@@ -4,3 +4,6 @@
 [submodule "vendor/zf-commons/zfc-user"]
 	path = vendor/zf-commons/zfc-user
 	url = git://github.com/ZF-Commons/ZfcUser.git
+[submodule "vendor/zf-commons/zfc-admin"]
+	path = vendor/zf-commons/zfc-admin
+	url = git://github.com/ZF-Commons/ZfcAdmin.git
