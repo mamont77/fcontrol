@@ -1,0 +1,6 @@
+[submodule "vendor/zf-commons/zfc-base"]
+	path = vendor/zf-commons/zfc-base
+	url = git://github.com/ZF-Commons/ZfcBase.git
+[submodule "vendor/zf-commons/zfc-user"]
+	path = vendor/zf-commons/zfc-user
+	url = git://github.com/ZF-Commons/ZfcUser.git
