@@ -22,6 +22,33 @@ return array(
                     ),
                 ),
             ),
+//            'zfcadmin' => array(
+//                'child_routes' => array(
+//                    'album' => array(
+//                        'type' => 'Literal',
+//                        'options' => array(
+//                            'route' => 'admin/album',
+//                            'defaults' => array(
+//                                'controller' => 'Album\Controller\Album',
+//                                'action'     => 'index',
+//                            ),
+//                        ),
+//                        'child_routes' =>array(
+//                            'mychildroute' => array(
+//                                'type' => 'literal',
+//                                'options' => array(
+//                                    'route' => '/',
+//                                    'defaults' => array(
+//                                        'controller' => 'Album\Controller\Album',
+//                                        'action'     => 'edit',
+//                                        'id'     => '[0-9]+',
+//                                    ),
+//                                ),
+//                            ),
+//                        ),
+//                    ),
+//                ),
+//            ),
         ),
     ),
 

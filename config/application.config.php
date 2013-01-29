@@ -2,6 +2,7 @@
 return array(
     'modules' => array(
         'Application',
+        'ZfcAdmin',
         'Album',
     ),
     'module_listener_options' => array(
