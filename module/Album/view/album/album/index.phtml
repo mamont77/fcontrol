@@ -1,10 +1,13 @@
-<?php 
+<?php
+// module/Album/view/album/album/index.phtml:
+
 $title = 'My albums';
 $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
-<p><a href="<?php echo $this->url('album', array( 
-        'action'=>'add'));?>">Add new album</a></p>
+<p>
+    <a href="<?php echo $this->url('album', array('action'=>'add'));?>">Add new album</a>
+</p>
 
 <table class="table">
 <tr>
@@ -12,7 +15,7 @@ $this->headTitle($title);
     <th>Artist</th>
     <th>&nbsp;</th>
 </tr>
-<?php foreach($albums as $album) : ?>
+<?php foreach ($albums as $album) : ?>
 <tr>
     <td><?php echo $this->escapeHtml($album->title);?></td>
     <td><?php echo $this->escapeHtml($album->artist);?></td>

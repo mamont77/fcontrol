@@ -1,24 +1,25 @@
 {
-    "hash": "e6e4ef7ecad6ed3304664f2f72c29e3a",
+    "hash": "f0cef498553487d8cd23d83053667777",
     "packages": [
         {
             "name": "zendframework/zendframework",
-            "version": "dev-master",
+            "version": "2.0.6",
             "source": {
                 "type": "git",
                 "url": "git://github.com/zendframework/zf2.git",
-                "reference": "835e6a84b5ede140cd192d7b152e1f766fef50b9"
+                "reference": "release-2.0.6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/zendframework/zf2/archive/835e6a84b5ede140cd192d7b152e1f766fef50b9.zip",
-                "reference": "835e6a84b5ede140cd192d7b152e1f766fef50b9",
+                "url": "https://github.com/zendframework/zf2/archive/release-2.0.6.zip",
+                "reference": "release-2.0.6",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
             "replace": {
+                "zendframework/zend-acl": "self.version",
                 "zendframework/zend-authentication": "self.version",
                 "zendframework/zend-barcode": "self.version",
                 "zendframework/zend-cache": "self.version",
@@ -30,18 +31,21 @@
                 "zendframework/zend-db": "self.version",
                 "zendframework/zend-di": "self.version",
                 "zendframework/zend-dom": "self.version",
+                "zendframework/zend-escaper": "self.version",
                 "zendframework/zend-eventmanager": "self.version",
                 "zendframework/zend-feed": "self.version",
                 "zendframework/zend-file": "self.version",
                 "zendframework/zend-filter": "self.version",
                 "zendframework/zend-form": "self.version",
                 "zendframework/zend-http": "self.version",
+                "zendframework/zend-i18n": "self.version",
                 "zendframework/zend-inputfilter": "self.version",
                 "zendframework/zend-json": "self.version",
                 "zendframework/zend-ldap": "self.version",
                 "zendframework/zend-loader": "self.version",
                 "zendframework/zend-log": "self.version",
                 "zendframework/zend-mail": "self.version",
+                "zendframework/zend-markup": "self.version",
                 "zendframework/zend-math": "self.version",
                 "zendframework/zend-memory": "self.version",
                 "zendframework/zend-mime": "self.version",
@@ -61,12 +65,7 @@
                 "zendframework/zend-uri": "self.version",
                 "zendframework/zend-validator": "self.version",
                 "zendframework/zend-view": "self.version",
-                "zendframework/zend-xmlrpc": "self.version",
-                "zendframework/zend-escaper": "self.version",
-                "zendframework/zend-i18n": "self.version",
-                "zendframework/zend-debug": "self.version",
-                "zendframework/zend-permissions-acl": "self.version",
-                "zendframework/zend-version": "self.version"
+                "zendframework/zend-xmlrpc": "self.version"
             },
             "require-dev": {
                 "doctrine/common": ">=2.1",
@@ -75,11 +74,11 @@
             "suggest": {
                 "doctrine/common": "Doctrine\\Common >=2.1 for annotation features",
                 "ext-intl": "ext/intl for i18n features",
-                "zendframework/zendservice-recaptcha": "ZendService\\ReCaptcha for rendering ReCaptchas in Zend\\Captcha and/or Zend\\Form",
+                "pecl-weakref": "Implementation of weak references for Zend\\Stdlib\\CallbackHandler",
                 "zendframework/zendpdf": "ZendPdf for creating PDF representations of barcodes",
-                "pecl-weakref": "Implementation of weak references for Zend\\Stdlib\\CallbackHandler"
+                "zendframework/zendservice-recaptcha": "ZendService\\ReCaptcha for rendering ReCaptchas in Zend\\Captcha and/or Zend\\Form"
             },
-            "time": "2013-01-29 15:06:42",
+            "time": "2012-12-19 21:14:25",
             "bin": [
                 "bin/classmap_generator.php"
             ],
@@ -106,210 +105,408 @@
                 "framework",
                 "zf2"
             ]
-        },
+        }
+    ],
+    "packages-dev": [
         {
-            "name": "zendframework/zftool",
-            "version": "dev-master",
+            "name": "phpunit/php-code-coverage",
+            "version": "1.2.7",
             "source": {
                 "type": "git",
-                "url": "https://github.com/zendframework/ZFTool.git",
-                "reference": "6dd8afc462f7f6a386890a90b8ec03006c64c004"
+                "url": "git://github.com/sebastianbergmann/php-code-coverage.git",
+                "reference": "1.2.7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/zendframework/ZFTool/archive/6dd8afc462f7f6a386890a90b8ec03006c64c004.zip",
-                "reference": "6dd8afc462f7f6a386890a90b8ec03006c64c004",
+                "url": "https://github.com/sebastianbergmann/php-code-coverage/archive/1.2.7.zip",
+                "reference": "1.2.7",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3",
-                "zendframework/zend-mvc": ">=2.0.0",
-                "zendframework/zend-modulemanager": ">=2.0.0",
-                "zendframework/zend-console": ">=2.0.0",
-                "zendframework/zend-view": ">=2.0.0",
-                "zendframework/zend-stdlib": ">=2.0.0",
-                "zendframework/zend-servicemanager": ">=2.0.0",
-                "zendframework/zend-file": ">=2.0.0",
-                "zendframework/zend-loader": ">=2.0.0",
-                "zendframework/zend-version": ">=2.0.0",
-                "zendframework/zend-text": ">=2.0.0",
-                "zendframework/zend-code": ">=2.0.0",
-                "zendframework/zend-config": ">=2.0.0"
-            },
-            "time": "2013-01-23 10:38:38",
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "ZFTool\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "description": "Utility module for Zend Framework 2 applications.",
-            "homepage": "http://framework.zend.com/",
-            "keywords": [
-                "zf2",
-                "tool"
-            ]
-        },
-        {
-            "name": "zf-commons/zfc-admin",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ZF-Commons/ZfcAdmin",
-                "reference": "a42d266149d9444d27528e3c3253295d80d59bf6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/ZF-Commons/ZfcAdmin/archive/a42d266149d9444d27528e3c3253295d80d59bf6.zip",
-                "reference": "a42d266149d9444d27528e3c3253295d80d59bf6",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3",
-                "zendframework/zendframework": "2.*"
+                "phpunit/php-file-iterator": ">=1.3.0@stable",
+                "phpunit/php-token-stream": ">=1.1.3@stable",
+                "phpunit/php-text-template": ">=1.1.1@stable"
             },
             "suggest": {
-                "bjyoungblood/bjy-authorize": "Access control to protect ZfcAdmin against unauthorized users"
+                "ext-dom": "*",
+                "ext-xdebug": ">=2.0.5"
             },
-            "time": "2012-10-30 07:58:51",
+            "time": "2012-12-02 14:54:55",
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "ZfcAdmin": "src/"
-                },
                 "classmap": [
-                    "./Module.php"
+                    "PHP/"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                ""
+            ],
             "license": [
                 "BSD-3-Clause"
             ],
             "authors": [
                 {
-                    "name": "Jurian Sluiman ",
-                    "email": "jurian@juriansluiman.nl",
-                    "homepage": "http://juriansluiman.nl/en/"
-                },
-                {
-                    "name": "Martin Shwalbe",
-                    "email": "martin.shwalbe@gmail.com",
-                    "homepage": "http://hounddog.github.com"
+                    "name": "Sebastian Bergmann",
+                    "email": "sb@sebastian-bergmann.de",
+                    "role": "lead"
                 }
             ],
-            "description": "A generic Admin module for ZF2.",
-            "homepage": "https://github.com/juriansluiman/ZfcAdmin",
+            "description": "Library that provides collection, processing, and rendering functionality for PHP code coverage information.",
+            "homepage": "https://github.com/sebastianbergmann/php-code-coverage",
             "keywords": [
-                "zf2"
+                "testing",
+                "coverage",
+                "xunit"
             ]
         },
         {
-            "name": "zf-commons/zfc-base",
-            "version": "dev-master",
+            "name": "phpunit/php-file-iterator",
+            "version": "1.3.3",
             "source": {
                 "type": "git",
-                "url": "git://github.com/ZF-Commons/ZfcBase.git",
-                "reference": "38990ad5f51002dd271ab676b90a3d59728190e2"
+                "url": "git://github.com/sebastianbergmann/php-file-iterator.git",
+                "reference": "1.3.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/ZF-Commons/ZfcBase/archive/38990ad5f51002dd271ab676b90a3d59728190e2.zip",
-                "reference": "38990ad5f51002dd271ab676b90a3d59728190e2",
+                "url": "https://github.com/sebastianbergmann/php-file-iterator/zipball/1.3.3",
+                "reference": "1.3.3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "time": "2012-10-11 04:44:38",
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "File/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                ""
+            ],
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sb@sebastian-bergmann.de",
+                    "role": "lead"
+                }
+            ],
+            "description": "FilterIterator implementation that filters files based on a list of suffixes.",
+            "homepage": "http://www.phpunit.de/",
+            "keywords": [
+                "filesystem",
+                "iterator"
+            ]
+        },
+        {
+            "name": "phpunit/php-text-template",
+            "version": "1.1.4",
+            "source": {
+                "type": "git",
+                "url": "git://github.com/sebastianbergmann/php-text-template.git",
+                "reference": "1.1.4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/sebastianbergmann/php-text-template/zipball/1.1.4",
+                "reference": "1.1.4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "time": "2012-10-31 11:15:28",
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "Text/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                ""
+            ],
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sb@sebastian-bergmann.de",
+                    "role": "lead"
+                }
+            ],
+            "description": "Simple template engine.",
+            "homepage": "https://github.com/sebastianbergmann/php-text-template/",
+            "keywords": [
+                "template"
+            ]
+        },
+        {
+            "name": "phpunit/php-timer",
+            "version": "1.0.4",
+            "source": {
+                "type": "git",
+                "url": "git://github.com/sebastianbergmann/php-timer.git",
+                "reference": "1.0.4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/sebastianbergmann/php-timer/zipball/1.0.4",
+                "reference": "1.0.4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "time": "2012-10-11 04:45:58",
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "PHP/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                ""
+            ],
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sb@sebastian-bergmann.de",
+                    "role": "lead"
+                }
+            ],
+            "description": "Utility class for timing",
+            "homepage": "http://www.phpunit.de/",
+            "keywords": [
+                "timer"
+            ]
+        },
+        {
+            "name": "phpunit/php-token-stream",
+            "version": "1.1.5",
+            "source": {
+                "type": "git",
+                "url": "git://github.com/sebastianbergmann/php-token-stream.git",
+                "reference": "1.1.5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/sebastianbergmann/php-token-stream/zipball/1.1.5",
+                "reference": "1.1.5",
+                "shasum": ""
+            },
+            "require": {
+                "ext-tokenizer": "*",
+                "php": ">=5.3.3"
+            },
+            "time": "2012-10-11 04:47:14",
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "PHP/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                ""
+            ],
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Sebastian Bergmann",
+                    "email": "sb@sebastian-bergmann.de",
+                    "role": "lead"
+                }
+            ],
+            "description": "Wrapper around PHP's tokenizer extension.",
+            "homepage": "http://www.phpunit.de/",
+            "keywords": [
+                "tokenizer"
+            ]
+        },
+        {
+            "name": "phpunit/phpunit",
+            "version": "3.7.13",
+            "source": {
+                "type": "git",
+                "url": "git://github.com/sebastianbergmann/phpunit.git",
+                "reference": "3.7.13"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/sebastianbergmann/phpunit/archive/3.7.13.zip",
+                "reference": "3.7.13",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3",
-                "zendframework/zendframework": "2.*"
+                "phpunit/php-file-iterator": ">=1.3.1",
+                "phpunit/php-text-template": ">=1.1.1",
+                "phpunit/php-code-coverage": ">=1.2.1",
+                "phpunit/php-timer": ">=1.0.2",
+                "phpunit/phpunit-mock-objects": ">=1.2.0,<1.3.0",
+                "symfony/yaml": ">=2.1.0,<2.2.0",
+                "ext-dom": "*",
+                "ext-pcre": "*",
+                "ext-reflection": "*",
+                "ext-spl": "*"
             },
-            "time": "2012-10-24 17:42:28",
+            "suggest": {
+                "phpunit/php-invoker": ">=1.1.0",
+                "ext-json": "*",
+                "ext-simplexml": "*",
+                "ext-tokenizer": "*"
+            },
+            "time": "2013-01-13 10:21:19",
+            "bin": [
+                "composer/bin/phpunit"
+            ],
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.7.x-dev"
+                }
+            },
             "autoload": {
-                "psr-0": {
-                    "ZfcBase": "src/"
-                },
                 "classmap": [
-                    "./Module.php"
+                    "PHPUnit/"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                "",
+                "../../symfony/yaml/"
+            ],
+            "license": [
+                "BSD-3-Clause"
+            ],
             "authors": [
                 {
-                    "name": "Kyle Spraggs",
-                    "email": "theman@spiffyjr.me",
-                    "homepage": "http://www.spiffyjr.me/"
-                },
-                {
-                    "name": "Evan Coury",
-                    "email": "me@evancoury.com",
-                    "homepage": "http://blog.evan.pro/"
+                    "name": "Sebastian Bergmann",
+                    "email": "sebastian@phpunit.de",
+                    "role": "lead"
                 }
             ],
-            "description": "A set of genetic (abstract) classes which are commonly used across multiple modules.",
-            "homepage": "https://github.com/ZF-Commons/ZfcBase",
+            "description": "The PHP Unit Testing framework.",
+            "homepage": "http://www.phpunit.de/",
             "keywords": [
-                "zf2"
+                "testing",
+                "phpunit",
+                "xunit"
             ]
         },
         {
-            "name": "zf-commons/zfc-user",
-            "version": "dev-master",
+            "name": "phpunit/phpunit-mock-objects",
+            "version": "1.2.3",
             "source": {
                 "type": "git",
-                "url": "git://github.com/ZF-Commons/ZfcUser.git",
-                "reference": "2123edb7e76f5820a7fce28d061f97fd91c50752"
+                "url": "git://github.com/sebastianbergmann/phpunit-mock-objects.git",
+                "reference": "1.2.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/ZF-Commons/ZfcUser/archive/2123edb7e76f5820a7fce28d061f97fd91c50752.zip",
-                "reference": "2123edb7e76f5820a7fce28d061f97fd91c50752",
+                "url": "https://github.com/sebastianbergmann/phpunit-mock-objects/archive/1.2.3.zip",
+                "reference": "1.2.3",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3",
-                "zf-commons/zfc-base": "dev-master",
-                "zendframework/zendframework": "2.*"
+                "phpunit/php-text-template": ">=1.1.1@stable"
             },
-            "time": "2013-01-28 21:24:50",
+            "suggest": {
+                "ext-soap": "*"
+            },
+            "time": "2013-01-13 10:24:48",
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "ZfcUser": "src/"
-                },
                 "classmap": [
-                    "./Module.php"
+                    "PHPUnit/"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
+            "include-path": [
+                ""
+            ],
+            "license": [
+                "BSD-3-Clause"
+            ],
             "authors": [
                 {
-                    "name": "Kyle Spraggs",
-                    "email": "theman@spiffyjr.me",
-                    "homepage": "http://www.spiffyjr.me/"
-                },
-                {
-                    "name": "Evan Coury",
-                    "email": "me@evancoury.com",
-                    "homepage": "http://blog.evan.pro/"
+                    "name": "Sebastian Bergmann",
+                    "email": "sb@sebastian-bergmann.de",
+                    "role": "lead"
                 }
             ],
-            "description": "A generic user registration and authentication module for ZF2. Supports Zend\\Db and Doctrine2.",
-            "homepage": "https://github.com/ZF-Commons/ZfcUser",
+            "description": "Mock Object library for PHPUnit",
+            "homepage": "https://github.com/sebastianbergmann/phpunit-mock-objects/",
             "keywords": [
-                "zf2"
+                "mock",
+                "xunit"
             ]
+        },
+        {
+            "name": "symfony/yaml",
+            "version": "v2.1.7",
+            "target-dir": "Symfony/Component/Yaml",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Yaml",
+                "reference": "v2.1.7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/symfony/Yaml/archive/v2.1.7.zip",
+                "reference": "v2.1.7",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "time": "2013-01-17 21:21:51",
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Yaml": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Yaml Component",
+            "homepage": "http://symfony.com"
         }
     ],
-    "packages-dev": null,
     "aliases": [
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "zendframework/zendframework": 20,
-        "zendframework/zftool": 20,
-        "zf-commons/zfc-base": 20,
-        "zf-commons/zfc-admin": 20,
-        "zf-commons/zfc-user": 20
-    }
+    "stability-flags": [
+
+    ]
 }
