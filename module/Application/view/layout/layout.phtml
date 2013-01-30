@@ -2,7 +2,7 @@
 
 <html lang="en">
   <head>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <?php echo $this->headTitle('ZF2 '. $this->translate('Skeleton Application'))->setSeparator(' - ')->setAutoEscape(false) ?>
 
     <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
@@ -30,21 +30,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Skeleton Application') ?></a>
-
-          <div class="dropdown" style="float:right">
-              <?php echo $this->partial('layout/languages.phtml', array(
-                    'lang' => array(
-                        'English'  => 'en-US',
-                        'Français' => 'fr-FR',
-                        'Deutsch'  => 'de-DE',
-                    ),
-                    'selected' => $this->lang,
-              )); ?>
-          </div>
+          <a class="brand" href="<?php echo $this->url('home') ?>"><?php echo $this->translate('fControl') ?></a>
           <div class="nav-collapse">
             <ul class="nav">
               <li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home') ?></a></li>
+              <li class=""><a href="<?php //echo $this->url('user') ?>"><?php echo 'Профиль' ?></a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
