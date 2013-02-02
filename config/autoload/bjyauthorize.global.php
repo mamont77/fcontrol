@@ -12,7 +12,7 @@ return array(
          *
          * for ZfcUser, this will be your default identity provider
          */
-        'identity_provider' => 'BjyAuthorize\Provider\Identity\ZfcUserZendDb',
+        //'identity_provider' => 'BjyAuthorize\Provider\Identity\ZfcUserZendDb',
         /* If you only have a default role and an authenticated role, you can
          * use the 'AuthenticationIdentityProvider' to allow/restrict access
          * with the guards based on the state 'logged in' and 'not logged in'.
@@ -21,6 +21,8 @@ return array(
          * 'authenticated_role' => 'user',          // authenticated
          * 'identity_provider'  => 'BjyAuthorize\Provider\Identity\AuthenticationIdentityProvider',
          */
+        'authenticated_role' => 'user',          // authenticated
+        'identity_provider'  => 'BjyAuthorize\Provider\Identity\AuthenticationIdentityProvider',
 
         /* role providers simply provide a list of roles that should be inserted
          * into the Zend\Acl instance. the module comes with two providers, one
@@ -85,18 +87,21 @@ return array(
         /* Currently, only controller and route guards exist
          */
         'guards' => array(
-            /* If this guard is specified here (i.e. it is enabled), it will block
+             /* If this guard is specified here (i.e. it is enabled), it will block
              * access to all controllers and actions unless they are specified here.
              * You may omit the 'action' index to allow access to the entire controller
              */
-            'BjyAuthorize\Guard\Controller' => array(
-                array('controller' => 'index', 'action' => 'index', 'roles' => array('guest','user')),
-                array('controller' => 'index', 'action' => 'stuff', 'roles' => array('user')),
-                array('controller' => 'zfcuser', 'roles' => array()),
-                // Below is the default index action used by the [ZendSkeletonApplication](https://github.com/zendframework/ZendSkeletonApplication)
-                //array('controller' => 'Application\Controller\Index', 'roles' => array('guest', 'user')),
-                array('controller' => 'Album\Controller\Album', 'roles' => array('guest', 'user')),
-            ),
+//            'BjyAuthorize\Guard\Controller' => array(
+//                array('controller' => 'zfcuser', 'roles' => array('user')),
+//                array('controller' => 'zfcuser', 'action' => 'logout', 'roles' => array('user')),
+//                array('controller' => 'zfcuser', 'action' => 'login', 'roles' => array('guest')),
+//                array('controller' => 'zfcuser', 'action' => 'register', 'roles' => array('admin')),
+//                // Below is the default index action used by the [ZendSkeletonApplication](https://github.com/zendframework/ZendSkeletonApplication)
+//                array('controller' => 'Album\Controller\Album', 'action' => 'index', 'roles' => array('guest', 'user')),
+//                array('controller' => 'Album\Controller\Album', 'action' => 'add', 'roles' => array('user')),
+//                array('controller' => 'Album\Controller\Album', 'action' => 'edit', 'roles' => array('user')),
+//                array('controller' => 'Album\Controller\Album', 'action' => 'delete', 'roles' => array('user')),
+//            ),
 
             /* If this guard is specified here (i.e. it is enabled), it will block
              * access to all routes unless they are specified here.
@@ -105,11 +110,14 @@ return array(
                 array('route' => 'zfcuser', 'roles' => array('user')),
                 array('route' => 'zfcuser/logout', 'roles' => array('user')),
                 array('route' => 'zfcuser/login', 'roles' => array('guest')),
-                array('route' => 'zfcuser/register', 'roles' => array('guest')),
+                array('route' => 'zfcuser/register', 'roles' => array('admin')),
                 // Below is the default index action used by the [ZendSkeletonApplication](https://github.com/zendframework/ZendSkeletonApplication)
                 array('route' => 'home', 'roles' => array('guest', 'user')),
-//                array('route' => 'application', 'roles' => array('guest', 'user')),
-//                array('route' => 'album', 'roles' => array('guest', 'user')),
+                array('route' => 'application', 'roles' => array('guest', 'user')),
+                array('route' => 'album', 'roles' => array('user')),
+                array('route' => 'album/add', 'roles' => array('user')),
+                array('route' => 'album/edit', 'roles' => array('user')),
+                array('route' => 'album/delete', 'roles' => array('user')),
             ),
         ),
     ),
