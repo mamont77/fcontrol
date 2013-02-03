@@ -7,3 +7,5 @@ nbproject
 .project
 .settings
 composer.lock
+
+/atlassian-ide-plugin.xml
