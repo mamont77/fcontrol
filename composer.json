@@ -8,8 +8,6 @@
     ],
     "homepage": "http://framework.zend.com/",
     "require": {
-        "php": ">=5.3.3",
-        "zendframework/zendframework": "dev-master",
-        "zendframework/zftool": "dev-master"
+        "php": ">=5.3.3"
     }
 }

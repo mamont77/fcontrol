@@ -13,3 +13,6 @@
 [submodule "vendor/ZfcAdmin"]
 	path = vendor/ZfcAdmin
 	url = https://github.com/ZF-Commons/ZfcAdmin.git
+[submodule "vendor/ZFTool"]
+	path = vendor/ZFTool
+	url = https://github.com/zendframework/ZFTool.git
