@@ -3,6 +3,7 @@ return array(
     'modules' => array(
         'ZfcBase',
         'ZfcUser',
+        'ZfcAdmin',
         'BjyAuthorize',
         'Application',
         'Album',
