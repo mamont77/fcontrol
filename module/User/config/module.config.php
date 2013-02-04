@@ -8,10 +8,10 @@ return array(
     // The following section is new and should be added to your file
     'router' => array(
         'routes' => array(
-            'user' => array(
+            'admin' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/user[/:action][/:id]',
+                    'route'    => '/admin/users[/:action][/:id]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id'     => '[0-9]+',

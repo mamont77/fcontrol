@@ -1,12 +1,12 @@
 <?php
 // module/Album/view/album/album/index.phtml:
 
-$title = 'My albums';
+$title = 'Список сотрудников';
 $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 <p>
-    <a href="<?php echo $this->url('user', array('action'=>'add'));?>">Add new album</a>
+    <a href="<?php echo $this->url('admin/users', array('action' => 'add'));?>">Добавить сотрудника</a>
 </p>
 
 <table class="table">

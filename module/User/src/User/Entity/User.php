@@ -140,7 +140,7 @@ class User implements InputFilterAwareInterface
                 ),
             )));
 
-            $this->inputFilter = $inputFilter;        
+            $this->inputFilter = $inputFilter;
         }
 
         return $this->inputFilter;
