@@ -1,7 +1,5 @@
 <?php
-// module/Album/view/album/album/edit.phtml:
-
-$title = 'Edit album';
+$title = 'Редактирование сотрудника';
 $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
@@ -9,17 +7,19 @@ $this->headTitle($title);
 <?php
 $form = $this->form;
 $form->setAttribute('action', $this->url(
-    'album',
+    'user',
     array(
         'action' => 'edit',
-        'id'     => $this->id,
+        'id'     => $this->user_id,
     )
 ));
 $form->prepare();
 
 echo $this->form()->openTag($form);
-echo $this->formHidden($form->get('id'));
-echo $this->formRow($form->get('title'));
-echo $this->formRow($form->get('artist'));
+echo $this->formHidden($form->get('user_id'));
+echo $this->formRow($form->get('display_name'));
+echo $this->formRow($form->get('email'));
+echo $this->formRow($form->get('state'));
+echo $this->formRow($form->get('password'));
 echo $this->formSubmit($form->get('submit'));
 echo $this->form()->closeTag();

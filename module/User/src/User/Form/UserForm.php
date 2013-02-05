@@ -12,13 +12,13 @@ class UserForm extends Form
         parent::__construct('user');
         $this->setAttribute('method', 'post');
         $this->add(array(
-            'name' => 'id',
+            'name' => 'user_id',
             'attributes' => array(
                 'type'  => 'hidden',
             ),
         ));
         $this->add(array(
-            'name' => 'artist',
+            'name' => 'username',
             'attributes' => array(
                 'type'  => 'text',
             ),
@@ -27,7 +27,34 @@ class UserForm extends Form
             ),
         ));
         $this->add(array(
-            'name' => 'title',
+            'name' => 'email',
+            'attributes' => array(
+                'type'  => 'text',
+            ),
+            'options' => array(
+                'label' => 'Title',
+            ),
+        ));
+        $this->add(array(
+            'name' => 'display_name',
+            'attributes' => array(
+                'type'  => 'text',
+            ),
+            'options' => array(
+                'label' => 'Title',
+            ),
+        ));
+        $this->add(array(
+            'name' => 'password',
+            'attributes' => array(
+                'type'  => 'text',
+            ),
+            'options' => array(
+                'label' => 'Title',
+            ),
+        ));
+        $this->add(array(
+            'name' => ' state',
             'attributes' => array(
                 'type'  => 'text',
             ),

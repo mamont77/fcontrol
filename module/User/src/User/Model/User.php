@@ -9,16 +9,22 @@ use Zend\InputFilter\InputFilterInterface;
 
 class User implements InputFilterAwareInterface
 {
-    public $id;
-    public $artist;
-    public $title;
+    public $user_id;
+    public $username;
+    public $email;
+    public $display_name;
+    public $password;
+    public $state;
     protected $inputFilter;
 
     public function exchangeArray($data)
     {
-        $this->id     = (isset($data['id']))     ? $data['id']     : null;
-        $this->artist = (isset($data['artist'])) ? $data['artist'] : null;
-        $this->title  = (isset($data['title']))  ? $data['title']  : null;
+        $this->user_id     = (isset($data['user_id']))     ? $data['user_id']     : null;
+        $this->username = (isset($data['username'])) ? $data['username'] : null;
+        $this->email  = (isset($data['email']))  ? $data['email']  : null;
+        $this->display_name  = (isset($data['display_name']))  ? $data['display_name']  : null;
+        $this->password  = (isset($data['password']))  ? $data['password']  : null;
+        $this->state  = (isset($data['state']))  ? $data['state']  : null;
     }
 
      // Add the following method:
@@ -39,7 +45,7 @@ class User implements InputFilterAwareInterface
             $factory     = new InputFactory();
 
             $inputFilter->add($factory->createInput(array(
-                'name'     => 'id',
+                'name'     => 'user_id',
                 'required' => true,
                 'filters'  => array(
                     array('name' => 'Int'),
@@ -47,7 +53,7 @@ class User implements InputFilterAwareInterface
             )));
 
             $inputFilter->add($factory->createInput(array(
-                'name'     => 'artist',
+                'name'     => 'username',
                 'required' => true,
                 'filters'  => array(
                     array('name' => 'StripTags'),
@@ -66,7 +72,64 @@ class User implements InputFilterAwareInterface
             )));
 
             $inputFilter->add($factory->createInput(array(
-                'name'     => 'title',
+                'name'     => 'email',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 1,
+                            'max'      => 100,
+                        ),
+                    ),
+                ),
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name'     => 'display_name',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 1,
+                            'max'      => 100,
+                        ),
+                    ),
+                ),
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name'     => 'password',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 1,
+                            'max'      => 100,
+                        ),
+                    ),
+                ),
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name'     => 'state',
                 'required' => true,
                 'filters'  => array(
                     array('name' => 'StripTags'),

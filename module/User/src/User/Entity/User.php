@@ -17,7 +17,8 @@ use Zend\InputFilter\InputFilterInterface;
  * @property string $title
  * @property int $id
  */
-class User implements InputFilterAwareInterface 
+
+class User implements InputFilterAwareInterface
 {
     protected $inputFilter;
 
