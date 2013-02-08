@@ -23,16 +23,7 @@ class UserForm extends Form
                 'type'  => 'text',
             ),
             'options' => array(
-                'label' => 'Artist',
-            ),
-        ));
-        $this->add(array(
-            'name' => 'email',
-            'attributes' => array(
-                'type'  => 'text',
-            ),
-            'options' => array(
-                'label' => 'Title',
+                'label' => 'Фамилия Имя',
             ),
         ));
         $this->add(array(
@@ -41,25 +32,31 @@ class UserForm extends Form
                 'type'  => 'text',
             ),
             'options' => array(
-                'label' => 'Title',
+                'label' => 'Отображаемое имя',
             ),
         ));
         $this->add(array(
+            'name' => 'email',
+            'attributes' => array(
+                'type'  => 'text',
+            ),
+            'options' => array(
+                'label' => 'Email',
+            ),
+        ));
+        $this->add(array(
+            'type' => 'Zend\Form\Element\Password',
             'name' => 'password',
-            'attributes' => array(
-                'type'  => 'text',
-            ),
             'options' => array(
-                'label' => 'Title',
+                'label' => 'Пароль',
             ),
         ));
+
         $this->add(array(
-            'name' => ' state',
-            'attributes' => array(
-                'type'  => 'text',
-            ),
+            'type' => 'Zend\Form\Element\Checkbox',
+            'name' => 'state',
             'options' => array(
-                'label' => 'Title',
+                'label' => 'Активен',
             ),
         ));
         $this->add(array(

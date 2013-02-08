@@ -7,16 +7,17 @@ $this->headTitle($title);
 <?php
 $form = $this->form;
 $form->setAttribute('action', $this->url(
-    'user',
+    'admin/users',
     array(
-        'action' => 'edit',
-        'id'     => $this->user_id,
+//        'action' => 'edit',
+//        'id'     => $this->user_id,
     )
 ));
 $form->prepare();
 
 echo $this->form()->openTag($form);
 echo $this->formHidden($form->get('user_id'));
+echo $this->formRow($form->get('username'));
 echo $this->formRow($form->get('display_name'));
 echo $this->formRow($form->get('email'));
 echo $this->formRow($form->get('state'));

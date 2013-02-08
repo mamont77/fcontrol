@@ -21,7 +21,7 @@ class UserController extends AbstractActionController
     public function addAction()
     {
         $form = new UserForm();
-        $form->get('submit')->setValue('Add');
+        $form->get('submit')->setValue('Добавить');
 
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -34,7 +34,7 @@ class UserController extends AbstractActionController
                 $this->getUserTable()->saveUser($user);
 
                 // Redirect to list of users
-                return $this->redirect()->toRoute('user');
+                return $this->redirect()->toRoute('admin/users');
             }
         }
         return array('form' => $form);
@@ -44,7 +44,7 @@ class UserController extends AbstractActionController
     {
         $id = (int) $this->params()->fromRoute('id', 0);
         if (!$id) {
-            return $this->redirect()->toRoute('user', array(
+            return $this->redirect()->toRoute('admin/users', array(
                 'action' => 'add'
             ));
         }
@@ -52,7 +52,7 @@ class UserController extends AbstractActionController
 
         $form  = new UserForm();
         $form->bind($user);
-        $form->get('submit')->setAttribute('value', 'Edit');
+        $form->get('submit')->setAttribute('value', 'Сохранить');
 
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -63,7 +63,7 @@ class UserController extends AbstractActionController
                 $this->getUserTable()->saveUser($form->getData());
 
                 // Redirect to list of users
-                return $this->redirect()->toRoute('user');
+                return $this->redirect()->toRoute('admin/users');
             }
         }
 
@@ -77,20 +77,20 @@ class UserController extends AbstractActionController
     {
         $id = (int) $this->params()->fromRoute('id', 0);
         if (!$id) {
-            return $this->redirect()->toRoute('user');
+            return $this->redirect()->toRoute('admin/users');
         }
 
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $del = $request->getPost('del', 'No');
+            $del = $request->getPost('del', 'Да');
 
-            if ($del == 'Yes') {
+            if ($del == 'Нет') {
                 $id = (int) $request->getPost('id');
                 $this->getUserTable()->deleteUser($id);
             }
 
             // Redirect to list of users
-            return $this->redirect()->toRoute('user');
+            return $this->redirect()->toRoute('admin/users');
         }
 
         return array(

@@ -8,23 +8,30 @@ $this->headTitle($title);
 </p>
 
 <table class="table">
-<tr>
-    <th>Имя</th>
-    <th>Email</th>
-    <th>Статус</th>
-    <th>Операции</th>
-</tr>
-<?php foreach ($users as $user) : ?>
-<tr>
-    <td><?php echo $this->escapeHtml($user->display_name);?></td>
-    <td><?php echo $this->escapeHtml($user->email);?></td>
-    <td><?php echo $this->escapeHtml($user->state);?></td>
-    <td>
-        <a href="<?php echo $this->url('admin/user',
-            array('action'=>'edit', 'id' => $user->user_id));?>">Edit</a>
-        <a href="<?php echo $this->url('admin/user',
-            array('action'=>'delete', 'id' => $user->user_id));?>">Delete</a>
-    </td>
-</tr>
-<?php endforeach; ?>
+    <tr>
+        <th>Фамилия Имя</th>
+        <th>Отображаемое имя</th>
+        <th>Email</th>
+        <th>Статус</th>
+        <th>Операции</th>
+    </tr>
+    <?php foreach ($users as $user) : ?>
+    <tr>
+        <td><?php echo $this->escapeHtml($user->username);?></td>
+        <td><?php echo $this->escapeHtml($user->display_name);?></td>
+        <td><?php echo $this->escapeHtml($user->email);?></td>
+        <td>
+            <?php if ($user->state == 1) {
+                echo 'Активен';
+            } else {
+                echo 'Блокирован';
+            };?>
+        <td>
+            <a href="<?php echo $this->url('admin/user',
+                array('action' => 'edit', 'id' => $user->user_id));?>">Редактировать</a>
+            <a href="<?php echo $this->url('admin/user',
+                array('action' => 'delete', 'id' => $user->user_id));?>">Удалить</a>
+        </td>
+    </tr>
+    <?php endforeach; ?>
 </table>
