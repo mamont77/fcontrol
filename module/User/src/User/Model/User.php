@@ -19,12 +19,12 @@ class User implements InputFilterAwareInterface
 
     public function exchangeArray($data)
     {
-        $this->user_id     = (isset($data['user_id']))     ? $data['user_id']     : null;
+        $this->user_id = (isset($data['user_id'])) ? $data['user_id'] : null;
         $this->username = (isset($data['username'])) ? $data['username'] : null;
-        $this->email  = (isset($data['email']))  ? $data['email']  : null;
-        $this->display_name  = (isset($data['display_name']))  ? $data['display_name']  : null;
-        $this->password  = (isset($data['password']))  ? $data['password']  : null;
-        $this->state  = (isset($data['state']))  ? $data['state']  : null;
+        $this->email = (isset($data['email'])) ? $data['email'] : null;
+        $this->display_name = (isset($data['display_name'])) ? $data['display_name'] : null;
+        $this->password = (isset($data['password'])) ? $data['password'] : null;
+        $this->state = (isset($data['state'])) ? $data['state'] : null;
     }
 
      // Add the following method:
