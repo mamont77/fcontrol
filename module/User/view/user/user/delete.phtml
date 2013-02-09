@@ -10,12 +10,13 @@ $this->headTitle($title);
 <?php
 $url = $this->url('admin/user', array(
     'action' => 'delete',
-    'id'     => $this->id_user,
+    'id'     => $this->user_id,
 ));
 ?>
+
 <form action="<?php echo $url; ?>" method="post">
 <div>
-    <input type="hidden" name="id_user" value="<?php echo (int) $user->id_user; ?>" />
+    <input type="hidden" name="user_id" value="<?php echo (int) $user->user_id; ?>" />
     <input type="submit" name="del" value="Да" />
     <input type="submit" name="del" value="Нет" />
 </div>

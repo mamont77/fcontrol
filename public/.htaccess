@@ -1,4 +1,10 @@
 RewriteEngine On
+
+RewriteBase /
+RewriteCond %{HTTP_HOST} (.*)
+RewriteCond %{REQUEST_URI} /$ [NC]
+RewriteRule ^(.*)(/)$ $1 [L,R=301]
+
 # The following rule tells Apache that if the requested filename
 # exists, simply serve it.
 RewriteCond %{REQUEST_FILENAME} -s [OR]
@@ -21,3 +27,4 @@ AddCharset utf-8 *
     CharsetSourceEnc utf-8
     CharsetDefault utf-8
 </IfModule>
+
