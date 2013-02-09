@@ -21,6 +21,8 @@ class UserForm extends Form
             'name' => 'username',
             'attributes' => array(
                 'type'  => 'text',
+                'required' => true,
+                'maxlength'  => '255',
             ),
             'options' => array(
                 'label' => 'Фамилия Имя',
@@ -30,6 +32,9 @@ class UserForm extends Form
             'name' => 'display_name',
             'attributes' => array(
                 'type'  => 'text',
+                'required' => true,
+                'maxlength'  => '50',
+
             ),
             'options' => array(
                 'label' => 'Отображаемое имя',
@@ -39,6 +44,8 @@ class UserForm extends Form
             'name' => 'email',
             'attributes' => array(
                 'type'  => 'text',
+                'required' => true,
+                'maxlength'  => '255',
             ),
             'options' => array(
                 'label' => 'Email',
@@ -47,6 +54,11 @@ class UserForm extends Form
         $this->add(array(
             'type' => 'Zend\Form\Element\Password',
             'name' => 'password',
+            'attributes' => array(
+                'type'  => 'password',
+                'required' => true,
+                'maxlength'  => '24',
+            ),
             'options' => array(
                 'label' => 'Пароль',
             ),
@@ -57,6 +69,8 @@ class UserForm extends Form
             'name' => 'state',
             'options' => array(
                 'label' => 'Активен',
+                'checked_value' => '1',
+                'unchecked_value' => '0'
             ),
         ));
         $this->add(array(

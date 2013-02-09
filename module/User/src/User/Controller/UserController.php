@@ -49,12 +49,12 @@ class UserController extends AbstractActionController
             ));
         }
         $user = $this->getUserTable()->getUser($id);
-
         $form  = new UserForm();
         $form->bind($user);
         $form->get('submit')->setAttribute('value', 'Сохранить');
 
         $request = $this->getRequest();
+
         if ($request->isPost()) {
             $form->setInputFilter($user->getInputFilter());
             $form->setData($request->getPost());
@@ -68,7 +68,7 @@ class UserController extends AbstractActionController
         }
 
         return array(
-            'id' => $id,
+            'user_id' => $id,
             'form' => $form,
         );
     }
