@@ -134,7 +134,7 @@ class User implements InputFilterAwareInterface
                         'options' => array(
                             'encoding' => 'UTF-8',
                             'min'      => 1,
-                            'max'      => 100,
+                            'max'      => 255,
                         ),
                     ),
                 ),
@@ -153,7 +153,7 @@ class User implements InputFilterAwareInterface
                         'options' => array(
                             'encoding' => 'UTF-8',
                             'min'      => 1,
-                            'max'      => 100,
+                            'max'      => 255,
                         ),
                     ),
                 ),
@@ -172,7 +172,7 @@ class User implements InputFilterAwareInterface
                         'options' => array(
                             'encoding' => 'UTF-8',
                             'min'      => 1,
-                            'max'      => 100,
+                            'max'      => 50,
                         ),
                     ),
                 ),
@@ -191,7 +191,7 @@ class User implements InputFilterAwareInterface
                         'options' => array(
                             'encoding' => 'UTF-8',
                             'min'      => 1,
-                            'max'      => 100,
+                            'max'      => 24,
                         ),
                     ),
                 ),
@@ -210,7 +210,7 @@ class User implements InputFilterAwareInterface
                         'options' => array(
                             'encoding' => 'UTF-8',
                             'min'      => 1,
-                            'max'      => 100,
+                            'max'      => 1,
                         ),
                     ),
                 ),
