@@ -30,7 +30,10 @@ class UserController extends AbstractActionController
             $form->setData($request->getPost());
 
             if ($form->isValid()) {
-                $user->exchangeArray($form->getData());
+                $userData = $form->getData();
+                $userModel = new User();
+                $userData['password'] = $userModel->changePassword($userData['password']);
+                $user->exchangeArray($userData);
                 $this->getUserTable()->saveUser($user);
 
                 // Redirect to list of users

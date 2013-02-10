@@ -18,65 +18,75 @@ class UserForm extends Form
         parent::__construct('user');
 
         $this->_translator = new Translator;
-        $this->_translator->addTranslationFile("phparray",'./vendor/ZF2/resources/languages/ru/Zend_Validate.php');
+        $this->_translator->addTranslationFile("phparray", './vendor/ZF2/resources/languages/ru/Zend_Validate.php');
         AbstractValidator::setDefaultTranslator($this->_translator);
 
         $this->setAttribute('method', 'post');
         $this->add(array(
             'name' => 'user_id',
             'attributes' => array(
-                'type'  => 'hidden',
+                'type' => 'hidden',
             ),
         ));
         $this->add(array(
             'name' => 'username',
             'attributes' => array(
-                'type'  => 'text',
+                'type' => 'text',
                 'required' => true,
-                'maxlength'  => '255',
+                'maxlength' => '255',
             ),
             'options' => array(
                 'label' => 'Фамилия Имя',
             ),
         ));
-        $this->add(array(
-            'name' => 'display_name',
-            'attributes' => array(
-                'type'  => 'text',
-                'required' => true,
-                'maxlength'  => '50',
-
-            ),
-            'options' => array(
-                'label' => 'Отображаемое имя',
-            ),
-        ));
+//        $this->add(array(
+//            'name' => 'display_name',
+//            'attributes' => array(
+//                'type'  => 'text',
+//                'required' => true,
+//                'maxlength'  => '50',
+//
+//            ),
+//            'options' => array(
+//                'label' => 'Отображаемое имя',
+//            ),
+//        ));
         $this->add(array(
             'type' => 'Zend\Form\Element\Email',
             'name' => 'email',
             'attributes' => array(
-                'type'  => 'text',
+                'type' => 'text',
                 'required' => true,
-                'maxlength'  => '255',
-                'class'  => 'email',
+                'maxlength' => '255',
+                'class' => 'email',
             ),
             'options' => array(
                 'label' => 'Email',
             ),
         ));
         $this->add(array(
-            'type' => 'Zend\Form\Element\Password',
+            'type' => 'password',
             'name' => 'password',
             'attributes' => array(
-                'type'  => 'password',
+                'type' => 'password',
                 'required' => true,
-                'maxlength'  => '24',
+                'maxlength' => '24',
             ),
             'options' => array(
                 'label' => 'Пароль',
             ),
         ));
 
+        $this->add(array(
+            'name' => 'passwordVerify',
+            'options' => array(
+                'label' => 'Повторить пароль',
+            ),
+            'attributes' => array(
+                'type' => 'password',
+                'required' => true,
+            ),
+        ));
         $this->add(array(
             'type' => 'Zend\Form\Element\Checkbox',
             'name' => 'state',
@@ -89,7 +99,7 @@ class UserForm extends Form
         $this->add(array(
             'name' => 'submit',
             'attributes' => array(
-                'type'  => 'submit',
+                'type' => 'submit',
                 'value' => 'Go',
                 'id' => 'submitbutton',
             ),

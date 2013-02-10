@@ -5,7 +5,7 @@ $this->headTitle($title);
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 
 <p>Вы уверены что хотите удалить
-    <strong>'<?php echo $this->escapeHtml($user->display_name); ?>'</strong> (<?php echo $this->escapeHtml($user->email); ?>)?
+    <strong>'<?php echo $this->escapeHtml($user->username); ?>'</strong> (<?php echo $this->escapeHtml($user->email); ?>)?
 </p>
 <?php
 $url = $this->url('admin/user', array(

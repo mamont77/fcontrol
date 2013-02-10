@@ -6,6 +6,7 @@ use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
+use Zend\Crypt\Password\Bcrypt;
 
 class User implements InputFilterAwareInterface
 {
@@ -27,7 +28,7 @@ class User implements InputFilterAwareInterface
         $this->state = (isset($data['state'])) ? $data['state'] : null;
     }
 
-     // Add the following method:
+    // Add the following method:
     public function getArrayCopy()
     {
         return get_object_vars($this);
@@ -42,114 +43,131 @@ class User implements InputFilterAwareInterface
     {
         if (!$this->inputFilter) {
             $inputFilter = new InputFilter();
-            $factory     = new InputFactory();
+            $factory = new InputFactory();
 
             $inputFilter->add($factory->createInput(array(
-                'name'     => 'user_id',
+                'name' => 'user_id',
                 'required' => true,
-                'filters'  => array(
+                'filters' => array(
                     array('name' => 'Int'),
                 ),
             )));
 
             $inputFilter->add($factory->createInput(array(
-                'name'     => 'username',
+                'name' => 'username',
                 'required' => true,
-                'filters'  => array(
+                'filters' => array(
                     array('name' => 'StripTags'),
                     array('name' => 'StringTrim'),
                 ),
                 'validators' => array(
                     array(
-                        'name'    => 'StringLength',
+                        'name' => 'StringLength',
                         'options' => array(
                             'encoding' => 'UTF-8',
-                            'min'      => 1,
-                            'max'      => 100,
+                            'min' => 1,
+                            'max' => 100,
                         ),
                     ),
                 ),
             )));
 
             $inputFilter->add($factory->createInput(array(
-                'name'     => 'email',
+                'name' => 'email',
                 'required' => true,
-                'filters'  => array(
+                'filters' => array(
                     array('name' => 'StripTags'),
                     array('name' => 'StringTrim'),
                 ),
                 'validators' => array(
                     array(
-                        'name'    => 'StringLength',
+                        'name' => 'EmailAddress',
                         'options' => array(
                             'encoding' => 'UTF-8',
-                            'min'      => 1,
-                            'max'      => 100,
+                            'min' => 1,
+                            'max' => 255,
+                        ),
+                    ),
+                ),
+            )));
+
+//            $inputFilter->add($factory->createInput(array(
+//                'name'     => 'display_name',
+//                'required' => true,
+//                'filters'  => array(
+//                    array('name' => 'StripTags'),
+//                    array('name' => 'StringTrim'),
+//                ),
+//                'validators' => array(
+//                    array(
+//                        'name'    => 'StringLength',
+//                        'options' => array(
+//                            'encoding' => 'UTF-8',
+//                            'min'      => 1,
+//                            'max'      => 100,
+//                        ),
+//                    ),
+//                ),
+//            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'password',
+                'required' => true,
+                'filters' => array(
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name' => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min' => 6,
                         ),
                     ),
                 ),
             )));
 
             $inputFilter->add($factory->createInput(array(
-                'name'     => 'display_name',
+                'name' => 'passwordVerify',
                 'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
+                'filters' => array(
                     array('name' => 'StringTrim'),
                 ),
                 'validators' => array(
                     array(
-                        'name'    => 'StringLength',
+                        'name' => 'StringLength',
                         'options' => array(
                             'encoding' => 'UTF-8',
-                            'min'      => 1,
-                            'max'      => 100,
+                            'min' => 6,
+                        ),
+                    ),
+                    array(
+                        'name' => 'Identical',
+                        'options' => array(
+                            'token' => 'password',
                         ),
                     ),
                 ),
             )));
 
             $inputFilter->add($factory->createInput(array(
-                'name'     => 'password',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                ),
-                'validators' => array(
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 1,
-                            'max'      => 100,
-                        ),
-                    ),
-                ),
-            )));
-
-            $inputFilter->add($factory->createInput(array(
-                'name'     => 'state',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                ),
-                'validators' => array(
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 1,
-                            'max'      => 100,
-                        ),
-                    ),
-                ),
+                'name' => 'state',
+                'required' => false,
             )));
 
             $this->inputFilter = $inputFilter;
         }
 
         return $this->inputFilter;
+    }
+
+    /**
+     * @param $newPass
+     * @return mixed
+     */
+    public function changePassword($newPass)
+    {
+        $crypt = new Bcrypt;
+        return $crypt->create($newPass);
     }
 }
