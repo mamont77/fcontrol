@@ -8,8 +8,8 @@
 return array(
     'modules' => array(
         //'ZFTool',
-//        'ZfcBase',
-//        'ZfcUser',
+        'ZfcBase',
+        'ZfcUser',
         'Application',
         'Album',
         'User',
