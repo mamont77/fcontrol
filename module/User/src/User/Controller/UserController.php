@@ -66,7 +66,7 @@ class UserController extends AbstractActionController
                 $userData = $form->getData();
                 $userModel = new User();
                 $userData->password = $userModel->changePassword($userData->password);
-                $this->getUserTable()->saveUser($userData);
+                $this->getUserTable()->saveUser($form->getData());
 
                 // Redirect to list of users
                 return $this->redirect()->toRoute('admin/users');

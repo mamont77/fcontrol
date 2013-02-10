@@ -1,0 +1,32 @@
+<h1>Вход</h1>
+
+<?php
+$form = $this->loginForm;
+$form->prepare();
+$form->setAttribute('action', $this->url('zfcuser/login'));
+$form->setAttribute('method', 'post');
+?>
+
+<?php echo $this->form()->openTag($form) ?>
+
+    <dl class="zend_form">
+        <?php echo $this->formElementErrors($form->get('identity')) ?>
+
+        <dt><?php echo $this->formLabel($form->get('identity')) ?></dt>
+        <dd><?php echo $this->formInput($form->get('identity')) ?></dd>
+
+        <dt><label for="credential">Пароль</label></dt>
+        <dd><?php echo $this->formInput($form->get('credential')) ?></dd>
+
+        <?php if ($this->redirect): ?>
+            <input type="hidden" name="redirect" value="<?php echo $this->redirect ?>" />
+        <?php endif ?>
+
+        <dd><button type="submit" name="submit" value="">Войти</button></dd>
+    </dl>
+
+<?php echo $this->form()->closeTag() ?>
+
+<?php if ($this->enableRegistration) : ?>
+Не зарегистрированы? <a href="<?php echo $this->url('zfcuser/register') . ($this->redirect ? '?redirect='.$this->redirect : '') ?>">Регистрация!</a>
+<?php endif; ?>
