@@ -32,12 +32,16 @@
                     <div class="nav-collapse collapse">
                         <ul class="nav">
                             <li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home') ?></a></li>
+                            <?php if ($this->zfcUserIdentity()): ?>
                             <li class=""><a href="<?php echo $this->url('zfcuser') ?>">Мой профиль</a>
-                                <ul class="nav">
-                                    <li><a href="<?php echo $this->url('zfcuser/changeemail') ?>">Изменить Email</a></li>
-                                    <li><a href="<?php echo $this->url('zfcuser/changepassword') ?>">Изменить пароль</a></li>
-                                </ul>
+<!--                                <ul class="nav">-->
+<!--                                    <li><a href="--><?php //echo $this->url('zfcuser/changeemail') ?><!--">Изменить Email</a></li>-->
+<!--                                    <li><a href="--><?php //echo $this->url('zfcuser/changepassword') ?><!--">Изменить пароль</a></li>-->
+<!--                                </ul>-->
                             </li>
+                            <?php else: ?>
+                                <li class=""><a href="<?php echo $this->url('zfcuser') ?>">Войти</a>
+                            <?php endif ?>
                             <li class=""><a href="<?php echo $this->url('admin/users') ?>">Управление пользователями</a></li>
                         </ul>
                     </div><!--/.nav-collapse -->
