@@ -40,21 +40,41 @@ div.container a.brand {
     padding: 2px 7px;
 }
 
-form {
+/*form {*/
 
+/*}*/
+
+/*form label {*/
+
+/*}*/
+
+/*form label span {*/
+    /*display: block;*/
+    /*margin-right: 10px;*/
+    /*width: 200px;*/
+/*}*/
+
+/*form label input {*/
+    /*margin-left: 210px;*/
+    /*margin-top: -2em;*/
+/*}*/
+
+
+
+form {
+  float:left
 }
 
 form label {
-
+  clear:both; text-align:right; line-height:25px;
+  margin: 0;
 }
 
 form label span {
-    display: block;
-    margin-right: 10px;
-    width: 200px;
+  float:left; padding-right:10px;
 }
 
 form label input {
-    margin-left: 210px;
-    margin-top: -2em;
 }
+
+
