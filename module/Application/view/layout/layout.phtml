@@ -13,13 +13,12 @@
                         ->prependStylesheet($this->basePath() . '/css/style.css')
                         ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css')
                         ->prependStylesheet($this->basePath() . '/css/reset.css')
-                        ->prependStylesheet($this->basePath() . '/css/text.css')
-                        ->prependStylesheet($this->basePath() . '/css/960.css')?>
+                        ->prependStylesheet($this->basePath() . '/css/text.css')?>
 
         <!-- Scripts -->
         <?php echo $this->headScript()->prependFile($this->basePath() . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
                                       ->prependFile($this->basePath() . '/js/bootstrap.min.js')
-                                      ->prependFile($this->basePath() . '/js/jquery.min.js') ?>
+                                      ->prependFile($this->basePath() . '/js/jquery-1.9.1.min.js') ?>
 
     </head>
     <body>

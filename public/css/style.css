@@ -40,43 +40,32 @@ div.container a.brand {
     padding: 2px 7px;
 }
 
-/*form {*/
-
-/*}*/
-
-/*form label {*/
-
-/*}*/
-
-/*form label span {*/
-    /*display: block;*/
-    /*margin-right: 10px;*/
-    /*width: 200px;*/
-/*}*/
-
-/*form label input {*/
-    /*margin-left: 210px;*/
-    /*margin-top: -2em;*/
-/*}*/
-
-
-
-form {
-  float:left
+form:after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
 }
 
 form label {
-  clear:both; text-align:right; line-height:25px;
-  margin: 0;
 }
 
-form label span {
-  float:left; padding-right:10px;
+form span {
+  width: 160px;
+  float: left;
 }
 
-form label input {
+form input {
+  margin-left: 5px;
+  float: none;
+  display: inline;
 }
 
+form #submitbutton {
+
+
+}
 
 table {
     *border-collapse: collapse; /* IE7 and lower */
