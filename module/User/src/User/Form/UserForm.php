@@ -21,7 +21,11 @@ class UserForm extends Form
         $this->_translator->addTranslationFile("phparray", './vendor/ZF2/resources/languages/ru/Zend_Validate.php');
         AbstractValidator::setDefaultTranslator($this->_translator);
 
-        $this->setAttribute('method', 'post');
+        $this->setAttributes(array(
+            'method' => 'post',
+            'class' => '',
+        ));
+
         $this->add(array(
             'name' => 'user_id',
             'attributes' => array(
@@ -102,6 +106,7 @@ class UserForm extends Form
                 'type' => 'submit',
                 'value' => 'Go',
                 'id' => 'submitbutton',
+                'class' => 'btn btn-success',
             ),
         ));
     }
