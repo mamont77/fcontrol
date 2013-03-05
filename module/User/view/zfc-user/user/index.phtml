@@ -1,6 +1,6 @@
 <div style="float:left; padding-right:16px;"><?php echo $this->gravatar($this->zfcUserIdentity()->getEmail()) ?></div>
 <h3>Hello, <?php echo $this->zfcUserDisplayName() ?>!</h3>
-<a href="<?php echo $this->url('zfcuser/changeemail') ?>">[Изменить Email]</a>
-<a href="<?php echo $this->url('zfcuser/changepassword') ?>">[Изменить пароль]</a>
-<a href="<?php echo $this->url('zfcuser/logout') ?>">[Выход]</a>
+<a href="<?php echo $this->url('zfcuser/changeemail') ?>" class="btn btn-info">Изменить Email</a>
+<a href="<?php echo $this->url('zfcuser/changepassword') ?>" class="btn btn-info">Изменить пароль</a>
+<a href="<?php echo $this->url('zfcuser/logout') ?>" class="btn btn-warning">Выход</a>
 <div style="clear:both;"></div>
