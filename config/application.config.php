@@ -16,6 +16,7 @@ return array(
         'BjyProfiler',
         'ZFTool',
         'Application',
+//        'Admin',
         'Album',
         'User',
         ),

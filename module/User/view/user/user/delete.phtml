@@ -17,7 +17,7 @@ $url = $this->url('admin/user', array(
 <form action="<?php echo $url; ?>" method="post">
 <div>
     <input type="hidden" name="user_id" value="<?php echo (int) $user->user_id; ?>" />
-    <input type="submit" name="del" value="Да" />
-    <input type="submit" name="del" value="Нет" />
+    <input type="submit" name="del" value="Да" class="btn btn-warning" />
+    <input type="submit" name="del" value="Нет" class="btn btn-link" />
 </div>
 </form>

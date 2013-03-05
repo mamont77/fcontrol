@@ -4,7 +4,7 @@ $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 <p>
-    <a href="<?php echo $this->url('admin/users', array('action' => 'add'));?>">Добавить сотрудника</a>
+    <a href="<?php echo $this->url('admin/users', array('action' => 'add'));?>" class="btn btn-primary">Добавить сотрудника</a>
 </p>
 
 <table class="table table-bordered table-hover">
