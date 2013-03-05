@@ -7,13 +7,19 @@
  */
 return array(
     'modules' => array(
-        //'ZFTool',
+        'ZFTool',
         'ZfcBase',
         'ZfcUser',
+        'BjyAuthorize',
+        'RoleUserBridge',
+        'ZendDeveloperTools',
+        'BjyProfiler',
+        'ZFTool',
         'Application',
         'Album',
         'User',
         ),
+
     'module_listener_options' => array(
         'module_paths' => array(
             './module',

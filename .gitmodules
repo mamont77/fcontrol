@@ -16,3 +16,12 @@
 [submodule "vendor/ZFTool"]
 	path = vendor/ZFTool
 	url = https://github.com/zendframework/ZFTool.git
+[submodule "vendor/ZendDeveloperTools"]
+	path = vendor/ZendDeveloperTools
+	url = git://github.com/zendframework/ZendDeveloperTools.git
+[submodule "vendor/BjyProfiler"]
+	path = vendor/BjyProfiler
+	url = git://github.com/bjyoungblood/BjyProfiler.git
+[submodule "vendor/RoleUserBridge"]
+	path = vendor/RoleUserBridge
+	url = git://github.com/darkmatus/roleuserbridge.git

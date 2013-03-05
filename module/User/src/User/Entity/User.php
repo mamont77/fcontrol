@@ -9,7 +9,7 @@ use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface; 
 
 /**
- * A music album.
+ * A users.
  *
  * @ORM\Entity
  * @ORM\Table(name="user")

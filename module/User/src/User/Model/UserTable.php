@@ -6,23 +6,24 @@ use Zend\Db\TableGateway\TableGateway;
 
 class UserTable
 {
-    protected $tableGateway;
+    protected $userGateway;
+    protected $roleGateway;
 
-    public function __construct(TableGateway $tableGateway)
+    public function __construct(TableGateway $userGateway)
     {
-        $this->tableGateway = $tableGateway;
+        $this->userGateway = $userGateway;
     }
 
     public function fetchAll()
     {
-        $resultSet = $this->tableGateway->select();
+        $resultSet = $this->userGateway->select();
         return $resultSet;
     }
 
     public function getUser($id)
     {
         $id  = (int) $id;
-        $rowset = $this->tableGateway->select(array('user_id' => $id));
+        $rowset = $this->userGateway->select(array('user_id' => $id));
         $row = $rowset->current();
         if (!$row) {
             throw new \Exception("Could not find row $id");
@@ -42,10 +43,10 @@ class UserTable
 
         $id = (int)$user->user_id;
         if ($id == 0) {
-            $this->tableGateway->insert($data);
+            $this->userGateway->insert($data);
         } else {
             if ($this->getUser($id)) {
-                $this->tableGateway->update($data, array('user_id' => $id));
+                $this->userGateway->update($data, array('user_id' => $id));
             } else {
                 throw new \Exception('Form id does not exist');
             }
@@ -54,6 +55,6 @@ class UserTable
 
     public function deleteUser($id)
     {
-        $this->tableGateway->delete(array('user_id' => $id));
+        $this->userGateway->delete(array('user_id' => $id));
     }
 }
