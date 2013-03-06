@@ -25,3 +25,6 @@
 [submodule "vendor/RoleUserBridge"]
 	path = vendor/RoleUserBridge
 	url = git://github.com/darkmatus/roleuserbridge.git
+[submodule "vendor/ZfcRbac"]
+	path = vendor/ZfcRbac
+	url = git://github.com/ZF-Commons/ZfcRbac.git

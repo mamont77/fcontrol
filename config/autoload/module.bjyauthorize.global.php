@@ -26,7 +26,7 @@ return array(
              */
             'BjyAuthorize\Provider\Role\Config' => array(
                 'guest' => array(),
-                'user' => array('children' => array(
+                'user'  => array('children' => array(
                     'admin' => array(),
                 )),
             ),
@@ -97,10 +97,11 @@ return array(
                 array('route' => 'zfcuser/register', 'roles' => array('guest')),
                 array('route' => 'zfcuser/changepassword', 'roles' => array('user')),
                 array('route' => 'zfcuser/changeemail', 'roles' => array('user')),
-                // Below is the default index action used by the [ZendSkeletonApplication](https://github.com/zendframework/ZendSkeletonApplication)
                 array('route' => 'home', 'roles' => array('guest', 'user')),
-                array('route' => 'admin', 'roles' => array('admin')),
-                array('route' => 'admin/users', 'roles' => array('admin')),
+                array('route' => 'zfcadmin', 'roles' => array('admin')),
+                array('route' => 'zfcadmin/dashboard', 'roles' => array('admin')),
+                array('route' => 'zfcadmin/users', 'roles' => array('admin')),
+                array('route' => 'zfcadmin/user', 'roles' => array('admin')),
                 array('route' => 'album', 'roles' => array('admin')),
 
             ),

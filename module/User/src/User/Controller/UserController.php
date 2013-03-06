@@ -18,6 +18,11 @@ class UserController extends AbstractActionController
         ));
     }
 
+    public function dashboardAction()
+    {
+        return new ViewModel();
+    }
+
     public function addAction()
     {
         $form = new UserForm();
@@ -37,7 +42,7 @@ class UserController extends AbstractActionController
                 $this->getUserTable()->saveUser($user);
 
                 // Redirect to list of users
-                return $this->redirect()->toRoute('admin/users');
+                return $this->redirect()->toRoute('zfcadmin/users');
             }
         }
         return array('form' => $form);
@@ -47,7 +52,7 @@ class UserController extends AbstractActionController
     {
         $id = (int) $this->params()->fromRoute('id', 0);
         if (!$id) {
-            return $this->redirect()->toRoute('admin/users', array(
+            return $this->redirect()->toRoute('zfcadmin/users', array(
                 'action' => 'add'
             ));
         }
@@ -69,7 +74,7 @@ class UserController extends AbstractActionController
                 $this->getUserTable()->saveUser($form->getData());
 
                 // Redirect to list of users
-                return $this->redirect()->toRoute('admin/users');
+                return $this->redirect()->toRoute('zfcadmin/users');
             }
         }
 
@@ -83,7 +88,7 @@ class UserController extends AbstractActionController
     {
         $id = (int) $this->params()->fromRoute('id', 0);
         if (!$id) {
-            return $this->redirect()->toRoute('admin/users');
+            return $this->redirect()->toRoute('zfcadmin/users');
         }
 
         $request = $this->getRequest();
@@ -96,7 +101,7 @@ class UserController extends AbstractActionController
             }
 
             // Redirect to list of users
-            return $this->redirect()->toRoute('admin/users');
+            return $this->redirect()->toRoute('zfcadmin/users');
         }
 
         return array(
