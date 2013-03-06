@@ -10,8 +10,9 @@ return array(
 
         'admin' => array(
             'home' => array(
-                'label' => 'Главная',
+                'label' => 'fControl (alfa)',
                 'route' => 'home',
+                'class' => 'brand',
             ),
             'dashboard' => array(
                 'label' => 'Dashboard',
