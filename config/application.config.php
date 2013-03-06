@@ -12,7 +12,7 @@ return array(
         'ZfcAdmin',
         'ZfcUser',
         'BjyAuthorize',
-//        'ZfcRbac',
+        //'ZfcRbac',
         'RoleUserBridge',
         'ZendDeveloperTools',
         'BjyProfiler',
@@ -20,8 +20,8 @@ return array(
         'Application',
         'Album',
         'User',
+        'FcAdmin'
         ),
-
     'module_listener_options' => array(
         'module_paths' => array(
             './module',
