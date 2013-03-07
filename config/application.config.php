@@ -18,9 +18,7 @@ return array(
         'ZFTool',
         'Application',
         'Album',
-        'User',
         'FcAdmin',
-        'FcNavigation'
     ),
     'module_listener_options' => array(
         'module_paths' => array(

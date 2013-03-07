@@ -1,6 +1,6 @@
 <?php
 
-namespace User\Model;
+namespace FcAdmin\Model;
 
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
@@ -90,25 +90,6 @@ class User implements InputFilterAwareInterface
                     ),
                 ),
             )));
-
-//            $inputFilter->add($factory->createInput(array(
-//                'name'     => 'display_name',
-//                'required' => true,
-//                'filters'  => array(
-//                    array('name' => 'StripTags'),
-//                    array('name' => 'StringTrim'),
-//                ),
-//                'validators' => array(
-//                    array(
-//                        'name'    => 'StringLength',
-//                        'options' => array(
-//                            'encoding' => 'UTF-8',
-//                            'min'      => 1,
-//                            'max'      => 100,
-//                        ),
-//                    ),
-//                ),
-//            )));
 
             $inputFilter->add($factory->createInput(array(
                 'name' => 'password',

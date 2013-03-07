@@ -1,6 +1,6 @@
 <?php
 
-namespace User\Model;
+namespace FcAdmin\Model;
 
 use Zend\Db\TableGateway\TableGateway;
 

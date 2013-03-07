@@ -1,6 +1,6 @@
 <?php
 
-namespace User\Entity;
+namespace FcAdmin\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Zend\InputFilter\InputFilter;
@@ -96,7 +96,6 @@ class User implements InputFilterAwareInterface
         $this->user_id = $data['user_id'];
         $this->username = $data['username'];
         $this->email = $data['email'];
-//        $this->display_name = $data['display_name'];
         $this->password = $data['password'];
         $this->state = $data['state'];
     }
@@ -158,25 +157,6 @@ class User implements InputFilterAwareInterface
                     ),
                 ),
             )));
-
-//            $inputFilter->add($factory->createInput(array(
-//                'name'     => 'display_name',
-//                'required' => true,
-//                'filters'  => array(
-//                    array('name' => 'StripTags'),
-//                    array('name' => 'StringTrim'),
-//                ),
-//                'validators' => array(
-//                    array(
-//                        'name'    => 'StringLength',
-//                        'options' => array(
-//                            'encoding' => 'UTF-8',
-//                            'min'      => 1,
-//                            'max'      => 50,
-//                        ),
-//                    ),
-//                ),
-//            )));
 
             $inputFilter->add($factory->createInput(array(
                 'name'     => 'password',

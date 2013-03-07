@@ -1,6 +1,6 @@
 <?php
 
-namespace User\Form;
+namespace FcAdmin\Form;
 
 use Zend\Form\Form;
 use Zend\I18n\Translator\Translator;
@@ -43,18 +43,6 @@ class UserForm extends Form
                 'label' => 'Фамилия Имя',
             ),
         ));
-//        $this->add(array(
-//            'name' => 'display_name',
-//            'attributes' => array(
-//                'type'  => 'text',
-//                'required' => true,
-//                'maxlength'  => '50',
-//
-//            ),
-//            'options' => array(
-//                'label' => 'Отображаемое имя',
-//            ),
-//        ));
         $this->add(array(
             'type' => 'Zend\Form\Element\Email',
             'name' => 'email',
@@ -104,7 +92,7 @@ class UserForm extends Form
             'name' => 'submit',
             'attributes' => array(
                 'type' => 'submit',
-                'value' => 'Go',
+                'value' => 'Войти',
                 'id' => 'submitbutton',
                 'class' => 'btn btn-success',
             ),

@@ -83,8 +83,9 @@ return array(
                 //array('controller' => 'index', 'action' => 'stuff', 'roles' => array('user')),
                 array('controller' => 'zfcuser', 'roles' => array()),
                 array('controller' => 'Application\Controller\Index', 'roles' => array('guest', 'user')),
-                array('controller' => 'User\Controller\User', 'roles' => array('admin')),
                 array('controller' => 'Album\Controller\Album', 'roles' => array('admin')),
+                array('controller' => 'FcAdmin\Controller\Index', 'roles' => array('admin')),
+                array('controller' => 'FcAdmin\Controller\Users', 'roles' => array('admin')),
             ),
 
             /* If this guard is specified here (i.e. it is enabled), it will block
