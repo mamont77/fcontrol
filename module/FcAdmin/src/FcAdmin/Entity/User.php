@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilterAwareInterface;
-use Zend\InputFilter\InputFilterInterface; 
+use Zend\InputFilter\InputFilterInterface;
 
 /**
  * A users.
@@ -60,7 +60,7 @@ class User implements InputFilterAwareInterface
      * @param string $property
      * @return mixed
      */
-    public function __get($property) 
+    public function __get($property)
     {
         return $this->$property;
     }
@@ -71,7 +71,7 @@ class User implements InputFilterAwareInterface
      * @param string $property
      * @param mixed $value
      */
-    public function __set($property, $value) 
+    public function __set($property, $value)
     {
         $this->$property = $value;
     }
@@ -81,7 +81,7 @@ class User implements InputFilterAwareInterface
      *
      * @return array
      */
-    public function getArrayCopy() 
+    public function getArrayCopy()
     {
         return get_object_vars($this);
     }
@@ -91,7 +91,7 @@ class User implements InputFilterAwareInterface
      *
      * @param array $data
      */
-    public function populate($data = array()) 
+    public function populate($data = array())
     {
         $this->user_id = $data['user_id'];
         $this->username = $data['username'];
@@ -99,105 +99,4 @@ class User implements InputFilterAwareInterface
         $this->password = $data['password'];
         $this->state = $data['state'];
     }
-
-    public function setInputFilter(InputFilterInterface $inputFilter)
-    {
-        throw new \Exception("Not used");
-    }
-
-    public function getInputFilter()
-    {
-        if (!$this->inputFilter) {
-            $inputFilter = new InputFilter();
-
-            $factory = new InputFactory();
-
-            $inputFilter->add($factory->createInput(array(
-                'name'       => 'user_id',
-                'required'   => true,
-                'filters' => array(
-                    array('name'    => 'Int'),
-                ),
-            )));
-
-            $inputFilter->add($factory->createInput(array(
-                'name'     => 'username',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                ),
-                'validators' => array(
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 1,
-                            'max'      => 255,
-                        ),
-                    ),
-                ),
-            )));
-
-            $inputFilter->add($factory->createInput(array(
-                'name'     => 'email',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                ),
-                'validators' => array(
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 1,
-                            'max'      => 255,
-                        ),
-                    ),
-                ),
-            )));
-
-            $inputFilter->add($factory->createInput(array(
-                'name'     => 'password',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                ),
-                'validators' => array(
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 1,
-                            'max'      => 24,
-                        ),
-                    ),
-                ),
-            )));
-
-            $inputFilter->add($factory->createInput(array(
-                'name'     => 'state',
-                'required' => true,
-                'filters'  => array(
-                    array('name' => 'StripTags'),
-                    array('name' => 'StringTrim'),
-                ),
-                'validators' => array(
-                    array(
-                        'name'    => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min'      => 1,
-                            'max'      => 1,
-                        ),
-                    ),
-                ),
-            )));
-            $this->inputFilter = $inputFilter;
-        }
-
-        return $this->inputFilter;
-    } 
 }

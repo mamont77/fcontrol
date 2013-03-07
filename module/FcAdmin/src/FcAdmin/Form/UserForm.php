@@ -62,7 +62,6 @@ class UserForm extends Form
             'attributes' => array(
                 'type' => 'password',
                 'required' => true,
-                'maxlength' => '24',
             ),
             'options' => array(
                 'label' => 'Пароль',
