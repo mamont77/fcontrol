@@ -3,10 +3,9 @@ body {
     padding-bottom: 40px;
 }
 
-div.container a.brand {
-    background: url("../images/logoSmallInv.png") no-repeat scroll 0 10px transparent;
-    margin-left: 0;
-    padding: 8px 20px 12px 45px;
+.navbar .nav > li > a.brand {
+    background: url("../images/logoSmallInv.png") no-repeat scroll 0 5px transparent;
+    padding-left: 45px;
 }
 
 .navbar .nav > li > a {

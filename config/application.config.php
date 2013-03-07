@@ -29,20 +29,8 @@ return array(
         ),
         'config_glob_paths' => array('config/autoload/{,*.}{global,local}.php')
     ),
-    'view_manager' => array(
-        'display_not_found_reason' => true,
-        'display_exceptions'       => true,
-        'doctype'                  => 'HTML5',
-        'not_found_template'       => 'error/404',
-        'exception_template'       => 'error/index',
-        'template_map' => array(
-            'layout/layout'           => __DIR__ . '/../module/Application/view/layout/layout.phtml',
-            'application/index/index' => __DIR__ . '/../module/Application/view/application/index/index.phtml',
-            'error/404'               => __DIR__ . '/../module/Application/view/error/404.phtml',
-            'error/index'             => __DIR__ . '/../module/Application/view/error/index.phtml',
-        ),
-        'template_path_stack' => array(
-            __DIR__ . '/../module/Application/view',
-        ),
+    'translator' => array(
+      'locale' => 'ru_RU',
     ),
+
 );
