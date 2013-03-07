@@ -3,23 +3,16 @@
 namespace FcAdmin\Form;
 
 use Zend\Form\Form;
-use Zend\I18n\Translator\Translator;
 use Zend\Validator\AbstractValidator;
 
 class UserForm extends Form
 {
 
-    protected $_translator;
-
-
     public function __construct($name = null)
     {
         // we want to ignore the name passed
         parent::__construct('user');
-
-        $this->_translator = new Translator;
-        $this->_translator->addTranslationFile("phparray", './vendor/ZF2/resources/languages/ru/Zend_Validate.php');
-        AbstractValidator::setDefaultTranslator($this->_translator);
+        //$this->setUseInputFilterDefaults(false);
 
         $this->setAttributes(array(
             'method' => 'post',
@@ -32,17 +25,20 @@ class UserForm extends Form
                 'type' => 'hidden',
             ),
         ));
+
         $this->add(array(
             'name' => 'username',
             'attributes' => array(
                 'type' => 'text',
                 'required' => true,
+                'minlength' => '6',
                 'maxlength' => '255',
             ),
             'options' => array(
                 'label' => 'Фамилия Имя',
             ),
         ));
+
         $this->add(array(
             'type' => 'Zend\Form\Element\Email',
             'name' => 'email',
@@ -56,6 +52,7 @@ class UserForm extends Form
                 'label' => 'Email',
             ),
         ));
+
         $this->add(array(
             'type' => 'password',
             'name' => 'password',
@@ -78,6 +75,7 @@ class UserForm extends Form
                 'required' => true,
             ),
         ));
+
         $this->add(array(
             'type' => 'Zend\Form\Element\Checkbox',
             'name' => 'state',
@@ -87,6 +85,7 @@ class UserForm extends Form
                 'unchecked_value' => '0'
             ),
         ));
+
         $this->add(array(
             'name' => 'submit',
             'attributes' => array(

@@ -1,7 +1,6 @@
 <?php
 
 namespace FcAdmin\Model;
-
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;
@@ -10,13 +9,20 @@ use Zend\Crypt\Password\Bcrypt;
 
 class User implements InputFilterAwareInterface
 {
+
+    const INVALID_USERNAME = 'Поле должно содержать от 4 до 255 символов!';
+    const INVALID_EMAIL = 'Не правильный емейл!';
+    const INVALID_PASSWORD = 'Поле должно содержать минимум 6 символов!';
+
+
     public $user_id;
     public $username;
     public $email;
     public $display_name;
     public $password;
     public $state;
-    protected $inputFilter;
+    protected $_inputFilter;
+
 
     public function exchangeArray($data)
     {
@@ -41,9 +47,10 @@ class User implements InputFilterAwareInterface
 
     public function getInputFilter()
     {
-        if (!$this->inputFilter) {
+        if (!$this->_inputFilter) {
             $inputFilter = new InputFilter();
             $factory = new InputFactory();
+
 
             $inputFilter->add($factory->createInput(array(
                 'name' => 'user_id',
@@ -67,6 +74,10 @@ class User implements InputFilterAwareInterface
                             'encoding' => 'UTF-8',
                             'min' => 6,
                             'max' => 255,
+                            'messages' => array(
+                                'stringLengthTooShort' => self::INVALID_USERNAME,
+                                'stringLengthTooLong' => self::INVALID_USERNAME
+                            ),
                         ),
                     ),
                 ),
@@ -136,10 +147,10 @@ class User implements InputFilterAwareInterface
                 'required' => false,
             )));
 
-            $this->inputFilter = $inputFilter;
+            $this->_inputFilter = $inputFilter;
         }
 
-        return $this->inputFilter;
+        return $this->_inputFilter;
     }
 
     /**
