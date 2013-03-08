@@ -1,4 +1,8 @@
-<h1>Вход</h1>
+<?php
+    $this->plugin('translate')->setTranslatorTextDomain(__NAMESPACE__);
+?>
+
+<h1><?php echo $this->translate('Sign In'); ?></h1>
 
 <?php
 $form = $this->loginForm;
@@ -10,11 +14,11 @@ $form->setAttribute('method', 'post');
 <?php echo $this->form()->openTag($form) ?>
 <?php echo $this->formElementErrors($form->get('identity')) ?>
 <label>
-    <span>Email</span>
+    <span><?php echo $this->translate('Email'); ?></span>
     <?php echo $this->formInput($form->get('identity')) ?>
 </label>
 <label>
-    <span>Пароль</span>
+    <span><?php echo $this->translate('Password'); ?></span>
     <?php echo $this->formInput($form->get('credential')) ?>
 </label>
 <?php if ($this->redirect): ?>
@@ -25,6 +29,6 @@ $form->setAttribute('method', 'post');
 <?php echo $this->form()->closeTag() ?>
 
 <?php if ($this->enableRegistration) : ?>
-Не зарегистрированы? <a
-        href="<?php echo $this->url('zfcuser/register') . ($this->redirect ? '?redirect=' . $this->redirect : '') ?>">Регистрация!</a>
+<?php echo $this->translate('Not registered?'); ?> <a
+        href="<?php echo $this->url('zfcuser/register') . ($this->redirect ? '?redirect=' . $this->redirect : '') ?>"><?php echo $this->translate('Sign up!'); ?></a>
 <?php endif; ?>

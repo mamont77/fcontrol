@@ -1,8 +1,12 @@
-<h3>Изменить Email для <?php echo $this->zfcUserDisplayName() ?></h3>
+<?php
+    $this->plugin('translate')->setTranslatorTextDomain(__NAMESPACE__);
+?>
+
+<h3><?php echo sprintf($this->translate('Change Email for %s'), $this->zfcUserDisplayName()); ?></h3>
 <?php if ($status === true) : ?>
-<div class="alert alert-success">Адрес электронной почты успешно изменен.</div>
+<div class="alert alert-success"><?php echo $this->translate('Email address changed successfully.'); ?></div>
 <?php elseif ($status === false) : ?>
-<div class="alert alert-error">Не удалось обновить ваш электронный адрес. Пожалуйста, попробуйте еще раз.</div>
+<div class="alert alert-error"><?php echo $this->translate('Unable to update your email address. Please try again.'); ?></div>
 <?php endif; ?>
 <?php
 
@@ -21,13 +25,13 @@ $form->setAttribute('method', 'post');
                 <?php
                 switch ($element->getLabel()) {
                     case 'New Email':
-                        echo '<span>Новый Email</span>';
+                        echo '<span>' . $this->translate('New Email') . '</span>';
                         break;
                     case 'Verify New Email':
-                        echo '<span>Подтвердите новый Email</span>';
+                        echo '<span>' . $this->translate('Verify New Email') . '</span>';
                         break;
                     case 'Password':
-                        echo '<span>Пароль</span>';
+                        echo '<span>' . $this->translate('Password') . '</span>';
                         break;
                 }
                 ?>
@@ -44,5 +48,5 @@ $form->setAttribute('method', 'post');
     <?php if ($this->redirect): ?>
         <input type="hidden" name="redirect" value="<?php echo $this->redirect ?>" />
     <?php endif ?>
-    <input type="submit" value="Отправить" class="btn btn-primary" />
+    <input type="submit" value="<?php echo $this->translate('Submit'); ?>" class="btn btn-primary" />
 <?php echo $this->form()->closeTag() ?>
