@@ -21,6 +21,7 @@ class User implements InputFilterAwareInterface
     public $email;
     public $display_name;
     public $password;
+    public $role_id;
     public $state;
     protected $_inputFilter;
 
@@ -32,6 +33,7 @@ class User implements InputFilterAwareInterface
         $this->email = (isset($data['email'])) ? $data['email'] : null;
         $this->display_name = (isset($data['display_name'])) ? $data['display_name'] : null;
         $this->password = (isset($data['password'])) ? $data['password'] : null;
+        $this->role_id = (isset($data['role_id'])) ? $data['role_id'] : null;
         $this->state = (isset($data['state'])) ? $data['state'] : null;
     }
 
@@ -151,6 +153,11 @@ class User implements InputFilterAwareInterface
                         ),
                     ),
                 ),
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'role_id',
+                'required' => true,
             )));
 
             $inputFilter->add($factory->createInput(array(

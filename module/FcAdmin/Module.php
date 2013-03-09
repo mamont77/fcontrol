@@ -3,7 +3,9 @@
 namespace FcAdmin;
 
 use FcAdmin\Model\User;
+use FcAdmin\Model\Role;
 use FcAdmin\Model\UserTable;
+use FcAdmin\Model\RoleTable;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
 
@@ -37,6 +39,17 @@ class Module
                     $resultSetPrototype = new ResultSet();
                     $resultSetPrototype->setArrayObjectPrototype(new User());
                     return new TableGateway('user', $dbAdapter, null, $resultSetPrototype);
+                },
+                'FcAdmin\Model\RoleTable' =>  function($sm) {
+                    $tableGateway = $sm->get('RoleTableGateway');
+                    $table = new RoleTable($tableGateway);
+                    return $table;
+                },
+                'RoleTableGateway' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new Role());
+                    return new TableGateway('user_role_linker', $dbAdapter, null, $resultSetPrototype);
                 },
             ),
         );

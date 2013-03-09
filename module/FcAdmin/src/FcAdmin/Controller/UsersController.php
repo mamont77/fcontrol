@@ -5,11 +5,13 @@ namespace FcAdmin\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use FcAdmin\Model\User;
+use FcAdmin\Model\Role;
 use FcAdmin\Form\UserForm;
 
 class UsersController extends AbstractActionController
 {
     protected $userTable;
+    protected $roleTable;
 
     public function indexAction()
     {
@@ -34,7 +36,8 @@ class UsersController extends AbstractActionController
                 $userModel = new User();
                 $userData['password'] = $userModel->changePassword($userData['password']);
                 $user->exchangeArray($userData);
-                $this->getUserTable()->saveUser($user);
+                $user->user_id = $this->getUserTable()->saveUser($user);
+                $this->getRoleTable()->saveRole($user);
 
                 // Redirect to list of users
                 return $this->redirect()->toRoute('zfcadmin/users');
@@ -52,8 +55,10 @@ class UsersController extends AbstractActionController
             ));
         }
         $user = $this->getUserTable()->getUser($id);
+
         $form  = new UserForm();
         $form->bind($user);
+        $form->get('role_id')->setValue($user->role_id);
         $form->get('submit')->setAttribute('value', 'Сохранить');
 
         $request = $this->getRequest();
@@ -67,6 +72,7 @@ class UsersController extends AbstractActionController
                 $userModel = new User();
                 $userData->password = $userModel->changePassword($userData->password);
                 $this->getUserTable()->saveUser($form->getData());
+                $this->getRoleTable()->saveRole($form->getData());
 
                 // Redirect to list of users
                 return $this->redirect()->toRoute('zfcadmin/users');
@@ -93,6 +99,7 @@ class UsersController extends AbstractActionController
             if ($del == 'Да') {
                 $id = (int) $request->getPost('user_id');
                 $this->getUserTable()->deleteUser($id);
+                $this->getRoleTable()->deleteRole($id);
             }
 
             // Redirect to list of users
@@ -113,4 +120,14 @@ class UsersController extends AbstractActionController
         }
         return $this->userTable;
     }
+
+    public function getRoleTable()
+    {
+        if (!$this->roleTable) {
+            $sm = $this->getServiceLocator();
+            $this->roleTable = $sm->get('FcAdmin\Model\RoleTable');
+        }
+        return $this->roleTable;
+    }
+
 }

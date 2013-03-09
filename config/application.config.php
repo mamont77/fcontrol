@@ -12,7 +12,7 @@ return array(
         'ZfcAdmin',
         'ZfcUser',
         'BjyAuthorize',
-        'RoleUserBridge',
+//        'RoleUserBridge',
         'ZendDeveloperTools',
         'BjyProfiler',
         'ZFTool',

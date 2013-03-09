@@ -12,6 +12,7 @@ $this->headTitle($title);
         <th>ID</th>
         <th>Фамилия Имя</th>
         <th>Email</th>
+        <th>Роль</th>
         <th>Статус</th>
         <th>Операции</th>
     </tr>
@@ -20,6 +21,7 @@ $this->headTitle($title);
         <td><?php echo $this->escapeHtml($user->user_id);?></td>
         <td><?php echo $this->escapeHtml($user->username);?></td>
         <td><?php echo $this->escapeHtml($user->email);?></td>
+        <td><?php echo $this->escapeHtml($user->role_id);?></td>
         <td>
             <?php if ($user->state == 1) {
                 echo 'Активен';
