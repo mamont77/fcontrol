@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1
--- Время создания: Фев 10 2013 г., 15:24
+-- Время создания: Мар 09 2013 г., 18:59
 -- Версия сервера: 5.5.25
 -- Версия PHP: 5.3.13
 
@@ -62,27 +62,40 @@ CREATE TABLE IF NOT EXISTS `user` (
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=22 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=52 ;
 
 --
 -- Дамп данных таблицы `user`
 --
 
 INSERT INTO `user` (`user_id`, `username`, `email`, `display_name`, `password`, `state`) VALUES
-(1, '45', 'ruslan.piskarev@gmail.com', 'Ruslan Piskarev', 'zenkov77', 1),
-(2, NULL, 'mamont@rapvokzal.com', 'Mamont', '$2y$14$DKaHb.TwevOiufuPqoC7OOO5KS55P2fySQXvAzBImK7SeBlxHQpH.', 1),
-(3, 'test', 'test', 'test', 'test', 1),
-(4, 'test2', 'test2', 'test2', 'test2', 0),
-(5, 'Фамилия Имя', 'Email', 'EmailОтображаемое имя', 'Пароль', 0),
-(8, 'Имя', 'Email2', 'Отображаемое', '1234', 0),
-(9, 'b', '345000@test.com', 'b', 'b', 1),
-(14, '4574574', '4567456', '4564564', '3465345', 0),
+(1, 'ОТМОРОЖЕННЫЙ МАМОНТ', 'ruslan.piskarev@gmail.com', NULL, '$2y$14$KbY/UZwU4LWUoIfgtRsqTOF6ZY5MvhoQICOdlnHbB7kFFwF8RwYOi', 1),
+(5, 'Фамилия Имя', 'sfsdfsd2@sgfsdfd.com', NULL, '$2y$14$HFHWayoyLI.IFNUC6oVYZu2VwbNnJLjs7SqBos32mZQbdESm760Nm', 1),
 (15, 'еукеуке', '123@gmail.com', NULL, 'кеуке', 0),
 (16, 'куеуке', 'dsff@dfgsdf.com', NULL, '123456', 0),
 (18, 'rtetert', 'reter@dfsdf.com', NULL, '123456', 0),
 (19, 'кенкуен', 'erytery@dsf.com', NULL, '123456', 0),
 (20, '65456456', 'ertrtr@safased.com', NULL, '$2y$14$dq5tPKadsdRfxYXl3i1Lyue../.G6mgXYB.EarQmCKQi9.73Mhd4C', 1),
-(21, '56456', '123@123.com', NULL, '$2y$14$Cuxlz3BFfY32ZYqehMl4LO0E.nV6d.n5O9hK8Vt33yZ.1Ta6zHrry', 1);
+(21, '56456', '123@123.com', NULL, '$2y$14$Cuxlz3BFfY32ZYqehMl4LO0E.nV6d.n5O9hK8Vt33yZ.1Ta6zHrry', 1),
+(25, '145', 'n1450@test.com', NULL, '$2y$14$pE/LjOLS0LAMeeyBDmmrgebxc5rvRlu/UKFluFPbvrhfYZToCdB9y', 1),
+(26, 'руский алфавит2', 'sdfsdf4a@sdfdf.com', NULL, '$2y$14$Kbhi84.wRjYxcPcBbj1S4OOBVmq54gHLcwSBZijb/ptseP.8yB0x2', 1),
+(27, 'руский алфавит', 'sfsdfsd22@sgfsdfd.com', NULL, '$2y$14$RMuz4jNzrswGjCvVb3j7u.qTFL3FT.kM75GNhbCo8MY0/UNjnL5a2', 0),
+(28, 'test2руский алфавит', 'sfsdfs3d2@sgfsdfd.com', NULL, '$2y$14$SIAwdKiEB1h9sonN/bVpq.VOrQnyFE5TmdYhoVz5iWTLnXu64O8Bq', 1),
+(30, 'zf2 select selected', 'sfsdfsd2@sgfsd5fd.com', NULL, '$2y$14$4O76.gFLWxw6avz1uz8SfujhycqJnmXoceG7kvcPEyh8qOv0PeIMm', 1),
+(32, 'руский алфавит36534', 'sfsd32fsd2@sgfsdfd.com', NULL, '$2y$14$4hmjlCVRppq2MSzx5OTXgeR33SsZ3nlt93y7MRn5qJTbxts9oB4uC', 1),
+(33, 'retertert', 'sfsdfs76d2@sgfsdfd.com', NULL, '$2y$14$ptokaG8Zj3T2ITQYkYehPO36jladBbsnNEdcLusZ0y5STAIc5uyJW', 1),
+(35, '$roleUserBridge', 'oleUserBridge@gfdsg.com', NULL, '$2y$14$ULxDg4ye9gWlWlG4iskYfOWV9ndQNcbgWcO2t1KDzjTT5OZGtfqgW', 1),
+(37, 'вачпвап', 'sfsdf2344sd2@sgfsdfd.com', NULL, '$2y$14$7CPYqI02zPi7PxPv71wStORPfAlLW8FBxyDssnA1A49/GNNR5JEN6', 1),
+(38, '4564356', 'sf22sd23fsd2@sgfsdfd.com', NULL, '$2y$14$Yj/CDTUzNWIEirDVhUvuzuasQRC8qa6bhgphCZ7I8jeq5yPJ/lkk2', 1),
+(40, 'руский алфавит34', 'sfsdfs4d2@sgfsdfd.com', NULL, '$2y$14$/292etIN2LS0JSjvY4eJ4OpI/1NO/wMHZZxJP3X2Vo1aJVCZBGYJe', 1),
+(41, 'руский алфавит32', 'sfsdfsdt2@sgfsdfd.com', NULL, '$2y$14$rVPGngZqeg3RmlnYD7acTOSwW6bRCC3VYs1IPejh9DJPvVSyOB.wG', 1),
+(42, 'n14505', 'sfs4d23fsd2@sgfsdfd.com', NULL, '$2y$14$MuR/v6EG4faFysh1mbjji.IZyezdpQBu5zBs0mahYBGIo0quwy4Cq', 0),
+(44, 'руский алф5авит', '12r3@gmail.com', NULL, '$2y$14$D9XgLEPSyH0pePZEe1odmuGFLd.FIiLRm8gKoTB5rZlqm5tr1vdg2', 1),
+(46, 'n1450423', 'sf3d23fsd2@sgfsdfd.com', NULL, '$2y$14$iH1J79GdvHmVvXCAh8JZ7.e/oAbMYuDmpks94yqmic.U4fX/IBR3S', 1),
+(48, 'fgdxgdsfgdf', 'sfsd423fsd2@sgfsdfd.com', NULL, '$2y$14$DepPwheUmIxMCAQBmvjuI.WLrV4vImW05P2UvR5VkRYTXIieO7Uzu', 1),
+(49, 'n145035t', 'sfsdfs234d2@sgfsdfd.com', NULL, '$2y$14$oM0.LATbiptxMIg3asYhIu8.DGbcSPIR636x0TDP/BGe4a.4ZK3oW', 1),
+(50, 'руский алфавит4re', 'sfsdfsd42@sgfsdfd.com', NULL, '$2y$14$gLvR0VW7hHz3OWgCL233b.r/txM52TqgqTiK5CMDpb.jBnu.P9Zdm', 1),
+(51, '4565xzzvxcv', 'sf3sdfsd2@sgfsdfd.com', NULL, '$2y$14$SEnQnz3kJzp38tM9KLcCw.L3jEsDHz5zK0J9qXAVn4FxdSDLHAd7G', 1);
 
 -- --------------------------------------------------------
 
@@ -102,9 +115,9 @@ CREATE TABLE IF NOT EXISTS `user_role` (
 --
 
 INSERT INTO `user_role` (`role_id`, `default`, `parent`) VALUES
-('admin', 0, NULL),
+('admin', 0, 'user'),
 ('guest', 1, NULL),
-('manager', 0, NULL);
+('user', 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -124,8 +137,12 @@ CREATE TABLE IF NOT EXISTS `user_role_linker` (
 --
 
 INSERT INTO `user_role_linker` (`user_id`, `role_id`) VALUES
+(0, ''),
 (1, 'admin'),
-(2, 'manager');
+(51, 'admin'),
+(0, 'manager'),
+(5, 'manager'),
+(50, 'manager');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

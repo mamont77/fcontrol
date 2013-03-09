@@ -10,9 +10,7 @@ class UserForm extends Form
 
     public function __construct($name = null)
     {
-        // we want to ignore the name passed
         parent::__construct('user');
-        //$this->setUseInputFilterDefaults(false);
 
         $this->setAttributes(array(
             'method' => 'post',
@@ -54,6 +52,33 @@ class UserForm extends Form
         ));
 
         $this->add(array(
+            'type' => 'Select',
+            'name' => 'role_id',
+            'options' => array(
+                'label' => 'Роль',
+            ),
+            'attributes' => array(
+                'required' => true,
+                'options' => array(
+                    'user' => 'user',
+                    'manager' => 'manager',
+                    'admin' => 'admin',
+                ),
+                'value' => 'user',
+            )
+        ));
+
+        $this->add(array(
+            'type' => 'Zend\Form\Element\Checkbox',
+            'name' => 'state',
+            'options' => array(
+                'label' => 'Активен',
+                'checked_value' => '1',
+                'unchecked_value' => '0'
+            ),
+        ));
+
+        $this->add(array(
             'type' => 'password',
             'name' => 'password',
             'attributes' => array(
@@ -73,16 +98,6 @@ class UserForm extends Form
             'attributes' => array(
                 'type' => 'password',
                 'required' => true,
-            ),
-        ));
-
-        $this->add(array(
-            'type' => 'Zend\Form\Element\Checkbox',
-            'name' => 'state',
-            'options' => array(
-                'label' => 'Активен',
-                'checked_value' => '1',
-                'unchecked_value' => '0'
             ),
         ));
 
