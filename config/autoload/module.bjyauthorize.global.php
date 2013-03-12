@@ -86,6 +86,8 @@ return array(
                 array('controller' => 'Album\Controller\Album', 'roles' => array('admin')),
                 array('controller' => 'FcAdmin\Controller\Index', 'roles' => array('admin')),
                 array('controller' => 'FcAdmin\Controller\Users', 'roles' => array('admin')),
+                array('controller' => 'FcLibraries\Controller\Index', 'roles' => array('admin')),
+                array('controller' => 'FcLibraries\Controller\Regions', 'roles' => array('admin')),
             ),
 
             /* If this guard is specified here (i.e. it is enabled), it will block
@@ -103,6 +105,10 @@ return array(
                 array('route' => 'zfcadmin/dashboard', 'roles' => array('admin')),
                 array('route' => 'zfcadmin/users', 'roles' => array('admin')),
                 array('route' => 'zfcadmin/user', 'roles' => array('admin')),
+                array('route' => 'zfcadmin/libraries', 'roles' => array('admin')),
+                array('route' => 'zfcadmin/regions', 'roles' => array('admin')),
+                array('route' => 'zfcadmin/region', 'roles' => array('admin')),
+
                 array('route' => 'album', 'roles' => array('admin')),
 
             ),

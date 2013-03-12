@@ -12,13 +12,14 @@ return array(
         'ZfcAdmin',
         'ZfcUser',
         'BjyAuthorize',
-//        'RoleUserBridge',
+        //'RoleUserBridge',
         'ZendDeveloperTools',
         'BjyProfiler',
         'ZFTool',
         'Application',
         'Album',
         'FcAdmin',
+        'FcLibraries'
     ),
     'module_listener_options' => array(
         'module_paths' => array(
@@ -27,8 +28,5 @@ return array(
         ),
         'config_glob_paths' => array('config/autoload/{,*.}{global,local}.php')
     ),
-    'translator' => array(
-      'locale' => 'ru_RU',
-    ),
-
+    'translator' => array('locale' => 'ru_RU')
 );
