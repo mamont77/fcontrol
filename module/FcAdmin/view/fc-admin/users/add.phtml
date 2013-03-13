@@ -4,10 +4,6 @@ $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 <?php
-$form = $this->form;
-$form->setAttribute('action', $this->url('zfcadmin/user', array('action' => 'add')));
-$form->prepare();
+$this->form->setAttribute('action', $this->url('zfcadmin/user', array('action' => 'add')));
 
-echo $this->form()->openTag($form);
-echo $this->formCollection($form);
-echo $this->form()->closeTag();
+echo $this->ztbForm($this->form);

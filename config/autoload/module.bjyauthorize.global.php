@@ -80,12 +80,13 @@ return array(
              */
             'BjyAuthorize\Guard\Controller' => array(
                 //array('controller' => 'index', 'action' => 'index', 'roles' => array('guest','user')),
-                //array('controller' => 'index', 'action' => 'stuff', 'roles' => array('user')),
+                array('controller' => 'zfcuseradmin', 'roles' => array('admin')),
                 array('controller' => 'zfcuser', 'roles' => array()),
                 array('controller' => 'Application\Controller\Index', 'roles' => array('guest', 'user')),
                 array('controller' => 'Album\Controller\Album', 'roles' => array('admin')),
                 array('controller' => 'FcAdmin\Controller\Index', 'roles' => array('admin')),
                 array('controller' => 'FcAdmin\Controller\Users', 'roles' => array('admin')),
+                array('controller' => 'ZfcUserAdmin\Controller\UserAdmin', 'roles' => array('admin')),
                 array('controller' => 'FcLibraries\Controller\Index', 'roles' => array('admin')),
                 array('controller' => 'FcLibraries\Controller\Regions', 'roles' => array('admin')),
             ),
@@ -108,6 +109,12 @@ return array(
                 array('route' => 'zfcadmin/libraries', 'roles' => array('admin')),
                 array('route' => 'zfcadmin/regions', 'roles' => array('admin')),
                 array('route' => 'zfcadmin/region', 'roles' => array('admin')),
+                array('route' => 'zfcadmin/zfcuseradmin', 'roles' => array('admin')),
+                array('route' => 'zfcadmin/zfcuseradmin/list', 'roles' => array('admin')),
+                array('route' => 'zfcadmin/zfcuseradmin/create', 'roles' => array('admin')),
+                array('route' => 'zfcadmin/zfcuseradmin/create', 'roles' => array('admin')),
+                array('route' => 'zfcadmin/zfcuseradmin/edit', 'roles' => array('admin')),
+                array('route' => 'zfcadmin/zfcuseradmin/remove', 'roles' => array('admin')),
 
                 array('route' => 'album', 'roles' => array('admin')),
 

@@ -28,3 +28,9 @@
 [submodule "vendor/ZfcRbac"]
 	path = vendor/ZfcRbac
 	url = git://github.com/ZF-Commons/ZfcRbac.git
+[submodule "vendor/ZfcUserAdmin"]
+	path = vendor/ZfcUserAdmin
+	url = https://github.com/Danielss89/ZfcUserAdmin.git
+[submodule "vendor/ZfcTwitterBootstrap"]
+	path = vendor/ZfcTwitterBootstrap
+	url = git://github.com/mwillbanks/ZfcTwitterBootstrap.git

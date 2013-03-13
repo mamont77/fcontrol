@@ -24,10 +24,6 @@ $navigation = array(
                 'user' => array(
                     'label' => 'Управление пользователями',
                     'route' => 'zfcadmin/users',
-//                    'params' => array(
-//                        'k1' => 'v1',
-//                        'id' => '1',
-//                    ),
                 ),
                 array(
                     'label' => 'Библиотека',
@@ -50,8 +46,6 @@ $navigation = array(
                 ),
             ),
         ),
-
-
     )
 );
 

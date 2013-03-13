@@ -19,6 +19,8 @@ return array(
         'Application',
         'Album',
         'FcAdmin',
+        //'ZfcUserAdmin',
+        'ZfcTwitterBootstrap',
         'FcLibraries'
     ),
     'module_listener_options' => array(

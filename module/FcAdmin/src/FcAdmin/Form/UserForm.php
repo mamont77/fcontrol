@@ -14,7 +14,7 @@ class UserForm extends Form
 
         $this->setAttributes(array(
             'method' => 'post',
-            'class' => '',
+            'class' => 'form-horizontal',
         ));
 
         $this->add(array(
