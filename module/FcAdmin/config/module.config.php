@@ -7,24 +7,6 @@ return array(
         ),
     ),
 
-    'navigation' => array(
-        'admin' => array(
-            'home' => array(
-                'label' => 'fControl (alfa)',
-                'route' => 'home',
-                'class' => 'brand',
-            ),
-            'dashboard' => array(
-                'label' => 'Панель управления',
-                'route' => 'zfcadmin',
-            ),
-            'user' => array(
-                'label' => 'Управление пользователями',
-                'route' => 'zfcadmin/users',
-            ),
-        ),
-    ),
-
     'router' => array(
         'routes' => array(
             'zfcadmin' => array(

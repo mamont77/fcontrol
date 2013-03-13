@@ -9,31 +9,7 @@ return array(
         ),
     ),
 
-    'navigation' => array(
-        'admin' => array(
-            array(
-                'label' => 'Библиотека',
-                'route' => 'zfcadmin/libraries',
-                'class' => 'dropdown-toggle ',
-//                'data-toggle' => 'dropdown',
-                'pages' => array(
-                    array(
-                        'label' => 'Регионы',
-                        'route' => 'zfcadmin/regions',
-//                        'class' => 'dropdown ',
-                    ),
-                    array(
-                        'label' => 'Страны',
-                        'route' => 'zfcadmin/countries',
-                    ),
-                    array(
-                        'label' => 'Аэропорты',
-                        'route' => 'zfcadmin/airports',
-                    ),
-                )
-            ),
-        )
-    ),
+
 
     'router' => array(
         'routes' => array(
