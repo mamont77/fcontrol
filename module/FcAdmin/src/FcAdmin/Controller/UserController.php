@@ -8,7 +8,7 @@ use FcAdmin\Model\User;
 use FcAdmin\Model\Role;
 use FcAdmin\Form\UserForm;
 
-class UsersController extends AbstractActionController
+class UserController extends AbstractActionController
 {
     protected $userTable;
     protected $roleTable;

@@ -3,9 +3,9 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'FcLibraries\Controller\Index' => 'FcLibraries\Controller\IndexController',
-            'FcLibraries\Controller\Regions' => 'FcLibraries\Controller\RegionsController',
-            'FcLibraries\Controller\Countries' => 'FcLibraries\Controller\CountriesController',
-            'FcLibraries\Controller\Airports' => 'FcLibraries\Controller\AirportsController',
+            'FcLibraries\Controller\Region' => 'FcLibraries\Controller\RegionController',
+            'FcLibraries\Controller\Country' => 'FcLibraries\Controller\CountryController',
+            'FcLibraries\Controller\Airport' => 'FcLibraries\Controller\AirportController',
         ),
     ),
 
@@ -30,7 +30,7 @@ return array(
                         'options' => array(
                             'route' => '/libraries/regions',
                             'defaults' => array(
-                                'controller' => 'FcLibraries\Controller\Regions',
+                                'controller' => 'FcLibraries\Controller\Region',
                                 'action' => 'index',
                             ),
                         ),
@@ -50,7 +50,7 @@ return array(
                         'options' => array(
                             'route' => '/libraries/countries',
                             'defaults' => array(
-                                'controller' => 'FcLibraries\Controller\Countries',
+                                'controller' => 'FcLibraries\Controller\Country',
                                 'action' => 'index',
                             ),
                         ),
@@ -70,7 +70,7 @@ return array(
                         'options' => array(
                             'route' => '/libraries/airports',
                             'defaults' => array(
-                                'controller' => 'FcLibraries\Controller\Airports',
+                                'controller' => 'FcLibraries\Controller\Airport',
                                 'action' => 'index',
                             ),
                         ),

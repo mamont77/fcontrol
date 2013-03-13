@@ -3,7 +3,7 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'FcAdmin\Controller\Index' => 'FcAdmin\Controller\IndexController',
-            'FcAdmin\Controller\Users' => 'FcAdmin\Controller\UsersController',
+            'FcAdmin\Controller\User' => 'FcAdmin\Controller\UserController',
         ),
     ),
 
@@ -24,7 +24,7 @@ return array(
                         'options' => array(
                             'route' => '/users',
                             'defaults' => array(
-                                'controller' => 'FcAdmin\Controller\Users',
+                                'controller' => 'FcAdmin\Controller\User',
                                 'action' => 'index',
                             ),
                         ),
@@ -38,7 +38,7 @@ return array(
                                 'id' => '[0-9]+',
                             ),
                             'defaults' => array(
-                                'controller' => 'FcAdmin\Controller\Users',
+                                'controller' => 'FcAdmin\Controller\User',
                                 'action' => 'index',
                             ),
                         ),
