@@ -4,6 +4,9 @@ namespace FcLibraries\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+//use FcLibraries\Model\Region;
+use FcLibraries\Form\RegionForm;
+
 
 class RegionController extends AbstractActionController implements ControllerInterface
 {
@@ -14,7 +17,26 @@ class RegionController extends AbstractActionController implements ControllerInt
 
     public function addAction()
     {
-        return new ViewModel();
+        $form = new RegionForm();
+        $form->get('submit')->setValue('Добавить');
+
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $user = new Region();
+            $form->setInputFilter($user->getInputFilter());
+            $form->setData($request->getPost());
+
+            if ($form->isValid()) {
+                $userData = $form->getData();
+                $userModel = new Region();
+                $user->exchangeArray($userData);
+                $user->user_id = $this->getUserTable()->saveUser($user);
+
+                // Redirect to list of users
+                return $this->redirect()->toRoute('zfcadmin/users');
+            }
+        }
+        return array('form' => $form);
     }
 
     public function editAction()

@@ -3,17 +3,40 @@
 namespace FcLibraries\Form;
 
 use Zend\Form\Form;
-use Zend\Validator\AbstractValidator;
+use Zend\Form\Element;
+
 
 class RegionForm extends Form
 {
-    public function __construct($name = null)
+    public function __construct()
     {
-        parent::__construct('region');
+        parent::__construct();
 
-        $this->setAttributes(array(
-            'method' => 'post',
-            'class' => 'form-horizontal',
+        $this->setName('demoFormInline');
+        $this->setAttribute('method', 'post');
+
+        //Text
+        $this->add(array(
+            'name' => 'text',
+            'type' => 'Zend\Form\Element\Text',
+            'attributes' => array(
+                'placeholder' => 'Search term...',
+            ),
+            'options' => array(
+                'label' => 'Text',
+            ),
+        ));
+
+        //Csrf
+        $this->add(new Element\Csrf('csrf'));
+
+        //Submit button
+        $this->add(array(
+            'name' => 'submitBtn',
+            'attributes' => array(
+                'type' => 'submit',
+                'value' => 'Search',
+            ),
         ));
 
         $this->add(array(

@@ -43,6 +43,10 @@ return array(
                                 'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'id' => '[0-9]+',
                             ),
+                            'defaults' => array(
+                                'controller' => 'FcLibraries\Controller\Region',
+                                'action' => 'add',
+                            ),
                         ),
                     ),
                     'countries' => array(
