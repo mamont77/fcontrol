@@ -34,3 +34,9 @@
 [submodule "vendor/ZfcTwitterBootstrap"]
 	path = vendor/ZfcTwitterBootstrap
 	url = git://github.com/mwillbanks/ZfcTwitterBootstrap.git
+[submodule "vendor/DluTwBootstrap"]
+	path = vendor/DluTwBootstrap
+	url = https://bitbucket.org/dlu/dlutwbootstrap.git
+[submodule "vendor/DluTwBootstrapDemo"]
+	path = vendor/DluTwBootstrapDemo
+	url = https://bitbucket.org/dlu/dlutwbootstrap-demo.git
