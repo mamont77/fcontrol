@@ -1,62 +1,82 @@
-<?php echo $this->doctype(); ?>
+<?php
+$this->headTitle()->setSeparator(' - ')
+    ->setAutoEscape(false);
+$basePath = $this->basePath();
+
+//Twitter Bootstrap styles
+$this->headLink()->appendStylesheet($basePath . '/css/bootstrap.min.css');
+//Twitter Bootstrap style override by DluTwBootstrap
+$this->headLink()->appendStylesheet($basePath . '/css/dlu-tw-bootstrap.css');
+//Twitter Bootstrap responsive styles
+$this->headLink()->appendStylesheet($basePath . '/css/bootstrap-responsive.min.css');
+//fControl style
+$this->headLink()->appendStylesheet($basePath . '/css/style.css');
+
+//jQuery and Twitter Bootstrap JS libraries
+$this->inlineScript()->appendFile($basePath . '/js/jquery-1.9.1.min.js');
+$this->inlineScript()->appendFile($basePath . '/js/bootstrap.min.js');
+$this->inlineScript()->appendFile($basePath . '/js/fcontrol.js');
+
+echo $this->doctype();
+?>
 
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <?php echo $this->headTitle($this->translate('fControl'))->setSeparator(' - ')->setAutoEscape(false) ?>
+<head>
+    <meta charset="utf-8">
+    <?php echo $this->headTitle('fControl') ?>
+    <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
+    <!-- Le styles -->
+    <?php echo $this->headLink() ?>
+    <?php echo $this->headStyle(); ?>
+    <!-- Scripts -->
+    <?php echo $this->headScript() ?>
+</head>
 
-        <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
+<body style="padding-top: 60px; padding-bottom: 40px;">
+<!-- NavBar -->
+<?php
+//Set up the brand link
+$brandLink = new \Zend\Navigation\Page\Mvc();
+$brandLink->setRoute('home');
+$brandLink->setLabel('fControl (alfa)');
+echo $this->navigation()->twbNavbar()->renderNavbar($this->navBar,
+    null, null, $brandLink, null, true, false, true, true, true);
+?>
+<!-- /NavBar -->
+<!-- UserBar -->
+<div class="user_nav">
+    <ul class="nav pull-right">
+        <?php if ($this->zfcUserIdentity() !== false) { ?>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                <?php echo $this->ZfcUserDisplayName(); ?>
+                (Admin)
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="/user/change-password">Изменить пароль</a></li>
+                <li><a href="/user/change-email">Изменить Email</a></li>
+                <li><a href="/user/logout">Выйти</a></li>
+            </ul>
+        </li>
 
-        <!-- Le styles -->
-        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/images/favicon.ico'))
-                        ->prependStylesheet($this->basePath() . '/css/bootstrap-responsive.css')
-                        ->prependStylesheet($this->basePath() . '/css/style.css')
-                        ->prependStylesheet($this->basePath() . '/css/bootstrap.css')?>
+        <?php } else { ?>
+    <li><a class="btn" href="/user/login">Войти</a></li>
+        <?php } ?>
+    </ul>
+</div>
 
-        <!-- Scripts -->
-        <?php echo $this->headScript()->prependFile($this->basePath() . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
-                                      ->prependFile($this->basePath() . '/js/bootstrap.js')
-                                      ->prependFile($this->basePath() . '/js/jquery-1.9.1.min.js') ?>
+<!-- /UserBar -->
+<div class="container">
 
-    </head>
-    <body>
-        <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="navbar-inner">
-                <div class="container">
-                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </a>
-                    <a class="brand" href="<?php echo $this->url('home') ?>">fControl</a> (alfa)
-                    <div class="nav-collapse collapse">
-                        <ul class="nav">
-                            <li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home') ?></a></li>
-                            <?php if ($this->zfcUserIdentity()): ?>
-                            <li class=""><a href="<?php echo $this->url('zfcuser') ?>">Мой профиль</a>
-<!--                                <ul class="nav">-->
-<!--                                    <li><a href="--><?php //echo $this->url('zfcuser/changeemail') ?><!--">Изменить Email</a></li>-->
-<!--                                    <li><a href="--><?php //echo $this->url('zfcuser/changepassword') ?><!--">Изменить пароль</a></li>-->
-<!--                                </ul>-->
-                            </li>
-                            <?php else: ?>
-                                <li class=""><a href="<?php echo $this->url('zfcuser') ?>">Войти</a>
-                            <?php endif ?>
-                            <li class=""><a href="<?php echo $this->url('zfcadmin/users') ?>">Управление пользователями</a></li>
-                        </ul>
-                    </div><!--/.nav-collapse -->
-                </div>
-            </div>
-        </div>
-        <div class="navbar navbar-inverse navbar-fixed-top"><?= $this->partial('layout/top_menu');?></div>
 
-        <div class="container">
-            <?php echo $this->content; ?>
-            <hr>
-            <footer>
-                <p>&copy; C Air Chartering 2012. <?php echo 'Все права защищены.' ?></p>
-            </footer>
-        </div> <!-- /container -->
-        <?php echo $this->inlineScript() ?>
-    </body>
+    <?php echo $this->content; ?>
+    <hr>
+    <footer>
+        <p>&copy; C Air Chartering 2012. <?php echo 'Все права защищены.' ?></p>
+    </footer>
+</div>
+<!-- /container -->
+<?php echo $this->inlineScript(); ?>
+</body>
 </html>

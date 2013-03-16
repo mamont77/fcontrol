@@ -3,13 +3,24 @@ body {
     padding-bottom: 40px;
 }
 
-.navbar .nav > li > a.brand {
+body > .navbar .brand {
+    color: #cccccc;
+    /*float: right;*/
+    font-weight: bold;
+    margin-left: 20px;
+    padding-left: 0;
+    padding-right: 0;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 0 30px rgba(255, 255, 255, 0.125);
+    transition: all 0.2s linear 0s;
+}
+
+body > .navbar .brand {
     background: url("../images/logoSmallInv.png") no-repeat scroll 0 5px transparent;
     padding-left: 45px;
 }
 
 .navbar .nav > li > a {
-    padding: 2px 7px;
+    /*padding: 2px 7px;*/
 }
 
 form label {

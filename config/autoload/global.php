@@ -9,46 +9,6 @@ $dbParams = array(
     'options' => array('buffer_results' => true)
 );
 
-$navigation = array(
-    'admin' => array(
-        'home' => array(
-            'label' => 'fControl (alfa)',
-            'route' => 'home',
-            'class' => 'brand',
-        ),
-        'dashboard' => array(
-            'label' => 'Панель управления',
-            'route' => 'zfcadmin',
-            'liClass' => 'test',
-            'pages' => array(
-                'user' => array(
-                    'label' => 'Управление пользователями',
-                    'route' => 'zfcadmin/users',
-                ),
-                array(
-                    'label' => 'Библиотека',
-                    'route' => 'zfcadmin/libraries',
-                    'class' => 'dropdown-toggle ',
-                    'pages' => array(
-                        array(
-                            'label' => 'Регионы',
-                            'route' => 'zfcadmin/regions',
-                        ),
-                        array(
-                            'label' => 'Страны',
-                            'route' => 'zfcadmin/countries',
-                        ),
-                        array(
-                            'label' => 'Аэропорты',
-                            'route' => 'zfcadmin/airports',
-                        ),
-                    )
-                ),
-            ),
-        ),
-    )
-);
-
 return array(
     'service_manager' => array(
         'factories' => array(
@@ -73,5 +33,4 @@ return array(
             },
         ),
     ),
-    'navigation' => $navigation,
 );

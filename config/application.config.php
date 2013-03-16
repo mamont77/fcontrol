@@ -8,20 +8,21 @@
 return array(
     'modules' => array(
         'ZFTool',
+        'ZendDeveloperTools',
+        //'DluTwBootstrapDemo',
+        'Application',
         'ZfcBase',
         'ZfcAdmin',
         'ZfcUser',
         'BjyAuthorize',
         //'RoleUserBridge',
-        'ZendDeveloperTools',
         'BjyProfiler',
-        'ZFTool',
-        'Application',
         'Album',
         'FcAdmin',
         //'ZfcUserAdmin',
-        'ZfcTwitterBootstrap',
-        'FcLibraries'
+        //'ZfcTwitterBootstrap',
+        'FcLibraries',
+        'DluTwBootstrap',
     ),
     'module_listener_options' => array(
         'module_paths' => array(
