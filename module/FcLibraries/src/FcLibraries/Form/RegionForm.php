@@ -12,18 +12,20 @@ class RegionForm extends Form
     {
         parent::__construct();
 
-        $this->setName('demoFormInline');
+        $this->setName('region');
         $this->setAttribute('method', 'post');
 
         //Text
         $this->add(array(
-            'name' => 'text',
+            'name' => 'name',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'placeholder' => 'Search term...',
+                'placeholder' => 'Region of the world',
+                'required' => true,
+                'maxlength' => '30',
             ),
             'options' => array(
-                'label' => 'Text',
+                'label' => 'Region',
             ),
         ));
 
@@ -35,18 +37,9 @@ class RegionForm extends Form
             'name' => 'submitBtn',
             'attributes' => array(
                 'type' => 'submit',
-                'value' => 'Search',
+                'value' => 'Add',
             ),
         ));
 
-        $this->add(array(
-            'name' => 'submit',
-            'attributes' => array(
-                'type' => 'submit',
-                'value' => 'Войти',
-                'id' => 'submitbutton',
-                'class' => 'btn btn-success',
-            ),
-        ));
     }
 }

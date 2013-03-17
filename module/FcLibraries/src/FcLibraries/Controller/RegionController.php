@@ -4,12 +4,16 @@ namespace FcLibraries\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-//use FcLibraries\Model\Region;
+use FcLibraries\Model\Region;
 use FcLibraries\Form\RegionForm;
+use FcLibraries\Form\RegionFormInputFilter;
 
 
 class RegionController extends AbstractActionController implements ControllerInterface
 {
+    protected $_regionTable;
+
+
     public function indexAction()
     {
         return new ViewModel();
@@ -18,25 +22,29 @@ class RegionController extends AbstractActionController implements ControllerInt
     public function addAction()
     {
         $form = new RegionForm();
-        $form->get('submit')->setValue('Добавить');
+        $formType = \DluTwBootstrap\Form\FormUtil::FORM_TYPE_HORIZONTAL;
+        $inputFilter = new RegionFormInputFilter();
+        $form->setInputFilter($inputFilter);
 
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $user = new Region();
-            $form->setInputFilter($user->getInputFilter());
+            $form->setInputFilter($inputFilter);
             $form->setData($request->getPost());
 
             if ($form->isValid()) {
-                $userData = $form->getData();
-                $userModel = new Region();
-                $user->exchangeArray($userData);
-                $user->user_id = $this->getUserTable()->saveUser($user);
+                $data = $form->getData();
+                $model = new Region();
+                $model->exchangeArray($data);
+                $model->add($model);
 
                 // Redirect to list of users
-                return $this->redirect()->toRoute('zfcadmin/users');
+                return $this->redirect()->toRoute('zfcadmin/region/add');
             }
         }
         return array('form' => $form);
+
+
+
     }
 
     public function editAction()
@@ -47,5 +55,14 @@ class RegionController extends AbstractActionController implements ControllerInt
     public function deleteAction()
     {
         return new ViewModel();
+    }
+
+    public function getModelTable()
+    {
+        if (!$this->_regionTable) {
+            $sm = $this->getServiceLocator();
+            $this->_regionTable = $sm->get('FcLibraries\Model\Region');
+        }
+        return $this->_regionTable;
     }
 }

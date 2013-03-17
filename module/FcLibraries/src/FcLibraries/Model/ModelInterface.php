@@ -9,9 +9,9 @@ interface ModelInterface
 
     public function get($id);
 
-    public function add(Library $library);
+    public function add($data);
 
-    public function edit(Library $library);
+    public function edit($data);
 
     public function delete($id);
 

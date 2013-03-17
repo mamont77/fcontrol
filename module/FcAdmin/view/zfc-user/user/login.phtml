@@ -16,7 +16,7 @@ if ($this->redirect) {
         'name' => 'redirect',
         'type' => 'Zend\Form\Element\Hidden',
         'attributes' => array(
-            'value' => $this->redirect,
+            'value' => $this->escapeHtml($this->redirect),
         ),
     ));
 }

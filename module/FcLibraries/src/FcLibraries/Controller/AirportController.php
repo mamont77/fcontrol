@@ -18,7 +18,6 @@ class AirportController extends AbstractActionController implements ControllerIn
     public function addAction()
     {
         $form = new AirportForm();
-        $form->get('submit')->setValue('Добавить');
 
         $request = $this->getRequest();
         if ($request->isPost()) {
