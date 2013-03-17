@@ -5,11 +5,34 @@ $this->headTitle($title);
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 
 <?php
-$this->form->setAttribute('action', $this->url(
+$displayOptions = array(
+    'class' => 'form-horizontal',
+    'elements' => array(
+        'username' => array(
+            'class' => 'username',
+        ),
+    ),
+);
+$form = $this->form;
+$formType = $this->formType;
+$validData = $this->validData;
+$form->setAttribute('action', $this->url(
     'zfcadmin/user',
     array(
         'action' => 'edit',
         'id'     => $this->user_id,
     )
 ));
-echo $this->ztbForm($this->form);
+$form->prepare();
+?>
+
+<?php if ($form->getMessages()): ?>
+<div class="alert alert-error">
+    <button class="close" data-dismiss="alert" type="button">×</button>
+    <strong>Неверный ввод!</strong>
+    Поля формы заполнены не правильно.
+</div>
+<?php endif; ?>
+
+<?php echo $this->formTwb($form, $formType, $displayOptions); ?>
+

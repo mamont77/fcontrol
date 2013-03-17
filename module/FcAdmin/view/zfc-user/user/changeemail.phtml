@@ -1,52 +1,51 @@
 <?php
-    $this->plugin('translate')->setTranslatorTextDomain(__NAMESPACE__);
+$this->plugin('translate')->setTranslatorTextDomain(__NAMESPACE__);
 ?>
 
 <h3><?php echo sprintf($this->translate('Change Email for %s'), $this->zfcUserDisplayName()); ?></h3>
 <?php if ($status === true) : ?>
-<div class="alert alert-success"><?php echo $this->translate('Email address changed successfully.'); ?></div>
+<div class="alert alert-success">
+    <button class="close" data-dismiss="alert" type="button">×</button>
+    <?php echo $this->translate('Email address changed successfully.'); ?>
+</div>
 <?php elseif ($status === false) : ?>
-<div class="alert alert-error"><?php echo $this->translate('Unable to update your email address. Please try again.'); ?></div>
+<div class="alert alert-error">
+    <button class="close" data-dismiss="alert" type="button">×</button>
+    <?php echo $this->translate('Unable to update your email address. Please try again.'); ?>
+</div>
 <?php endif; ?>
 <?php
-
 $form = $this->changeEmailForm;
-
-$form->prepare();
+$formType = $this->formType;
 $form->setAttribute('action', $this->url('zfcuser/changeemail'));
 $form->setAttribute('method', 'post');
-
+$displayOptions = array(
+    'class' => 'form-horizontal',
+);
+if ($this->redirect){
+    $form->add(array(
+        'name' => 'redirect',
+        'type' => 'Zend\Form\Element\Hidden',
+        'attributes' => array(
+            'value' => $this->redirect,
+        ),
+    ));
+}
+$form->add(array(
+    'name' => 'submit',
+    'type' => 'Zend\Form\Element\Submit',
+    'attributes' => array(
+        'value' => 'Отправить',
+    ),
+));
+foreach ($form as $element) {
+    $label = $element->getLabel();
+    if ($label != '') {
+        $element->setLabel($this->translate($label));
+    }
+}
+$form->prepare();
 ?>
 
-<?php echo $this->form()->openTag($form) ?>
-    <?php foreach ($form as $element): ?>
-        <label>
-        <?php if ($element->getLabel() != null): ?>
-                <?php
-                switch ($element->getLabel()) {
-                    case 'New Email':
-                        echo '<span>' . $this->translate('New Email') . '</span>';
-                        break;
-                    case 'Verify New Email':
-                        echo '<span>' . $this->translate('Verify New Email') . '</span>';
-                        break;
-                    case 'Password':
-                        echo '<span>' . $this->translate('Password') . '</span>';
-                        break;
-                }
-                ?>
-        <?php endif ?>
-        <?php if ($element instanceof Zend\Form\Element\Button): ?>
-            <?php echo $this->formButton($element) ?>
-        <?php elseif ($element instanceof Zend\Form\Element\Captcha): ?>
-            <?php echo $this->formCaptcha($element) . $this->formElementErrors($element) ?>
-        <?php else: ?>
-            <?php echo $this->formInput($element) . $this->formElementErrors($element) ?>
-        <?php endif ?>
-    </label>
-    <?php endforeach ?>
-    <?php if ($this->redirect): ?>
-        <input type="hidden" name="redirect" value="<?php echo $this->redirect ?>" />
-    <?php endif ?>
-    <input type="submit" value="<?php echo $this->translate('Submit'); ?>" class="btn btn-primary" />
-<?php echo $this->form()->closeTag() ?>
+<?php echo $this->formTwb($form, $formType, $displayOptions); ?>
+

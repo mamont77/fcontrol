@@ -1,36 +1,38 @@
 <?php
-    $this->plugin('translate')->setTranslatorTextDomain(__NAMESPACE__);
+$this->plugin('translate')->setTranslatorTextDomain(__NAMESPACE__);
 ?>
 
 <h1><?php echo $this->translate('Sign In'); ?></h1>
-
 <?php
 $form = $this->loginForm;
-$form->prepare();
+$formType = $this->formType;
 $form->setAttribute('action', $this->url('zfcuser/login'));
 $form->setAttribute('method', 'post');
-//$form->setAttribute('class', 'form-horizontal');
-
+$displayOptions = array(
+    'class' => 'form-horizontal',
+);
+if ($this->redirect) {
+    $form->add(array(
+        'name' => 'redirect',
+        'type' => 'Zend\Form\Element\Hidden',
+        'attributes' => array(
+            'value' => $this->redirect,
+        ),
+    ));
+}
+foreach ($form as $element) {
+    if ($element instanceof Zend\Form\Element\Button) {
+        $element->setValue($this->translate('Sign In'));
+    }
+    $label = $element->getLabel();
+    if ($label != '') {
+        $element->setLabel($this->translate($label));
+    }
+}
+$form->prepare();
 ?>
 
-<?php echo $this->form()->openTag($form) ?>
-<?php echo $this->formElementErrors($form->get('identity')) ?>
-
-<label>
-    <span><?php echo $this->translate('Email'); ?></span>
-    <?php echo $this->formInput($form->get('identity')) ?>
-</label>
-<label>
-    <span><?php echo $this->translate('Password'); ?></span>
-    <?php echo $this->formInput($form->get('credential')) ?>
-</label>
-<?php if ($this->redirect): ?>
-<input type="hidden" name="redirect" value="<?php echo $this->redirect ?>"/>
-<?php endif ?>
-<button type="submit" name="submit" value="" class="btn btn-success">Войти</button>
-
-<?php echo $this->form()->closeTag() ?>
-
+<?php echo $this->formTwb($form, $formType, $displayOptions); ?>
 
 <?php if ($this->enableRegistration) : ?>
 <?php echo $this->translate('Not registered?'); ?> <a

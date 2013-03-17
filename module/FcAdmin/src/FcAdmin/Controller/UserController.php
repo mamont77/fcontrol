@@ -23,7 +23,6 @@ class UserController extends AbstractActionController
     public function addAction()
     {
         $form = new UserForm();
-        $form->get('submit')->setValue('Добавить');
 
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -59,7 +58,6 @@ class UserController extends AbstractActionController
         $form  = new UserForm();
         $form->bind($user);
         $form->get('role_id')->setValue($user->role_id);
-        $form->get('submit')->setAttribute('value', 'Сохранить');
 
         $request = $this->getRequest();
 

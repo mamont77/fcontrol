@@ -54,7 +54,7 @@ class UserTable
             'password' => $user->password,
             'state' => $user->state,
         );
-        $roleData = $user->role;
+        $roleData = $user->role_id;
 
         $id = (int)$user->user_id;
         if ($id == 0) {
