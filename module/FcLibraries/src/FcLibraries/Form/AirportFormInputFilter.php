@@ -2,7 +2,7 @@
 namespace FcLibraries\Form;
 use Zend\InputFilter\InputFilter;
 
-class RegionFormInputFilter extends InputFilter
+class AirportFormInputFilter extends InputFilter
 {
     public function __construct()
     {
