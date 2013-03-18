@@ -16,5 +16,5 @@ interface ControllerInterface
 
     public function deleteAction();
 
-    public function getModelTable();
+//    public function getRegionTable();
 }

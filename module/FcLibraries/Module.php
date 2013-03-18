@@ -2,6 +2,7 @@
 namespace FcLibraries;
 
 use FcLibraries\Model\Region;
+use FcLibraries\Model\RegionTable;
 //use FcLibraries\Model\Country;
 //use FcLibraries\Model\Airport;
 use Zend\Db\ResultSet\ResultSet;
@@ -29,17 +30,17 @@ class Module
     {
         return array(
             'factories' => array(
-                'FcLibraries\Model\Region' =>  function($sm) {
+                'FcLibraries\Model\RegionTable' =>  function($sm) {
                     $tableGateway = $sm->get('RegionTableGateway');
-                    $table = new Region($tableGateway);
+                    $table = new RegionTable($tableGateway);
                     return $table;
                 },
-//                'RegionTableGateway' => function ($sm) {
-//                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-//                    $resultSetPrototype = new ResultSet();
-//                    $resultSetPrototype->setArrayObjectPrototype(new Region());
-//                    return new TableGateway('region', $dbAdapter, null, $resultSetPrototype);
-//                },
+                'RegionTableGateway' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new Region());
+                    return new TableGateway('library_region', $dbAdapter, null, $resultSetPrototype);
+                },
             ),
         );
     }

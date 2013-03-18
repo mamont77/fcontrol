@@ -1,18 +1,23 @@
 <?php
 
 namespace FcLibraries\Model;
+use Zend\Db\TableGateway\TableGateway;
 
 interface ModelInterface
 {
+
+    public function __construct(TableGateway $tableGateway);
 
     public function fetchAll();
 
     public function get($id);
 
-    public function add($data);
+    public function issetName($id);
 
-    public function edit($data);
+//    public function add(Region $data);
 
-    public function delete($id);
+//    public function update(Region $data);
+
+    public function remove($id);
 
 }

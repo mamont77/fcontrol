@@ -1,18 +1,21 @@
 <?php
-
 namespace FcLibraries\Model;
-use Zend\Db\TableGateway\TableGateway;
 
-class Region implements ModelInterface
+use Zend\InputFilter\Factory as InputFactory;
+use Zend\InputFilter\InputFilter;
+use Zend\InputFilter\InputFilterAwareInterface;
+use Zend\InputFilter\InputFilterInterface;
+
+class Region implements InputFilterAwareInterface
 {
     public $id;
     public $name;
-    protected $_tableGateway;
-
-    public function __construct(TableGateway $tableGateway)
-    {
-        $this->_tableGateway = $tableGateway;
-    }
+    protected $_inputFilter;
+    protected $_filters = array(
+        array('name' => 'StripTags'),
+        array('name' => 'StringTrim'),
+    );
+    const TOO_SHORT = 'Long';
 
     public function exchangeArray($data)
     {
@@ -20,32 +23,50 @@ class Region implements ModelInterface
         $this->name = (isset($data['name'])) ? $data['name'] : null;
     }
 
-    public function fetchAll()
+     // Add the following method:
+    public function getArrayCopy()
     {
-
+        return get_object_vars($this);
     }
 
-    public function get($id)
+    public function setInputFilter(InputFilterInterface $inputFilter)
     {
-
+        throw new \Exception("Not used");
     }
 
-    public function add($data)
+    public function getInputFilter()
     {
-        $data = array(
-            'name' => $data->name,
-        );
-        $this->_tableGateway->insert($data);
+        if (!$this->_inputFilter) {
+            $inputFilter = new InputFilter();
+            $factory     = new InputFactory();
+
+            $inputFilter->add($factory->createInput(array(
+                'name'     => 'id',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'Int'),
+                ),
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name'     => 'name',
+                'required' => true,
+                'filters'  => $this->_filters,
+                'validators' => array(
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min'      => 1,
+                            'max'      => 30,
+                        ),
+                    ),
+                ),
+            )));
+
+            $this->_inputFilter = $inputFilter;
+        }
+
+        return $this->_inputFilter;
     }
-
-    public function edit($data)
-    {
-
-    }
-
-    public function delete($id)
-    {
-
-    }
-
 }

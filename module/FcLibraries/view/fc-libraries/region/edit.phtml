@@ -1,0 +1,32 @@
+<?php
+$title = 'Edit region';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<?php
+$displayOptions = array(
+    'class' => 'form-horizontal',
+);
+$form = $this->form;
+$formType = $this->formType;
+$validData = $this->validData;
+$form->setAttribute('action', $this->url(
+    'zfcadmin/region',
+    array(
+        'action' => 'edit',
+        'id'     => $this->id,
+    )
+));
+$form->prepare();
+?>
+
+<?php if ($form->getMessages()): ?>
+<div class="alert alert-error">
+    <button class="close" data-dismiss="alert" type="button">×</button>
+    <strong>Неверный ввод!</strong>
+    Поля формы заполнены не правильно.
+</div>
+<?php endif; ?>
+
+<?php echo $this->formTwb($form, $formType, $displayOptions); ?>
