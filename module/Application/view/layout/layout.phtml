@@ -54,14 +54,14 @@ echo $this->navigation()->twbNavbar()->renderNavbar($this->navBar,
                 <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-                <li><a href="/user/change-password">Изменить пароль</a></li>
-                <li><a href="/user/change-email">Изменить Email</a></li>
-                <li><a href="/user/logout">Выйти</a></li>
+                <li><a href="/user/change-password">Change Password</a></li>
+                <li><a href="/user/change-email">Change Email</a></li>
+                <li><a href="/user/logout">Sign Out</a></li>
             </ul>
         </li>
 
         <?php } else { ?>
-    <li><a class="btn" href="/user/login">Войти</a></li>
+    <li><a class="btn" href="/user/login">Sign in</a></li>
         <?php } ?>
     </ul>
 </div>
@@ -73,7 +73,7 @@ echo $this->navigation()->twbNavbar()->renderNavbar($this->navBar,
     <?php echo $this->content; ?>
     <hr>
     <footer>
-        <p>&copy; C Air Chartering 2012. <?php echo 'Все права защищены.' ?></p>
+        <p>&copy; C Air Chartering 2012-<?php echo date('Y');?>. <?php echo 'All rights reserved.' ?></p>
     </footer>
 </div>
 <!-- /container -->

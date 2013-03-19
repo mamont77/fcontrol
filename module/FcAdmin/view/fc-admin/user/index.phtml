@@ -1,20 +1,20 @@
 <?php
-$title = 'Список сотрудников';
+$title = 'The list of employees';
 $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 <p>
-    <a href="<?php echo $this->url('zfcadmin/user', array('action' => 'add'));?>" class="btn btn-primary">Добавить сотрудника</a>
+    <a href="<?php echo $this->url('zfcadmin/user', array('action' => 'add'));?>" class="btn btn-primary">Add new employee</a>
 </p>
 
 <table class="table table-bordered table-hover">
     <tr>
         <th>ID</th>
-        <th>Фамилия Имя</th>
+        <th>Name</th>
         <th>Email</th>
-        <th>Роль</th>
-        <th>Статус</th>
-        <th>Операции</th>
+        <th>Role</th>
+        <th>Status</th>
+        <th>Actions</th>
     </tr>
     <?php foreach ($users as $user) : ?>
     <tr>
@@ -24,15 +24,15 @@ $this->headTitle($title);
         <td><?php echo $this->escapeHtml($user->role_id);?></td>
         <td>
             <?php if ($user->state == 1) {
-                echo 'Активен';
+                echo 'Active';
             } else {
-                echo 'Блокирован';
+                echo 'Banned';
             };?>
         <td>
             <a href="<?php echo $this->url('zfcadmin/user',
-                array('action' => 'edit', 'id' => $user->user_id));?>" class="btn btn-success">Редактировать</a>
+                array('action' => 'edit', 'id' => $user->user_id));?>" class="btn btn-success">Edit</a>
             <a href="<?php echo $this->url('zfcadmin/user',
-                array('action' => 'delete', 'id' => $user->user_id));?>" class="btn btn-warning">Удалить</a>
+                array('action' => 'delete', 'id' => $user->user_id));?>" class="btn btn-warning">Remove</a>
         </td>
     </tr>
     <?php endforeach; ?>

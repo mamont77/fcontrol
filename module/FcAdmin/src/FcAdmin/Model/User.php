@@ -10,10 +10,10 @@ use Zend\Crypt\Password\Bcrypt;
 class User implements InputFilterAwareInterface
 {
 
-    const INVALID_USERNAME = 'Поле должно содержать от 4 до 255 символов!';
-    const INVALID_EMAIL = 'Не правильный емейл!';
-    const INVALID_PASSWORD = 'Поле должно содержать минимум 6 символов!';
-    const NOT_SAME = 'Поля "Пароль" и "Повторить пароль" должны совпадать!';
+//    const INVALID_USERNAME = 'Поле должно содержать от 4 до 255 символов!';
+//    const INVALID_EMAIL = 'Не правильный емейл!';
+//    const INVALID_PASSWORD = 'Поле должно содержать минимум 6 символов!';
+//    const NOT_SAME = 'Поля "Пароль" и "Повторить пароль" должны совпадать!';
 
 
     public $user_id;
@@ -77,10 +77,10 @@ class User implements InputFilterAwareInterface
                             'encoding' => 'UTF-8',
                             'min' => 6,
                             'max' => 255,
-                            'messages' => array(
-                                \Zend\Validator\StringLength::TOO_LONG => self::INVALID_USERNAME,
-                                \Zend\Validator\StringLength::TOO_SHORT => self::INVALID_USERNAME,
-                            ),
+//                            'messages' => array(
+//                                \Zend\Validator\StringLength::TOO_LONG => self::INVALID_USERNAME,
+//                                \Zend\Validator\StringLength::TOO_SHORT => self::INVALID_USERNAME,
+//                            ),
                         ),
                     ),
                 ),
@@ -117,9 +117,9 @@ class User implements InputFilterAwareInterface
                         'options' => array(
                             'encoding' => 'UTF-8',
                             'min' => 6,
-                            'messages' => array(
-                                \Zend\Validator\StringLength::TOO_SHORT => self::INVALID_PASSWORD,
-                            ),
+//                            'messages' => array(
+//                                \Zend\Validator\StringLength::TOO_SHORT => self::INVALID_PASSWORD,
+//                            ),
                         ),
                     ),
                 ),
@@ -137,9 +137,9 @@ class User implements InputFilterAwareInterface
                         'options' => array(
                             'encoding' => 'UTF-8',
                             'min' => 6,
-                            'messages' => array(
-                                \Zend\Validator\StringLength::TOO_SHORT => self::INVALID_PASSWORD,
-                            ),
+//                            'messages' => array(
+//                                \Zend\Validator\StringLength::TOO_SHORT => self::INVALID_PASSWORD,
+//                            ),
                         ),
 
                     ),
@@ -147,9 +147,9 @@ class User implements InputFilterAwareInterface
                         'name' => 'Identical',
                         'options' => array(
                             'token' => 'password',
-                            'messages' => array(
-                                \Zend\Validator\Identical::NOT_SAME => self::NOT_SAME,
-                            ),
+//                            'messages' => array(
+//                                \Zend\Validator\Identical::NOT_SAME => self::NOT_SAME,
+//                            ),
                         ),
                     ),
                 ),

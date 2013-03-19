@@ -3,11 +3,11 @@ return array(
     'navigation' => array(
         'fcontrol' => array(
             array(
-                'label' => 'Панель управления',
+                'label' => 'Control panel',
                 'type' => 'uri',
                 'pages' => array(
                     array(
-                        'label' => 'Пользователи',
+                        'label' => 'Users',
                         'route' => 'zfcadmin/users',
                         'action' => 'index',
                     ),
@@ -16,20 +16,20 @@ return array(
                         'divider' => true,
                     ),
                     array(
-                        'label' => 'Библиотека',
+                        'label' => 'Libraries',
                         'type' => 'uri',
                         'navHeader' => true,
                     ),
                     array(
-                        'label' => 'Регионы',
+                        'label' => 'Regions',
                         'route' => 'zfcadmin/regions',
                     ),
                     array(
-                        'label' => 'Страны',
+                        'label' => 'Countries',
                         'route' => 'zfcadmin/countries',
                     ),
                     array(
-                        'label' => 'Аэропорты',
+                        'label' => 'Airports',
                         'route' => 'zfcadmin/airports',
                     ),
                 ),

@@ -1,17 +1,18 @@
 <?php
-$title = 'Регионы';
+$title = 'Regions';
 $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 <p>
-    <a href="<?php echo $this->url('zfcadmin/region', array('action' => 'add'));?>" class="btn btn-primary">Add region</a>
+    <a href="<?php echo $this->url('zfcadmin/region', array('action' => 'add'));?>"
+       class="btn btn-primary">Add region</a>
 </p>
 
 <table class="table table-bordered table-hover">
     <tr>
         <th>ID</th>
         <th>Name</th>
-        <th>Операции</th>
+        <th>Actions</th>
     </tr>
     <?php foreach ($data as $row) : ?>
     <tr>
@@ -19,9 +20,9 @@ $this->headTitle($title);
         <td><?php echo $this->escapeHtml($row->name);?></td>
         <td>
             <a href="<?php echo $this->url('zfcadmin/region',
-                array('action' => 'edit', 'id' => $row->id));?>" class="btn btn-success">Редактировать</a>
+                array('action' => 'edit', 'id' => $row->id));?>" class="btn btn-success">Edit</a>
             <a href="<?php echo $this->url('zfcadmin/region',
-                array('action' => 'delete', 'id' => $row->id));?>" class="btn btn-warning">Удалить</a>
+                array('action' => 'delete', 'id' => $row->id));?>" class="btn btn-warning">Remove</a>
         </td>
     </tr>
     <?php endforeach; ?>

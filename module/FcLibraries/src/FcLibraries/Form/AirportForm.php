@@ -43,7 +43,7 @@ class AirportForm extends Form
             'name' => 'submit',
             'attributes' => array(
                 'type' => 'submit',
-                'value' => 'Войти',
+                'value' => 'Add',
                 'id' => 'submitbutton',
                 'class' => 'btn btn-success',
             ),

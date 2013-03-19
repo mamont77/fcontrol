@@ -92,9 +92,9 @@ class UserController extends AbstractActionController
 
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $del = $request->getPost('del', 'Нет');
+            $del = $request->getPost('del', 'No');
 
-            if ($del == 'Да') {
+            if ($del == 'Yes') {
                 $id = (int) $request->getPost('user_id');
                 $this->getUserTable()->deleteUser($id);
                 $this->getRoleTable()->deleteRole($id);

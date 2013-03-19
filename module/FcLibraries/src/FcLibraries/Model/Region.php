@@ -15,7 +15,7 @@ class Region implements InputFilterAwareInterface
         array('name' => 'StripTags'),
         array('name' => 'StringTrim'),
     );
-    const TOO_SHORT = 'Long';
+//    const TOO_SHORT = 'Long';
 
     public function exchangeArray($data)
     {

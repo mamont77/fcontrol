@@ -57,16 +57,16 @@ return array(
             'fcontrol_navigation' => 'Application\Navigation\Service\fControlNavigationFactory',
         ),
     ),
-    'translator' => array(
-        'locale' => 'ru_RU',
-        'translation_file_patterns' => array(
-            array(
-                'type' => 'gettext',
-                'base_dir' => __DIR__ . '/../language',
-                'pattern' => '%s.mo',
-            ),
-        ),
-    ),
+//    'translator' => array(
+//        'locale' => 'ru_RU',
+//        'translation_file_patterns' => array(
+//            array(
+//                'type' => 'gettext',
+//                'base_dir' => __DIR__ . '/../language',
+//                'pattern' => '%s.mo',
+//            ),
+//        ),
+//    ),
     'controllers' => array(
         'invokables' => array(
             'Application\Controller\Index' => 'Application\Controller\IndexController'

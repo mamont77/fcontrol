@@ -62,7 +62,6 @@ class RegionController extends AbstractActionController implements ControllerInt
             if ($form->isValid()) {
                 $this->getRegionTable()->update($form->getData());
 
-                // Redirect to list of albums
                 return $this->redirect()->toRoute('zfcadmin/regions');
             }
         }
@@ -89,7 +88,7 @@ class RegionController extends AbstractActionController implements ControllerInt
                 $this->getRegionTable()->remove($id);
             }
 
-            // Redirect to list of albums
+            // Redirect to list
             return $this->redirect()->toRoute('zfcadmin/regions');
         }
 

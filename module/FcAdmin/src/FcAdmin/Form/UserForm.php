@@ -26,7 +26,7 @@ class UserForm extends Form
             'name' => 'username',
             'type' => 'Zend\Form\Element\Text',
             'options' => array(
-                'label' => 'Фамилия Имя',
+                'label' => 'Name and Surname',
             ),
             'attributes' => array(
                 'required' => true,
@@ -47,32 +47,15 @@ class UserForm extends Form
             ),
         ));
 
-//        $this->add(array(
-//            'name' => 'role_id',
-//            'type' => 'Select',
-//            'options' => array(
-//                'label' => 'Роль',
-//            ),
-//            'attributes' => array(
-//                'required' => true,
-//                'options' => array(
-//                    'user' => 'user',
-//                    'manager' => 'manager',
-//                    'admin' => 'admin',
-//                ),
-//                'value' => 'user',
-//            )
-//        ));
-
         $this->add(array(
             'name' => 'role_id',
             'type' => 'Zend\Form\Element\Select',
             'options' => array(
-                'label' => 'Роль',
+                'label' => 'Role',
                 'value_options' => array(
-                    'user' => 'user',
-                    'manager' => 'manager',
-                    'admin' => 'admin',
+                    'user' => 'User',
+                    'manager' => 'Manager',
+                    'admin' => 'Admin',
                 ),
             ),
             'value' => 'user',
@@ -82,7 +65,7 @@ class UserForm extends Form
             'name' => 'state',
             'type' => 'Zend\Form\Element\Checkbox',
             'options' => array(
-                'label' => 'Статус',
+                'label' => 'Status',
                 'checked_value' => '1',
                 'unchecked_value' => '0'
             ),
@@ -95,7 +78,7 @@ class UserForm extends Form
                 'required' => true,
             ),
             'options' => array(
-                'label' => 'Пароль',
+                'label' => 'Password',
             ),
         ));
 
@@ -103,7 +86,7 @@ class UserForm extends Form
             'name' => 'passwordVerify',
             'type' => 'password',
             'options' => array(
-                'label' => 'Повторить пароль',
+                'label' => 'Repeat Password',
             ),
             'attributes' => array(
                 'required' => true,
@@ -118,7 +101,7 @@ class UserForm extends Form
             'name' => 'submitBtn',
             'type' => 'Zend\Form\Element\Submit',
             'attributes' => array(
-                'value' => 'Добавить',
+                'value' => 'Add',
             ),
             'options' => array(
                 'primary' => true,
@@ -130,7 +113,7 @@ class UserForm extends Form
             'name' => 'resetBtn',
             'attributes' => array(
                 'type' => 'reset',
-                'value' => 'Сброс',
+                'value' => 'Reset',
             ),
         ));
 

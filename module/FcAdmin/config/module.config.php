@@ -55,17 +55,17 @@ return array(
             'user' => __DIR__ . '/../view',
         ),
     ),
-    'translator' => array(
-      'locale' => 'ru_RU',
-      'translation_file_patterns' => array(
-        array(
-          'type'     => 'gettext',
-          'base_dir' => __DIR__ . '/../language',
-          'pattern'  => '%s.mo',
-          'text_domain' => __NAMESPACE__,
-        ),
-      ),
-    ),
+//    'translator' => array(
+//      'locale' => 'ru_RU',
+//      'translation_file_patterns' => array(
+//        array(
+//          'type'     => 'gettext',
+//          'base_dir' => __DIR__ . '/../language',
+//          'pattern'  => '%s.mo',
+//          'text_domain' => __NAMESPACE__,
+//        ),
+//      ),
+//    ),
 
     'zfcadmin' => array(
         'use_admin_layout' => false,
