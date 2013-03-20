@@ -3,6 +3,7 @@
 namespace FcLibraries\Model;
 use Zend\Db\TableGateway\TableGateway;
 
+
 interface ModelInterface
 {
 
@@ -12,7 +13,7 @@ interface ModelInterface
 
     public function get($id);
 
-    public function issetName($id);
+    public function existName($id);
 
 //    public function add(Region $data);
 

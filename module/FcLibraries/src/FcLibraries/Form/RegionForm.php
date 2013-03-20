@@ -8,11 +8,13 @@ use Zend\Form\Element;
 
 class RegionForm extends Form
 {
+    protected $_formName = 'region';
+
     public function __construct($name = null)
     {
-        parent::__construct('region');
+        parent::__construct($this->_formName);
 
-        $this->setName('region');
+        $this->setName($this->_formName);
         $this->setAttribute('method', 'post');
 
         $this->add(array(
@@ -22,21 +24,18 @@ class RegionForm extends Form
             ),
         ));
 
-        //Text
         $this->add(array(
             'name' => 'name',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'placeholder' => 'Region of the world',
                 'required' => true,
                 'maxlength' => '30',
             ),
             'options' => array(
-                'label' => 'Region',
+                'label' => 'Region of the world',
             ),
         ));
 
-        //Csrf
         $this->add(new Element\Csrf('csrf'));
 
         //Submit button
@@ -47,7 +46,6 @@ class RegionForm extends Form
                 'value' => 'Add',
             ),
         ));
-
 
         //Plain button
         $this->add(array(

@@ -1,0 +1,32 @@
+<?php
+$title = 'Edit country';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<?php
+$displayOptions = array(
+    'class' => 'form-horizontal',
+);
+$form = $this->form;
+$formType = $this->formType;
+$validData = $this->validData;
+$form->setAttribute('action', $this->url(
+    'zfcadmin/country',
+    array(
+        'action' => 'edit',
+        'id'     => $this->id,
+    )
+));
+$form->prepare();
+?>
+
+<?php if ($form->getMessages()): ?>
+<div class="alert alert-error">
+    <button class="close" data-dismiss="alert" type="button">×</button>
+    <strong>Invalid input!</strong>
+    Form fields are not filled in correctly.
+</div>
+<?php endif; ?>
+
+<?php echo $this->formTwb($form, $formType, $displayOptions); ?>

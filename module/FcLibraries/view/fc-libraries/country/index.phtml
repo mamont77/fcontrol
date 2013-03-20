@@ -1,2 +1,34 @@
-<h1>Countries</h1>
-Страница в разработке!
+<?php
+$title = 'Countries';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<p>
+    <a href="<?php echo $this->url('zfcadmin/country', array('action' => 'add'));?>"
+       class="btn btn-primary">Add country</a>
+</p>
+
+<table class="table table-bordered table-hover">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Region</th>
+        <th>Code</th>
+        <th>Actions</th>
+    </tr>
+    <?php foreach ($data as $row) : ?>
+    <tr>
+        <td><?php echo $this->escapeHtml($row->id);?></td>
+        <td><?php echo $this->escapeHtml($row->name);?></td>
+        <td><?php echo $this->escapeHtml($row->region);?></td>
+        <td><?php echo $this->escapeHtml($row->code);?></td>
+        <td>
+            <a href="<?php echo $this->url('zfcadmin/country',
+                array('action' => 'edit', 'id' => $row->id));?>" class="btn btn-success">Edit</a>
+            <a href="<?php echo $this->url('zfcadmin/country',
+                array('action' => 'delete', 'id' => $row->id));?>" class="btn btn-warning">Remove</a>
+        </td>
+    </tr>
+    <?php endforeach; ?>
+</table>
+
