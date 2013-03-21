@@ -4,31 +4,25 @@ namespace FcLibraries\Form;
 
 use Zend\Form\Form;
 use Zend\Form\Element;
-//use FcLibraries\Controller\RegionController;
 use Zend\Mvc\Controller\AbstractController;
 
 
 class CountryForm extends Form
 {
     /**
-     * @var string
+     * @var array
      */
-    protected $_formName = 'country';
-    protected $_regionTable = null;
-    protected $_regions = null;
+    protected $_regions = array();
 
     /**
      * @param null $name
+     * @param array $options
      */
-    public function __construct($name = null)
+    public function __construct($name = null, $options)
     {
-        parent::__construct($this->_formName);
-        $this->setRegions();
+        parent::__construct($name);
+        $this->setRegions($options['regions']);
 
-        echo'<pre>';
-        print_r($this->_regions);
-        echo'</pre>';
-        $this->setName($this->_formName);
         $this->setAttribute('method', 'post');
 
         $this->add(array(
@@ -55,13 +49,8 @@ class CountryForm extends Form
             'type' => 'Zend\Form\Element\Select',
             'options' => array(
                 'label' => 'Region',
-                'value_options' => array(
-                    'user' => 'User',
-                    'manager' => 'Manager',
-                    'admin' => 'Admin',
-                ),
+                'value_options' => $this->_regions,
             ),
-            'value' => 'user',
         ));
 
         $this->add(array(
@@ -99,14 +88,14 @@ class CountryForm extends Form
     }
 
     /**
-     * @return array|null|object
+     * @param \Zend\Db\ResultSet\ResultSet $data
      */
-    private function setRegions()
+    private function setRegions(\Zend\Db\ResultSet\ResultSet $data)
     {
         if (!$this->_regions) {
-            $this->_regions = $this->getRegionTable();
+            foreach ($data as $row) {
+                $this->_regions[$row->id] = $row->name;
+            }
         }
-        return $this->_regions;
     }
-
 }

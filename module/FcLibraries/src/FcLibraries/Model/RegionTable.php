@@ -14,6 +14,9 @@ class RegionTable implements ModelInterface
         $this->_tableGateway = $tableGateway;
     }
 
+    /**
+     * @return \Zend\Db\ResultSet\ResultSet
+     */
     public function fetchAll()
     {
         $resultSet = $this->_tableGateway->select();

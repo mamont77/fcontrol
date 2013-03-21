@@ -21,11 +21,19 @@ class CountryTable implements ModelInterface
     }
 
     /**
-     * @return \Zend\Db\ResultSet\ResultSet
+     * @return null|\Zend\Db\ResultSet\ResultSetInterface
      */
     public function fetchAll()
     {
-        $resultSet = $this->_tableGateway->select();
+        //$resultSet = $this->_tableGateway->select();
+        $select = new Select;
+        $select->from('library_country');
+        $select->columns(array('id', 'region', 'name', 'code'));
+        $select->join(array('r' => 'library_region'),
+            'r.id = library_country.region',
+            array('region_name' => 'name'));
+        $select->order('library_country.code ASC');
+        $resultSet = $this->_tableGateway->selectWith($select);
         return $resultSet;
     }
 

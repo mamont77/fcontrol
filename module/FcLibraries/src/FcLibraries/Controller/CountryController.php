@@ -10,6 +10,7 @@ use FcLibraries\Form\CountryForm;
 class CountryController extends AbstractActionController implements ControllerInterface
 {
     protected $_countryTable;
+    protected $_regionTable;
 
     /**
      * @return array|\Zend\View\Model\ViewModel
@@ -26,8 +27,7 @@ class CountryController extends AbstractActionController implements ControllerIn
      */
     public function addAction()
     {
-        $form = new CountryForm();
-
+        $form = new CountryForm('country', array('regions' => $this->getRegions()));
         $request = $this->getRequest();
         if ($request->isPost()) {
             $model = new Country();
@@ -58,7 +58,7 @@ class CountryController extends AbstractActionController implements ControllerIn
         }
         $data = $this->getCountryTable()->get($id);
 
-        $form = new CountryForm();
+        $form = new CountryForm('country', array('regions' => $this->getRegions()));
         $form->bind($data);
         $form->get('submitBtn')->setAttribute('value', 'Edit');
 
@@ -109,6 +109,9 @@ class CountryController extends AbstractActionController implements ControllerIn
         );
     }
 
+    /**
+     * @return array|object
+     */
     public function getCountryTable()
     {
         if (!$this->_countryTable) {
@@ -116,5 +119,24 @@ class CountryController extends AbstractActionController implements ControllerIn
             $this->_countryTable = $sm->get('FcLibraries\Model\CountryTable');
         }
         return $this->_countryTable;
+    }
+
+    /**
+     * @return array|object
+     */
+    private function getRegionTable()
+    {
+        if (!$this->_regionTable) {
+            $sm = $this->getServiceLocator();
+            $this->_regionTable = $sm->get('FcLibraries\Model\RegionTable');
+        }
+        return $this->_regionTable;
+    }
+
+    /**
+     * @return mixed
+     */
+    private function getRegions() {
+        return $this->getRegionTable()->fetchAll();
     }
 }

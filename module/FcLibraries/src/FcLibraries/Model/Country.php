@@ -11,6 +11,7 @@ class Country implements InputFilterAwareInterface
     public $id;
     public $name;
     public $region;
+    public $region_name;
     public $code;
     protected $_inputFilter;
 
@@ -30,6 +31,7 @@ class Country implements InputFilterAwareInterface
         $this->id = (isset($data['id'])) ? $data['id'] : null;
         $this->name = (isset($data['name'])) ? $data['name'] : null;
         $this->region = (isset($data['region'])) ? $data['region'] : null;
+        $this->region_name = (isset($data['region_name'])) ? $data['region_name'] : null;
         $this->code = (isset($data['code'])) ? $data['code'] : null;
     }
 
