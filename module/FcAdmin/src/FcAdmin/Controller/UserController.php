@@ -5,8 +5,11 @@ namespace FcAdmin\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use FcAdmin\Model\User;
-use FcAdmin\Model\Role;
+//use FcAdmin\Model\Role;
 use FcAdmin\Form\UserForm;
+use Zend\Db\Sql\Select;
+use Zend\Paginator\Paginator;
+use Zend\Paginator\Adapter\Iterator as paginatorIterator;
 
 class UserController extends AbstractActionController
 {
@@ -15,8 +18,28 @@ class UserController extends AbstractActionController
 
     public function indexAction()
     {
+        $select = new Select();
+
+        $order_by = $this->params()->fromRoute('order_by') ?
+            $this->params()->fromRoute('order_by') : 'username';
+        $order = $this->params()->fromRoute('order') ?
+            $this->params()->fromRoute('order') : Select::ORDER_ASCENDING;
+        $page = $this->params()->fromRoute('page') ? (int)$this->params()->fromRoute('page') : 1;
+
+        $albums = $this->getUserTable()->fetchAll($select->order($order_by . ' ' . $order));
+        $itemsPerPage = 5;
+
+        $albums->current();
+        $pagination = new Paginator(new paginatorIterator($albums));
+        $pagination->setCurrentPageNumber($page)
+            ->setItemCountPerPage($itemsPerPage)
+            ->setPageRange(7);
+
         return new ViewModel(array(
-            'users' => $this->getUserTable()->fetchAll(),
+            'order_by' => $order_by,
+            'order' => $order,
+            'page' => $page,
+            'pagination' => $pagination,
         ));
     }
 

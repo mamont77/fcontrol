@@ -2,28 +2,48 @@
 
 namespace FcAdmin\Model;
 
-use Zend\Db\TableGateway\TableGateway;
+use Zend\Db\TableGateway\AbstractTableGateway;
+use Zend\Db\Adapter\Adapter;
+use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\Select;
 
-class UserTable
+class UserTable extends AbstractTableGateway
 {
-    protected $tableGateway;
 
-    public function __construct(TableGateway $tableGateway)
+    protected $table = 'user';
+
+    public function __construct(Adapter $adapter)
     {
-        $this->tableGateway = $tableGateway;
+        $this->adapter = $adapter;
+        $this->resultSetPrototype = new ResultSet();
+        $this->resultSetPrototype->setArrayObjectPrototype(new User());
+
+        $this->initialize();
     }
 
-    public function fetchAll()
+    public function fetchAll(Select $select = null)
     {
-        $select = new Select;
-        $select->from('user');
+        if (null === $select)
+            $select = new Select();
+        $select->from($this->table);
         $select->columns(array('user_id', 'email', 'username', 'state'));
         $select->join('user_role_linker', "user_role_linker.user_id = user.user_id", array('role_id'), 'left');
+        $resultSet = $this->selectWith($select);
+        $resultSet->buffer();
 
-        $resultSet = $this->tableGateway->selectWith($select);
         return $resultSet;
     }
+
+//    public function fetchAll()
+//    {
+//        $select = new Select;
+//        $select->from('user');
+//        $select->columns(array('user_id', 'email', 'username', 'state'));
+//        $select->join('user_role_linker', "user_role_linker.user_id = user.user_id", array('role_id'), 'left');
+//
+//        $resultSet = $this->tableGateway->selectWith($select);
+//        return $resultSet;
+//    }
 
     public function getUser($id)
     {
@@ -35,7 +55,7 @@ class UserTable
         $select->where(array('user.user_id' => $id));
         $select->join('user_role_linker', "user_role_linker.user_id = user.user_id", array('role_id'), 'left');
 
-        $rowSet = $this->tableGateway->selectWith($select);
+        $rowSet = $this->selectWith($select);
         $row = $rowSet->current();
 
         if (!$row) {
@@ -58,19 +78,19 @@ class UserTable
 
         $id = (int)$user->user_id;
         if ($id == 0) {
-            $this->tableGateway->insert($userData);
+            $this->insert($userData);
         } else {
             if ($this->getUser($id)) {
-                $this->tableGateway->update($userData, array('user_id' => $id));
+                $this->update($userData, array('user_id' => $id));
             } else {
                 throw new \Exception('Form id does not exist');
             }
         }
-        return $this->tableGateway->getLastInsertValue();
+        return $this->getLastInsertValue();
     }
 
     public function deleteUser($id)
     {
-        $this->tableGateway->delete(array('user_id' => $id));
+        $this->delete(array('user_id' => $id));
     }
 }

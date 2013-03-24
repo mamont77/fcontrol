@@ -20,9 +20,14 @@ return array(
                 ),
                 'child_routes' => array(
                     'users' => array(
-                        'type' => 'literal',
+                        'type' => 'segment',
                         'options' => array(
-                            'route' => '/users',
+                            'route' => '/users[/page/:page][/order_by/:order_by][/:order]',
+                            'constraints' => array(
+                                'page' => '[0-9]+',
+                                'order_by' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'order' => 'ASC|DESC',
+                            ),
                             'defaults' => array(
                                 'controller' => 'FcAdmin\Controller\User',
                                 'action' => 'index',
@@ -53,6 +58,9 @@ return array(
         'doctype' => 'HTML5',
         'template_path_stack' => array(
             'user' => __DIR__ . '/../view',
+        ),
+        'template_map' => array(
+            'users-pagination-slide' => __DIR__ . '/../view/layout/usersSlidePagination.phtml',
         ),
     ),
 //    'translator' => array(
