@@ -21,7 +21,7 @@ class AlbumTable
 
     public function getAlbum($id)
     {
-        $id  = (int) $id;
+        $id = (int)$id;
         $rowset = $this->tableGateway->select(array('id' => $id));
         $row = $rowset->current();
         if (!$row) {
@@ -34,7 +34,7 @@ class AlbumTable
     {
         $data = array(
             'artist' => $album->artist,
-            'title'  => $album->title,
+            'title' => $album->title,
         );
 
         $id = (int)$album->id;

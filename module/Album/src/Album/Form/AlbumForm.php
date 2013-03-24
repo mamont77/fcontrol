@@ -14,13 +14,13 @@ class AlbumForm extends Form
         $this->add(array(
             'name' => 'id',
             'attributes' => array(
-                'type'  => 'hidden',
+                'type' => 'hidden',
             ),
         ));
         $this->add(array(
             'name' => 'artist',
             'attributes' => array(
-                'type'  => 'text',
+                'type' => 'text',
             ),
             'options' => array(
                 'label' => 'Artist',
@@ -29,7 +29,7 @@ class AlbumForm extends Form
         $this->add(array(
             'name' => 'title',
             'attributes' => array(
-                'type'  => 'text',
+                'type' => 'text',
             ),
             'options' => array(
                 'label' => 'Title',
@@ -38,7 +38,7 @@ class AlbumForm extends Form
         $this->add(array(
             'name' => 'submit',
             'attributes' => array(
-                'type'  => 'submit',
+                'type' => 'submit',
                 'value' => 'Go',
                 'id' => 'submitbutton',
             ),
