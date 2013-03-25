@@ -34,17 +34,6 @@ class UserTable extends AbstractTableGateway
         return $resultSet;
     }
 
-//    public function fetchAll()
-//    {
-//        $select = new Select;
-//        $select->from('user');
-//        $select->columns(array('user_id', 'email', 'username', 'state'));
-//        $select->join('user_role_linker', "user_role_linker.user_id = user.user_id", array('role_id'), 'left');
-//
-//        $resultSet = $this->tableGateway->selectWith($select);
-//        return $resultSet;
-//    }
-
     public function getUser($id)
     {
         $id = (int)$id;
@@ -74,7 +63,6 @@ class UserTable extends AbstractTableGateway
             'password' => $user->password,
             'state' => $user->state,
         );
-        $roleData = $user->role_id;
 
         $id = (int)$user->user_id;
         if ($id == 0) {

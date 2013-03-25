@@ -1,13 +1,12 @@
 <?php
 
 namespace FcLibraries\Model;
-use Zend\Db\TableGateway\TableGateway;
-
+use Zend\Db\Adapter\Adapter;
 
 interface ModelInterface
 {
 
-    public function __construct(TableGateway $tableGateway);
+    public function __construct(Adapter $adapter);
 
     public function fetchAll();
 
@@ -17,7 +16,7 @@ interface ModelInterface
 
 //    public function add(Region $data);
 
-//    public function update(Region $data);
+//    public function save(Region $data);
 
     public function remove($id);
 

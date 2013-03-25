@@ -6,6 +6,9 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use FcLibraries\Model\Country;
 use FcLibraries\Form\CountryForm;
+use Zend\Db\Sql\Select;
+use Zend\Paginator\Paginator;
+use Zend\Paginator\Adapter\Iterator as paginatorIterator;
 
 class CountryController extends AbstractActionController implements ControllerInterface
 {
@@ -17,8 +20,29 @@ class CountryController extends AbstractActionController implements ControllerIn
      */
     public function indexAction()
     {
+        $select = new Select();
+
+        $order_by = $this->params()->fromRoute('order_by') ?
+            $this->params()->fromRoute('order_by') : 'name';
+        $order = $this->params()->fromRoute('order') ?
+            $this->params()->fromRoute('order') : Select::ORDER_ASCENDING;
+        $page = $this->params()->fromRoute('page') ? (int)$this->params()->fromRoute('page') : 1;
+
+        $albums = $this->getCountryTable()->fetchAll($select->order($order_by . ' ' . $order));
+        $itemsPerPage = 5;
+
+        $albums->current();
+        $pagination = new Paginator(new paginatorIterator($albums));
+        $pagination->setCurrentPageNumber($page)
+            ->setItemCountPerPage($itemsPerPage)
+            ->setPageRange(7);
+
         return new ViewModel(array(
-            'data' => $this->getCountryTable()->fetchAll(),
+            'order_by' => $order_by,
+            'order' => $order,
+            'page' => $page,
+            'pagination' => $pagination,
+            'route' => 'zfcadmin/countries',
         ));
     }
 
@@ -60,7 +84,7 @@ class CountryController extends AbstractActionController implements ControllerIn
 
         $form = new CountryForm('country', array('regions' => $this->getRegions()));
         $form->bind($data);
-        $form->get('submitBtn')->setAttribute('value', 'Edit');
+        $form->get('submitBtn')->setAttribute('value', 'Save');
 
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -68,7 +92,7 @@ class CountryController extends AbstractActionController implements ControllerIn
             $form->setData($request->getPost());
 
             if ($form->isValid()) {
-                $this->getCountryTable()->update($form->getData());
+                $this->getCountryTable()->save($form->getData());
 
                 return $this->redirect()->toRoute('zfcadmin/countries');
             }

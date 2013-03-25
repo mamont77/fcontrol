@@ -26,9 +26,14 @@ return array(
                         ),
                     ),
                     'regions' => array(
-                        'type' => 'literal',
+                        'type' => 'segment',
                         'options' => array(
-                            'route' => '/libraries/regions',
+                            'route' => '/libraries/regions[/page/:page][/order_by/:order_by][/:order]',
+                            'constraints' => array(
+                                'page' => '[0-9]+',
+                                'order_by' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'order' => 'ASC|DESC',
+                            ),
                             'defaults' => array(
                                 'controller' => 'FcLibraries\Controller\Region',
                                 'action' => 'index',
@@ -50,9 +55,14 @@ return array(
                         ),
                     ),
                     'countries' => array(
-                        'type' => 'literal',
+                        'type' => 'segment',
                         'options' => array(
-                            'route' => '/libraries/countries',
+                            'route' => '/libraries/countries[/page/:page][/order_by/:order_by][/:order]',
+                            'constraints' => array(
+                                'page' => '[0-9]+',
+                                'order_by' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'order' => 'ASC|DESC',
+                            ),
                             'defaults' => array(
                                 'controller' => 'FcLibraries\Controller\Country',
                                 'action' => 'index',
@@ -105,6 +115,9 @@ return array(
     'view_manager' => array(
         'template_path_stack' => array(
             __DIR__ . '/../view',
+        ),
+        'template_map' => array(
+            'libraries-pagination-slide' => __DIR__ . '/../view/layout/slidePagination.phtml',
         ),
     ),
     'translator' => array(

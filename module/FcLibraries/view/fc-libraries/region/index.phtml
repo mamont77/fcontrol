@@ -1,6 +1,9 @@
 <?php
 $title = 'Regions';
 $this->headTitle($title);
+$url_order = 'ASC';
+if ($order_by == 'name')
+    $url_order = $order == 'ASC' ? 'DESC' : 'ASC';
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 <p>
@@ -11,10 +14,17 @@ $this->headTitle($title);
 <table class="table table-bordered table-hover">
     <tr>
         <th>ID</th>
-        <th>Name</th>
+        <th>
+            <a href="<?php echo $this->url($route, array('order_by' => 'name', 'order' => $url_order)); ?>">
+                Name
+                <?php if ($order_by == 'name'): ?>
+                <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
+                <?php endif; ?>
+            </a>
+        </th>
         <th>Actions</th>
     </tr>
-    <?php foreach ($data as $row) : ?>
+    <?php foreach ($pagination as $row) : ?>
     <tr>
         <td><?php echo $this->escapeHtml($row->id);?></td>
         <td><?php echo $this->escapeHtml($row->name);?></td>
@@ -27,4 +37,12 @@ $this->headTitle($title);
     </tr>
     <?php endforeach; ?>
 </table>
-
+<?php
+echo $this->paginationControl(
+    $pagination, 'Sliding', 'libraries-pagination-slide', array(
+        'order_by' => $order_by,
+        'order' => $order,
+        'route' => $route,
+    )
+);
+?>

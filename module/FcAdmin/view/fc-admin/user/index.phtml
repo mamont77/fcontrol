@@ -17,11 +17,20 @@ elseif ($order_by == 'email')
     <tr>
         <th>ID</th>
         <th>
-            <a href="<?php echo $this->url('zfcadmin/users', array('order_by' => 'username', 'order' => $url_order)); ?>">Name<?php if ($order_by == 'username'): ?>
-                <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i><?php endif; ?></a></th>
+            <a href="<?php echo $this->url($route, array('order_by' => 'username', 'order' => $url_order)); ?>">
+                Name
+                <?php if ($order_by == 'username'): ?>
+                <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
+                <?php endif; ?>
+            </a>
+        </th>
         <th>
-            <a href="<?php echo $this->url('zfcadmin/users', array('order_by' => 'email', 'order' => $url_order)); ?>">Email<?php if ($order_by == 'email'): ?>
-                <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i><?php endif; ?></a>
+            <a href="<?php echo $this->url($route, array('order_by' => 'email', 'order' => $url_order)); ?>">
+                Email
+                <?php if ($order_by == 'email'): ?>
+                <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
+                <?php endif; ?>
+            </a>
         </th>
         <th>Role</th>
         <th>Status</th>

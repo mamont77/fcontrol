@@ -5,7 +5,6 @@ namespace FcAdmin\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use FcAdmin\Model\User;
-//use FcAdmin\Model\Role;
 use FcAdmin\Form\UserForm;
 use Zend\Db\Sql\Select;
 use Zend\Paginator\Paginator;

@@ -2,38 +2,44 @@
 
 namespace FcLibraries\Model;
 
-use Zend\Db\TableGateway\TableGateway;
+use Zend\Db\TableGateway\AbstractTableGateway;
+use Zend\Db\Adapter\Adapter;
+use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\Select;
 
-class CountryTable implements ModelInterface
+class CountryTable extends AbstractTableGateway implements ModelInterface
 {
-    /**
-     * @var \Zend\Db\TableGateway\TableGateway
-     */
-    protected $_tableGateway;
+    protected $table = 'library_country';
 
     /**
-     * @param \Zend\Db\TableGateway\TableGateway $tableGateway
+     * @param \Zend\Db\Adapter\Adapter $adapter
      */
-    public function __construct(TableGateway $tableGateway)
+    public function __construct(Adapter $adapter)
     {
-        $this->_tableGateway = $tableGateway;
+        $this->adapter = $adapter;
+        $this->resultSetPrototype = new ResultSet();
+        $this->resultSetPrototype->setArrayObjectPrototype(new Country());
+
+        $this->initialize();
     }
 
     /**
+     * @param \Zend\Db\Sql\Select $select
      * @return null|\Zend\Db\ResultSet\ResultSetInterface
      */
-    public function fetchAll()
+    public function fetchAll(Select $select = null)
     {
-        //$resultSet = $this->_tableGateway->select();
-        $select = new Select;
-        $select->from('library_country');
-        $select->columns(array('id', 'region', 'name', 'code'));
+        if (null === $select)
+            $select = new Select();
+        $select->from($this->table);
+        $select->columns(array('id', 'name', 'code'));
         $select->join(array('r' => 'library_region'),
             'r.id = library_country.region',
             array('region_name' => 'name'));
-        $select->order('library_country.code ASC');
-        $resultSet = $this->_tableGateway->selectWith($select);
+//        $select->order('library_country.code ASC');
+        $resultSet = $this->selectWith($select);
+        $resultSet->buffer();
+
         return $resultSet;
     }
 
@@ -45,11 +51,12 @@ class CountryTable implements ModelInterface
     public function get($id)
     {
         $id = (int)$id;
-        $rowSet = $this->_tableGateway->select(array('id' => $id));
+        $rowSet = $this->select(array('id' => $id));
         $row = $rowSet->current();
         if (!$row) {
             throw new \Exception("Could not find row $id");
         }
+
         return $row;
     }
 
@@ -60,7 +67,8 @@ class CountryTable implements ModelInterface
     public function existName($name)
     {
         $name = (string)$name;
-        $rowSet = $this->_tableGateway->select(array('name' => $name));
+        $rowSet = $this->select(array('name' => $name));
+
         return ($rowSet->current()) ? true : false;
     }
 
@@ -78,7 +86,7 @@ class CountryTable implements ModelInterface
         if ($this->existName($object->name)) {
             throw new \Exception("$object->name in the table exists");
         } else {
-            $this->_tableGateway->insert($data);
+            $this->insert($data);
         }
     }
 
@@ -86,7 +94,7 @@ class CountryTable implements ModelInterface
      * @param Country $object
      * @throws \Exception
      */
-    public function update(Country $object)
+    public function save(Country $object)
     {
         $data = array(
             'name' => $object->name,
@@ -95,7 +103,7 @@ class CountryTable implements ModelInterface
         );
         $id = (int)$object->id;
         if ($this->get($id)) {
-            $this->_tableGateway->update($data, array('id' => $id));
+            $this->update($data, array('id' => $id));
         } else {
             throw new \Exception('Form id does not exist');
         }
@@ -106,7 +114,7 @@ class CountryTable implements ModelInterface
      */
     public function remove($id)
     {
-        $this->_tableGateway->delete(array('id' => $id));
+        $this->delete(array('id' => $id));
     }
 
 }
