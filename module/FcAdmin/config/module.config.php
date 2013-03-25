@@ -60,7 +60,7 @@ return array(
             'user' => __DIR__ . '/../view',
         ),
         'template_map' => array(
-            'users-pagination-slide' => __DIR__ . '/../view/layout/usersSlidePagination.phtml',
+            'users-pagination-slide' => __DIR__ . '/../view/layout/slidePagination.phtml',
         ),
     ),
 //    'translator' => array(

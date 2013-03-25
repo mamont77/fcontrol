@@ -50,6 +50,10 @@ elseif ($order_by == 'email')
 </table>
 <?php
 echo $this->paginationControl(
-    $pagination, 'Sliding', 'users-pagination-slide', array('order_by' => $order_by, 'order' => $order)
+    $pagination, 'Sliding', 'users-pagination-slide', array(
+        'order_by' => $order_by,
+        'order' => $order,
+        'route' => $route,
+    )
 );
 ?>

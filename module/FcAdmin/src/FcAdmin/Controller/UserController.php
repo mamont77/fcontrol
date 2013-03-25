@@ -40,6 +40,7 @@ class UserController extends AbstractActionController
             'order' => $order,
             'page' => $page,
             'pagination' => $pagination,
+            'route' => 'zfcadmin/users',
         ));
     }
 
