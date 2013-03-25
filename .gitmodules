@@ -22,18 +22,6 @@
 [submodule "vendor/BjyProfiler"]
 	path = vendor/BjyProfiler
 	url = git://github.com/bjyoungblood/BjyProfiler.git
-[submodule "vendor/RoleUserBridge"]
-	path = vendor/RoleUserBridge
-	url = git://github.com/darkmatus/roleuserbridge.git
-[submodule "vendor/ZfcRbac"]
-	path = vendor/ZfcRbac
-	url = git://github.com/ZF-Commons/ZfcRbac.git
-[submodule "vendor/ZfcUserAdmin"]
-	path = vendor/ZfcUserAdmin
-	url = https://github.com/Danielss89/ZfcUserAdmin.git
-[submodule "vendor/ZfcTwitterBootstrap"]
-	path = vendor/ZfcTwitterBootstrap
-	url = git://github.com/mwillbanks/ZfcTwitterBootstrap.git
 [submodule "vendor/DluTwBootstrap"]
 	path = vendor/DluTwBootstrap
 	url = https://bitbucket.org/dlu/dlutwbootstrap.git
