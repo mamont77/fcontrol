@@ -10,12 +10,6 @@ use Zend\Crypt\Password\Bcrypt;
 class User implements InputFilterAwareInterface
 {
 
-//    const INVALID_USERNAME = 'Поле должно содержать от 4 до 255 символов!';
-//    const INVALID_EMAIL = 'Не правильный емейл!';
-//    const INVALID_PASSWORD = 'Поле должно содержать минимум 6 символов!';
-//    const NOT_SAME = 'Поля "Пароль" и "Повторить пароль" должны совпадать!';
-
-
     public $user_id;
     public $username;
     public $email;

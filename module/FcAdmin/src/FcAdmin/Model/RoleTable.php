@@ -2,20 +2,27 @@
 
 namespace FcAdmin\Model;
 
-use Zend\Db\TableGateway\TableGateway;
+use Zend\Db\TableGateway\AbstractTableGateway;
+use Zend\Db\Adapter\Adapter;
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\Sql\Select;
 
-class RoleTable
+class RoleTable extends AbstractTableGateway
 {
-    protected $tableGateway;
+    protected $table = 'user_role_linker';
 
-    public function __construct(TableGateway $tableGateway)
+    public function __construct(Adapter $adapter)
     {
-        $this->tableGateway = $tableGateway;
+        $this->adapter = $adapter;
+        $this->resultSetPrototype = new ResultSet();
+        $this->resultSetPrototype->setArrayObjectPrototype(new User());
+
+        $this->initialize();
     }
 
     public function getRole($userId)
     {
-        $rowset = $this->tableGateway->select(array('user_id' => (int)$userId));
+        $rowset = $this->select(array('user_id' => (int)$userId));
         return $rowset->current();
     }
 
@@ -24,15 +31,15 @@ class RoleTable
         $userId = (int)$user->user_id;
         $roleId = (string)$user->role_id;
         if ($this->getRole($userId)) {
-            $this->tableGateway->update(array('role_id' => $roleId), array('user_id' => $userId));
+            $this->update(array('role_id' => $roleId), array('user_id' => $userId));
         } else {
-            $this->tableGateway->insert(array('user_id' => $userId, 'role_id' => $roleId));
+            $this->insert(array('user_id' => $userId, 'role_id' => $roleId));
         }
 
     }
 
     public function deleteRole($userId)
     {
-        $this->tableGateway->delete(array('user_id' => $userId));
+        $this->delete(array('user_id' => $userId));
     }
 }

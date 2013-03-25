@@ -81,6 +81,7 @@ class UserController extends AbstractActionController
 
         $form  = new UserForm();
         $form->bind($user);
+        $form->get('submitBtn')->setAttribute('value', 'Save');
         $form->get('role_id')->setValue($user->role_id);
 
         $request = $this->getRequest();
