@@ -54,7 +54,7 @@ class CountryController extends AbstractActionController implements ControllerIn
         $form = new CountryForm('country', array('regions' => $this->getRegions()));
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $model = new Country();
+            $model = $this->getServiceLocator()->get('CountryModel');
             $form->setInputFilter($model->getInputFilter());
             $form->setData($request->getPost());
 

@@ -48,6 +48,7 @@ class Module
             ),
             'invokables' => array(
                 'RegionModel' => 'FcLibraries\Model\Region',
+                'CountryModel' => 'FcLibraries\Model\Country',
             ),
 
         );
