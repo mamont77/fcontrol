@@ -77,7 +77,7 @@ class Region implements ServiceLocatorAwareInterface, InputFilterAwareInterface
                         ),
                     ),
                     array(
-                        'name' => 'Db\RecordExists',
+                        'name' => 'Db\NoRecordExists',
                         'options' => array(
                             'table' => 'library_region',
                             'field' => 'name',
