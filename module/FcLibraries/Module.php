@@ -46,6 +46,10 @@ class Module
                     return $table;
                 },
             ),
+            'invokables' => array(
+                'RegionModel' => 'FcLibraries\Model\Region',
+            ),
+
         );
     }
 }
