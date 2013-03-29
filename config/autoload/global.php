@@ -1,7 +1,7 @@
 <?php
 
 $dbParams = array(
-    'database' => 'zf2tutorial',
+    'database' => 'fcontrol',
     'username' => 'root',
     'password' => '',
     'hostname' => 'localhost',
