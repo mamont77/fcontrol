@@ -48,11 +48,11 @@ class RegionController extends AbstractActionController implements ControllerInt
     public function addAction()
     {
         $form = new RegionForm();
+//        $formType = \DluTwBootstrap\Form\FormUtil::FORM_TYPE_HORIZONTAL;
 
         $request = $this->getRequest();
         if ($request->isPost()) {
-//            $model = new Region();
-            $model = $this->getServiceLocator()->get('RegionModel');
+            $model = new Region();
             $form->setInputFilter($model->getInputFilter());
             $form->setData($request->getPost());
 
@@ -67,9 +67,6 @@ class RegionController extends AbstractActionController implements ControllerInt
         return array('form' => $form);
     }
 
-    /**
-     * @return array|\Zend\Http\Response
-     */
     public function editAction()
     {
         $id = (int) $this->params()->fromRoute('id', 0);
@@ -79,7 +76,6 @@ class RegionController extends AbstractActionController implements ControllerInt
             ));
         }
         $data = $this->getRegionTable()->get($id);
-        //$data = $this->getServiceLocator()->get('RegionModel');
 
         $form  = new RegionForm();
         $form->bind($data);

@@ -50,7 +50,7 @@ return array(
                             ),
                             'defaults' => array(
                                 'controller' => 'FcLibraries\Controller\Region',
-                                'action' => 'index',
+                                'action' => 'add',
                             ),
                         ),
                     ),
@@ -79,7 +79,7 @@ return array(
                             ),
                             'defaults' => array(
                                 'controller' => 'FcLibraries\Controller\Country',
-                                'action' => 'index',
+                                'action' => 'add',
                             ),
                         ),
                     ),

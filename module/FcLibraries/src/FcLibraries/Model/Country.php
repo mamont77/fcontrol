@@ -6,10 +6,7 @@ use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 
-use Zend\ServiceManager\ServiceLocatorAwareInterface,
-    Zend\ServiceManager\ServiceLocatorInterface;
-
-class Country implements ServiceLocatorAwareInterface, InputFilterAwareInterface
+class Country implements InputFilterAwareInterface
 {
     public $id;
     public $name;
@@ -25,19 +22,6 @@ class Country implements ServiceLocatorAwareInterface, InputFilterAwareInterface
         array('name' => 'StripTags'),
         array('name' => 'StringTrim'),
     );
-
-    protected $serviceLocator;
-
-    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
-    {
-        $this->serviceLocator = $serviceLocator;
-        return $this;
-    }
-
-    public function getServiceLocator()
-    {
-        return $this->serviceLocator;
-    }
 
     /**
      * @param $data
@@ -99,14 +83,6 @@ class Country implements ServiceLocatorAwareInterface, InputFilterAwareInterface
                             'max' => 30,
                         ),
                     ),
-                    array(
-                        'name' => 'Db\NoRecordExists',
-                        'options' => array(
-                            'table' => 'library_country',
-                            'field' => 'name',
-                            'adapter' => $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter'),
-                        ),
-                    ),
                 ),
             )));
 
@@ -126,14 +102,6 @@ class Country implements ServiceLocatorAwareInterface, InputFilterAwareInterface
                             'encoding' => 'UTF-8',
                             'min' => 2,
                             'max' => 3,
-                        ),
-                    ),
-                    array(
-                        'name' => 'Db\NoRecordExists',
-                        'options' => array(
-                            'table' => 'library_country',
-                            'field' => 'code',
-                            'adapter' => $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter'),
                         ),
                     ),
                 ),
