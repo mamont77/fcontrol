@@ -20,7 +20,7 @@ class RegionForm extends Form
         $this->add(array(
             'name' => 'id',
             'attributes' => array(
-                'type'  => 'hidden',
+                'type' => 'hidden',
             ),
         ));
 
@@ -49,10 +49,10 @@ class RegionForm extends Form
 
         //Plain button
         $this->add(array(
-            'name'      => 'cancel',
-            'type'      => 'Zend\Form\Element\Button',
-            'options'   => array(
-               'label'      => 'Cancel',
+            'name' => 'cancel',
+            'type' => 'Zend\Form\Element\Button',
+            'options' => array(
+                'label' => 'Cancel',
             ),
         ));
 

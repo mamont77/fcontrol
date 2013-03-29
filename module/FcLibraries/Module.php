@@ -35,12 +35,12 @@ class Module
     {
         return array(
             'factories' => array(
-                'FcLibraries\Model\RegionTable' =>  function($sm) {
+                'FcLibraries\Model\RegionTable' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     $table = new RegionTable($dbAdapter);
                     return $table;
                 },
-                'FcLibraries\Model\CountryTable' =>  function($sm) {
+                'FcLibraries\Model\CountryTable' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     $table = new CountryTable($dbAdapter);
                     return $table;

@@ -160,7 +160,8 @@ class CountryController extends AbstractActionController implements ControllerIn
     /**
      * @return mixed
      */
-    private function getRegions() {
+    private function getRegions()
+    {
         return $this->getRegionTable()->fetchAll();
     }
 }

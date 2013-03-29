@@ -15,6 +15,7 @@ class Region implements InputFilterAwareInterface
         array('name' => 'StripTags'),
         array('name' => 'StringTrim'),
     );
+
 //    const TOO_SHORT = 'Long';
 
     public function exchangeArray($data)
@@ -23,7 +24,7 @@ class Region implements InputFilterAwareInterface
         $this->name = (isset($data['name'])) ? $data['name'] : null;
     }
 
-     // Add the following method:
+    // Add the following method:
     public function getArrayCopy()
     {
         return get_object_vars($this);
@@ -38,27 +39,27 @@ class Region implements InputFilterAwareInterface
     {
         if (!$this->_inputFilter) {
             $inputFilter = new InputFilter();
-            $factory     = new InputFactory();
+            $factory = new InputFactory();
 
             $inputFilter->add($factory->createInput(array(
-                'name'     => 'id',
+                'name' => 'id',
                 'required' => true,
-                'filters'  => array(
+                'filters' => array(
                     array('name' => 'Int'),
                 ),
             )));
 
             $inputFilter->add($factory->createInput(array(
-                'name'     => 'name',
+                'name' => 'name',
                 'required' => true,
-                'filters'  => $this->_filters,
+                'filters' => $this->_filters,
                 'validators' => array(
                     array(
-                        'name'    => 'StringLength',
+                        'name' => 'StringLength',
                         'options' => array(
                             'encoding' => 'UTF-8',
-                            'min'      => 1,
-                            'max'      => 30,
+                            'min' => 1,
+                            'max' => 30,
                         ),
                     ),
                 ),

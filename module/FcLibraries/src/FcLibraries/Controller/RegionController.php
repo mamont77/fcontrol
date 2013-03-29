@@ -69,7 +69,7 @@ class RegionController extends AbstractActionController implements ControllerInt
 
     public function editAction()
     {
-        $id = (int) $this->params()->fromRoute('id', 0);
+        $id = (int)$this->params()->fromRoute('id', 0);
         if (!$id) {
             return $this->redirect()->toRoute('zfcadmin/region', array(
                 'action' => 'add'
@@ -77,7 +77,7 @@ class RegionController extends AbstractActionController implements ControllerInt
         }
         $data = $this->getRegionTable()->get($id);
 
-        $form  = new RegionForm();
+        $form = new RegionForm();
         $form->bind($data);
         $form->get('submitBtn')->setAttribute('value', 'Save');
 
@@ -101,7 +101,7 @@ class RegionController extends AbstractActionController implements ControllerInt
 
     public function deleteAction()
     {
-        $id = (int) $this->params()->fromRoute('id', 0);
+        $id = (int)$this->params()->fromRoute('id', 0);
         if (!$id) {
             return $this->redirect()->toRoute('zfcadmin/regions');
         }
@@ -111,7 +111,7 @@ class RegionController extends AbstractActionController implements ControllerInt
             $del = $request->getPost('del', 'No');
 
             if ($del == 'Yes') {
-                $id = (int) $request->getPost('id');
+                $id = (int)$request->getPost('id');
                 $this->getRegionTable()->remove($id);
             }
 
@@ -120,7 +120,7 @@ class RegionController extends AbstractActionController implements ControllerInt
         }
 
         return array(
-            'id'    => $id,
+            'id' => $id,
             'data' => $this->getRegionTable()->get($id)
         );
     }
