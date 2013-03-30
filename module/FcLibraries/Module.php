@@ -50,12 +50,6 @@ class Module
                     $table = new CountryTable($dbAdapter);
                     return $table;
                 },
-//                'FcLibraries\Model\Region' => function($sm){
-//                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-//                    $region = new Region();
-//                    $region->setDbAdapter($dbAdapter);
-//                    return $region;
-//                },
             ),
         );
     }
