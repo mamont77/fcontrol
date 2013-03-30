@@ -46,15 +46,5 @@ class RegionForm extends Form
                 'value' => 'Add',
             ),
         ));
-
-        //Plain button
-        $this->add(array(
-            'name' => 'cancel',
-            'type' => 'Zend\Form\Element\Button',
-            'options' => array(
-                'label' => 'Cancel',
-            ),
-        ));
-
     }
 }

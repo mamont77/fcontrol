@@ -48,7 +48,6 @@ class RegionController extends AbstractActionController implements ControllerInt
     public function addAction()
     {
         $form = new RegionForm();
-//        $formType = \DluTwBootstrap\Form\FormUtil::FORM_TYPE_HORIZONTAL;
 
         $request = $this->getRequest();
         if ($request->isPost()) {

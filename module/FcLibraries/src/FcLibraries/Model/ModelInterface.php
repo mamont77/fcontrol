@@ -12,8 +12,6 @@ interface ModelInterface
 
     public function get($id);
 
-    public function existName($id);
-
 //    public function add(Region $data);
 
 //    public function save(Region $data);

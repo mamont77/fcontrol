@@ -4,8 +4,6 @@ namespace FcLibraries\Form;
 
 use Zend\Form\Form;
 use Zend\Form\Element;
-use Zend\Mvc\Controller\AbstractController;
-
 
 class CountryForm extends Form
 {
@@ -75,16 +73,6 @@ class CountryForm extends Form
                 'value' => 'Add',
             ),
         ));
-
-        //Plain button
-        $this->add(array(
-            'name' => 'cancel',
-            'type' => 'Zend\Form\Element\Button',
-            'options' => array(
-                'label' => 'Cancel',
-            ),
-        ));
-
     }
 
     /**
