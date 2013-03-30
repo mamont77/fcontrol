@@ -32,7 +32,7 @@ class RegionTable extends LibraryTable
         $data = array(
             'name' => $object->name,
         );
-            $this->insert($data);
+        $this->insert($data);
     }
 
     /**

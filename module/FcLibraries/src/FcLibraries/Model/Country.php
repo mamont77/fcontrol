@@ -3,25 +3,14 @@ namespace FcLibraries\Model;
 
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
-use Zend\InputFilter\InputFilterAwareInterface;
-use Zend\InputFilter\InputFilterInterface;
 
-class Country implements InputFilterAwareInterface
+class Country extends Library
 {
     public $id;
     public $name;
     public $region;
     public $region_name;
     public $code;
-    protected $_inputFilter;
-
-    /**
-     * @var array
-     */
-    protected $_filters = array(
-        array('name' => 'StripTags'),
-        array('name' => 'StringTrim'),
-    );
 
     /**
      * @param $data
@@ -33,24 +22,6 @@ class Country implements InputFilterAwareInterface
         $this->region = (isset($data['region'])) ? $data['region'] : null;
         $this->region_name = (isset($data['region_name'])) ? $data['region_name'] : null;
         $this->code = (isset($data['code'])) ? $data['code'] : null;
-    }
-
-    /**
-     * @return array
-     */
-    public function getArrayCopy()
-    {
-        return get_object_vars($this);
-    }
-
-    /**
-     * @param \Zend\InputFilter\InputFilterInterface $inputFilter
-     * @return void|\Zend\InputFilter\InputFilterAwareInterface
-     * @throws \Exception
-     */
-    public function setInputFilter(InputFilterInterface $inputFilter)
-    {
-        throw new \Exception("Not used");
     }
 
     /**

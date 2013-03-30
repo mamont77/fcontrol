@@ -12,9 +12,9 @@ interface ModelInterface
 
     public function get($id);
 
-//    public function add(Region $data);
-
-//    public function save(Region $data);
+//    public function add($data);
+//
+//    public function save($data);
 
     public function remove($id);
 
