@@ -3,6 +3,7 @@ namespace FcLibraries\Model;
 
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
+use FcLibraries\Model\Library;
 
 class Region extends Library
 {

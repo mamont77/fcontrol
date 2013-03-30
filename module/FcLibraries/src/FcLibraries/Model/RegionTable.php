@@ -4,6 +4,7 @@ namespace FcLibraries\Model;
 
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\ResultSet\ResultSet;
+use FcLibraries\Model\LibraryTable;
 
 class RegionTable extends LibraryTable
 {
