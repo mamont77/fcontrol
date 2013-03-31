@@ -3,8 +3,9 @@ namespace FcLibraries\Model;
 
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
+use FcLibraries\Model\LibraryModel;
 
-class Country extends Library
+class Country extends LibraryModel
 {
     public $id;
     public $name;

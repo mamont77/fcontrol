@@ -3,10 +3,15 @@ namespace FcLibraries\Model;
 
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
-use FcLibraries\Model\Library;
+use FcLibraries\Model\LibraryModel;
 
-class Region extends Library
+class Region extends LibraryModel
 {
+    /**
+     * @var string
+     */
+    protected $table = 'library_region';
+
     public $id;
     public $name;
 
@@ -35,6 +40,18 @@ class Region extends Library
                             'encoding' => 'UTF-8',
                             'min' => 1,
                             'max' => 30,
+                        ),
+                    ),
+                    array(
+                        'name'    => 'Db\NoRecordExists',
+                        'options' => array(
+                            'table' => $this->table,
+                            'field' => 'name',
+//                            'exclude' => array(
+//                                'field' => 'id',
+//                                'value' => $this->id
+//                            ),
+                            'adapter' => $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter'),
                         ),
                     ),
                 ),

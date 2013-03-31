@@ -51,7 +51,7 @@ class RegionController extends AbstractActionController implements ControllerInt
 
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $model = new Region();
+            $model = $this->getServiceLocator()->get('RegionModel');
             $form->setInputFilter($model->getInputFilter());
             $form->setData($request->getPost());
 

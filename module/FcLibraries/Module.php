@@ -1,6 +1,7 @@
 <?php
 namespace FcLibraries;
 
+use FcLibraries\Model\Region;
 use FcLibraries\Model\RegionTable;
 use FcLibraries\Model\CountryTable;
 
@@ -34,16 +35,18 @@ class Module
     public function getServiceConfig()
     {
         return array(
+            'invokables' => array(
+                'RegionModel' => 'FcLibraries\Model\Region',
+            ),
             'factories' => array(
                 'FcLibraries\Model\RegionTable' => function ($sm) {
+                    $region = $sm->get('RegionModel');
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    $table = new RegionTable($dbAdapter);
-                    return $table;
+                    return new RegionTable($dbAdapter, $region);
                 },
                 'FcLibraries\Model\CountryTable' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    $table = new CountryTable($dbAdapter);
-                    return $table;
+                    return new CountryTable($dbAdapter);
                 },
             ),
         );
