@@ -16,12 +16,11 @@ class RegionTable extends LibraryTable
     /**
      * @param \Zend\Db\Adapter\Adapter $adapter
      */
-    public function __construct(Adapter $adapter)
+    public function __construct(Adapter $adapter, Region $region)
     {
         $this->adapter = $adapter;
         $this->resultSetPrototype = new ResultSet();
-        $this->resultSetPrototype->setArrayObjectPrototype(new Region());
-
+        $this->resultSetPrototype->setArrayObjectPrototype($region);
         $this->initialize();
     }
 
