@@ -81,12 +81,11 @@ class RegionController extends AbstractActionController implements ControllerInt
 
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $form->setInputFilter($data->getInputFilter());
+            $filter = $this->getServiceLocator()->get('FcLibraries\Form\RegionFilter');
+            $form->setInputFilter($filter->getInputFilter());
             $form->setData($request->getPost());
-
             if ($form->isValid()) {
                 $this->getRegionTable()->save($form->getData());
-
                 return $this->redirect()->toRoute('zfcadmin/regions');
             }
         }

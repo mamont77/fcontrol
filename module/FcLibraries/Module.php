@@ -2,6 +2,7 @@
 namespace FcLibraries;
 
 use FcLibraries\Model\RegionTable;
+use FcLibraries\Form\RegionFilter;
 use FcLibraries\Model\CountryTable;
 use FcLibraries\Model\AirportTable;
 
@@ -51,6 +52,10 @@ class Module
                 'FcLibraries\Model\AirportTable' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     return new AirportTable($dbAdapter);
+                },
+                'FcLibraries\Form\RegionFilter' => function($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new RegionFilter($dbAdapter);
                 },
             ),
         );
