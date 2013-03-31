@@ -1,9 +1,9 @@
 <?php
 namespace FcLibraries;
 
-use FcLibraries\Model\Region;
 use FcLibraries\Model\RegionTable;
 use FcLibraries\Model\CountryTable;
+use FcLibraries\Model\AirportTable;
 
 class Module
 {
@@ -47,6 +47,10 @@ class Module
                 'FcLibraries\Model\CountryTable' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     return new CountryTable($dbAdapter);
+                },
+                'FcLibraries\Model\AirportTable' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new AirportTable($dbAdapter);
                 },
             ),
         );

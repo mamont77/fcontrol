@@ -2,12 +2,10 @@
 $title = 'Countries';
 $this->headTitle($title);
 $url_order = 'ASC';
-if ($order_by == 'name')
+if ($order) {
     $url_order = $order == 'ASC' ? 'DESC' : 'ASC';
-elseif ($order_by == 'region_name')
-    $url_order = $order == 'ASC' ? 'DESC' : 'ASC';
-elseif ($order_by == 'code')
-    $url_order = $order == 'ASC' ? 'DESC' : 'ASC';
+
+}
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 <p>

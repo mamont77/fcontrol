@@ -5,29 +5,88 @@ namespace FcLibraries\Form;
 use Zend\Form\Form;
 use Zend\Form\Element;
 
-
 class AirportForm extends Form
 {
-    public function __construct()
-    {
-        parent::__construct();
+    /**
+     * @var array
+     */
+    protected $_countries = array();
 
-        $this->setName('demoFormInline');
+    /**
+     * @param null $name
+     * @param array $options
+     */
+    public function __construct($name = null, $options)
+    {
+        parent::__construct($name);
+        $this->setCountries($options['countries']);
+
         $this->setAttribute('method', 'post');
 
-        //Text
         $this->add(array(
-            'name' => 'text',
-            'type' => 'Zend\Form\Element\Text',
+            'name' => 'id',
             'attributes' => array(
-                'placeholder' => 'Search term...',
-            ),
-            'options' => array(
-                'label' => 'Text',
+                'type' => 'hidden',
             ),
         ));
 
-        //Csrf
+        $this->add(array(
+            'name' => 'name',
+            'type' => 'Zend\Form\Element\Text',
+            'attributes' => array(
+                'required' => true,
+                'maxlength' => '30',
+            ),
+            'options' => array(
+                'label' => 'Name of Airport',
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'short_name',
+            'type' => 'Zend\Form\Element\Text',
+            'attributes' => array(
+                'required' => true,
+                'maxlength' => '30',
+            ),
+            'options' => array(
+                'label' => 'Short Name',
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'code_icao',
+            'type' => 'Zend\Form\Element\Text',
+            'attributes' => array(
+                'required' => true,
+                'maxlength' => '4',
+            ),
+            'options' => array(
+                'label' => 'Code ICAO',
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'code_iata',
+            'type' => 'Zend\Form\Element\Text',
+            'attributes' => array(
+                'required' => true,
+                'maxlength' => '3',
+            ),
+            'options' => array(
+                'label' => 'Code IATA',
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'country',
+            'type' => 'Zend\Form\Element\Select',
+            'options' => array(
+                'label' => 'Country',
+                'value_options' => $this->_countries,
+            ),
+        ));
+
         $this->add(new Element\Csrf('csrf'));
 
         //Submit button
@@ -35,18 +94,20 @@ class AirportForm extends Form
             'name' => 'submitBtn',
             'attributes' => array(
                 'type' => 'submit',
-                'value' => 'Search',
-            ),
-        ));
-
-        $this->add(array(
-            'name' => 'submit',
-            'attributes' => array(
-                'type' => 'submit',
                 'value' => 'Add',
-                'id' => 'submitbutton',
-                'class' => 'btn btn-success',
             ),
         ));
+    }
+
+    /**
+     * @param \Zend\Db\ResultSet\ResultSet $data
+     */
+    private function setCountries(\Zend\Db\ResultSet\ResultSet $data)
+    {
+        if (!$this->_countries) {
+            foreach ($data as $row) {
+                $this->_countries[$row->id] = $row->name;
+            }
+        }
     }
 }

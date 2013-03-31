@@ -26,7 +26,7 @@ class UserController extends AbstractActionController
         $page = $this->params()->fromRoute('page') ? (int)$this->params()->fromRoute('page') : 1;
 
         $albums = $this->getUserTable()->fetchAll($select->order($order_by . ' ' . $order));
-        $itemsPerPage = 5;
+        $itemsPerPage = 20;
 
         $albums->current();
         $pagination = new Paginator(new paginatorIterator($albums));

@@ -29,7 +29,7 @@ class CountryController extends AbstractActionController implements ControllerIn
         $page = $this->params()->fromRoute('page') ? (int)$this->params()->fromRoute('page') : 1;
 
         $albums = $this->getCountryTable()->fetchAll($select->order($order_by . ' ' . $order));
-        $itemsPerPage = 5;
+        $itemsPerPage = 20;
 
         $albums->current();
         $pagination = new Paginator(new paginatorIterator($albums));

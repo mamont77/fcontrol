@@ -4,7 +4,6 @@ namespace FcLibraries\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use FcLibraries\Model\Region;
 use FcLibraries\Form\RegionForm;
 use Zend\Db\Sql\Select;
 use Zend\Paginator\Paginator;
@@ -28,7 +27,7 @@ class RegionController extends AbstractActionController implements ControllerInt
         $page = $this->params()->fromRoute('page') ? (int)$this->params()->fromRoute('page') : 1;
 
         $albums = $this->getRegionTable()->fetchAll($select->order($order_by . ' ' . $order));
-        $itemsPerPage = 5;
+        $itemsPerPage = 20;
 
         $albums->current();
         $pagination = new Paginator(new paginatorIterator($albums));

@@ -83,9 +83,14 @@ return array(
                         ),
                     ),
                     'airports' => array(
-                        'type' => 'literal',
+                        'type' => 'segment',
                         'options' => array(
-                            'route' => '/libraries/airports',
+                            'route' => '/libraries/airports[/page/:page][/order_by/:order_by][/:order]',
+                            'constraints' => array(
+                                'page' => '[0-9]+',
+                                'order_by' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'order' => 'ASC|DESC',
+                            ),
                             'defaults' => array(
                                 'controller' => 'FcLibraries\Controller\Airport',
                                 'action' => 'index',
@@ -102,7 +107,7 @@ return array(
                             ),
                             'defaults' => array(
                                 'controller' => 'FcLibraries\Controller\Airport',
-                                'action' => 'add',
+                                'action' => 'index',
                             ),
                         ),
                     ),

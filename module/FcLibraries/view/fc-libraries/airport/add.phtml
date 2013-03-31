@@ -1,5 +1,5 @@
 <?php
-$title = 'Add Airport';
+$title = 'Add airport';
 $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
@@ -11,7 +11,7 @@ $displayOptions = array(
 $form = $this->form;
 $formType = $this->formType;
 $validData = $this->validData;
-$form->setAttribute('action', $this->url('zfcadmin/libraries/airport', array('action' => 'add')));
+$form->setAttribute('action', $this->url('zfcadmin/airport', array('action' => 'add')));
 $form->prepare();
 ?>
 

@@ -6,46 +6,162 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use FcLibraries\Model\Airport;
 use FcLibraries\Form\AirportForm;
-use FcLibraries\Form\AirportFormInputFilter;
+use Zend\Db\Sql\Select;
+use Zend\Paginator\Paginator;
+use Zend\Paginator\Adapter\Iterator as paginatorIterator;
 
 class AirportController extends AbstractActionController implements ControllerInterface
 {
+    protected $airportTable;
+    protected $countryTable;
+
+    /**
+     * @return array|\Zend\View\Model\ViewModel
+     */
     public function indexAction()
     {
-        return new ViewModel();
+        $select = new Select();
+
+        $order_by = $this->params()->fromRoute('order_by') ?
+            $this->params()->fromRoute('order_by') : 'name';
+        $order = $this->params()->fromRoute('order') ?
+            $this->params()->fromRoute('order') : Select::ORDER_ASCENDING;
+        $page = $this->params()->fromRoute('page') ? (int)$this->params()->fromRoute('page') : 1;
+
+        $albums = $this->getAirportTable()->fetchAll($select->order($order_by . ' ' . $order));
+        $itemsPerPage = 20;
+
+        $albums->current();
+        $pagination = new Paginator(new paginatorIterator($albums));
+        $pagination->setCurrentPageNumber($page)
+            ->setItemCountPerPage($itemsPerPage)
+            ->setPageRange(7);
+
+        return new ViewModel(array(
+            'order_by' => $order_by,
+            'order' => $order,
+            'page' => $page,
+            'pagination' => $pagination,
+            'route' => 'zfcadmin/airports',
+        ));
     }
 
+    /**
+     * @return array|\Zend\Http\Response
+     */
     public function addAction()
     {
-        $form = new AirportForm();
-
+        $form = new AirportForm('airport', array('countries' => $this->getCountries()));
         $request = $this->getRequest();
         if ($request->isPost()) {
-//            $model = new Airport();
-            $filter = new AirportFormInputFilter();
-            $form->setInputFilter($filter->getInputFilter());
+            $model = new Airport();
+            $form->setInputFilter($model->getInputFilter());
             $form->setData($request->getPost());
 
             if ($form->isValid()) {
-                $data = $form->getData();
-                $model = new Airport();
-                $model->exchangeArray($data);
-                $model->id = $model->save($model);
-
-                // Redirect to list of users
-                return $this->redirect()->toRoute('zfcadmin/users');
+                $model->exchangeArray($form->getData());
+                $this->getAirportTable()->add($model);
+                return $this->redirect()->toRoute('zfcadmin/airport', array(
+                    'action' => 'add'
+                ));
             }
         }
         return array('form' => $form);
     }
 
+    /**
+     * @return array|\Zend\Http\Response
+     */
     public function editAction()
     {
-        return new ViewModel();
+        $id = (int)$this->params()->fromRoute('id', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('zfcadmin/airport', array(
+                'action' => 'add'
+            ));
+        }
+        $data = $this->getAirportTable()->get($id);
+
+        $form = new AirportForm('airport', array('countries' => $this->getCountries()));
+        $form->bind($data);
+        $form->get('submitBtn')->setAttribute('value', 'Save');
+
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $form->setInputFilter($data->getInputFilter());
+            $form->setData($request->getPost());
+
+            if ($form->isValid()) {
+                $this->getAirportTable()->save($form->getData());
+
+                return $this->redirect()->toRoute('zfcadmin/airports');
+            }
+        }
+
+        return array(
+            'id' => $id,
+            'form' => $form,
+        );
     }
 
+    /**
+     * @return array|\Zend\Http\Response
+     */
     public function deleteAction()
     {
-        return new ViewModel();
+        $id = (int)$this->params()->fromRoute('id', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('zfcadmin/airports');
+        }
+
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $del = $request->getPost('del', 'No');
+
+            if ($del == 'Yes') {
+                $id = (int)$request->getPost('id');
+                $this->getAirportTable()->remove($id);
+            }
+
+            // Redirect to list
+            return $this->redirect()->toRoute('zfcadmin/airports');
+        }
+
+        return array(
+            'id' => $id,
+            'data' => $this->getAirportTable()->get($id)
+        );
+    }
+
+    /**
+     * @return array|object
+     */
+    private function getAirportTable()
+    {
+        if (!$this->airportTable) {
+            $sm = $this->getServiceLocator();
+            $this->airportTable = $sm->get('FcLibraries\Model\AirportTable');
+        }
+        return $this->airportTable;
+    }
+
+    /**
+     * @return array|object
+     */
+    public function getCountryTable()
+    {
+        if (!$this->countryTable) {
+            $sm = $this->getServiceLocator();
+            $this->countryTable = $sm->get('FcLibraries\Model\CountryTable');
+        }
+        return $this->countryTable;
+    }
+
+    /**
+     * @return mixed
+     */
+    private function getCountries()
+    {
+        return $this->getCountryTable()->fetchAll();
     }
 }
