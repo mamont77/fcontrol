@@ -1,7 +1,7 @@
 <?php
 namespace FcLibraries;
 
-use FcLibraries\Model\RegionTable;
+use FcLibraries\Model\RegionModel;
 use FcLibraries\Filter\RegionFilter;
 use FcLibraries\Model\CountryTable;
 use FcLibraries\Model\AirportTable;
@@ -41,7 +41,7 @@ class Module
             'factories' => array(
                 'FcLibraries\Model\RegionTable' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new RegionTable($dbAdapter);
+                    return new RegionModel($dbAdapter);
                 },
                 'FcLibraries\Filter\RegionFilter' => function($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');

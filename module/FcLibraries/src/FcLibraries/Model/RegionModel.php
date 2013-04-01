@@ -4,10 +4,10 @@ namespace FcLibraries\Model;
 
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\ResultSet\ResultSet;
-use FcLibraries\Model\LibraryTable;
+use FcLibraries\Model\BaseModel;
 use FcLibraries\Filter\RegionFilter;
 
-class RegionTable extends LibraryTable
+class RegionModel extends BaseModel
 {
     /**
      * @var string
