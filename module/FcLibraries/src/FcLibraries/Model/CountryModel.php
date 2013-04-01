@@ -5,9 +5,10 @@ namespace FcLibraries\Model;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\Select;
-use FcLibraries\Model\LibraryTable;
+use FcLibraries\Model\BaseModel;
+use FcLibraries\Filter\CountryFilter;
 
-class CountryTable extends LibraryTable
+class CountryModel extends BaseModel
 {
     protected $table = 'library_country';
 
@@ -18,7 +19,7 @@ class CountryTable extends LibraryTable
     {
         $this->adapter = $adapter;
         $this->resultSetPrototype = new ResultSet();
-        $this->resultSetPrototype->setArrayObjectPrototype(new Country());
+        $this->resultSetPrototype->setArrayObjectPrototype(new CountryFilter($this->adapter));
 
         $this->initialize();
     }
@@ -44,9 +45,9 @@ class CountryTable extends LibraryTable
     }
 
     /**
-     * @param Country $object
+     * @param \FcLibraries\Filter\CountryFilter $object
      */
-    public function add(Country $object)
+    public function add(CountryFilter $object)
     {
         $data = array(
             'name' => $object->name,
@@ -57,10 +58,10 @@ class CountryTable extends LibraryTable
     }
 
     /**
-     * @param Country $object
+     * @param \FcLibraries\Filter\CountryFilter $object
      * @throws \Exception
      */
-    public function save(Country $object)
+    public function save(CountryFilter $object)
     {
         $data = array(
             'name' => $object->name,

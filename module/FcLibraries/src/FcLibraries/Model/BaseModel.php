@@ -5,7 +5,6 @@ namespace FcLibraries\Model;
 use Zend\Db\TableGateway\AbstractTableGateway;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\ResultSet\ResultSet;
-use Zend\Db\Sql\Select;
 
 class BaseModel extends AbstractTableGateway
 {
@@ -20,21 +19,6 @@ class BaseModel extends AbstractTableGateway
     public function __construct(Adapter $adapter)
     {
         $this->adapter = $adapter;
-    }
-
-    /**
-     * @param \Zend\Db\Sql\Select $select
-     * @return null|\Zend\Db\ResultSet\ResultSetInterface
-     */
-    public function fetchAll(Select $select = null)
-    {
-        if (null === $select)
-            $select = new Select();
-        $select->from($this->table);
-        $resultSet = $this->selectWith($select);
-        $resultSet->buffer();
-
-        return $resultSet;
     }
 
     /**

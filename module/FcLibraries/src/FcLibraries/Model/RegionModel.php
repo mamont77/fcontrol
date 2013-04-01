@@ -4,6 +4,7 @@ namespace FcLibraries\Model;
 
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\Sql\Select;
 use FcLibraries\Model\BaseModel;
 use FcLibraries\Filter\RegionFilter;
 
@@ -23,6 +24,21 @@ class RegionModel extends BaseModel
         $this->resultSetPrototype = new ResultSet();
         $this->resultSetPrototype->setArrayObjectPrototype(new RegionFilter($this->adapter));
         $this->initialize();
+    }
+
+    /**
+     * @param \Zend\Db\Sql\Select $select
+     * @return null|\Zend\Db\ResultSet\ResultSetInterface
+     */
+    public function fetchAll(Select $select = null)
+    {
+        if (null === $select)
+            $select = new Select();
+        $select->from($this->table);
+        $resultSet = $this->selectWith($select);
+        $resultSet->buffer();
+
+        return $resultSet;
     }
 
     /**

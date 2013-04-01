@@ -4,7 +4,6 @@ namespace FcLibraries\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use FcLibraries\Model\Country;
 use FcLibraries\Form\CountryForm;
 use Zend\Db\Sql\Select;
 use Zend\Paginator\Paginator;
@@ -52,15 +51,16 @@ class CountryController extends AbstractActionController implements ControllerIn
     public function addAction()
     {
         $form = new CountryForm('country', array('regions' => $this->getRegions()));
+
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $model = new Country();
-            $form->setInputFilter($model->getInputFilter());
+            $filter = $this->getServiceLocator()->get('FcLibraries\Filter\CountryFilter');
+            $form->setInputFilter($filter->getInputFilter());
             $form->setData($request->getPost());
 
             if ($form->isValid()) {
-                $model->exchangeArray($form->getData());
-                $this->getCountryTable()->add($model);
+                $filter->exchangeArray($form->getData());
+                $this->getCountryTable()->add($filter);
                 return $this->redirect()->toRoute('zfcadmin/country', array(
                     'action' => 'add'
                 ));
@@ -72,6 +72,7 @@ class CountryController extends AbstractActionController implements ControllerIn
     /**
      * @return array|\Zend\Http\Response
      */
+
     public function editAction()
     {
         $id = (int)$this->params()->fromRoute('id', 0);
@@ -88,12 +89,11 @@ class CountryController extends AbstractActionController implements ControllerIn
 
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $form->setInputFilter($data->getInputFilter());
+            $filter = $this->getServiceLocator()->get('FcLibraries\Filter\RegionFilter');
+            $form->setInputFilter($filter->getInputFilter());
             $form->setData($request->getPost());
-
             if ($form->isValid()) {
                 $this->getCountryTable()->save($form->getData());
-
                 return $this->redirect()->toRoute('zfcadmin/countries');
             }
         }
@@ -140,7 +140,7 @@ class CountryController extends AbstractActionController implements ControllerIn
     {
         if (!$this->_countryTable) {
             $sm = $this->getServiceLocator();
-            $this->_countryTable = $sm->get('FcLibraries\Model\CountryTable');
+            $this->_countryTable = $sm->get('FcLibraries\Model\CountryModel');
         }
         return $this->_countryTable;
     }
@@ -152,7 +152,7 @@ class CountryController extends AbstractActionController implements ControllerIn
     {
         if (!$this->_regionTable) {
             $sm = $this->getServiceLocator();
-            $this->_regionTable = $sm->get('FcLibraries\Model\RegionTable');
+            $this->_regionTable = $sm->get('FcLibraries\Model\RegionModel');
         }
         return $this->_regionTable;
     }

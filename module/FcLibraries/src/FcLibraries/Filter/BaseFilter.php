@@ -52,7 +52,6 @@ class BaseFilter implements InputFilterAwareInterface
         return $this->dbAdapter;
     }
 
-
     /**
      * @param $data
      */
@@ -107,5 +106,38 @@ class BaseFilter implements InputFilterAwareInterface
         }
 
         return $this->inputFilter;
+    }
+
+    /**
+     * @param $tableName
+     * @param $fieldName
+     * @param null $objectId
+     * @return array
+     */
+    protected function _noRecordExistsValidators($tableName, $fieldName, $elementId = null)
+    {
+        if (is_numeric($elementId)) {
+            return array(
+                'name' => 'Db\NoRecordExists',
+                'options' => array(
+                    'table' => $tableName,
+                    'field' => $fieldName,
+                    'exclude' => array(
+                        'field' => 'id',
+                        'value' => $elementId
+                    ),
+                    'adapter' => $this->getDbAdapter(),
+                ),
+            );
+        } else {
+            return array(
+                'name' => 'Db\NoRecordExists',
+                'options' => array(
+                    'table' => $tableName,
+                    'field' => $fieldName,
+                    'adapter' => $this->getDbAdapter(),
+                ),
+            );
+        }
     }
 }

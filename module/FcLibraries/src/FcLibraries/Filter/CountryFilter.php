@@ -1,12 +1,19 @@
 <?php
-namespace FcLibraries\Model;
+namespace FcLibraries\Filter;
 
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
-use FcLibraries\Model\LibraryModel;
+use Zend\InputFilter\InputFilterAwareInterface;
+use Zend\InputFilter\InputFilterInterface;
+use Zend\Db\Adapter\Adapter;
 
-class Country extends LibraryModel
+class CountryFilter extends BaseFilter
 {
+    /**
+     * @var string
+     */
+    protected $table = 'library_country';
+
     public $id;
     public $name;
     public $region;
@@ -30,7 +37,7 @@ class Country extends LibraryModel
      */
     public function getInputFilter()
     {
-        if (!$this->_inputFilter) {
+        if (!$this->inputFilter) {
             $inputFilter = new InputFilter();
             $factory = new InputFactory();
 
@@ -45,7 +52,7 @@ class Country extends LibraryModel
             $inputFilter->add($factory->createInput(array(
                 'name' => 'name',
                 'required' => true,
-                'filters' => $this->_filters,
+                'filters' => $this->defaultFilters,
                 'validators' => array(
                     array(
                         'name' => 'StringLength',
@@ -55,6 +62,7 @@ class Country extends LibraryModel
                             'max' => 30,
                         ),
                     ),
+                    $this->_noRecordExistsValidators($this->table, 'name', $this->id),
                 ),
             )));
 
@@ -66,7 +74,7 @@ class Country extends LibraryModel
             $inputFilter->add($factory->createInput(array(
                 'name' => 'code',
                 'required' => true,
-                'filters' => $this->_filters,
+                'filters' => $this->defaultFilters,
                 'validators' => array(
                     array(
                         'name' => 'StringLength',
@@ -76,12 +84,14 @@ class Country extends LibraryModel
                             'max' => 3,
                         ),
                     ),
+                    $this->_noRecordExistsValidators($this->table, 'code', $this->id),
+
                 ),
             )));
 
-            $this->_inputFilter = $inputFilter;
+            $this->inputFilter = $inputFilter;
         }
 
-        return $this->_inputFilter;
+        return $this->inputFilter;
     }
 }

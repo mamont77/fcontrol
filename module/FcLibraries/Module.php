@@ -3,8 +3,10 @@ namespace FcLibraries;
 
 use FcLibraries\Model\RegionModel;
 use FcLibraries\Filter\RegionFilter;
-use FcLibraries\Model\CountryTable;
-use FcLibraries\Model\AirportTable;
+use FcLibraries\Model\CountryModel;
+use FcLibraries\Filter\CountryFilter;
+use FcLibraries\Model\AirportModel;
+use FcLibraries\Filter\AirportFilter;
 
 class Module
 {
@@ -36,24 +38,31 @@ class Module
     public function getServiceConfig()
     {
         return array(
-            'invokables' => array(
-            ),
+            'invokables' => array(),
             'factories' => array(
-                'FcLibraries\Model\RegionTable' => function ($sm) {
+                'FcLibraries\Model\RegionModel' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     return new RegionModel($dbAdapter);
                 },
-                'FcLibraries\Filter\RegionFilter' => function($sm) {
+                'FcLibraries\Filter\RegionFilter' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     return new RegionFilter($dbAdapter);
                 },
-                'FcLibraries\Model\CountryTable' => function ($sm) {
+                'FcLibraries\Model\CountryModel' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new CountryTable($dbAdapter);
+                    return new CountryModel($dbAdapter);
                 },
-                'FcLibraries\Model\AirportTable' => function ($sm) {
+                'FcLibraries\Filter\CountryFilter' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new AirportTable($dbAdapter);
+                    return new CountryFilter($dbAdapter);
+                },
+                'FcLibraries\Model\AirportModel' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new AirportModel($dbAdapter);
+                },
+                'FcLibraries\Filter\AirportFilter' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new AirportFilter($dbAdapter);
                 },
             ),
         );

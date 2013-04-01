@@ -10,7 +10,7 @@ class CountryForm extends Form
     /**
      * @var array
      */
-    protected $_regions = array();
+    protected $regions = array();
 
     /**
      * @param null $name
@@ -47,7 +47,7 @@ class CountryForm extends Form
             'type' => 'Zend\Form\Element\Select',
             'options' => array(
                 'label' => 'Region',
-                'value_options' => $this->_regions,
+                'value_options' => $this->regions,
             ),
         ));
 
@@ -80,9 +80,9 @@ class CountryForm extends Form
      */
     private function setRegions(\Zend\Db\ResultSet\ResultSet $data)
     {
-        if (!$this->_regions) {
+        if (!$this->regions) {
             foreach ($data as $row) {
-                $this->_regions[$row->id] = $row->name;
+                $this->regions[$row->id] = $row->name;
             }
         }
     }

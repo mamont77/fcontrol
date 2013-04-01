@@ -139,7 +139,7 @@ class RegionController extends AbstractActionController implements ControllerInt
     {
         if (!$this->_regionTable) {
             $sm = $this->getServiceLocator();
-            $this->_regionTable = $sm->get('FcLibraries\Model\RegionTable');
+            $this->_regionTable = $sm->get('FcLibraries\Model\RegionModel');
         }
         return $this->_regionTable;
     }

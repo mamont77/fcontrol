@@ -37,30 +37,6 @@ class RegionFilter extends BaseFilter
             $inputFilter = new InputFilter();
             $factory = new InputFactory();
 
-            if ($this->id) {
-                $noRecordExistsValidators = array(
-                    'name' => 'Db\NoRecordExists',
-                    'options' => array(
-                        'table' => $this->table,
-                        'field' => 'name',
-                        'exclude' => array(
-                            'field' => 'id',
-                            'value' => $this->id
-                        ),
-                        'adapter' => $this->getDbAdapter(),
-                    ),
-                );
-            } else {
-                $noRecordExistsValidators = array(
-                    'name' => 'Db\NoRecordExists',
-                    'options' => array(
-                        'table' => $this->table,
-                        'field' => 'name',
-                        'adapter' => $this->getDbAdapter(),
-                    ),
-                );
-            }
-
             $inputFilter->add($factory->createInput(array(
                 'name' => 'name',
                 'required' => true,
@@ -74,7 +50,7 @@ class RegionFilter extends BaseFilter
                             'max' => 30,
                         ),
                     ),
-                    $noRecordExistsValidators,
+                    $this->_noRecordExistsValidators($this->table, 'name', $this->id),
                 ),
             )));
             $this->inputFilter = $inputFilter;
