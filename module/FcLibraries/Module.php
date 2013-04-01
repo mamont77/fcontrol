@@ -2,7 +2,7 @@
 namespace FcLibraries;
 
 use FcLibraries\Model\RegionTable;
-use FcLibraries\Form\RegionFilter;
+use FcLibraries\Filter\RegionFilter;
 use FcLibraries\Model\CountryTable;
 use FcLibraries\Model\AirportTable;
 
@@ -37,13 +37,15 @@ class Module
     {
         return array(
             'invokables' => array(
-                'RegionModel' => 'FcLibraries\Model\Region',
             ),
             'factories' => array(
                 'FcLibraries\Model\RegionTable' => function ($sm) {
-                    $region = $sm->get('RegionModel');
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new RegionTable($dbAdapter, $region);
+                    return new RegionTable($dbAdapter);
+                },
+                'FcLibraries\Filter\RegionFilter' => function($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new RegionFilter($dbAdapter);
                 },
                 'FcLibraries\Model\CountryTable' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
@@ -52,10 +54,6 @@ class Module
                 'FcLibraries\Model\AirportTable' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     return new AirportTable($dbAdapter);
-                },
-                'FcLibraries\Form\RegionFilter' => function($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new RegionFilter($dbAdapter);
                 },
             ),
         );

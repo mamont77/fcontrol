@@ -42,18 +42,6 @@ class Region extends LibraryModel
                             'max' => 30,
                         ),
                     ),
-                    array(
-                        'name'    => 'Db\NoRecordExists',
-                        'options' => array(
-                            'table' => $this->table,
-                            'field' => 'name',
-//                            'exclude' => array(
-//                                'field' => 'id',
-//                                'value' => $this->id
-//                            ),
-                            'adapter' => $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter'),
-                        ),
-                    ),
                 ),
             )));
 

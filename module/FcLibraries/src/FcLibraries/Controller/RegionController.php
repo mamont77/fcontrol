@@ -44,27 +44,34 @@ class RegionController extends AbstractActionController implements ControllerInt
         ));
     }
 
+    /**
+     * @return array
+     */
     public function addAction()
     {
         $form = new RegionForm();
 
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $model = $this->getServiceLocator()->get('RegionModel');
-            $form->setInputFilter($model->getInputFilter());
+            $filter = $this->getServiceLocator()->get('FcLibraries\Filter\RegionFilter');
+            $form->setInputFilter($filter->getInputFilter());
             $form->setData($request->getPost());
 
             if ($form->isValid()) {
-                $model->exchangeArray($form->getData());
-                $this->getRegionTable()->add($model);
-                return $this->redirect()->toRoute('zfcadmin/region', array(
-                    'action' => 'add'
-                ));
+                $filter->exchangeArray($form->getData());
+                $this->getRegionTable()->add($filter);
+                return $this->redirect()->toRoute('zfcadmin/region',
+                    array(
+                        'action' => 'add'
+                    ));
             }
         }
         return array('form' => $form);
     }
 
+    /**
+     * @return array
+     */
     public function editAction()
     {
         $id = (int)$this->params()->fromRoute('id', 0);
@@ -81,7 +88,7 @@ class RegionController extends AbstractActionController implements ControllerInt
 
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $filter = $this->getServiceLocator()->get('FcLibraries\Form\RegionFilter');
+            $filter = $this->getServiceLocator()->get('FcLibraries\Filter\RegionFilter');
             $form->setInputFilter($filter->getInputFilter());
             $form->setData($request->getPost());
             if ($form->isValid()) {
@@ -96,6 +103,9 @@ class RegionController extends AbstractActionController implements ControllerInt
         );
     }
 
+    /**
+     * @return array
+     */
     public function deleteAction()
     {
         $id = (int)$this->params()->fromRoute('id', 0);
@@ -122,6 +132,9 @@ class RegionController extends AbstractActionController implements ControllerInt
         );
     }
 
+    /**
+     * @return array|object
+     */
     public function getRegionTable()
     {
         if (!$this->_regionTable) {

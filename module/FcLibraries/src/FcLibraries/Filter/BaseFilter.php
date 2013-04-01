@@ -1,30 +1,57 @@
 <?php
-namespace FcLibraries\Model;
+namespace FcLibraries\Filter;
 
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
+use Zend\Db\Adapter\Adapter;
 
-class LibraryModel implements InputFilterAwareInterface
+class BaseFilter implements InputFilterAwareInterface
 {
-    /**
-     * @var
-     */
-    public $id;
 
     /**
-     * @var
+     * @var $inputFilter
      */
-    protected $_inputFilter;
+    protected $inputFilter;
+
+    /**
+     * @var $dbAdapter
+     */
+    protected $dbAdapter;
+
+    /**
+     * @var string
+     */
+    protected $table = '';
+
+    public $id;
+    public $name;
 
     /**
      * @var array
      */
-    protected $_filters = array(
+    protected $defaultFilters = array(
         array('name' => 'StripTags'),
         array('name' => 'StringTrim'),
     );
+
+    /**
+     * @param \Zend\Db\Adapter\Adapter $dbAdapter
+     */
+    public function __construct(Adapter $dbAdapter)
+    {
+        $this->dbAdapter = $dbAdapter;
+    }
+
+    /**
+     * @return \Zend\Db\Adapter\Adapter
+     */
+    public function getDbAdapter()
+    {
+        return $this->dbAdapter;
+    }
+
 
     /**
      * @param $data
@@ -58,21 +85,27 @@ class LibraryModel implements InputFilterAwareInterface
      */
     public function getInputFilter()
     {
-        if (!$this->_inputFilter) {
+        if (!$this->inputFilter) {
+
             $inputFilter = new InputFilter();
             $factory = new InputFactory();
 
             $inputFilter->add($factory->createInput(array(
-                'name' => 'id',
+                'name' => 'name',
                 'required' => true,
-                'filters' => array(
-                    array('name' => 'Int'),
+                'filters' => $this->defaultFilters,
+                'validators' => array(
+                    array(
+                        'name' => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                        ),
+                    ),
                 ),
             )));
-
-            $this->_inputFilter = $inputFilter;
+            $this->inputFilter = $inputFilter;
         }
 
-        return $this->_inputFilter;
+        return $this->inputFilter;
     }
 }

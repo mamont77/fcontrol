@@ -5,6 +5,7 @@ namespace FcLibraries\Model;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\ResultSet\ResultSet;
 use FcLibraries\Model\LibraryTable;
+use FcLibraries\Filter\RegionFilter;
 
 class RegionTable extends LibraryTable
 {
@@ -16,18 +17,18 @@ class RegionTable extends LibraryTable
     /**
      * @param \Zend\Db\Adapter\Adapter $adapter
      */
-    public function __construct(Adapter $adapter, Region $region)
+    public function __construct(Adapter $adapter)
     {
         $this->adapter = $adapter;
         $this->resultSetPrototype = new ResultSet();
-        $this->resultSetPrototype->setArrayObjectPrototype($region);
+        $this->resultSetPrototype->setArrayObjectPrototype(new RegionFilter($this->adapter));
         $this->initialize();
     }
 
     /**
      * @param Region $object
      */
-    public function add(Region $object)
+    public function add(RegionFilter $object)
     {
         $data = array(
             'name' => $object->name,
@@ -39,7 +40,7 @@ class RegionTable extends LibraryTable
      * @param Region $object
      * @throws \Exception
      */
-    public function save(Region $object)
+    public function save(RegionFilter $object)
     {
         $data = array(
             'name' => $object->name,
