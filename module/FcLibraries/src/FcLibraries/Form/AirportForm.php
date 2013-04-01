@@ -10,7 +10,7 @@ class AirportForm extends Form
     /**
      * @var array
      */
-    protected $_countries = array();
+    protected $countries = array();
 
     /**
      * @param null $name
@@ -83,7 +83,8 @@ class AirportForm extends Form
             'type' => 'Zend\Form\Element\Select',
             'options' => array(
                 'label' => 'Country',
-                'value_options' => $this->_countries,
+                'empty_option' => '-- Please select --',
+                'value_options' => $this->countries,
             ),
         ));
 
@@ -104,9 +105,9 @@ class AirportForm extends Form
      */
     private function setCountries(\Zend\Db\ResultSet\ResultSet $data)
     {
-        if (!$this->_countries) {
+        if (!$this->countries) {
             foreach ($data as $row) {
-                $this->_countries[$row->id] = $row->name;
+                $this->countries[$row->id] = $row->name;
             }
         }
     }

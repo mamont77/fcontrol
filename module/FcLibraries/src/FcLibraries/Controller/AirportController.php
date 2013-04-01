@@ -4,7 +4,6 @@ namespace FcLibraries\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use FcLibraries\Model\Airport;
 use FcLibraries\Form\AirportForm;
 use Zend\Db\Sql\Select;
 use Zend\Paginator\Paginator;
@@ -12,8 +11,8 @@ use Zend\Paginator\Adapter\Iterator as paginatorIterator;
 
 class AirportController extends AbstractActionController implements ControllerInterface
 {
-    protected $airportTable;
-    protected $countryTable;
+    protected $airportModel;
+    protected $countryModel;
 
     /**
      * @return array|\Zend\View\Model\ViewModel
@@ -28,11 +27,11 @@ class AirportController extends AbstractActionController implements ControllerIn
             $this->params()->fromRoute('order') : Select::ORDER_ASCENDING;
         $page = $this->params()->fromRoute('page') ? (int)$this->params()->fromRoute('page') : 1;
 
-        $albums = $this->getAirportTable()->fetchAll($select->order($order_by . ' ' . $order));
+        $data = $this->getAirportModel()->fetchAll($select->order($order_by . ' ' . $order));
         $itemsPerPage = 20;
 
-        $albums->current();
-        $pagination = new Paginator(new paginatorIterator($albums));
+        $data->current();
+        $pagination = new Paginator(new paginatorIterator($data));
         $pagination->setCurrentPageNumber($page)
             ->setItemCountPerPage($itemsPerPage)
             ->setPageRange(7);
@@ -52,15 +51,16 @@ class AirportController extends AbstractActionController implements ControllerIn
     public function addAction()
     {
         $form = new AirportForm('airport', array('countries' => $this->getCountries()));
+
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $model = new Airport();
-            $form->setInputFilter($model->getInputFilter());
+            $filter = $this->getServiceLocator()->get('FcLibraries\Filter\AirportFilter');
+            $form->setInputFilter($filter->getInputFilter());
             $form->setData($request->getPost());
 
             if ($form->isValid()) {
-                $model->exchangeArray($form->getData());
-                $this->getAirportTable()->add($model);
+                $filter->exchangeArray($form->getData());
+                $this->getAirportModel()->add($filter);
                 return $this->redirect()->toRoute('zfcadmin/airport', array(
                     'action' => 'add'
                 ));
@@ -80,7 +80,7 @@ class AirportController extends AbstractActionController implements ControllerIn
                 'action' => 'add'
             ));
         }
-        $data = $this->getAirportTable()->get($id);
+        $data = $this->getAirportModel()->get($id);
 
         $form = new AirportForm('airport', array('countries' => $this->getCountries()));
         $form->bind($data);
@@ -88,12 +88,11 @@ class AirportController extends AbstractActionController implements ControllerIn
 
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $form->setInputFilter($data->getInputFilter());
+            $filter = $this->getServiceLocator()->get('FcLibraries\Filter\AirportFilter');
+            $form->setInputFilter($filter->getInputFilter());
             $form->setData($request->getPost());
-
             if ($form->isValid()) {
-                $this->getAirportTable()->save($form->getData());
-
+                $this->getAirportModel()->save($form->getData());
                 return $this->redirect()->toRoute('zfcadmin/airports');
             }
         }
@@ -120,7 +119,7 @@ class AirportController extends AbstractActionController implements ControllerIn
 
             if ($del == 'Yes') {
                 $id = (int)$request->getPost('id');
-                $this->getAirportTable()->remove($id);
+                $this->getAirportModel()->remove($id);
             }
 
             // Redirect to list
@@ -129,32 +128,32 @@ class AirportController extends AbstractActionController implements ControllerIn
 
         return array(
             'id' => $id,
-            'data' => $this->getAirportTable()->get($id)
+            'data' => $this->getAirportModel()->get($id)
         );
     }
 
     /**
      * @return array|object
      */
-    private function getAirportTable()
+    private function getAirportModel()
     {
-        if (!$this->airportTable) {
+        if (!$this->airportModel) {
             $sm = $this->getServiceLocator();
-            $this->airportTable = $sm->get('FcLibraries\Model\AirportTable');
+            $this->airportModel = $sm->get('FcLibraries\Model\AirportModel');
         }
-        return $this->airportTable;
+        return $this->airportModel;
     }
 
     /**
      * @return array|object
      */
-    public function getCountryTable()
+    public function getCountryModel()
     {
-        if (!$this->countryTable) {
+        if (!$this->countryModel) {
             $sm = $this->getServiceLocator();
-            $this->countryTable = $sm->get('FcLibraries\Model\CountryTable');
+            $this->countryModel = $sm->get('FcLibraries\Model\CountryModel');
         }
-        return $this->countryTable;
+        return $this->countryModel;
     }
 
     /**
@@ -162,6 +161,6 @@ class AirportController extends AbstractActionController implements ControllerIn
      */
     private function getCountries()
     {
-        return $this->getCountryTable()->fetchAll();
+        return $this->getCountryModel()->fetchAll();
     }
 }

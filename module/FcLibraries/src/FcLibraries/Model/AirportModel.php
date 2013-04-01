@@ -5,9 +5,10 @@ namespace FcLibraries\Model;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\Select;
-use FcLibraries\Model\LibraryTable;
+use FcLibraries\Model\BaseModel;
+use FcLibraries\Filter\AirportFilter;
 
-class AirportTable extends LibraryTable
+class AirportModel extends BaseModel
 {
     protected $table = 'library_airport';
 
@@ -18,7 +19,7 @@ class AirportTable extends LibraryTable
     {
         $this->adapter = $adapter;
         $this->resultSetPrototype = new ResultSet();
-        $this->resultSetPrototype->setArrayObjectPrototype(new Airport());
+        $this->resultSetPrototype->setArrayObjectPrototype(new AirportFilter($this->adapter));
 
         $this->initialize();
     }
@@ -46,7 +47,7 @@ class AirportTable extends LibraryTable
     /**
      * @param Country $object
      */
-    public function add(Airport $object)
+    public function add(AirportFilter $object)
     {
         $data = array(
             'name' => $object->name,
@@ -62,7 +63,7 @@ class AirportTable extends LibraryTable
      * @param Country $object
      * @throws \Exception
      */
-    public function save(Airport $object)
+    public function save(AirportFilter $object)
     {
         $data = array(
             'name' => $object->name,

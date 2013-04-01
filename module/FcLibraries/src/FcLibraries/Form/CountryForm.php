@@ -47,6 +47,7 @@ class CountryForm extends Form
             'type' => 'Zend\Form\Element\Select',
             'options' => array(
                 'label' => 'Region',
+                'empty_option' => '-- Please select --',
                 'value_options' => $this->regions,
             ),
         ));

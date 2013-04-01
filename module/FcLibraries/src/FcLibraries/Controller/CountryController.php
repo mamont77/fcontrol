@@ -11,8 +11,8 @@ use Zend\Paginator\Adapter\Iterator as paginatorIterator;
 
 class CountryController extends AbstractActionController implements ControllerInterface
 {
-    protected $_countryTable;
-    protected $_regionTable;
+    protected $countryModel;
+    protected $regionModel;
 
     /**
      * @return array|\Zend\View\Model\ViewModel
@@ -27,11 +27,11 @@ class CountryController extends AbstractActionController implements ControllerIn
             $this->params()->fromRoute('order') : Select::ORDER_ASCENDING;
         $page = $this->params()->fromRoute('page') ? (int)$this->params()->fromRoute('page') : 1;
 
-        $albums = $this->getCountryTable()->fetchAll($select->order($order_by . ' ' . $order));
+        $data = $this->getCountryModel()->fetchAll($select->order($order_by . ' ' . $order));
         $itemsPerPage = 20;
 
-        $albums->current();
-        $pagination = new Paginator(new paginatorIterator($albums));
+        $data->current();
+        $pagination = new Paginator(new paginatorIterator($data));
         $pagination->setCurrentPageNumber($page)
             ->setItemCountPerPage($itemsPerPage)
             ->setPageRange(7);
@@ -60,7 +60,7 @@ class CountryController extends AbstractActionController implements ControllerIn
 
             if ($form->isValid()) {
                 $filter->exchangeArray($form->getData());
-                $this->getCountryTable()->add($filter);
+                $this->getCountryModel()->add($filter);
                 return $this->redirect()->toRoute('zfcadmin/country', array(
                     'action' => 'add'
                 ));
@@ -72,7 +72,6 @@ class CountryController extends AbstractActionController implements ControllerIn
     /**
      * @return array|\Zend\Http\Response
      */
-
     public function editAction()
     {
         $id = (int)$this->params()->fromRoute('id', 0);
@@ -81,7 +80,7 @@ class CountryController extends AbstractActionController implements ControllerIn
                 'action' => 'add'
             ));
         }
-        $data = $this->getCountryTable()->get($id);
+        $data = $this->getCountryModel()->get($id);
 
         $form = new CountryForm('country', array('regions' => $this->getRegions()));
         $form->bind($data);
@@ -93,7 +92,7 @@ class CountryController extends AbstractActionController implements ControllerIn
             $form->setInputFilter($filter->getInputFilter());
             $form->setData($request->getPost());
             if ($form->isValid()) {
-                $this->getCountryTable()->save($form->getData());
+                $this->getCountryModel()->save($form->getData());
                 return $this->redirect()->toRoute('zfcadmin/countries');
             }
         }
@@ -120,7 +119,7 @@ class CountryController extends AbstractActionController implements ControllerIn
 
             if ($del == 'Yes') {
                 $id = (int)$request->getPost('id');
-                $this->getCountryTable()->remove($id);
+                $this->getCountryModel()->remove($id);
             }
 
             // Redirect to list
@@ -129,32 +128,32 @@ class CountryController extends AbstractActionController implements ControllerIn
 
         return array(
             'id' => $id,
-            'data' => $this->getCountryTable()->get($id)
+            'data' => $this->getCountryModel()->get($id)
         );
     }
 
     /**
      * @return array|object
      */
-    public function getCountryTable()
+    public function getCountryModel()
     {
-        if (!$this->_countryTable) {
+        if (!$this->countryModel) {
             $sm = $this->getServiceLocator();
-            $this->_countryTable = $sm->get('FcLibraries\Model\CountryModel');
+            $this->countryModel = $sm->get('FcLibraries\Model\CountryModel');
         }
-        return $this->_countryTable;
+        return $this->countryModel;
     }
 
     /**
      * @return array|object
      */
-    private function getRegionTable()
+    private function getRegionModel()
     {
-        if (!$this->_regionTable) {
+        if (!$this->regionModel) {
             $sm = $this->getServiceLocator();
-            $this->_regionTable = $sm->get('FcLibraries\Model\RegionModel');
+            $this->regionModel = $sm->get('FcLibraries\Model\RegionModel');
         }
-        return $this->_regionTable;
+        return $this->regionModel;
     }
 
     /**
@@ -162,6 +161,6 @@ class CountryController extends AbstractActionController implements ControllerIn
      */
     private function getRegions()
     {
-        return $this->getRegionTable()->fetchAll();
+        return $this->getRegionModel()->fetchAll();
     }
 }

@@ -11,7 +11,7 @@ use Zend\Paginator\Adapter\Iterator as paginatorIterator;
 
 class RegionController extends AbstractActionController implements ControllerInterface
 {
-    protected $_regionTable;
+    protected $regionModel;
 
     /**
      * @return array|\Zend\View\Model\ViewModel
@@ -26,11 +26,11 @@ class RegionController extends AbstractActionController implements ControllerInt
             $this->params()->fromRoute('order') : Select::ORDER_ASCENDING;
         $page = $this->params()->fromRoute('page') ? (int)$this->params()->fromRoute('page') : 1;
 
-        $albums = $this->getRegionTable()->fetchAll($select->order($order_by . ' ' . $order));
+        $data = $this->getRegionModel()->fetchAll($select->order($order_by . ' ' . $order));
         $itemsPerPage = 20;
 
-        $albums->current();
-        $pagination = new Paginator(new paginatorIterator($albums));
+        $data->current();
+        $pagination = new Paginator(new paginatorIterator($data));
         $pagination->setCurrentPageNumber($page)
             ->setItemCountPerPage($itemsPerPage)
             ->setPageRange(7);
@@ -59,7 +59,7 @@ class RegionController extends AbstractActionController implements ControllerInt
 
             if ($form->isValid()) {
                 $filter->exchangeArray($form->getData());
-                $this->getRegionTable()->add($filter);
+                $this->getRegionModel()->add($filter);
                 return $this->redirect()->toRoute('zfcadmin/region',
                     array(
                         'action' => 'add'
@@ -80,7 +80,7 @@ class RegionController extends AbstractActionController implements ControllerInt
                 'action' => 'add'
             ));
         }
-        $data = $this->getRegionTable()->get($id);
+        $data = $this->getRegionModel()->get($id);
 
         $form = new RegionForm();
         $form->bind($data);
@@ -92,7 +92,7 @@ class RegionController extends AbstractActionController implements ControllerInt
             $form->setInputFilter($filter->getInputFilter());
             $form->setData($request->getPost());
             if ($form->isValid()) {
-                $this->getRegionTable()->save($form->getData());
+                $this->getRegionModel()->save($form->getData());
                 return $this->redirect()->toRoute('zfcadmin/regions');
             }
         }
@@ -119,7 +119,7 @@ class RegionController extends AbstractActionController implements ControllerInt
 
             if ($del == 'Yes') {
                 $id = (int)$request->getPost('id');
-                $this->getRegionTable()->remove($id);
+                $this->getRegionModel()->remove($id);
             }
 
             // Redirect to list
@@ -128,19 +128,19 @@ class RegionController extends AbstractActionController implements ControllerInt
 
         return array(
             'id' => $id,
-            'data' => $this->getRegionTable()->get($id)
+            'data' => $this->getRegionModel()->get($id)
         );
     }
 
     /**
      * @return array|object
      */
-    public function getRegionTable()
+    public function getRegionModel()
     {
-        if (!$this->_regionTable) {
+        if (!$this->regionModel) {
             $sm = $this->getServiceLocator();
-            $this->_regionTable = $sm->get('FcLibraries\Model\RegionModel');
+            $this->regionModel = $sm->get('FcLibraries\Model\RegionModel');
         }
-        return $this->_regionTable;
+        return $this->regionModel;
     }
 }
