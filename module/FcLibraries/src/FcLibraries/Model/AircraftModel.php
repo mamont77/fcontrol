@@ -6,11 +6,11 @@ use Zend\Db\Adapter\Adapter;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\Select;
 use FcLibraries\Model\BaseModel;
-use FcLibraries\Filter\AirportFilter;
+use FcLibraries\Filter\AircraftFilter;
 
-class AirportModel extends BaseModel
+class AircraftModel extends BaseModel
 {
-    protected $table = 'library_airport';
+    protected $table = 'library_aircraft';
 
     /**
      * @param \Zend\Db\Adapter\Adapter $adapter
@@ -19,7 +19,7 @@ class AirportModel extends BaseModel
     {
         $this->adapter = $adapter;
         $this->resultSetPrototype = new ResultSet();
-        $this->resultSetPrototype->setArrayObjectPrototype(new AirportFilter($this->adapter));
+        $this->resultSetPrototype->setArrayObjectPrototype(new AircraftFilter($this->adapter));
 
         $this->initialize();
     }
@@ -33,10 +33,10 @@ class AirportModel extends BaseModel
         if (null === $select)
             $select = new Select();
         $select->from($this->table);
-        $select->columns(array('id', 'name', 'short_name', 'code_icao', 'code_iata'));
-        $select->join(array('c' => 'library_country'),
-            'c.id = library_airport.country',
-            array('country_name' => 'name'));
+        $select->columns(array('id', 'aircraft_type', 'reg_number'));
+        $select->join(array('t' => 'library_aircraft_type'),
+            't.id = library_aircraft.aircraft_type',
+            array('aircraft_type_name' => 'name'));
 //        $select->order('library_country.code ASC');
         $resultSet = $this->selectWith($select);
         $resultSet->buffer();
@@ -45,32 +45,26 @@ class AirportModel extends BaseModel
     }
 
     /**
-     * @param AirportFilter $object
+     * @param \FcLibraries\Filter\AircraftFilter $object
      */
-    public function add(AirportFilter $object)
+    public function add(AircraftFilter $object)
     {
         $data = array(
-            'name' => $object->name,
-            'short_name' => $object->short_name,
-            'code_icao' => $object->code_icao,
-            'code_iata' => $object->code_iata,
-            'country' => $object->country,
+            'aircraft_type' => $object->aircraft_type,
+            'reg_number' => $object->reg_number,
         );
         $this->insert($data);
     }
 
     /**
-     * @param AirportFilter $object
+     * @param \FcLibraries\Filter\AircraftFilter $object
      * @throws \Exception
      */
-    public function save(AirportFilter $object)
+    public function save(AircraftFilter $object)
     {
         $data = array(
-            'name' => $object->name,
-            'short_name' => $object->short_name,
-            'code_icao' => $object->code_icao,
-            'code_iata' => $object->code_iata,
-            'country' => $object->country,
+            'aircraft_type' => $object->aircraft_type,
+            'reg_number' => $object->reg_number,
         );
         $id = (int)$object->id;
         if ($this->get($id)) {

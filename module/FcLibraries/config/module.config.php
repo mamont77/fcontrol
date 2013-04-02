@@ -6,6 +6,8 @@ return array(
             'FcLibraries\Controller\Region' => 'FcLibraries\Controller\RegionController',
             'FcLibraries\Controller\Country' => 'FcLibraries\Controller\CountryController',
             'FcLibraries\Controller\Airport' => 'FcLibraries\Controller\AirportController',
+            'FcLibraries\Controller\AircraftType' => 'FcLibraries\Controller\AircraftTypeController',
+            'FcLibraries\Controller\Aircraft' => 'FcLibraries\Controller\AircraftController',
         ),
     ),
 
@@ -107,6 +109,64 @@ return array(
                             ),
                             'defaults' => array(
                                 'controller' => 'FcLibraries\Controller\Airport',
+                                'action' => 'index',
+                            ),
+                        ),
+                    ),
+                    'aircraft_types' => array(
+                        'type' => 'segment',
+                        'options' => array(
+                            'route' => '/libraries/aircraft_types[/page/:page][/order_by/:order_by][/:order]',
+                            'constraints' => array(
+                                'page' => '[0-9]+',
+                                'order_by' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'order' => 'ASC|DESC',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'FcLibraries\Controller\AircraftType',
+                                'action' => 'index',
+                            ),
+                        ),
+                    ),
+                    'aircraft_type' => array(
+                        'type' => 'segment',
+                        'options' => array(
+                            'route' => '/libraries/aircraft_type[/:action][/:id]',
+                            'constraints' => array(
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id' => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'FcLibraries\Controller\AircraftType',
+                                'action' => 'index',
+                            ),
+                        ),
+                    ),
+                    'aircrafts' => array(
+                        'type' => 'segment',
+                        'options' => array(
+                            'route' => '/libraries/aircrafts[/page/:page][/order_by/:order_by][/:order]',
+                            'constraints' => array(
+                                'page' => '[0-9]+',
+                                'order_by' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'order' => 'ASC|DESC',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'FcLibraries\Controller\Aircraft',
+                                'action' => 'index',
+                            ),
+                        ),
+                    ),
+                    'aircraft' => array(
+                        'type' => 'segment',
+                        'options' => array(
+                            'route' => '/libraries/aircraft[/:action][/:id]',
+                            'constraints' => array(
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id' => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'FcLibraries\Controller\Aircraft',
                                 'action' => 'index',
                             ),
                         ),

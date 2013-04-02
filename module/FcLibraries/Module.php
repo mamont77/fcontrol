@@ -7,6 +7,10 @@ use FcLibraries\Model\CountryModel;
 use FcLibraries\Filter\CountryFilter;
 use FcLibraries\Model\AirportModel;
 use FcLibraries\Filter\AirportFilter;
+use FcLibraries\Model\AircraftTypeModel;
+use FcLibraries\Filter\AircraftTypeFilter;
+use FcLibraries\Model\AircraftModel;
+use FcLibraries\Filter\AircraftFilter;
 
 class Module
 {
@@ -63,6 +67,22 @@ class Module
                 'FcLibraries\Filter\AirportFilter' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     return new AirportFilter($dbAdapter);
+                },
+                'FcLibraries\Model\AircraftTypeModel' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new AircraftTypeModel($dbAdapter);
+                },
+                'FcLibraries\Filter\AircraftTypeFilter' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new AircraftTypeFilter($dbAdapter);
+                },
+                'FcLibraries\Model\AircraftModel' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new AircraftModel($dbAdapter);
+                },
+                'FcLibraries\Filter\AircraftFilter' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new AircraftFilter($dbAdapter);
                 },
             ),
         );

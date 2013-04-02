@@ -91,6 +91,8 @@ return array(
                 array('controller' => 'FcLibraries\Controller\Region', 'roles' => array('admin')),
                 array('controller' => 'FcLibraries\Controller\Country', 'roles' => array('admin')),
                 array('controller' => 'FcLibraries\Controller\Airport', 'roles' => array('admin')),
+                array('controller' => 'FcLibraries\Controller\AircraftType', 'roles' => array('admin')),
+                array('controller' => 'FcLibraries\Controller\Aircraft', 'roles' => array('admin')),
             ),
 
             /* If this guard is specified here (i.e. it is enabled), it will block
@@ -115,12 +117,10 @@ return array(
                 array('route' => 'zfcadmin/country', 'roles' => array('admin')),
                 array('route' => 'zfcadmin/airports', 'roles' => array('admin')),
                 array('route' => 'zfcadmin/airport', 'roles' => array('admin')),
-                //array('route' => 'zfcadmin/zfcuseradmin', 'roles' => array('admin')),
-                //array('route' => 'zfcadmin/zfcuseradmin/list', 'roles' => array('admin')),
-                //array('route' => 'zfcadmin/zfcuseradmin/create', 'roles' => array('admin')),
-                //array('route' => 'zfcadmin/zfcuseradmin/create', 'roles' => array('admin')),
-                //array('route' => 'zfcadmin/zfcuseradmin/edit', 'roles' => array('admin')),
-                //array('route' => 'zfcadmin/zfcuseradmin/remove', 'roles' => array('admin')),
+                array('route' => 'zfcadmin/aircraft_types', 'roles' => array('admin')),
+                array('route' => 'zfcadmin/aircraft_type', 'roles' => array('admin')),
+                array('route' => 'zfcadmin/aircrafts', 'roles' => array('admin')),
+                array('route' => 'zfcadmin/aircraft', 'roles' => array('admin')),
 
                 array('route' => 'album', 'roles' => array('admin')),
 

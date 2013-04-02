@@ -6,11 +6,14 @@ use Zend\Db\Adapter\Adapter;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\Select;
 use FcLibraries\Model\BaseModel;
-use FcLibraries\Filter\AirportFilter;
+use FcLibraries\Filter\AircraftTypeFilter;
 
-class AirportModel extends BaseModel
+class AircraftTypeModel extends BaseModel
 {
-    protected $table = 'library_airport';
+    /**
+     * @var string
+     */
+    protected $table = 'library_aircraft_type';
 
     /**
      * @param \Zend\Db\Adapter\Adapter $adapter
@@ -19,8 +22,7 @@ class AirportModel extends BaseModel
     {
         $this->adapter = $adapter;
         $this->resultSetPrototype = new ResultSet();
-        $this->resultSetPrototype->setArrayObjectPrototype(new AirportFilter($this->adapter));
-
+        $this->resultSetPrototype->setArrayObjectPrototype(new AircraftTypeFilter($this->adapter));
         $this->initialize();
     }
 
@@ -33,11 +35,6 @@ class AirportModel extends BaseModel
         if (null === $select)
             $select = new Select();
         $select->from($this->table);
-        $select->columns(array('id', 'name', 'short_name', 'code_icao', 'code_iata'));
-        $select->join(array('c' => 'library_country'),
-            'c.id = library_airport.country',
-            array('country_name' => 'name'));
-//        $select->order('library_country.code ASC');
         $resultSet = $this->selectWith($select);
         $resultSet->buffer();
 
@@ -45,32 +42,24 @@ class AirportModel extends BaseModel
     }
 
     /**
-     * @param AirportFilter $object
+     * @param AircraftTypeFilter $object
      */
-    public function add(AirportFilter $object)
+    public function add(AircraftTypeFilter $object)
     {
         $data = array(
             'name' => $object->name,
-            'short_name' => $object->short_name,
-            'code_icao' => $object->code_icao,
-            'code_iata' => $object->code_iata,
-            'country' => $object->country,
         );
         $this->insert($data);
     }
 
     /**
-     * @param AirportFilter $object
+     * @param AircraftTypeFilter $object
      * @throws \Exception
      */
-    public function save(AirportFilter $object)
+    public function save(AircraftTypeFilter $object)
     {
         $data = array(
             'name' => $object->name,
-            'short_name' => $object->short_name,
-            'code_icao' => $object->code_icao,
-            'code_iata' => $object->code_iata,
-            'country' => $object->country,
         );
         $id = (int)$object->id;
         if ($this->get($id)) {
@@ -79,5 +68,4 @@ class AirportModel extends BaseModel
             throw new \Exception('Form id does not exist');
         }
     }
-
 }

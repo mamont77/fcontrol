@@ -32,6 +32,14 @@ return array(
                         'label' => 'Airports',
                         'route' => 'zfcadmin/airports',
                     ),
+                    array(
+                        'label' => 'Types Aircraft',
+                        'route' => 'zfcadmin/aircraft_types',
+                    ),
+                    array(
+                        'label' => 'Aircrafts',
+                        'route' => 'zfcadmin/aircrafts',
+                    ),
                 ),
             ),
             array(
