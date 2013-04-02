@@ -59,8 +59,11 @@ class AirportController extends AbstractActionController implements ControllerIn
             $form->setData($request->getPost());
 
             if ($form->isValid()) {
-                $filter->exchangeArray($form->getData());
+                $data = $form->getData();
+                $filter->exchangeArray($data);
                 $this->getAirportModel()->add($filter);
+                $this->flashMessenger()->addSuccessMessage("Airport '"
+                        . $data['name'] . "' was successfully added.");
                 return $this->redirect()->toRoute('zfcadmin/airport', array(
                     'action' => 'add'
                 ));
@@ -92,7 +95,10 @@ class AirportController extends AbstractActionController implements ControllerIn
             $form->setInputFilter($filter->getInputFilter());
             $form->setData($request->getPost());
             if ($form->isValid()) {
-                $this->getAirportModel()->save($form->getData());
+                $data = $form->getData();
+                $this->getAirportModel()->save($data);
+                $this->flashMessenger()->addSuccessMessage("Airport '"
+                        . $data->name . "' was successfully saved.");
                 return $this->redirect()->toRoute('zfcadmin/airports');
             }
         }
@@ -119,7 +125,10 @@ class AirportController extends AbstractActionController implements ControllerIn
 
             if ($del == 'Yes') {
                 $id = (int)$request->getPost('id');
+                $name = (string) $request->getPost('name');
                 $this->getAirportModel()->remove($id);
+                $this->flashMessenger()->addSuccessMessage("Airport '"
+                        . $name . "' was successfully deleted.");
             }
 
             // Redirect to list

@@ -28,3 +28,6 @@
 [submodule "vendor/DluTwBootstrapDemo"]
 	path = vendor/DluTwBootstrapDemo
 	url = https://bitbucket.org/dlu/dlutwbootstrap-demo.git
+[submodule "vendor/SuperMessenger"]
+	path = vendor/SuperMessenger
+	url = git://github.com/blanchonvincent/SuperMessenger.git

@@ -58,8 +58,11 @@ class RegionController extends AbstractActionController implements ControllerInt
             $form->setData($request->getPost());
 
             if ($form->isValid()) {
-                $filter->exchangeArray($form->getData());
+                $data = $form->getData();
+                $filter->exchangeArray($data);
                 $this->getRegionModel()->add($filter);
+                $this->flashMessenger()->addSuccessMessage("Region '"
+                        . $data['name'] . "' was successfully added.");
                 return $this->redirect()->toRoute('zfcadmin/region',
                     array(
                         'action' => 'add'
@@ -92,7 +95,10 @@ class RegionController extends AbstractActionController implements ControllerInt
             $form->setInputFilter($filter->getInputFilter());
             $form->setData($request->getPost());
             if ($form->isValid()) {
-                $this->getRegionModel()->save($form->getData());
+                $data = $form->getData();
+                $this->getRegionModel()->save($data);
+                $this->flashMessenger()->addSuccessMessage("Region '"
+                        . $data->name . "' was successfully saved.");
                 return $this->redirect()->toRoute('zfcadmin/regions');
             }
         }
@@ -119,7 +125,10 @@ class RegionController extends AbstractActionController implements ControllerInt
 
             if ($del == 'Yes') {
                 $id = (int)$request->getPost('id');
+                $name = (string) $request->getPost('name');
                 $this->getRegionModel()->remove($id);
+                $this->flashMessenger()->addSuccessMessage("Region '"
+                        . $name . "' was successfully deleted.");
             }
 
             // Redirect to list

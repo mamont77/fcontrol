@@ -17,6 +17,7 @@ $url = $this->url('zfcadmin/region', array(
 <form action="<?php echo $url; ?>" method="post">
 <div>
     <input type="hidden" name="id" value="<?php echo (int)$data->id; ?>" />
+    <input type="hidden" name="name" value="<?php echo $this->escapeHtml($data->name); ?>" />
     <input type="submit" name="del" value="Yes" class="btn btn-warning" />
     <input type="submit" name="del" value="No" class="btn btn-link" />
 </div>

@@ -59,8 +59,11 @@ class CountryController extends AbstractActionController implements ControllerIn
             $form->setData($request->getPost());
 
             if ($form->isValid()) {
-                $filter->exchangeArray($form->getData());
+                $data = $form->getData();
+                $filter->exchangeArray($data);
                 $this->getCountryModel()->add($filter);
+                $this->flashMessenger()->addSuccessMessage("Country '"
+                        . $data['name'] . "' was successfully added.");
                 return $this->redirect()->toRoute('zfcadmin/country', array(
                     'action' => 'add'
                 ));
@@ -92,7 +95,10 @@ class CountryController extends AbstractActionController implements ControllerIn
             $form->setInputFilter($filter->getInputFilter());
             $form->setData($request->getPost());
             if ($form->isValid()) {
-                $this->getCountryModel()->save($form->getData());
+                $data = $form->getData();
+                $this->getCountryModel()->save($data);
+                $this->flashMessenger()->addSuccessMessage("Country '"
+                        . $data->name . "' was successfully saved.");
                 return $this->redirect()->toRoute('zfcadmin/countries');
             }
         }
@@ -119,7 +125,10 @@ class CountryController extends AbstractActionController implements ControllerIn
 
             if ($del == 'Yes') {
                 $id = (int)$request->getPost('id');
+                $name = (string) $request->getPost('name');
                 $this->getCountryModel()->remove($id);
+                $this->flashMessenger()->addSuccessMessage("Country '"
+                        . $name . "' was successfully deleted.");
             }
 
             // Redirect to list

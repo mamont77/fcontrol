@@ -8,6 +8,9 @@ if ($order) {
 }
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
+
 <p>
     <a href="<?php echo $this->url('zfcadmin/region', array('action' => 'add'));?>"
        class="btn btn-primary">Add region</a>

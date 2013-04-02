@@ -20,6 +20,7 @@ return array(
         'FcAdmin',
         'FcLibraries',
         'DluTwBootstrap',
+        'SuperMessenger',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

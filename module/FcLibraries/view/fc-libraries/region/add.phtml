@@ -1,5 +1,4 @@
 <?php
-//$this->plugin('translate')->setTranslatorTextDomain(__NAMESPACE__);
 $title = 'Add region';
 $this->headTitle($title);
 ?>
@@ -10,8 +9,6 @@ $displayOptions = array(
     'class' => 'form-horizontal',
 );
 $form = $this->form;
-$formType = $this->formType;
-$validData = $this->validData;
 $form->setAttribute('action', $this->url('zfcadmin/region', array('action' => 'add')));
 $form->prepare();
 ?>
@@ -22,6 +19,8 @@ $form->prepare();
     <strong>Invalid input!</strong>
     Form fields are not filled in correctly.
 </div>
+<?php else: ?>
+    <?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
 <?php endif; ?>
 
 <?php echo $this->formTwb($form, $formType, $displayOptions); ?>
