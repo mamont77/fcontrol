@@ -11,6 +11,8 @@ use FcLibraries\Model\AircraftTypeModel;
 use FcLibraries\Filter\AircraftTypeFilter;
 use FcLibraries\Model\AircraftModel;
 use FcLibraries\Filter\AircraftFilter;
+use FcLibraries\Model\AirOperatorModel;
+use FcLibraries\Filter\AirOperatorFilter;
 
 class Module
 {
@@ -83,6 +85,14 @@ class Module
                 'FcLibraries\Filter\AircraftFilter' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     return new AircraftFilter($dbAdapter);
+                },
+                'FcLibraries\Model\AirOperatorModel' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new AirOperatorModel($dbAdapter);
+                },
+                'FcLibraries\Filter\AirOperatorFilter' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new AirOperatorFilter($dbAdapter);
                 },
             ),
         );

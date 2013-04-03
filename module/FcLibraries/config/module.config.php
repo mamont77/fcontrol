@@ -8,6 +8,7 @@ return array(
             'FcLibraries\Controller\Airport' => 'FcLibraries\Controller\AirportController',
             'FcLibraries\Controller\AircraftType' => 'FcLibraries\Controller\AircraftTypeController',
             'FcLibraries\Controller\Aircraft' => 'FcLibraries\Controller\AircraftController',
+            'FcLibraries\Controller\AirOperator' => 'FcLibraries\Controller\AirOperatorController',
         ),
     ),
 
@@ -167,6 +168,35 @@ return array(
                             ),
                             'defaults' => array(
                                 'controller' => 'FcLibraries\Controller\Aircraft',
+                                'action' => 'index',
+                            ),
+                        ),
+                    ),
+                    'air_operators' => array(
+                        'type' => 'segment',
+                        'options' => array(
+                            'route' => '/libraries/air_operators[/page/:page][/order_by/:order_by][/:order]',
+                            'constraints' => array(
+                                'page' => '[0-9]+',
+                                'order_by' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'order' => 'ASC|DESC',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'FcLibraries\Controller\AirOperator',
+                                'action' => 'index',
+                            ),
+                        ),
+                    ),
+                    'air_operator' => array(
+                        'type' => 'segment',
+                        'options' => array(
+                            'route' => '/libraries/air_operator[/:action][/:id]',
+                            'constraints' => array(
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id' => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'FcLibraries\Controller\AirOperator',
                                 'action' => 'index',
                             ),
                         ),

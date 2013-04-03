@@ -59,6 +59,7 @@ class AirportForm extends Form
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'required' => true,
+                'minlength' => '4',
                 'maxlength' => '4',
             ),
             'options' => array(
@@ -71,6 +72,7 @@ class AirportForm extends Form
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'required' => true,
+                'minlength' => '3',
                 'maxlength' => '3',
             ),
             'options' => array(

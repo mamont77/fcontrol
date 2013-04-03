@@ -40,6 +40,10 @@ return array(
                         'label' => 'Aircrafts',
                         'route' => 'zfcadmin/aircrafts',
                     ),
+                    array(
+                        'label' => 'Air Operators',
+                        'route' => 'zfcadmin/air_operators',
+                    ),
                 ),
             ),
             array(
