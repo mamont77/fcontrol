@@ -9,6 +9,7 @@ return array(
             'FcLibraries\Controller\AircraftType' => 'FcLibraries\Controller\AircraftTypeController',
             'FcLibraries\Controller\Aircraft' => 'FcLibraries\Controller\AircraftController',
             'FcLibraries\Controller\AirOperator' => 'FcLibraries\Controller\AirOperatorController',
+            'FcLibraries\Controller\Kontragent' => 'FcLibraries\Controller\KontragentController',
         ),
     ),
 
@@ -197,6 +198,35 @@ return array(
                             ),
                             'defaults' => array(
                                 'controller' => 'FcLibraries\Controller\AirOperator',
+                                'action' => 'index',
+                            ),
+                        ),
+                    ),
+                    'kontragents' => array(
+                        'type' => 'segment',
+                        'options' => array(
+                            'route' => '/libraries/kontragents[/page/:page][/order_by/:order_by][/:order]',
+                            'constraints' => array(
+                                'page' => '[0-9]+',
+                                'order_by' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'order' => 'ASC|DESC',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'FcLibraries\Controller\Kontragent',
+                                'action' => 'index',
+                            ),
+                        ),
+                    ),
+                    'kontragent' => array(
+                        'type' => 'segment',
+                        'options' => array(
+                            'route' => '/libraries/kontragent[/:action][/:id]',
+                            'constraints' => array(
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id' => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'FcLibraries\Controller\Kontragent',
                                 'action' => 'index',
                             ),
                         ),

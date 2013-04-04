@@ -13,6 +13,8 @@ use FcLibraries\Model\AircraftModel;
 use FcLibraries\Filter\AircraftFilter;
 use FcLibraries\Model\AirOperatorModel;
 use FcLibraries\Filter\AirOperatorFilter;
+use FcLibraries\Model\KontragentModel;
+use FcLibraries\Filter\KontragentFilter;
 
 class Module
 {
@@ -93,6 +95,14 @@ class Module
                 'FcLibraries\Filter\AirOperatorFilter' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     return new AirOperatorFilter($dbAdapter);
+                },
+                'FcLibraries\Model\KontragentModel' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new KontragentModel($dbAdapter);
+                },
+                'FcLibraries\Filter\KontragentFilter' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new KontragentFilter($dbAdapter);
                 },
             ),
         );

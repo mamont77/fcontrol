@@ -71,6 +71,7 @@ class AirOperatorForm extends Form
             'name' => 'code_iata',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
+                'required' => false,
                 'minlength' => '2',
                 'maxlength' => '2',
             ),

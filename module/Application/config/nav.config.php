@@ -44,6 +44,10 @@ return array(
                         'label' => 'Air Operators',
                         'route' => 'zfcadmin/air_operators',
                     ),
+                    array(
+                        'label' => 'Kontragents',
+                        'route' => 'zfcadmin/kontragents',
+                    ),
                 ),
             ),
             array(

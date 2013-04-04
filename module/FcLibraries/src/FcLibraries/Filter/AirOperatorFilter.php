@@ -107,6 +107,7 @@ class AirOperatorFilter extends BaseFilter
 
             $inputFilter->add($factory->createInput(array(
                 'name' => 'code_iata',
+                'required' => false,
                 'filters' => $this->defaultFilters,
                 'validators' => array(
                     array(
