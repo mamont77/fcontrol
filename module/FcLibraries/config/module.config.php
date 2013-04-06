@@ -10,6 +10,8 @@ return array(
             'FcLibraries\Controller\Aircraft' => 'FcLibraries\Controller\AircraftController',
             'FcLibraries\Controller\AirOperator' => 'FcLibraries\Controller\AirOperatorController',
             'FcLibraries\Controller\Kontragent' => 'FcLibraries\Controller\KontragentController',
+            'FcLibraries\Controller\Unit' => 'FcLibraries\Controller\UnitController',
+            'FcLibraries\Controller\Currency' => 'FcLibraries\Controller\CurrencyController',
         ),
     ),
 
@@ -227,6 +229,64 @@ return array(
                             ),
                             'defaults' => array(
                                 'controller' => 'FcLibraries\Controller\Kontragent',
+                                'action' => 'index',
+                            ),
+                        ),
+                    ),
+                    'units' => array(
+                        'type' => 'segment',
+                        'options' => array(
+                            'route' => '/libraries/units[/page/:page][/order_by/:order_by][/:order]',
+                            'constraints' => array(
+                                'page' => '[0-9]+',
+                                'order_by' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'order' => 'ASC|DESC',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'FcLibraries\Controller\Unit',
+                                'action' => 'index',
+                            ),
+                        ),
+                    ),
+                    'unit' => array(
+                        'type' => 'segment',
+                        'options' => array(
+                            'route' => '/libraries/unit[/:action][/:id]',
+                            'constraints' => array(
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id' => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'FcLibraries\Controller\Unit',
+                                'action' => 'index',
+                            ),
+                        ),
+                    ),
+                    'currencies' => array(
+                        'type' => 'segment',
+                        'options' => array(
+                            'route' => '/libraries/currencies[/page/:page][/order_by/:order_by][/:order]',
+                            'constraints' => array(
+                                'page' => '[0-9]+',
+                                'order_by' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'order' => 'ASC|DESC',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'FcLibraries\Controller\Currency',
+                                'action' => 'index',
+                            ),
+                        ),
+                    ),
+                    'currency' => array(
+                        'type' => 'segment',
+                        'options' => array(
+                            'route' => '/libraries/currency[/:action][/:id]',
+                            'constraints' => array(
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id' => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'FcLibraries\Controller\Currency',
                                 'action' => 'index',
                             ),
                         ),

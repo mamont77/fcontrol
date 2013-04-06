@@ -75,4 +75,12 @@ class LibraryModel implements InputFilterAwareInterface
 
         return $this->_inputFilter;
     }
+
+    /**
+     * @return array
+     */
+    public function getTypePermission()
+    {
+        return array('LAND', 'O/F');
+    }
 }

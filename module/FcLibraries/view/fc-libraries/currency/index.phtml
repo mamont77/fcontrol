@@ -1,5 +1,5 @@
 <?php
-$title = 'Countries';
+$title = 'Currencies';
 $this->headTitle($title);
 $url_order = 'ASC';
 if ($order) {
@@ -11,8 +11,8 @@ if ($order) {
 <?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
 
 <p>
-    <a href="<?php echo $this->url('zfcadmin/country', array('action' => 'add'));?>"
-       class="btn btn-primary">Add Country</a>
+    <a href="<?php echo $this->url('zfcadmin/currency', array('action' => 'add'));?>"
+       class="btn btn-primary">Add Currency</a>
 </p>
 
 <table class="table table-bordered table-hover">
@@ -20,24 +20,16 @@ if ($order) {
         <th>ID</th>
         <th>
             <a href="<?php echo $this->url($route, array('order_by' => 'name', 'order' => $url_order)); ?>">
-                Name
+                Long Name
                 <?php if ($order_by == 'name'): ?>
                 <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
                 <?php endif; ?>
             </a>
         </th>
         <th>
-            <a href="<?php echo $this->url($route, array('order_by' => 'region_name', 'order' => $url_order)); ?>">
-                Region
-                <?php if ($order_by == 'region_name'): ?>
-                <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
-                <?php endif; ?>
-            </a>
-        </th>
-        <th>
-            <a href="<?php echo $this->url($route, array('order_by' => 'code', 'order' => $url_order)); ?>">
-                Code
-                <?php if ($order_by == 'code'): ?>
+            <a href="<?php echo $this->url($route, array('order_by' => 'currency', 'order' => $url_order)); ?>">
+                Currency
+                <?php if ($order_by == 'currency'): ?>
                 <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
                 <?php endif; ?>
             </a>
@@ -48,12 +40,11 @@ if ($order) {
     <tr>
         <td><?php echo $this->escapeHtml($row->id);?></td>
         <td><?php echo $this->escapeHtml($row->name);?></td>
-        <td><?php echo $this->escapeHtml($row->region_name);?></td>
-        <td><?php echo $this->escapeHtml($row->code);?></td>
+        <td><?php echo $this->escapeHtml($row->currency);?></td>
         <td>
-            <a href="<?php echo $this->url('zfcadmin/country',
+            <a href="<?php echo $this->url('zfcadmin/currency',
                 array('action' => 'edit', 'id' => $row->id));?>" class="btn btn-success">Edit</a>
-            <a href="<?php echo $this->url('zfcadmin/country',
+            <a href="<?php echo $this->url('zfcadmin/currency',
                 array('action' => 'delete', 'id' => $row->id));?>" class="btn btn-warning">Remove</a>
         </td>
     </tr>

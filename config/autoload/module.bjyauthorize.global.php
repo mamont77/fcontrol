@@ -95,6 +95,8 @@ return array(
                 array('controller' => 'FcLibraries\Controller\Aircraft', 'roles' => array('admin')),
                 array('controller' => 'FcLibraries\Controller\AirOperator', 'roles' => array('admin')),
                 array('controller' => 'FcLibraries\Controller\Kontragent', 'roles' => array('admin')),
+                array('controller' => 'FcLibraries\Controller\Unit', 'roles' => array('admin')),
+                array('controller' => 'FcLibraries\Controller\Currency', 'roles' => array('admin')),
             ),
 
             /* If this guard is specified here (i.e. it is enabled), it will block
@@ -127,9 +129,10 @@ return array(
                 array('route' => 'zfcadmin/air_operator', 'roles' => array('admin')),
                 array('route' => 'zfcadmin/kontragents', 'roles' => array('admin')),
                 array('route' => 'zfcadmin/kontragent', 'roles' => array('admin')),
-
-                array('route' => 'album', 'roles' => array('admin')),
-
+                array('route' => 'zfcadmin/units', 'roles' => array('admin')),
+                array('route' => 'zfcadmin/unit', 'roles' => array('admin')),
+                array('route' => 'zfcadmin/currencies', 'roles' => array('admin')),
+                array('route' => 'zfcadmin/currency', 'roles' => array('admin')),
             ),
         ),
     ),

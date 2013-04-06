@@ -48,11 +48,19 @@ return array(
                         'label' => 'Kontragents',
                         'route' => 'zfcadmin/kontragents',
                     ),
+                    array(
+                        'label' => 'Units',
+                        'route' => 'zfcadmin/units',
+                    ),
+                    array(
+                        'label' => 'Currencies',
+                        'route' => 'zfcadmin/currencies',
+                    ),
                 ),
             ),
             array(
-                'label' => 'Links',
-                'title' => 'Resources utilized by DluTwBootstrap',
+                'label' => 'Forms',
+                'title' => 'Resources by fControl',
                 'type' => 'uri',
                 'pages' => array(
                     array(

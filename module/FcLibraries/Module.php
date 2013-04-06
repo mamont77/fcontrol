@@ -15,6 +15,10 @@ use FcLibraries\Model\AirOperatorModel;
 use FcLibraries\Filter\AirOperatorFilter;
 use FcLibraries\Model\KontragentModel;
 use FcLibraries\Filter\KontragentFilter;
+use FcLibraries\Model\UnitModel;
+use FcLibraries\Filter\UnitFilter;
+use FcLibraries\Model\CurrencyModel;
+use FcLibraries\Filter\CurrencyFilter;
 
 class Module
 {
@@ -103,6 +107,23 @@ class Module
                 'FcLibraries\Filter\KontragentFilter' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     return new KontragentFilter($dbAdapter);
+                },
+
+                'FcLibraries\Model\UnitModel' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new UnitModel($dbAdapter);
+                },
+                'FcLibraries\Filter\UnitFilter' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new UnitFilter($dbAdapter);
+                },
+                'FcLibraries\Model\CurrencyModel' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new CurrencyModel($dbAdapter);
+                },
+                'FcLibraries\Filter\CurrencyFilter' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new CurrencyFilter($dbAdapter);
                 },
             ),
         );

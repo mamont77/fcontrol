@@ -189,6 +189,22 @@ class KontragentFilter extends BaseFilter
                 ),
             )));
 
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'sita',
+                'required' => true,
+                'filters' => $this->defaultFilters,
+                'validators' => array(
+                    array(
+                        'name' => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min' => 1,
+                            'max' => 10,
+                        ),
+                    ),
+                ),
+            )));
+
             $this->inputFilter = $inputFilter;
         }
 

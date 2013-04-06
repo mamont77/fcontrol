@@ -6,14 +6,14 @@ use Zend\Db\Adapter\Adapter;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\Select;
 use FcLibraries\Model\BaseModel;
-use FcLibraries\Filter\RegionFilter;
+use FcLibraries\Filter\UnitFilter;
 
-class RegionModel extends BaseModel
+class UnitModel extends BaseModel
 {
     /**
      * @var string
      */
-    protected $table = 'library_region';
+    protected $table = 'library_unit';
 
     /**
      * @param \Zend\Db\Adapter\Adapter $adapter
@@ -22,7 +22,7 @@ class RegionModel extends BaseModel
     {
         $this->adapter = $adapter;
         $this->resultSetPrototype = new ResultSet();
-        $this->resultSetPrototype->setArrayObjectPrototype(new RegionFilter($this->adapter));
+        $this->resultSetPrototype->setArrayObjectPrototype(new UnitFilter($this->adapter));
         $this->initialize();
     }
 
@@ -42,9 +42,9 @@ class RegionModel extends BaseModel
     }
 
     /**
-     * @param \FcLibraries\Filter\RegionFilter $object
+     * @param \FcLibraries\Filter\UnitFilter $object
      */
-    public function add(RegionFilter $object)
+    public function add(UnitFilter $object)
     {
         $data = array(
             'name' => $object->name,
@@ -53,10 +53,10 @@ class RegionModel extends BaseModel
     }
 
     /**
-     * @param \FcLibraries\Filter\RegionFilter $object
+     * @param \FcLibraries\Filter\UnitFilter $object
      * @throws \Exception
      */
-    public function save(RegionFilter $object)
+    public function save(UnitFilter $object)
     {
         $data = array(
             'name' => $object->name,
