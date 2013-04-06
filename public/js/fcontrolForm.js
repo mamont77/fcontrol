@@ -25,6 +25,12 @@
         }
     };
 
+    fControl.behaviors.setFocus = {
+        attach:function (context, settings) {
+            $('form:first *:input[type!=hidden]:first').focus();
+        }
+    };
+
     fControl.behaviors.cancelButton = {
         attach:function (context, settings) {
             var route;
