@@ -142,5 +142,17 @@ class KontragentForm extends Form
                 'value' => 'Add',
             ),
         ));
+
+        //Cancel button
+        $this->add(array(
+            'name' => 'cancel',
+            'type' => 'Zend\Form\Element\Button',
+            'options' => array(
+                'label' => 'Cancel',
+            ),
+            'attributes' => array(
+                'class' => 'btn-link cancel',
+            ),
+        ));
     }
 }

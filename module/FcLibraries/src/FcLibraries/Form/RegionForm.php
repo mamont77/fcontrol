@@ -43,7 +43,19 @@ class RegionForm extends Form
             'name' => 'submitBtn',
             'attributes' => array(
                 'type' => 'submit',
-                'value' => 'Add',
+                'value' => 'Add', a
+            ),
+        ));
+
+        //Cancel button
+        $this->add(array(
+            'name' => 'cancel',
+            'type' => 'Zend\Form\Element\Button',
+            'options' => array(
+                'label' => 'Cancel',
+            ),
+            'attributes' => array(
+                'class' => 'btn-link cancel',
             ),
         ));
     }
