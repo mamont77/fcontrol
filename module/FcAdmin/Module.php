@@ -2,6 +2,8 @@
 
 namespace FcAdmin;
 
+use Zend\ModuleManager\ModuleManager;
+use Zend\Mvc\MvcEvent;
 use FcAdmin\Model\UserTable;
 use FcAdmin\Model\RoleTable;
 
@@ -42,5 +44,25 @@ class Module
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';
+    }
+
+    public function init(ModuleManager $moduleManager)
+    {
+        $sharedEvents = $moduleManager->getEventManager()->getSharedManager();
+        $sharedEvents->attach(__NAMESPACE__, 'dispatch', array($this, 'onModuleDispatch'));
+    }
+
+    public function onModuleDispatch(MvcEvent $e)
+    {
+        //Set the layout template for every action in this module
+        $controller = $e->getTarget();
+        $controller->layout('layout/layout');
+
+        //Set the main menu into the layout view model
+        $serviceManager = $e->getApplication()->getServiceManager();
+        $navBarContainer = $serviceManager->get('fcontrol_navigation');
+
+        $viewModel = $e->getViewModel();
+        $viewModel->setVariable('navBar', $navBarContainer);
     }
 }
