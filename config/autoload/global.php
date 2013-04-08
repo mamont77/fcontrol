@@ -2,8 +2,8 @@
 
 $dbParams = array(
     'database' => 'fcontrol',
-    'username' => 'root',
-    'password' => '',
+    'username' => 'rapvokza_izstar',
+    'password' => 'zenkov77',
     'hostname' => 'localhost',
     // buffer_results - only for mysqli buffered queries, skip for others
     'options' => array('buffer_results' => true)
@@ -20,6 +20,9 @@ return array(
                     'username' => $dbParams['username'],
                     'password' => $dbParams['password'],
                     'hostname' => $dbParams['hostname'],
+                    'driver_options' => array(
+                         PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
+                    ),
                 ));
 
                 $adapter->setProfiler(new BjyProfiler\Db\Profiler\Profiler);
