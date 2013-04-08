@@ -17,7 +17,6 @@ if ($order) {
 
 <table class="table table-bordered table-hover">
     <tr>
-        <th>ID</th>
         <th>
             <a href="<?php echo $this->url($route, array('order_by' => 'name', 'order' => $url_order)); ?>">
                 Name
@@ -30,7 +29,6 @@ if ($order) {
     </tr>
     <?php foreach ($pagination as $row) : ?>
     <tr>
-        <td><?php echo $this->escapeHtml($row->id);?></td>
         <td><?php echo $this->escapeHtml($row->name);?></td>
         <td>
             <a href="<?php echo $this->url('zfcadmin/region',

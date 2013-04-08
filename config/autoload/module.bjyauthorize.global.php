@@ -110,6 +110,7 @@ return array(
                 array('route' => 'zfcuser/changepassword', 'roles' => array('user')),
                 array('route' => 'zfcuser/changeemail', 'roles' => array('user')),
                 array('route' => 'home', 'roles' => array('guest', 'user')),
+                array('route' => 'album', 'roles' => array('admin')),
                 array('route' => 'zfcadmin', 'roles' => array('admin')),
                 array('route' => 'zfcadmin/dashboard', 'roles' => array('admin')),
                 array('route' => 'zfcadmin/users', 'roles' => array('admin')),

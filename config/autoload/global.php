@@ -34,6 +34,7 @@ return array(
                 $adapter->injectProfilingStatementPrototype($options);
                 return $adapter;
             },
+            'fcontrol_navigation' => 'Application\Navigation\Service\fControlNavigationFactory',
         ),
     ),
 );

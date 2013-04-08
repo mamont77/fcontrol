@@ -9,9 +9,8 @@
 
 namespace Application;
 
-//use Zend\ModuleManager\ModuleManager;
-//use Zend\Mvc\ModuleRouteListener;
-//use Zend\Mvc\MvcEvent;
+use Zend\ModuleManager\ModuleManager;
+use Zend\Mvc\MvcEvent;
 use Zend\ServiceManager\ServiceManager;
 
 class Module
@@ -39,13 +38,13 @@ class Module
         return $config;
     }
 
-    public function init(\Zend\ModuleManager\ModuleManager $moduleManager)
+    public function init(ModuleManager $moduleManager)
     {
         $sharedEvents = $moduleManager->getEventManager()->getSharedManager();
         $sharedEvents->attach(__NAMESPACE__, 'dispatch', array($this, 'onModuleDispatch'));
     }
 
-    public function onModuleDispatch(\Zend\Mvc\MvcEvent $e)
+    public function onModuleDispatch(MvcEvent $e)
     {
 
         //Set the layout template for every action in this module
