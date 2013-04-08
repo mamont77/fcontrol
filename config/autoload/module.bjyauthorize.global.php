@@ -97,6 +97,7 @@ return array(
                 array('controller' => 'FcLibraries\Controller\Kontragent', 'roles' => array('admin')),
                 array('controller' => 'FcLibraries\Controller\Unit', 'roles' => array('admin')),
                 array('controller' => 'FcLibraries\Controller\Currency', 'roles' => array('admin')),
+                array('controller' => 'FcFlight\Controller\Flight', 'roles' => array('user')),
             ),
 
             /* If this guard is specified here (i.e. it is enabled), it will block
@@ -134,6 +135,8 @@ return array(
                 array('route' => 'zfcadmin/unit', 'roles' => array('admin')),
                 array('route' => 'zfcadmin/currencies', 'roles' => array('admin')),
                 array('route' => 'zfcadmin/currency', 'roles' => array('admin')),
+                array('route' => 'flights', 'roles' => array('user')),
+                array('route' => 'flight', 'roles' => array('user')),
             ),
         ),
     ),

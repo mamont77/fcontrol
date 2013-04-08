@@ -64,13 +64,8 @@ return array(
                 'type' => 'uri',
                 'pages' => array(
                     array(
-                        'label' => 'Tutorials & Discussion',
-                        'type' => 'uri',
-                        'navHeader' => true,
-                    ),
-                    array(
-                        'label' => 'DluTwBootstrap on ZF Daily blog',
-                        'uri' => 'http://www.zfdaily.com/tag/dlutwbootstrap/',
+                        'label' => 'Flights',
+                        'route' => 'flights',
                     ),
                     array(
                         'type' => 'uri',
