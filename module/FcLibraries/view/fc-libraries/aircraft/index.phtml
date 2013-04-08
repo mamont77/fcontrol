@@ -17,7 +17,6 @@ if ($order) {
 
 <table class="table table-bordered table-hover">
     <tr>
-        <th>ID</th>
         <th>
             <a href="<?php echo $this->url($route, array('order_by' => 'aircraft_type_name', 'order' => $url_order)); ?>">
                 Type Aircraft
@@ -38,7 +37,6 @@ if ($order) {
     </tr>
     <?php foreach ($pagination as $row) : ?>
     <tr>
-        <td><?php echo $this->escapeHtml($row->id);?></td>
         <td><?php echo $this->escapeHtml($row->aircraft_type_name);?></td>
         <td><?php echo $this->escapeHtml($row->reg_number);?></td>
         <td>
