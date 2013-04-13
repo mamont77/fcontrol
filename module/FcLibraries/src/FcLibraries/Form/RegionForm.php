@@ -12,6 +12,10 @@ class RegionForm extends Form
 
     public function __construct($name = null)
     {
+        if (!is_null($name)) {
+            $this->_formName = $name;
+        }
+
         parent::__construct($this->_formName);
 
         $this->setName($this->_formName);

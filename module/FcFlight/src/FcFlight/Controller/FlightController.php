@@ -11,8 +11,10 @@ use Zend\Paginator\Adapter\Iterator as paginatorIterator;
 
 class FlightController extends AbstractActionController
 {
+    protected $flightModel;
+    protected $kontragentModel;
+    protected $airOperatorModel;
     protected $aircraftModel;
-    protected $aircraftTypeModel;
 
     /**
      * @return array|\Zend\View\Model\ViewModel
@@ -27,7 +29,7 @@ class FlightController extends AbstractActionController
             $this->params()->fromRoute('order') : Select::ORDER_ASCENDING;
         $page = $this->params()->fromRoute('page') ? (int)$this->params()->fromRoute('page') : 1;
 
-        $data = $this->getAircraftModel()->fetchAll($select->order($order_by . ' ' . $order));
+        $data = $this->getFlightModel()->fetchAll($select->order($order_by . ' ' . $order));
         $itemsPerPage = 20;
 
         $data->current();
@@ -41,7 +43,7 @@ class FlightController extends AbstractActionController
             'order' => $order,
             'page' => $page,
             'pagination' => $pagination,
-            'route' => 'zfcadmin/aircrafts',
+            'route' => 'flights',
         ));
     }
 
@@ -50,21 +52,29 @@ class FlightController extends AbstractActionController
      */
     public function addAction()
     {
-        $form = new AircraftForm('aircraft', array('aircraft_types' => $this->getAircraftTypes()));
+
+        $form = new FlightForm('flight',
+            array(
+                'libraries' => array(
+                    'kontragent' => $this->getKontragents(),
+                    'air_operator' => $this->getAirOperators(),
+                    'aircraft' => $this->getAircrafts(),
+                )
+            ));
 
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $filter = $this->getServiceLocator()->get('FcLibraries\Filter\AircraftFilter');
+            $filter = $this->getServiceLocator()->get('FcLibraries\Filter\FlightFilter');
             $form->setInputFilter($filter->getInputFilter());
             $form->setData($request->getPost());
 
             if ($form->isValid()) {
                 $data = $form->getData();
                 $filter->exchangeArray($data);
-                $this->getAircraftModel()->add($filter);
-                $this->flashMessenger()->addSuccessMessage("Aircraft '"
-                        . $data['reg_number'] . "' was successfully added.");
-                return $this->redirect()->toRoute('zfcadmin/aircraft', array(
+                $this->getFlightModel()->add($filter);
+                $this->flashMessenger()->addSuccessMessage("Flights '"
+                    . $data['reg_number'] . "' was successfully added.");
+                return $this->redirect()->toRoute('flight', array(
                     'action' => 'add'
                 ));
             }
@@ -79,27 +89,27 @@ class FlightController extends AbstractActionController
     {
         $id = (int)$this->params()->fromRoute('id', 0);
         if (!$id) {
-            return $this->redirect()->toRoute('zfcadmin/aircraft', array(
+            return $this->redirect()->toRoute('flight', array(
                 'action' => 'add'
             ));
         }
-        $data = $this->getAircraftModel()->get($id);
+        $data = $this->getFlightModel()->get($id);
 
-        $form = new AircraftForm('aircraft', array('aircraft_types' => $this->getAircraftTypes()));
+        $form = new FlightForm('aircraft', array('aircraft_types' => $this->getFlightTypes()));
         $form->bind($data);
         $form->get('submitBtn')->setAttribute('value', 'Save');
 
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $filter = $this->getServiceLocator()->get('FcLibraries\Filter\AircraftFilter');
+            $filter = $this->getServiceLocator()->get('FcLibraries\Filter\FlightFilter');
             $form->setInputFilter($filter->getInputFilter());
             $form->setData($request->getPost());
             if ($form->isValid()) {
                 $data = $form->getData();
-                $this->getAircraftModel()->save($data);
-                $this->flashMessenger()->addSuccessMessage("Aircraft '"
-                        . $data->name . "' was successfully saved.");
-                return $this->redirect()->toRoute('zfcadmin/aircrafts');
+                $this->getFlightModel()->save($data);
+                $this->flashMessenger()->addSuccessMessage("Flights '"
+                    . $data->name . "' was successfully saved.");
+                return $this->redirect()->toRoute('flights');
             }
         }
 
@@ -116,7 +126,7 @@ class FlightController extends AbstractActionController
     {
         $id = (int)$this->params()->fromRoute('id', 0);
         if (!$id) {
-            return $this->redirect()->toRoute('zfcadmin/aircrafts');
+            return $this->redirect()->toRoute('flights');
         }
 
         $request = $this->getRequest();
@@ -125,51 +135,94 @@ class FlightController extends AbstractActionController
 
             if ($del == 'Yes') {
                 $id = (int)$request->getPost('id');
-                $reg_number = (string) $request->getPost('reg_number');
-                $this->getAircraftModel()->remove($id);
+                $reg_number = (string)$request->getPost('reg_number');
+                $this->getFlightModel()->remove($id);
                 $this->flashMessenger()->addSuccessMessage("Aircraft '"
-                        . $reg_number . "' was successfully deleted.");
+                    . $reg_number . "' was successfully deleted.");
             }
 
             // Redirect to list
-            return $this->redirect()->toRoute('zfcadmin/countries');
+            return $this->redirect()->toRoute('flights');
         }
 
         return array(
             'id' => $id,
-            'data' => $this->getAircraftModel()->get($id)
+            'data' => $this->getFlightModel()->get($id)
         );
     }
 
     /**
      * @return array|object
      */
-    public function getAircraftModel()
+    public function getFlightModel()
     {
-        if (!$this->aircraftModel) {
+        if (!$this->flightModel) {
             $sm = $this->getServiceLocator();
-            $this->aircraftModel = $sm->get('FcLibraries\Model\AircraftModel');
+            $this->flightModel = $sm->get('Flights\Model\FlightModel');
         }
-        return $this->aircraftModel;
+        return $this->flightModel;
     }
 
-    /**
-     * @return array|object
-     */
-    private function getAircraftTypeModel()
+    public function getLibraryKontragentModel()
     {
-        if (!$this->aircraftTypeModel) {
+        if (!$this->kontragentModel) {
             $sm = $this->getServiceLocator();
-            $this->aircraftTypeModel = $sm->get('FcLibraries\Model\AircraftTypeModel');
+            $this->kontragentModel = $sm->get('FcLibraries\Model\KontragentModel');
         }
-        return $this->aircraftTypeModel;
+
+        return $this->kontragentModel;
     }
 
     /**
      * @return mixed
      */
-    private function getAircraftTypes()
+    private function getKontragents()
     {
-        return $this->getAircraftTypeModel()->fetchAll();
+        return $this->getLibraryKontragentModel()->fetchAll();
+    }
+
+
+    public function getLibraryAirOperatorModel()
+    {
+        if (!$this->airOperatorModel) {
+            $sm = $this->getServiceLocator();
+            $this->airOperatorModel = $sm->get('FcLibraries\Model\AirOperatorModel');
+        }
+
+        return $this->airOperatorModel;
+    }
+
+    /**
+     * @return mixed
+     */
+    private function getAirOperators()
+    {
+        return $this->getLibraryAirOperatorModel()->fetchAll();
+    }
+
+    public function getLibraryAircraftModel()
+    {
+        if (!$this->aircraftModel) {
+            $sm = $this->getServiceLocator();
+            $this->aircraftModel = $sm->get('FcLibraries\Model\AircraftModel');
+        }
+
+        return $this->aircraftModel;
+    }
+
+    /**
+     * @return mixed
+     */
+    private function getAircrafts()
+    {
+
+//        echo'<pre>airOperators</pre>';
+//        $temp = $this->getLibraryAircraftModel()->fetchAll();
+//        foreach ($temp as $i) {
+//            echo'<pre>';var_dump($i);echo'</pre>';
+//
+//        }
+
+        return $this->getLibraryAircraftModel()->fetchAll();
     }
 }
