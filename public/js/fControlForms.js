@@ -20,7 +20,8 @@
                 'air_operator':'admin/libraries/air_operators',
                 'kontragent':'admin/libraries/kontragents',
                 'unit':'admin/libraries/units',
-                'currency':'admin/libraries/currencies'
+                'currency':'admin/libraries/currencies',
+                'flight':''
             }
         }
     };

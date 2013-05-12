@@ -33,16 +33,9 @@ class FlightForm extends Form
 
         parent::__construct($this->_formName);
 
-        $this->setLibrary('kontragents', 'name', $options['libraries']['kontragent']);
-        $this->setLibrary('airOperators', 'name', $options['libraries']['air_operator']);
-        $this->setLibrary('aircrafts', 'reg_number', $options['libraries']['aircraft']);
-
-//        echo'<pre>kontragents</pre>';
-//        $temp = $this->kontragents;
-//        foreach ($temp as $k => $i) {
-//            echo'<pre>';var_dump($i);echo'</pre>';
-//
-//        }
+        $this->setLibrary('kontragents', 'id', 'name', $options['libraries']['kontragent']);
+        $this->setLibrary('airOperators', 'id', 'short_name', $options['libraries']['air_operator']);
+        $this->setLibrary('aircrafts', 'reg_number', 'aircraft_type', $options['libraries']['aircraft']);
 
         $this->setName($this->_formName);
         $this->setAttribute('method', 'post');
@@ -55,14 +48,46 @@ class FlightForm extends Form
         ));
 
         $this->add(array(
-            'name' => 'name',
-            'type' => 'Zend\Form\Element\Text',
+            'name' => 'dateOrder',
+            'type' => 'Zend\Form\Element\Date',
             'attributes' => array(
                 'required' => true,
-                'maxlength' => '30',
+                'maxlength' => '6',
             ),
             'options' => array(
-                'label' => 'Region of the world',
+                'label' => 'Date Order',
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'kontragent',
+            'type' => 'Zend\Form\Element\Select',
+            'options' => array(
+                'label' => 'Customer',
+                'empty_option' => '-- Please select --',
+                'value_options' => $this->kontragents,
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'airOperator',
+            'type' => 'Zend\Form\Element\Select',
+            'options' => array(
+                'label' => 'Air Operator',
+                'empty_option' => '-- Please select --',
+                'value_options' => $this->airOperators,
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'aircraft',
+            'type' => 'Zend\Form\Element\Select',
+            'options' => array(
+                'label' => 'Aircraft Type',
+                'empty_option' => '-- Please select --',
+                'value_options' => $this->aircrafts,
+                'hint' => 'GegNumber',
+
             ),
         ));
 
@@ -95,11 +120,11 @@ class FlightForm extends Form
      * @param \Zend\Db\ResultSet\ResultSet $data
      * @return FlightForm
      */
-    private function setLibrary($LibraryName, $baseFieldName, \Zend\Db\ResultSet\ResultSet $data)
+    private function setLibrary($LibraryName, $baseFieldKey = 'id', $baseFieldName, \Zend\Db\ResultSet\ResultSet $data)
     {
         if (!$this->{$LibraryName}) {
             foreach ($data as $row) {
-                $this->{$LibraryName}[$row->id] = $row->{$baseFieldName};
+                $this->{$LibraryName}[$row->{$baseFieldKey}] = $row->{$baseFieldName};
             }
         }
         return $this;

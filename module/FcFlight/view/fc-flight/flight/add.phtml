@@ -6,8 +6,23 @@ $this->headTitle($title);
 
 <?php
 $displayOptions = array(
-    'class' => 'form-horizontal',
+    'elements' => array(
+//        'dateOrder' => array(
+//            'class' => 'input-small',
+//        ),
+//        'kontragent' => array(
+//            'class' => 'input-small',
+//            'required' => true,
+//        ),
+//        'airOperator' => array(
+//            'class' => 'input-small',
+//        ),
+//        'aircraft' => array(
+//            'class' => 'input-small',
+//        ),
+    ),
 );
+//$formType = 'inline';
 $form = $this->form;
 $form->setAttribute('action', $this->url('flight', array('action' => 'add')));
 $form->prepare();
@@ -20,7 +35,7 @@ $form->prepare();
     Form fields are not filled in correctly.
 </div>
 <?php else: ?>
-    <?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
+<?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
 <?php endif; ?>
 
 <?php echo $this->formTwb($form, $formType, $displayOptions); ?>

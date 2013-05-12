@@ -64,42 +64,29 @@ return array(
                 'type' => 'uri',
                 'pages' => array(
                     array(
-                        'label' => 'Flights',
-                        'route' => 'flights',
+                        'label' => 'Flight',
+                        'route' => 'flight',
+                        'action' => 'add',
                     ),
+                ),
+            ),
+            array(
+                'label' => 'Help for DEVEL',
+                'title' => 'Resources by fControl',
+                'type' => 'uri',
+                'pages' => array(
                     array(
-                        'type' => 'uri',
-                        'divider' => true,
-                    ),
-                    array(
-                        'label' => 'Git Repository on Bitbucket',
-                        'type' => 'uri',
-                        'navHeader' => true,
-                    ),
-                    array(
-                        'label' => 'DluTwBootstrap (ZF2 module)',
-                        'uri' => 'https://bitbucket.org/dlu/dlutwbootstrap',
-                    ),
-                    array(
-                        'label' => 'DluTwBootstrap Demo (ZF2 module)',
-                        'uri' => 'https://bitbucket.org/dlu/dlutwbootstrap-demo',
-                    ),
-                    array(
-                        'label' => 'DluTwBootstrap Demo App (ZF2 application)',
-                        'uri' => 'https://bitbucket.org/dlu/dlutwbootstrap-demo-app',
-                    ),
-                    array(
-                        'type' => 'uri',
-                        'divider' => true,
-                    ),
-                    array(
-                        'label' => 'Twitter Bootstrap',
+                        'label' => 'See also',
                         'type' => 'uri',
                         'navHeader' => true,
                     ),
                     array(
                         'label' => 'Forms',
                         'uri' => 'http://twitter.github.com/bootstrap/base-css.html#forms',
+                    ),
+                    array(
+                        'label' => 'DluTwBootstrap Demo App (ZF2 application)',
+                        'uri' => 'http://apps.zfdaily.com/dlutwbootstrap-demo/tw-bootstrap-demo/form-inline',
                     ),
                 ),
             ),
