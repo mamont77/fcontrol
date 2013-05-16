@@ -14,7 +14,7 @@ class FlightModel extends AbstractTableGateway
     /**
      * @var string
      */
-    protected $table = 'library_region';
+    protected $table = 'flight_base';
 
     /**
      * @param \Zend\Db\Adapter\Adapter $adapter
@@ -77,7 +77,7 @@ class FlightModel extends AbstractTableGateway
     public function save(FlightFilter $object)
     {
         $data = array(
-            'name' => $object->name,
+            'dateOrder' => $object->dateOrder,
         );
         $id = (int)$object->id;
         if ($this->get($id)) {

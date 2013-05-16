@@ -26,7 +26,10 @@ class FlightFilter implements InputFilterAwareInterface
     protected $table = '';
 
     public $id;
-    public $name;
+    public $dateOrder;
+    public $kontragent;
+    public $airOperator;
+    public $aircraft;
 
     /**
      * @var array
@@ -57,8 +60,14 @@ class FlightFilter implements InputFilterAwareInterface
      */
     public function exchangeArray($data)
     {
+
+//        \Zend\Debug\Debug::dump($data);
+//        exit;
         $this->id = (isset($data['id'])) ? $data['id'] : null;
-        $this->name = (isset($data['name'])) ? $data['name'] : null;
+        $this->dateOrder = (isset($data['dateOrder'])) ? $data['dateOrder'] : null;
+        $this->kontragent = (isset($data['kontragent'])) ? $data['kontragent'] : null;
+        $this->airOperator = (isset($data['airOperator'])) ? $data['airOperator'] : null;
+        $this->aircraft = (isset($data['aircraft'])) ? $data['aircraft'] : null;
     }
 
     /**
@@ -91,21 +100,35 @@ class FlightFilter implements InputFilterAwareInterface
             $factory = new InputFactory();
 
             $inputFilter->add($factory->createInput(array(
-                'name' => 'name',
+                'name' => 'dateOrder',
                 'required' => true,
-                'filters' => $this->defaultFilters,
+//                'filters' => $this->defaultFilters,
                 'validators' => array(
                     array(
-                        'name' => 'StringLength',
+                        'name' => 'Date',
                         'options' => array(
                             'encoding' => 'UTF-8',
-                            'min' => 1,
-                            'max' => 30,
+//                            'format' => 'yymmdd',
                         ),
                     ),
-                    $this->_noRecordExistsValidators($this->table, 'name', $this->id),
                 ),
             )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'kontragent',
+                'required' => true,
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'airOperator',
+                'required' => true,
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'aircraft',
+                'required' => true,
+            )));
+
             $this->inputFilter = $inputFilter;
         }
 

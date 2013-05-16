@@ -64,12 +64,14 @@ class FlightController extends AbstractActionController
 
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $filter = $this->getServiceLocator()->get('FcLibraries\Filter\FlightFilter');
+            $filter = $this->getServiceLocator()->get('FcFlight\Filter\FlightFilter');
             $form->setInputFilter($filter->getInputFilter());
             $form->setData($request->getPost());
 
             if ($form->isValid()) {
                 $data = $form->getData();
+//                \Zend\Debug\Debug::dump($data);
+//                exit;
                 $filter->exchangeArray($data);
                 $this->getFlightModel()->add($filter);
                 $this->flashMessenger()->addSuccessMessage("Flights '"
@@ -101,7 +103,7 @@ class FlightController extends AbstractActionController
 
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $filter = $this->getServiceLocator()->get('FcLibraries\Filter\FlightFilter');
+            $filter = $this->getServiceLocator()->get('FcFlight\Filter\FlightFilter');
             $form->setInputFilter($filter->getInputFilter());
             $form->setData($request->getPost());
             if ($form->isValid()) {

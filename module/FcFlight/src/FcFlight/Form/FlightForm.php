@@ -53,9 +53,14 @@ class FlightForm extends Form
             'attributes' => array(
                 'required' => true,
                 'maxlength' => '6',
+//                'min'  => '2012-01-01',
+//                'max'  => '2020-01-01',
+//                'step' => '1', // days; default step interval is 1 day
+
             ),
             'options' => array(
                 'label' => 'Date Order',
+                'description' => 'YYMMDD',
             ),
         ));
 
