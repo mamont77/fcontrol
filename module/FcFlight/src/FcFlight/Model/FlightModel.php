@@ -14,7 +14,7 @@ class FlightModel extends AbstractTableGateway
     /**
      * @var string
      */
-    protected $table = 'flight_base';
+    protected $table = 'flightBaseForm';
 
     /**
      * @param \Zend\Db\Adapter\Adapter $adapter
@@ -53,6 +53,11 @@ class FlightModel extends AbstractTableGateway
         if (null === $select)
             $select = new Select();
         $select->from($this->table);
+        $select->columns(array('id', 'refNumberOrder', 'dateOrder', 'kontragent', 'airOperator', 'aircraft'));
+        $select->join(array('kontragent' => 'library_kontragent'),
+            'kontragent.id = flightBaseForm.kontragent',
+            array('kontragent_name' => 'name'));
+//        $select->order('flightBaseForm.refNumberOrder ASC');
         $resultSet = $this->selectWith($select);
         $resultSet->buffer();
 
@@ -65,9 +70,15 @@ class FlightModel extends AbstractTableGateway
     public function add(FlightFilter $object)
     {
         $data = array(
-            'name' => $object->name,
+            'refNumberOrder' => 'ORD-' . date('Ymds') . '/1', //TODO ORD-YYMMDD/1
+            'dateOrder' => $object->dateOrder,
+            'kontragent' => $object->kontragent,
+            'airOperator' => $object->airOperator,
+            'aircraft' => $object->aircraft,
         );
         $this->insert($data);
+
+        return $data['refNumberOrder'];
     }
 
     /**

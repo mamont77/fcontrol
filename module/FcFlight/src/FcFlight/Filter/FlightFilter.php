@@ -26,8 +26,10 @@ class FlightFilter implements InputFilterAwareInterface
     protected $table = '';
 
     public $id;
+    public $refNumberOrder;
     public $dateOrder;
     public $kontragent;
+    public $kontragent_name;
     public $airOperator;
     public $aircraft;
 
@@ -64,8 +66,10 @@ class FlightFilter implements InputFilterAwareInterface
 //        \Zend\Debug\Debug::dump($data);
 //        exit;
         $this->id = (isset($data['id'])) ? $data['id'] : null;
+        $this->refNumberOrder = (isset($data['refNumberOrder'])) ? $data['refNumberOrder'] : null;
         $this->dateOrder = (isset($data['dateOrder'])) ? $data['dateOrder'] : null;
         $this->kontragent = (isset($data['kontragent'])) ? $data['kontragent'] : null;
+        $this->kontragent_name = (isset($data['kontragent_name'])) ? $data['kontragent_name'] : null;
         $this->airOperator = (isset($data['airOperator'])) ? $data['airOperator'] : null;
         $this->aircraft = (isset($data['aircraft'])) ? $data['aircraft'] : null;
     }

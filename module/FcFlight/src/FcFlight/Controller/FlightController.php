@@ -24,15 +24,16 @@ class FlightController extends AbstractActionController
         $select = new Select();
 
         $order_by = $this->params()->fromRoute('order_by') ?
-            $this->params()->fromRoute('order_by') : 'name';
+            $this->params()->fromRoute('order_by') : 'refNumberOrder';
         $order = $this->params()->fromRoute('order') ?
             $this->params()->fromRoute('order') : Select::ORDER_ASCENDING;
         $page = $this->params()->fromRoute('page') ? (int)$this->params()->fromRoute('page') : 1;
-
-        $data = $this->getFlightModel()->fetchAll($select->order($order_by . ' ' . $order));
+        $data = $this->getFlightModel()->fetchAll($select->order($order_by . ' ' . $order)); //TODO fix order by refNumberOrder
         $itemsPerPage = 20;
 
         $data->current();
+//        \Zend\Debug\Debug::dump($data);
+
         $pagination = new Paginator(new paginatorIterator($data));
         $pagination->setCurrentPageNumber($page)
             ->setItemCountPerPage($itemsPerPage)
@@ -70,12 +71,10 @@ class FlightController extends AbstractActionController
 
             if ($form->isValid()) {
                 $data = $form->getData();
-//                \Zend\Debug\Debug::dump($data);
-//                exit;
                 $filter->exchangeArray($data);
-                $this->getFlightModel()->add($filter);
+                $refNumberOrder = $this->getFlightModel()->add($filter);
                 $this->flashMessenger()->addSuccessMessage("Flights '"
-                    . $data['reg_number'] . "' was successfully added.");
+                    . $refNumberOrder . "' was successfully added.");
                 return $this->redirect()->toRoute('flight', array(
                     'action' => 'add'
                 ));
@@ -160,7 +159,7 @@ class FlightController extends AbstractActionController
     {
         if (!$this->flightModel) {
             $sm = $this->getServiceLocator();
-            $this->flightModel = $sm->get('Flights\Model\FlightModel');
+            $this->flightModel = $sm->get('FcFlight\Model\FlightModel');
         }
         return $this->flightModel;
     }
@@ -217,14 +216,6 @@ class FlightController extends AbstractActionController
      */
     private function getAircrafts()
     {
-
-//        echo'<pre>airOperators</pre>';
-//        $temp = $this->getLibraryAircraftModel()->fetchAll();
-//        foreach ($temp as $i) {
-//            echo'<pre>';var_dump($i);echo'</pre>';
-//
-//        }
-
         return $this->getLibraryAircraftModel()->fetchAll();
     }
 }
