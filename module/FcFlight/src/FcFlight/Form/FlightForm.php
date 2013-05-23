@@ -48,7 +48,7 @@ class FlightForm extends Form
         ));
 
         $this->add(array(
-            'name' => 'dateOrder',
+            'name' => 'dateOrder', //TODO fix date format
             'type' => 'Zend\Form\Element\Date',
             'attributes' => array(
                 'required' => true,

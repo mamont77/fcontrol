@@ -54,10 +54,15 @@ class FlightModel extends AbstractTableGateway
             $select = new Select();
         $select->from($this->table);
         $select->columns(array('id', 'refNumberOrder', 'dateOrder', 'kontragent', 'airOperator', 'aircraft'));
-        $select->join(array('kontragent' => 'library_kontragent'),
-            'kontragent.id = flightBaseForm.kontragent',
-            array('kontragent_name' => 'name'));
-//        $select->order('flightBaseForm.refNumberOrder ASC');
+        $select->join(array('library_kontragent' => 'library_kontragent'),
+            'library_kontragent.id = flightBaseForm.kontragent',
+            array('kontragentShortName' => 'short_name'));
+        $select->join(array('library_air_operator' => 'library_air_operator'),
+            'library_air_operator.id = flightBaseForm.airOperator',
+            array('airOperatorShortName' => 'short_name'));
+        $select->join(array('library_aircraft' => 'library_aircraft'),
+            'library_aircraft.reg_number = flightBaseForm.aircraft',
+            array('aircraftType' => 'aircraft_type'));
         $resultSet = $this->selectWith($select);
         $resultSet->buffer();
 
@@ -69,6 +74,14 @@ class FlightModel extends AbstractTableGateway
      */
     public function add(FlightFilter $object)
     {
+//        \Zend\Debug\Debug::dump($object->dateOrder);
+//
+//        $temp = $this->_findSimilarRefNumberOrder($object->dateOrder);
+//        foreach ($temp as $item) {
+//            \Zend\Debug\Debug::dump($item);
+//        }
+//        exit;
+
         $data = array(
             'refNumberOrder' => 'ORD-' . date('Ymds') . '/1', //TODO ORD-YYMMDD/1
             'dateOrder' => $object->dateOrder,
@@ -105,4 +118,25 @@ class FlightModel extends AbstractTableGateway
     {
         $this->delete(array('id' => $id));
     }
+
+    /**
+     * @param $refNumber
+     * @return array|\ArrayObject|bool|null
+     */
+    private function _findSimilarRefNumberOrder($refNumber)
+    {
+        $refNumber = (string)$refNumber;
+        $rowSet = $this->select(array('refNumberOrder' => $refNumber));
+        $this->select->limit(5);
+        $row = $rowSet->current();
+        if (!$row) {
+            return false;
+        }
+
+        return $row;
+
+
+    }
+
+
 }
