@@ -1,0 +1,24 @@
+<?php
+$title = 'Remove Flight';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<p>Are you sure you want to delete
+    <strong>'<?php echo $this->escapeHtml($data->refNumberOrder); ?>'</strong>?
+</p>
+<?php
+$url = $this->url('flight', array(
+    'action' => 'delete',
+    'id'     => $this->id,
+));
+?>
+
+<form action="<?php echo $url; ?>" method="post">
+<div>
+    <input type="hidden" name="id" value="<?php echo (int)$data->id; ?>" />
+    <input type="hidden" name="refNumberOrder" value="<?php echo $this->escapeHtml($data->refNumberOrder); ?>" />
+    <input type="submit" name="del" value="Yes" class="btn btn-warning" />
+    <input type="submit" name="del" value="No" class="btn btn-link" />
+</div>
+</form>

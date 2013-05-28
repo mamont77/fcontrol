@@ -101,7 +101,11 @@ class FlightModel extends AbstractTableGateway
     public function save(FlightFilter $object)
     {
         $data = array(
+            //'refNumberOrder' => 'ORD-' . date('Ymds') . '/1', //TODO ORD-YYMMDD/1
             'dateOrder' => $object->dateOrder,
+            'kontragent' => $object->kontragent,
+            'airOperator' => $object->airOperator,
+            'aircraft' => $object->aircraft,
         );
         $id = (int)$object->id;
         if ($this->get($id)) {

@@ -34,7 +34,7 @@ class FlightForm extends Form
         parent::__construct($this->_formName);
 
         $this->setLibrary('kontragents', 'id', 'name', $options['libraries']['kontragent']);
-        $this->setLibrary('airOperators', 'id', 'short_name', $options['libraries']['air_operator']);
+        $this->setLibrary('airOperators', 'id', 'short_name', $options['libraries']['air_operator']); //don't rename
         $this->setLibrary('aircrafts', 'reg_number', 'aircraft_type', $options['libraries']['aircraft']);
 
         $this->setName($this->_formName);
@@ -42,6 +42,13 @@ class FlightForm extends Form
 
         $this->add(array(
             'name' => 'id',
+            'attributes' => array(
+                'type' => 'hidden',
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'refNumberOrder',
             'attributes' => array(
                 'type' => 'hidden',
             ),

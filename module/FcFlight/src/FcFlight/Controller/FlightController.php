@@ -61,7 +61,8 @@ class FlightController extends AbstractActionController
                     'air_operator' => $this->getAirOperators(),
                     'aircraft' => $this->getAircrafts(),
                 )
-            ));
+            )
+        );
 
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -96,7 +97,16 @@ class FlightController extends AbstractActionController
         }
         $data = $this->getFlightModel()->get($id);
 
-        $form = new FlightForm('aircraft', array('aircraft_types' => $this->getFlightTypes()));
+        $form = new FlightForm('flight',
+            array(
+                'libraries' => array(
+                    'kontragent' => $this->getKontragents(),
+                    'air_operator' => $this->getAirOperators(),
+                    'aircraft' => $this->getAircrafts(),
+                )
+            )
+        );
+
         $form->bind($data);
         $form->get('submitBtn')->setAttribute('value', 'Save');
 
@@ -109,7 +119,7 @@ class FlightController extends AbstractActionController
                 $data = $form->getData();
                 $this->getFlightModel()->save($data);
                 $this->flashMessenger()->addSuccessMessage("Flights '"
-                    . $data->name . "' was successfully saved.");
+                    . $data->refNumberOrder . "' was successfully saved.");
                 return $this->redirect()->toRoute('flights');
             }
         }
@@ -136,10 +146,10 @@ class FlightController extends AbstractActionController
 
             if ($del == 'Yes') {
                 $id = (int)$request->getPost('id');
-                $reg_number = (string)$request->getPost('reg_number');
+                $refNumberOrder = (string)$request->getPost('refNumberOrder');
                 $this->getFlightModel()->remove($id);
                 $this->flashMessenger()->addSuccessMessage("Aircraft '"
-                    . $reg_number . "' was successfully deleted.");
+                    . $refNumberOrder . "' was successfully deleted.");
             }
 
             // Redirect to list
