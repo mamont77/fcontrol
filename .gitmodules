@@ -24,7 +24,7 @@
 	url = git://github.com/bjyoungblood/BjyProfiler.git
 [submodule "vendor/DluTwBootstrap"]
 	path = vendor/DluTwBootstrap
-	url = https://bitbucket.org/dlu/dlutwbootstrap.git
+	url = https://bitbucket.org/tihe/dlutwbootstrap.git
 [submodule "vendor/DluTwBootstrapDemo"]
 	path = vendor/DluTwBootstrapDemo
 	url = https://bitbucket.org/dlu/dlutwbootstrap-demo.git
