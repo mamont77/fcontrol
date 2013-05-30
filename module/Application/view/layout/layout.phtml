@@ -15,8 +15,11 @@ $this->headLink()->appendStylesheet($basePath . '/css/style.css');
 //jQuery and Twitter Bootstrap JS libraries
 $this->inlineScript()->appendFile($basePath . '/js/jquery-1.9.1.min.js');
 $this->inlineScript()->appendFile($basePath . '/js/bootstrap.min.js');
+$this->inlineScript()->appendFile($basePath . '/js/jquery.maskedinput.min.js');
 $this->inlineScript()->appendFile($basePath . '/js/fControlGlobal.js');
+$this->inlineScript()->appendFile($basePath . '/js/fControlNav.js');
 $this->inlineScript()->appendFile($basePath . '/js/fControlForms.js');
+$this->inlineScript()->appendFile($basePath . '/js/fControlLibrariesForms.js');
 $this->inlineScript()->appendFile($basePath . '/js/fControlFlightForm.js');
 
 echo $this->doctype();

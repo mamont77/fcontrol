@@ -56,17 +56,15 @@ class FlightForm extends Form
 
         $this->add(array(
             'name' => 'dateOrder', //TODO fix date format
-            'type' => 'Zend\Form\Element\Date',
+            'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'required' => true,
-                'maxlength' => '6',
-//                'min'  => '2012-01-01',
-//                'max'  => '2020-01-01',
-//                'step' => '1', // days; default step interval is 1 day
+//                'minlength' => '8',
+                'maxlength' => '8',
             ),
             'options' => array(
                 'label' => 'Date Order',
-                'description' => 'YYMMDD',
+                'description' => 'DD/MM/YY',
             ),
         ));
 
