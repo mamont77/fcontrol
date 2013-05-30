@@ -40,6 +40,7 @@ class FlightModel extends AbstractTableGateway
         if (!$row) {
             throw new \Exception("Could not find row $id");
         }
+        $row->dateOrder = date('Y-m-d', $row->dateOrder);
 
         return $row;
     }
@@ -74,17 +75,15 @@ class FlightModel extends AbstractTableGateway
      */
     public function add(FlightFilter $object)
     {
-//        \Zend\Debug\Debug::dump($object->dateOrder);
-//
-//        $temp = $this->_findSimilarRefNumberOrder($object->dateOrder);
-//        foreach ($temp as $item) {
-//            \Zend\Debug\Debug::dump($item);
-//        }
-//        exit;
+        /*
+         * $dateOrder = '1977-03-10';//YYYY-MM-DD
+         * $dateOrder = '2014-03-10';//YYYY-MM-DD
+         */
+        $dateOrder = strtotime($object->dateOrder);
 
         $data = array(
-            'refNumberOrder' => 'ORD-' . date('Ymds') . '/1', //TODO ORD-YYMMDD/1
-            'dateOrder' => $object->dateOrder,
+            'refNumberOrder' => 'ORD-' . date('ymd', $dateOrder) . '/' . date('s', $dateOrder), //TODO ORD-YYMMDD/1
+            'dateOrder' => $dateOrder,
             'kontragent' => $object->kontragent,
             'airOperator' => $object->airOperator,
             'aircraft' => $object->aircraft,
@@ -100,9 +99,11 @@ class FlightModel extends AbstractTableGateway
      */
     public function save(FlightFilter $object)
     {
+        $dateOrder = strtotime($object->dateOrder);
+
         $data = array(
-            //'refNumberOrder' => 'ORD-' . date('Ymds') . '/1', //TODO ORD-YYMMDD/1
-            'dateOrder' => $object->dateOrder,
+            'refNumberOrder' => 'ORD-' . date('ymd', $dateOrder) . '/' . date('s', $dateOrder), //TODO ORD-YYMMDD/1
+            'dateOrder' => $dateOrder,
             'kontragent' => $object->kontragent,
             'airOperator' => $object->airOperator,
             'aircraft' => $object->aircraft,

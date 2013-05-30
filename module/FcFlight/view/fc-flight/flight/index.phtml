@@ -62,7 +62,7 @@ if ($order) {
     <?php foreach ($pagination as $row) : ?>
     <tr>
         <td><?php echo $this->escapeHtml($row->refNumberOrder);?></td>
-        <td><?php echo $this->escapeHtml($row->dateOrder);?></td>
+        <td><?php echo $this->escapeHtml(date('Y-m-d', $row->dateOrder));?></td>
         <td><?php echo $this->escapeHtml($row->kontragentShortName);?></td>
         <td><?php echo $this->escapeHtml($row->airOperatorShortName);?></td>
         <td>

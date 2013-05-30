@@ -30,9 +30,7 @@ class FlightController extends AbstractActionController
         $page = $this->params()->fromRoute('page') ? (int)$this->params()->fromRoute('page') : 1;
         $data = $this->getFlightModel()->fetchAll($select->order($order_by . ' ' . $order)); //TODO fix order by refNumberOrder
         $itemsPerPage = 20;
-
         $data->current();
-//        \Zend\Debug\Debug::dump($data);
 
         $pagination = new Paginator(new paginatorIterator($data));
         $pagination->setCurrentPageNumber($page)

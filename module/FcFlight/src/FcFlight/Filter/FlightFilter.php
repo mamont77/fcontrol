@@ -107,13 +107,12 @@ class FlightFilter implements InputFilterAwareInterface
             $inputFilter->add($factory->createInput(array(
                 'name' => 'dateOrder',
                 'required' => true,
-//                'filters' => $this->defaultFilters,
+                'filters' => $this->defaultFilters,
                 'validators' => array(
                     array(
-                        'name' => 'Date',
+                        'name' => 'Regex',
                         'options' => array(
-                            'encoding' => 'UTF-8',
-//                            'format' => 'YYMMDD',
+                            'pattern' => '/\d{4,4}\-\d{2,2}\-\d{2,2}/',//YYYY-MM-DD
                         ),
                     ),
                 ),

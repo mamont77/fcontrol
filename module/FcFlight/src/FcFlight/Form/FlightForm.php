@@ -59,12 +59,11 @@ class FlightForm extends Form
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'required' => true,
-//                'minlength' => '8',
-                'maxlength' => '8',
+                'maxlength' => '10',
             ),
             'options' => array(
                 'label' => 'Date Order',
-                'description' => 'DD/MM/YY',
+                'description' => 'YYYY-MM-DD',
             ),
         ));
 
