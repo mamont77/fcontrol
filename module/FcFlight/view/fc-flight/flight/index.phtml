@@ -18,16 +18,11 @@ if ($order) {
 <table class="table table-bordered table-hover">
     <tr>
         <th>
-            <a href="<?php echo $this->url($route, array('order_by' => 'refNumberOrder', 'order' => $url_order)); ?>">
-                REF NUMBER ORDER
-                <?php if ($order_by == 'refNumberOrder'): ?>
-                <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
-                <?php endif; ?>
-            </a>
+            Ref Number
         </th>
         <th>
             <a href="<?php echo $this->url($route, array('order_by' => 'dateOrder', 'order' => $url_order)); ?>">
-                DATE ORDER
+                Date Order
                 <?php if ($order_by == 'dateOrder'): ?>
                 <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
                 <?php endif; ?>
@@ -35,7 +30,7 @@ if ($order) {
         </th>
         <th>
             <a href="<?php echo $this->url($route, array('order_by' => 'kontragentShortName', 'order' => $url_order)); ?>">
-                CUSTOMER
+                Customer
                 <?php if ($order_by == 'kontragentShortName'): ?>
                 <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
                 <?php endif; ?>
@@ -43,7 +38,7 @@ if ($order) {
         </th>
         <th>
             <a href="<?php echo $this->url($route, array('order_by' => 'airOperatorShortName', 'order' => $url_order)); ?>">
-                AIR OPERATOR
+                Air Operator
                 <?php if ($order_by == 'airOperatorShortName'): ?>
                 <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
                 <?php endif; ?>
@@ -51,7 +46,7 @@ if ($order) {
         </th>
         <th>
             <a href="<?php echo $this->url($route, array('order_by' => 'aircraftType', 'order' => $url_order)); ?>">
-                AIRCRAFT
+                Aircraft
                 <?php if ($order_by == 'aircraftType'): ?>
                 <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
                 <?php endif; ?>

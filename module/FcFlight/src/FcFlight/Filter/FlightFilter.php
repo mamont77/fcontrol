@@ -110,10 +110,8 @@ class FlightFilter implements InputFilterAwareInterface
                 'filters' => $this->defaultFilters,
                 'validators' => array(
                     array(
-                        'name' => 'Regex',
-                        'options' => array(
-                            'pattern' => '/\d{4,4}\-\d{2,2}\-\d{2,2}/',//YYYY-MM-DD
-                        ),
+                        'name' => 'Date',
+                        'format' => 'Y-m-d',
                     ),
                 ),
             )));

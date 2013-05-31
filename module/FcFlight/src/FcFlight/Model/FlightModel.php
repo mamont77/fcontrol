@@ -82,7 +82,7 @@ class FlightModel extends AbstractTableGateway
         $dateOrder = strtotime($object->dateOrder);
 
         $data = array(
-            'refNumberOrder' => 'ORD-' . date('ymd', $dateOrder) . '/' . date('s', $dateOrder), //TODO ORD-YYMMDD/1
+            'refNumberOrder' => $this->getLastRefNumberOrder($dateOrder),
             'dateOrder' => $dateOrder,
             'kontragent' => $object->kontragent,
             'airOperator' => $object->airOperator,
@@ -102,7 +102,7 @@ class FlightModel extends AbstractTableGateway
         $dateOrder = strtotime($object->dateOrder);
 
         $data = array(
-            'refNumberOrder' => 'ORD-' . date('ymd', $dateOrder) . '/' . date('s', $dateOrder), //TODO ORD-YYMMDD/1
+            'refNumberOrder' => $this->getLastRefNumberOrder($dateOrder),
             'dateOrder' => $dateOrder,
             'kontragent' => $object->kontragent,
             'airOperator' => $object->airOperator,
@@ -125,22 +125,44 @@ class FlightModel extends AbstractTableGateway
     }
 
     /**
+     * @param $dateOrder
+     * @return string
+     */
+    public function getLastRefNumberOrder($dateOrder)
+    {
+        /*
+        * ORD-YYMMDD/1
+        */
+        $refNumberOrder = 'ORD-' . date('ymd', $dateOrder) . '/';
+        $result = $this->_findSimilarRefNumberOrder($refNumberOrder);
+        $result = $result->current();
+        if ($result) {
+            $suffix = explode('/', $result->refNumberOrder);
+            $suffix = (int)$suffix[1] + 1;
+            $refNumberOrder = $refNumberOrder . $suffix;
+        } else {
+            $refNumberOrder = $refNumberOrder . '1';
+        }
+
+        return $refNumberOrder;
+    }
+
+    /**
      * @param $refNumber
-     * @return array|\ArrayObject|bool|null
+     * @return null|\Zend\Db\ResultSet\ResultSetInterface
      */
     private function _findSimilarRefNumberOrder($refNumber)
     {
         $refNumber = (string)$refNumber;
-        $rowSet = $this->select(array('refNumberOrder' => $refNumber));
-        $this->select->limit(5);
-        $row = $rowSet->current();
-        if (!$row) {
-            return false;
-        }
+        $select = new Select();
+        $select->from($this->table);
+        $select->columns(array('refNumberOrder'));
+        $select->where->like('refNumberOrder', $refNumber . '%');
+        $select->order('refNumberOrder DESC');
+        $select->limit(1);
+        $resultSet = $this->selectWith($select);
 
-        return $row;
-
-
+        return $resultSet;
     }
 
 
