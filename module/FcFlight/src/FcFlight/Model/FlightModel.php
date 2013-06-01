@@ -125,6 +125,24 @@ class FlightModel extends AbstractTableGateway
     }
 
     /**
+     * @param $refNumberOrder
+     * @return array|\ArrayObject|null
+     * @throws \Exception
+     */
+    public function getByRefNumberOrder($refNumberOrder)
+    {
+        $refNumberOrder = (string)$refNumberOrder;
+        $rowSet = $this->select(array('refNumberOrder' => $refNumberOrder));
+        $row = $rowSet->current();
+        if (!$row) {
+            throw new \Exception("Could not find row $refNumberOrder");
+        }
+        $row->dateOrder = date('Y-m-d', $row->dateOrder);
+
+        return $row;
+    }
+
+    /**
      * @param $dateOrder
      * @return string
      */

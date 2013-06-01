@@ -18,3 +18,29 @@ body > .navbar .brand {
     background: url("../images/logoSmallInv.png") no-repeat scroll 0 5px transparent;
     padding-left: 45px;
 }
+
+h1 {
+    font-size: 22px;
+}
+
+#flightBrowse {
+    width: 500px;
+}
+
+#flightBrowse td {
+    vertical-align: top;
+}
+
+#flightBrowse .cHeader th,
+#flightBrowse .cHeader td {
+    padding: .5em;
+}
+
+#flightBrowse .cHeader td {
+    border: 1px solid #000000;
+
+}
+
+.cRefNumberOrder {
+    font-weight: bold;
+}

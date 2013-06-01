@@ -137,6 +137,7 @@ return array(
                 array('route' => 'zfcadmin/currency', 'roles' => array('admin')),
                 array('route' => 'flights', 'roles' => array('user')),
                 array('route' => 'flight', 'roles' => array('user')),
+                array('route' => 'browse', 'roles' => array('user')),
             ),
         ),
     ),

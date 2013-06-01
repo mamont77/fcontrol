@@ -49,6 +49,28 @@ class FlightController extends AbstractActionController
     /**
      * @return array|\Zend\Http\Response
      */
+    public function showAction()
+    {
+        $refNumberOrder = (string)$this->params()->fromRoute('refNumberOrder', '');
+        $refNumberOrder = urldecode($refNumberOrder);
+
+        if (empty($refNumberOrder)) {
+            return $this->redirect()->toRoute('flights', array(
+                'action' => 'index'
+            ));
+        }
+
+        $data = $this->getFlightModel()->getByRefNumberOrder($refNumberOrder);
+//        \Zend\Debug\Debug::dump($data);exit;
+
+        return new ViewModel(array(
+            'data' => $this->getFlightModel()->getByRefNumberOrder($refNumberOrder),
+        ));
+    }
+
+    /**
+     * @return array|\Zend\Http\Response
+     */
     public function addAction()
     {
 

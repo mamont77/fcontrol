@@ -52,6 +52,20 @@ return array(
                     ),
                 ),
             ),
+            'browse' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/browse[/:refNumberOrder]',
+                    'constraints' => array(
+                        'action' => 'show',
+                        'refNumberOrder' => 'ORD-[0-9]{6,6}(%252F)[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'FcFlight\Controller\Flight',
+                        'action' => 'show',
+                    ),
+                ),
+            ),
         ),
     ),
 

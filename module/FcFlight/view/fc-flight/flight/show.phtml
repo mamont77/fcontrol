@@ -1,0 +1,43 @@
+<?php
+$title = 'Browse: Flight';
+$this->headTitle($title);
+
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
+
+<table id="flightBrowse">
+    <tr>
+        <td>
+            <table class="cHeader">
+                <tr>
+                    <th>Reg Number Order</th>
+                    <td class="cRefNumberOrder"><?php echo $this->escapeHtml($data->refNumberOrder);?></td>
+                </tr>
+                <tr>
+                    <th>Date Order</th>
+                    <td><?php echo $this->escapeHtml($data->dateOrder);?></td>
+                </tr>
+                <tr>
+                    <th>Customer</th>
+                    <td><?php echo $this->escapeHtml($data->kontragent);//TODO ?></td>
+                </tr>
+            </table>
+        </td>
+        <td>
+            <table class="cHeader">
+                <tr>
+                    <th>Air Operator</th>
+                    <td><?php echo $this->escapeHtml($data->airOperator);//TODO?></td>
+                </tr>
+                <tr>
+                    <th>Aircraft</th>
+                    <td><?php echo $this->escapeHtml($data->aircraft);//TODO?> (<?php echo $this->escapeHtml($data->aircraft);//TODO ?>)</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+
