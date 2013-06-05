@@ -169,13 +169,13 @@ class FlightModel extends AbstractTableGateway
      * @param $refNumber
      * @return null|\Zend\Db\ResultSet\ResultSetInterface
      */
-    private function _findSimilarRefNumberOrder($refNumber)
+    private function _findSimilarRefNumberOrder($refNumberOrder)
     {
-        $refNumber = (string)$refNumber;
+        $refNumberOrder = (string)$refNumberOrder;
         $select = new Select();
         $select->from($this->table);
         $select->columns(array('refNumberOrder'));
-        $select->where->like('refNumberOrder', $refNumber . '%');
+        $select->where->like('refNumberOrder', $refNumberOrder . '%');
         $select->order('refNumberOrder DESC');
         $select->limit(1);
         $resultSet = $this->selectWith($select);
