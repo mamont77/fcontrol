@@ -61,7 +61,8 @@ class FlightController extends AbstractActionController
         }
 
         $data = $this->getFlightModel()->getByRefNumberOrder($refNumberOrder);
-//        \Zend\Debug\Debug::dump($data);exit;
+//        $data = $data->current();
+        \Zend\Debug\Debug::dump($data);exit;
 
         return new ViewModel(array(
             'data' => $this->getFlightModel()->getByRefNumberOrder($refNumberOrder),
