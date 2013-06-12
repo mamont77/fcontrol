@@ -1,0 +1,86 @@
+<?php
+$title = 'Cities';
+$this->headTitle($title);
+$url_order = 'ASC';
+if ($order) {
+    $url_order = $order == 'ASC' ? 'DESC' : 'ASC';
+}
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
+
+<p>
+    <a href="<?php echo $this->url('zfcadmin/city', array('action' => 'add'));?>"
+       class="btn btn-primary">Add Airport</a>
+</p>
+
+<table class="table table-bordered table-hover">
+    <tr>
+        <th>
+            <a href="<?php echo $this->url($route, array('order_by' => 'name', 'order' => $url_order)); ?>">
+                Name
+                <?php if ($order_by == 'name'): ?>
+                <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
+                <?php endif; ?>
+            </a>
+        </th>
+        <th>
+            <a href="<?php echo $this->url($route, array('order_by' => 'short_name', 'order' => $url_order)); ?>">
+                Short Name
+                <?php if ($order_by == 'short_name'): ?>
+                <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
+                <?php endif; ?>
+            </a>
+        </th>
+        <th>
+            <a href="<?php echo $this->url($route, array('order_by' => 'code_icao', 'order' => $url_order)); ?>">
+                Code ICAO
+                <?php if ($order_by == 'code_icao'): ?>
+                <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
+                <?php endif; ?>
+            </a>
+        </th>
+        <th>
+            <a href="<?php echo $this->url($route, array('order_by' => 'code_iata', 'order' => $url_order)); ?>">
+                Code IATA
+                <?php if ($order_by == 'code_icao'): ?>
+                <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
+                <?php endif; ?>
+            </a>
+        </th>
+        <th>
+            <a href="<?php echo $this->url($route, array('order_by' => 'country_name', 'order' => $url_order)); ?>">
+                Country
+                <?php if ($order_by == 'country_name'): ?>
+                <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
+                <?php endif; ?>
+            </a>
+        </th>
+        <th>Actions</th>
+    </tr>
+    <?php foreach ($pagination as $row) : ?>
+    <tr>
+        <td><?php echo $this->escapeHtml($row->name);?></td>
+        <td><?php echo $this->escapeHtml($row->short_name);?></td>
+        <td><?php echo $this->escapeHtml($row->code_icao);?></td>
+        <td><?php echo $this->escapeHtml($row->code_iata);?></td>
+        <td><?php echo $this->escapeHtml($row->country_name);?></td>
+        <td>
+            <a href="<?php echo $this->url('zfcadmin/city',
+                array('action' => 'edit', 'id' => $row->id));?>" class="btn btn-success">Edit</a>
+            <a href="<?php echo $this->url('zfcadmin/city',
+                array('action' => 'delete', 'id' => $row->id));?>" class="btn btn-warning">Remove</a>
+        </td>
+    </tr>
+    <?php endforeach; ?>
+</table>
+<?php
+echo $this->paginationControl(
+    $pagination, 'Sliding', 'libraries-pagination-slide', array(
+        'order_by' => $order_by,
+        'order' => $order,
+        'route' => $route,
+    )
+);
+?>

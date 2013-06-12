@@ -43,7 +43,7 @@ class CountryForm extends Form
         ));
 
         $this->add(array(
-            'name' => 'region',
+            'name' => 'region_id',
             'type' => 'Zend\Form\Element\Select',
             'options' => array(
                 'label' => 'Region',

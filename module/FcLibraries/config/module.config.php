@@ -5,6 +5,7 @@ return array(
             'FcLibraries\Controller\Index' => 'FcLibraries\Controller\IndexController',
             'FcLibraries\Controller\Region' => 'FcLibraries\Controller\RegionController',
             'FcLibraries\Controller\Country' => 'FcLibraries\Controller\CountryController',
+            'FcLibraries\Controller\City' => 'FcLibraries\Controller\CityController',
             'FcLibraries\Controller\Airport' => 'FcLibraries\Controller\AirportController',
             'FcLibraries\Controller\AircraftType' => 'FcLibraries\Controller\AircraftTypeController',
             'FcLibraries\Controller\Aircraft' => 'FcLibraries\Controller\AircraftController',
@@ -70,6 +71,21 @@ return array(
                             ),
                             'defaults' => array(
                                 'controller' => 'FcLibraries\Controller\Country',
+                                'action' => 'index',
+                            ),
+                        ),
+                    ),
+                    'cities' => array(
+                        'type' => 'segment',
+                        'options' => array(
+                            'route' => '/libraries/cities[/page/:page][/order_by/:order_by][/:order]',
+                            'constraints' => array(
+                                'page' => '[0-9]+',
+                                'order_by' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'order' => 'ASC|DESC',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'FcLibraries\Controller\City',
                                 'action' => 'index',
                             ),
                         ),

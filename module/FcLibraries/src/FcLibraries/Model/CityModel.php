@@ -6,11 +6,11 @@ use Zend\Db\Adapter\Adapter;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\Select;
 use FcLibraries\Model\BaseModel;
-use FcLibraries\Filter\CountryFilter;
+use FcLibraries\Filter\CityFilter;
 
-class CountryModel extends BaseModel
+class CityModel extends BaseModel
 {
-    protected $table = 'library_country';
+    protected $table = 'library_city';
 
     /**
      * @param \Zend\Db\Adapter\Adapter $adapter
@@ -19,7 +19,7 @@ class CountryModel extends BaseModel
     {
         $this->adapter = $adapter;
         $this->resultSetPrototype = new ResultSet();
-        $this->resultSetPrototype->setArrayObjectPrototype(new CountryFilter($this->adapter));
+        $this->resultSetPrototype->setArrayObjectPrototype(new CityFilter($this->adapter));
 
         $this->initialize();
     }
@@ -33,11 +33,10 @@ class CountryModel extends BaseModel
         if (null === $select)
             $select = new Select();
         $select->from($this->table);
-        $select->columns(array('id', 'name', 'code'));
-        $select->join(array('r' => 'library_region'),
-            'r.id = library_country.region_id',
-            array('region_name' => 'name'));
-//        $select->order('library_country.code ASC');
+        $select->columns(array('id', 'name', 'country_id'));
+        $select->join(array('c' => 'library_country'),
+            'c.id = library_city.country_id',
+            array('country_name' => 'name'));
         $resultSet = $this->selectWith($select);
         $resultSet->buffer();
 
@@ -45,28 +44,26 @@ class CountryModel extends BaseModel
     }
 
     /**
-     * @param \FcLibraries\Filter\CountryFilter $object
+     * @param \FcLibraries\Filter\CityFilter $object
      */
-    public function add(CountryFilter $object)
+    public function add(CityFilter $object)
     {
         $data = array(
             'name' => $object->name,
-            'region_id' => $object->region_id,
-            'code' => $object->code,
+            'country_id' => $object->country_id,
         );
         $this->insert($data);
     }
 
     /**
-     * @param \FcLibraries\Filter\CountryFilter $object
+     * @param \FcLibraries\Filter\CityFilter $object
      * @throws \Exception
      */
-    public function save(CountryFilter $object)
+    public function save(CityFilter $object)
     {
         $data = array(
             'name' => $object->name,
-            'region_id' => $object->region_id,
-            'code' => $object->code,
+            'country_id' => $object->country_id,
         );
         $id = (int)$object->id;
         if ($this->get($id)) {

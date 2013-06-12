@@ -7,18 +7,17 @@ use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\Db\Adapter\Adapter;
 
-class CountryFilter extends BaseFilter
+class CityFilter extends BaseFilter
 {
     /**
      * @var string
      */
-    protected $table = 'library_country';
+    protected $table = 'library_city';
 
     public $id;
     public $name;
-    public $region_id;
-    public $region_name;
-    public $code;
+    public $country_id;
+    public $country_name;
 
     /**
      * @param $data
@@ -27,9 +26,8 @@ class CountryFilter extends BaseFilter
     {
         $this->id = (isset($data['id'])) ? $data['id'] : null;
         $this->name = (isset($data['name'])) ? $data['name'] : null;
-        $this->region_id = (isset($data['region_id'])) ? $data['region_id'] : null;
-        $this->region_name = (isset($data['region_name'])) ? $data['region_name'] : null;
-        $this->code = (isset($data['code'])) ? $data['code'] : null;
+        $this->country_id = (isset($data['country_id'])) ? $data['country_id'] : null;
+        $this->country_name = (isset($data['country_name'])) ? $data['country_name'] : null;
     }
 
     /**
@@ -62,31 +60,12 @@ class CountryFilter extends BaseFilter
                             'max' => 30,
                         ),
                     ),
-                    $this->_noRecordExistsValidators($this->table, 'name', $this->id),
                 ),
             )));
 
             $inputFilter->add($factory->createInput(array(
-                'name' => 'region_id',
+                'name' => 'country_id',
                 'required' => true,
-            )));
-
-            $inputFilter->add($factory->createInput(array(
-                'name' => 'code',
-                'required' => true,
-                'filters' => $this->defaultFilters,
-                'validators' => array(
-                    array(
-                        'name' => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min' => 2,
-                            'max' => 3,
-                        ),
-                    ),
-                    $this->_noRecordExistsValidators($this->table, 'code', $this->id),
-
-                ),
             )));
 
             $this->inputFilter = $inputFilter;

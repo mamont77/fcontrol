@@ -5,7 +5,6 @@ namespace FcLibraries\Form;
 use Zend\Form\Form;
 use Zend\Form\Element;
 
-
 class RegionForm extends Form
 {
     protected $_formName = 'region';
@@ -45,9 +44,12 @@ class RegionForm extends Form
         //Submit button
         $this->add(array(
             'name' => 'submitBtn',
+            'type' => 'Zend\Form\Element\Submit',
+            'options' => array(
+                'primary' => true,
+            ),
             'attributes' => array(
-                'type' => 'submit',
-                'value' => 'Add', a
+                'value' => 'Add',
             ),
         ));
 

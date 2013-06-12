@@ -7,6 +7,8 @@ use FcLibraries\Model\RegionModel;
 use FcLibraries\Filter\RegionFilter;
 use FcLibraries\Model\CountryModel;
 use FcLibraries\Filter\CountryFilter;
+use FcLibraries\Model\CityModel;
+use FcLibraries\Filter\CityFilter;
 use FcLibraries\Model\AirportModel;
 use FcLibraries\Filter\AirportFilter;
 use FcLibraries\Model\AircraftTypeModel;
@@ -89,6 +91,14 @@ class Module
                 'FcLibraries\Filter\CountryFilter' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     return new CountryFilter($dbAdapter);
+                },
+                'FcLibraries\Model\CityModel' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new CityModel($dbAdapter);
+                },
+                'FcLibraries\Filter\CityFilter' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new CityFilter($dbAdapter);
                 },
                 'FcLibraries\Model\AirportModel' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');

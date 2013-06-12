@@ -29,6 +29,10 @@ return array(
                         'route' => 'zfcadmin/countries',
                     ),
                     array(
+                        'label' => 'Cities',
+                        'route' => 'zfcadmin/cities',
+                    ),
+                    array(
                         'label' => 'Airports',
                         'route' => 'zfcadmin/airports',
                     ),
