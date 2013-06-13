@@ -10,7 +10,7 @@ class AirportForm extends Form
     /**
      * @var array
      */
-    protected $countries = array();
+    protected $cities = array();
 
     /**
      * @param null $name
@@ -19,7 +19,7 @@ class AirportForm extends Form
     public function __construct($name = null, $options)
     {
         parent::__construct($name);
-        $this->setCountries($options['countries']);
+        $this->setCities($options['cities']);
 
         $this->setAttribute('method', 'post');
 
@@ -58,7 +58,6 @@ class AirportForm extends Form
             'name' => 'code_icao',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'required' => true,
                 'minlength' => '4',
                 'maxlength' => '4',
             ),
@@ -81,12 +80,15 @@ class AirportForm extends Form
         ));
 
         $this->add(array(
-            'name' => 'country',
+            'name' => 'city_id',
             'type' => 'Zend\Form\Element\Select',
+            'attributes' => array(
+                'required' => true,
+            ),
             'options' => array(
-                'label' => 'Country',
+                'label' => 'City',
                 'empty_option' => '-- Please select --',
-                'value_options' => $this->countries,
+                'value_options' => $this->cities,
             ),
         ));
 
@@ -117,11 +119,11 @@ class AirportForm extends Form
     /**
      * @param \Zend\Db\ResultSet\ResultSet $data
      */
-    private function setCountries(\Zend\Db\ResultSet\ResultSet $data)
+    private function setCities(\Zend\Db\ResultSet\ResultSet $data)
     {
-        if (!$this->countries) {
+        if (!$this->cities) {
             foreach ($data as $row) {
-                $this->countries[$row->id] = $row->name;
+                $this->cities[$row->id] = $row->name;
             }
         }
     }

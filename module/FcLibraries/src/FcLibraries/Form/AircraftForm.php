@@ -33,6 +33,9 @@ class AircraftForm extends Form
         $this->add(array(
             'name' => 'aircraft_type',
             'type' => 'Zend\Form\Element\Select',
+            'attributes' => array(
+                'required' => true,
+            ),
             'options' => array(
                 'label' => 'Type Aircraft',
                 'empty_option' => '-- Please select --',

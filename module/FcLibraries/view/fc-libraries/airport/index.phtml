@@ -50,9 +50,9 @@ if ($order) {
             </a>
         </th>
         <th>
-            <a href="<?php echo $this->url($route, array('order_by' => 'country_name', 'order' => $url_order)); ?>">
-                Country
-                <?php if ($order_by == 'country_name'): ?>
+            <a href="<?php echo $this->url($route, array('order_by' => 'city_name', 'order' => $url_order)); ?>">
+                City <small>(Country)</small>
+                <?php if ($order_by == 'city_name'): ?>
                 <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
                 <?php endif; ?>
             </a>
@@ -65,7 +65,10 @@ if ($order) {
         <td><?php echo $this->escapeHtml($row->short_name);?></td>
         <td><?php echo $this->escapeHtml($row->code_icao);?></td>
         <td><?php echo $this->escapeHtml($row->code_iata);?></td>
-        <td><?php echo $this->escapeHtml($row->country_name);?></td>
+        <td>
+            <?php echo $this->escapeHtml($row->city_name);?>
+            <small>(<?php echo $this->escapeHtml($row->country_name);?>)</small>
+        </td>
         <td>
             <a href="<?php echo $this->url('zfcadmin/airport',
                 array('action' => 'edit', 'id' => $row->id));?>" class="btn btn-success">Edit</a>

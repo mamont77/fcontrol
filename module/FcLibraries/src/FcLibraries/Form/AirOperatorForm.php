@@ -83,6 +83,9 @@ class AirOperatorForm extends Form
         $this->add(array(
             'name' => 'country',
             'type' => 'Zend\Form\Element\Select',
+            'attributes' => array(
+                'required' => true,
+            ),
             'options' => array(
                 'label' => 'Country',
                 'empty_option' => '-- Please select --',

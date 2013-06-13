@@ -12,7 +12,7 @@ use Zend\Paginator\Adapter\Iterator as paginatorIterator;
 class AirportController extends AbstractActionController implements ControllerInterface
 {
     protected $airportModel;
-    protected $countryModel;
+    protected $cityModel;
 
     /**
      * @return array|\Zend\View\Model\ViewModel
@@ -50,7 +50,7 @@ class AirportController extends AbstractActionController implements ControllerIn
      */
     public function addAction()
     {
-        $form = new AirportForm('airport', array('countries' => $this->getCountries()));
+        $form = new AirportForm('airport', array('cities' => $this->getCities()));
 
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -85,7 +85,7 @@ class AirportController extends AbstractActionController implements ControllerIn
         }
         $data = $this->getAirportModel()->get($id);
 
-        $form = new AirportForm('airport', array('countries' => $this->getCountries()));
+        $form = new AirportForm('airport', array('cities' => $this->getCities()));
         $form->bind($data);
         $form->get('submitBtn')->setAttribute('value', 'Save');
 
@@ -156,20 +156,20 @@ class AirportController extends AbstractActionController implements ControllerIn
     /**
      * @return array|object
      */
-    public function getCountryModel()
+    public function getCityModel()
     {
-        if (!$this->countryModel) {
+        if (!$this->cityModel) {
             $sm = $this->getServiceLocator();
-            $this->countryModel = $sm->get('FcLibraries\Model\CountryModel');
+            $this->cityModel = $sm->get('FcLibraries\Model\CityModel');
         }
-        return $this->countryModel;
+        return $this->cityModel;
     }
 
     /**
      * @return mixed
      */
-    private function getCountries()
+    private function getCities()
     {
-        return $this->getCountryModel()->fetchAll();
+        return $this->getCityModel()->fetchAll();
     }
 }

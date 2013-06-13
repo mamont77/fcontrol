@@ -19,7 +19,9 @@ class AirportFilter extends BaseFilter
     public $short_name;
     public $code_icao;
     public $code_iata;
-    public $country;
+    public $city_id;
+    public $city_name;
+    public $country_id;
     public $country_name;
 
     /**
@@ -32,7 +34,9 @@ class AirportFilter extends BaseFilter
         $this->short_name = (isset($data['short_name'])) ? $data['short_name'] : null;
         $this->code_icao = (isset($data['code_icao'])) ? $data['code_icao'] : null;
         $this->code_iata = (isset($data['code_iata'])) ? $data['code_iata'] : null;
-        $this->country = (isset($data['country'])) ? $data['country'] : null;
+        $this->city_id = (isset($data['city_id'])) ? $data['city_id'] : null;
+        $this->city_name = (isset($data['city_name'])) ? $data['city_name'] : null;
+        $this->country_id = (isset($data['country_id'])) ? $data['country_id'] : null;
         $this->country_name = (isset($data['country_name'])) ? $data['country_name'] : null;
     }
 
@@ -66,7 +70,6 @@ class AirportFilter extends BaseFilter
                             'max' => 30,
                         ),
                     ),
-                    $this->_noRecordExistsValidators($this->table, 'name', $this->id),
                 ),
             )));
 
@@ -83,7 +86,6 @@ class AirportFilter extends BaseFilter
                             'max' => 30,
                         ),
                     ),
-                    $this->_noRecordExistsValidators($this->table, 'short_name', $this->id),
                 ),
             )));
 
@@ -100,7 +102,6 @@ class AirportFilter extends BaseFilter
                             'max' => 4,
                         ),
                     ),
-                    $this->_noRecordExistsValidators($this->table, 'code_icao', $this->id),
                 ),
             )));
 
@@ -122,7 +123,7 @@ class AirportFilter extends BaseFilter
             )));
 
             $inputFilter->add($factory->createInput(array(
-                'name' => 'country',
+                'name' => 'city_id',
                 'required' => true,
             )));
 

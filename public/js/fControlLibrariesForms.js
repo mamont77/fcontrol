@@ -7,6 +7,7 @@
             routesForForms = {
                 'region':'admin/libraries/regions',
                 'country':'admin/libraries/countries',
+                'city':'admin/libraries/cities',
                 'airport':'admin/libraries/airports',
                 'aircraft_type':'admin/libraries/aircraft_types',
                 'aircraft':'admin/libraries/aircrafts',

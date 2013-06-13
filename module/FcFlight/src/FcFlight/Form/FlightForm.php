@@ -70,6 +70,9 @@ class FlightForm extends Form
         $this->add(array(
             'name' => 'kontragent',
             'type' => 'Zend\Form\Element\Select',
+            'attributes' => array(
+                'required' => true,
+            ),
             'options' => array(
                 'label' => 'Customer',
                 'empty_option' => '-- Please select --',
@@ -80,6 +83,9 @@ class FlightForm extends Form
         $this->add(array(
             'name' => 'airOperator',
             'type' => 'Zend\Form\Element\Select',
+            'attributes' => array(
+                'required' => true,
+            ),
             'options' => array(
                 'label' => 'Air Operator',
                 'empty_option' => '-- Please select --',
@@ -90,6 +96,9 @@ class FlightForm extends Form
         $this->add(array(
             'name' => 'aircraft',
             'type' => 'Zend\Form\Element\Select',
+            'attributes' => array(
+                'required' => true,
+            ),
             'options' => array(
                 'label' => 'Aircraft Type',
                 'empty_option' => '-- Please select --',

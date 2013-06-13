@@ -75,6 +75,20 @@ return array(
                             ),
                         ),
                     ),
+                    'country' => array(
+                        'type' => 'segment',
+                        'options' => array(
+                            'route' => '/libraries/country[/:action][/:id]',
+                            'constraints' => array(
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id' => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'FcLibraries\Controller\Country',
+                                'action' => 'index',
+                            ),
+                        ),
+                    ),
                     'cities' => array(
                         'type' => 'segment',
                         'options' => array(
@@ -90,16 +104,16 @@ return array(
                             ),
                         ),
                     ),
-                    'country' => array(
+                    'city' => array(
                         'type' => 'segment',
                         'options' => array(
-                            'route' => '/libraries/country[/:action][/:id]',
+                            'route' => '/libraries/city[/:action][/:id]',
                             'constraints' => array(
                                 'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'id' => '[0-9]+',
                             ),
                             'defaults' => array(
-                                'controller' => 'FcLibraries\Controller\Country',
+                                'controller' => 'FcLibraries\Controller\City',
                                 'action' => 'index',
                             ),
                         ),

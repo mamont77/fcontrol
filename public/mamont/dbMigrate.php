@@ -33,31 +33,25 @@ function databaseErrorHandler($message, $info)
 }
 
 $DB2->query('TRUNCATE TABLE library_country');
-$countries = $DB1->select('SELECT * FROM a_country');
-foreach ($countries as $country) {
-    //echo'<pre>';print_r($country);echo'</pre>';
-    $DB2->query('INSERT INTO library_country (id, region, name, code)
-        VALUES ("' . $country['id'] . '", 6, "' . $country['country'] . '", "' . $country['iso'] . '")');
+$result = $DB1->select('SELECT * FROM a_country');
+foreach ($result as $item) {
+    //echo'<pre>';print_r($result);echo'</pre>';
+    $DB2->query('INSERT INTO library_country (id, region_id, name, code)
+        VALUES ("' . $item['id'] . '", 6, "' . $item['country'] . '", "' . $item['iso'] . '")');
+}
+
+$DB2->query('TRUNCATE TABLE library_city');
+$result = $DB1->select('SELECT * FROM a_city');
+foreach ($result as $item) {
+    //echo'<pre>';print_r($result);echo'</pre>';
+    $DB2->query('INSERT INTO library_city (id, country_id, name)
+        VALUES ("' . $item['id'] . '", "' . $item['country_id'] . '", "' . $item['city'] . '")');
 }
 
 $DB2->query('TRUNCATE TABLE library_airport');
-$airports = $DB1->select('SELECT
-    a_airports.id as id,
-    a_city.id as city_id,
-    a_airports.name,
-    a_airports.iata,
-    a_airports.icao,
-    a_airports.latitude,
-    a_airports.longitude,
-    a_city.country_id as country
-    FROM a_airports
-    JOIN a_city
-    ON a_airports.city_id = a_city.id');
-foreach ($airports as $airport) {
-    echo'<pre>';print_r($airport);echo'</pre>';
-    $DB2->query('INSERT INTO library_airport (id, country, name, short_name, code_icao, code_iata, city_id, latitude, longitude)
-        VALUES ("' . $airport['id'] . '", "' . $airport['country'] . '", "' . $airport['name'] . '", "' . $airport['name'] . '", "' . $airport['icao'] . '", "' . $airport['iata'] . '", "' . $airport['city_id'] . '", "' . $airport['latitude'] . '", "' . $airport['longitude'] . '")');
+$result = $DB1->select('SELECT * FROM a_airports');
+foreach ($result as $item) {
+    //echo'<pre>';print_r($result);echo'</pre>';
+    $DB2->query('INSERT INTO library_airport (id, city_id, name, short_name, code_icao, code_iata, latitude, longitude)
+        VALUES ("' . $item['id'] . '", "' . $item['city_id'] . '", "' . $item['name'] . '", "' . $item['name'] . '", "' . $item['icao'] . '", "' . $item['iata'] . '", "' . $item['latitude'] . '", "' . $item['longitude'] . '")');
 }
-
-
-

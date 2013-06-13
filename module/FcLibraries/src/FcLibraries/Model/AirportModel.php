@@ -34,10 +34,12 @@ class AirportModel extends BaseModel
             $select = new Select();
         $select->from($this->table);
         $select->columns(array('id', 'name', 'short_name', 'code_icao', 'code_iata'));
-        $select->join(array('c' => 'library_country'),
-            'c.id = library_airport.country',
+        $select->join(array('city' => 'library_city'),
+            'library_airport.city_id = city.id',
+            array('city_name' => 'name'));
+        $select->join(array('country' => 'library_country'),
+            'city.country_id = country.id',
             array('country_name' => 'name'));
-//        $select->order('library_country.code ASC');
         $resultSet = $this->selectWith($select);
         $resultSet->buffer();
 
@@ -54,7 +56,7 @@ class AirportModel extends BaseModel
             'short_name' => $object->short_name,
             'code_icao' => $object->code_icao,
             'code_iata' => $object->code_iata,
-            'country' => $object->country,
+            'city_id' => $object->city_id,
         );
         $this->insert($data);
     }
@@ -70,7 +72,7 @@ class AirportModel extends BaseModel
             'short_name' => $object->short_name,
             'code_icao' => $object->code_icao,
             'code_iata' => $object->code_iata,
-            'country' => $object->country,
+            'city_id' => $object->city_id,
         );
         $id = (int)$object->id;
         if ($this->get($id)) {
