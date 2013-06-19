@@ -3,12 +3,8 @@ namespace FcFlight;
 
 use Zend\ModuleManager\ModuleManager;
 use Zend\Mvc\MvcEvent;
-
-//use FcLibraries\Model\KontragentModel;
-
 use FcFlight\Model\FlightModel;
-use FcFlight\Filter\FlightFilter;
-
+use FcFlight\Filter\FlightHeaderFilter;
 
 class Module
 {
@@ -66,15 +62,10 @@ class Module
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     return new FlightModel($dbAdapter);
                 },
-                'FcFlight\Filter\FlightFilter' => function ($sm) {
+                'FcFlight\Filter\FlightHeaderFilter' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new FlightFilter($dbAdapter);
+                    return new FlightHeaderFilter($dbAdapter);
                 },
-
-//                'FcLibraries\Model\KontragentModel' => function ($sm) {
-//                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-//                    return new KontragentModel($dbAdapter);
-//                },
             ),
         );
     }

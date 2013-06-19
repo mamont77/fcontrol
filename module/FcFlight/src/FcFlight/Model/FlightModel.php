@@ -6,7 +6,7 @@ use Zend\Db\TableGateway\AbstractTableGateway;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\Select;
-use FcFlight\Filter\FlightFilter;
+use FcFlight\Filter\FlightHeaderFilter;
 
 class FlightModel extends AbstractTableGateway
 {
@@ -14,7 +14,7 @@ class FlightModel extends AbstractTableGateway
     /**
      * @var string
      */
-    protected $table = 'flightBaseForm';
+    protected $table = 'flightBaseHeaderForm';
 
     /**
      * @param \Zend\Db\Adapter\Adapter $adapter
@@ -23,7 +23,7 @@ class FlightModel extends AbstractTableGateway
     {
         $this->adapter = $adapter;
         $this->resultSetPrototype = new ResultSet();
-        $this->resultSetPrototype->setArrayObjectPrototype(new FlightFilter($this->adapter));
+        $this->resultSetPrototype->setArrayObjectPrototype(new FlightHeaderFilter($this->adapter));
         $this->initialize();
     }
 
@@ -56,13 +56,13 @@ class FlightModel extends AbstractTableGateway
         $select->from($this->table);
         $select->columns(array('id', 'refNumberOrder', 'dateOrder', 'kontragent', 'airOperator', 'aircraft'));
         $select->join(array('library_kontragent' => 'library_kontragent'),
-            'library_kontragent.id = flightBaseForm.kontragent',
+            'library_kontragent.id = flightBaseHeaderForm.kontragent',
             array('kontragentShortName' => 'short_name'));
         $select->join(array('library_air_operator' => 'library_air_operator'),
-            'library_air_operator.id = flightBaseForm.airOperator',
+            'library_air_operator.id = flightBaseHeaderForm.airOperator',
             array('airOperatorShortName' => 'short_name'));
         $select->join(array('library_aircraft' => 'library_aircraft'),
-            'library_aircraft.reg_number = flightBaseForm.aircraft',
+            'library_aircraft.reg_number = flightBaseHeaderForm.aircraft',
             array('aircraftType' => 'aircraft_type'));
         $resultSet = $this->selectWith($select);
         $resultSet->buffer();
@@ -71,9 +71,10 @@ class FlightModel extends AbstractTableGateway
     }
 
     /**
-     * @param \FcFlight\Filter\FlightFilter $object
+     * @param \FcFlight\Filter\FlightHeaderFilter $object
+     * @return mixed
      */
-    public function add(FlightFilter $object)
+    public function add(FlightHeaderFilter $object)
     {
         /*
          * $dateOrder = '1977-03-10';//YYYY-MM-DD
@@ -94,10 +95,11 @@ class FlightModel extends AbstractTableGateway
     }
 
     /**
-     * @param \FcFlight\Filter\FlightFilter $object
+     * @param \FcFlight\Filter\FlightHeaderFilter $object
+     * @return mixed
      * @throws \Exception
      */
-    public function save(FlightFilter $object)
+    public function save(FlightHeaderFilter $object)
     {
         $dateOrder = strtotime($object->dateOrder);
 
@@ -137,13 +139,13 @@ class FlightModel extends AbstractTableGateway
         $select->from($this->table);
         $select->columns(array('id', 'refNumberOrder', 'dateOrder', 'kontragent', 'airOperator', 'aircraft'));
         $select->join(array('library_kontragent' => 'library_kontragent'),
-            'library_kontragent.id = flightBaseForm.kontragent',
+            'library_kontragent.id = flightBaseHeaderForm.kontragent',
             array('kontragentShortName' => 'short_name'));
         $select->join(array('library_air_operator' => 'library_air_operator'),
-            'library_air_operator.id = flightBaseForm.airOperator',
+            'library_air_operator.id = flightBaseHeaderForm.airOperator',
             array('airOperatorShortName' => 'short_name'));
         $select->join(array('library_aircraft' => 'library_aircraft'),
-            'library_aircraft.reg_number = flightBaseForm.aircraft',
+            'library_aircraft.reg_number = flightBaseHeaderForm.aircraft',
             array('aircraftType' => 'aircraft_type'));
         $select->where(array('refNumberOrder' => $refNumberOrder));
         $resultSet = $this->selectWith($select);

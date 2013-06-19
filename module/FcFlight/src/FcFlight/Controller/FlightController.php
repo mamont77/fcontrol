@@ -4,7 +4,7 @@ namespace FcFlight\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use FcFlight\Form\FlightForm;
+use FcFlight\Form\FlightHeaderForm;
 use Zend\Db\Sql\Select;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\Iterator as paginatorIterator;
@@ -80,7 +80,7 @@ class FlightController extends AbstractActionController
     public function addAction()
     {
 
-        $form = new FlightForm('flight',
+        $form = new FlightHeaderForm('flight',
             array(
                 'libraries' => array(
                     'kontragent' => $this->getKontragents(),
@@ -92,7 +92,7 @@ class FlightController extends AbstractActionController
 
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $filter = $this->getServiceLocator()->get('FcFlight\Filter\FlightFilter');
+            $filter = $this->getServiceLocator()->get('FcFlight\Filter\FlightHeaderFilter');
             $form->setInputFilter($filter->getInputFilter());
             $form->setData($request->getPost());
 
@@ -123,7 +123,7 @@ class FlightController extends AbstractActionController
         }
         $data = $this->getFlightModel()->get($id);
 
-        $form = new FlightForm('flight',
+        $form = new FlightHeaderForm('flight',
             array(
                 'libraries' => array(
                     'kontragent' => $this->getKontragents(),
@@ -138,7 +138,7 @@ class FlightController extends AbstractActionController
 
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $filter = $this->getServiceLocator()->get('FcFlight\Filter\FlightFilter');
+            $filter = $this->getServiceLocator()->get('FcFlight\Filter\FlightHeaderFilter');
             $form->setInputFilter($filter->getInputFilter());
             $form->setData($request->getPost());
             if ($form->isValid()) {

@@ -7,7 +7,7 @@ use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\Db\Adapter\Adapter;
 
-class FlightFilter implements InputFilterAwareInterface
+class FlightHeaderFilter implements InputFilterAwareInterface
 {
 
     /**
