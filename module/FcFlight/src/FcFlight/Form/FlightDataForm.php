@@ -5,9 +5,9 @@ namespace FcFlight\Form;
 use Zend\Form\Form;
 use Zend\Form\Element;
 
-class FlightHeaderForm extends Form
+class FlightDataForm extends Form
 {
-    protected $_formName = 'flightHeader';
+    protected $_formName = 'flightData';
 
     /**
      * @var array

@@ -104,14 +104,21 @@ class FlightModel extends AbstractTableGateway
         $dateOrder = strtotime($object->dateOrder);
 
         $data = array(
-            'refNumberOrder' => $this->getLastRefNumberOrder($dateOrder),
+            'refNumberOrder' => $object->refNumberOrder,
             'dateOrder' => $dateOrder,
             'kontragent' => $object->kontragent,
             'airOperator' => $object->airOperator,
             'aircraft' => $object->aircraft,
         );
         $id = (int)$object->id;
-        if ($this->get($id)) {
+        $oldData = $this->get($id);
+//        \Zend\Debug\Debug::dump($oldData->dateOrder);
+//        \Zend\Debug\Debug::dump(date('Y-m-d', $data['dateOrder']));
+//        die;
+        if ($oldData) {
+            if ($oldData->dateOrder != date('Y-m-d', $data['dateOrder'])) {
+                $data['refNumberOrder'] = $this->getLastRefNumberOrder($dateOrder);
+            }
             $this->update($data, array('id' => $id));
         } else {
             throw new \Exception('Form id does not exist');
@@ -161,17 +168,19 @@ class FlightModel extends AbstractTableGateway
     public function getLastRefNumberOrder($dateOrder)
     {
         /*
-        * ORD-YYMMDD/1
+        * ORD-YYMMDD-1
         */
         $refNumberOrder = 'ORD-' . date('ymd', $dateOrder) . '-';
         $result = $this->_findSimilarRefNumberOrder($refNumberOrder);
         $result = $result->current();
+//        \Zend\Debug\Debug::dump($result);
+//        die;
         if ($result) {
             $suffix = explode('-', $result->refNumberOrder);
             $suffix = (int)$suffix[2] + 1;
             $refNumberOrder = $refNumberOrder . $suffix;
         } else {
-            $refNumberOrder = $refNumberOrder . '1';
+            $refNumberOrder = $refNumberOrder . '001';
         }
 
         return $refNumberOrder;
@@ -188,7 +197,7 @@ class FlightModel extends AbstractTableGateway
         $select->from($this->table);
         $select->columns(array('refNumberOrder'));
         $select->where->like('refNumberOrder', $refNumberOrder . '%');
-        $select->order('refNumberOrder DESC');
+        $select->order('refNumberOrder DESC');//TODO FIXME https://url.odesk.com/ixnye3 (select * from flightBaseHeaderForm where refNumberOrder like 'ORD-130619-%' ORDER BY binary(refNumberOrder) DESC)
         $select->limit(1);
         $resultSet = $this->selectWith($select);
 
