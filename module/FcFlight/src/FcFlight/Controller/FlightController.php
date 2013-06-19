@@ -60,12 +60,17 @@ class FlightController extends AbstractActionController
             ));
         }
 
-        $data = $this->getFlightModel()->getByRefNumberOrder($refNumberOrder);
-//        $data = $data->current();
-//        \Zend\Debug\Debug::dump($data);exit;
+        $data = $this->getFlightModel()->getHeaderByRefNumberOrder($refNumberOrder);
+        $data->current();
+
+        foreach ($data as $item) {
+            //\Zend\Debug\Debug::dump($item);
+            $data = $item;
+            break;
+        }
 
         return new ViewModel(array(
-            'data' => $this->getFlightModel()->getByRefNumberOrder($refNumberOrder),
+            'data' => $data,
         ));
     }
 

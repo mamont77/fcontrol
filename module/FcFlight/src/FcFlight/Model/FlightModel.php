@@ -128,20 +128,28 @@ class FlightModel extends AbstractTableGateway
 
     /**
      * @param $refNumberOrder
-     * @return array|\ArrayObject|null
-     * @throws \Exception
+     * @return null|\Zend\Db\ResultSet\ResultSetInterface
      */
-    public function getByRefNumberOrder($refNumberOrder)
+    public function getHeaderByRefNumberOrder($refNumberOrder)
     {
         $refNumberOrder = (string)$refNumberOrder;
-        $rowSet = $this->select(array('refNumberOrder' => $refNumberOrder));
-        $row = $rowSet->current();
-        if (!$row) {
-            throw new \Exception("Could not find row $refNumberOrder");
-        }
-        $row->dateOrder = date('Y-m-d', $row->dateOrder);
+        $select = new Select();
+        $select->from($this->table);
+        $select->columns(array('id', 'refNumberOrder', 'dateOrder', 'kontragent', 'airOperator', 'aircraft'));
+        $select->join(array('library_kontragent' => 'library_kontragent'),
+            'library_kontragent.id = flightBaseForm.kontragent',
+            array('kontragentShortName' => 'short_name'));
+        $select->join(array('library_air_operator' => 'library_air_operator'),
+            'library_air_operator.id = flightBaseForm.airOperator',
+            array('airOperatorShortName' => 'short_name'));
+        $select->join(array('library_aircraft' => 'library_aircraft'),
+            'library_aircraft.reg_number = flightBaseForm.aircraft',
+            array('aircraftType' => 'aircraft_type'));
+        $select->where(array('refNumberOrder' => $refNumberOrder));
+        $resultSet = $this->selectWith($select);
+        $resultSet->buffer();
 
-        return $row;
+        return $resultSet;
     }
 
     /**
