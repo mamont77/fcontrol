@@ -58,7 +58,7 @@ return array(
                     'route' => '/browse[/:refNumberOrder]',
                     'constraints' => array(
                         'action' => 'show',
-                        'refNumberOrder' => 'ORD-[0-9]{6,6}(%252F)[0-9]+',
+                        'refNumberOrder' => 'ORD-[0-9]{6,6}-[0-9]+',
                     ),
                     'defaults' => array(
                         'controller' => 'FcFlight\Controller\Flight',

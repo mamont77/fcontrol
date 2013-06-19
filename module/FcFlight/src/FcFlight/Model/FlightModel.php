@@ -114,6 +114,8 @@ class FlightModel extends AbstractTableGateway
         } else {
             throw new \Exception('Form id does not exist');
         }
+
+        return $data['refNumberOrder'];
     }
 
     /**
@@ -151,12 +153,12 @@ class FlightModel extends AbstractTableGateway
         /*
         * ORD-YYMMDD/1
         */
-        $refNumberOrder = 'ORD-' . date('ymd', $dateOrder) . '/';
+        $refNumberOrder = 'ORD-' . date('ymd', $dateOrder) . '-';
         $result = $this->_findSimilarRefNumberOrder($refNumberOrder);
         $result = $result->current();
         if ($result) {
-            $suffix = explode('/', $result->refNumberOrder);
-            $suffix = (int)$suffix[1] + 1;
+            $suffix = explode('-', $result->refNumberOrder);
+            $suffix = (int)$suffix[2] + 1;
             $refNumberOrder = $refNumberOrder . $suffix;
         } else {
             $refNumberOrder = $refNumberOrder . '1';

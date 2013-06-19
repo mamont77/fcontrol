@@ -62,7 +62,7 @@ class FlightController extends AbstractActionController
 
         $data = $this->getFlightModel()->getByRefNumberOrder($refNumberOrder);
 //        $data = $data->current();
-        \Zend\Debug\Debug::dump($data);exit;
+//        \Zend\Debug\Debug::dump($data);exit;
 
         return new ViewModel(array(
             'data' => $this->getFlightModel()->getByRefNumberOrder($refNumberOrder),
@@ -138,9 +138,9 @@ class FlightController extends AbstractActionController
             $form->setData($request->getPost());
             if ($form->isValid()) {
                 $data = $form->getData();
-                $this->getFlightModel()->save($data);
+                $refNumberOrder = $this->getFlightModel()->save($data);
                 $this->flashMessenger()->addSuccessMessage("Flights '"
-                    . $data->refNumberOrder . "' was successfully saved.");
+                    . $refNumberOrder . "' was successfully saved.");
                 return $this->redirect()->toRoute('flights');
             }
         }
