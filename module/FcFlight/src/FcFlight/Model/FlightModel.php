@@ -171,23 +171,28 @@ class FlightModel extends AbstractTableGateway
         * ORD-YYMMDD-1
         */
         $refNumberOrder = 'ORD-' . date('ymd', $dateOrder) . '-';
+        $allSimilarNumbers = array();
         $result = $this->_findSimilarRefNumberOrder($refNumberOrder);
-        $result = $result->current();
-//        \Zend\Debug\Debug::dump($result);
-//        die;
+
         if ($result) {
-            $suffix = explode('-', $result->refNumberOrder);
-            $suffix = (int)$suffix[2] + 1;
-            $refNumberOrder = $refNumberOrder . $suffix;
+            foreach ($result as $row) {
+                $parsedNumber = explode('-', $row->refNumberOrder);
+                $allSimilarNumbers[$parsedNumber[2]] = $parsedNumber[1];
+            }
+            krsort($allSimilarNumbers);
+            $lastKey = array_slice($allSimilarNumbers, 0, 1, true);
+            $lastKey = key($lastKey);
+            $nextKey = (int)$lastKey + 1;
+            $refNumberOrder = $refNumberOrder . $nextKey;
         } else {
-            $refNumberOrder = $refNumberOrder . '001';
+            $refNumberOrder = $refNumberOrder . '1';
         }
 
         return $refNumberOrder;
     }
 
     /**
-     * @param $refNumber
+     * @param $refNumberOrder
      * @return null|\Zend\Db\ResultSet\ResultSetInterface
      */
     private function _findSimilarRefNumberOrder($refNumberOrder)
@@ -197,12 +202,9 @@ class FlightModel extends AbstractTableGateway
         $select->from($this->table);
         $select->columns(array('refNumberOrder'));
         $select->where->like('refNumberOrder', $refNumberOrder . '%');
-        $select->order('refNumberOrder DESC');//TODO FIXME https://url.odesk.com/ixnye3 (select * from flightBaseHeaderForm where refNumberOrder like 'ORD-130619-%' ORDER BY binary(refNumberOrder) DESC)
-        $select->limit(1);
         $resultSet = $this->selectWith($select);
+        $resultSet->buffer();
 
         return $resultSet;
     }
-
-
 }
