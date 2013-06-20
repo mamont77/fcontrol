@@ -12,17 +12,22 @@ class FlightDataForm extends Form
     /**
      * @var array
      */
-    protected $kontragents = array();
+    protected $parentFormId = array();
 
     /**
      * @var array
      */
-    protected $airOperators = array();
+    protected $flightNumberIds = array();
 
     /**
      * @var array
      */
-    protected $aircrafts = array();
+    protected $apDepIds = array();
+
+    /**
+     * @var array
+     */
+    protected $apArrIds = array();
 
     /**
      * @param null $name
@@ -36,9 +41,8 @@ class FlightDataForm extends Form
 
         parent::__construct($this->_formName);
 
-        $this->setLibrary('kontragents', 'id', 'name', $options['libraries']['kontragent']);
-        $this->setLibrary('airOperators', 'id', 'short_name', $options['libraries']['air_operator']); //don't rename
-        $this->setLibrary('aircrafts', 'reg_number', 'aircraft_type', $options['libraries']['aircraft']);
+        $this->setLibrary('airOperators', 'id', 'code_icao', $options['libraries']['air_operator']); //don't rename
+        $this->setLibrary('airports', 'reg_number', 'code_icao', $options['libraries']['aircraft']);
 
         $this->setName($this->_formName);
         $this->setAttribute('method', 'post');
@@ -51,63 +55,108 @@ class FlightDataForm extends Form
         ));
 
         $this->add(array(
-            'name' => 'refNumberOrder',
+            'name' => 'id',
             'attributes' => array(
                 'type' => 'hidden',
             ),
         ));
 
         $this->add(array(
-            'name' => 'dateOrder',
+            'name' => 'parentFormId',
+            'attributes' => array(
+                'type' => 'hidden',
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'dateOfFlight',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'required' => true,
                 'maxlength' => '10',
             ),
             'options' => array(
-                'label' => 'Date Order',
-                'description' => 'YYYY-MM-DD',
+                'label' => 'Date Of Flight',
+                'description' => 'DD-MM-YYYY',
             ),
         ));
 
         $this->add(array(
-            'name' => 'kontragent',
+            'name' => 'flightNumberId',
             'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
                 'required' => true,
             ),
             'options' => array(
-                'label' => 'Customer',
+                'label' => 'Air Operators',
                 'empty_option' => '-- Please select --',
-                'value_options' => $this->kontragents,
+                'value_options' => $this->flightNumberIds,
             ),
         ));
 
         $this->add(array(
-            'name' => 'airOperator',
+            'name' => 'flightNumberText',
+            'type' => 'Zend\Form\Element\Text',
+            'attributes' => array(
+                'required' => true,
+                'maxlength' => '6',
+            ),
+            'options' => array(
+                'label' => 'Flight Number',
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'apDepId',
             'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
                 'required' => true,
             ),
             'options' => array(
-                'label' => 'Air Operator',
+                'label' => 'Airports',
                 'empty_option' => '-- Please select --',
-                'value_options' => $this->airOperators,
+                'value_options' => $this->apDepIds,
             ),
         ));
 
         $this->add(array(
-            'name' => 'aircraft',
+            'name' => 'apDepTime',
+            'type' => 'Zend\Form\Element\Text',
+            'attributes' => array(
+                'required' => true,
+                'maxlength' => '5',
+            ),
+            'options' => array(
+                'label' => 'Time, UTC',
+                'hint' => 'HH:MM',
+                'description' => 'UTC',
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'apArrId',
             'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
                 'required' => true,
             ),
             'options' => array(
-                'label' => 'Aircraft Type',
+                'label' => 'Airports',
                 'empty_option' => '-- Please select --',
-                'value_options' => $this->aircrafts,
-                'hint' => 'GegNumber',
+                'value_options' => $this->apDepIds,
+            ),
+        ));
 
+        $this->add(array(
+            'name' => 'apArrTime',
+            'type' => 'Zend\Form\Element\Text',
+            'attributes' => array(
+                'required' => true,
+                'maxlength' => '5',
+            ),
+            'options' => array(
+                'label' => 'Time, UTC',
+                'hint' => 'HH:MM',
+                'description' => 'UTC',
             ),
         ));
 
@@ -122,17 +171,6 @@ class FlightDataForm extends Form
             ),
         ));
 
-        //Cancel button
-        $this->add(array(
-            'name' => 'cancel',
-            'type' => 'Zend\Form\Element\Button',
-            'options' => array(
-                'label' => 'Cancel',
-            ),
-            'attributes' => array(
-                'class' => 'btn-link cancel',
-            ),
-        ));
     }
 
     /**

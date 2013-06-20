@@ -13,15 +13,15 @@ $this->headTitle($title);
             <table class="cHeader">
                 <tr>
                     <th>Reg Number Order</th>
-                    <td class="cRefNumberOrder"><?php echo $this->escapeHtml($data->refNumberOrder);?></td>
+                    <td class="cRefNumberOrder"><?php echo $this->escapeHtml($header->refNumberOrder);?></td>
                 </tr>
                 <tr>
                     <th>Date Order</th>
-                    <td><?php echo date('Y-m-d', $data->dateOrder);?></td>
+                    <td><?php echo date('Y-m-d', $header->dateOrder);?></td>
                 </tr>
                 <tr>
                     <th>Customer</th>
-                    <td><?php echo $this->escapeHtml($data->kontragentShortName); ?></td>
+                    <td><?php echo $this->escapeHtml($header->kontragentShortName); ?></td>
                 </tr>
             </table>
         </td>
@@ -29,15 +29,50 @@ $this->headTitle($title);
             <table class="cHeader">
                 <tr>
                     <th>Air Operator</th>
-                    <td><?php echo $this->escapeHtml($data->airOperatorShortName); ?></td>
+                    <td><?php echo $this->escapeHtml($header->airOperatorShortName); ?></td>
                 </tr>
                 <tr>
                     <th>Aircraft</th>
-                    <td><?php echo $this->escapeHtml($data->aircraftType); ?> (<?php echo $this->escapeHtml($data->aircraft); ?>)</td>
+                    <td><?php echo $this->escapeHtml($header->aircraftType); ?> (<?php echo $this->escapeHtml($header->aircraft); ?>)</td>
                 </tr>
             </table>
         </td>
     </tr>
 </table>
 
+<?php
+$displayOptions = array(
+    'elements' => array(
+//        'dateOrder' => array(
+//            'class' => 'input-small',
+//        ),
+//        'kontragent' => array(
+//            'class' => 'input-small',
+//            'required' => true,
+//        ),
+//        'airOperator' => array(
+//            'class' => 'input-small',
+//        ),
+//        'aircraft' => array(
+//            'class' => 'input-small',
+//        ),
+    ),
+);
+//$formType = 'inline';
+$form = $this->form;
+$form->setAttribute('action', $this->url('flight', array('action' => 'add')));
+$form->prepare();
+?>
+
+<?php if ($form->getMessages()): ?>
+<div class="alert alert-error">
+    <button class="close" data-dismiss="alert" type="button">×</button>
+    <strong>Invalid input!</strong>
+    Form fields are not filled in correctly.
+</div>
+<?php else: ?>
+<?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
+<?php endif; ?>
+
+<?php echo $this->formTwb($form, $formType, $displayOptions); ?>
 

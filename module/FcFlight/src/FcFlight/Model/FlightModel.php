@@ -112,9 +112,6 @@ class FlightModel extends AbstractTableGateway
         );
         $id = (int)$object->id;
         $oldData = $this->get($id);
-//        \Zend\Debug\Debug::dump($oldData->dateOrder);
-//        \Zend\Debug\Debug::dump(date('Y-m-d', $data['dateOrder']));
-//        die;
         if ($oldData) {
             if ($oldData->dateOrder != date('Y-m-d', $data['dateOrder'])) {
                 $data['refNumberOrder'] = $this->getLastRefNumberOrder($dateOrder);

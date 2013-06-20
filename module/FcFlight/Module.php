@@ -5,6 +5,7 @@ use Zend\ModuleManager\ModuleManager;
 use Zend\Mvc\MvcEvent;
 use FcFlight\Model\FlightModel;
 use FcFlight\Filter\FlightHeaderFilter;
+use FcFlight\Filter\FlightDataFilter;
 
 class Module
 {
@@ -65,6 +66,10 @@ class Module
                 'FcFlight\Filter\FlightHeaderFilter' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     return new FlightHeaderFilter($dbAdapter);
+                },
+                'FcFlight\Filter\FlightDataFilter' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new FlightDataFilter($dbAdapter);
                 },
             ),
         );

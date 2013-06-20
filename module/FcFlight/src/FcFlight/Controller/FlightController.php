@@ -5,6 +5,7 @@ namespace FcFlight\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use FcFlight\Form\FlightHeaderForm;
+use FcFlight\Form\FlightDataForm;
 use Zend\Db\Sql\Select;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\Iterator as paginatorIterator;
@@ -15,6 +16,7 @@ class FlightController extends AbstractActionController
     protected $kontragentModel;
     protected $airOperatorModel;
     protected $aircraftModel;
+    protected $airportModel;
 
     /**
      * @return array|\Zend\View\Model\ViewModel
@@ -60,17 +62,26 @@ class FlightController extends AbstractActionController
             ));
         }
 
-        $data = $this->getFlightModel()->getHeaderByRefNumberOrder($refNumberOrder);
-        $data->current();
+        $header = $this->getFlightModel()->getHeaderByRefNumberOrder($refNumberOrder);
+        $header->current();
 
-        foreach ($data as $item) {
-            //\Zend\Debug\Debug::dump($item);
-            $data = $item;
+        foreach ($header as $item) {
+            $header = $item;
             break;
         }
 
+        $form = new FlightDataForm('flight',
+            array(
+                'libraries' => array(
+                    'air_operator' => $this->getAirOperators(),
+                    'airport' => $this->getAirports(),
+                )
+            )
+        );
+
         return new ViewModel(array(
-            'data' => $data,
+            'header' => $header,
+            'form' => $form,
         ));
     }
 
@@ -253,5 +264,23 @@ class FlightController extends AbstractActionController
     private function getAircrafts()
     {
         return $this->getLibraryAircraftModel()->fetchAll();
+    }
+
+    public function getLibraryAirportModel()
+    {
+        if (!$this->airportModel) {
+            $sm = $this->getServiceLocator();
+            $this->airportModel = $sm->get('FcLibraries\Model\AirportModel');
+        }
+
+        return $this->airportModel;
+    }
+
+    /**
+     * @return mixed
+     */
+    private function getAirports()
+    {
+        return $this->getLibraryAirportModel()->fetchAll();
     }
 }

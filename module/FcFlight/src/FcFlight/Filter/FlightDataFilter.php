@@ -26,14 +26,14 @@ class FlightDataFilter implements InputFilterAwareInterface
     protected $table = '';
 
     public $id;
-    public $refNumberOrder;
-    public $dateOrder;
-    public $kontragent;
-    public $kontragentShortName;
-    public $airOperator;
-    public $airOperatorShortName;
-    public $aircraft;
-    public $aircraftType;
+    public $parentFormId;
+    public $dateOfFlight;
+    public $flightNumberId;
+    public $flightNumberText;
+    public $apDepId;
+    public $apDepTime;
+    public $apArrId;
+    public $apArrTime;
 
     /**
      * @var array
@@ -65,14 +65,14 @@ class FlightDataFilter implements InputFilterAwareInterface
     public function exchangeArray($data)
     {
         $this->id = (isset($data['id'])) ? $data['id'] : null;
-        $this->refNumberOrder = (isset($data['refNumberOrder'])) ? $data['refNumberOrder'] : null;
-        $this->dateOrder = (isset($data['dateOrder'])) ? $data['dateOrder'] : null;
-        $this->kontragent = (isset($data['kontragent'])) ? $data['kontragent'] : null;
-        $this->kontragentShortName = (isset($data['kontragentShortName'])) ? $data['kontragentShortName'] : null;
-        $this->airOperator = (isset($data['airOperator'])) ? $data['airOperator'] : null;
-        $this->airOperatorShortName = (isset($data['airOperatorShortName'])) ? $data['airOperatorShortName'] : null;
-        $this->aircraft = (isset($data['aircraft'])) ? $data['aircraft'] : null;
-        $this->aircraftType = (isset($data['aircraftType'])) ? $data['aircraftType'] : null;
+        $this->parentFormId = (isset($data['parentFormId'])) ? $data['parentFormId'] : null;
+        $this->dateOfFlight = (isset($data['dateOfFlight'])) ? $data['dateOfFlight'] : null;
+        $this->flightNumberId = (isset($data['flightNumberId'])) ? $data['flightNumberId'] : null;
+        $this->flightNumberText = (isset($data['flightNumberText'])) ? $data['flightNumberText'] : null;
+        $this->apDepId = (isset($data['apDepId'])) ? $data['apDepId'] : null;
+        $this->apDepTime = (isset($data['apDepTime'])) ? $data['apDepTime'] : null;
+        $this->apArrId = (isset($data['apArrId'])) ? $data['apArrId'] : null;
+        $this->apArrTime = (isset($data['apArrTime'])) ? $data['apArrTime'] : null;
     }
 
     /**
@@ -105,30 +105,70 @@ class FlightDataFilter implements InputFilterAwareInterface
             $factory = new InputFactory();
 
             $inputFilter->add($factory->createInput(array(
-                'name' => 'dateOrder',
+                'name' => 'dateOfFlight',
                 'required' => true,
                 'filters' => $this->defaultFilters,
                 'validators' => array(
                     array(
                         'name' => 'Date',
-                        'format' => 'Y-m-d',
+                        'format' => 'd-m-Y',
                     ),
                 ),
             )));
 
             $inputFilter->add($factory->createInput(array(
-                'name' => 'kontragent',
+                'name' => 'flightNumberId',
                 'required' => true,
             )));
 
             $inputFilter->add($factory->createInput(array(
-                'name' => 'airOperator',
+                'name' => 'flightNumberText',
+                'required' => true,
+                'filters' => $this->defaultFilters,
+                'validators' => array(
+                    array(
+                        'name' => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min' => 6,
+                            'max' => 6,
+                        ),
+                    ),
+                ),
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'apDepId',
                 'required' => true,
             )));
 
             $inputFilter->add($factory->createInput(array(
-                'name' => 'aircraft',
+                'name' => 'apDepTime',
                 'required' => true,
+                'filters' => $this->defaultFilters,
+                'validators' => array(
+                    array(
+                        'name' => 'Date',
+                        'format' => 'h:m',
+                    ),
+                ),
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'apArrId',
+                'required' => true,
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'apArrTime',
+                'required' => true,
+                'filters' => $this->defaultFilters,
+                'validators' => array(
+                    array(
+                        'name' => 'Date',
+                        'format' => 'h:m',
+                    ),
+                ),
             )));
 
             $this->inputFilter = $inputFilter;
