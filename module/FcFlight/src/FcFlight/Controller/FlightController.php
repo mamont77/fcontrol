@@ -70,11 +70,12 @@ class FlightController extends AbstractActionController
             break;
         }
 
-        $form = new FlightDataForm('flight',
+        $form = new FlightDataForm('flightData',
             array(
                 'libraries' => array(
-                    'air_operator' => $this->getAirOperators(),
-                    'airport' => $this->getAirports(),
+                    'flightNumberIds' => $this->getAirOperators(),
+                    'apDepIds' => $this->getAirports(),
+                    'apArrIds' => $this->getAirports(),
                 )
             )
         );
@@ -91,7 +92,7 @@ class FlightController extends AbstractActionController
     public function addAction()
     {
 
-        $form = new FlightHeaderForm('flight',
+        $form = new FlightHeaderForm('flightHeader',
             array(
                 'libraries' => array(
                     'kontragent' => $this->getKontragents(),

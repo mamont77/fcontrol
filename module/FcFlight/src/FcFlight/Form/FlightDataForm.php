@@ -17,17 +17,32 @@ class FlightDataForm extends Form
     /**
      * @var array
      */
-    protected $flightNumberIds = array();
+    protected $flightNumberIdsIcao = array();
 
     /**
      * @var array
      */
-    protected $apDepIds = array();
+    protected $flightNumberIdsIata = array();
 
     /**
      * @var array
      */
-    protected $apArrIds = array();
+    protected $apDepIdsIcao = array();
+
+    /**
+     * @var array
+     */
+    protected $apDepIdsIata = array();
+
+    /**
+     * @var array
+     */
+    protected $apArrIdsIcao = array();
+
+    /**
+     * @var array
+     */
+    protected $apArrIdsIata = array();
 
     /**
      * @param null $name
@@ -41,8 +56,12 @@ class FlightDataForm extends Form
 
         parent::__construct($this->_formName);
 
-        $this->setLibrary('airOperators', 'id', 'code_icao', $options['libraries']['air_operator']); //don't rename
-        $this->setLibrary('airports', 'reg_number', 'code_icao', $options['libraries']['aircraft']);
+        $this->setLibrary('flightNumberIdsIcao', 'id', 'code_icao', $options['libraries']['flightNumberIds']);
+        $this->setLibrary('flightNumberIdsIata', 'id', 'code_iata', $options['libraries']['flightNumberIds']);
+        $this->setLibrary('apDepIdsIcao', 'id', 'code_icao', $options['libraries']['apDepIds']);
+        $this->setLibrary('apDepIdsIata', 'id', 'code_iata', $options['libraries']['apDepIds']);
+        $this->setLibrary('apArrIdsIcao', 'id', 'code_icao', $options['libraries']['apArrIds']);
+        $this->setLibrary('apArrIdsIata', 'id', 'code_iata', $options['libraries']['apArrIds']);
 
         $this->setName($this->_formName);
         $this->setAttribute('method', 'post');
@@ -81,82 +100,172 @@ class FlightDataForm extends Form
             ),
         ));
 
+        //Fieldset Flight Number
         $this->add(array(
-            'name' => 'flightNumberId',
-            'type' => 'Zend\Form\Element\Select',
-            'attributes' => array(
-                'required' => true,
+            'name'          => 'flightNumber',
+            'type'          => 'Zend\Form\Fieldset',
+            'options'       => array(
+                'legend'        => 'Flight Number',
             ),
-            'options' => array(
-                'label' => 'Air Operators',
-                'empty_option' => '-- Please select --',
-                'value_options' => $this->flightNumberIds,
+            'elements'      => array(
+                //flightNumberIdIcao
+                array(
+                    'spec' => array(
+                        'name' => 'flightNumberIdIcao',
+                        'type' => 'Zend\Form\Element\Select',
+                        'attributes' => array(
+                            'required' => true,
+                        ),
+                        'options' => array(
+                            'label' => 'ICAO',
+                            'empty_option' => '-- Please select --',
+                            'value_options' => $this->flightNumberIdsIcao,
+                        ),
+                    ),
+                ),
+                //flightNumberIdIata
+                array(
+                    'spec' => array(
+                        'name' => 'flightNumberIdIata',
+                        'type' => 'Zend\Form\Element\Select',
+                        'attributes' => array(
+                            'required' => true,
+                        ),
+                        'options' => array(
+                            'label' => 'IATA',
+                            'empty_option' => '-- Please select --',
+                            'value_options' => $this->flightNumberIdsIata,
+                        ),
+                    ),
+                ),
+                //flightNumberText
+                array(
+                    'spec' => array(
+                        'name' => 'flightNumberText',
+                        'type' => 'Zend\Form\Element\Text',
+                        'attributes' => array(
+                            'required' => true,
+                            'maxlength' => '6',
+                        ),
+                        'options' => array(
+                            'label' => 'Text',
+                        ),
+                    ),
+                ),
             ),
         ));
 
+        //Fieldset Ap Dep
         $this->add(array(
-            'name' => 'flightNumberText',
-            'type' => 'Zend\Form\Element\Text',
-            'attributes' => array(
-                'required' => true,
-                'maxlength' => '6',
+            'name'          => 'apDep',
+            'type'          => 'Zend\Form\Fieldset',
+            'options'       => array(
+                'legend'        => 'App Dep',
             ),
-            'options' => array(
-                'label' => 'Flight Number',
+            'elements'      => array(
+                //apDepIdIcao
+                array(
+                    'spec' => array(
+                        'name' => 'apDepIdIcao',
+                        'type' => 'Zend\Form\Element\Select',
+                        'attributes' => array(
+                            'required' => true,
+                        ),
+                        'options' => array(
+                            'label' => 'ICAO',
+                            'empty_option' => '-- Please select --',
+                            'value_options' => $this->apDepIdsIcao,
+                        ),
+                    ),
+                ),
+                //apDepIdIata
+                array(
+                    'spec' => array(
+                        'name' => 'apDepIdIata',
+                        'type' => 'Zend\Form\Element\Select',
+                        'attributes' => array(
+                            'required' => true,
+                        ),
+                        'options' => array(
+                            'label' => 'IATA',
+                            'empty_option' => '-- Please select --',
+                            'value_options' => $this->apDepIdsIata,
+                        ),
+                    ),
+                ),
+                //flightNumberText
+                array(
+                    'spec' => array(
+                        'name' => 'apDepTime',
+                        'type' => 'Zend\Form\Element\Text',
+                        'attributes' => array(
+                            'required' => true,
+                            'maxlength' => '5',
+                        ),
+                        'options' => array(
+                            'label' => 'Time',
+                            'hint' => 'HH:MM',
+                            'description' => 'UTC',
+                        ),
+                    ),
+                ),
             ),
         ));
 
+        //Fieldset Ap Arr
         $this->add(array(
-            'name' => 'apDepId',
-            'type' => 'Zend\Form\Element\Select',
-            'attributes' => array(
-                'required' => true,
+            'name'          => 'apArr',
+            'type'          => 'Zend\Form\Fieldset',
+            'options'       => array(
+                'legend'        => 'App Arr',
             ),
-            'options' => array(
-                'label' => 'Airports',
-                'empty_option' => '-- Please select --',
-                'value_options' => $this->apDepIds,
-            ),
-        ));
-
-        $this->add(array(
-            'name' => 'apDepTime',
-            'type' => 'Zend\Form\Element\Text',
-            'attributes' => array(
-                'required' => true,
-                'maxlength' => '5',
-            ),
-            'options' => array(
-                'label' => 'Time, UTC',
-                'hint' => 'HH:MM',
-                'description' => 'UTC',
-            ),
-        ));
-
-        $this->add(array(
-            'name' => 'apArrId',
-            'type' => 'Zend\Form\Element\Select',
-            'attributes' => array(
-                'required' => true,
-            ),
-            'options' => array(
-                'label' => 'Airports',
-                'empty_option' => '-- Please select --',
-                'value_options' => $this->apDepIds,
-            ),
-        ));
-
-        $this->add(array(
-            'name' => 'apArrTime',
-            'type' => 'Zend\Form\Element\Text',
-            'attributes' => array(
-                'required' => true,
-                'maxlength' => '5',
-            ),
-            'options' => array(
-                'label' => 'Time, UTC',
-                'hint' => 'HH:MM',
-                'description' => 'UTC',
+            'elements'      => array(
+                //apArrIdIcao
+                array(
+                    'spec' => array(
+                        'name' => 'apArrIdIcao',
+                        'type' => 'Zend\Form\Element\Select',
+                        'attributes' => array(
+                            'required' => true,
+                        ),
+                        'options' => array(
+                            'label' => 'ICAO',
+                            'empty_option' => '-- Please select --',
+                            'value_options' => $this->apArrIdsIcao,
+                        ),
+                    ),
+                ),
+                //apArrIdIata
+                array(
+                    'spec' => array(
+                        'name' => 'apArrIdIata',
+                        'type' => 'Zend\Form\Element\Select',
+                        'attributes' => array(
+                            'required' => true,
+                        ),
+                        'options' => array(
+                            'label' => 'IATA',
+                            'empty_option' => '-- Please select --',
+                            'value_options' => $this->apArrIdsIata,
+                        ),
+                    ),
+                ),
+                //apArrTime
+                array(
+                    'spec' => array(
+                        'name' => 'apArrTime',
+                        'type' => 'Zend\Form\Element\Text',
+                        'attributes' => array(
+                            'required' => true,
+                            'maxlength' => '5',
+                        ),
+                        'options' => array(
+                            'label' => 'Time',
+                            'hint' => 'HH:MM',
+                            'description' => 'UTC',
+                        ),
+                    ),
+                ),
             ),
         ));
 

@@ -107,7 +107,6 @@ class FlightHeaderForm extends Form
                 'empty_option' => '-- Please select --',
                 'value_options' => $this->aircrafts,
                 'hint' => 'GegNumber',
-
             ),
         ));
 

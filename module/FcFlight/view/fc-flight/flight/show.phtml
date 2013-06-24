@@ -42,20 +42,57 @@ $this->headTitle($title);
 
 <?php
 $displayOptions = array(
+    'fieldsets' => array(
+        'flightNumber' => array(
+            'display_legend' => true,
+            'elements' => array(
+                'flightNumberIdIcao' => array(
+                    'required' => true,
+                ),
+                'flightNumberIdIata' => array(
+                    'required' => true,
+                ),
+                'flightNumberText' => array(
+                    'required' => true,
+                ),
+            ),
+        ),
+        'apDep' => array(
+            'display_legend' => true,
+            'elements' => array(
+                'apDepIdIcao' => array(
+                    'required' => true,
+                ),
+                'apDepIdIata' => array(
+                    'required' => true,
+                ),
+                'apDepTime' => array(
+                    'required' => true,
+                ),
+            ),
+        ),
+        'apArr' => array(
+            'display_legend' => true,
+            'elements' => array(
+                'apArrIdIcao' => array(
+                    'required' => true,
+                ),
+                'apArrIdIata' => array(
+                    'required' => true,
+                ),
+                'apArrTime' => array(
+                    'required' => true,
+                ),
+            ),
+        ),
+    ),
     'elements' => array(
-//        'dateOrder' => array(
-//            'class' => 'input-small',
-//        ),
-//        'kontragent' => array(
-//            'class' => 'input-small',
-//            'required' => true,
-//        ),
-//        'airOperator' => array(
-//            'class' => 'input-small',
-//        ),
-//        'aircraft' => array(
-//            'class' => 'input-small',
-//        ),
+        'dateOfFlight' => array(
+            'required' => true,
+        ),
+        'submitBtn' => array(
+            'class' => 'btn-large',
+        ),
     ),
 );
 //$formType = 'inline';
