@@ -15,7 +15,7 @@
                 'kontragent':'admin/libraries/kontragents',
                 'unit':'admin/libraries/units',
                 'currency':'admin/libraries/currencies',
-                'flight':''
+                'flightHeader':''
             }
         }
     };

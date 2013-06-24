@@ -2,7 +2,7 @@
 
     fControl.behaviors.setAircraftRegNumber = {
         attach:function (context, settings) {
-            var $form = $('form#flight');
+            var $form = $('form#flightHeader');
             $($form).find('#dateOrder').mask('9999-99-99');
             $($form).find('#hint-aircraft').text('GegNumber: ' + ($form).find('#aircraft').val());
             $form.on('change', '#aircraft', function () {
