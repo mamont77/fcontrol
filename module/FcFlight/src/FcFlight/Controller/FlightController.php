@@ -114,9 +114,11 @@ class FlightController extends AbstractActionController
                 $refNumberOrder = $this->getFlightModel()->add($filter);
                 $this->flashMessenger()->addSuccessMessage("Flights '"
                     . $refNumberOrder . "' was successfully added.");
-                return $this->redirect()->toRoute('flight', array(
-                    'action' => 'add'
-                ));
+                return $this->redirect()->toRoute('browse',
+                    array(
+                        'action' => 'show',
+                        'refNumberOrder' => $refNumberOrder,
+                    ));
             }
         }
         return array('form' => $form);

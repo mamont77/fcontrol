@@ -63,6 +63,7 @@ class FlightDataForm extends Form
         $this->setLibrary('apArrIdsIcao', 'id', 'code_icao', $options['libraries']['apArrIds']);
         $this->setLibrary('apArrIdsIata', 'id', 'code_iata', $options['libraries']['apArrIds']);
 
+
         $this->setName($this->_formName);
         $this->setAttribute('method', 'post');
 
@@ -115,6 +116,7 @@ class FlightDataForm extends Form
                         'type' => 'Zend\Form\Element\Select',
                         'attributes' => array(
                             'required' => true,
+                            'id' => 'flightNumberIdIcao',
                         ),
                         'options' => array(
                             'label' => 'ICAO',
@@ -129,7 +131,8 @@ class FlightDataForm extends Form
                         'name' => 'flightNumberIdIata',
                         'type' => 'Zend\Form\Element\Select',
                         'attributes' => array(
-                            'required' => true,
+                            //'required' => true,
+                            'id' => 'flightNumberIdIata',
                         ),
                         'options' => array(
                             'label' => 'IATA',
@@ -146,6 +149,7 @@ class FlightDataForm extends Form
                         'attributes' => array(
                             'required' => true,
                             'maxlength' => '6',
+                            'id' => 'flightNumberText',
                         ),
                         'options' => array(
                             'label' => 'Text',
@@ -170,6 +174,7 @@ class FlightDataForm extends Form
                         'type' => 'Zend\Form\Element\Select',
                         'attributes' => array(
                             'required' => true,
+                            'id' => 'apDepIdIcao',
                         ),
                         'options' => array(
                             'label' => 'ICAO',
@@ -184,7 +189,8 @@ class FlightDataForm extends Form
                         'name' => 'apDepIdIata',
                         'type' => 'Zend\Form\Element\Select',
                         'attributes' => array(
-                            'required' => true,
+                            //'required' => true,
+                            'id' => 'apDepIdIata',
                         ),
                         'options' => array(
                             'label' => 'IATA',
@@ -201,6 +207,7 @@ class FlightDataForm extends Form
                         'attributes' => array(
                             'required' => true,
                             'maxlength' => '5',
+                            'id' => 'apDepTime',
                         ),
                         'options' => array(
                             'label' => 'Time',
@@ -227,6 +234,7 @@ class FlightDataForm extends Form
                         'type' => 'Zend\Form\Element\Select',
                         'attributes' => array(
                             'required' => true,
+                            'id' => 'apArrIdIcao',
                         ),
                         'options' => array(
                             'label' => 'ICAO',
@@ -241,7 +249,8 @@ class FlightDataForm extends Form
                         'name' => 'apArrIdIata',
                         'type' => 'Zend\Form\Element\Select',
                         'attributes' => array(
-                            'required' => true,
+                            //'required' => true,
+                            'id' => 'apArrIdIata',
                         ),
                         'options' => array(
                             'label' => 'IATA',
@@ -258,6 +267,7 @@ class FlightDataForm extends Form
                         'attributes' => array(
                             'required' => true,
                             'maxlength' => '5',
+                            'id' => 'apArrTime',
                         ),
                         'options' => array(
                             'label' => 'Time',
@@ -293,7 +303,9 @@ class FlightDataForm extends Form
     {
         if (!$this->{$LibraryName}) {
             foreach ($data as $row) {
-                $this->{$LibraryName}[$row->{$baseFieldKey}] = $row->{$baseFieldName};
+                if ($row->{$baseFieldName} != '') {
+                    $this->{$LibraryName}[$row->{$baseFieldKey}] = $row->{$baseFieldName};
+                }
             }
         }
         return $this;
