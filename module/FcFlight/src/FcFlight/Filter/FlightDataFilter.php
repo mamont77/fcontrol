@@ -121,7 +121,13 @@ class FlightDataFilter implements InputFilterAwareInterface
                 'validators' => array(
                     array(
                         'name' => 'Date',
-                        'format' => 'd-m-Y',
+                        'options' => array(
+                            'format' => 'd-m-Y',
+                            'messages' => array(
+                                'dateFalseFormat' => 'Invalid date format, must be dd-mm-YY',
+                                'dateInvalidDate' => 'Invalid date, must be dd-mm-YY'
+                            ),
+                        ),
                     ),
                 ),
             )));
