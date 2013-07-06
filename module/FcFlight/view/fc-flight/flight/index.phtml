@@ -11,7 +11,7 @@ if ($order) {
 <?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
 
 <p>
-    <a href="<?php echo $this->url('flight', array('action' => 'add'));?>"
+    <a href="<?php echo $this->url('flight', array('action' => 'addHeader'));?>"
        class="btn btn-primary">Add Flight</a>
 </p>
 
@@ -73,9 +73,9 @@ if ($order) {
         </td>
         <td>
             <a href="<?php echo $this->url('flight',
-                array('action' => 'edit', 'id' => $row->id));?>" class="btn btn-success">Edit</a>
+                array('action' => 'editHeader', 'id' => $row->id));?>" class="btn btn-success">Edit</a>
             <a href="<?php echo $this->url('flight',
-                array('action' => 'delete', 'id' => $row->id));?>" class="btn btn-warning">Remove</a>
+                array('action' => 'deleteHeader', 'id' => $row->id));?>" class="btn btn-warning">Remove</a>
         </td>
     </tr>
     <?php endforeach; ?>

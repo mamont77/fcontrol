@@ -55,6 +55,7 @@
             });
 
             //App Dep
+            $($form).find('#apDepTime').mask('99:99');
             $form.on('change', '#apDepIdIcao', function () {
                 var master = $(this).val(),
                     slave,
@@ -88,6 +89,7 @@
             });
 
             //App Arr
+            $($form).find('#apArrTime').mask('99:99');
             $form.on('change', '#apArrIdIcao', function () {
                 var master = $(this).val(),
                     slave,

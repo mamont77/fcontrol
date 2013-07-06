@@ -64,6 +64,7 @@ class FlightDataFilter implements InputFilterAwareInterface
      */
     public function exchangeArray($data)
     {
+        \Zend\Debug\Debug::dump($data);
         $this->id = (isset($data['id'])) ? $data['id'] : null;
         $this->parentFormId = (isset($data['parentFormId'])) ? $data['parentFormId'] : null;
         $this->dateOfFlight = (isset($data['dateOfFlight'])) ? $data['dateOfFlight'] : null;
@@ -84,8 +85,8 @@ class FlightDataFilter implements InputFilterAwareInterface
     }
 
     /**
-     * @param \Zend\InputFilter\InputFilterInterface $inputFilter
-     * @return void|\Zend\InputFilter\InputFilterAwareInterface
+     * @param InputFilterInterface $inputFilter
+     * @return void|InputFilterAwareInterface
      * @throws \Exception
      */
     public function setInputFilter(InputFilterInterface $inputFilter)

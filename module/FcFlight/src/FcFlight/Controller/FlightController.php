@@ -89,7 +89,7 @@ class FlightController extends AbstractActionController
     /**
      * @return array|\Zend\Http\Response
      */
-    public function addAction()
+    public function addHeaderAction()
     {
 
         $form = new FlightHeaderForm('flightHeader',
@@ -127,7 +127,7 @@ class FlightController extends AbstractActionController
     /**
      * @return array|\Zend\Http\Response
      */
-    public function editAction()
+    public function editHeaderAction()
     {
         $id = (int)$this->params()->fromRoute('id', 0);
         if (!$id) {
@@ -173,7 +173,7 @@ class FlightController extends AbstractActionController
     /**
      * @return array|\Zend\Http\Response
      */
-    public function deleteAction()
+    public function deleteHeaderAction()
     {
         $id = (int)$this->params()->fromRoute('id', 0);
         if (!$id) {
@@ -200,6 +200,62 @@ class FlightController extends AbstractActionController
             'id' => $id,
             'data' => $this->getFlightModel()->get($id)
         );
+    }
+
+    /**
+     * @return array|\Zend\Http\Response
+     */
+    public function addDataAction()
+    {
+
+        $form = new FlightDataForm('flightData',
+            array(
+                'libraries' => array(
+                    'kontragent' => $this->getKontragents(),
+                    'air_operator' => $this->getAirOperators(),
+                    'aircraft' => $this->getAircrafts(),
+                )
+            )
+        );
+
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $filter = $this->getServiceLocator()->get('FcFlight\Filter\FlightDataFilter');
+            $form->setInputFilter($filter->getInputFilter());
+            $form->setData($request->getPost());
+
+            if ($form->isValid()) {
+                $data = $form->getData();
+                $filter->exchangeArray($data);
+                $refNumberOrder = $this->getFlightModel()->add($filter);
+                $this->flashMessenger()->addSuccessMessage("Flights '"
+                . $refNumberOrder . "' was successfully added.");
+                return $this->redirect()->toRoute('browse',
+                    array(
+                        'action' => 'show',
+                        'refNumberOrder' => $refNumberOrder,
+                    ));
+            }
+        }
+        return array('form' => $form);
+    }
+
+    /**
+     * @return array|\Zend\Http\Response
+     */
+    public function editDataAction()
+    {
+        //todo
+
+    }
+
+    /**
+     * @return array|\Zend\Http\Response
+     */
+    public function deleteDataAction()
+    {
+        //todo
+
     }
 
     /**

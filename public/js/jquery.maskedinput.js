@@ -9,7 +9,7 @@
     var el = document.createElement('input'),
         name = 'onpaste';
     el.setAttribute(name, '');
-    return (typeof el[name] === 'function')?'paste':'input';             
+    return (typeof el[name] === 'function')?'paste':'input';
 }
 
 var pasteEventName = getPasteEvent() + ".mask",
@@ -26,7 +26,7 @@ $.mask = {
 		'*': "[A-Za-z0-9]"
 	},
 	dataName: "rawMaskFn",
-	placeholder: '_',
+	placeholder: '_'
 };
 
 $.fn.extend({
