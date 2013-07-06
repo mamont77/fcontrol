@@ -4,17 +4,15 @@ $this->headTitle($title);
 
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
-
-<?php if ($form->getMessages()): ?>
-    <div class="alert alert-error">
-        <button class="close" data-dismiss="alert" type="button">×</button>
-        <strong>Invalid input!</strong>
-        Form fields are not filled in correctly.
-    </div>
-<?php else: ?>
-    <?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
-<?php endif; ?>
-
+<div>
+    <ul class="nav nav-pills">
+        <li>
+            <a href="<?php echo $this->url('flight', array('action' => 'add-data', 'id' => $header->id)); ?>">Add Form 1</a>
+        </li>
+        <li class="disabled"><a href="#">Add Form 2</a></li>
+        <li class="disabled"><a href="#">Add Form 3</a></li>
+    </ul>
+</div>
 <table id="flightBrowse">
     <tr>
         <td>
@@ -49,67 +47,3 @@ $this->headTitle($title);
         </td>
     </tr>
 </table>
-
-<?php
-$displayOptions = array(
-    'fieldsets' => array(
-        'flightNumber' => array(
-            'display_legend' => true,
-            'elements' => array(
-                'flightNumberIdIcao' => array(
-                    'required' => true,
-                ),
-                'flightNumberIdIata' => array(
-                    'required' => false,
-                ),
-                'flightNumberText' => array(
-                    'required' => true,
-                ),
-            ),
-        ),
-        'apDep' => array(
-            'display_legend' => true,
-            'elements' => array(
-                'apDepIdIcao' => array(
-                    'required' => true,
-                ),
-                'apDepIdIata' => array(
-                    'required' => false,
-                ),
-                'apDepTime' => array(
-                    'required' => true,
-                ),
-            ),
-        ),
-        'apArr' => array(
-            'display_legend' => true,
-            'elements' => array(
-                'apArrIdIcao' => array(
-                    'required' => true,
-                ),
-                'apArrIdIata' => array(
-                    'required' => false,
-                ),
-                'apArrTime' => array(
-                    'required' => true,
-                ),
-            ),
-        ),
-    ),
-    'elements' => array(
-        'dateOfFlight' => array(
-            'required' => true,
-        ),
-        'submitBtn' => array(
-            'class' => 'btn-large',
-        ),
-    ),
-);
-//$formType = 'inline';
-$form = $this->form;
-$form->setAttribute('action', $this->url('flight', array('action' => 'addData')));
-$form->prepare();
-?>
-
-<?php echo $this->formTwb($form, $formType, $displayOptions); ?>
-

@@ -30,7 +30,7 @@ class FlightController extends AbstractActionController
         $order = $this->params()->fromRoute('order') ?
             $this->params()->fromRoute('order') : Select::ORDER_ASCENDING;
         $page = $this->params()->fromRoute('page') ? (int)$this->params()->fromRoute('page') : 1;
-        $data = $this->getFlightModel()->fetchAll($select->order($order_by . ' ' . $order));
+        $data = $this->getFlightModel()->fetchAllHeader($select->order($order_by . ' ' . $order));
         $itemsPerPage = 20;
         $data->current();
 
@@ -70,19 +70,8 @@ class FlightController extends AbstractActionController
             break;
         }
 
-        $form = new FlightDataForm('flightData',
-            array(
-                'libraries' => array(
-                    'flightNumberIds' => $this->getAirOperators(),
-                    'apDepIds' => $this->getAirports(),
-                    'apArrIds' => $this->getAirports(),
-                )
-            )
-        );
-
         return new ViewModel(array(
             'header' => $header,
-            'form' => $form,
         ));
     }
 
@@ -111,7 +100,7 @@ class FlightController extends AbstractActionController
             if ($form->isValid()) {
                 $data = $form->getData();
                 $filter->exchangeArray($data);
-                $refNumberOrder = $this->getFlightModel()->add($filter);
+                $refNumberOrder = $this->getFlightModel()->addHeader($filter);
                 $this->flashMessenger()->addSuccessMessage("Flights '"
                     . $refNumberOrder . "' was successfully added.");
                 return $this->redirect()->toRoute('browse',
@@ -135,9 +124,9 @@ class FlightController extends AbstractActionController
                 'action' => 'add'
             ));
         }
-        $data = $this->getFlightModel()->get($id);
+        $data = $this->getFlightModel()->getHeader($id);
 
-        $form = new FlightHeaderForm('flight',
+        $form = new FlightHeaderForm('flightHeader',
             array(
                 'libraries' => array(
                     'kontragent' => $this->getKontragents(),
@@ -157,7 +146,7 @@ class FlightController extends AbstractActionController
             $form->setData($request->getPost());
             if ($form->isValid()) {
                 $data = $form->getData();
-                $refNumberOrder = $this->getFlightModel()->save($data);
+                $refNumberOrder = $this->getFlightModel()->saveHeader($data);
                 $this->flashMessenger()->addSuccessMessage("Flights '"
                     . $refNumberOrder . "' was successfully saved.");
                 return $this->redirect()->toRoute('flights');
@@ -187,7 +176,7 @@ class FlightController extends AbstractActionController
             if ($del == 'Yes') {
                 $id = (int)$request->getPost('id');
                 $refNumberOrder = (string)$request->getPost('refNumberOrder');
-                $this->getFlightModel()->remove($id);
+                $this->getFlightModel()->removeHeader($id);
                 $this->flashMessenger()->addSuccessMessage("Aircraft '"
                     . $refNumberOrder . "' was successfully deleted.");
             }
@@ -198,7 +187,7 @@ class FlightController extends AbstractActionController
 
         return array(
             'id' => $id,
-            'data' => $this->getFlightModel()->get($id)
+            'data' => $this->getFlightModel()->getHeader($id)
         );
     }
 
@@ -208,12 +197,20 @@ class FlightController extends AbstractActionController
     public function addDataAction()
     {
 
+        $parentFormId = (int)$this->params()->fromRoute('id', 0);
+        if (!$parentFormId) {
+            return $this->redirect()->toRoute('flight', array(
+                'action' => 'index'
+            ));
+        }
+
         $form = new FlightDataForm('flightData',
             array(
+                'parentFormId' => $parentFormId,
                 'libraries' => array(
-                    'kontragent' => $this->getKontragents(),
-                    'air_operator' => $this->getAirOperators(),
-                    'aircraft' => $this->getAircrafts(),
+                    'flightNumberIds' => $this->getAirOperators(),
+                    'apDepIds' => $this->getAirports(),
+                    'apArrIds' => $this->getAirports(),
                 )
             )
         );
@@ -227,8 +224,8 @@ class FlightController extends AbstractActionController
             if ($form->isValid()) {
                 $data = $form->getData();
                 $filter->exchangeArray($data);
-                $refNumberOrder = $this->getFlightModel()->add($filter);
-                $this->flashMessenger()->addSuccessMessage("Flights '"
+                $refNumberOrder = $this->getFlightModel()->addData($filter);
+                $this->flashMessenger()->addSuccessMessage("Form 1 '"
                 . $refNumberOrder . "' was successfully added.");
                 return $this->redirect()->toRoute('browse',
                     array(
@@ -237,7 +234,7 @@ class FlightController extends AbstractActionController
                     ));
             }
         }
-        return array('form' => $form);
+        return array('form' => $form, 'parentFormId' => $parentFormId);
     }
 
     /**

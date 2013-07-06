@@ -7,6 +7,7 @@ use Zend\Db\Adapter\Adapter;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\Select;
 use FcFlight\Filter\FlightHeaderFilter;
+use FcFlight\Filter\FlightDataFilter;
 
 class FlightModel extends AbstractTableGateway
 {
@@ -32,7 +33,7 @@ class FlightModel extends AbstractTableGateway
      * @return array|\ArrayObject|null
      * @throws \Exception
      */
-    public function get($id)
+    public function getHeader($id)
     {
         $id = (int)$id;
         $rowSet = $this->select(array('id' => $id));
@@ -49,7 +50,7 @@ class FlightModel extends AbstractTableGateway
      * @param \Zend\Db\Sql\Select $select
      * @return null|\Zend\Db\ResultSet\ResultSetInterface
      */
-    public function fetchAll(Select $select = null)
+    public function fetchAllHeader(Select $select = null)
     {
         if (null === $select)
             $select = new Select();
@@ -74,7 +75,7 @@ class FlightModel extends AbstractTableGateway
      * @param \FcFlight\Filter\FlightHeaderFilter $object
      * @return mixed
      */
-    public function add(FlightHeaderFilter $object)
+    public function addHeader(FlightHeaderFilter $object)
     {
         /*
          * $dateOrder = '1977-03-10';//YYYY-MM-DD
@@ -99,7 +100,7 @@ class FlightModel extends AbstractTableGateway
      * @return mixed
      * @throws \Exception
      */
-    public function save(FlightHeaderFilter $object)
+    public function saveHeader(FlightHeaderFilter $object)
     {
         $dateOrder = strtotime($object->dateOrder);
 
@@ -111,7 +112,7 @@ class FlightModel extends AbstractTableGateway
             'aircraft' => $object->aircraft,
         );
         $id = (int)$object->id;
-        $oldData = $this->get($id);
+        $oldData = $this->getHeader($id);
         if ($oldData) {
             if ($oldData->dateOrder != date('Y-m-d', $data['dateOrder'])) {
                 $data['refNumberOrder'] = $this->getLastRefNumberOrder($dateOrder);
@@ -127,7 +128,7 @@ class FlightModel extends AbstractTableGateway
     /**
      * @param $id
      */
-    public function remove($id)
+    public function removeHeader($id)
     {
         $this->delete(array('id' => $id));
     }
@@ -203,5 +204,26 @@ class FlightModel extends AbstractTableGateway
         $resultSet->buffer();
 
         return $resultSet;
+    }
+
+    /**
+     * @param FlightHeaderFilter $object
+     * @return mixed
+     */
+    public function addData(FlightDataFilter $object)
+    {
+
+        $dateOfFlight = strtotime($object->dateOfFlight);
+
+//        $data = array(
+//            'refNumberOrder' => $this->getLastRefNumberOrder($dateOrder),
+//            'dateOrder' => $dateOrder,
+//            'kontragent' => $object->kontragent,
+//            'airOperator' => $object->airOperator,
+//            'aircraft' => $object->aircraft,
+//        );
+//        $this->insert($data);
+//
+//        return $data['refNumberOrder'];
     }
 }

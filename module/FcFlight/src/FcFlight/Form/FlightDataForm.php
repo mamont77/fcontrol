@@ -7,12 +7,10 @@ use Zend\Form\Element;
 
 class FlightDataForm extends Form
 {
-    protected $_formName = 'flightData';
-
     /**
-     * @var array
+     * @var string
      */
-    protected $parentFormId = array();
+    protected $_formName = 'flightData';
 
     /**
      * @var array
@@ -85,6 +83,8 @@ class FlightDataForm extends Form
             'name' => 'parentFormId',
             'attributes' => array(
                 'type' => 'hidden',
+                'value' => $options['parentFormId'],
+
             ),
         ));
 
