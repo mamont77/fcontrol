@@ -159,6 +159,12 @@ class FlightModel extends AbstractTableGateway
         return $resultSet;
     }
 
+    public function getHeaderRefNumberOrderById($id)
+    {
+        $row = $this->getHeader($id);
+        print_r($row);
+    }
+
     /**
      * @param $dateOrder
      * @return string

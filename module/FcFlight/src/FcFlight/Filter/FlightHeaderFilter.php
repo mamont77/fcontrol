@@ -84,8 +84,8 @@ class FlightHeaderFilter implements InputFilterAwareInterface
     }
 
     /**
-     * @param \Zend\InputFilter\InputFilterInterface $inputFilter
-     * @return void|\Zend\InputFilter\InputFilterAwareInterface
+     * @param InputFilterInterface $inputFilter
+     * @return void|InputFilterAwareInterface
      * @throws \Exception
      */
     public function setInputFilter(InputFilterInterface $inputFilter)

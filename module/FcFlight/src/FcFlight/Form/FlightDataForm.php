@@ -73,18 +73,10 @@ class FlightDataForm extends Form
         ));
 
         $this->add(array(
-            'name' => 'id',
-            'attributes' => array(
-                'type' => 'hidden',
-            ),
-        ));
-
-        $this->add(array(
             'name' => 'parentFormId',
             'attributes' => array(
                 'type' => 'hidden',
                 'value' => $options['parentFormId'],
-
             ),
         ));
 
@@ -131,7 +123,6 @@ class FlightDataForm extends Form
                         'name' => 'flightNumberIdIata',
                         'type' => 'Zend\Form\Element\Select',
                         'attributes' => array(
-                            //'required' => true,
                             'id' => 'flightNumberIdIata',
                         ),
                         'options' => array(

@@ -63,9 +63,11 @@ class FlightDataFilter implements InputFilterAwareInterface
     }
 
     /**
-     * @param $data
+     * Array to Object
+     *
+     * @param array $data
      */
-    public function exchangeArray($data)
+    public function exchangeArray(array $data)
     {
         $this->id = (isset($data['id'])) ? $data['id'] : null;
         $this->parentFormId = (isset($data['parentFormId'])) ? $data['parentFormId'] : null;
@@ -112,7 +114,11 @@ class FlightDataFilter implements InputFilterAwareInterface
 
             $inputFilter = new InputFilter();
             $factory = new InputFactory();
-//            \Zend\Debug\Debug::dump($inputFilter);
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'parentFormId',
+                'required' => true,
+            )));
 
             $inputFilter->add($factory->createInput(array(
                 'name' => 'dateOfFlight',
@@ -132,60 +138,78 @@ class FlightDataFilter implements InputFilterAwareInterface
                 ),
             )));
 
-//            $inputFilter->add($factory->createInput(array(
-//                'name' => 'flightNumberId',
-//                'required' => true,
-//            )));
-//
-//            $inputFilter->add($factory->createInput(array(
-//                'name' => 'flightNumberText',
-//                'required' => true,
-//                'filters' => $this->defaultFilters,
-//                'validators' => array(
-//                    array(
-//                        'name' => 'StringLength',
-//                        'options' => array(
-//                            'encoding' => 'UTF-8',
-//                            'min' => 6,
-//                            'max' => 6,
-//                        ),
-//                    ),
-//                ),
-//            )));
-//
-//            $inputFilter->add($factory->createInput(array(
-//                'name' => 'apDepId',
-//                'required' => true,
-//            )));
-//
-//            $inputFilter->add($factory->createInput(array(
-//                'name' => 'apDepTime',
-//                'required' => true,
-//                'filters' => $this->defaultFilters,
-//                'validators' => array(
-//                    array(
-//                        'name' => 'Date',
-//                        'format' => 'h:m',
-//                    ),
-//                ),
-//            )));
-//
-//            $inputFilter->add($factory->createInput(array(
-//                'name' => 'apArrId',
-//                'required' => true,
-//            )));
-//
-//            $inputFilter->add($factory->createInput(array(
-//                'name' => 'apArrTime',
-//                'required' => true,
-//                'filters' => $this->defaultFilters,
-//                'validators' => array(
-//                    array(
-//                        'name' => 'Date',
-//                        'format' => 'h:m',
-//                    ),
-//                ),
-//            )));
+            $flightNumberInputFilter = new InputFilter();
+
+            $flightNumberInputFilter->add($factory->createInput(array(
+                'name' => 'flightNumberIdIcao',
+                'required' => true,
+            )));
+
+            $flightNumberInputFilter->add($factory->createInput(array(
+                'name' => 'flightNumberText',
+                'required' => true,
+                'filters' => $this->defaultFilters,
+                'validators' => array(
+                    array(
+                        'name' => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min' => 6,
+                            'max' => 6,
+                        ),
+                    ),
+                ),
+            )));
+
+            $inputFilter->add($flightNumberInputFilter, 'flightNumber');
+
+            $apDepInputFilter = new InputFilter();
+
+            $apDepInputFilter->add($factory->createInput(array(
+                'name' => 'apDepIdIcao',
+                'required' => true,
+            )));
+
+            $apDepInputFilter->add($factory->createInput(array(
+                'name' => 'apDepTime',
+                'required' => true,
+                'filters' => $this->defaultFilters,
+                'validators' => array(
+                    array(
+                        'name' => 'Date',
+                        'options' => array(
+                            'format' => 'H:i',
+                        ),
+                    ),
+                ),
+            )));
+
+            $inputFilter->add($apDepInputFilter, 'apDep');
+
+            $apArrInputFilter = new InputFilter();
+
+
+            $apArrInputFilter->add($factory->createInput(array(
+                'name' => 'apArrIdIcao',
+                'required' => true,
+            )));
+
+            $apArrInputFilter->add($factory->createInput(array(
+                'name' => 'apArrTime',
+                'required' => true,
+                'filters' => $this->defaultFilters,
+                'validators' => array(
+                    array(
+                        'name' => 'Date',
+                        'options' => array(
+                            'format' => 'H:i',
+                        ),
+                    ),
+                ),
+            )));
+
+            $inputFilter->add($apArrInputFilter, 'apArr');
+
 
             $this->inputFilter = $inputFilter;
         }
