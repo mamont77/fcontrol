@@ -2,8 +2,9 @@
 
 namespace FcFlight\Form;
 
-use Zend\Form\Form;
 use Zend\Form\Element;
+use Zend\Form\Form;
+use \Zend\Db\ResultSet\ResultSet;
 
 class FlightDataForm extends Form
 {
@@ -221,7 +222,7 @@ class FlightDataForm extends Form
      * @param string|array $fieldName
      * @return $this
      */
-    public function setLibrary($libraryName, \Zend\Db\ResultSet\ResultSet $data, $baseFieldKey = 'id', $fieldName = '')
+    protected function setLibrary($libraryName, ResultSet $data, $baseFieldKey = 'id', $fieldName = '')
     {
         if (!$this->{$libraryName}) {
             foreach ($data as $row) {
@@ -231,14 +232,22 @@ class FlightDataForm extends Form
                     } else {
                         $fieldValue = $row->{$fieldName[0]};
                     }
+                    //$this->{$libraryName}[$baseFieldKey . '_' . $row->{$baseFieldKey}] = $fieldValue;
                     $this->{$libraryName}[$row->{$baseFieldKey}] = $fieldValue;
                 } else {
                     if ($row->{$fieldName} != '') {
+                        //$this->{$libraryName}[$baseFieldKey . '_' . $row->{$baseFieldKey}] = $row->{$fieldName};
                         $this->{$libraryName}[$row->{$baseFieldKey}] = $row->{$fieldName};
                     }
                 }
             }
+            //usort($this->{$libraryName}, array($this, 'sortLibrary'));
         }
         return $this;
+    }
+
+    protected function sortLibrary($a, $b)
+    {
+        return $a > $b;
     }
 }
