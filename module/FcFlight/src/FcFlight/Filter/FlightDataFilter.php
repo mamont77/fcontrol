@@ -168,7 +168,7 @@ class FlightDataFilter implements InputFilterAwareInterface
             $apDepInputFilter = new InputFilter();
 
             $apDepInputFilter->add($factory->createInput(array(
-                'name' => 'apDepIdIcaoAndIata',
+                'name' => 'apDepIcaoAndIata',
                 'required' => true,
             )));
 
@@ -200,7 +200,7 @@ class FlightDataFilter implements InputFilterAwareInterface
             $apArrInputFilter = new InputFilter();
 
             $apArrInputFilter->add($factory->createInput(array(
-                'name' => 'apArrIdIcaoAndIata',
+                'name' => 'apArrIcaoAndIata',
                 'required' => true,
             )));
 

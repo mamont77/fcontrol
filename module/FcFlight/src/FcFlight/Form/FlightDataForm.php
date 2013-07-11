@@ -129,7 +129,7 @@ class FlightDataForm extends Form
                         'type' => 'Zend\Form\Element\Select',
                         'attributes' => array(
                             'required' => true,
-                            'id' => 'apDepIdIcao',
+                            'id' => 'apDepIcaoAndIata',
                         ),
                         'options' => array(
                             'label' => 'IATA and ICAO',
