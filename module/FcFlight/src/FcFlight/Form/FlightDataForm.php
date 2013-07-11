@@ -15,32 +15,13 @@ class FlightDataForm extends Form
     /**
      * @var array
      */
-    protected $flightNumberIdsIcao = array();
+    protected $flightNumberIcaoAndIata = array();
 
     /**
      * @var array
      */
-    protected $flightNumberIdsIata = array();
+    protected $appIcaoAndIata = array();
 
-    /**
-     * @var array
-     */
-    protected $apDepIdsIcao = array();
-
-    /**
-     * @var array
-     */
-    protected $apDepIdsIata = array();
-
-    /**
-     * @var array
-     */
-    protected $apArrIdsIcao = array();
-
-    /**
-     * @var array
-     */
-    protected $apArrIdsIata = array();
 
     /**
      * @param null $name
@@ -54,13 +35,10 @@ class FlightDataForm extends Form
 
         parent::__construct($this->_formName);
 
-        $this->setLibrary('flightNumberIdsIcao', 'id', 'code_icao', $options['libraries']['flightNumberIds']);
-        $this->setLibrary('flightNumberIdsIata', 'id', 'code_iata', $options['libraries']['flightNumberIds']);
-        $this->setLibrary('apDepIdsIcao', 'id', 'code_icao', $options['libraries']['apDepIds']);
-        $this->setLibrary('apDepIdsIata', 'id', 'code_iata', $options['libraries']['apDepIds']);
-        $this->setLibrary('apArrIdsIcao', 'id', 'code_icao', $options['libraries']['apArrIds']);
-        $this->setLibrary('apArrIdsIata', 'id', 'code_iata', $options['libraries']['apArrIds']);
-
+        $this->setLibrary('flightNumberIcaoAndIata', $options['libraries']['flightNumberIcaoAndIata'],
+            'id', array('code_iata', 'code_icao'));
+        $this->setLibrary('appIcaoAndIata', $options['libraries']['appIcaoAndIata'],
+            'id', array('code_iata', 'code_icao'));
 
         $this->setName($this->_formName);
         $this->setAttribute('method', 'post');
@@ -95,40 +73,25 @@ class FlightDataForm extends Form
 
         //Fieldset Flight Number
         $this->add(array(
-            'name'          => 'flightNumber',
-            'type'          => 'Zend\Form\Fieldset',
-            'options'       => array(
-                'legend'        => 'Flight Number',
+            'name' => 'flightNumber',
+            'type' => 'Zend\Form\Fieldset',
+            'options' => array(
+                'legend' => 'Flight Number',
             ),
-            'elements'      => array(
-                //flightNumberIdIcao
+            'elements' => array(
+                //flightNumberIcaoAndIata
                 array(
                     'spec' => array(
-                        'name' => 'flightNumberIdIcao',
+                        'name' => 'flightNumberIcaoAndIata',
                         'type' => 'Zend\Form\Element\Select',
                         'attributes' => array(
                             'required' => true,
-                            'id' => 'flightNumberIdIcao',
+                            'id' => 'flightNumberIcaoAndIata',
                         ),
                         'options' => array(
-                            'label' => 'ICAO',
+                            'label' => 'IATA and ICAO',
                             'empty_option' => '-- Please select --',
-                            'value_options' => $this->flightNumberIdsIcao,
-                        ),
-                    ),
-                ),
-                //flightNumberIdIata
-                array(
-                    'spec' => array(
-                        'name' => 'flightNumberIdIata',
-                        'type' => 'Zend\Form\Element\Select',
-                        'attributes' => array(
-                            'id' => 'flightNumberIdIata',
-                        ),
-                        'options' => array(
-                            'label' => 'IATA',
-                            'empty_option' => '-- Please select --',
-                            'value_options' => $this->flightNumberIdsIata,
+                            'value_options' => $this->flightNumberIcaoAndIata,
                         ),
                     ),
                 ),
@@ -152,40 +115,25 @@ class FlightDataForm extends Form
 
         //Fieldset Ap Dep
         $this->add(array(
-            'name'          => 'apDep',
-            'type'          => 'Zend\Form\Fieldset',
-            'options'       => array(
-                'legend'        => 'App Dep',
+            'name' => 'apDep',
+            'type' => 'Zend\Form\Fieldset',
+            'options' => array(
+                'legend' => 'App Dep',
             ),
-            'elements'      => array(
-                //apDepIdIcao
+            'elements' => array(
+                //apDepIcaoAndIata
                 array(
                     'spec' => array(
-                        'name' => 'apDepIdIcao',
+                        'name' => 'apDepIcaoAndIata',
                         'type' => 'Zend\Form\Element\Select',
                         'attributes' => array(
                             'required' => true,
                             'id' => 'apDepIdIcao',
                         ),
                         'options' => array(
-                            'label' => 'ICAO',
+                            'label' => 'IATA and ICAO',
                             'empty_option' => '-- Please select --',
-                            'value_options' => $this->apDepIdsIcao,
-                        ),
-                    ),
-                ),
-                //apDepIdIata
-                array(
-                    'spec' => array(
-                        'name' => 'apDepIdIata',
-                        'type' => 'Zend\Form\Element\Select',
-                        'attributes' => array(
-                            'id' => 'apDepIdIata',
-                        ),
-                        'options' => array(
-                            'label' => 'IATA',
-                            'empty_option' => '-- Please select --',
-                            'value_options' => $this->apDepIdsIata,
+                            'value_options' => $this->appIcaoAndIata,
                         ),
                     ),
                 ),
@@ -211,40 +159,25 @@ class FlightDataForm extends Form
 
         //Fieldset Ap Arr
         $this->add(array(
-            'name'          => 'apArr',
-            'type'          => 'Zend\Form\Fieldset',
-            'options'       => array(
-                'legend'        => 'App Arr',
+            'name' => 'apArr',
+            'type' => 'Zend\Form\Fieldset',
+            'options' => array(
+                'legend' => 'App Arr',
             ),
-            'elements'      => array(
-                //apArrIdIcao
+            'elements' => array(
+                //apArrIcaoAndIata
                 array(
                     'spec' => array(
-                        'name' => 'apArrIdIcao',
+                        'name' => 'apArrIcaoAndIata',
                         'type' => 'Zend\Form\Element\Select',
                         'attributes' => array(
                             'required' => true,
-                            'id' => 'apArrIdIcao',
+                            'id' => 'apArrIcaoAndIata',
                         ),
                         'options' => array(
-                            'label' => 'ICAO',
+                            'label' => 'IATA and ICAO',
                             'empty_option' => '-- Please select --',
-                            'value_options' => $this->apArrIdsIcao,
-                        ),
-                    ),
-                ),
-                //apArrIdIata
-                array(
-                    'spec' => array(
-                        'name' => 'apArrIdIata',
-                        'type' => 'Zend\Form\Element\Select',
-                        'attributes' => array(
-                            'id' => 'apArrIdIata',
-                        ),
-                        'options' => array(
-                            'label' => 'IATA',
-                            'empty_option' => '-- Please select --',
-                            'value_options' => $this->apArrIdsIata,
+                            'value_options' => $this->appIcaoAndIata,
                         ),
                     ),
                 ),
@@ -282,18 +215,27 @@ class FlightDataForm extends Form
     }
 
     /**
-     * @param $LibraryName
-     * @param string $baseFieldKey
-     * @param $baseFieldName
+     * @param $libraryName
      * @param \Zend\Db\ResultSet\ResultSet $data
-     * @return FlightHeaderForm
+     * @param string $baseFieldKey
+     * @param string|array $fieldName
+     * @return $this
      */
-    private function setLibrary($LibraryName, $baseFieldKey = 'id', $baseFieldName, \Zend\Db\ResultSet\ResultSet $data)
+    public function setLibrary($libraryName, \Zend\Db\ResultSet\ResultSet $data, $baseFieldKey = 'id', $fieldName = '')
     {
-        if (!$this->{$LibraryName}) {
+        if (!$this->{$libraryName}) {
             foreach ($data as $row) {
-                if ($row->{$baseFieldName} != '') {
-                    $this->{$LibraryName}[$row->{$baseFieldKey}] = $row->{$baseFieldName};
+                if (is_array($fieldName)) {
+                    if ($row->{$fieldName[1]} != '') {
+                        $fieldValue = $row->{$fieldName[0]} . ' (' . $row->{$fieldName[1]} . ')';
+                    } else {
+                        $fieldValue = $row->{$fieldName[0]};
+                    }
+                    $this->{$libraryName}[$row->{$baseFieldKey}] = $fieldValue;
+                } else {
+                    if ($row->{$fieldName} != '') {
+                        $this->{$libraryName}[$row->{$baseFieldKey}] = $row->{$fieldName};
+                    }
                 }
             }
         }

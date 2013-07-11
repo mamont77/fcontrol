@@ -208,9 +208,8 @@ class FlightController extends AbstractActionController
             array(
                 'parentFormId' => $parentFormId,
                 'libraries' => array(
-                    'flightNumberIds' => $this->getAirOperators(),
-                    'apDepIds' => $this->getAirports(),
-                    'apArrIds' => $this->getAirports(),
+                    'flightNumberIcaoAndIata' => $this->getAirOperators(),
+                    'appIcaoAndIata' => $this->getAirports(),
                 )
             )
         );

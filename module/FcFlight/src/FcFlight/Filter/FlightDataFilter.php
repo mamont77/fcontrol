@@ -33,14 +33,11 @@ class FlightDataFilter implements InputFilterAwareInterface
     public $id;
     public $parentFormId;
     public $dateOfFlight;
-    public $flightNumberIdIcao;
-    public $flightNumberIdIata;
+    public $flightNumberIcaoAndIata;
     public $flightNumberText;
-    public $apDepIdIcao;
-    public $apDepIdIata;
+    public $apDepIdIcaoAndIata;
     public $apDepTime;
-    public $apArrIdIcao;
-    public $apArrIdIata;
+    public $apArrIdIcaoAndIata;
     public $apArrTime;
 
     /**
@@ -77,17 +74,15 @@ class FlightDataFilter implements InputFilterAwareInterface
         $this->id = (isset($data['id'])) ? $data['id'] : null;
         $this->parentFormId = (isset($data['parentFormId'])) ? $data['parentFormId'] : null;
         $this->dateOfFlight = (isset($data['dateOfFlight'])) ? $data['dateOfFlight'] : null;
-        $this->flightNumberIdIcao = (isset($data['flightNumber']['flightNumberIdIcao']))
-            ? $data['flightNumber']['flightNumberIdIcao'] : null;
-        $this->flightNumberIdIata = (isset($data['flightNumber']['flightNumberIdIata']))
-            ? $data['flightNumber']['flightNumberIdIata'] : null;
+        $this->flightNumberIcaoAndIata = (isset($data['flightNumber']['flightNumberIcaoAndIata']))
+            ? $data['flightNumber']['flightNumberIcaoAndIata'] : null;
         $this->flightNumberText = (isset($data['flightNumber']['flightNumberText']))
             ? $data['flightNumber']['flightNumberText'] : null;
-        $this->apDepIdIcao = (isset($data['apDep']['apDepIdIcao'])) ? $data['apDep']['apDepIdIcao'] : null;
-        $this->apDepIdIata = (isset($data['apDep']['apDepIdIata'])) ? $data['apDep']['apDepIdIata'] : null;
+        $this->apDepIdIcaoAndIata = (isset($data['apDep']['apDepIdIcaoAndIata']))
+            ? $data['apDep']['apDepIdIcaoAndIata'] : null;
         $this->apDepTime = (isset($data['apDep']['apDepTime'])) ? $data['apDep']['apDepTime'] : null;
-        $this->apArrIdIcao = (isset($data['apArr']['apArrIdIcao'])) ? $data['apArr']['apArrIdIcao'] : null;
-        $this->apArrIdIata = (isset($data['apArr']['apArrIdIata'])) ? $data['apArr']['apArrIdIata'] : null;
+        $this->apArrIdIcaoAndIata = (isset($data['apArr']['apArrIdIcaoAndIata']))
+            ? $data['apArr']['apArrIdIcaoAndIata'] : null;
         $this->apArrTime = (isset($data['apArr']['apArrTime'])) ? $data['apArr']['apArrTime'] : null;
     }
 
@@ -148,7 +143,7 @@ class FlightDataFilter implements InputFilterAwareInterface
             $flightNumberInputFilter = new InputFilter();
 
             $flightNumberInputFilter->add($factory->createInput(array(
-                'name' => 'flightNumberIdIcao',
+                'name' => 'flightNumberIcaoAndIata',
                 'required' => true,
             )));
 
@@ -173,7 +168,7 @@ class FlightDataFilter implements InputFilterAwareInterface
             $apDepInputFilter = new InputFilter();
 
             $apDepInputFilter->add($factory->createInput(array(
-                'name' => 'apDepIdIcao',
+                'name' => 'apDepIdIcaoAndIata',
                 'required' => true,
             )));
 
@@ -205,7 +200,7 @@ class FlightDataFilter implements InputFilterAwareInterface
             $apArrInputFilter = new InputFilter();
 
             $apArrInputFilter->add($factory->createInput(array(
-                'name' => 'apArrIdIcao',
+                'name' => 'apArrIdIcaoAndIata',
                 'required' => true,
             )));
 
@@ -227,11 +222,8 @@ class FlightDataFilter implements InputFilterAwareInterface
                                 \Zend\Validator\Callback::INVALID_VALUE => 'The arrival time is less than the departure time',
                             ),
                             'callback' => function($value, $context = array()) use (&$apDepTimeValue) {
-                                // value of this input
                                 $apArrTime = \DateTime::createFromFormat('H:i', $value);
-                                // value of input to check against from context
                                 $apDepTime = \DateTime::createFromFormat('H:i', $apDepTimeValue);
-                                // compare times, eg..
                                 return $apArrTime > $apDepTime;
                             },
                         ),
