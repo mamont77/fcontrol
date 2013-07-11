@@ -180,7 +180,6 @@ class FlightDataForm extends Form
                         'name' => 'apDepIdIata',
                         'type' => 'Zend\Form\Element\Select',
                         'attributes' => array(
-                            //'required' => true,
                             'id' => 'apDepIdIata',
                         ),
                         'options' => array(
@@ -190,7 +189,7 @@ class FlightDataForm extends Form
                         ),
                     ),
                 ),
-                //flightNumberText
+                //apDepTime
                 array(
                     'spec' => array(
                         'name' => 'apDepTime',
@@ -240,7 +239,6 @@ class FlightDataForm extends Form
                         'name' => 'apArrIdIata',
                         'type' => 'Zend\Form\Element\Select',
                         'attributes' => array(
-                            //'required' => true,
                             'id' => 'apArrIdIata',
                         ),
                         'options' => array(

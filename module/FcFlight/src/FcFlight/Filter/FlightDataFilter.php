@@ -25,6 +25,11 @@ class FlightDataFilter implements InputFilterAwareInterface
      */
     protected $table = '';
 
+    /**
+     * @var string
+     */
+    protected $apDepTimeValue = '';
+
     public $id;
     public $parentFormId;
     public $dateOfFlight;
@@ -110,6 +115,8 @@ class FlightDataFilter implements InputFilterAwareInterface
      */
     public function getInputFilter()
     {
+        global $apDepTimeValue;
+
         if (!$this->inputFilter) {
 
             $inputFilter = new InputFilter();
@@ -181,13 +188,21 @@ class FlightDataFilter implements InputFilterAwareInterface
                             'format' => 'H:i',
                         ),
                     ),
+                    array(
+                        'name' => 'Callback',
+                        'options' => array(
+                            'callback' => function($value, $context = array()) use (&$apDepTimeValue) {
+                                $apDepTimeValue = $value;
+                                return true;
+                            },
+                        ),
+                    ),
                 ),
             )));
 
             $inputFilter->add($apDepInputFilter, 'apDep');
 
             $apArrInputFilter = new InputFilter();
-
 
             $apArrInputFilter->add($factory->createInput(array(
                 'name' => 'apArrIdIcao',
@@ -205,15 +220,47 @@ class FlightDataFilter implements InputFilterAwareInterface
                             'format' => 'H:i',
                         ),
                     ),
+                    array(
+                        'name' => 'Callback',
+                        'options' => array(
+                            'messages' => array(
+                                \Zend\Validator\Callback::INVALID_VALUE => 'The arrival time is less than the departure time',
+                            ),
+                            'callback' => function($value, $context = array()) use (&$apDepTimeValue) {
+                                // value of this input
+                                $apArrTime = \DateTime::createFromFormat('H:i', $value);
+                                // value of input to check against from context
+                                $apDepTime = \DateTime::createFromFormat('H:i', $apDepTimeValue);
+                                // compare times, eg..
+                                return $apArrTime > $apDepTime;
+                            },
+                        ),
+                    ),
                 ),
             )));
 
             $inputFilter->add($apArrInputFilter, 'apArr');
 
-
             $this->inputFilter = $inputFilter;
         }
 
         return $this->inputFilter;
+    }
+
+    /**
+     * @param $value
+     * @deprecated
+     */
+    public function setApDepTimeValue($value)
+    {
+        $this->apDepTimeValue = $value;
+    }
+
+    /**
+     * @return string
+     * @deprecated
+     */
+    public function getApDepTimeValue() {
+        return $this->apDepTimeValue;
     }
 }
