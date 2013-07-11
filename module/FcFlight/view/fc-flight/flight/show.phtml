@@ -7,12 +7,14 @@ $this->headTitle($title);
 <div>
     <ul class="nav nav-pills">
         <li>
-            <a href="<?php echo $this->url('flight', array('action' => 'add-data', 'id' => $header->id)); ?>">Add Form 1</a>
+            <a href="<?php echo $this->url('flight', array('action' => 'add-data', 'id' => $header->id)); ?>">Add Form
+                1</a>
         </li>
         <li class="disabled"><a href="#">Add Form 2</a></li>
         <li class="disabled"><a href="#">Add Form 3</a></li>
     </ul>
 </div>
+<?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
 <table id="flightBrowse">
     <tr>
         <td>

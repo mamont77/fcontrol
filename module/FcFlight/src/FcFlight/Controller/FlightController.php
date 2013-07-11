@@ -12,7 +12,8 @@ use Zend\Paginator\Adapter\Iterator as paginatorIterator;
 
 class FlightController extends AbstractActionController
 {
-    protected $flightModel;
+    protected $flightHeaderModel;
+    protected $flightDataModel;
     protected $kontragentModel;
     protected $airOperatorModel;
     protected $aircraftModel;
@@ -30,7 +31,7 @@ class FlightController extends AbstractActionController
         $order = $this->params()->fromRoute('order') ?
             $this->params()->fromRoute('order') : Select::ORDER_ASCENDING;
         $page = $this->params()->fromRoute('page') ? (int)$this->params()->fromRoute('page') : 1;
-        $data = $this->getFlightModel()->fetchAllHeader($select->order($order_by . ' ' . $order));
+        $data = $this->getFlightHeaderModel()->fetchAll($select->order($order_by . ' ' . $order));
         $itemsPerPage = 20;
         $data->current();
 
@@ -62,7 +63,7 @@ class FlightController extends AbstractActionController
             ));
         }
 
-        $header = $this->getFlightModel()->getHeaderByRefNumberOrder($refNumberOrder);
+        $header = $this->getFlightHeaderModel()->getByRefNumberOrder($refNumberOrder);
         $header->current();
 
         foreach ($header as $item) {
@@ -100,7 +101,7 @@ class FlightController extends AbstractActionController
             if ($form->isValid()) {
                 $data = $form->getData();
                 $filter->exchangeArray($data);
-                $refNumberOrder = $this->getFlightModel()->addHeader($filter);
+                $refNumberOrder = $this->getFlightHeaderModel()->add($filter);
                 $this->flashMessenger()->addSuccessMessage("Flights '"
                     . $refNumberOrder . "' was successfully added.");
                 return $this->redirect()->toRoute('browse',
@@ -124,7 +125,7 @@ class FlightController extends AbstractActionController
                 'action' => 'add'
             ));
         }
-        $data = $this->getFlightModel()->getHeader($id);
+        $data = $this->getFlightHeaderModel()->get($id);
 
         $form = new FlightHeaderForm('flightHeader',
             array(
@@ -146,7 +147,7 @@ class FlightController extends AbstractActionController
             $form->setData($request->getPost());
             if ($form->isValid()) {
                 $data = $form->getData();
-                $refNumberOrder = $this->getFlightModel()->saveHeader($data);
+                $refNumberOrder = $this->getFlightHeaderModel()->save($data);
                 $this->flashMessenger()->addSuccessMessage("Flights '"
                     . $refNumberOrder . "' was successfully saved.");
                 return $this->redirect()->toRoute('flights');
@@ -176,7 +177,7 @@ class FlightController extends AbstractActionController
             if ($del == 'Yes') {
                 $id = (int)$request->getPost('id');
                 $refNumberOrder = (string)$request->getPost('refNumberOrder');
-                $this->getFlightModel()->removeHeader($id);
+                $this->getFlightHeaderModel()->remove($id);
                 $this->flashMessenger()->addSuccessMessage("Aircraft '"
                     . $refNumberOrder . "' was successfully deleted.");
             }
@@ -187,7 +188,7 @@ class FlightController extends AbstractActionController
 
         return array(
             'id' => $id,
-            'data' => $this->getFlightModel()->getHeader($id)
+            'data' => $this->getFlightHeaderModel()->get($id)
         );
     }
 
@@ -222,11 +223,10 @@ class FlightController extends AbstractActionController
 
             if ($form->isValid()) {
                 $data = $form->getData();
-                \Zend\Debug\Debug::dump($data);
+//                \Zend\Debug\Debug::dump($data);
                 $filter->exchangeArray($data);
-
-                $refNumberOrder = $this->getFlightModel()->getHeaderRefNumberOrderById($data['parentFormId']);
-                $summaryData = $this->getFlightModel()->addData($filter);
+                $refNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($data['parentFormId']);
+                $summaryData = $this->getFlightDataModel()->add($filter);
                 $this->flashMessenger()->addSuccessMessage("Form 1 '"
                 . $summaryData . "' was successfully added.");
                 return $this->redirect()->toRoute('browse',
@@ -260,13 +260,25 @@ class FlightController extends AbstractActionController
     /**
      * @return array|object
      */
-    public function getFlightModel()
+    public function getFlightHeaderModel()
     {
-        if (!$this->flightModel) {
+        if (!$this->flightHeaderModel) {
             $sm = $this->getServiceLocator();
-            $this->flightModel = $sm->get('FcFlight\Model\FlightModel');
+            $this->flightHeaderModel = $sm->get('FcFlight\Model\FlightHeaderModel');
         }
-        return $this->flightModel;
+        return $this->flightHeaderModel;
+    }
+
+    /**
+     * @return array|object
+     */
+    public function getFlightDataModel()
+    {
+        if (!$this->flightDataModel) {
+            $sm = $this->getServiceLocator();
+            $this->flightDataModel = $sm->get('FcFlight\Model\FlightDataModel');
+        }
+        return $this->flightDataModel;
     }
 
     public function getLibraryKontragentModel()

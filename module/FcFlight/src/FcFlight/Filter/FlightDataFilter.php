@@ -35,9 +35,9 @@ class FlightDataFilter implements InputFilterAwareInterface
     public $dateOfFlight;
     public $flightNumberIcaoAndIata;
     public $flightNumberText;
-    public $apDepIdIcaoAndIata;
+    public $apDepIcaoAndIata;
     public $apDepTime;
-    public $apArrIdIcaoAndIata;
+    public $apArrIcaoAndIata;
     public $apArrTime;
 
     /**
@@ -78,11 +78,11 @@ class FlightDataFilter implements InputFilterAwareInterface
             ? $data['flightNumber']['flightNumberIcaoAndIata'] : null;
         $this->flightNumberText = (isset($data['flightNumber']['flightNumberText']))
             ? $data['flightNumber']['flightNumberText'] : null;
-        $this->apDepIdIcaoAndIata = (isset($data['apDep']['apDepIdIcaoAndIata']))
-            ? $data['apDep']['apDepIdIcaoAndIata'] : null;
+        $this->apDepIcaoAndIata = (isset($data['apDep']['apDepIcaoAndIata']))
+            ? $data['apDep']['apDepIcaoAndIata'] : null;
         $this->apDepTime = (isset($data['apDep']['apDepTime'])) ? $data['apDep']['apDepTime'] : null;
-        $this->apArrIdIcaoAndIata = (isset($data['apArr']['apArrIdIcaoAndIata']))
-            ? $data['apArr']['apArrIdIcaoAndIata'] : null;
+        $this->apArrIcaoAndIata = (isset($data['apArr']['apArrIcaoAndIata']))
+            ? $data['apArr']['apArrIcaoAndIata'] : null;
         $this->apArrTime = (isset($data['apArr']['apArrTime'])) ? $data['apArr']['apArrTime'] : null;
     }
 

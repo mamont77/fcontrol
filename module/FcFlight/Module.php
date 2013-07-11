@@ -3,7 +3,8 @@ namespace FcFlight;
 
 use Zend\ModuleManager\ModuleManager;
 use Zend\Mvc\MvcEvent;
-use FcFlight\Model\FlightModel;
+use FcFlight\Model\FlightHeaderModel;
+use FcFlight\Model\FlightDataModel;
 use FcFlight\Filter\FlightHeaderFilter;
 use FcFlight\Filter\FlightDataFilter;
 
@@ -59,9 +60,13 @@ class Module
         return array(
             'invokables' => array(),
             'factories' => array(
-                'FcFlight\Model\FlightModel' => function ($sm) {
+                'FcFlight\Model\FlightHeaderModel' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new FlightModel($dbAdapter);
+                    return new FlightHeaderModel($dbAdapter);
+                },
+                'FcFlight\Model\FlightDataModel' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new FlightDataModel($dbAdapter);
                 },
                 'FcFlight\Filter\FlightHeaderFilter' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
