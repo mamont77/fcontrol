@@ -55,7 +55,7 @@ class FlightDataModel extends AbstractTableGateway
         $select = new Select();
         $select->from($this->table);
         $select->columns(array('id',
-            'parentFormId',
+            'headerId',
             'dateOfFlight',
             'flightNumberIcaoAndIata',
             'flightNumberText',
@@ -66,35 +66,36 @@ class FlightDataModel extends AbstractTableGateway
         $select->join(array('library_air_operator' => 'library_air_operator'),
             'library_air_operator.id = flightBaseDataForm.flightNumberIcaoAndIata',
             array('flightNumberIcao' => 'code_icao', 'flightNumberIata' => 'code_iata'));
-//        $select->join(array('library_air_operator' => 'library_air_operator'),
-//            'library_air_operator.id = flightBaseHeaderForm.airOperator',
-//            array('airOperatorShortName' => 'short_name'));
-//        $select->join(array('library_aircraft' => 'library_aircraft'),
-//            'library_aircraft.reg_number = flightBaseHeaderForm.aircraft',
-//            array('aircraftType' => 'aircraft_type'));
-        $select->where(array('parentFormId' => $id));
+        $select->join(array('dep' => 'library_airport'),
+            'dep.id = flightBaseDataForm.apDepIcaoAndIata',
+            array('apDepIcao' => 'code_icao', 'apDepIata' => 'code_iata'));
+        $select->join(array('arr' => 'library_airport'),
+            'arr.id = flightBaseDataForm.apArrIcaoAndIata',
+            array('apArrIcao' => 'code_icao', 'apArrIata' => 'code_iata'));
+        $select->where(array('headerId' => $id));
         $resultSet = $this->selectWith($select);
         $resultSet->buffer();
-//        $temp = $resultSet->count();
-//        \Zend\Debug\Debug::dump($resultSet);
 
         $data = array();
         foreach ($resultSet as $row) {
-//            \Zend\Debug\Debug::dump($row);
+            //Real fields
             $data[$row->id]['id'] = $row->id;
-            $data[$row->id]['parentFormId'] = $row->parentFormId;
+            $data[$row->id]['headerId'] = $row->headerId;
             $data[$row->id]['dateOfFlight'] = date('d/m/Y', $row->dateOfFlight);
             $data[$row->id]['flightNumberIcaoAndIata'] = $row->flightNumberIcaoAndIata;
             $data[$row->id]['flightNumberText'] = $row->flightNumberText;
             $data[$row->id]['apDepIcaoAndIata'] = $row->apDepIcaoAndIata;
-            $data[$row->id]['apDepTime'] = $row->apDepTime;
+            $data[$row->id]['apDepTime'] = date('H:i', $row->apDepTime);
             $data[$row->id]['apArrIcaoAndIata'] = $row->apArrIcaoAndIata;
-            $data[$row->id]['apArrTime'] = $row->apArrTime;
+            $data[$row->id]['apArrTime'] = date('H:i', $row->apArrTime);
+            //Virtual fields from join
             $data[$row->id]['flightNumberIcao'] = $row->flightNumberIcao;
             $data[$row->id]['flightNumberIata'] = $row->flightNumberIata;
-
+            $data[$row->id]['apDepIcao'] = $row->apDepIcao;
+            $data[$row->id]['apDepIata'] = $row->apDepIata;
+            $data[$row->id]['apArrIcao'] = $row->apArrIcao;
+            $data[$row->id]['apArrIata'] = $row->apArrIata;
         }
-//        \Zend\Debug\Debug::dump($data);
 
         return $data;
     }
@@ -110,14 +111,14 @@ class FlightDataModel extends AbstractTableGateway
         $apArrTime = \DateTime::createFromFormat('d-m-Y H:i', $object->dateOfFlight . ' ' . $object->apArrTime);
 
         $data = array(
-            'parentFormId' => $object->parentFormId,
-            'dateOfFlight' => $dateOfFlight->getTimestamp(),
-            'flightNumberIcaoAndIata' => $object->flightNumberIcaoAndIata,
-            'flightNumberText' => $object->flightNumberText,
-            'apDepIcaoAndIata' => $object->apDepIcaoAndIata,
-            'apDepTime' => $apDepTime->getTimestamp(),
-            'apArrIcaoAndIata' => $object->apArrIcaoAndIata,
-            'apArrTime' => $apArrTime->getTimestamp(),
+            'headerId' => (int)$object->headerId,
+            'dateOfFlight' => (string)$dateOfFlight->getTimestamp(),
+            'flightNumberIcaoAndIata' => (int)$object->flightNumberIcaoAndIata,
+            'flightNumberText' => (string)$object->flightNumberText,
+            'apDepIcaoAndIata' => (int)$object->apDepIcaoAndIata,
+            'apDepTime' => (string)$apDepTime->getTimestamp(),
+            'apArrIcaoAndIata' => (int)$object->apArrIcaoAndIata,
+            'apArrTime' => (string)$apArrTime->getTimestamp(),
         );
         $hash = $object->dateOfFlight . ': Dep ' . $object->apDepTime . ', Arr ' . $object->apArrTime . '.';
 

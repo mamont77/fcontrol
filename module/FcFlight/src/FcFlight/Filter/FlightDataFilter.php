@@ -30,8 +30,9 @@ class FlightDataFilter implements InputFilterAwareInterface
      */
     protected $apDepTimeValue = '';
 
+    //Real fields
     public $id;
-    public $parentFormId;
+    public $headerId;
     public $dateOfFlight;
     public $flightNumberIcaoAndIata;
     public $flightNumberText;
@@ -39,6 +40,14 @@ class FlightDataFilter implements InputFilterAwareInterface
     public $apDepTime;
     public $apArrIcaoAndIata;
     public $apArrTime;
+
+    //Virtual fields
+    public $flightNumberIcao;
+    public $flightNumberIata;
+    public $apDepIcao;
+    public $apDepIata;
+    public $apArrIcao;
+    public $apArrIata;
 
     /**
      * @var array
@@ -71,19 +80,61 @@ class FlightDataFilter implements InputFilterAwareInterface
      */
     public function exchangeArray(array $data)
     {
+        //Real fields
         $this->id = (isset($data['id'])) ? $data['id'] : null;
-        $this->parentFormId = (isset($data['parentFormId'])) ? $data['parentFormId'] : null;
+        $this->headerId = (isset($data['headerId'])) ? $data['headerId'] : null;
         $this->dateOfFlight = (isset($data['dateOfFlight'])) ? $data['dateOfFlight'] : null;
-        $this->flightNumberIcaoAndIata = (isset($data['flightNumber']['flightNumberIcaoAndIata']))
-            ? $data['flightNumber']['flightNumberIcaoAndIata'] : null;
-        $this->flightNumberText = (isset($data['flightNumber']['flightNumberText']))
-            ? $data['flightNumber']['flightNumberText'] : null;
-        $this->apDepIcaoAndIata = (isset($data['apDep']['apDepIcaoAndIata']))
-            ? $data['apDep']['apDepIcaoAndIata'] : null;
-        $this->apDepTime = (isset($data['apDep']['apDepTime'])) ? $data['apDep']['apDepTime'] : null;
-        $this->apArrIcaoAndIata = (isset($data['apArr']['apArrIcaoAndIata']))
-            ? $data['apArr']['apArrIcaoAndIata'] : null;
-        $this->apArrTime = (isset($data['apArr']['apArrTime'])) ? $data['apArr']['apArrTime'] : null;
+        if (isset($data['flightNumber']['flightNumberIcaoAndIata'])) {
+            $this->flightNumberIcaoAndIata = $data['flightNumber']['flightNumberIcaoAndIata'];
+        } else if (isset($data['flightNumberIcaoAndIata'])) {
+            $this->flightNumberIcaoAndIata = $data['flightNumberIcaoAndIata'];
+        } else {
+            $this->flightNumberIcaoAndIata = null;
+        }
+        if (isset($data['flightNumber']['flightNumberText'])) {
+            $this->flightNumberText = $data['flightNumber']['flightNumberText'];
+        } else if (isset($data['flightNumberText'])) {
+            $this->flightNumberText = $data['flightNumberText'];
+        } else {
+            $this->flightNumberText = null;
+        }
+        if (isset($data['apDep']['apDepIcaoAndIata'])) {
+            $this->apDepIcaoAndIata = $data['apDep']['apDepIcaoAndIata'];
+        } else if (isset($data['apDepIcaoAndIata'])) {
+            $this->apDepIcaoAndIata = $data['apDepIcaoAndIata'];
+        } else {
+            $this->apDepIcaoAndIata = null;
+        }
+        if (isset($data['apDep']['apDepTime'])) {
+            $this->apDepTime = $data['apDep']['apDepTime'];
+        } else if (isset($data['apDepTime'])) {
+            $this->apDepTime = $data['apDepTime'];
+        } else {
+            $this->apDepTime = null;
+        }
+        if (isset($data['apArr']['apArrIcaoAndIata'])) {
+            $this->apArrIcaoAndIata = $data['apArr']['apArrIcaoAndIata'];
+        } else if (isset($data['apArrIcaoAndIata'])) {
+            $this->apArrIcaoAndIata = $data['apArrIcaoAndIata'];
+        } else {
+            $this->apArrIcaoAndIata = null;
+        }
+        if (isset($data['apArr']['apArrTime'])) {
+            $this->apArrTime = $data['apArr']['apArrTime'];
+        } else if (isset($data['apArrTime'])) {
+            $this->apArrTime = $data['apArrTime'];
+        } else {
+            $this->apArrTime = null;
+        }
+
+        //Virtual fields
+        $this->flightNumberIcao = (isset($data['flightNumberIcao'])) ? $data['flightNumberIcao'] : null;
+        $this->flightNumberIata = (isset($data['flightNumberIata'])) ? $data['flightNumberIata'] : null;
+        $this->apDepIcao = (isset($data['apDepIcao'])) ? $data['apDepIcao'] : null;
+        $this->apDepIata = (isset($data['apDepIata'])) ? $data['apDepIata'] : null;
+        $this->apArrIcao = (isset($data['apArrIcao'])) ? $data['apArrIcao'] : null;
+        $this->apArrIata = (isset($data['apArrIata'])) ? $data['apArrIata'] : null;
+
     }
 
     /**
@@ -118,7 +169,7 @@ class FlightDataFilter implements InputFilterAwareInterface
             $factory = new InputFactory();
 
             $inputFilter->add($factory->createInput(array(
-                'name' => 'parentFormId',
+                'name' => 'headerId',
                 'required' => true,
             )));
 

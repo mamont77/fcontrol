@@ -7,11 +7,14 @@ $this->headTitle($title);
 <div>
     <ul class="nav nav-pills">
         <li>
-            <a href="<?php echo $this->url('flight', array('action' => 'add-data', 'id' => $header->id)); ?>">Add Form
-                1</a>
+            <a href="<?php echo $this->url('flight', array('action' => 'add-data', 'id' => $header->id)); ?>">Add Data</a>
         </li>
-        <li class="disabled"><a href="#">Add Form 2</a></li>
-        <li class="disabled"><a href="#">Add Form 3</a></li>
+        <li class="disabled"><a href="#">Add Resuel</a></li>
+        <li class="disabled"><a href="#">Add Permission</a></li>
+        <li class="disabled"><a href="#">Add Hotel</a></li>
+        <li class="disabled"><a href="#">Add Transfer</a></li>
+        <li class="disabled"><a href="#">Add FLP?</a></li>
+        <li class="disabled"><a href="#">Add Charter</a></li>
     </ul>
 </div>
 <?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
@@ -52,7 +55,7 @@ $this->headTitle($title);
 
 <table class="table table-bordered table-hover">
     <tr>
-        <th>
+        <th rowspan="2">
             Date of Flight
         </th>
         <th colspan="3">
@@ -64,22 +67,47 @@ $this->headTitle($title);
         <th colspan="3">
             Ap Arr
         </th>
-        <th>Actions</th>
+        <th rowspan="2">Actions</th>
     </tr>
-    <?php \Zend\Debug\Debug::dump($data);?>
+    <tr>
 
+        <th>
+            ICAO
+        </th>
+        <th>
+            IATA
+        </th>
+        <th></th>
+        <th>
+            ICAO
+        </th>
+        <th>
+            IATA
+        </th>
+        <th>
+            Time, UTC
+        </th>
+        <th>
+            ICAO
+        </th>
+        <th>
+            IATA
+        </th>
+        <th>
+            Time, UTC
+        </th>
+    </tr>
     <?php foreach ($data as $row) : ?>
-<!--        --><?php //\Zend\Debug\Debug::dump($row);?>
         <tr>
             <td><?php echo $this->escapeHtml($row['dateOfFlight']); ?></td>
             <td><?php echo $this->escapeHtml($row['flightNumberIcao']); ?></td>
             <td><?php echo $this->escapeHtml($row['flightNumberIata']); ?></td>
             <td><?php echo $this->escapeHtml($row['flightNumberText']); ?></td>
-            <td><?php echo $this->escapeHtml($row['apDepIcaoAndIata']); ?></td>
-            <td><?php echo $this->escapeHtml($row['apDepIcaoAndIata']); ?></td>
+            <td><?php echo $this->escapeHtml($row['apDepIcao']); ?></td>
+            <td><?php echo $this->escapeHtml($row['apDepIata']); ?></td>
             <td><?php echo $this->escapeHtml($row['apDepTime']); ?></td>
-            <td><?php echo $this->escapeHtml($row['apArrIcaoAndIata']); ?></td>
-            <td><?php echo $this->escapeHtml($row['apArrIcaoAndIata']); ?></td>
+            <td><?php echo $this->escapeHtml($row['apArrIcao']); ?></td>
+            <td><?php echo $this->escapeHtml($row['apArrIata']); ?></td>
             <td><?php echo $this->escapeHtml($row['apArrTime']); ?></td>
             <td>
                 <a href="<?php echo $this->url('flight',

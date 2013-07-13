@@ -52,10 +52,10 @@ class FlightDataForm extends Form
         ));
 
         $this->add(array(
-            'name' => 'parentFormId',
+            'name' => 'headerId',
             'attributes' => array(
                 'type' => 'hidden',
-                'value' => $options['parentFormId'],
+                'value' => $options['headerId'],
             ),
         ));
 

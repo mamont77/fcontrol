@@ -201,8 +201,8 @@ class FlightController extends AbstractActionController
     public function addDataAction()
     {
 
-        $parentFormId = (int)$this->params()->fromRoute('id', 0);
-        if (!$parentFormId) {
+        $headerId = (int)$this->params()->fromRoute('id', 0);
+        if (!$headerId) {
             return $this->redirect()->toRoute('flight', array(
                 'action' => 'index'
             ));
@@ -210,7 +210,7 @@ class FlightController extends AbstractActionController
 
         $form = new FlightDataForm('flightData',
             array(
-                'parentFormId' => $parentFormId,
+                'headerId' => $headerId,
                 'libraries' => array(
                     'flightNumberIcaoAndIata' => $this->getAirOperators(),
                     'appIcaoAndIata' => $this->getAirports(),
@@ -227,9 +227,9 @@ class FlightController extends AbstractActionController
             if ($form->isValid()) {
                 $data = $form->getData();
                 $filter->exchangeArray($data);
-                $refNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($data['parentFormId']);
+                $refNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($data['headerId']);
                 $summaryData = $this->getFlightDataModel()->add($filter);
-                $this->flashMessenger()->addSuccessMessage("Form 1 '"
+                $this->flashMessenger()->addSuccessMessage("Data -  '"
                 . $summaryData . "' was successfully added.");
                 return $this->redirect()->toRoute('browse',
                     array(
@@ -238,7 +238,7 @@ class FlightController extends AbstractActionController
                     ));
             }
         }
-        return array('form' => $form, 'parentFormId' => $parentFormId);
+        return array('form' => $form, 'headerId' => $headerId);
     }
 
     /**
