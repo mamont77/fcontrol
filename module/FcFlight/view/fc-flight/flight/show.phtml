@@ -49,3 +49,44 @@ $this->headTitle($title);
         </td>
     </tr>
 </table>
+
+<table class="table table-bordered table-hover">
+    <tr>
+        <th>
+            Date of Flight
+        </th>
+        <th colspan="3">
+            Flight Number
+        </th>
+        <th colspan="3">
+            App Dep
+        </th>
+        <th colspan="3">
+            Ap Arr
+        </th>
+        <th>Actions</th>
+    </tr>
+    <?php \Zend\Debug\Debug::dump($data);?>
+
+    <?php foreach ($data as $row) : ?>
+<!--        --><?php //\Zend\Debug\Debug::dump($row);?>
+        <tr>
+            <td><?php echo $this->escapeHtml($row['dateOfFlight']); ?></td>
+            <td><?php echo $this->escapeHtml($row['flightNumberIcao']); ?></td>
+            <td><?php echo $this->escapeHtml($row['flightNumberIata']); ?></td>
+            <td><?php echo $this->escapeHtml($row['flightNumberText']); ?></td>
+            <td><?php echo $this->escapeHtml($row['apDepIcaoAndIata']); ?></td>
+            <td><?php echo $this->escapeHtml($row['apDepIcaoAndIata']); ?></td>
+            <td><?php echo $this->escapeHtml($row['apDepTime']); ?></td>
+            <td><?php echo $this->escapeHtml($row['apArrIcaoAndIata']); ?></td>
+            <td><?php echo $this->escapeHtml($row['apArrIcaoAndIata']); ?></td>
+            <td><?php echo $this->escapeHtml($row['apArrTime']); ?></td>
+            <td>
+                <a href="<?php echo $this->url('flight',
+                    array('action' => 'edit-header', 'id' => $row['id']));?>" class="btn btn-success">Edit</a>
+                <a href="<?php echo $this->url('flight',
+                    array('action' => 'delete-header', 'id' => $row['id']));?>" class="btn btn-warning">Remove</a>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+</table>

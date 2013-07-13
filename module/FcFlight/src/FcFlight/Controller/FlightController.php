@@ -71,8 +71,11 @@ class FlightController extends AbstractActionController
             break;
         }
 
+        $data = $this->getFlightDataModel()->getDataById($header->id);
+
         return new ViewModel(array(
             'header' => $header,
+            'data' => $data,
         ));
     }
 
@@ -223,7 +226,6 @@ class FlightController extends AbstractActionController
 
             if ($form->isValid()) {
                 $data = $form->getData();
-//                \Zend\Debug\Debug::dump($data);
                 $filter->exchangeArray($data);
                 $refNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($data['parentFormId']);
                 $summaryData = $this->getFlightDataModel()->add($filter);
