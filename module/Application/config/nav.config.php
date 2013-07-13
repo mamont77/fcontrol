@@ -70,7 +70,7 @@ return array(
                     array(
                         'label' => 'Flight',
                         'route' => 'flight',
-                        'action' => 'add',
+                        'action' => 'add-header',
                     ),
                 ),
             ),
