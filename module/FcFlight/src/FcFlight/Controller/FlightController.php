@@ -106,7 +106,7 @@ class FlightController extends AbstractActionController
                 $filter->exchangeArray($data);
                 $refNumberOrder = $this->getFlightHeaderModel()->add($filter);
                 $this->flashMessenger()->addSuccessMessage("Flights '"
-                    . $refNumberOrder . "' was successfully added.");
+                . $refNumberOrder . "' was successfully added.");
                 return $this->redirect()->toRoute('browse',
                     array(
                         'action' => 'show',
@@ -152,7 +152,7 @@ class FlightController extends AbstractActionController
                 $data = $form->getData();
                 $refNumberOrder = $this->getFlightHeaderModel()->save($data);
                 $this->flashMessenger()->addSuccessMessage("Flights '"
-                    . $refNumberOrder . "' was successfully saved.");
+                . $refNumberOrder . "' was successfully saved.");
                 return $this->redirect()->toRoute('flights');
             }
         }
@@ -181,8 +181,8 @@ class FlightController extends AbstractActionController
                 $id = (int)$request->getPost('id');
                 $refNumberOrder = (string)$request->getPost('refNumberOrder');
                 $this->getFlightHeaderModel()->remove($id);
-                $this->flashMessenger()->addSuccessMessage("Aircraft '"
-                    . $refNumberOrder . "' was successfully deleted.");
+                $this->flashMessenger()->addSuccessMessage("Flights '"
+                . $refNumberOrder . "' was successfully deleted.");
             }
 
             // Redirect to list
@@ -229,8 +229,7 @@ class FlightController extends AbstractActionController
                 $filter->exchangeArray($data);
                 $refNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($data['headerId']);
                 $summaryData = $this->getFlightDataModel()->add($filter);
-                $this->flashMessenger()->addSuccessMessage("Data -  '"
-                . $summaryData . "' was successfully added.");
+                $this->flashMessenger()->addSuccessMessage($summaryData . "' was successfully added.");
                 return $this->redirect()->toRoute('browse',
                     array(
                         'action' => 'show',
@@ -243,20 +242,75 @@ class FlightController extends AbstractActionController
 
     /**
      * @return array|\Zend\Http\Response
+     * @deprecated
      */
-    public function editDataAction()
-    {
-        //todo
-
-    }
+//    public function editDataAction()
+//    {
+//        $id = (int)$this->params()->fromRoute('id', 0);
+//        $data = $this->getFlightDataModel()->get($id);
+//
+//        $form = new FlightDataForm('flightData',
+//            array(
+//                //'headerId' => $id,
+//                'libraries' => array(
+//                    'flightNumberIcaoAndIata' => $this->getAirOperators(),
+//                    'appIcaoAndIata' => $this->getAirports(),
+//                )
+//            )
+//        );
+//
+//        $form->bind($data);
+//        $form->get('submitBtn')->setAttribute('value', 'Save');
+//
+//        $request = $this->getRequest();
+//        if ($request->isPost()) {
+//            $filter = $this->getServiceLocator()->get('FcFlight\Filter\FlightDataFilter');
+//            $form->setInputFilter($filter->getInputFilter());
+//            $form->setData($request->getPost());
+//            if ($form->isValid()) {
+//                $data = $form->getData();
+//                $refNumberOrder = $this->getFlightDataModel()->save($data);
+//                $this->flashMessenger()->addSuccessMessage("Data '"
+//                . $refNumberOrder . "' was successfully saved.");
+//                return $this->redirect()->toRoute('flights');
+//            }
+//        }
+//
+//        return array(
+//            'id' => $id,
+//            'form' => $form,
+//        );
+//    }
 
     /**
      * @return array|\Zend\Http\Response
      */
     public function deleteDataAction()
     {
-        //todo
+        $id = (int)$this->params()->fromRoute('id', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('flights');
+        }
 
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $redirectPath = $this->getFlightDataModel()->getHeaderRefNumberOrderByDataId($id);
+            $del = $request->getPost('del', 'No');
+
+            if ($del == 'Yes') {
+                $id = (int)$request->getPost('id');
+                $this->getFlightDataModel()->remove($id);
+                $this->flashMessenger()->addSuccessMessage("Data was successfully deleted.");
+            }
+
+            // Redirect to list
+            return $this->redirect()->toUrl('/browse/' . $redirectPath);
+        }
+
+        return array(
+            'id' => $id,
+            'data' => $this->getFlightDataModel()->get($id)
+        );
     }
 
     /**

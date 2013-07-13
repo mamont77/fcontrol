@@ -73,6 +73,7 @@ class FlightDataModel extends AbstractTableGateway
             'arr.id = flightBaseDataForm.apArrIcaoAndIata',
             array('apArrIcao' => 'code_icao', 'apArrIata' => 'code_iata'));
         $select->where(array('headerId' => $id));
+        $select->order('dateOfFlight ' . $select::ORDER_ASCENDING);
         $resultSet = $this->selectWith($select);
         $resultSet->buffer();
 
@@ -125,5 +126,21 @@ class FlightDataModel extends AbstractTableGateway
         $this->insert($data);
 
         return $hash;
+    }
+
+    /**
+     * @param $id
+     */
+    public function remove($id)
+    {
+        $this->delete(array('id' => $id));
+    }
+
+    public function getHeaderRefNumberOrderByDataId($id)
+    {
+        $row = $this->get($id);
+        $headerModel = new FlightHeaderModel($this->getAdapter());
+
+        return $headerModel->getRefNumberOrderById($row->headerId);
     }
 }
