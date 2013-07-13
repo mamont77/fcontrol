@@ -100,6 +100,12 @@ class CountryForm extends Form
             foreach ($data as $row) {
                 $this->regions[$row->id] = $row->name;
             }
+            uasort($this->regions, array($this, 'sortLibrary'));
         }
+    }
+
+    protected function sortLibrary($a, $b)
+    {
+        return $a > $b;
     }
 }

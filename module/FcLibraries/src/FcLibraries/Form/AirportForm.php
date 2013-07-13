@@ -125,6 +125,12 @@ class AirportForm extends Form
             foreach ($data as $row) {
                 $this->cities[$row->id] = $row->name;
             }
+            uasort($this->cities, array($this, 'sortLibrary'));
         }
+    }
+
+    protected function sortLibrary($a, $b)
+    {
+        return $a > $b;
     }
 }

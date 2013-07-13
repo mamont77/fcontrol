@@ -88,6 +88,12 @@ class CityForm extends Form
             foreach ($data as $row) {
                 $this->countries[$row->id] = $row->name;
             }
+            uasort($this->countries, array($this, 'sortLibrary'));
         }
+    }
+
+    protected function sortLibrary($a, $b)
+    {
+        return $a > $b;
     }
 }

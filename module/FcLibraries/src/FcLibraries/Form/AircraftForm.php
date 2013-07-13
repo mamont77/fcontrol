@@ -88,6 +88,12 @@ class AircraftForm extends Form
             foreach ($data as $row) {
                 $this->aircraft_types[$row->id] = $row->name;
             }
+            uasort($this->aircraft_types, array($this, 'sortLibrary'));
         }
+    }
+
+    protected function sortLibrary($a, $b)
+    {
+        return $a > $b;
     }
 }

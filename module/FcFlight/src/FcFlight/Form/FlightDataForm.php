@@ -232,16 +232,14 @@ class FlightDataForm extends Form
                     } else {
                         $fieldValue = $row->{$fieldName[0]};
                     }
-                    //$this->{$libraryName}[$baseFieldKey . '_' . $row->{$baseFieldKey}] = $fieldValue;
                     $this->{$libraryName}[$row->{$baseFieldKey}] = $fieldValue;
                 } else {
                     if ($row->{$fieldName} != '') {
-                        //$this->{$libraryName}[$baseFieldKey . '_' . $row->{$baseFieldKey}] = $row->{$fieldName};
                         $this->{$libraryName}[$row->{$baseFieldKey}] = $row->{$fieldName};
                     }
                 }
             }
-            //usort($this->{$libraryName}, array($this, 'sortLibrary'));
+            uasort($this->{$libraryName}, array($this, 'sortLibrary'));
         }
         return $this;
     }
