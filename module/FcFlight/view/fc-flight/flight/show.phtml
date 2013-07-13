@@ -6,15 +6,14 @@ $this->headTitle($title);
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 <div>
     <ul class="nav nav-pills">
-        <li class="disabled"><a href="#">Add:</a></li>
+        <li class="disabled"><a href="#">Add service:</a></li>
         <li>
             <a href="<?php echo $this->url('flight', array('action' => 'add-data', 'id' => $header->id)); ?>">Data</a>
         </li>
-        <li class="disabled"><a href="#">Resuel</a></li>
+        <li class="disabled"><a href="#">Refuel</a></li>
         <li class="disabled"><a href="#">Permission</a></li>
         <li class="disabled"><a href="#">Hotel</a></li>
-        <li class="disabled"><a href="#">Transfer</a></li>
-        <li class="disabled"><a href="#">...</a></li>
+        <li class="disabled"><a href="#">FPL/PPL/SLOT</a></li>
         <li class="disabled"><a href="#">Charter</a></li>
     </ul>
 </div>
