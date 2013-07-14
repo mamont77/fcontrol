@@ -21,6 +21,17 @@ $form->setAttribute('action', $this->url('zfcuser/changeemail'));
 $form->setAttribute('method', 'post');
 $displayOptions = array(
     'class' => 'form-horizontal',
+    'elements' => array(
+        'newIdentity' => array(
+            'required' => true,
+        ),
+        'newIdentityVerify' => array(
+            'required' => true,
+        ),
+        'credential' => array(
+            'required' => true,
+        ),
+    ),
 );
 if ($this->redirect){
     $form->add(array(
@@ -34,8 +45,11 @@ if ($this->redirect){
 $form->add(array(
     'name' => 'submit',
     'type' => 'Zend\Form\Element\Submit',
+    'options' => array(
+        'primary' => true,
+    ),
     'attributes' => array(
-        'value' => 'Отправить',
+        'value' => 'Submit',
     ),
 ));
 foreach ($form as $element) {

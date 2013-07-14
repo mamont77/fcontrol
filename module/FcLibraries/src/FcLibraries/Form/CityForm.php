@@ -38,7 +38,7 @@ class CityForm extends Form
                 'maxlength' => '30',
             ),
             'options' => array(
-                'label' => 'Country',
+                'label' => 'City',
             ),
         ));
 
@@ -60,6 +60,9 @@ class CityForm extends Form
         //Submit button
         $this->add(array(
             'name' => 'submitBtn',
+            'options' => array(
+                'primary' => true,
+            ),
             'attributes' => array(
                 'type' => 'submit',
                 'value' => 'Add',

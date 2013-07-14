@@ -32,7 +32,7 @@ if ($order) {
         <td><?php echo $this->escapeHtml($row->name);?></td>
         <td>
             <a href="<?php echo $this->url('zfcadmin/unit',
-                array('action' => 'edit', 'id' => $row->id));?>" class="btn btn-success">Edit</a>
+                array('action' => 'edit', 'id' => $row->id));?>" class="btn">Edit</a>
             <a href="<?php echo $this->url('zfcadmin/unit',
                 array('action' => 'delete', 'id' => $row->id));?>" class="btn btn-warning">Remove</a>
         </td>

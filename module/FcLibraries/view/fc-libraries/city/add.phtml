@@ -7,6 +7,14 @@ $this->headTitle($title);
 <?php
 $displayOptions = array(
     'class' => 'form-horizontal',
+    'elements' => array(
+        'name' => array(
+            'required' => true,
+        ),
+        'country_id' => array(
+            'required' => true,
+        ),
+    ),
 );
 $form = $this->form;
 $form->setAttribute('action', $this->url('zfcadmin/city', array('action' => 'add')));

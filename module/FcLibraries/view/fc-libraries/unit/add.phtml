@@ -7,6 +7,11 @@ $this->headTitle($title);
 <?php
 $displayOptions = array(
     'class' => 'form-horizontal',
+    'elements' => array(
+        'name' => array(
+            'required' => true,
+        ),
+    ),
 );
 $form = $this->form;
 $form->setAttribute('action', $this->url('zfcadmin/unit', array('action' => 'add')));

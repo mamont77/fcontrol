@@ -137,6 +137,9 @@ class KontragentForm extends Form
         //Submit button
         $this->add(array(
             'name' => 'submitBtn',
+            'options' => array(
+                'primary' => true,
+            ),
             'attributes' => array(
                 'type' => 'submit',
                 'value' => 'Add',

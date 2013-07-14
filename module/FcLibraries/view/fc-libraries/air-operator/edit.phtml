@@ -7,6 +7,20 @@ $this->headTitle($title);
 <?php
 $displayOptions = array(
     'class' => 'form-horizontal',
+    'elements' => array(
+        'name' => array(
+            'required' => true,
+        ),
+        'short_name' => array(
+            'required' => true,
+        ),
+        'code_icao' => array(
+            'required' => true,
+        ),
+        'country' => array(
+            'required' => true,
+        ),
+    ),
 );
 $form = $this->form;
 $form->setAttribute('action', $this->url(

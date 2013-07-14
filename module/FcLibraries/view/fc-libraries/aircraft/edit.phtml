@@ -7,6 +7,14 @@ $this->headTitle($title);
 <?php
 $displayOptions = array(
     'class' => 'form-horizontal',
+    'elements' => array(
+        'aircraft_type' => array(
+            'required' => true,
+        ),
+        'reg_number' => array(
+            'required' => true,
+        ),
+    ),
 );
 $form = $this->form;
 $form->setAttribute('action', $this->url(

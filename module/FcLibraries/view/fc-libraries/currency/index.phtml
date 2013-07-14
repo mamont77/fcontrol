@@ -41,7 +41,7 @@ if ($order) {
         <td><?php echo $this->escapeHtml($row->currency);?></td>
         <td>
             <a href="<?php echo $this->url('zfcadmin/currency',
-                array('action' => 'edit', 'id' => $row->id));?>" class="btn btn-success">Edit</a>
+                array('action' => 'edit', 'id' => $row->id));?>" class="btn">Edit</a>
             <a href="<?php echo $this->url('zfcadmin/currency',
                 array('action' => 'delete', 'id' => $row->id));?>" class="btn btn-warning">Remove</a>
         </td>

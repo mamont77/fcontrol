@@ -7,6 +7,29 @@ $this->headTitle($title);
 <?php
 $displayOptions = array(
     'class' => 'form-horizontal',
+    'elements' => array(
+        'name' => array(
+            'required' => true,
+        ),
+        'short_name' => array(
+            'required' => true,
+        ),
+        'address' => array(
+            'required' => true,
+        ),
+        'phone1' => array(
+            'required' => true,
+        ),
+        'fax' => array(
+            'required' => true,
+        ),
+        'mail' => array(
+            'required' => true,
+        ),
+        'sita' => array(
+            'required' => true,
+        ),
+    ),
 );
 $form = $this->form;
 $form->setAttribute('action', $this->url('zfcadmin/kontragent', array('action' => 'add')));

@@ -6,11 +6,20 @@ $this->headTitle($title);
 
 <?php
 $displayOptions = array(
-
     'class' => 'form-horizontal',
     'elements' => array(
         'username' => array(
             'class' => 'username',
+            'required' => true,
+        ),
+        'email' => array(
+            'required' => true,
+        ),
+        'password' => array(
+            'required' => true,
+        ),
+        'passwordVerify' => array(
+            'required' => true,
         ),
     ),
 );

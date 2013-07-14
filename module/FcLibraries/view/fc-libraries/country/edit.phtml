@@ -7,6 +7,17 @@ $this->headTitle($title);
 <?php
 $displayOptions = array(
     'class' => 'form-horizontal',
+    'elements' => array(
+        'name' => array(
+            'required' => true,
+        ),
+        'region_id' => array(
+            'required' => true,
+        ),
+        'code' => array(
+            'required' => true,
+        ),
+    ),
 );
 $form = $this->form;
 $form->setAttribute('action', $this->url(

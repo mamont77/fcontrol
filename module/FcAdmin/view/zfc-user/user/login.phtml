@@ -11,6 +11,19 @@ $form->setAttribute('method', 'post');
 $displayOptions = array(
     'class' => 'form-horizontal',
 );
+
+$displayOptions = array(
+    'class' => 'form-horizontal',
+    'elements' => array(
+        'identity' => array(
+            'required' => true,
+        ),
+        'credential' => array(
+            'required' => true,
+        ),
+    ),
+);
+
 if ($this->redirect) {
     $form->add(array(
         'name' => 'redirect',

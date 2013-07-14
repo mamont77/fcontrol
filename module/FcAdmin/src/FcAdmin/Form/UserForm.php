@@ -100,11 +100,11 @@ class UserForm extends Form
         $this->add(array(
             'name' => 'submitBtn',
             'type' => 'Zend\Form\Element\Submit',
-            'attributes' => array(
-                'value' => 'Add',
-            ),
             'options' => array(
                 'primary' => true,
+            ),
+            'attributes' => array(
+                'value' => 'Add',
             ),
         ));
 
