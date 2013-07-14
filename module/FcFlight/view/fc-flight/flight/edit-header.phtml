@@ -1,3 +1,7 @@
+<ul class="breadcrumb">
+    <li><a href="/">Home</a> <span class="divider">/</span></li>
+    <li class="active">Flight form</li>
+</ul>
 <?php
 $title = 'Edit Flight';
 $this->headTitle($title);
@@ -6,7 +10,20 @@ $this->headTitle($title);
 
 <?php
 $displayOptions = array(
-    'class' => 'form-horizontal',
+    'elements' => array(
+        'dateOrder' => array(
+            'required' => true,
+        ),
+        'kontragent' => array(
+            'required' => true,
+        ),
+        'airOperator' => array(
+            'required' => true,
+        ),
+        'aircraft' => array(
+            'required' => true,
+        ),
+    ),
 );
 $form = $this->form;
 $form->setAttribute('action', $this->url(

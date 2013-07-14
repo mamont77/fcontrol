@@ -8,7 +8,7 @@
 return array(
     'modules' => array(
         'ZFTool',
-        //'ZendDeveloperTools',
+        'ZendDeveloperTools',
         'Application',
         'ZfcBase',
         'ZfcAdmin',

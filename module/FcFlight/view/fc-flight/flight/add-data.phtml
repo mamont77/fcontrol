@@ -1,7 +1,10 @@
 <ul class="breadcrumb">
     <li><a href="/">Home</a> <span class="divider">/</span></li>
-    <li><a href="#"><?= $this->refNumberOrder ?></a> <span class="divider">/</span></li>
-    <li class="active"><?= $this->refNumberOrder ?></li>
+    <li>
+        <a href="<?=$this->url('browse', array('action' => 'show', 'refNumberOrder' => $this->refNumberOrder));?>"><?= $this->refNumberOrder ?></a>
+        <span class="divider">/</span>
+    </li>
+    <li class="active">Data form</li>
 </ul>
 <?php
 $title = 'Add Data';

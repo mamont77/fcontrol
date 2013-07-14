@@ -208,6 +208,8 @@ class FlightController extends AbstractActionController
             ));
         }
 
+        $refNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($headerId);
+
         $form = new FlightDataForm('flightData',
             array(
                 'headerId' => $headerId,
@@ -227,7 +229,6 @@ class FlightController extends AbstractActionController
             if ($form->isValid()) {
                 $data = $form->getData();
                 $filter->exchangeArray($data);
-                $refNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($data['headerId']);
 //                \Zend\Debug\Debug::dump($headerId);die;
                 $summaryData = $this->getFlightDataModel()->add($filter);
                 $this->flashMessenger()->addSuccessMessage($summaryData . ' was successfully added.');
@@ -238,7 +239,10 @@ class FlightController extends AbstractActionController
                     ));
             }
         }
-        return array('form' => $form, 'headerId' => $headerId);
+        return array('form' => $form,
+            'headerId' => $headerId,
+            'refNumberOrder' => $refNumberOrder,
+        );
     }
 
     /**
