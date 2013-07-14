@@ -228,8 +228,9 @@ class FlightController extends AbstractActionController
                 $data = $form->getData();
                 $filter->exchangeArray($data);
                 $refNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($data['headerId']);
+//                \Zend\Debug\Debug::dump($headerId);die;
                 $summaryData = $this->getFlightDataModel()->add($filter);
-                $this->flashMessenger()->addSuccessMessage($summaryData . "' was successfully added.");
+                $this->flashMessenger()->addSuccessMessage($summaryData . ' was successfully added.');
                 return $this->redirect()->toRoute('browse',
                     array(
                         'action' => 'show',

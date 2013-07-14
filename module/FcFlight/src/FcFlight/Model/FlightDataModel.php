@@ -121,7 +121,7 @@ class FlightDataModel extends AbstractTableGateway
             'apArrIcaoAndIata' => (int)$object->apArrIcaoAndIata,
             'apArrTime' => (string)$apArrTime->getTimestamp(),
         );
-        $hash = $object->dateOfFlight . ': Dep ' . $object->apDepTime . ', Arr ' . $object->apArrTime . '.';
+        $hash = $object->dateOfFlight . ': Dep ' . $object->apDepTime . ', Arr ' . $object->apArrTime;
 
         $this->insert($data);
 
