@@ -23,6 +23,7 @@ class AirportFilter extends BaseFilter
     public $city_name;
     public $country_id;
     public $country_name;
+    public $region_name;
 
     /**
      * @param $data
@@ -38,6 +39,7 @@ class AirportFilter extends BaseFilter
         $this->city_name = (isset($data['city_name'])) ? $data['city_name'] : null;
         $this->country_id = (isset($data['country_id'])) ? $data['country_id'] : null;
         $this->country_name = (isset($data['country_name'])) ? $data['country_name'] : null;
+        $this->region_name = (isset($data['region_name'])) ? $data['region_name'] : null;
     }
 
     /**
