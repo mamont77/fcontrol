@@ -12,6 +12,9 @@ namespace Application;
 use Zend\ModuleManager\ModuleManager;
 use Zend\Mvc\MvcEvent;
 use Zend\ServiceManager\ServiceManager;
+use Application\Service\ErrorHandling as ErrorHandlingService;
+use Zend\Log\Logger;
+use Zend\Log\Writer\Stream as LogWriterStream;
 
 class Module
 {
@@ -60,13 +63,37 @@ class Module
 
     }
 
-//    public function onBootstrap(MvcEvent $e)
-//    {
-//        $e->getApplication()->getServiceManager()->get('translator');
-//        $eventManager        = $e->getApplication()->getEventManager();
-//        $moduleRouteListener = new ModuleRouteListener();
-//        $moduleRouteListener->attach($eventManager);
-//    }
+    public function onBootstrap($e)
+    {
+        $eventManager = $e->getApplication()->getEventManager();
+        $eventManager->attach('dispatch.error', function ($event) {
+            $exception = $event->getResult()->exception;
+            if ($exception) {
+                $sm = $event->getApplication()->getServiceManager();
+                $service = $sm->get('Application\Service\ErrorHandling');
+                $service->logException($exception);
+            }
+        });
+    }
 
+    public function getServiceConfig()
+    {
+        return array(
+            'factories' => array(
+                'Application\Service\ErrorHandling' =>  function($sm) {
+                    $logger = $sm->get('Zend\Log');
+                    $service = new ErrorHandlingService($logger);
+                    return $service;
+                },
+                'Zend\Log' => function ($sm) {
+                    $filename = 'log_' . date('F') . '.txt';
+                    $log = new Logger();
+                    $writer = new LogWriterStream('./data/logs/' . $filename);
+                    $log->addWriter($writer);
 
+                    return $log;
+                },
+            ),
+        );
+    }
 }
