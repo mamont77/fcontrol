@@ -64,7 +64,7 @@ class KontragentForm extends Form
             'name' => 'phone1',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'required' => true,
+                'required' => false,
                 'maxlength' => '30',
             ),
             'options' => array(
@@ -100,7 +100,7 @@ class KontragentForm extends Form
             'name' => 'fax',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'required' => true,
+                'required' => false,
                 'maxlength' => '30',
             ),
             'options' => array(
@@ -124,7 +124,7 @@ class KontragentForm extends Form
             'name' => 'sita',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'required' => true,
+                'required' => false,
                 'maxlength' => '10',
             ),
             'options' => array(

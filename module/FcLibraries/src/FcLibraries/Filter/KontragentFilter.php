@@ -105,7 +105,7 @@ class KontragentFilter extends BaseFilter
 
             $inputFilter->add($factory->createInput(array(
                 'name' => 'phone1',
-                'required' => true,
+                'required' => false,
                 'filters' => $this->defaultFilters,
                 'validators' => array(
                     array(
@@ -156,7 +156,7 @@ class KontragentFilter extends BaseFilter
 
             $inputFilter->add($factory->createInput(array(
                 'name' => 'fax',
-                'required' => true,
+                'required' => false,
                 'filters' => $this->defaultFilters,
                 'validators' => array(
                     array(
@@ -191,7 +191,7 @@ class KontragentFilter extends BaseFilter
 
             $inputFilter->add($factory->createInput(array(
                 'name' => 'sita',
-                'required' => true,
+                'required' => false,
                 'filters' => $this->defaultFilters,
                 'validators' => array(
                     array(
