@@ -65,9 +65,6 @@ class AircraftFilter extends BaseFilter
                             'max' => 10,
                         ),
                     ),
-                    array(
-                        'name' => 'Digits',
-                    ),
                     $this->_noRecordExistsValidators($this->table, 'reg_number', $this->id),
                 ),
             )));
