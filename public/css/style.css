@@ -15,8 +15,8 @@ body > .navbar .brand {
 }
 
 body > .navbar .brand {
-    background: url("../images/logoSmallInv.png") no-repeat scroll 0 5px transparent;
-    padding-left: 45px;
+    background: url("../images/logoSmall.png") no-repeat scroll 0 5px transparent;
+    padding-left: 85px;
 }
 
 h1 {
