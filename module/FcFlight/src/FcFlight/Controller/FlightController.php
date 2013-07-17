@@ -26,12 +26,20 @@ class FlightController extends AbstractActionController
     {
         $select = new Select();
 
-        $order_by = $this->params()->fromRoute('order_by') ?
-            $this->params()->fromRoute('order_by') : 'dateOrder';
-        $order = $this->params()->fromRoute('order') ?
-            $this->params()->fromRoute('order') : Select::ORDER_DESCENDING;
+        $orderByMaster = 'dateOrder';
+        $orderAsType = Select::ORDER_DESCENDING;
+
+        $orderBy = $this->params()->fromRoute('order_by') ? $this->params()->fromRoute('order_by') : $orderByMaster;
+        $orderAs = $this->params()->fromRoute('order') ? $this->params()->fromRoute('order') : $orderAsType;
+
         $page = $this->params()->fromRoute('page') ? (int)$this->params()->fromRoute('page') : 1;
-        $data = $this->getFlightHeaderModel()->fetchAll($select->order($order_by . ' ' . $order));
+        if ($orderBy == $orderByMaster && $orderAsType == $orderAs) {
+            $data = $this->getFlightHeaderModel()->fetchAll($select->order($orderBy . ' ' . $orderAs
+            . ', id ' . $orderAs));
+        } else {
+            $data = $this->getFlightHeaderModel()->fetchAll($select->order($orderBy . ' ' . $orderAs));
+        }
+        //\Zend\Debug\Debug::dump($data);
         $itemsPerPage = 20;
         $data->current();
 
@@ -41,8 +49,8 @@ class FlightController extends AbstractActionController
             ->setPageRange(7);
 
         return new ViewModel(array(
-            'order_by' => $order_by,
-            'order' => $order,
+            'order_by' => $orderBy,
+            'order' => $orderAs,
             'page' => $page,
             'pagination' => $pagination,
             'route' => 'flights',
