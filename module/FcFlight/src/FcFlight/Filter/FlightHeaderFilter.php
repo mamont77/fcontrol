@@ -34,6 +34,7 @@ class FlightHeaderFilter implements InputFilterAwareInterface
     public $airOperatorShortName;
     public $aircraft;
     public $aircraftType;
+    public $aircraftTypeName;
 
     /**
      * @var array
@@ -73,6 +74,7 @@ class FlightHeaderFilter implements InputFilterAwareInterface
         $this->airOperatorShortName = (isset($data['airOperatorShortName'])) ? $data['airOperatorShortName'] : null;
         $this->aircraft = (isset($data['aircraft'])) ? $data['aircraft'] : null;
         $this->aircraftType = (isset($data['aircraftType'])) ? $data['aircraftType'] : null;
+        $this->aircraftTypeName = (isset($data['aircraftTypeName'])) ? $data['aircraftTypeName'] : null;
     }
 
     /**

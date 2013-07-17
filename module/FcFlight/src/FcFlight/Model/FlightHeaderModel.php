@@ -64,6 +64,9 @@ class FlightHeaderModel extends AbstractTableGateway
         $select->join(array('library_aircraft' => 'library_aircraft'),
             'library_aircraft.reg_number = flightBaseHeaderForm.aircraft',
             array('aircraftType' => 'aircraft_type'));
+        $select->join(array('library_aircraft_type' => 'library_aircraft_type'),
+            'library_aircraft_type.id = library_aircraft.aircraft_type',
+            array('aircraftTypeName' => 'name'));
         $resultSet = $this->selectWith($select);
         $resultSet->buffer();
 
@@ -151,6 +154,9 @@ class FlightHeaderModel extends AbstractTableGateway
         $select->join(array('library_aircraft' => 'library_aircraft'),
             'library_aircraft.reg_number = flightBaseHeaderForm.aircraft',
             array('aircraftType' => 'aircraft_type'));
+        $select->join(array('library_aircraft_type' => 'library_aircraft_type'),
+            'library_aircraft_type.id = library_aircraft.aircraft_type',
+            array('aircraftTypeName' => 'name'));
         $select->where(array('refNumberOrder' => $refNumberOrder));
         $resultSet = $this->selectWith($select);
         $resultSet->buffer();

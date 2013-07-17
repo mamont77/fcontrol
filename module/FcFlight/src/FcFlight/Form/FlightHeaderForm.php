@@ -38,7 +38,7 @@ class FlightHeaderForm extends Form
 
         $this->setLibrary('kontragents', 'id', 'name', $options['libraries']['kontragent']);
         $this->setLibrary('airOperators', 'id', 'short_name', $options['libraries']['air_operator']); //don't rename
-        $this->setLibrary('aircrafts', 'reg_number', 'aircraft_type', $options['libraries']['aircraft']);
+        $this->setLibrary('aircrafts', 'reg_number', 'aircraft_type_name', $options['libraries']['aircraft']);
 
         $this->setName($this->_formName);
         $this->setAttribute('method', 'post');
