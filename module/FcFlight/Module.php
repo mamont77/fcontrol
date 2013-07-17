@@ -32,6 +32,14 @@ class Module
         );
     }
 
+    public function getValidatorConfig() {
+        return array(
+            'invokables' => array(
+                'dateOfFlight' => 'FcFlight\Validator\dateOfFlight'
+            ),
+        );
+    }
+
      public function init(ModuleManager $moduleManager)
      {
          $sharedEvents = $moduleManager->getEventManager()->getSharedManager();
