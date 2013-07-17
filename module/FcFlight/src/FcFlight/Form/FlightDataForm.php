@@ -88,6 +88,7 @@ class FlightDataForm extends Form
                         'attributes' => array(
                             'required' => true,
                             'id' => 'flightNumberIcaoAndIata',
+                            'size' => 5,
                         ),
                         'options' => array(
                             'label' => 'IATA and ICAO',
@@ -130,6 +131,7 @@ class FlightDataForm extends Form
                         'attributes' => array(
                             'required' => true,
                             'id' => 'apDepIcaoAndIata',
+                            'size' => 5,
                         ),
                         'options' => array(
                             'label' => 'IATA and ICAO',
@@ -174,6 +176,7 @@ class FlightDataForm extends Form
                         'attributes' => array(
                             'required' => true,
                             'id' => 'apArrIcaoAndIata',
+                            'size' => 5,
                         ),
                         'options' => array(
                             'label' => 'IATA and ICAO',

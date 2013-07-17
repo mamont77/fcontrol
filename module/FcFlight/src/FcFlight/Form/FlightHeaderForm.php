@@ -75,6 +75,7 @@ class FlightHeaderForm extends Form
             'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
                 'required' => true,
+                'size' => 5,
             ),
             'options' => array(
                 'label' => 'Customer',
@@ -88,6 +89,7 @@ class FlightHeaderForm extends Form
             'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
                 'required' => true,
+                'size' => 5,
             ),
             'options' => array(
                 'label' => 'Air Operator',
@@ -101,6 +103,7 @@ class FlightHeaderForm extends Form
             'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
                 'required' => true,
+                'size' => 5,
             ),
             'options' => array(
                 'label' => 'Aircraft Type',

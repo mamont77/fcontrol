@@ -47,6 +47,7 @@ class CityForm extends Form
             'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
                 'required' => true,
+                'size' => 5,
             ),
             'options' => array(
                 'label' => 'Country',
