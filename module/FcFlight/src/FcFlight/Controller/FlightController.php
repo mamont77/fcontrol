@@ -27,9 +27,9 @@ class FlightController extends AbstractActionController
         $select = new Select();
 
         $order_by = $this->params()->fromRoute('order_by') ?
-            $this->params()->fromRoute('order_by') : 'refNumberOrder';
+            $this->params()->fromRoute('order_by') : 'dateOrder';
         $order = $this->params()->fromRoute('order') ?
-            $this->params()->fromRoute('order') : Select::ORDER_ASCENDING;
+            $this->params()->fromRoute('order') : Select::ORDER_DESCENDING;
         $page = $this->params()->fromRoute('page') ? (int)$this->params()->fromRoute('page') : 1;
         $data = $this->getFlightHeaderModel()->fetchAll($select->order($order_by . ' ' . $order));
         $itemsPerPage = 20;
