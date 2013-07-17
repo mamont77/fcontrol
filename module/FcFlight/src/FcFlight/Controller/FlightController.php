@@ -39,7 +39,7 @@ class FlightController extends AbstractActionController
         } else {
             $data = $this->getFlightHeaderModel()->fetchAll($select->order($orderBy . ' ' . $orderAs));
         }
-        //\Zend\Debug\Debug::dump($data);
+//        \Zend\Debug\Debug::dump($data);
         $itemsPerPage = 20;
         $data->current();
 

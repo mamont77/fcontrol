@@ -36,7 +36,7 @@ class CountryModel extends BaseModel
         $select->columns(array('id', 'name', 'code'));
         $select->join(array('r' => 'library_region'),
             'r.id = library_country.region_id',
-            array('region_name' => 'name'));
+            array('region_name' => 'name') , 'left');
 //        $select->order('library_country.code ASC');
         $resultSet = $this->selectWith($select);
         $resultSet->buffer();
