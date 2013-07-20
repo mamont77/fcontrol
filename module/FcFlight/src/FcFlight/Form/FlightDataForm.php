@@ -37,7 +37,7 @@ class FlightDataForm extends BaseForm
         parent::__construct($this->_formName);
 
         $this->setLibrary('flightNumberIcaoAndIata', $options['libraries']['flightNumberIcaoAndIata'],
-            'id', array('code_iata', 'code_icao'));
+            'id', array('code_icao', 'code_iata'));
         $this->setLibrary('appIcaoAndIata', $options['libraries']['appIcaoAndIata'],
             'id', array('code_iata', 'code_icao'));
 
@@ -91,7 +91,7 @@ class FlightDataForm extends BaseForm
                             'size' => 5,
                         ),
                         'options' => array(
-                            'label' => 'IATA and ICAO',
+                            'label' => 'ICAO (IATA)',
                             'empty_option' => '-- Please select --',
                             'value_options' => $this->flightNumberIcaoAndIata,
                         ),
@@ -134,7 +134,7 @@ class FlightDataForm extends BaseForm
                             'size' => 5,
                         ),
                         'options' => array(
-                            'label' => 'IATA and ICAO',
+                            'label' => 'IATA (ICAO)',
                             'empty_option' => '-- Please select --',
                             'value_options' => $this->appIcaoAndIata,
                         ),
@@ -179,7 +179,7 @@ class FlightDataForm extends BaseForm
                             'size' => 5,
                         ),
                         'options' => array(
-                            'label' => 'IATA and ICAO',
+                            'label' => 'IATA (ICAO)',
                             'empty_option' => '-- Please select --',
                             'value_options' => $this->appIcaoAndIata,
                         ),

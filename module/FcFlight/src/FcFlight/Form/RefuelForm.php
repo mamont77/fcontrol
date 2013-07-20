@@ -104,7 +104,7 @@ class RefuelForm extends BaseForm
 
         $this->add(array(
             'name' => 'quantity',
-            'type' => 'Zend\Form\Element\Number',
+            'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'required' => true,
                 'maxlength' => '10',

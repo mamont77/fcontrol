@@ -25,29 +25,13 @@ class RefuelFilter implements InputFilterAwareInterface
      */
     protected $table = '';
 
-    /**
-     * @var string
-     */
-    protected $apDepTimeValue = '';
-
     //Real fields
     public $id;
     public $headerId;
-    public $dateOfFlight;
-    public $flightNumberIcaoAndIata;
-    public $flightNumberText;
-    public $apDepIcaoAndIata;
-    public $apDepTime;
-    public $apArrIcaoAndIata;
-    public $apArrTime;
+
 
     //Virtual fields
-    public $flightNumberIcao;
-    public $flightNumberIata;
-    public $apDepIcao;
-    public $apDepIata;
-    public $apArrIcao;
-    public $apArrIata;
+
 
     /**
      * @var array
@@ -109,8 +93,6 @@ class RefuelFilter implements InputFilterAwareInterface
      */
     public function getInputFilter()
     {
-        global $apDepTimeValue;
-
         if (!$this->inputFilter) {
 
             $inputFilter = new InputFilter();
@@ -122,7 +104,12 @@ class RefuelFilter implements InputFilterAwareInterface
             )));
 
             $inputFilter->add($factory->createInput(array(
-                'name' => 'dateOfFlight',
+                'name' => 'airport',
+                'required' => true,
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'date',
                 'required' => true,
                 'filters' => $this->defaultFilters,
                 'validators' => array(
@@ -136,125 +123,39 @@ class RefuelFilter implements InputFilterAwareInterface
                             ),
                         ),
                     ),
-                    array(
-                        'name' => 'FcFlight\Validator\dateOfFlight',
-                    )
                 ),
             )));
 
-            $flightNumberInputFilter = new InputFilter();
-
-            $flightNumberInputFilter->add($factory->createInput(array(
-                'name' => 'flightNumberIcaoAndIata',
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'agent',
                 'required' => true,
             )));
 
-            $flightNumberInputFilter->add($factory->createInput(array(
-                'name' => 'flightNumberText',
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'quantity',
                 'required' => true,
                 'filters' => $this->defaultFilters,
                 'validators' => array(
                     array(
-                        'name' => 'StringLength',
+                        'name' => 'Regex',
                         'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min' => 6,
-                            'max' => 6,
-                        ),
-                    ),
-                ),
-            )));
-
-            $inputFilter->add($flightNumberInputFilter, 'flightNumber');
-
-            $apDepInputFilter = new InputFilter();
-
-            $apDepInputFilter->add($factory->createInput(array(
-                'name' => 'apDepIcaoAndIata',
-                'required' => true,
-            )));
-
-            $apDepInputFilter->add($factory->createInput(array(
-                'name' => 'apDepTime',
-                'required' => true,
-                'filters' => $this->defaultFilters,
-                'validators' => array(
-                    array(
-                        'name' => 'Date',
-                        'options' => array(
-                            'format' => 'H:i',
-                        ),
-                    ),
-                    array(
-                        'name' => 'Callback',
-                        'options' => array(
-                            'callback' => function($value, $context = array()) use (&$apDepTimeValue) {
-                                $apDepTimeValue = $value;
-                                return true;
-                            },
-                        ),
-                    ),
-                ),
-            )));
-
-            $inputFilter->add($apDepInputFilter, 'apDep');
-
-            $apArrInputFilter = new InputFilter();
-
-            $apArrInputFilter->add($factory->createInput(array(
-                'name' => 'apArrIcaoAndIata',
-                'required' => true,
-            )));
-
-            $apArrInputFilter->add($factory->createInput(array(
-                'name' => 'apArrTime',
-                'required' => true,
-                'filters' => $this->defaultFilters,
-                'validators' => array(
-                    array(
-                        'name' => 'Date',
-                        'options' => array(
-                            'format' => 'H:i',
-                        ),
-                    ),
-                    array(
-                        'name' => 'Callback',
-                        'options' => array(
+                            'pattern' => '/^(([^0]{1})([0-9])*|(0{1}))(\.\d{2})?$/',
                             'messages' => array(
-                                \Zend\Validator\Callback::INVALID_VALUE => 'The arrival time is less than the departure time',
+                                'regexNotMatch' => 'Invalid quantity format. For example please enter: 100 or 500.50',
                             ),
-                            'callback' => function($value, $context = array()) use (&$apDepTimeValue) {
-                                $apArrTime = \DateTime::createFromFormat('H:i', $value);
-                                $apDepTime = \DateTime::createFromFormat('H:i', $apDepTimeValue);
-                                return $apArrTime > $apDepTime;
-                            },
                         ),
                     ),
                 ),
             )));
 
-            $inputFilter->add($apArrInputFilter, 'apArr');
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'unit',
+                'required' => true,
+            )));
 
             $this->inputFilter = $inputFilter;
         }
 
         return $this->inputFilter;
-    }
-
-    /**
-     * @param $value
-     * @deprecated
-     */
-    public function setApDepTimeValue($value)
-    {
-        $this->apDepTimeValue = $value;
-    }
-
-    /**
-     * @return string
-     * @deprecated
-     */
-    public function getApDepTimeValue() {
-        return $this->apDepTimeValue;
     }
 }
