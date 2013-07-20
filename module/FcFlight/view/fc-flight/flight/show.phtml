@@ -14,7 +14,9 @@ $this->headTitle($title);
         <li>
             <a href="<?php echo $this->url('flight', array('action' => 'add-data', 'id' => $header->id)); ?>">Data</a>
         </li>
-        <li class="disabled"><a href="#">Refuel</a></li>
+        <li>
+            <a href="<?php echo $this->url('refuel', array('action' => 'add', 'id' => $header->id)); ?>">Refuel</a>
+        </li>
         <li class="disabled"><a href="#">Permission</a></li>
         <li class="disabled"><a href="#">Hotel</a></li>
         <li class="disabled"><a href="#">FPL/PPL/SLOT</a></li>

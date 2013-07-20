@@ -6,15 +6,15 @@ use Zend\Db\TableGateway\AbstractTableGateway;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\Select;
-use FcFlight\Filter\FlightDataFilter;
+use FcFlight\Filter\RefuelFilter;
 
-class FlightDataModel extends AbstractTableGateway
+class RefuelModel extends AbstractTableGateway
 {
 
     /**
      * @var string
      */
-    protected $table = 'flightBaseDataForm';
+    protected $table = 'flightRefuelForm';
 
     /**
      * @param \Zend\Db\Adapter\Adapter $adapter
@@ -23,7 +23,7 @@ class FlightDataModel extends AbstractTableGateway
     {
         $this->adapter = $adapter;
         $this->resultSetPrototype = new ResultSet();
-        $this->resultSetPrototype->setArrayObjectPrototype(new FlightDataFilter($this->adapter));
+        $this->resultSetPrototype->setArrayObjectPrototype(new RefuelFilter($this->adapter));
         $this->initialize();
     }
 
@@ -47,9 +47,9 @@ class FlightDataModel extends AbstractTableGateway
 
     /**
      * @param $id
-     * @return array
+     * @return null|\Zend\Db\ResultSet\ResultSetInterface
      */
-    public function getDataById($id)
+    public function getById($id)
     {
         $id = (string)$id;
         $select = new Select();
@@ -102,10 +102,10 @@ class FlightDataModel extends AbstractTableGateway
     }
 
     /**
-     * @param FlightDataFilter $object
+     * @param RefuelFilter $object
      * @return string
      */
-    public function add(FlightDataFilter $object)
+    public function add(RefuelFilter $object)
     {
         $dateOfFlight = \DateTime::createFromFormat('d-m-Y', $object->dateOfFlight);
         $apDepTime = \DateTime::createFromFormat('d-m-Y H:i', $object->dateOfFlight . ' ' . $object->apDepTime);
@@ -134,13 +134,5 @@ class FlightDataModel extends AbstractTableGateway
     public function remove($id)
     {
         $this->delete(array('id' => $id));
-    }
-
-    public function getHeaderRefNumberOrderByDataId($id)
-    {
-        $row = $this->get($id);
-        $headerModel = new FlightHeaderModel($this->getAdapter());
-
-        return $headerModel->getRefNumberOrderById($row->headerId);
     }
 }
