@@ -5,7 +5,7 @@ namespace FcFlight\Form;
 use Zend\Form\Form;
 use Zend\Form\Element;
 
-class FlightHeaderForm extends Form
+class FlightHeaderForm extends BaseForm
 {
     protected $_formName = 'flightHeader';
 
@@ -36,9 +36,9 @@ class FlightHeaderForm extends Form
 
         parent::__construct($this->_formName);
 
-        $this->setLibrary('kontragents', 'id', 'name', $options['libraries']['kontragent']);
-        $this->setLibrary('airOperators', 'id', 'short_name', $options['libraries']['air_operator']); //don't rename
-        $this->setLibrary('aircrafts', 'reg_number', 'aircraft_type_name', $options['libraries']['aircraft']);
+        $this->setLibrary('kontragents', $options['libraries']['kontragent'], 'id', 'name');
+        $this->setLibrary('airOperators', $options['libraries']['air_operator'], 'id', 'short_name'); //don't rename
+        $this->setLibrary('aircrafts', $options['libraries']['aircraft'], 'reg_number', 'aircraft_type_name');
 
         $this->setName($this->_formName);
         $this->setAttribute('method', 'post');
@@ -138,22 +138,5 @@ class FlightHeaderForm extends Form
                 'class' => 'btn-link cancel',
             ),
         ));
-    }
-
-    /**
-     * @param $LibraryName
-     * @param string $baseFieldKey
-     * @param $baseFieldName
-     * @param \Zend\Db\ResultSet\ResultSet $data
-     * @return FlightHeaderForm
-     */
-    private function setLibrary($LibraryName, $baseFieldKey = 'id', $baseFieldName, \Zend\Db\ResultSet\ResultSet $data)
-    {
-        if (!$this->{$LibraryName}) {
-            foreach ($data as $row) {
-                $this->{$LibraryName}[$row->{$baseFieldKey}] = $row->{$baseFieldName};
-            }
-        }
-        return $this;
     }
 }

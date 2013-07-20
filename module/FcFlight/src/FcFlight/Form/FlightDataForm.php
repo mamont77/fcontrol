@@ -6,7 +6,7 @@ use Zend\Form\Element;
 use Zend\Form\Form;
 use \Zend\Db\ResultSet\ResultSet;
 
-class FlightDataForm extends Form
+class FlightDataForm extends BaseForm
 {
     /**
      * @var string
@@ -219,39 +219,5 @@ class FlightDataForm extends Form
             ),
         ));
 
-    }
-
-    /**
-     * @param $libraryName
-     * @param \Zend\Db\ResultSet\ResultSet $data
-     * @param string $baseFieldKey
-     * @param string|array $fieldName
-     * @return $this
-     */
-    protected function setLibrary($libraryName, ResultSet $data, $baseFieldKey = 'id', $fieldName = '')
-    {
-        if (!$this->{$libraryName}) {
-            foreach ($data as $row) {
-                if (is_array($fieldName)) {
-                    if ($row->{$fieldName[1]} != '') {
-                        $fieldValue = $row->{$fieldName[0]} . ' (' . $row->{$fieldName[1]} . ')';
-                    } else {
-                        $fieldValue = $row->{$fieldName[0]};
-                    }
-                    $this->{$libraryName}[$row->{$baseFieldKey}] = $fieldValue;
-                } else {
-                    if ($row->{$fieldName} != '') {
-                        $this->{$libraryName}[$row->{$baseFieldKey}] = $row->{$fieldName};
-                    }
-                }
-            }
-            uasort($this->{$libraryName}, array($this, 'sortLibrary'));
-        }
-        return $this;
-    }
-
-    protected function sortLibrary($a, $b)
-    {
-        return $a > $b;
     }
 }

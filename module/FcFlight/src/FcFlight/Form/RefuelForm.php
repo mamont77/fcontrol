@@ -3,10 +3,9 @@
 namespace FcFlight\Form;
 
 use Zend\Form\Element;
-use Zend\Form\Form;
 use \Zend\Db\ResultSet\ResultSet;
 
-class RefuelForm extends Form
+class RefuelForm extends BaseForm
 {
     /**
      * @var string
@@ -40,9 +39,9 @@ class RefuelForm extends Form
 
         parent::__construct($this->_formName);
 
-        $this->setLibraryFromArray('airports', $options['libraries']['apDeps'], 'id', array('apDepIata', 'apDepIcao'));
-        $this->setLibraryFromObject('agents', $options['libraries']['agents'], 'id', 'name');
-        $this->setLibraryFromObject('units', $options['libraries']['units'], 'id', 'name');
+        $this->setLibrary('airports', $options['libraries']['apDeps'], 'id', array('apDepIata', 'apDepIcao'), 'array');
+        $this->setLibrary('agents', $options['libraries']['agents'], 'id', 'name');
+        $this->setLibrary('units', $options['libraries']['units'], 'id', 'name');
 
         $this->setName($this->_formName);
         $this->setAttribute('method', 'post');
@@ -143,68 +142,5 @@ class RefuelForm extends Form
             ),
         ));
 
-    }
-
-    /**
-     * @param $libraryName
-     * @param ResultSet $data
-     * @param string $baseFieldKey
-     * @param string $fieldName
-     * @return $this
-     */
-    protected function setLibraryFromObject($libraryName, ResultSet $data, $baseFieldKey = 'id', $fieldName = '')
-    {
-        if (!$this->{$libraryName}) {
-            foreach ($data as $row) {
-                if (is_array($fieldName)) {
-                    if ($row->{$fieldName[1]} != '') {
-                        $fieldValue = $row->{$fieldName[0]} . ' (' . $row->{$fieldName[1]} . ')';
-                    } else {
-                        $fieldValue = $row->{$fieldName[0]};
-                    }
-                    $this->{$libraryName}[$row->{$baseFieldKey}] = $fieldValue;
-                } else {
-                    if ($row->{$fieldName} != '') {
-                        $this->{$libraryName}[$row->{$baseFieldKey}] = $row->{$fieldName};
-                    }
-                }
-            }
-            uasort($this->{$libraryName}, array($this, 'sortLibrary'));
-        }
-        return $this;
-    }
-
-    /**
-     * @param $libraryName
-     * @param array $data
-     * @param string $baseFieldKey
-     * @param string $fieldName
-     * @return $this
-     */
-    protected function setLibraryFromArray($libraryName, array $data, $baseFieldKey = 'id', $fieldName = '')
-    {
-        if (!$this->{$libraryName}) {
-            foreach ($data as $row) {
-                if (is_array($fieldName)) {
-                    if ($row[$fieldName[1]] != '') {
-                        $fieldValue = $row[$fieldName[0]] . ' (' . $row[$fieldName[1]] . ')';
-                    } else {
-                        $fieldValue = $row[$fieldName[0]];
-                    }
-                    $this->{$libraryName}[$row[$baseFieldKey]] = $fieldValue;
-                } else {
-                    if ($row[$fieldName] != '') {
-                        $this->{$libraryName}[$row[$baseFieldKey]] = $row[$fieldName];
-                    }
-                }
-            }
-            uasort($this->{$libraryName}, array($this, 'sortLibrary'));
-        }
-        return $this;
-    }
-
-    protected function sortLibrary($a, $b)
-    {
-        return $a > $b;
     }
 }
