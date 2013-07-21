@@ -116,10 +116,8 @@ $this->headTitle($title);
             <td><?php echo $this->escapeHtml($row['apArrIata']); ?></td>
             <td><?php echo $this->escapeHtml($row['apArrTime']); ?></td>
             <td>
-                <!--<a href="<?php echo $this->url('flight',
-                    array('action' => 'edit-data', 'id' => $row['id']));?>" class="btn">Edit</a>-->
-                <a href="<?php echo $this->url('flight',
-                    array('action' => 'delete-data', 'id' => $row['id']));?>" class="btn btn-warning">Remove</a>
+                <a title="Remove" href="<?php echo $this->url('flight',
+                    array('action' => 'delete-data', 'id' => $row['id']));?>"><i class="icon-remove"></i></a>
             </td>
         </tr>
     <?php endforeach; ?>

@@ -1,6 +1,7 @@
 <ul class="breadcrumb">
     <li><a href="/">Home</a> <span class="divider">/</span></li>
-    <li><a href="<?=$this->url('zfcadmin/libraries', array('action' => 'index'));?>">Libraries</a> <span class="divider">/</span></li>
+    <li><a href="<?= $this->url('zfcadmin/libraries', array('action' => 'index')); ?>">Libraries</a> <span
+            class="divider">/</span></li>
     <li class="active">Aircrafts</li>
 </ul>
 <?php
@@ -16,7 +17,7 @@ if ($order) {
 <?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
 
 <p>
-    <a href="<?php echo $this->url('zfcadmin/aircraft', array('action' => 'add'));?>"
+    <a href="<?php echo $this->url('zfcadmin/aircraft', array('action' => 'add')); ?>"
        class="btn btn-primary">Add Aircraft</a>
 </p>
 
@@ -26,7 +27,7 @@ if ($order) {
             <a href="<?php echo $this->url($route, array('order_by' => 'aircraft_type_name', 'order' => $url_order)); ?>">
                 Type Aircraft
                 <?php if ($order_by == 'aircraft_type_name'): ?>
-                <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
+                    <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
                 <?php endif; ?>
             </a>
         </th>
@@ -34,23 +35,23 @@ if ($order) {
             <a href="<?php echo $this->url($route, array('order_by' => 'reg_number', 'order' => $url_order)); ?>">
                 Reg Number
                 <?php if ($order_by == 'reg_number'): ?>
-                <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
+                    <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
                 <?php endif; ?>
             </a>
         </th>
         <th>Actions</th>
     </tr>
     <?php foreach ($pagination as $row) : ?>
-    <tr>
-        <td><?php echo $this->escapeHtml($row->aircraft_type_name);?></td>
-        <td><?php echo $this->escapeHtml($row->reg_number);?></td>
-        <td>
-            <a href="<?php echo $this->url('zfcadmin/aircraft',
-                array('action' => 'edit', 'id' => $row->id));?>" class="btn">Edit</a>
-            <a href="<?php echo $this->url('zfcadmin/aircraft',
-                array('action' => 'delete', 'id' => $row->id));?>" class="btn btn-warning">Remove</a>
-        </td>
-    </tr>
+        <tr>
+            <td><?php echo $this->escapeHtml($row->aircraft_type_name); ?></td>
+            <td><?php echo $this->escapeHtml($row->reg_number); ?></td>
+            <td>
+                <a title="Edit" href="<?php echo $this->url('zfcadmin/aircraft',
+                    array('action' => 'edit', 'id' => $row->id));?>"><i class="icon-edit"></i></a>
+                <a title="Remove" href="<?php echo $this->url('zfcadmin/aircraft',
+                    array('action' => 'delete', 'id' => $row->id));?>"><i class="icon-remove"></i></a>
+            </td>
+        </tr>
     <?php endforeach; ?>
 </table>
 <?php
