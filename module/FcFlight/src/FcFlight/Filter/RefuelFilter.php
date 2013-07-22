@@ -28,10 +28,16 @@ class RefuelFilter implements InputFilterAwareInterface
     //Real fields
     public $id;
     public $headerId;
-
+    public $airport;
+    public $date;
+    public $agent;
+    public $quantity;
+    public $unit;
 
     //Virtual fields
-
+    public $airportName;
+    public $agentName;
+    public $unitName;
 
     /**
      * @var array
@@ -67,6 +73,14 @@ class RefuelFilter implements InputFilterAwareInterface
         //Real fields
         $this->id = (isset($data['id'])) ? $data['id'] : null;
         $this->headerId = (isset($data['headerId'])) ? $data['headerId'] : null;
+        $this->airport = (isset($data['airport'])) ? $data['airport'] : null;
+        $this->date = (isset($data['date'])) ? $data['date'] : null;
+        $this->agent = (isset($data['agent'])) ? $data['agent'] : null;
+        $this->quantity = (isset($data['quantity'])) ? $data['quantity'] : null;
+        $this->unit = (isset($data['unit'])) ? $data['unit'] : null;
+        $this->airportName = (isset($data['airportName'])) ? $data['airportName'] : null;
+        $this->agentName = (isset($data['agentName'])) ? $data['agentName'] : null;
+        $this->unitName = (isset($data['unitName'])) ? $data['unitName'] : null;
     }
 
     /**

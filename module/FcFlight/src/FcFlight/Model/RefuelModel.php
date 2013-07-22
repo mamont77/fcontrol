@@ -107,21 +107,17 @@ class RefuelModel extends AbstractTableGateway
      */
     public function add(RefuelFilter $object)
     {
-        $dateOfFlight = \DateTime::createFromFormat('d-m-Y', $object->dateOfFlight);
-        $apDepTime = \DateTime::createFromFormat('d-m-Y H:i', $object->dateOfFlight . ' ' . $object->apDepTime);
-        $apArrTime = \DateTime::createFromFormat('d-m-Y H:i', $object->dateOfFlight . ' ' . $object->apArrTime);
+        $date = \DateTime::createFromFormat('d-m-Y', $object->date);
 
         $data = array(
             'headerId' => (int)$object->headerId,
-            'dateOfFlight' => (string)$dateOfFlight->getTimestamp(),
-            'flightNumberIcaoAndIata' => (int)$object->flightNumberIcaoAndIata,
-            'flightNumberText' => (string)$object->flightNumberText,
-            'apDepIcaoAndIata' => (int)$object->apDepIcaoAndIata,
-            'apDepTime' => (string)$apDepTime->getTimestamp(),
-            'apArrIcaoAndIata' => (int)$object->apArrIcaoAndIata,
-            'apArrTime' => (string)$apArrTime->getTimestamp(),
+            'airport' => (int)$object->airport,
+            'date' => (string)$date->getTimestamp(),
+            'agent' => (int)$object->agent,
+            'quantity' => (string)$object->quantity,
+            'unit' => (int)$object->unit,
         );
-        $hash = $object->dateOfFlight . ': Dep ' . $object->apDepTime . ', Arr ' . $object->apArrTime;
+        $hash = $object->date;
 
         $this->insert($data);
 
