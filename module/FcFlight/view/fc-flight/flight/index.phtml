@@ -11,7 +11,7 @@ if ($order) {
 <?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
 
 <p>
-    <a href="<?php echo $this->url('flight', array('action' => 'add-header'));?>"
+    <a href="<?php echo $this->url('flight', array('action' => 'add-header')); ?>"
        class="btn btn-primary">Add Flight</a>
 </p>
 
@@ -24,7 +24,7 @@ if ($order) {
             <a href="<?php echo $this->url($route, array('order_by' => 'dateOrder', 'order' => $url_order)); ?>">
                 Date Order
                 <?php if ($order_by == 'dateOrder'): ?>
-                <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
+                    <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
                 <?php endif; ?>
             </a>
         </th>
@@ -32,7 +32,7 @@ if ($order) {
             <a href="<?php echo $this->url($route, array('order_by' => 'kontragentShortName', 'order' => $url_order)); ?>">
                 Customer
                 <?php if ($order_by == 'kontragentShortName'): ?>
-                <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
+                    <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
                 <?php endif; ?>
             </a>
         </th>
@@ -40,7 +40,7 @@ if ($order) {
             <a href="<?php echo $this->url($route, array('order_by' => 'airOperatorShortName', 'order' => $url_order)); ?>">
                 Air Operator
                 <?php if ($order_by == 'airOperatorShortName'): ?>
-                <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
+                    <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
                 <?php endif; ?>
             </a>
         </th>
@@ -48,36 +48,36 @@ if ($order) {
             <a href="<?php echo $this->url($route, array('order_by' => 'aircraftType', 'order' => $url_order)); ?>">
                 Aircraft
                 <?php if ($order_by == 'aircraftType'): ?>
-                <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
+                    <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
                 <?php endif; ?>
             </a>
         </th>
         <th>Actions</th>
     </tr>
     <?php foreach ($pagination as $row) : ?>
-    <tr>
-        <td>
-            <a href="<?php
+        <tr>
+            <td>
+                <a href="<?php
                 echo $this->url('browse',
                     array('refNumberOrder' => urlencode($row->refNumberOrder)));?>">
-                    <?php echo $this->escapeHtml($row->refNumberOrder);?>
-            </a>
-        </td>
-        <td><?php echo date('Y-m-d', $row->dateOrder);?></td>
-        <td><?php echo $this->escapeHtml($row->kontragentShortName);?></td>
-        <td><?php echo $this->escapeHtml($row->airOperatorShortName);?></td>
-        <td>
-            <?php echo $this->escapeHtml($row->aircraftTypeName);?>
-            <br />
-            <small><?php echo $this->escapeHtml($row->aircraft);?></small>
-        </td>
-        <td>
-            <a href="<?php echo $this->url('flight',
-                array('action' => 'edit-header', 'id' => $row->id));?>" class="btn">Edit</a>
-            <a href="<?php echo $this->url('flight',
-                array('action' => 'delete-header', 'id' => $row->id));?>" class="btn btn-warning">Remove</a>
-        </td>
-    </tr>
+                    <?php echo $this->escapeHtml($row->refNumberOrder); ?>
+                </a>
+            </td>
+            <td><?php echo date('Y-m-d', $row->dateOrder); ?></td>
+            <td><?php echo $this->escapeHtml($row->kontragentShortName); ?></td>
+            <td><?php echo $this->escapeHtml($row->airOperatorShortName); ?></td>
+            <td>
+                <?php echo $this->escapeHtml($row->aircraftTypeName); ?>
+                <br/>
+                <small><?php echo $this->escapeHtml($row->aircraft); ?></small>
+            </td>
+            <td>
+                <a title="Edit" href="<?php echo $this->url('flight',
+                    array('action' => 'edit-header', 'id' => $row->id));?>"><i class="icon-edit"></i></a>
+                <a title="Remove" href="<?php echo $this->url('flight',
+                    array('action' => 'delete-header', 'id' => $row->id));?>"><i class="icon-remove"></i></a>
+            </td>
+        </tr>
     <?php endforeach; ?>
 </table>
 <?php

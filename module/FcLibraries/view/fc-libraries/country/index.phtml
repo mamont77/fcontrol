@@ -1,6 +1,7 @@
 <ul class="breadcrumb">
     <li><a href="/">Home</a> <span class="divider">/</span></li>
-    <li><a href="<?=$this->url('zfcadmin/libraries', array('action' => 'index'));?>">Libraries</a> <span class="divider">/</span></li>
+    <li><a href="<?= $this->url('zfcadmin/libraries', array('action' => 'index')); ?>">Libraries</a> <span
+            class="divider">/</span></li>
     <li class="active">Countries</li>
 </ul>
 <?php
@@ -16,7 +17,7 @@ if ($order) {
 <?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
 
 <p>
-    <a href="<?php echo $this->url('zfcadmin/country', array('action' => 'add'));?>"
+    <a href="<?php echo $this->url('zfcadmin/country', array('action' => 'add')); ?>"
        class="btn btn-primary">Add Country</a>
 </p>
 
@@ -26,7 +27,7 @@ if ($order) {
             <a href="<?php echo $this->url($route, array('order_by' => 'name', 'order' => $url_order)); ?>">
                 Name
                 <?php if ($order_by == 'name'): ?>
-                <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
+                    <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
                 <?php endif; ?>
             </a>
         </th>
@@ -34,7 +35,7 @@ if ($order) {
             <a href="<?php echo $this->url($route, array('order_by' => 'region_name', 'order' => $url_order)); ?>">
                 Region
                 <?php if ($order_by == 'region_name'): ?>
-                <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
+                    <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
                 <?php endif; ?>
             </a>
         </th>
@@ -42,24 +43,24 @@ if ($order) {
             <a href="<?php echo $this->url($route, array('order_by' => 'code', 'order' => $url_order)); ?>">
                 Code
                 <?php if ($order_by == 'code'): ?>
-                <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
+                    <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
                 <?php endif; ?>
             </a>
         </th>
         <th>Actions</th>
     </tr>
     <?php foreach ($pagination as $row) : ?>
-    <tr>
-        <td><?php echo $this->escapeHtml($row->name);?></td>
-        <td><?php echo $this->escapeHtml($row->region_name);?></td>
-        <td><?php echo $this->escapeHtml($row->code);?></td>
-        <td>
-            <a href="<?php echo $this->url('zfcadmin/country',
-                array('action' => 'edit', 'id' => $row->id));?>" class="btn">Edit</a>
-            <a href="<?php echo $this->url('zfcadmin/country',
-                array('action' => 'delete', 'id' => $row->id));?>" class="btn btn-warning">Remove</a>
-        </td>
-    </tr>
+        <tr>
+            <td><?php echo $this->escapeHtml($row->name); ?></td>
+            <td><?php echo $this->escapeHtml($row->region_name); ?></td>
+            <td><?php echo $this->escapeHtml($row->code); ?></td>
+            <td>
+                <a title="Edit" href="<?php echo $this->url('zfcadmin/country',
+                    array('action' => 'edit', 'id' => $row->id));?>"><i class="icon-edit"></i></a>
+                <a title="Remove" href="<?php echo $this->url('zfcadmin/country',
+                    array('action' => 'delete', 'id' => $row->id));?>"><i class="icon-remove"></i></a>
+            </td>
+        </tr>
     <?php endforeach; ?>
 </table>
 <?php

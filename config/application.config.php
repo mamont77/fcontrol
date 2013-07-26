@@ -15,7 +15,6 @@ return array(
         'ZfcUser',
         'BjyAuthorize',
         'BjyProfiler',
-        'Album',
         'FcAdmin',
         'FcLibraries',
         'FcFlight',

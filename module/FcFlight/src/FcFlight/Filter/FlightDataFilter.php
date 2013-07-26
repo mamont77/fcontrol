@@ -241,7 +241,7 @@ class FlightDataFilter implements InputFilterAwareInterface
                     array(
                         'name' => 'Callback',
                         'options' => array(
-                            'callback' => function($value, $context = array()) use (&$apDepTimeValue) {
+                            'callback' => function ($value, $context = array()) use (&$apDepTimeValue) {
                                 $apDepTimeValue = $value;
                                 return true;
                             },
@@ -276,7 +276,7 @@ class FlightDataFilter implements InputFilterAwareInterface
                             'messages' => array(
                                 \Zend\Validator\Callback::INVALID_VALUE => 'The arrival time is less than the departure time',
                             ),
-                            'callback' => function($value, $context = array()) use (&$apDepTimeValue) {
+                            'callback' => function ($value, $context = array()) use (&$apDepTimeValue) {
                                 $apArrTime = \DateTime::createFromFormat('H:i', $value);
                                 $apDepTime = \DateTime::createFromFormat('H:i', $apDepTimeValue);
                                 return $apArrTime > $apDepTime;
@@ -307,7 +307,8 @@ class FlightDataFilter implements InputFilterAwareInterface
      * @return string
      * @deprecated
      */
-    public function getApDepTimeValue() {
+    public function getApDepTimeValue()
+    {
         return $this->apDepTimeValue;
     }
 }

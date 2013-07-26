@@ -47,7 +47,7 @@ class FlightDataModel extends AbstractTableGateway
 
     /**
      * @param $id
-     * @return null|\Zend\Db\ResultSet\ResultSetInterface
+     * @return array
      */
     public function getDataById($id)
     {
