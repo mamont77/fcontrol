@@ -5,8 +5,10 @@ use Zend\ModuleManager\ModuleManager;
 use Zend\Mvc\MvcEvent;
 use FcFlight\Model\FlightHeaderModel;
 use FcFlight\Model\FlightDataModel;
+use FcFlight\Model\RefuelModel;
 use FcFlight\Filter\FlightHeaderFilter;
 use FcFlight\Filter\FlightDataFilter;
+use FcFlight\Filter\RefuelFilter;
 
 class Module
 {
@@ -76,6 +78,10 @@ class Module
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     return new FlightDataModel($dbAdapter);
                 },
+                'FcFlight\Model\RefuelModel' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new RefuelModel($dbAdapter);
+                },
                 'FcFlight\Filter\FlightHeaderFilter' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     return new FlightHeaderFilter($dbAdapter);
@@ -83,6 +89,10 @@ class Module
                 'FcFlight\Filter\FlightDataFilter' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     return new FlightDataFilter($dbAdapter);
+                },
+                'FcFlight\Filter\RefuelFilter' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new RefuelFilter($dbAdapter);
                 },
             ),
         );

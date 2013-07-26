@@ -3,6 +3,7 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'FcFlight\Controller\Flight' => 'FcFlight\Controller\FlightController',
+            'FcFlight\Controller\Refuel' => 'FcFlight\Controller\RefuelController',
         ),
     ),
 
@@ -63,6 +64,20 @@ return array(
                     'defaults' => array(
                         'controller' => 'FcFlight\Controller\Flight',
                         'action' => 'show',
+                    ),
+                ),
+            ),
+            'refuel' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/refuel[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'FcFlight\Controller\Refuel',
+                        'action' => 'index',
                     ),
                 ),
             ),

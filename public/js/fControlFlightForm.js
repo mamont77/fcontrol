@@ -25,4 +25,11 @@
         }
     };
 
+    fControl.behaviors.refuelForm = {
+        attach:function (context, settings) {
+            var $form = $('form#refuel');
+            $($form).find('#date').mask('99-99-9999');
+        }
+    };
+
 })(jQuery);

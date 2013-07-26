@@ -2,27 +2,30 @@
 
 namespace FcFlight\Form;
 
-use Zend\Form\Form;
 use Zend\Form\Element;
+use \Zend\Db\ResultSet\ResultSet;
 
-class FlightHeaderForm extends BaseForm
+class RefuelForm extends BaseForm
 {
-    protected $_formName = 'flightHeader';
+    /**
+     * @var string
+     */
+    protected $_formName = 'flightData';
 
     /**
      * @var array
      */
-    protected $kontragents = array();
+    protected $airports = array();
 
     /**
      * @var array
      */
-    protected $airOperators = array();
+    protected $agents = array();
 
     /**
      * @var array
      */
-    protected $aircrafts = array();
+    protected $units = array();
 
     /**
      * @param null $name
@@ -36,9 +39,9 @@ class FlightHeaderForm extends BaseForm
 
         parent::__construct($this->_formName);
 
-        $this->setLibrary('kontragents', $options['libraries']['kontragent'], 'id', 'name');
-        $this->setLibrary('airOperators', $options['libraries']['air_operator'], 'id', 'short_name'); //don't rename
-        $this->setLibrary('aircrafts', $options['libraries']['aircraft'], 'reg_number', 'aircraft_type_name');
+        $this->setLibrary('airports', $options['libraries']['apDeps'], 'id', array('apDepIata', 'apDepIcao'), 'array');
+        $this->setLibrary('agents', $options['libraries']['agents'], 'id', 'name');
+        $this->setLibrary('units', $options['libraries']['units'], 'id', 'name');
 
         $this->setName($this->_formName);
         $this->setAttribute('method', 'post');
@@ -51,65 +54,77 @@ class FlightHeaderForm extends BaseForm
         ));
 
         $this->add(array(
-            'name' => 'refNumberOrder',
+            'name' => 'headerId',
             'attributes' => array(
                 'type' => 'hidden',
+                'value' => $options['headerId'],
             ),
         ));
 
         $this->add(array(
-            'name' => 'dateOrder',
+            'name' => 'airport',
+            'type' => 'Zend\Form\Element\Select',
+            'attributes' => array(
+                'required' => true,
+                'size' => 5,
+            ),
+            'options' => array(
+                'label' => 'Airport',
+                'empty_option' => '-- Please select --',
+                'value_options' => $this->airports,
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'date',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'required' => true,
                 'maxlength' => '10',
             ),
             'options' => array(
-                'label' => 'Date Order',
-                'description' => 'YYYY-MM-DD',
+                'label' => 'Date',
+                'description' => 'DD-MM-YYYY',
             ),
         ));
 
         $this->add(array(
-            'name' => 'kontragent',
+            'name' => 'agent',
             'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
                 'required' => true,
                 'size' => 5,
             ),
             'options' => array(
-                'label' => 'Customer',
+                'label' => 'Agent',
                 'empty_option' => '-- Please select --',
-                'value_options' => $this->kontragents,
+                'value_options' => $this->agents,
             ),
         ));
 
         $this->add(array(
-            'name' => 'airOperator',
+            'name' => 'quantity',
+            'type' => 'Zend\Form\Element\Text',
+            'attributes' => array(
+                'required' => true,
+                'maxlength' => '10',
+            ),
+            'options' => array(
+                'label' => 'Quantity',
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'unit',
             'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
                 'required' => true,
                 'size' => 5,
             ),
             'options' => array(
-                'label' => 'Air Operator',
+                'label' => 'Unit',
                 'empty_option' => '-- Please select --',
-                'value_options' => $this->airOperators,
-            ),
-        ));
-
-        $this->add(array(
-            'name' => 'aircraft',
-            'type' => 'Zend\Form\Element\Select',
-            'attributes' => array(
-                'required' => true,
-                'size' => 5,
-            ),
-            'options' => array(
-                'label' => 'Aircraft Type',
-                'empty_option' => '-- Please select --',
-                'value_options' => $this->aircrafts,
-                'hint' => 'GegNumber',
+                'value_options' => $this->units,
             ),
         ));
 
@@ -127,16 +142,5 @@ class FlightHeaderForm extends BaseForm
             ),
         ));
 
-        //Cancel button
-        $this->add(array(
-            'name' => 'cancel',
-            'type' => 'Zend\Form\Element\Button',
-            'options' => array(
-                'label' => 'Cancel',
-            ),
-            'attributes' => array(
-                'class' => 'btn-link cancel',
-            ),
-        ));
     }
 }

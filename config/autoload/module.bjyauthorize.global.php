@@ -83,7 +83,6 @@ return array(
                 //array('controller' => 'zfcuseradmin', 'roles' => array('admin')),
                 array('controller' => 'zfcuser', 'roles' => array()),
                 array('controller' => 'Application\Controller\Index', 'roles' => array('guest', 'user')),
-                array('controller' => 'Album\Controller\Album', 'roles' => array('admin')),
                 array('controller' => 'FcAdmin\Controller\Index', 'roles' => array('admin')),
                 array('controller' => 'FcAdmin\Controller\User', 'roles' => array('admin')),
                 //array('controller' => 'ZfcUserAdmin\Controller\UserAdmin', 'roles' => array('admin')),
@@ -99,6 +98,7 @@ return array(
                 array('controller' => 'FcLibraries\Controller\Unit', 'roles' => array('admin')),
                 array('controller' => 'FcLibraries\Controller\Currency', 'roles' => array('admin')),
                 array('controller' => 'FcFlight\Controller\Flight', 'roles' => array('user')),
+                array('controller' => 'FcFlight\Controller\Refuel', 'roles' => array('user')),
             ),
 
             /* If this guard is specified here (i.e. it is enabled), it will block
@@ -112,7 +112,6 @@ return array(
                 array('route' => 'zfcuser/changepassword', 'roles' => array('user')),
                 array('route' => 'zfcuser/changeemail', 'roles' => array('user')),
                 array('route' => 'home', 'roles' => array('guest', 'user')),
-                array('route' => 'album', 'roles' => array('admin')),
                 array('route' => 'zfcadmin', 'roles' => array('admin')),
                 array('route' => 'zfcadmin/dashboard', 'roles' => array('admin')),
                 array('route' => 'zfcadmin/users', 'roles' => array('admin')),
@@ -141,6 +140,7 @@ return array(
                 array('route' => 'flights', 'roles' => array('user')),
                 array('route' => 'flight', 'roles' => array('user')),
                 array('route' => 'browse', 'roles' => array('user')),
+                array('route' => 'refuel', 'roles' => array('user')),
             ),
         ),
     ),
