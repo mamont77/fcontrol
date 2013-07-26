@@ -23,36 +23,6 @@ class RefuelController extends AbstractActionController
     /**
      * @return array|\Zend\Http\Response
      */
-//    public function indexAction()
-//    {
-//        $refNumberOrder = (string)$this->params()->fromRoute('refNumberOrder', '');
-//        $refNumberOrder = urldecode($refNumberOrder);
-//
-//        if (empty($refNumberOrder)) {
-//            return $this->redirect()->toRoute('refuel', array(
-//                'action' => 'index'
-//            ));
-//        }
-//
-//        $header = $this->getFlightHeaderModel()->getByRefNumberOrder($refNumberOrder);
-//        $header->current();
-//
-//        foreach ($header as $item) {
-//            $header = $item;
-//            break;
-//        }
-//
-//        $data = $this->getFlightDataModel()->getDataById($header->id);
-//
-//        return new ViewModel(array(
-//            'header' => $header,
-//            'data' => $data,
-//        ));
-//    }
-
-    /**
-     * @return array|\Zend\Http\Response
-     */
     public function addAction()
     {
 
@@ -64,11 +34,7 @@ class RefuelController extends AbstractActionController
         }
 
         $refNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($this->headerId);
-//        \Zend\Debug\Debug::dump($this->headerId);
-//        \Zend\Debug\Debug::dump($this->getParentData());
-//        \Zend\Debug\Debug::dump($this->getKontragents());
-//        \Zend\Debug\Debug::dump($this->getUnits());
-//        exit();
+
         $form = new RefuelForm('refuel',
             array(
                 'headerId' => $this->headerId,
@@ -89,9 +55,8 @@ class RefuelController extends AbstractActionController
             if ($form->isValid()) {
                 $data = $form->getData();
                 $filter->exchangeArray($data);
-//                \Zend\Debug\Debug::dump($headerId);die;
                 $summaryData = $this->getRefuelModel()->add($filter);
-                $this->flashMessenger()->addSuccessMessage($summaryData . ' was successfully added.');
+                $this->flashMessenger()->addSuccessMessage('Refuel ' . $summaryData . ' was successfully added.');
                 return $this->redirect()->toRoute('browse',
                     array(
                         'action' => 'show',
@@ -107,76 +72,34 @@ class RefuelController extends AbstractActionController
 
     /**
      * @return array|\Zend\Http\Response
-     * @deprecated
      */
-//    public function editAction()
-//    {
-//        $id = (int)$this->params()->fromRoute('id', 0);
-//        $data = $this->getFlightDataModel()->get($id);
-//
-//        $form = new FlightDataForm('flightData',
-//            array(
-//                //'headerId' => $id,
-//                'libraries' => array(
-//                    'flightNumberIcaoAndIata' => $this->getAirOperators(),
-//                    'appIcaoAndIata' => $this->getAirports(),
-//                )
-//            )
-//        );
-//
-//        $form->bind($data);
-//        $form->get('submitBtn')->setAttribute('value', 'Save');
-//
-//        $request = $this->getRequest();
-//        if ($request->isPost()) {
-//            $filter = $this->getServiceLocator()->get('FcFlight\Filter\FlightDataFilter');
-//            $form->setInputFilter($filter->getInputFilter());
-//            $form->setData($request->getPost());
-//            if ($form->isValid()) {
-//                $data = $form->getData();
-//                $refNumberOrder = $this->getFlightDataModel()->save($data);
-//                $this->flashMessenger()->addSuccessMessage("Data '"
-//                . $refNumberOrder . "' was successfully saved.");
-//                return $this->redirect()->toRoute('flights');
-//            }
-//        }
-//
-//        return array(
-//            'id' => $id,
-//            'form' => $form,
-//        );
-//    }
+    public function deleteAction()
+    {
+        $id = (int)$this->params()->fromRoute('id', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('flights');
+        }
 
-//    /**
-//     * @return array|\Zend\Http\Response
-//     */
-//    public function deleteAction()
-//    {
-//        $id = (int)$this->params()->fromRoute('id', 0);
-//        if (!$id) {
-//            return $this->redirect()->toRoute('flights');
-//        }
-//
-//        $request = $this->getRequest();
-//        if ($request->isPost()) {
-//            $redirectPath = $this->getFlightDataModel()->getHeaderRefNumberOrderByDataId($id);
-//            $del = $request->getPost('del', 'No');
-//
-//            if ($del == 'Yes') {
-//                $id = (int)$request->getPost('id');
-//                $this->getFlightDataModel()->remove($id);
-//                $this->flashMessenger()->addSuccessMessage("Data was successfully deleted.");
-//            }
-//
-//            // Redirect to list
-//            return $this->redirect()->toUrl('/browse/' . $redirectPath);
-//        }
-//
-//        return array(
-//            'id' => $id,
-//            'data' => $this->getFlightDataModel()->get($id)
-//        );
-//    }
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $redirectPath = $this->getRefuelModel()->getHeaderRefNumberOrderByRefuelId($id);
+            $del = $request->getPost('del', 'No');
+
+            if ($del == 'Yes') {
+                $id = (int)$request->getPost('id');
+                $this->getRefuelModel()->remove($id);
+                $this->flashMessenger()->addSuccessMessage("Refuel was successfully deleted.");
+            }
+
+            // Redirect to list
+            return $this->redirect()->toUrl('/browse/' . $redirectPath);
+        }
+
+        return array(
+            'id' => $id,
+            'data' => $this->getRefuelModel()->get($id)
+        );
+    }
 
     /**
      * @return array|object
@@ -214,6 +137,9 @@ class RefuelController extends AbstractActionController
         return $this->refuelModel;
     }
 
+    /**
+     * @return array|object
+     */
     public function getLibraryKontragentModel()
     {
         if (!$this->kontragentModel) {
@@ -240,6 +166,9 @@ class RefuelController extends AbstractActionController
         return $this->getFlightDataModel()->getDataById($this->headerId);
     }
 
+    /**
+     * @return array|object
+     */
     public function getLibraryUnitModel()
     {
         if (!$this->unitModel) {

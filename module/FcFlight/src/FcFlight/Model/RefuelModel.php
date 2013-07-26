@@ -54,26 +54,25 @@ class RefuelModel extends AbstractTableGateway
         $id = (string)$id;
         $select = new Select();
         $select->from($this->table);
+
         $select->columns(array('id',
             'headerId',
-            'dateOfFlight',
-            'flightNumberIcaoAndIata',
-            'flightNumberText',
-            'apDepIcaoAndIata',
-            'apDepTime',
-            'apArrIcaoAndIata',
-            'apArrTime'));
-        $select->join(array('library_air_operator' => 'library_air_operator'),
-            'library_air_operator.id = flightBaseDataForm.flightNumberIcaoAndIata',
-            array('flightNumberIcao' => 'code_icao', 'flightNumberIata' => 'code_iata'));
-        $select->join(array('dep' => 'library_airport'),
-            'dep.id = flightBaseDataForm.apDepIcaoAndIata',
-            array('apDepIcao' => 'code_icao', 'apDepIata' => 'code_iata'));
-        $select->join(array('arr' => 'library_airport'),
-            'arr.id = flightBaseDataForm.apArrIcaoAndIata',
-            array('apArrIcao' => 'code_icao', 'apArrIata' => 'code_iata'));
+            'airport',
+            'date',
+            'agent',
+            'quantity',
+            'unit'));
+        $select->join(array('library_airport' => 'library_airport'),
+            'library_airport.id = flightRefuelForm.airport',
+            array('airportName' => 'name'));
+        $select->join(array('library_kontragent' => 'library_kontragent'),
+            'library_kontragent.id = flightRefuelForm.agent',
+            array('agentName' => 'name'));
+        $select->join(array('library_unit' => 'library_unit'),
+            'library_unit.id = flightRefuelForm.unit',
+            array('unitName' => 'name'));
         $select->where(array('headerId' => $id));
-        $select->order('dateOfFlight ' . $select::ORDER_ASCENDING);
+        $select->order('date ' . $select::ORDER_ASCENDING);
         $resultSet = $this->selectWith($select);
         $resultSet->buffer();
 
@@ -82,20 +81,15 @@ class RefuelModel extends AbstractTableGateway
             //Real fields
             $data[$row->id]['id'] = $row->id;
             $data[$row->id]['headerId'] = $row->headerId;
-            $data[$row->id]['dateOfFlight'] = date('d/m/Y', $row->dateOfFlight);
-            $data[$row->id]['flightNumberIcaoAndIata'] = $row->flightNumberIcaoAndIata;
-            $data[$row->id]['flightNumberText'] = $row->flightNumberText;
-            $data[$row->id]['apDepIcaoAndIata'] = $row->apDepIcaoAndIata;
-            $data[$row->id]['apDepTime'] = date('H:i', $row->apDepTime);
-            $data[$row->id]['apArrIcaoAndIata'] = $row->apArrIcaoAndIata;
-            $data[$row->id]['apArrTime'] = date('H:i', $row->apArrTime);
+            $data[$row->id]['airport'] = $row->airport;
+            $data[$row->id]['date'] = date('d/m/Y', $row->date);//DD-MM-YYYY
+            $data[$row->id]['agent'] = $row->agent;
+            $data[$row->id]['quantity'] = $row->quantity;
+            $data[$row->id]['unit'] = $row->unit;
             //Virtual fields from join
-            $data[$row->id]['flightNumberIcao'] = $row->flightNumberIcao;
-            $data[$row->id]['flightNumberIata'] = $row->flightNumberIata;
-            $data[$row->id]['apDepIcao'] = $row->apDepIcao;
-            $data[$row->id]['apDepIata'] = $row->apDepIata;
-            $data[$row->id]['apArrIcao'] = $row->apArrIcao;
-            $data[$row->id]['apArrIata'] = $row->apArrIata;
+            $data[$row->id]['airportName'] = $row->airportName;
+            $data[$row->id]['agentName'] = $row->agentName;
+            $data[$row->id]['unitName'] = $row->unitName;
         }
 
         return $data;
@@ -130,5 +124,13 @@ class RefuelModel extends AbstractTableGateway
     public function remove($id)
     {
         $this->delete(array('id' => $id));
+    }
+
+    public function getHeaderRefNumberOrderByRefuelId($id)
+    {
+        $row = $this->get($id);
+        $headerModel = new FlightHeaderModel($this->getAdapter());
+
+        return $headerModel->getRefNumberOrderById($row->headerId);
     }
 }

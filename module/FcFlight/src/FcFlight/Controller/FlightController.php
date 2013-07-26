@@ -14,6 +14,7 @@ class FlightController extends AbstractActionController
 {
     protected $flightHeaderModel;
     protected $flightDataModel;
+    protected $refuelModel;
     protected $kontragentModel;
     protected $airOperatorModel;
     protected $aircraftModel;
@@ -39,7 +40,6 @@ class FlightController extends AbstractActionController
         } else {
             $data = $this->getFlightHeaderModel()->fetchAll($select->order($orderBy . ' ' . $orderAs));
         }
-//        \Zend\Debug\Debug::dump($data);
         $itemsPerPage = 20;
         $data->current();
 
@@ -80,10 +80,12 @@ class FlightController extends AbstractActionController
         }
 
         $data = $this->getFlightDataModel()->getDataById($header->id);
+        $refuel = $this->getRefuelModel()->getById($header->id);
 
         return new ViewModel(array(
             'header' => $header,
             'data' => $data,
+            'refuel' => $refuel,
         ));
     }
 
@@ -237,7 +239,6 @@ class FlightController extends AbstractActionController
             if ($form->isValid()) {
                 $data = $form->getData();
                 $filter->exchangeArray($data);
-//                \Zend\Debug\Debug::dump($headerId);die;
                 $summaryData = $this->getFlightDataModel()->add($filter);
                 $this->flashMessenger()->addSuccessMessage($summaryData . ' was successfully added.');
                 return $this->redirect()->toRoute('browse',
@@ -421,5 +422,17 @@ class FlightController extends AbstractActionController
     private function getAirports()
     {
         return $this->getLibraryAirportModel()->fetchAll();
+    }
+
+    /**
+     * @return array|object
+     */
+    public function getRefuelModel()
+    {
+        if (!$this->refuelModel) {
+            $sm = $this->getServiceLocator();
+            $this->refuelModel = $sm->get('FcFlight\Model\RefuelModel');
+        }
+        return $this->refuelModel;
     }
 }
