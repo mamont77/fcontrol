@@ -3,23 +3,13 @@ return array(
     'navigation' => array(
         'fcontrol' => array(
             array(
-                'label' => 'Control panel',
+                'label' => 'Flights',
+                'route' => 'home',
+            ),
+            array(
+                'label' => 'Libraries',
                 'type' => 'uri',
                 'pages' => array(
-                    array(
-                        'label' => 'Users',
-                        'route' => 'zfcadmin/users',
-                        'action' => 'index',
-                    ),
-                    array(
-                        'type' => 'uri',
-                        'divider' => true,
-                    ),
-                    array(
-                        'label' => 'Libraries',
-                        'type' => 'uri',
-                        'navHeader' => true,
-                    ),
                     array(
                         'label' => 'Regions',
                         'route' => 'zfcadmin/regions',
@@ -63,36 +53,9 @@ return array(
                 ),
             ),
             array(
-                'label' => 'Forms',
-                'title' => 'Resources by fControl',
-                'type' => 'uri',
-                'pages' => array(
-                    array(
-                        'label' => 'Flight',
-                        'route' => 'flight',
-                        'action' => 'add-header',
-                    ),
-                ),
-            ),
-            array(
-                'label' => 'Help for DEVEL',
-                'title' => 'Resources by fControl',
-                'type' => 'uri',
-                'pages' => array(
-                    array(
-                        'label' => 'See also',
-                        'type' => 'uri',
-                        'navHeader' => true,
-                    ),
-                    array(
-                        'label' => 'Forms',
-                        'uri' => 'http://twitter.github.com/bootstrap/base-css.html#forms',
-                    ),
-                    array(
-                        'label' => 'DluTwBootstrap Demo App (ZF2 application)',
-                        'uri' => 'http://apps.zfdaily.com/dlutwbootstrap-demo/tw-bootstrap-demo/form-inline',
-                    ),
-                ),
+                'label' => 'Users',
+                'route' => 'zfcadmin/users',
+                'action' => 'index',
             ),
         ),
     ),

@@ -52,10 +52,10 @@ if ($order) {
             echo 'Banned';
         };?>
         <td>
-            <a href="<?php echo $this->url('zfcadmin/user',
-                array('action' => 'edit', 'id' => $user->user_id));?>" class="btn">Edit</a>
-            <a href="<?php echo $this->url('zfcadmin/user',
-                array('action' => 'delete', 'id' => $user->user_id));?>" class="btn btn-warning">Remove</a>
+            <a title="Edit" href="<?php echo $this->url('zfcadmin/user',
+                array('action' => 'edit', 'id' => $user->user_id));?>"><i class="icon-edit"></i></a>
+            <a title="Remove" href="<?php echo $this->url('zfcadmin/user',
+                array('action' => 'delete', 'id' => $user->user_id));?>"><i class="icon-remove"></i></a>
         </td>
     </tr>
     <?php endforeach; ?>
