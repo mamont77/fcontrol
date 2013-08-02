@@ -65,7 +65,7 @@ class UserForm extends Form
             'name' => 'state',
             'type' => 'Zend\Form\Element\Checkbox',
             'options' => array(
-                'label' => 'Status',
+                'label' => 'Active?',
                 'checked_value' => '1',
                 'unchecked_value' => '0'
             ),
