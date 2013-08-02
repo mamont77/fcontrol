@@ -35,9 +35,18 @@ return array(
             // format: user_role(role_id(varchar), parent(varchar))
             'BjyAuthorize\Provider\Role\ZendDb' => array(
                 'table' => 'user_role',
-                'role_id_field' => 'role_id',
-                'parent_role_field' => 'parent',
+                'role_id_field' => 'roleId',
+                'parent_role_field' => 'parent_id',
             ),
+
+            // this will load roles from
+            // the 'BjyAuthorize\Provider\Role\ObjectRepositoryProvider' service
+//            'BjyAuthorize\Provider\Role\ObjectRepositoryProvider' => array(
+//                // class name of the entity representing the role
+//                'role_entity_class' => 'My\Role\Entity',
+//                // service name of the object manager
+//                'object_manager'    => 'My\Doctrine\Common\Persistence\ObjectManager',
+//            ),
         ),
 
         // resource providers provide a list of resources that will be tracked
