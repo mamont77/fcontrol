@@ -1,9 +1,10 @@
 <ul class="breadcrumb">
     <li><a href="/">Home</a> <span class="divider">/</span></li>
     <li>
-        <a href="<?=$this->url('zfcadmin/users', array('action' => 'index'));?>">Users</a>
+        <a href="<?= $this->url('zfcadmin/users', array('action' => 'index')); ?>">Users</a>
         <span class="divider">/</span>
-    </li>    <li class="active">Remove form</li>
+    </li>
+    <li class="active">Remove form</li>
 </ul>
 <?php
 $title = 'Remove employee';
@@ -12,19 +13,20 @@ $this->headTitle($title);
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 
 <p>Are you sure you want to delete
-    <strong>'<?php echo $this->escapeHtml($user->username); ?>'</strong> (<?php echo $this->escapeHtml($user->email); ?>)?
+    <strong>'<?php echo $this->escapeHtml($user->username); ?>'</strong> (<?php echo $this->escapeHtml($user->email); ?>
+    )?
 </p>
 <?php
 $url = $this->url('zfcadmin/user', array(
     'action' => 'delete',
-    'id'     => $this->user_id,
+    'id' => $this->user_id,
 ));
 ?>
 
 <form action="<?php echo $url; ?>" method="post">
-<div>
-    <input type="hidden" name="user_id" value="<?php echo (int) $user->user_id; ?>" />
-    <input type="submit" name="del" value="Yes" class="btn btn-warning" />
-    <input type="submit" name="del" value="No" class="btn btn-link" />
-</div>
+    <div>
+        <input type="hidden" name="user_id" value="<?php echo (int)$user->user_id; ?>"/>
+        <input type="submit" name="del" value="Yes" class="btn btn-warning"/>
+        <input type="submit" name="del" value="No" class="btn btn-link"/>
+    </div>
 </form>

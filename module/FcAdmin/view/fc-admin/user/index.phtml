@@ -1,5 +1,6 @@
 <ul class="breadcrumb">
     <li><a href="/">Home</a> <span class="divider">/</span></li>
+    <li class="active">Users</li>
 </ul>
 <?php
 $title = 'The list of employees';
@@ -7,12 +8,11 @@ $this->headTitle($title);
 $url_order = 'ASC';
 if ($order) {
     $url_order = $order == 'ASC' ? 'DESC' : 'ASC';
-
 }
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 <p>
-    <a href="<?php echo $this->url('zfcadmin/user', array('action' => 'add'));?>" class="btn btn-primary">Add new
+    <a href="<?php echo $this->url('zfcadmin/user', array('action' => 'add')); ?>" class="btn btn-primary">Add new
         employee</a>
 </p>
 
@@ -23,7 +23,7 @@ if ($order) {
             <a href="<?php echo $this->url($route, array('order_by' => 'username', 'order' => $url_order)); ?>">
                 Name
                 <?php if ($order_by == 'username'): ?>
-                <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
+                    <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
                 <?php endif; ?>
             </a>
         </th>
@@ -31,7 +31,7 @@ if ($order) {
             <a href="<?php echo $this->url($route, array('order_by' => 'email', 'order' => $url_order)); ?>">
                 Email
                 <?php if ($order_by == 'email'): ?>
-                <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
+                    <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
                 <?php endif; ?>
             </a>
         </th>
@@ -40,24 +40,24 @@ if ($order) {
         <th>Actions</th>
     </tr>
     <?php foreach ($pagination as $user) : ?>
-    <tr>
-        <td><?php echo $this->escapeHtml($user->user_id);?></td>
-        <td><?php echo $this->escapeHtml($user->username);?></td>
-        <td><?php echo $this->escapeHtml($user->email);?></td>
-        <td><?php echo $this->escapeHtml($user->role_id);?></td>
-        <td>
-            <?php if ($user->state == 1) {
-            echo 'Active';
-        } else {
-            echo 'Banned';
-        };?>
-        <td>
-            <a title="Edit" href="<?php echo $this->url('zfcadmin/user',
-                array('action' => 'edit', 'id' => $user->user_id));?>"><i class="icon-edit"></i></a>
-            <a title="Remove" href="<?php echo $this->url('zfcadmin/user',
-                array('action' => 'delete', 'id' => $user->user_id));?>"><i class="icon-remove"></i></a>
-        </td>
-    </tr>
+        <tr>
+            <td><?php echo $this->escapeHtml($user->user_id); ?></td>
+            <td><?php echo $this->escapeHtml($user->username); ?></td>
+            <td><?php echo $this->escapeHtml($user->email); ?></td>
+            <td><?php echo $this->escapeHtml($user->role_id); ?></td>
+            <td>
+                <?php if ($user->state == 1) {
+                    echo 'Active';
+                } else {
+                    echo 'Banned';
+                };?>
+            <td>
+                <a title="Edit" href="<?php echo $this->url('zfcadmin/user',
+                    array('action' => 'edit', 'id' => $user->user_id));?>"><i class="icon-edit"></i></a>
+                <a title="Remove" href="<?php echo $this->url('zfcadmin/user',
+                    array('action' => 'delete', 'id' => $user->user_id));?>"><i class="icon-remove"></i></a>
+            </td>
+        </tr>
     <?php endforeach; ?>
 </table>
 <?php

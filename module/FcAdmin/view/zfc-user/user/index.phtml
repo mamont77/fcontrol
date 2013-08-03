@@ -3,8 +3,16 @@
 ?>
 
 <div style="float:left; padding-right:16px;"><?php echo $this->gravatar($this->zfcUserIdentity()->getEmail()) ?></div>
-<h3><?php echo $this->translate('Hello'); ?>, <?php echo $this->zfcUserDisplayName() ?>!</h3>
-<a href="<?php echo $this->url('zfcuser/changeemail'); ?>" class="btn btn-info">Change Email</a>
-<a href="<?php echo $this->url('zfcuser/changepassword'); ?>" class="btn btn-info">Change Password</a>
-<a href="<?php echo $this->url('zfcuser/logout'); ?>" class="btn btn-warning"><?php echo $this->translate('Sign Out'); ?></a>
+<div style="padding-bottom: 1em;">
+    <h3><?php echo $this->translate('Hello'); ?>, <?php echo $this->zfcUserDisplayName() ?>!</h3>
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#" class="disabled">Overview</a></li>
+        <li><a href="<?php echo $this->url('zfcuser/changeemail'); ?>">Change Email</a></li>
+        <li><a href="<?php echo $this->url('zfcuser/changepassword'); ?>">Change Password</a></li>
+        <li><a href="<?php echo $this->url('zfcuser/logout'); ?>"><?php echo $this->translate('Sign Out'); ?></a></li>
+    </ul>
+</div>
 <div style="clear:both;"></div>
+<div class="alert alert-info">
+    <strong>TODO!</strong> Здесь будут логи последних действий этого пользователя.
+</div>
