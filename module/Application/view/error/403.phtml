@@ -1,0 +1,41 @@
+<h1>Access Denied</h1>
+
+<p>
+    You do not have permission to access this page.
+</p>
+<?php if ($this->zfcUserIdentity() !== false) { ?>
+    <p>Please ask the administrator to give permission.</p>
+<?php } else { ?>
+    <?php echo $this->ZfcUserLoginWidget(); ?>
+<?php } ?>
+<!-- Button to trigger modal -->
+<a href="#accessDeniedDetails" role="button" data-toggle="modal">Show details</a>
+
+<!-- Modal -->
+<div id="accessDeniedDetails" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Access Denied (403 Forbidden)</h3>
+    </div>
+    <div class="modal-body">
+        <p>
+            <?php if (\BjyAuthorize\Guard\Controller::ERROR === $error) : ?>
+                You are not authorized to access <?php echo($controller); ?>
+                <?php if ($action) : ?>
+                    ::<?php echo($action); ?>Action()
+                <?php endif; ?>
+                .
+            <?php elseif (\BjyAuthorize\Guard\Route::ERROR === $error)  : ?>
+                You are not authorized to access <?php echo $route; ?>.
+            <?php elseif ($error == 'error-unauthorized') : ?>
+                You are not authorized <?php echo $reason; ?>.
+            <?php else : ?>
+                An unknown error occurred.
+            <?php endif; ?>
+        </p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    </div>
+</div>

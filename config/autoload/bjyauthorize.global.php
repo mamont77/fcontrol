@@ -26,7 +26,7 @@ return array(
              */
             'BjyAuthorize\Provider\Role\Config' => array(
                 'guest' => array(),
-                'user'  => array('children' => array(
+                'user' => array('children' => array(
                     'admin' => array(),
                 )),
             ),
@@ -75,7 +75,7 @@ return array(
 
                 // Don't mix allow/deny rules if you are using role inheritance.
                 // There are some weird bugs.
-                'deny' => array(// ...
+                'deny' => array( // ...
                 ),
             ),
         ),
@@ -152,6 +152,9 @@ return array(
                 array('route' => 'refuel', 'roles' => array('user')),
             ),
         ),
+
+        // Template name for the unauthorized strategy
+        'template'              => 'error/403.phtml',
     ),
 
 );
