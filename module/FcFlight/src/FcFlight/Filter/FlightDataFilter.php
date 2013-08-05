@@ -211,7 +211,7 @@ class FlightDataFilter implements InputFilterAwareInterface
                         'name' => 'StringLength',
                         'options' => array(
                             'encoding' => 'UTF-8',
-                            'min' => 6,
+                            'min' => 1,
                             'max' => 6,
                         ),
                     ),
