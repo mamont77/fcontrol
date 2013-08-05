@@ -38,7 +38,7 @@ class AirOperatorModel extends BaseModel
         $select->columns(array('id', 'name', 'short_name', 'code_icao', 'code_iata'));
         $select->join(array('c' => 'library_country'),
             'c.id = library_air_operator.country',
-            array('country_name' => 'name'));
+            array('country_name' => 'name'), 'left');
 //        $select->order('library_country.code ASC');
         $resultSet = $this->selectWith($select);
         $resultSet->buffer();

@@ -65,13 +65,13 @@ class FlightDataModel extends AbstractTableGateway
             'apArrTime'));
         $select->join(array('library_air_operator' => 'library_air_operator'),
             'library_air_operator.id = flightBaseDataForm.flightNumberIcaoAndIata',
-            array('flightNumberIcao' => 'code_icao', 'flightNumberIata' => 'code_iata'));
+            array('flightNumberIcao' => 'code_icao', 'flightNumberIata' => 'code_iata'), 'left');
         $select->join(array('dep' => 'library_airport'),
             'dep.id = flightBaseDataForm.apDepIcaoAndIata',
-            array('apDepIcao' => 'code_icao', 'apDepIata' => 'code_iata'));
+            array('apDepIcao' => 'code_icao', 'apDepIata' => 'code_iata'), 'left');
         $select->join(array('arr' => 'library_airport'),
             'arr.id = flightBaseDataForm.apArrIcaoAndIata',
-            array('apArrIcao' => 'code_icao', 'apArrIata' => 'code_iata'));
+            array('apArrIcao' => 'code_icao', 'apArrIata' => 'code_iata'), 'left');
         $select->where(array('headerId' => $id));
         $select->order('dateOfFlight ' . $select::ORDER_ASCENDING);
         $resultSet = $this->selectWith($select);

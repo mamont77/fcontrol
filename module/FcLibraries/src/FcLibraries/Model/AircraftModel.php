@@ -36,7 +36,7 @@ class AircraftModel extends BaseModel
         $select->columns(array('id', 'aircraft_type', 'reg_number'));
         $select->join(array('t' => 'library_aircraft_type'),
             't.id = library_aircraft.aircraft_type',
-            array('aircraft_type_name' => 'name'));
+            array('aircraft_type_name' => 'name'), 'left');
 //        $select->order('library_country.code ASC');
         $resultSet = $this->selectWith($select);
         $resultSet->buffer();

@@ -36,7 +36,7 @@ class CityModel extends BaseModel
         $select->columns(array('id', 'name', 'country_id'));
         $select->join(array('c' => 'library_country'),
             'c.id = library_city.country_id',
-            array('country_name' => 'name'));
+            array('country_name' => 'name'), 'left');
         $resultSet = $this->selectWith($select);
         $resultSet->buffer();
 

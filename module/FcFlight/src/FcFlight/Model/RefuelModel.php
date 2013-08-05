@@ -64,13 +64,13 @@ class RefuelModel extends AbstractTableGateway
             'unit'));
         $select->join(array('library_airport' => 'library_airport'),
             'library_airport.id = flightRefuelForm.airport',
-            array('airportName' => 'name'));
+            array('airportName' => 'name'), 'left');
         $select->join(array('library_kontragent' => 'library_kontragent'),
             'library_kontragent.id = flightRefuelForm.agent',
-            array('agentName' => 'name'));
+            array('agentName' => 'name'), 'left');
         $select->join(array('library_unit' => 'library_unit'),
             'library_unit.id = flightRefuelForm.unit',
-            array('unitName' => 'name'));
+            array('unitName' => 'name'), 'left');
         $select->where(array('headerId' => $id));
         $select->order('date ' . $select::ORDER_ASCENDING);
         $resultSet = $this->selectWith($select);

@@ -36,13 +36,13 @@ class AirportModel extends BaseModel
         $select->columns(array('id', 'name', 'short_name', 'code_icao', 'code_iata'));
         $select->join(array('city' => 'library_city'),
             'library_airport.city_id = city.id',
-            array('city_name' => 'name'));
+            array('city_name' => 'name'), 'left');
         $select->join(array('country' => 'library_country'),
             'city.country_id = country.id',
-            array('country_name' => 'name'));
+            array('country_name' => 'name'), 'left');
         $select->join(array('region' => 'library_region'),
             'country.region_id = region.id',
-            array('region_name' => 'name'));
+            array('region_name' => 'name'), 'left');
         $resultSet = $this->selectWith($select);
         $resultSet->buffer();
 

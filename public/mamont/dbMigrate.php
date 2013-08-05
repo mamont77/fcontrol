@@ -32,6 +32,38 @@ function databaseErrorHandler($message, $info)
     exit();
 }
 
+//test tables
+
+//$count = $DB1->selectCell('SELECT COUNT(*) FROM a_country');
+//print_r($count);
+//print "\r\n";
+//$count = $DB2->selectCell('SELECT COUNT(*) FROM library_country');
+//print_r($count);
+//print "\r\n";
+//$count = $DB1->selectCell('SELECT COUNT(*) FROM a_city');
+//print_r($count);
+//print "\r\n";
+//$count = $DB2->selectCell('SELECT COUNT(*) FROM library_city');
+//print_r($count);
+//print "\r\n";
+//$count = $DB1->selectCell('SELECT COUNT(*) FROM a_airports');
+//print_r($count);
+//print "\r\n";
+//$count = $DB2->selectCell('SELECT COUNT(*) FROM library_airport');
+//print_r($count);
+//print "\r\n";
+//
+//$count = $DB1->select('SELECT * FROM a_airports WHERE id=3671');
+//print_r($count);
+//print "\r\n";
+//$count = $DB2->select('SELECT * FROM library_airport WHERE id=3671');
+//print_r($count);
+//print "\r\n";
+//
+//exit();
+
+//end test tables
+
 $DB2->query('TRUNCATE TABLE library_country');
 $result = $DB1->select('SELECT * FROM a_country');
 foreach ($result as $item) {

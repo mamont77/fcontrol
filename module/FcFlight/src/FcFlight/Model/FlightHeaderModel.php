@@ -57,13 +57,13 @@ class FlightHeaderModel extends AbstractTableGateway
         $select->columns(array('id', 'refNumberOrder', 'dateOrder', 'kontragent', 'airOperator', 'aircraft'));
         $select->join(array('library_kontragent' => 'library_kontragent'),
             'library_kontragent.id = flightBaseHeaderForm.kontragent',
-            array('kontragentShortName' => 'short_name'));
+            array('kontragentShortName' => 'short_name'), 'left');
         $select->join(array('library_air_operator' => 'library_air_operator'),
             'library_air_operator.id = flightBaseHeaderForm.airOperator',
-            array('airOperatorShortName' => 'short_name'));
+            array('airOperatorShortName' => 'short_name'), 'left');
         $select->join(array('library_aircraft' => 'library_aircraft'),
             'library_aircraft.reg_number = flightBaseHeaderForm.aircraft',
-            array('aircraftType' => 'aircraft_type'));
+            array('aircraftType' => 'aircraft_type'), 'left');
         $select->join(array('library_aircraft_type' => 'library_aircraft_type'),
             'library_aircraft_type.id = library_aircraft.aircraft_type',
             array('aircraftTypeName' => 'name'), 'left');
@@ -147,13 +147,13 @@ class FlightHeaderModel extends AbstractTableGateway
         $select->columns(array('id', 'refNumberOrder', 'dateOrder', 'kontragent', 'airOperator', 'aircraft'));
         $select->join(array('library_kontragent' => 'library_kontragent'),
             'library_kontragent.id = flightBaseHeaderForm.kontragent',
-            array('kontragentShortName' => 'short_name'));
+            array('kontragentShortName' => 'short_name'), 'left');
         $select->join(array('library_air_operator' => 'library_air_operator'),
             'library_air_operator.id = flightBaseHeaderForm.airOperator',
-            array('airOperatorShortName' => 'short_name'));
+            array('airOperatorShortName' => 'short_name'), 'left');
         $select->join(array('library_aircraft' => 'library_aircraft'),
             'library_aircraft.reg_number = flightBaseHeaderForm.aircraft',
-            array('aircraftType' => 'aircraft_type'));
+            array('aircraftType' => 'aircraft_type'), 'left');
         $select->join(array('library_aircraft_type' => 'library_aircraft_type'),
             'library_aircraft_type.id = library_aircraft.aircraft_type',
             array('aircraftTypeName' => 'name'), 'left');
