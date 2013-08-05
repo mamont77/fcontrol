@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 ini_set('upload_max_filesize', '16M');
 ini_set('post_max_size', '20M');
 
-if (!defined('PATH_SEPARATOR')) define('PATH_SEPARATOR', getenv('COMSPEC')? ';' : ':');
+if (!defined('PATH_SEPARATOR')) define('PATH_SEPARATOR', getenv('COMSPEC') ? ';' : ':');
 ini_set('include_path', ini_get('include_path') . PATH_SEPARATOR . dirname(__FILE__));
 
 // {{{ Includes
@@ -23,13 +23,13 @@ $DB2->setErrorHandler('databaseErrorHandler');
 // Код обработчика ошибок SQL.
 function databaseErrorHandler($message, $info)
 {
-	// Если использовалась @, ничего не делать.
-	if (!error_reporting()) return;
-	// Выводим подробную информацию об ошибке.
-	echo "SQL Error: $message<br><pre>";
-	print_r($info);
-	echo "</pre>";
-	exit();
+    // Если использовалась @, ничего не делать.
+    if (!error_reporting()) return;
+    // Выводим подробную информацию об ошибке.
+    echo "SQL Error: $message<br><pre>";
+    print_r($info);
+    echo "</pre>";
+    exit();
 }
 
 $DB2->query('TRUNCATE TABLE library_country');
