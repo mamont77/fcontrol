@@ -39,7 +39,7 @@ class RefuelController extends AbstractActionController
             array(
                 'headerId' => $this->headerId,
                 'libraries' => array(
-                    'apDeps' => $this->getParentData(),
+                    'airports' => $this->getParentData(),
                     'agents' => $this->getKontragents(),
                     'units' => $this->getUnits(),
                 )

@@ -15,6 +15,16 @@ class RefuelForm extends BaseForm
     /**
      * @var array
      */
+    protected $airportsApDep = array();
+
+    /**
+     * @var array
+     */
+    protected $airportsApArr = array();
+
+    /**
+     * @var array
+     */
     protected $airports = array();
 
     /**
@@ -39,7 +49,11 @@ class RefuelForm extends BaseForm
 
         parent::__construct($this->_formName);
 
-        $this->setLibrary('airports', $options['libraries']['apDeps'], 'id', array('apDepIata', 'apDepIcao'), 'array');
+        $this->setLibrary('airportsApDep', $options['libraries']['airports'], 'apDepIcaoAndIata',
+            array('apDepIata', 'apDepIcao'), 'array');
+        $this->setLibrary('airportsApArr', $options['libraries']['airports'], 'apArrIcaoAndIata',
+            array('apArrIata', 'apArrIcao'), 'array');
+        $this->setAirports($this->airportsApDep, $this->airportsApArr);
         $this->setLibrary('agents', $options['libraries']['agents'], 'id', 'name');
         $this->setLibrary('units', $options['libraries']['units'], 'id', 'name');
 
@@ -71,7 +85,7 @@ class RefuelForm extends BaseForm
             'options' => array(
                 'label' => 'Airport',
                 'empty_option' => '-- Please select --',
-                'value_options' => $this->airports,
+                'value_options' => $this->getAirports(),
             ),
         ));
 
@@ -141,6 +155,24 @@ class RefuelForm extends BaseForm
                 'value' => 'Add',
             ),
         ));
+    }
 
+    /**
+     * @param array $a
+     * @param array $b
+     */
+    public function setAirports(array $a, array $b)
+    {
+        $compare = $a + $b;
+        uasort($compare, array($this, 'sortLibrary'));
+        $this->airports = $compare;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAirports()
+    {
+        return $this->airports;
     }
 }
