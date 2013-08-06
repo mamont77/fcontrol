@@ -36,6 +36,8 @@ class RefuelFilter implements InputFilterAwareInterface
 
     //Virtual fields
     public $airportName;
+    public $airportIcao;
+    public $airportIata;
     public $agentName;
     public $unitName;
 
@@ -79,6 +81,8 @@ class RefuelFilter implements InputFilterAwareInterface
         $this->quantity = (isset($data['quantity'])) ? $data['quantity'] : null;
         $this->unit = (isset($data['unit'])) ? $data['unit'] : null;
         $this->airportName = (isset($data['airportName'])) ? $data['airportName'] : null;
+        $this->airportIcao = (isset($data['airportIcao'])) ? $data['airportIcao'] : null;
+        $this->airportIata = (isset($data['airportIata'])) ? $data['airportIata'] : null;
         $this->agentName = (isset($data['agentName'])) ? $data['agentName'] : null;
         $this->unitName = (isset($data['unitName'])) ? $data['unitName'] : null;
     }

@@ -5,6 +5,8 @@ jQuery.noConflict();
 
 (function ($) {
 
+    $("[rel='tooltip']").tooltip();
+
     /**
      * Override jQuery.fn.init to guard against XSS attacks.
      *

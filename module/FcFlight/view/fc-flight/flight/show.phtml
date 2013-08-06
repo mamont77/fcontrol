@@ -171,7 +171,13 @@ $this->headTitle($title);
             </tr>
             <?php foreach ($refuel as $row) : ?>
                 <tr>
-                    <td><?php echo $this->escapeHtml($row['airportName']); ?></td>
+                    <td>
+                        <a rel="tooltip" href="#" data-toggle="tooltip" data-placement="top"
+                           title="" data-original-title="<?php echo $this->escapeHtml($row['airportName']); ?>">
+                               <?php echo $this->escapeHtml($row['airportIcao']); ?> |
+                               <?php echo $this->escapeHtml($row['airportIata']); ?>
+                        </a>
+                    </td>
                     <td><?php echo $this->escapeHtml($row['date']); ?></td>
                     <td><?php echo $this->escapeHtml($row['agentName']); ?></td>
                     <td><?php echo $this->escapeHtml($row['quantity']); ?></td>

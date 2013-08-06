@@ -64,7 +64,7 @@ class RefuelModel extends AbstractTableGateway
             'unit'));
         $select->join(array('library_airport' => 'library_airport'),
             'library_airport.id = flightRefuelForm.airport',
-            array('airportName' => 'name'), 'left');
+            array('airportName' => 'name', 'airportIcao' => 'code_icao', 'airportIata' => 'code_iata'), 'left');
         $select->join(array('library_kontragent' => 'library_kontragent'),
             'library_kontragent.id = flightRefuelForm.agent',
             array('agentName' => 'name'), 'left');
@@ -88,6 +88,8 @@ class RefuelModel extends AbstractTableGateway
             $data[$row->id]['unit'] = $row->unit;
             //Virtual fields from join
             $data[$row->id]['airportName'] = $row->airportName;
+            $data[$row->id]['airportIcao'] = $row->airportIcao;
+            $data[$row->id]['airportIata'] = $row->airportIata;
             $data[$row->id]['agentName'] = $row->agentName;
             $data[$row->id]['unitName'] = $row->unitName;
         }

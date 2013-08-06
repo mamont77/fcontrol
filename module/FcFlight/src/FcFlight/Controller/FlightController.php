@@ -82,6 +82,8 @@ class FlightController extends AbstractActionController
         $data = $this->getFlightDataModel()->getDataById($header->id);
         $refuel = $this->getRefuelModel()->getById($header->id);
 
+//        \Zend\Debug\Debug::dump($refuel);
+
         return new ViewModel(array(
             'header' => $header,
             'data' => $data,
