@@ -6,9 +6,9 @@ use Zend\Db\TableGateway\AbstractTableGateway;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\Select;
-use FcFlight\Filter\FlightDataFilter;
+use FcFlight\Filter\LegFilter;
 
-class FlightDataModel extends AbstractTableGateway
+class LegModel extends AbstractTableGateway
 {
 
     /**
@@ -23,7 +23,7 @@ class FlightDataModel extends AbstractTableGateway
     {
         $this->adapter = $adapter;
         $this->resultSetPrototype = new ResultSet();
-        $this->resultSetPrototype->setArrayObjectPrototype(new FlightDataFilter($this->adapter));
+        $this->resultSetPrototype->setArrayObjectPrototype(new LegFilter($this->adapter));
         $this->initialize();
     }
 
@@ -49,7 +49,7 @@ class FlightDataModel extends AbstractTableGateway
      * @param $id
      * @return array
      */
-    public function getDataById($id)
+    public function getLegById($id)
     {
         $id = (string)$id;
         $select = new Select();
@@ -102,10 +102,10 @@ class FlightDataModel extends AbstractTableGateway
     }
 
     /**
-     * @param FlightDataFilter $object
+     * @param LegFilter $object
      * @return string
      */
-    public function add(FlightDataFilter $object)
+    public function add(LegFilter $object)
     {
         $dateOfFlight = \DateTime::createFromFormat('d-m-Y', $object->dateOfFlight);
         $apDepTime = \DateTime::createFromFormat('d-m-Y H:i', $object->dateOfFlight . ' ' . $object->apDepTime);
@@ -136,7 +136,7 @@ class FlightDataModel extends AbstractTableGateway
         $this->delete(array('id' => $id));
     }
 
-    public function getHeaderRefNumberOrderByDataId($id)
+    public function getHeaderRefNumberOrderByLegId($id)
     {
         $row = $this->get($id);
         $headerModel = new FlightHeaderModel($this->getAdapter());

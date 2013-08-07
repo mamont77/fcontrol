@@ -5,7 +5,7 @@ namespace FcFlight\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use FcFlight\Form\FlightHeaderForm;
-use FcFlight\Form\FlightDataForm;
+use FcFlight\Form\LegForm;
 use FcFlight\Form\RefuelForm;
 use Zend\Db\Sql\Select;
 use Zend\Paginator\Paginator;
@@ -16,7 +16,7 @@ class RefuelController extends AbstractActionController
     public $headerId;
     protected $refuelModel;
     protected $flightHeaderModel;
-    protected $flightDataModel;
+    protected $legModel;
     protected $kontragentModel;
     protected $unitModel;
 
@@ -39,7 +39,7 @@ class RefuelController extends AbstractActionController
             array(
                 'headerId' => $this->headerId,
                 'libraries' => array(
-                    'airports' => $this->getParentData(),
+                    'airports' => $this->getParentLeg(),
                     'agents' => $this->getKontragents(),
                     'units' => $this->getUnits(),
                 )
@@ -116,13 +116,13 @@ class RefuelController extends AbstractActionController
     /**
      * @return array|object
      */
-    public function getFlightDataModel()
+    public function getLegModel()
     {
-        if (!$this->flightDataModel) {
+        if (!$this->legModel) {
             $sm = $this->getServiceLocator();
-            $this->flightDataModel = $sm->get('FcFlight\Model\FlightDataModel');
+            $this->legModel = $sm->get('FcFlight\Model\LegModel');
         }
-        return $this->flightDataModel;
+        return $this->legModel;
     }
 
     /**
@@ -161,9 +161,9 @@ class RefuelController extends AbstractActionController
     /**
      * @return array
      */
-    private function getParentData()
+    private function getParentLeg()
     {
-        return $this->getFlightDataModel()->getDataById($this->headerId);
+        return $this->getLegModel()->getLegById($this->headerId);
     }
 
     /**

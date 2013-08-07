@@ -10,7 +10,7 @@ class RefuelForm extends BaseForm
     /**
      * @var string
      */
-    protected $_formName = 'flightData';
+    protected $_formName = 'leg';
 
     /**
      * @var array

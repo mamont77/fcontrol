@@ -8,7 +8,7 @@ use Zend\InputFilter\InputFilterInterface;
 use Zend\Db\Adapter\Adapter;
 use FcFlight\Validator\FcFlightDateOfFlight;
 
-class FlightDataFilter implements InputFilterAwareInterface
+class LegFilter implements InputFilterAwareInterface
 {
 
     /**

@@ -6,12 +6,12 @@ use Zend\Form\Element;
 use Zend\Form\Form;
 use \Zend\Db\ResultSet\ResultSet;
 
-class FlightDataForm extends BaseForm
+class LegForm extends BaseForm
 {
     /**
      * @var string
      */
-    protected $_formName = 'flightData';
+    protected $_formName = 'leg';
 
     /**
      * @var array

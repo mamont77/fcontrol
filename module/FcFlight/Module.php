@@ -4,10 +4,10 @@ namespace FcFlight;
 use Zend\ModuleManager\ModuleManager;
 use Zend\Mvc\MvcEvent;
 use FcFlight\Model\FlightHeaderModel;
-use FcFlight\Model\FlightDataModel;
+use FcFlight\Model\LegModel;
 use FcFlight\Model\RefuelModel;
 use FcFlight\Filter\FlightHeaderFilter;
-use FcFlight\Filter\FlightDataFilter;
+use FcFlight\Filter\LegFilter;
 use FcFlight\Filter\RefuelFilter;
 
 class Module
@@ -74,9 +74,9 @@ class Module
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     return new FlightHeaderModel($dbAdapter);
                 },
-                'FcFlight\Model\FlightDataModel' => function ($sm) {
+                'FcFlight\Model\LegModel' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new FlightDataModel($dbAdapter);
+                    return new LegModel($dbAdapter);
                 },
                 'FcFlight\Model\RefuelModel' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
@@ -86,9 +86,9 @@ class Module
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     return new FlightHeaderFilter($dbAdapter);
                 },
-                'FcFlight\Filter\FlightDataFilter' => function ($sm) {
+                'FcFlight\Filter\LegFilter' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new FlightDataFilter($dbAdapter);
+                    return new LegFilter($dbAdapter);
                 },
                 'FcFlight\Filter\RefuelFilter' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');

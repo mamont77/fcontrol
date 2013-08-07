@@ -16,9 +16,9 @@
         }
     };
 
-    fControl.behaviors.flightDataForm = {
+    fControl.behaviors.flightLegForm = {
         attach:function (context, settings) {
-            var $form = $('form#flightData');
+            var $form = $('form#leg');
             $($form).find('#dateOfFlight').mask('99-99-9999');
             $($form).find('#apDepTime').mask('99:99');
             $($form).find('#apArrTime').mask('99:99');

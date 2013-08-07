@@ -5,7 +5,7 @@ namespace FcFlight\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use FcFlight\Form\FlightHeaderForm;
-use FcFlight\Form\FlightDataForm;
+use FcFlight\Form\LegForm;
 use Zend\Db\Sql\Select;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\Iterator as paginatorIterator;
@@ -13,7 +13,7 @@ use Zend\Paginator\Adapter\Iterator as paginatorIterator;
 class FlightController extends AbstractActionController
 {
     protected $flightHeaderModel;
-    protected $flightDataModel;
+    protected $legModel;
     protected $refuelModel;
     protected $kontragentModel;
     protected $airOperatorModel;
@@ -79,14 +79,14 @@ class FlightController extends AbstractActionController
             break;
         }
 
-        $data = $this->getFlightDataModel()->getDataById($header->id);
+        $leg = $this->getLegModel()->getLegById($header->id);
         $refuel = $this->getRefuelModel()->getById($header->id);
 
 //        \Zend\Debug\Debug::dump($refuel);
 
         return new ViewModel(array(
             'header' => $header,
-            'data' => $data,
+            'leg' => $leg,
             'refuel' => $refuel,
         ));
     }
@@ -210,7 +210,7 @@ class FlightController extends AbstractActionController
     /**
      * @return array|\Zend\Http\Response
      */
-    public function addDataAction()
+    public function addLegAction()
     {
 
         $headerId = (int)$this->params()->fromRoute('id', 0);
@@ -222,7 +222,7 @@ class FlightController extends AbstractActionController
 
         $refNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($headerId);
 
-        $form = new FlightDataForm('flightData',
+        $form = new LegForm('leg',
             array(
                 'headerId' => $headerId,
                 'libraries' => array(
@@ -234,15 +234,15 @@ class FlightController extends AbstractActionController
 
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $filter = $this->getServiceLocator()->get('FcFlight\Filter\FlightDataFilter');
+            $filter = $this->getServiceLocator()->get('FcFlight\Filter\LegFilter');
             $form->setInputFilter($filter->getInputFilter());
             $form->setData($request->getPost());
 
             if ($form->isValid()) {
                 $data = $form->getData();
                 $filter->exchangeArray($data);
-                $summaryData = $this->getFlightDataModel()->add($filter);
-                $this->flashMessenger()->addSuccessMessage($summaryData . ' was successfully added.');
+                $summaryData = $this->getLegModel()->add($filter);
+                $this->flashMessenger()->addSuccessMessage('Leg '. $summaryData . ' was successfully added.');
                 return $this->redirect()->toRoute('browse',
                     array(
                         'action' => 'show',
@@ -260,12 +260,12 @@ class FlightController extends AbstractActionController
      * @return array|\Zend\Http\Response
      * @deprecated
      */
-//    public function editDataAction()
+//    public function editLegAction()
 //    {
 //        $id = (int)$this->params()->fromRoute('id', 0);
-//        $data = $this->getFlightDataModel()->get($id);
+//        $data = $this->getLegModel()->get($id);
 //
-//        $form = new FlightDataForm('flightData',
+//        $form = new LegForm('leg',
 //            array(
 //                //'headerId' => $id,
 //                'libraries' => array(
@@ -280,12 +280,12 @@ class FlightController extends AbstractActionController
 //
 //        $request = $this->getRequest();
 //        if ($request->isPost()) {
-//            $filter = $this->getServiceLocator()->get('FcFlight\Filter\FlightDataFilter');
+//            $filter = $this->getServiceLocator()->get('FcFlight\Filter\LegFilter');
 //            $form->setInputFilter($filter->getInputFilter());
 //            $form->setData($request->getPost());
 //            if ($form->isValid()) {
 //                $data = $form->getData();
-//                $refNumberOrder = $this->getFlightDataModel()->save($data);
+//                $refNumberOrder = $this->getLegModel()->save($data);
 //                $this->flashMessenger()->addSuccessMessage("Data '"
 //                . $refNumberOrder . "' was successfully saved.");
 //                return $this->redirect()->toRoute('flights');
@@ -301,7 +301,7 @@ class FlightController extends AbstractActionController
     /**
      * @return array|\Zend\Http\Response
      */
-    public function deleteDataAction()
+    public function deleteLegAction()
     {
         $id = (int)$this->params()->fromRoute('id', 0);
         if (!$id) {
@@ -310,13 +310,13 @@ class FlightController extends AbstractActionController
 
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $redirectPath = $this->getFlightDataModel()->getHeaderRefNumberOrderByDataId($id);
+            $redirectPath = $this->getLegModel()->getHeaderRefNumberOrderByLegId($id);
             $del = $request->getPost('del', 'No');
 
             if ($del == 'Yes') {
                 $id = (int)$request->getPost('id');
-                $this->getFlightDataModel()->remove($id);
-                $this->flashMessenger()->addSuccessMessage("Data was successfully deleted.");
+                $this->getLegModel()->remove($id);
+                $this->flashMessenger()->addSuccessMessage("Leg was successfully deleted.");
             }
 
             // Redirect to list
@@ -325,7 +325,7 @@ class FlightController extends AbstractActionController
 
         return array(
             'id' => $id,
-            'data' => $this->getFlightDataModel()->get($id)
+            'leg' => $this->getLegModel()->get($id)
         );
     }
 
@@ -344,13 +344,13 @@ class FlightController extends AbstractActionController
     /**
      * @return array|object
      */
-    public function getFlightDataModel()
+    public function getLegModel()
     {
-        if (!$this->flightDataModel) {
+        if (!$this->legModel) {
             $sm = $this->getServiceLocator();
-            $this->flightDataModel = $sm->get('FcFlight\Model\FlightDataModel');
+            $this->legModel = $sm->get('FcFlight\Model\LegModel');
         }
-        return $this->flightDataModel;
+        return $this->legModel;
     }
 
     public function getLibraryKontragentModel()

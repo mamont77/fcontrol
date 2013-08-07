@@ -13,7 +13,7 @@ $this->headTitle($title);
     <ul class="nav nav-pills">
         <li class="disabled"><a href="#">Add service:</a></li>
         <li>
-            <a href="<?php echo $this->url('flight', array('action' => 'add-data', 'id' => $header->id)); ?>">LEG</a>
+            <a href="<?php echo $this->url('flight', array('action' => 'add-leg', 'id' => $header->id)); ?>">LEG</a>
         </li>
         <li>
             <a href="<?php echo $this->url('refuel', array('action' => 'add', 'id' => $header->id)); ?>">Refuel</a>
@@ -64,9 +64,9 @@ $this->headTitle($title);
     </table>
 </div>
 
-<? if (count($data) > 0): ?>
+<? if (count($leg) > 0): ?>
     <h4>Type of Service: LEG</h4>
-    <div id="data">
+    <div id="leg">
         <table class="table table-bordered table-hover">
             <tr>
                 <th rowspan="2">
@@ -110,7 +110,7 @@ $this->headTitle($title);
                     Time, UTC
                 </th>
             </tr>
-            <?php foreach ($data as $row) : ?>
+            <?php foreach ($leg as $row) : ?>
                 <tr>
                     <td><?php echo $this->escapeHtml($row['dateOfFlight']); ?></td>
                     <td><?php echo $this->escapeHtml($row['flightNumberIcao']); ?></td>
@@ -123,8 +123,10 @@ $this->headTitle($title);
                     <td><?php echo $this->escapeHtml($row['apArrIata']); ?></td>
                     <td><?php echo $this->escapeHtml($row['apArrTime']); ?></td>
                     <td>
+                        <!--                        <a title="Edit" href="--><?php //echo $this->url('flight',
+//                            array('action' => 'edit-leg', 'id' => $row['id']));?><!--"><i class="icon-edit"></i></a>-->
                         <a title="Remove" href="<?php echo $this->url('flight',
-                            array('action' => 'delete-data', 'id' => $row['id']));?>"><i class="icon-remove"></i></a>
+                            array('action' => 'delete-leg', 'id' => $row['id']));?>"><i class="icon-remove"></i></a>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -195,9 +197,6 @@ $this->headTitle($title);
                 </tr>
             <?php endforeach; ?>
         </table>
-        <div id="refuelTotal" class="">
-
-        </div>
         <div class="row-fluid">
             <div class="span6">
                 <a class="btn disabled" href="#">Make INVOICE</a>
@@ -214,6 +213,7 @@ $this->headTitle($title);
                 </table>
             </div>
         </div>
+        "-" fields in development
 
     </div>
 <? endif; ?>
