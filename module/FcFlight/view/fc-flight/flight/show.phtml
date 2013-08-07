@@ -174,8 +174,8 @@ $this->headTitle($title);
                     <td>
                         <a rel="tooltip" href="#" data-toggle="tooltip" data-placement="top"
                            title="" data-original-title="<?php echo $this->escapeHtml($row['airportName']); ?>">
-                               <?php echo $this->escapeHtml($row['airportIcao']); ?> |
-                               <?php echo $this->escapeHtml($row['airportIata']); ?>
+                            <?php echo $this->escapeHtml($row['airportIcao']); ?> |
+                            <?php echo $this->escapeHtml($row['airportIata']); ?>
                         </a>
                     </td>
                     <td><?php echo $this->escapeHtml($row['date']); ?></td>
@@ -195,6 +195,25 @@ $this->headTitle($title);
                 </tr>
             <?php endforeach; ?>
         </table>
-        <a class="btn disabled" href="#">Make INVOICE</a>
+        <div id="refuelTotal" class="">
+
+        </div>
+        <div class="row-fluid">
+            <div class="span6">
+                <a class="btn disabled" href="#">Make INVOICE</a>
+            </div>
+            <div class="span6">
+                <table style="width: 200px; float: right" class="table table-bordered .pull-right">
+                    <tr>
+                        <td>
+                            Subtotal
+                        </td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
     </div>
 <? endif; ?>
