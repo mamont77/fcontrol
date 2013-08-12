@@ -1,7 +1,7 @@
 <ul class="breadcrumb">
     <li><a href="/">Home</a> <span class="divider">/</span></li>
     <li>
-        <a href="<?=$this->url('browse', array('action' => 'show', 'refNumberOrder' => $this->refNumberOrder));?>"><?= $this->refNumberOrder ?></a>
+        <a href="<?= $this->url('browse', array('action' => 'show', 'refNumberOrder' => $this->refNumberOrder)); ?>"><?= $this->refNumberOrder ?></a>
         <span class="divider">/</span>
     </li>
     <li class="active">LEG form</li>
@@ -14,15 +14,23 @@ $this->headTitle($title);
 
 <?php
 $displayOptions = array(
+    'elements' => array(
+        'dateOfFlight' => array(
+            'required' => true,
+            'class' => 'span2',
+        ),
+    ),
     'fieldsets' => array(
         'flightNumber' => array(
             'display_legend' => true,
             'elements' => array(
                 'flightNumberIcaoAndIata' => array(
                     'required' => true,
+                    'class' => 'span8',
                 ),
                 'flightNumberText' => array(
                     'required' => true,
+                    'class' => 'span8',
                 ),
             ),
         ),
@@ -31,9 +39,11 @@ $displayOptions = array(
             'elements' => array(
                 'apDepIcaoAndIata' => array(
                     'required' => true,
+                    'class' => 'span8',
                 ),
                 'apDepTime' => array(
                     'required' => true,
+                    'class' => 'span8',
                 ),
             ),
         ),
@@ -42,20 +52,14 @@ $displayOptions = array(
             'elements' => array(
                 'apArrIcaoAndIata' => array(
                     'required' => true,
+                    'class' => 'span8',
                 ),
                 'apArrTime' => array(
                     'required' => true,
+                    'class' => 'span8',
                 ),
             ),
         ),
-    ),
-    'elements' => array(
-        'dateOfFlight' => array(
-            'required' => true,
-        ),
-//        'submitBtn' => array(
-//            'class' => 'btn-large',
-//        ),
     ),
 );
 //$formType = 'inline';
@@ -74,4 +78,56 @@ $form->prepare();
     <?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
 <?php endif; ?>
 
-<?php echo $this->formTwb($form, $formType, $displayOptions); ?>
+<?php //echo $this->formTwb($form, $formType, $displayOptions); ?>
+
+<?php
+$flightNumber = $form->get('flightNumber');
+$apDep = $form->get('apDep');
+$apArr = $form->get('apArr');
+
+echo $this->formTwb()->openTag($form, $formType);
+echo $this->formRowTwb($form->get('headerId'));
+echo $this->formRowTwb($form->get('dateOfFlight'), $formType, $displayOptions['elements']['dateOfFlight']);
+
+?>
+
+<div class="row-fluid">
+    <div class="span4">
+        <?php
+        echo $this->formFieldsetTwb()->openTag($flightNumber, $formType, $displayOptions['fieldsets']['flightNumber'], true, true, true);
+        echo $this->formRowTwb($flightNumber->get('flightNumberIcaoAndIata'), $formType, $displayOptions['fieldsets']['flightNumber']['elements']['flightNumberIcaoAndIata']);
+        echo $this->formRowTwb($flightNumber->get('flightNumberText'), $formType, $displayOptions['fieldsets']['flightNumber']['elements']['flightNumberText']);
+        echo $this->formFieldsetTwb()->closeTag();
+        ?>
+    </div>
+    <div class="span4">
+        <?php
+        echo $this->formFieldsetTwb()->openTag($apDep, $formType, $displayOptions['fieldsets']['apDep']);
+        echo $this->formRowTwb($apDep->get('apDepIcaoAndIata'), $formType, $displayOptions['fieldsets']['apDep']['elements']['apDepIcaoAndIata']);
+        echo $this->formRowTwb($apDep->get('apDepTime'), $formType, $displayOptions['fieldsets']['apDep']['elements']['apDepTime']);
+        echo $this->formFieldsetTwb()->closeTag();
+        ?>
+    </div>
+    <div class="span4">
+        <?php
+        echo $this->formFieldsetTwb()->openTag($apArr, $formType, $displayOptions['fieldsets']['apArr']);
+        echo $this->formRowTwb($apArr->get('apArrIcaoAndIata'), $formType, $displayOptions['fieldsets']['apArr']['elements']['apArrIcaoAndIata']);
+        echo $this->formRowTwb($apArr->get('apArrTime'), $formType, $displayOptions['fieldsets']['apArr']['elements']['apArrTime']);
+        echo $this->formFieldsetTwb()->closeTag();
+        ?>
+    </div>
+</div>
+
+<?php
+
+echo $this->formRowTwb($form->get('csrf'));
+$actions = array(
+    $form->get('submitBtn'),
+);
+?>
+<div class="form-actions">
+    <?= $this->formActionsTwb($actions, $formType, $displayOptions['elements']); ?>
+</div>
+
+<?php
+echo $this->formTwb()->closeTag();
