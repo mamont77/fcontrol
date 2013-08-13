@@ -5,7 +5,6 @@ namespace FcFlight\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use FcFlight\Form\FlightHeaderForm;
-use FcFlight\Form\LegForm;
 use Zend\Db\Sql\Select;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\Iterator as paginatorIterator;
@@ -208,128 +207,6 @@ class FlightController extends AbstractActionController
     }
 
     /**
-     * @return array|\Zend\Http\Response
-     */
-    public function addLegAction()
-    {
-
-        $headerId = (int)$this->params()->fromRoute('id', 0);
-        if (!$headerId) {
-            return $this->redirect()->toRoute('flight', array(
-                'action' => 'index'
-            ));
-        }
-
-        $refNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($headerId);
-
-        $form = new LegForm('leg',
-            array(
-                'headerId' => $headerId,
-                'libraries' => array(
-                    'flightNumberIcaoAndIata' => $this->getAirOperators(),
-                    'appIcaoAndIata' => $this->getAirports(),
-                )
-            )
-        );
-
-        $request = $this->getRequest();
-        if ($request->isPost()) {
-            $filter = $this->getServiceLocator()->get('FcFlight\Filter\LegFilter');
-            $form->setInputFilter($filter->getInputFilter());
-            $form->setData($request->getPost());
-
-            if ($form->isValid()) {
-                $data = $form->getData();
-                $filter->exchangeArray($data);
-                $summaryData = $this->getLegModel()->add($filter);
-                $this->flashMessenger()->addSuccessMessage('Leg '. $summaryData . ' was successfully added.');
-                return $this->redirect()->toRoute('browse',
-                    array(
-                        'action' => 'show',
-                        'refNumberOrder' => $refNumberOrder,
-                    ));
-            }
-        }
-        return array('form' => $form,
-            'headerId' => $headerId,
-            'refNumberOrder' => $refNumberOrder,
-        );
-    }
-
-    /**
-     * @return array|\Zend\Http\Response
-     * @deprecated
-     */
-//    public function editLegAction()
-//    {
-//        $id = (int)$this->params()->fromRoute('id', 0);
-//        $data = $this->getLegModel()->get($id);
-//
-//        $form = new LegForm('leg',
-//            array(
-//                //'headerId' => $id,
-//                'libraries' => array(
-//                    'flightNumberIcaoAndIata' => $this->getAirOperators(),
-//                    'appIcaoAndIata' => $this->getAirports(),
-//                )
-//            )
-//        );
-//
-//        $form->bind($data);
-//        $form->get('submitBtn')->setAttribute('value', 'Save');
-//
-//        $request = $this->getRequest();
-//        if ($request->isPost()) {
-//            $filter = $this->getServiceLocator()->get('FcFlight\Filter\LegFilter');
-//            $form->setInputFilter($filter->getInputFilter());
-//            $form->setData($request->getPost());
-//            if ($form->isValid()) {
-//                $data = $form->getData();
-//                $refNumberOrder = $this->getLegModel()->save($data);
-//                $this->flashMessenger()->addSuccessMessage("Data '"
-//                . $refNumberOrder . "' was successfully saved.");
-//                return $this->redirect()->toRoute('flights');
-//            }
-//        }
-//
-//        return array(
-//            'id' => $id,
-//            'form' => $form,
-//        );
-//    }
-
-    /**
-     * @return array|\Zend\Http\Response
-     */
-    public function deleteLegAction()
-    {
-        $id = (int)$this->params()->fromRoute('id', 0);
-        if (!$id) {
-            return $this->redirect()->toRoute('flights');
-        }
-
-        $request = $this->getRequest();
-        if ($request->isPost()) {
-            $redirectPath = $this->getLegModel()->getHeaderRefNumberOrderByLegId($id);
-            $del = $request->getPost('del', 'No');
-
-            if ($del == 'Yes') {
-                $id = (int)$request->getPost('id');
-                $this->getLegModel()->remove($id);
-                $this->flashMessenger()->addSuccessMessage("Leg was successfully deleted.");
-            }
-
-            // Redirect to list
-            return $this->redirect()->toUrl('/browse/' . $redirectPath);
-        }
-
-        return array(
-            'id' => $id,
-            'leg' => $this->getLegModel()->get($id)
-        );
-    }
-
-    /**
      * @return array|object
      */
     public function getFlightHeaderModel()
@@ -366,7 +243,7 @@ class FlightController extends AbstractActionController
     /**
      * @return mixed
      */
-    private function getKontragents()
+    public function getKontragents()
     {
         return $this->getLibraryKontragentModel()->fetchAll();
     }
@@ -385,7 +262,7 @@ class FlightController extends AbstractActionController
     /**
      * @return mixed
      */
-    private function getAirOperators()
+    public function getAirOperators()
     {
         return $this->getLibraryAirOperatorModel()->fetchAll();
     }
@@ -403,7 +280,7 @@ class FlightController extends AbstractActionController
     /**
      * @return mixed
      */
-    private function getAircrafts()
+    public function getAircrafts()
     {
         return $this->getLibraryAircraftModel()->fetchAll();
     }
@@ -421,7 +298,7 @@ class FlightController extends AbstractActionController
     /**
      * @return mixed
      */
-    private function getAirports()
+    public function getAirports()
     {
         return $this->getLibraryAirportModel()->fetchAll();
     }

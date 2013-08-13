@@ -4,20 +4,14 @@ namespace FcFlight\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use FcFlight\Form\FlightHeaderForm;
-use FcFlight\Form\LegForm;
 use FcFlight\Form\RefuelForm;
 use Zend\Db\Sql\Select;
 use Zend\Paginator\Paginator;
-use Zend\Paginator\Adapter\Iterator as paginatorIterator;
 
-class RefuelController extends AbstractActionController
+class RefuelController extends FlightController
 {
-    public $headerId;
-    protected $refuelModel;
-    protected $flightHeaderModel;
-    protected $legModel;
-    protected $kontragentModel;
+
+    protected $headerId;
     protected $unitModel;
 
     /**
@@ -99,63 +93,6 @@ class RefuelController extends AbstractActionController
             'id' => $id,
             'data' => $this->getRefuelModel()->get($id)
         );
-    }
-
-    /**
-     * @return array|object
-     */
-    public function getFlightHeaderModel()
-    {
-        if (!$this->flightHeaderModel) {
-            $sm = $this->getServiceLocator();
-            $this->flightHeaderModel = $sm->get('FcFlight\Model\FlightHeaderModel');
-        }
-        return $this->flightHeaderModel;
-    }
-
-    /**
-     * @return array|object
-     */
-    public function getLegModel()
-    {
-        if (!$this->legModel) {
-            $sm = $this->getServiceLocator();
-            $this->legModel = $sm->get('FcFlight\Model\LegModel');
-        }
-        return $this->legModel;
-    }
-
-    /**
-     * @return array|object
-     */
-    public function getRefuelModel()
-    {
-        if (!$this->refuelModel) {
-            $sm = $this->getServiceLocator();
-            $this->refuelModel = $sm->get('FcFlight\Model\RefuelModel');
-        }
-        return $this->refuelModel;
-    }
-
-    /**
-     * @return array|object
-     */
-    public function getLibraryKontragentModel()
-    {
-        if (!$this->kontragentModel) {
-            $sm = $this->getServiceLocator();
-            $this->kontragentModel = $sm->get('FcLibraries\Model\KontragentModel');
-        }
-
-        return $this->kontragentModel;
-    }
-
-    /**
-     * @return mixed
-     */
-    private function getKontragents()
-    {
-        return $this->getLibraryKontragentModel()->fetchAll();
     }
 
     /**

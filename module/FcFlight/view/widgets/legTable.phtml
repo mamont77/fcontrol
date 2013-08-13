@@ -1,0 +1,67 @@
+<legend>Type of Service: LEG</legend>
+<div id="leg">
+    <table class="table table-bordered table-hover">
+        <tr>
+            <th rowspan="2">
+                Date of Flight
+            </th>
+            <th colspan="3">
+                Flight Number
+            </th>
+            <th colspan="3">
+                App Dep
+            </th>
+            <th colspan="3">
+                Ap Arr
+            </th>
+            <th rowspan="2">Actions</th>
+        </tr>
+        <tr>
+            <th>
+                ICAO
+            </th>
+            <th>
+                IATA
+            </th>
+            <th></th>
+            <th>
+                ICAO
+            </th>
+            <th>
+                IATA
+            </th>
+            <th>
+                Time, UTC
+            </th>
+            <th>
+                ICAO
+            </th>
+            <th>
+                IATA
+            </th>
+            <th>
+                Time, UTC
+            </th>
+        </tr>
+        <?php foreach ($leg as $row) : ?>
+            <tr>
+                <td><?php echo $this->escapeHtml($row['dateOfFlight']); ?></td>
+                <td><?php echo $this->escapeHtml($row['flightNumberIcao']); ?></td>
+                <td><?php echo $this->escapeHtml($row['flightNumberIata']); ?></td>
+                <td><?php echo $this->escapeHtml($row['flightNumberText']); ?></td>
+                <td><?php echo $this->escapeHtml($row['apDepIcao']); ?></td>
+                <td><?php echo $this->escapeHtml($row['apDepIata']); ?></td>
+                <td><?php echo $this->escapeHtml($row['apDepTime']); ?></td>
+                <td><?php echo $this->escapeHtml($row['apArrIcao']); ?></td>
+                <td><?php echo $this->escapeHtml($row['apArrIata']); ?></td>
+                <td><?php echo $this->escapeHtml($row['apArrTime']); ?></td>
+                <td>
+                    <!--                        <a title="Edit" href="--><?php //echo $this->url('flight',
+//                            array('action' => 'edit-leg', 'id' => $row['id']));?><!--"><i class="icon-edit"></i></a>-->
+                    <a title="Remove" href="<?php echo $this->url('leg',
+                        array('action' => 'delete', 'id' => $row['id']));?>"><i class="icon-remove"></i></a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+</div>

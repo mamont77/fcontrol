@@ -64,9 +64,12 @@ $displayOptions = array(
 );
 //$formType = 'inline';
 $form = $this->form;
-$form->setAttribute('action', $this->url('flight', array('action' => 'add-leg', 'id' => $this->headerId)));
+$form->setAttribute('action', $this->url('leg', array('action' => 'add', 'id' => $this->headerId)));
 $form->prepare();
 ?>
+
+<?php echo $this->partial('widgets/legTable.phtml', array('leg' => $leg)); ?>
+
 
 <?php if ($form->getMessages()): ?>
     <div class="alert alert-error">
@@ -126,7 +129,7 @@ $actions = array(
 );
 ?>
 <div class="form-actions">
-    <?= $this->formActionsTwb($actions, $formType, $displayOptions['elements']); ?>
+    <?= $this->formActionsTwb($actions, $formType); ?>
 </div>
 
 <?php

@@ -107,6 +107,7 @@ return array(
                 array('controller' => 'FcLibraries\Controller\Unit', 'roles' => array('admin')),
                 array('controller' => 'FcLibraries\Controller\Currency', 'roles' => array('admin')),
                 array('controller' => 'FcFlight\Controller\Flight', 'roles' => array('user')),
+                array('controller' => 'FcFlight\Controller\Leg', 'roles' => array('user')),
                 array('controller' => 'FcFlight\Controller\Refuel', 'roles' => array('user')),
             ),
 
@@ -149,6 +150,7 @@ return array(
                 array('route' => 'flights', 'roles' => array('user')),
                 array('route' => 'flight', 'roles' => array('user')),
                 array('route' => 'browse', 'roles' => array('user')),
+                array('route' => 'leg', 'roles' => array('user')),
                 array('route' => 'refuel', 'roles' => array('user')),
             ),
         ),
