@@ -1,7 +1,7 @@
 <ul class="breadcrumb">
     <li><a href="/">Home</a> <span class="divider">/</span></li>
     <li>
-        <a href="<?=$this->url('browse', array('action' => 'show', 'refNumberOrder' => $this->refNumberOrder));?>"><?= $this->refNumberOrder ?></a>
+        <a href="<?= $this->url('browse', array('action' => 'show', 'refNumberOrder' => $this->refNumberOrder)); ?>"><?= $this->refNumberOrder ?></a>
         <span class="divider">/</span>
     </li>
     <li class="active">Refuel form</li>
@@ -20,18 +20,23 @@ $displayOptions = array(
     'elements' => array(
         'airport' => array(
             'required' => true,
+            'class' => 'span10',
         ),
         'date' => array(
             'required' => true,
+            'class' => 'span10',
         ),
         'agent' => array(
             'required' => true,
+            'class' => 'span10',
         ),
         'quantity' => array(
             'required' => true,
+            'class' => 'span10',
         ),
         'unit' => array(
             'required' => true,
+            'class' => 'span10',
         ),
     ),
 );
@@ -53,4 +58,43 @@ $form->prepare();
     <?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
 <?php endif; ?>
 
-<?php echo $this->formTwb($form, $formType, $displayOptions); ?>
+<?php //echo $this->formTwb($form, $formType, $displayOptions); ?>
+
+<?php
+    echo $this->formTwb()->openTag($form, $formType);
+    echo $this->formRowTwb($form->get('headerId'));
+?>
+
+<div class="row-fluid">
+    <div class="span4">
+        <?php
+        echo $this->formRowTwb($form->get('airport'), $formType, $displayOptions['elements']['airport']);
+        echo $this->formRowTwb($form->get('date'), $formType, $displayOptions['elements']['date']);
+        ?>
+    </div>
+    <div class="span4">
+        <?php
+        echo $this->formRowTwb($form->get('agent'), $formType, $displayOptions['elements']['agent']);
+        ?>
+    </div>
+    <div class="span4">
+        <?php
+        echo $this->formRowTwb($form->get('quantity'), $formType, $displayOptions['elements']['quantity']);
+        echo $this->formRowTwb($form->get('unit'), $formType, $displayOptions['elements']['unit']);
+        ?>
+    </div>
+</div>
+
+<?php
+
+echo $this->formRowTwb($form->get('csrf'));
+$actions = array(
+    $form->get('submitBtn'),
+);
+?>
+<div class="form-actions">
+    <?= $this->formActionsTwb($actions, $formType); ?>
+</div>
+
+<?php
+echo $this->formTwb()->closeTag();
