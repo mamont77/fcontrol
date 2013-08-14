@@ -118,25 +118,26 @@ class LegController extends FlightController
         }
 
         $request = $this->getRequest();
-        //$refUri = $request->getHeader('Referer')->uri()->getPath(); // TODO: переделать на сесси или куки и редиректить на реферала
+        $refUri = $request->getHeader('Referer')->uri()->getPath();
+        $refNumberOrder = $this->getLegModel()->getHeaderRefNumberOrderByLegId($id);
 
         if ($request->isPost()) {
-            $redirectPath = $this->getLegModel()->getHeaderRefNumberOrderByLegId($id);
             $del = $request->getPost('del', 'No');
-
             if ($del == 'Yes') {
                 $id = (int)$request->getPost('id');
-
                 $this->getLegModel()->remove($id);
                 $this->flashMessenger()->addSuccessMessage("Leg was successfully deleted.");
             }
+            $redirectPath = (string)$request->getPost('referer');
 
-            // Redirect to list
-            return $this->redirect()->toUrl('/browse/' . $redirectPath);
+            // Redirect to back
+            return $this->redirect()->toUrl($redirectPath);
         }
 
         return array(
             'id' => $id,
+            'referer' => $refUri,
+            'refNumberOrder' => $refNumberOrder,
             'leg' => $this->getLegModel()->get($id)
         );
     }
