@@ -40,6 +40,8 @@ class RefuelController extends FlightController
             )
         );
 
+        $refuel = $this->getRefuelModel()->getById($this->headerId);
+
         $request = $this->getRequest();
         if ($request->isPost()) {
             $filter = $this->getServiceLocator()->get('FcFlight\Filter\RefuelFilter');
@@ -51,16 +53,18 @@ class RefuelController extends FlightController
                 $filter->exchangeArray($data);
                 $summaryData = $this->getRefuelModel()->add($filter);
                 $this->flashMessenger()->addSuccessMessage('Refuel ' . $summaryData . ' was successfully added.');
-                return $this->redirect()->toRoute('browse',
+                return $this->redirect()->toRoute('refuel',
                     array(
-                        'action' => 'show',
-                        'refNumberOrder' => $refNumberOrder,
+                        'action' => 'add',
+                        'id' => $this->headerId,
                     ));
             }
         }
         return array('form' => $form,
             'headerId' => $this->headerId,
             'refNumberOrder' => $refNumberOrder,
+            'refuel' => $refuel,
+
         );
     }
 
@@ -75,22 +79,26 @@ class RefuelController extends FlightController
         }
 
         $request = $this->getRequest();
-        if ($request->isPost()) {
-            $redirectPath = $this->getRefuelModel()->getHeaderRefNumberOrderByRefuelId($id);
-            $del = $request->getPost('del', 'No');
+        $refUri = $request->getHeader('Referer')->uri()->getPath();
+        $refNumberOrder = $this->getRefuelModel()->getHeaderRefNumberOrderByRefuelId($id);
 
+        if ($request->isPost()) {
+            $del = $request->getPost('del', 'No');
             if ($del == 'Yes') {
                 $id = (int)$request->getPost('id');
                 $this->getRefuelModel()->remove($id);
                 $this->flashMessenger()->addSuccessMessage("Refuel was successfully deleted.");
             }
 
-            // Redirect to list
-            return $this->redirect()->toUrl('/browse/' . $redirectPath);
+            $redirectPath = (string)$request->getPost('referer');
+            // Redirect to back
+            return $this->redirect()->toUrl($redirectPath);
         }
 
         return array(
             'id' => $id,
+            'referer' => $refUri,
+            'refNumberOrder' => $refNumberOrder,
             'data' => $this->getRefuelModel()->get($id)
         );
     }
@@ -100,7 +108,7 @@ class RefuelController extends FlightController
      */
     private function getParentLeg()
     {
-        return $this->getLegModel()->getLegById($this->headerId);
+        return $this->getLegModel()->getById($this->headerId);
     }
 
     /**

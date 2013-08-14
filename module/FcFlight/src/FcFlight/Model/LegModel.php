@@ -49,7 +49,7 @@ class LegModel extends AbstractTableGateway
      * @param $id
      * @return array
      */
-    public function getLegById($id)
+    public function getById($id)
     {
         $id = (string)$id;
         $select = new Select();

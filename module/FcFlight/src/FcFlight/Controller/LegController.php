@@ -36,8 +36,7 @@ class LegController extends FlightController
             )
         );
 
-        $leg = $this->getLegModel()->getLegById($headerId);
-
+        $leg = $this->getLegModel()->getById($headerId);
 
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -111,7 +110,6 @@ class LegController extends FlightController
      */
     public function deleteAction()
     {
-
         $id = (int)$this->params()->fromRoute('id', 0);
         if (!$id) {
             return $this->redirect()->toRoute('flights');
@@ -128,8 +126,8 @@ class LegController extends FlightController
                 $this->getLegModel()->remove($id);
                 $this->flashMessenger()->addSuccessMessage("Leg was successfully deleted.");
             }
-            $redirectPath = (string)$request->getPost('referer');
 
+            $redirectPath = (string)$request->getPost('referer');
             // Redirect to back
             return $this->redirect()->toUrl($redirectPath);
         }

@@ -41,6 +41,8 @@ $form->setAttribute('action', $this->url('refuel', array('action' => 'add', 'id'
 $form->prepare();
 ?>
 
+<?php echo $this->partial('widgets/refuelTable.phtml', array('refuel' => $refuel)); ?>
+
 <?php if ($form->getMessages()): ?>
     <div class="alert alert-error">
         <button class="close" data-dismiss="alert" type="button">×</button>

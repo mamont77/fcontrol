@@ -78,7 +78,7 @@ class FlightController extends AbstractActionController
             break;
         }
 
-        $leg = $this->getLegModel()->getLegById($header->id);
+        $leg = $this->getLegModel()->getById($header->id);
         $refuel = $this->getRefuelModel()->getById($header->id);
 
 //        \Zend\Debug\Debug::dump($refuel);

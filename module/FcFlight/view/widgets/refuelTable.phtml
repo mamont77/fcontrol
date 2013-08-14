@@ -1,0 +1,80 @@
+<legend>Type of Service: Refuel</legend>
+<div id="refuel">
+    <table class="table table-bordered table-hover">
+        <tr>
+            <th>
+                Airport
+            </th>
+            <th>
+                Date
+            </th>
+            <th>
+                Agent
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th>
+                Unit
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                Currency
+            </th>
+            <th>
+                Unit
+            </th>
+            <th>
+                Total
+            </th>
+            <th>
+                Currency
+            </th>
+            <th>Actions</th>
+        </tr>
+        <?php foreach ($refuel as $row) : ?>
+            <tr>
+                <td>
+                    <a rel="tooltip" href="#" data-toggle="tooltip" data-placement="top"
+                       title="" data-original-title="<?php echo $this->escapeHtml($row['airportName']); ?>">
+                        <?php echo $this->escapeHtml($row['airportIcao']); ?> |
+                        <?php echo $this->escapeHtml($row['airportIata']); ?>
+                    </a>
+                </td>
+                <td><?php echo $this->escapeHtml($row['date']); ?></td>
+                <td><?php echo $this->escapeHtml($row['agentName']); ?></td>
+                <td><?php echo $this->escapeHtml($row['quantity']); ?></td>
+                <td><?php echo $this->escapeHtml($row['unitName']); ?></td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+
+                <td>
+                    <a title="Remove" href="<?php echo $this->url('refuel',
+                        array('action' => 'delete', 'id' => $row['id']));?>"><i class="icon-remove"></i></a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+    <div class="row-fluid">
+        <div class="span6">
+            <a class="btn disabled" href="#">Make INVOICE</a>
+        </div>
+        <div class="span6">
+            <table style="width: 200px; float: right" class="table table-bordered .pull-right">
+                <tr>
+                    <td>
+                        Subtotal
+                    </td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    "-" fields in development
+</div>
