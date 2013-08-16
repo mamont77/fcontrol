@@ -20,7 +20,7 @@ return array(
                             ),
                             'defaults' => array(
                                 'controller' => 'FcLibrariesSearch\Controller\Search',
-                                'action' => 'index',
+                                'action' => 'advancedSearch',
                             ),
                         ),
                     ),

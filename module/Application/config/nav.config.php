@@ -50,6 +50,14 @@ return array(
                         'label' => 'Currencies',
                         'route' => 'zfcadmin/currencies',
                     ),
+                    array(
+                        'type'      => 'uri',
+                        'divider'   => true,
+                    ),
+                    array(
+                        'label' => 'Advanced search',
+                        'route' => 'zfcadmin/advanced_search',
+                    ),
                 ),
             ),
             array(

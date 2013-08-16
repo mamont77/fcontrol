@@ -17,6 +17,7 @@ return array(
         'BjyProfiler',
         'FcAdmin',
         'FcLibraries',
+        'FcLibrariesSearch',
         'FcFlight',
         'DluTwBootstrap',
         'SuperMessenger',
