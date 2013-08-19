@@ -24,7 +24,7 @@ class AdvancedSearchFilter extends \FcLibraries\Filter\BaseFilter
     {
         $this->text = (isset($data['text'])) ? $data['text'] : null;
         $this->library = (isset($data['library'])) ? $data['library'] : null;
-
+        $this->table = $this->library;
     }
 
     /**
@@ -40,28 +40,21 @@ class AdvancedSearchFilter extends \FcLibraries\Filter\BaseFilter
                 'name' => 'text',
                 'required' => true,
                 'filters' => $this->defaultFilters,
-            )));
-
-            $inputFilter->add($factory->createInput(array(
-                'name' => 'library',
-                'required' => false,
-            )));
-
-            $inputFilter->add($factory->createInput(array(
-                'name' => 'reg_number',
-                'required' => true,
-                'filters' => $this->defaultFilters,
                 'validators' => array(
                     array(
                         'name' => 'StringLength',
                         'options' => array(
                             'encoding' => 'UTF-8',
                             'min' => 1,
-                            'max' => 10,
+                            'max' => 64,
                         ),
                     ),
-                    $this->_noRecordExistsValidators($this->table, 'reg_number', $this->id),
                 ),
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'library',
+                'required' => false,
             )));
 
             $this->inputFilter = $inputFilter;
