@@ -21,23 +21,21 @@ $displayOptions = array(
 
 //Form object
 $form = $this->form;
-$formType = $this->formType;
+//$formType = \DluTwBootstrap\Form\FormUtil::FORM_TYPE_SEARCH;
 $validData = $this->validData;
 $form->prepare();
 
 $form = $this->form;
-$form->setAttribute('action', $this->url('zfcadmin/aircraft', array('action' => 'add')));
+$form->setAttribute('action', $this->url('zfcadmin/advanced_search', array('action' => 'advancedSearch')));
 $form->prepare();
 if ($form->getMessages()):
     ?>
     <div class="alert alert-error">
         <button class="close" data-dismiss="alert" type="button">×</button>
         <strong>Invalid input!</strong>
-        The form fields are not filled out correctly. (The search form does not support field errors.
-        Use $form->getMessages() to inform user about data errors.)
+        The form field are not filled out correctly.
     </div>
-    <?php
-    \Zend\Debug\Debug::dump($form->getMessages(), '$form->getMessages():');
+<?php
 endif;
 
 //Default form display (the 'one-liner')

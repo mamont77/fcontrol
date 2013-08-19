@@ -7,27 +7,24 @@ use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\Db\Adapter\Adapter;
 
-class AdvancedSearchFilter implements InputFilterAwareInterface
+class AdvancedSearchFilter extends \FcLibraries\Filter\BaseFilter
 {
     /**
      * @var string
      */
-    protected $table = 'library_aircraft';
+    protected $table = '';
 
-    public $id;
-    public $aircraft_type;
-    public $aircraft_type_name;
-    public $reg_number;
+    public $text;
+    public $library;
 
     /**
      * @param $data
      */
     public function exchangeArray($data)
     {
-        $this->id = (isset($data['id'])) ? $data['id'] : null;
-        $this->aircraft_type = (isset($data['aircraft_type'])) ? $data['aircraft_type'] : null;
-        $this->aircraft_type_name = (isset($data['aircraft_type_name'])) ? $data['aircraft_type_name'] : null;
-        $this->reg_number = (isset($data['reg_number'])) ? $data['reg_number'] : null;
+        $this->text = (isset($data['text'])) ? $data['text'] : null;
+        $this->library = (isset($data['library'])) ? $data['library'] : null;
+
     }
 
     /**
@@ -40,16 +37,14 @@ class AdvancedSearchFilter implements InputFilterAwareInterface
             $factory = new InputFactory();
 
             $inputFilter->add($factory->createInput(array(
-                'name' => 'id',
+                'name' => 'text',
                 'required' => true,
-                'filters' => array(
-                    array('name' => 'Int'),
-                ),
+                'filters' => $this->defaultFilters,
             )));
 
             $inputFilter->add($factory->createInput(array(
-                'name' => 'aircraft_type',
-                'required' => true,
+                'name' => 'library',
+                'required' => false,
             )));
 
             $inputFilter->add($factory->createInput(array(

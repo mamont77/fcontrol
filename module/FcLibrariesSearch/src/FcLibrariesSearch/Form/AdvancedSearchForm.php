@@ -35,6 +35,29 @@ class AdvancedSearchForm extends Form
             ),
         ));
 
+        $this->add(array(
+            'type' => 'Zend\Form\Element\Radio',
+            'name' => 'library',
+            'options' => array(
+                'label' => 'Select library',
+                'value_options' => array(
+                    'library_aircraft' => 'Aircraft',
+                    'library_aircraft_type' => 'Type of Aircraft',
+                    'library_air_operator' => 'Air Operator',
+                    'library_airport' => 'Airport',
+                    'library_city' => 'City',
+                    'library_country' => 'Country',
+                    'library_currency' => 'Currency',
+                    'library_kontragent' => 'Kontragent',
+                    'library_region' => 'Region',
+                    'library_unit' => 'Unit',
+                ),
+            ),
+            'attributes' => array(
+                'value' => 'library_airport'
+            )
+        ));
+
         //Csrf
         $this->add(new Element\Csrf('csrf'));
 
