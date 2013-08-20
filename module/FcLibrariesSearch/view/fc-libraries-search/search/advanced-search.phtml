@@ -36,8 +36,59 @@ if ($form->getMessages()):
     </div>
 <?php
 endif;
+?>
 
-//Default form display (the 'one-liner')
-//Good for quick form preview or when there are no special presentation requirements
-//If you need more control over the form view, use the 'controlled' approach below
-echo $this->formTwb($form, $formType, $displayOptions);
+<div id="advancedSearchForm">
+    <?php
+    echo $this->formTwb($form, $formType, $displayOptions);
+    ?>
+</div>
+<? if (count($result) > 0): ?>
+<div id="advancedSearchResult">
+    <legend>Search Result</legend>
+
+    <?php
+    switch ($library) {
+        case 'library_aircraft':
+            $widgetName = 'aircraftTable';
+
+            break;
+
+        case 'library_air_operator':
+            $widgetName = 'airOperatorTable';
+
+            break;
+
+        case 'library_airport':
+            $fields = array('name', 'short_name', 'code_icao', 'code_iata');
+            break;
+
+        case 'library_country':
+            $fields = array('name', 'code');
+            break;
+
+        case 'library_currency':
+            $fields = array('name', 'currency');
+            break;
+
+        case 'library_kontragent':
+            $fields = array('name', 'short_name', 'sita');
+            break;
+
+        case 'library_city':
+        case 'library_region':
+        case 'library_unit':
+            $fields = array('name');
+            break;
+
+        default:
+            // skip it
+            break;
+    }
+    ?>
+
+    <?php echo $this->partial('widgets/' . $widgetName . '.phtml', array('result' => $result)); ?>
+
+</div>
+<? endif; ?>
+

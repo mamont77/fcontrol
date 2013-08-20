@@ -45,7 +45,7 @@ class AdvancedSearchFilter extends \FcLibraries\Filter\BaseFilter
                         'name' => 'StringLength',
                         'options' => array(
                             'encoding' => 'UTF-8',
-                            'min' => 1,
+                            'min' => 2,
                             'max' => 64,
                         ),
                     ),

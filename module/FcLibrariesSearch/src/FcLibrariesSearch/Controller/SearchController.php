@@ -20,6 +20,7 @@ class SearchController extends AbstractActionController
     {
         $form = new AdvancedSearchForm();
         $result = array();
+        $library = '';
 
         $request = $this->getRequest();
 
@@ -34,15 +35,19 @@ class SearchController extends AbstractActionController
                 $data = $form->getData();
                 $filter->exchangeArray($data);
 //                \Zend\Debug\Debug::dump($data);
-//                \Zend\Debug\Debug::dump($data->text);
-//                \Zend\Debug\Debug::dump($data->library);
-                $result = $this->getSearchModel()->getAdvancedSearchResult($data['text'], $data['library']);
+                $result = $this->getSearchModel()->findAdvancedSearchResult($data['text'], $data['library']);
+                if (count($result) == 0) {
+                    $result = 'Not found!';
+                }
+
+                $library = $data['library'];
             }
         }
 
         return array(
             'form' => $form,
             'result' => $result,
+            'library' => $library,
         );
     }
 
