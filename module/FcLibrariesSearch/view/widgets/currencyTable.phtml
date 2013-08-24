@@ -1,0 +1,36 @@
+<h4>Currency</h4>
+<?php
+if (is_string($result)) {
+    ?>
+    <div class="alert alert-error">
+        <?= $result; ?>
+    </div>
+<?php
+} else {
+    ?>
+    <table class="table table-bordered table-hover table-striped table-condensed">
+        <tr>
+            <th>
+                Long Name
+            </th>
+            <th>
+                Currency
+            </th>
+            <th>Actions</th>
+        </tr>
+        <?php foreach ($result as $row) : ?>
+            <tr>
+                <td><?php echo $this->escapeHtml($row->name); ?></td>
+                <td><?php echo $this->escapeHtml($row->currency); ?></td>
+                <td>
+                    <a title="Edit" href="<?php echo $this->url('zfcadmin/currency',
+                        array('action' => 'edit', 'id' => $row->id));?>"><i class="icon-edit"></i></a>
+                    <a title="Remove" href="<?php echo $this->url('zfcadmin/currency',
+                        array('action' => 'delete', 'id' => $row->id));?>"><i class="icon-remove"></i></a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+<?php
+}
+?>

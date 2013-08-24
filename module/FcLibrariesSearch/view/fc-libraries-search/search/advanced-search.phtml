@@ -51,34 +51,42 @@ endif;
     switch ($library) {
         case 'library_aircraft':
             $widgetName = 'aircraftTable';
+            break;
 
+        case 'library_aircraft_type':
+            $widgetName = 'aircraftTypeTable';
             break;
 
         case 'library_air_operator':
             $widgetName = 'airOperatorTable';
-
             break;
 
         case 'library_airport':
-            $fields = array('name', 'short_name', 'code_icao', 'code_iata');
-            break;
-
-        case 'library_country':
-            $fields = array('name', 'code');
-            break;
-
-        case 'library_currency':
-            $fields = array('name', 'currency');
-            break;
-
-        case 'library_kontragent':
-            $fields = array('name', 'short_name', 'sita');
+            $widgetName = 'airportTable';
             break;
 
         case 'library_city':
+            $widgetName = 'cityTable';
+            break;
+
+        case 'library_country':
+            $widgetName = 'countryTable';
+            break;
+
+        case 'library_currency':
+            $widgetName = 'currencyTable';
+            break;
+
+        case 'library_kontragent':
+            $widgetName = 'kontragentTable';
+            break;
+
         case 'library_region':
+            $widgetName = 'regionTable';
+            break;
+
         case 'library_unit':
-            $fields = array('name');
+            $widgetName = 'unitTable';
             break;
 
         default:
