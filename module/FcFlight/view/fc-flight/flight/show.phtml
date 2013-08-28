@@ -64,8 +64,8 @@ $this->headTitle($title);
     </table>
 </div>
 
-<? if (count($leg) > 0): ?>
-    <?php echo $this->partial('widgets/legTable.phtml', array('leg' => $leg)); ?>
+<? if (count($legs) > 0): ?>
+    <?php echo $this->partial('widgets/legTable.phtml', array('legs' => $legs)); ?>
 <? endif; ?>
 
 <? if (count($refuel) > 0): ?>

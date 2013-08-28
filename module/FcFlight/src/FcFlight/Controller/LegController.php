@@ -2,6 +2,7 @@
 
 namespace FcFlight\Controller;
 
+use Zend\Debug\Debug;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use FcFlight\Form\LegForm;
@@ -36,7 +37,7 @@ class LegController extends FlightController
             )
         );
 
-        $leg = $this->getLegModel()->getById($headerId);
+        $legs = $this->getLegModel()->getByHeaderId($headerId);
 
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -48,7 +49,7 @@ class LegController extends FlightController
                 $data = $form->getData();
                 $filter->exchangeArray($data);
                 $summaryData = $this->getLegModel()->add($filter);
-                $this->flashMessenger()->addSuccessMessage('Leg '. $summaryData . ' was successfully added.');
+                $this->flashMessenger()->addSuccessMessage('Leg ' . $summaryData . ' was successfully added.');
                 return $this->redirect()->toRoute('leg',
                     array(
                         'action' => 'add',
@@ -59,51 +60,73 @@ class LegController extends FlightController
         return array('form' => $form,
             'headerId' => $headerId,
             'refNumberOrder' => $refNumberOrder,
-            'leg' => $leg,
+            'legs' => $legs,
         );
     }
 
     /**
-     * @return array|\Zend\Http\Response
-     * @deprecated
+     * @return array
      */
-//    public function editAction()
-//    {
-//        $id = (int)$this->params()->fromRoute('id', 0);
-//        $data = $this->getLegModel()->get($id);
-//
-//        $form = new LegForm('leg',
-//            array(
-//                //'headerId' => $id,
-//                'libraries' => array(
-//                    'flightNumberIcaoAndIata' => $this->getAirOperators(),
-//                    'appIcaoAndIata' => $this->getAirports(),
-//                )
-//            )
-//        );
-//
-//        $form->bind($data);
-//        $form->get('submitBtn')->setAttribute('value', 'Save');
-//
-//        $request = $this->getRequest();
-//        if ($request->isPost()) {
-//            $filter = $this->getServiceLocator()->get('FcFlight\Filter\LegFilter');
-//            $form->setInputFilter($filter->getInputFilter());
-//            $form->setData($request->getPost());
-//            if ($form->isValid()) {
-//                $data = $form->getData();
-//                $refNumberOrder = $this->getLegModel()->save($data);
-//                $this->flashMessenger()->addSuccessMessage("Data '"
-//                . $refNumberOrder . "' was successfully saved.");
-//                return $this->redirect()->toRoute('flights');
-//            }
-//        }
-//
-//        return array(
-//            'id' => $id,getAirOperators
-//            'form' => $form,
-//        );
-//    }
+    public function editAction()
+    {
+        $id = (int)$this->params()->fromRoute('id', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('flight', array(
+                'action' => 'index'
+            ));
+        }
+
+        $refNumberOrder = $this->getLegModel()->getHeaderRefNumberOrderByLegId($id);
+
+        $data = $this->getLegModel()->get($id);
+        $data->flightNumber['flightNumberIcaoAndIata'] = $data->flightNumberIcaoAndIata;
+        $data->flightNumber['flightNumberText'] = $data->flightNumberText;
+        $data->apDep['apDepIcaoAndIata'] = $data->apDepIcaoAndIata;
+        $data->apDep['apDepTime'] = $data->apDepTime;
+        $data->apArr['apArrIcaoAndIata'] = $data->apArrIcaoAndIata;
+        $data->apArr['apArrTime'] = $data->apArrTime;
+
+        $form = new LegForm('leg',
+            array(
+                'libraries' => array(
+                    'flightNumberIcaoAndIata' => $this->getAirOperators(),
+                    'appIcaoAndIata' => $this->getAirports(),
+                )
+            )
+        );
+
+        $legs = $this->getLegModel()->getByHeaderId($data->headerId);
+
+
+        $form->bind($data);
+        $form->get('submitBtn')->setAttribute('value', 'Save');
+
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+            $filter = $this->getServiceLocator()->get('FcFlight\Filter\LegFilter');
+            $form->setInputFilter($filter->getInputFilter());
+            $form->setData($request->getPost());
+
+            if ($form->isValid()) {
+                $data = $form->getData();
+                $summaryData = $this->getLegModel()->save($data);
+                $this->flashMessenger()->addSuccessMessage('Leg ' . $summaryData . ' was successfully saved.');
+
+                return $this->redirect()->toRoute('browse',
+                    array(
+                        'action' => 'show',
+                        'refNumberOrder' => $refNumberOrder,
+                    ));
+            }
+        }
+
+        return array('form' => $form,
+            'id' => $data->id,
+            'refNumberOrder' => $refNumberOrder,
+            'legs' => $legs,
+        );
+    }
 
     /**
      * @return array|\Zend\Http\Response

@@ -49,7 +49,7 @@ class RefuelModel extends AbstractTableGateway
      * @param $id
      * @return null|\Zend\Db\ResultSet\ResultSetInterface
      */
-    public function getById($id)
+    public function getByHeaderId($id)
     {
         $id = (string)$id;
         $select = new Select();

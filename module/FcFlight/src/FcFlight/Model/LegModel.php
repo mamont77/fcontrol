@@ -41,6 +41,8 @@ class LegModel extends AbstractTableGateway
             throw new \Exception("Could not find row $id");
         }
         $row->dateOfFlight = date('d/m/Y', $row->dateOfFlight);
+        $row->apDepTime = date('H:i', $row->apDepTime);
+        $row->apArrTime = date('H:i', $row->apArrTime);
 
         return $row;
     }
@@ -49,7 +51,7 @@ class LegModel extends AbstractTableGateway
      * @param $id
      * @return array
      */
-    public function getById($id)
+    public function getByHeaderId($id)
     {
         $id = (string)$id;
         $select = new Select();
@@ -124,6 +126,39 @@ class LegModel extends AbstractTableGateway
         $hash = $object->dateOfFlight . ': Dep ' . $object->apDepTime . ', Arr ' . $object->apArrTime;
 
         $this->insert($data);
+
+        return $hash;
+    }
+
+    /**
+     * @param LegFilter $object
+     * @return string
+     * @throws \Exception
+     */
+    public function save(LegFilter $object)
+    {
+        $dateOfFlight = \DateTime::createFromFormat('d-m-Y', $object->dateOfFlight);
+        $apDepTime = \DateTime::createFromFormat('d-m-Y H:i', $object->dateOfFlight . ' ' . $object->apDepTime);
+        $apArrTime = \DateTime::createFromFormat('d-m-Y H:i', $object->dateOfFlight . ' ' . $object->apArrTime);
+
+        $data = array(
+            'headerId' => (int)$object->headerId,
+            'dateOfFlight' => (string)$dateOfFlight->getTimestamp(),
+            'flightNumberIcaoAndIata' => (int)$object->flightNumberIcaoAndIata,
+            'flightNumberText' => (string)$object->flightNumberText,
+            'apDepIcaoAndIata' => (int)$object->apDepIcaoAndIata,
+            'apDepTime' => (string)$apDepTime->getTimestamp(),
+            'apArrIcaoAndIata' => (int)$object->apArrIcaoAndIata,
+            'apArrTime' => (string)$apArrTime->getTimestamp(),
+        );
+        $hash = $object->dateOfFlight . ': Dep ' . $object->apDepTime . ', Arr ' . $object->apArrTime;
+
+        $id = (int)$object->id;
+        if ($this->get($id)) {
+            $this->update($data, array('id' => $id));
+        } else {
+            throw new \Exception('Form id does not exist');
+        }
 
         return $hash;
     }

@@ -59,7 +59,7 @@ class AdvancedSearchForm extends Form
         ));
 
         //Csrf
-        $this->add(new Element\Csrf('csrf'));
+//        $this->add(new Element\Csrf('csrf'));
 
         //Submit button
         $this->add(array(

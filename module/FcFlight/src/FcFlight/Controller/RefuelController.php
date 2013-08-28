@@ -40,7 +40,7 @@ class RefuelController extends FlightController
             )
         );
 
-        $refuel = $this->getRefuelModel()->getById($this->headerId);
+        $refuel = $this->getRefuelModel()->getByHeaderId($this->headerId);
 
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -108,7 +108,7 @@ class RefuelController extends FlightController
      */
     private function getParentLeg()
     {
-        return $this->getLegModel()->getById($this->headerId);
+        return $this->getLegModel()->getByHeaderId($this->headerId);
     }
 
     /**

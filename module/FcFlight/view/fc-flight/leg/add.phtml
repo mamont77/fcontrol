@@ -68,7 +68,7 @@ $form->setAttribute('action', $this->url('leg', array('action' => 'add', 'id' =>
 $form->prepare();
 ?>
 
-<?php echo $this->partial('widgets/legTable.phtml', array('leg' => $leg)); ?>
+<?php echo $this->partial('widgets/legTable.phtml', array('legs' => $legs)); ?>
 
 <?php if ($form->getMessages()): ?>
     <div class="alert alert-error">
@@ -79,8 +79,6 @@ $form->prepare();
 <?php else: ?>
     <?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
 <?php endif; ?>
-
-<?php //echo $this->formTwb($form, $formType, $displayOptions); ?>
 
 <?php
 $flightNumber = $form->get('flightNumber');

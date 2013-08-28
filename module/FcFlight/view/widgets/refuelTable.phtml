@@ -54,6 +54,8 @@
                 <td>-</td>
 
                 <td>
+                    <a title="Edit" href="<?php echo $this->url('refuel',
+                        array('action' => 'edit', 'id' => $row['id']));?>"><i class="icon-edit"></i></a>
                     <a title="Remove" href="<?php echo $this->url('refuel',
                         array('action' => 'delete', 'id' => $row['id']));?>"><i class="icon-remove"></i></a>
                 </td>
