@@ -6,11 +6,8 @@
     </li>
     <li class="active">Refuel form</li>
 </ul>
-<!--<div class="alert alert-info">-->
-<!--    <strong>Warning!</strong> Page in development.-->
-<!--</div>-->
 <?php
-$title = 'Add Refuel';
+$title = 'Edit Refuel';
 $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
@@ -42,7 +39,7 @@ $displayOptions = array(
 );
 //$formType = 'inline';
 $form = $this->form;
-$form->setAttribute('action', $this->url('refuel', array('action' => 'add', 'id' => $this->headerId)));
+$form->setAttribute('action', $this->url('refuel', array('action' => 'edit', 'id' => $this->id)));
 $form->prepare();
 ?>
 
@@ -59,8 +56,9 @@ $form->prepare();
 <?php endif; ?>
 
 <?php
-    echo $this->formTwb()->openTag($form, $formType);
-    echo $this->formRowTwb($form->get('headerId'));
+echo $this->formTwb()->openTag($form, $formType);
+echo $this->formRowTwb($form->get('id'));
+echo $this->formRowTwb($form->get('headerId'));
 ?>
 
 <div class="row-fluid">

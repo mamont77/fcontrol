@@ -68,6 +68,6 @@ $this->headTitle($title);
     <?php echo $this->partial('widgets/legTable.phtml', array('legs' => $legs)); ?>
 <? endif; ?>
 
-<? if (count($refuel) > 0): ?>
-    <?php echo $this->partial('widgets/refuelTable.phtml', array('refuel' => $refuel)); ?>
+<? if (count($refuels) > 0): ?>
+    <?php echo $this->partial('widgets/refuelTable.phtml', array('refuels' => $refuels)); ?>
 <? endif; ?>

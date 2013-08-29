@@ -40,7 +40,7 @@ class RefuelController extends FlightController
             )
         );
 
-        $refuel = $this->getRefuelModel()->getByHeaderId($this->headerId);
+        $refuels = $this->getRefuelModel()->getByHeaderId($this->headerId);
 
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -63,8 +63,69 @@ class RefuelController extends FlightController
         return array('form' => $form,
             'headerId' => $this->headerId,
             'refNumberOrder' => $refNumberOrder,
-            'refuel' => $refuel,
+            'refuels' => $refuels,
 
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function editAction()
+    {
+        $id = (int)$this->params()->fromRoute('id', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('flight', array(
+                'action' => 'index'
+            ));
+        }
+
+        $refNumberOrder = $this->getRefuelModel()->getHeaderRefNumberOrderByRefuelId($id);
+
+        $data = $this->getRefuelModel()->get($id);
+        $this->headerId = (int)$data->headerId;
+
+        $form = new RefuelForm('refuel',
+            array(
+                'libraries' => array(
+                    'airports' => $this->getParentLeg(),
+                    'agents' => $this->getKontragents(),
+                    'units' => $this->getUnits(),
+                )
+            )
+        );
+
+        $refuels = $this->getRefuelModel()->getByHeaderId($data->headerId);
+
+//\Zend\Debug\Debug::dump($data);
+
+        $form->bind($data);
+        $form->get('submitBtn')->setAttribute('value', 'Save');
+
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+            $filter = $this->getServiceLocator()->get('FcFlight\Filter\RefuelFilter');
+            $form->setInputFilter($filter->getInputFilter());
+            $form->setData($request->getPost());
+
+            if ($form->isValid()) {
+                $data = $form->getData();
+                $summaryData = $this->getRefuelModel()->save($data);
+                $this->flashMessenger()->addSuccessMessage('Refuel ' . $summaryData . ' was successfully saved.');
+
+                return $this->redirect()->toRoute('browse',
+                    array(
+                        'action' => 'show',
+                        'refNumberOrder' => $refNumberOrder,
+                    ));
+            }
+        }
+
+        return array('form' => $form,
+            'id' => $data->id,
+            'refNumberOrder' => $refNumberOrder,
+            'refuels' => $refuels,
         );
     }
 

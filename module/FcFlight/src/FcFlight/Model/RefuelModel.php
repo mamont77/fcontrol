@@ -40,7 +40,7 @@ class RefuelModel extends AbstractTableGateway
         if (!$row) {
             throw new \Exception("Could not find row $id");
         }
-        $row->dateOfFlight = date('d/m/Y', $row->dateOfFlight);
+        $row->date = date('d/m/Y', $row->date);
 
         return $row;
     }
@@ -116,6 +116,35 @@ class RefuelModel extends AbstractTableGateway
         $hash = $object->date;
 
         $this->insert($data);
+
+        return $hash;
+    }
+
+    /**
+     * @param RefuelFilter $object
+     * @return mixed
+     * @throws \Exception
+     */
+    public function save(RefuelFilter $object)
+    {
+        $date = \DateTime::createFromFormat('d-m-Y', $object->date);
+
+        $data = array(
+            'headerId' => (int)$object->headerId,
+            'airport' => (int)$object->airport,
+            'date' => (string)$date->getTimestamp(),
+            'agent' => (int)$object->agent,
+            'quantity' => (string)$object->quantity,
+            'unit' => (int)$object->unit,
+        );
+        $hash = $object->date;
+
+        $id = (int)$object->id;
+        if ($this->get($id)) {
+            $this->update($data, array('id' => $id));
+        } else {
+            throw new \Exception('Form id does not exist');
+        }
 
         return $hash;
     }
