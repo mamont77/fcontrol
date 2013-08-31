@@ -35,6 +35,7 @@ class FlightHeaderFilter implements InputFilterAwareInterface
     public $aircraft;
     public $aircraftType;
     public $aircraftTypeName;
+    public $status;
 
     /**
      * @var array
@@ -75,6 +76,7 @@ class FlightHeaderFilter implements InputFilterAwareInterface
         $this->aircraft = (isset($data['aircraft'])) ? $data['aircraft'] : null;
         $this->aircraftType = (isset($data['aircraftType'])) ? $data['aircraftType'] : null;
         $this->aircraftTypeName = (isset($data['aircraftTypeName'])) ? $data['aircraftTypeName'] : null;
+        $this->status = (isset($data['status'])) ? $data['status'] : null;
     }
 
     /**

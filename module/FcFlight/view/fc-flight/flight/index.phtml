@@ -55,7 +55,7 @@ if ($order) {
         <th>Actions</th>
     </tr>
     <?php foreach ($pagination as $row) : ?>
-        <tr>
+        <tr class="<?= ($row->status) ? 'success' : 'warning'; ?>">
             <td>
                 <a href="<?php
                 echo $this->url('browse',

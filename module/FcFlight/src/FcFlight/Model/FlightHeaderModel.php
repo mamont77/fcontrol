@@ -54,7 +54,7 @@ class FlightHeaderModel extends AbstractTableGateway
         if (null === $select)
             $select = new Select();
         $select->from($this->table);
-        $select->columns(array('id', 'refNumberOrder', 'dateOrder', 'kontragent', 'airOperator', 'aircraft'));
+        $select->columns(array('id', 'refNumberOrder', 'dateOrder', 'kontragent', 'airOperator', 'aircraft', 'status'));
         $select->join(array('library_kontragent' => 'library_kontragent'),
             'library_kontragent.id = flightBaseHeaderForm.kontragent',
             array('kontragentShortName' => 'short_name'), 'left');
@@ -91,6 +91,7 @@ class FlightHeaderModel extends AbstractTableGateway
             'kontragent' => $object->kontragent,
             'airOperator' => $object->airOperator,
             'aircraft' => $object->aircraft,
+            'status' => $object->status,
         );
         $this->insert($data);
 
@@ -112,6 +113,7 @@ class FlightHeaderModel extends AbstractTableGateway
             'kontragent' => $object->kontragent,
             'airOperator' => $object->airOperator,
             'aircraft' => $object->aircraft,
+            'status' => $object->status,
         );
         $id = (int)$object->id;
         $oldData = $this->get($id);
@@ -144,7 +146,7 @@ class FlightHeaderModel extends AbstractTableGateway
         $refNumberOrder = (string)$refNumberOrder;
         $select = new Select();
         $select->from($this->table);
-        $select->columns(array('id', 'refNumberOrder', 'dateOrder', 'kontragent', 'airOperator', 'aircraft'));
+        $select->columns(array('id', 'refNumberOrder', 'dateOrder', 'kontragent', 'airOperator', 'aircraft', 'status'));
         $select->join(array('library_kontragent' => 'library_kontragent'),
             'library_kontragent.id = flightBaseHeaderForm.kontragent',
             array('kontragentShortName' => 'short_name'), 'left');
