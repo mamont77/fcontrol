@@ -135,7 +135,7 @@ class LegController extends FlightController
     {
         $id = (int)$this->params()->fromRoute('id', 0);
         if (!$id) {
-            return $this->redirect()->toRoute('flights');
+            return $this->redirect()->toRoute('home');
         }
 
         $request = $this->getRequest();

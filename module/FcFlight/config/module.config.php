@@ -13,22 +13,35 @@ return array(
             'home' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/[/page/:page][/order_by/:order_by][/:order]',
+                    'route' => '/[/order_by/:order_by][/:order]',
                     'constraints' => array(
-                        'page' => '[0-9]+',
                         'order_by' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'order' => 'ASC|DESC',
                     ),
                     'defaults' => array(
                         'controller' => 'FcFlight\Controller\Flight',
-                        'action' => 'index',
+                        'action' => 'active',
                     ),
                 ),
             ),
-            'flights' => array(
+            'flightsActive' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/flights[/page/:page][/order_by/:order_by][/:order]',
+                    'route' => '/flights/active[/order_by/:order_by][/:order]',
+                    'constraints' => array(
+                        'order_by' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'order' => 'ASC|DESC',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'FcFlight\Controller\Flight',
+                        'action' => 'active',
+                    ),
+                ),
+            ),
+            'flightsArchived' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/flights/archived[/page/:page][/order_by/:order_by][/:order]',
                     'constraints' => array(
                         'page' => '[0-9]+',
                         'order_by' => '[a-zA-Z][a-zA-Z0-9_-]*',
@@ -36,7 +49,7 @@ return array(
                     ),
                     'defaults' => array(
                         'controller' => 'FcFlight\Controller\Flight',
-                        'action' => 'index',
+                        'action' => 'archived',
                     ),
                 ),
             ),
@@ -50,7 +63,7 @@ return array(
                     ),
                     'defaults' => array(
                         'controller' => 'FcFlight\Controller\Flight',
-                        'action' => 'index',
+                        'action' => 'add',
                     ),
                 ),
             ),

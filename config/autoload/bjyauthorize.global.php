@@ -116,13 +116,19 @@ return array(
              * access to all routes unless they are specified here.
              */
             'BjyAuthorize\Guard\Route' => array(
+                array('route' => 'home', 'roles' => array('guest', 'user')),
+                array('route' => 'flightsActive', 'roles' => array('user')),
+                array('route' => 'flightsArchived', 'roles' => array('user')),
+                array('route' => 'flight', 'roles' => array('user')),
+                array('route' => 'browse', 'roles' => array('user')),
+                array('route' => 'leg', 'roles' => array('user')),
+                array('route' => 'refuel', 'roles' => array('user')),
                 array('route' => 'zfcuser', 'roles' => array('user')),
                 array('route' => 'zfcuser/logout', 'roles' => array('user')),
                 array('route' => 'zfcuser/login', 'roles' => array('guest')),
                 array('route' => 'zfcuser/register', 'roles' => array('guest')),
                 array('route' => 'zfcuser/changepassword', 'roles' => array('user')),
                 array('route' => 'zfcuser/changeemail', 'roles' => array('user')),
-                array('route' => 'home', 'roles' => array('guest', 'user')),
                 array('route' => 'zfcadmin', 'roles' => array('admin')),
                 array('route' => 'zfcadmin/dashboard', 'roles' => array('admin')),
                 array('route' => 'zfcadmin/users', 'roles' => array('admin')),
@@ -149,11 +155,6 @@ return array(
                 array('route' => 'zfcadmin/currencies', 'roles' => array('admin')),
                 array('route' => 'zfcadmin/currency', 'roles' => array('admin')),
                 array('route' => 'zfcadmin/advanced_search', 'roles' => array('admin')),
-                array('route' => 'flights', 'roles' => array('user')),
-                array('route' => 'flight', 'roles' => array('user')),
-                array('route' => 'browse', 'roles' => array('user')),
-                array('route' => 'leg', 'roles' => array('user')),
-                array('route' => 'refuel', 'roles' => array('user')),
             ),
         ),
 

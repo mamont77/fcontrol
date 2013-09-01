@@ -22,7 +22,73 @@ class FlightController extends AbstractActionController
     /**
      * @return array|\Zend\View\Model\ViewModel
      */
-    public function indexAction()
+//    public function indexAction()
+//    {
+//        $select = new Select();
+//
+//        $orderByMaster = 'dateOrder';
+//        $orderAsType = Select::ORDER_DESCENDING;
+//
+//        $orderBy = $this->params()->fromRoute('order_by') ? $this->params()->fromRoute('order_by') : $orderByMaster;
+//        $orderAs = $this->params()->fromRoute('order') ? $this->params()->fromRoute('order') : $orderAsType;
+//
+//        $page = $this->params()->fromRoute('page') ? (int)$this->params()->fromRoute('page') : 1;
+//        if ($orderBy == $orderByMaster && $orderAsType == $orderAs) {
+//            $data = $this->getFlightHeaderModel()->fetchAll($select->order($orderBy . ' ' . $orderAs
+//            . ', id ' . $orderAs));
+//        } else {
+//            $data = $this->getFlightHeaderModel()->fetchAll($select->order($orderBy . ' ' . $orderAs));
+//        }
+//        $itemsPerPage = 20;
+//        $data->current();
+//
+//        $pagination = new Paginator(new paginatorIterator($data));
+//        $pagination->setCurrentPageNumber($page)
+//            ->setItemCountPerPage($itemsPerPage)
+//            ->setPageRange(7);
+//
+//        return new ViewModel(array(
+//            'order_by' => $orderBy,
+//            'order' => $orderAs,
+//            'page' => $page,
+//            'pagination' => $pagination,
+//            'route' => 'flightsActive',
+//        ));
+//    }
+
+    /**
+     * @return ViewModel
+     */
+    public function activeAction()
+    {
+        $select = new Select();
+
+        $orderByMaster = 'dateOrder';
+        $orderAsType = Select::ORDER_DESCENDING;
+
+        $orderBy = $this->params()->fromRoute('order_by') ? $this->params()->fromRoute('order_by') : $orderByMaster;
+        $orderAs = $this->params()->fromRoute('order') ? $this->params()->fromRoute('order') : $orderAsType;
+
+        if ($orderBy == $orderByMaster && $orderAsType == $orderAs) {
+            $data = $this->getFlightHeaderModel()->fetchAll($select->order($orderBy . ' ' . $orderAs
+            . ', id ' . $orderAs));
+        } else {
+            $data = $this->getFlightHeaderModel()->fetchAll($select->order($orderBy . ' ' . $orderAs));
+        }
+        $data->current();
+
+        return new ViewModel(array(
+            'order_by' => $orderBy,
+            'order' => $orderAs,
+            'data' => $data,
+            'route' => 'flightsActive',
+        ));
+    }
+
+    /**
+     * @return ViewModel
+     */
+    public function archivedAction()
     {
         $select = new Select();
 
@@ -35,9 +101,9 @@ class FlightController extends AbstractActionController
         $page = $this->params()->fromRoute('page') ? (int)$this->params()->fromRoute('page') : 1;
         if ($orderBy == $orderByMaster && $orderAsType == $orderAs) {
             $data = $this->getFlightHeaderModel()->fetchAll($select->order($orderBy . ' ' . $orderAs
-            . ', id ' . $orderAs));
+            . ', id ' . $orderAs), 0);
         } else {
-            $data = $this->getFlightHeaderModel()->fetchAll($select->order($orderBy . ' ' . $orderAs));
+            $data = $this->getFlightHeaderModel()->fetchAll($select->order($orderBy . ' ' . $orderAs), 0);
         }
         $itemsPerPage = 20;
         $data->current();
@@ -52,7 +118,7 @@ class FlightController extends AbstractActionController
             'order' => $orderAs,
             'page' => $page,
             'pagination' => $pagination,
-            'route' => 'flights',
+            'route' => 'flightsArchived',
         ));
     }
 
@@ -65,8 +131,8 @@ class FlightController extends AbstractActionController
         $refNumberOrder = urldecode($refNumberOrder);
 
         if (empty($refNumberOrder)) {
-            return $this->redirect()->toRoute('flights', array(
-                'action' => 'index'
+            return $this->redirect()->toRoute('home', array(
+                'action' => 'active'
             ));
         }
 
@@ -164,7 +230,7 @@ class FlightController extends AbstractActionController
                 $refNumberOrder = $this->getFlightHeaderModel()->save($data);
                 $this->flashMessenger()->addSuccessMessage("Flights '"
                 . $refNumberOrder . "' was successfully saved.");
-                return $this->redirect()->toRoute('flights');
+                return $this->redirect()->toRoute('home');
             }
         }
 
@@ -181,7 +247,7 @@ class FlightController extends AbstractActionController
     {
         $id = (int)$this->params()->fromRoute('id', 0);
         if (!$id) {
-            return $this->redirect()->toRoute('flights');
+            return $this->redirect()->toRoute('home');
         }
 
         $request = $this->getRequest();
@@ -197,7 +263,7 @@ class FlightController extends AbstractActionController
             }
 
             // Redirect to list
-            return $this->redirect()->toRoute('flights');
+            return $this->redirect()->toRoute('home');
         }
 
         return array(

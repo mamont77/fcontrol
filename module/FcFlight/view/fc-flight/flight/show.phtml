@@ -60,7 +60,7 @@ $this->headTitle($title);
                             (<?php echo $this->escapeHtml($header->aircraft); ?>)
                         </td>
                     </tr>
-                    <tr class="<?= ($header->status) ? 'success' : 'warning'; ?>">
+                    <tr class="<?= ($header->status) ? 'warning' : 'success'; ?>">
                         <th>Status</th><td><?= ($header->status) ? 'In Process' : 'Done'; ?></td>
                     </tr>
                 </table>

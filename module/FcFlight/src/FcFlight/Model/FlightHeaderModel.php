@@ -49,7 +49,7 @@ class FlightHeaderModel extends AbstractTableGateway
      * @param \Zend\Db\Sql\Select $select
      * @return null|\Zend\Db\ResultSet\ResultSetInterface
      */
-    public function fetchAll(Select $select = null)
+    public function fetchAll(Select $select = null, $status = 1)
     {
         if (null === $select)
             $select = new Select();
@@ -67,6 +67,7 @@ class FlightHeaderModel extends AbstractTableGateway
         $select->join(array('library_aircraft_type' => 'library_aircraft_type'),
             'library_aircraft_type.id = library_aircraft.aircraft_type',
             array('aircraftTypeName' => 'name'), 'left');
+        $select->where(array('status' => $status));
         $resultSet = $this->selectWith($select);
         $resultSet->buffer();
 

@@ -1,20 +1,3 @@
-<?php
-$title = 'Form: Flights';
-$this->headTitle($title);
-$url_order = 'ASC';
-if ($order) {
-    $url_order = $order == 'ASC' ? 'DESC' : 'ASC';
-}
-?>
-<h1><?php echo $this->escapeHtml($title); ?></h1>
-
-<?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
-
-<p>
-    <a href="<?php echo $this->url('flight', array('action' => 'add-header')); ?>"
-       class="btn btn-primary">Add Flight</a>
-</p>
-
 <table class="table table-bordered table-hover table-condensed">
     <tr>
         <th>
@@ -54,8 +37,8 @@ if ($order) {
         </th>
         <th>Actions</th>
     </tr>
-    <?php foreach ($pagination as $row) : ?>
-        <tr class="<?= ($row->status) ? 'success' : 'warning'; ?>">
+    <?php foreach ($data as $row) : ?>
+        <tr class="<?= ($row->status) ? 'warning' : 'success'; ?>">
             <td>
                 <a href="<?php
                 echo $this->url('browse',
@@ -80,12 +63,3 @@ if ($order) {
         </tr>
     <?php endforeach; ?>
 </table>
-<?php
-echo $this->paginationControl(
-    $pagination, 'Sliding', 'libraries-pagination-slide', array(
-        'order_by' => $order_by,
-        'order' => $order,
-        'route' => $route,
-    )
-);
-?>

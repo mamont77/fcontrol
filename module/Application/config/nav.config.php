@@ -5,10 +5,20 @@ return array(
             array(
                 'label' => 'Flights',
                 'route' => 'home',
+                'pages' => array(
+                    array(
+                        'label' => 'Active',
+                        'route' => 'flightsActive',
+                    ),
+                    array(
+                        'label' => 'Archive',
+                        'route' => 'flightsArchived',
+                    ),
+                ),
             ),
             array(
                 'label' => 'Libraries',
-                'type' => 'uri',
+                'route' => 'zfcadmin/libraries',
                 'pages' => array(
                     array(
                         'label' => 'Regions',

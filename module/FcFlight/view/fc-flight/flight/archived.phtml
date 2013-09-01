@@ -1,0 +1,38 @@
+<ul class="breadcrumb">
+    <li><a href="/">Home</a> <span class="divider">/</span></li>
+    <li class="active">Archived Flights</li>
+</ul>
+
+<?php
+$title = 'Archived Flights (Done)';
+$this->headTitle($title);
+$url_order = 'ASC';
+if ($order) {
+    $url_order = $order == 'ASC' ? 'DESC' : 'ASC';
+}
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
+
+<p>
+    <a href="<?php echo $this->url('flight', array('action' => 'add-header')); ?>"
+       class="btn btn-primary">Add Flight</a>
+</p>
+
+<?php echo $this->partial('widgets/headerTable.phtml', array(
+    'data' => $pagination,
+    'url_order' => $url_order,
+    'order_by' => $order_by,
+    'route' => $route,
+)); ?>
+
+<?php
+echo $this->paginationControl(
+    $pagination, 'Sliding', 'libraries-pagination-slide', array(
+        'order_by' => $order_by,
+        'order' => $order,
+        'route' => $route,
+    )
+);
+?>
