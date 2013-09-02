@@ -273,6 +273,28 @@ class FlightController extends AbstractActionController
     }
 
     /**
+     * @return array|\Zend\Http\Response
+     */
+    public function statusHeaderAction()
+    {
+        $id = (int)$this->params()->fromRoute('id', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('home');
+        }
+        $data = $this->getFlightHeaderModel()->get($id);
+
+        $data->status = ($data->status) ? 0 : 1;
+
+        $this->getFlightHeaderModel()->save($data);
+        $this->flashMessenger()->addSuccessMessage("Status for flights '"
+        . $data->refNumberOrder . "' was successfully switched.");
+        return $this->redirect()->toRoute('browse',
+            array(
+                'action' => 'show',
+                'refNumberOrder' => $data->refNumberOrder,
+            ));    }
+
+    /**
      * @return array|object
      */
     public function getFlightHeaderModel()

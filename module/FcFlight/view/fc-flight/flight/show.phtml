@@ -11,85 +11,96 @@ $this->headTitle($title);
 
 ?>
 <legend><?php echo $this->escapeHtml($title); ?></legend>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span2">
+            <ul class="nav nav-list">
+                <li class="nav-header">Operations</li>
+                <li class="active">
+                    <a href="<?php echo $this->url('flight', array('action' => 'status-header', 'id' => $header->id)); ?>">Change
+                        status</a>
+                </li>
+                <li class="<?= ($header->status) ? '' : 'disabled' ?>">
+                    <a href="<?php echo $this->url('flight', array('action' => 'edit-header', 'id' => $header->id)); ?>">Edit</a>
+                </li>
+                <li class="<?= ($header->status) ? '' : 'disabled' ?>">
+                    <a href="<?php echo $this->url('flight', array('action' => 'delete-header', 'id' => $header->id)); ?>">Delete</a>
+                </li>
+                <li class="divider"></li>
+            </ul>
+            <ul class="nav nav-list">
+                <li class="nav-header">Add service</li>
+                <li class="<?= ($header->status) ? '' : 'disabled' ?>">
+                    <a href="<?php echo $this->url('leg', array('action' => 'add', 'id' => $header->id)); ?>">
+                        LEG</a>
+                </li>
+                <li class="<?= ($header->status) ? '' : 'disabled' ?>">
+                    <a href="<?php echo $this->url('refuel', array('action' => 'add', 'id' => $header->id)); ?>">
+                        Refuel</a>
+                </li>
+                <li class="disabled"><a href="#">Permission</a></li>
+                <li class="disabled"><a href="#">Hotel</a></li>
+                <li class="disabled"><a href="#">FPL/PPL/SLOT</a></li>
+                <li class="disabled"><a href="#">Charter</a></li>
+                <li class="divider"></li>
+            </ul>
 
-<?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
+        </div>
+        <div class="span10">
+            <?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
 
-<div id="header">
-    <table id="flightBrowse">
-        <tr>
-            <td>
-                <table class="cHeader table">
+            <div id="header">
+                <table id="flightBrowse">
                     <tr>
-                        <th>Reg Number Order</th>
-                        <td class="cRefNumberOrder">
-                            <?php echo $this->escapeHtml($header->refNumberOrder); ?>
+                        <td>
+                            <table class="cHeader table">
+                                <tr>
+                                    <th>Reg Number Order</th>
+                                    <td class="cRefNumberOrder">
+                                        <?php echo $this->escapeHtml($header->refNumberOrder); ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Date Order</th>
+                                    <td><?php echo date('Y-m-d', $header->dateOrder); ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Customer</th>
+                                    <td><?php echo $this->escapeHtml($header->kontragentShortName); ?></td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <table class="cHeader table">
+                                <tr>
+                                    <th>Air Operator</th>
+                                    <td><?php echo $this->escapeHtml($header->airOperatorShortName); ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Aircraft</th>
+                                    <td><?php echo $this->escapeHtml($header->aircraftTypeName); ?>
+                                        (<?php echo $this->escapeHtml($header->aircraft); ?>)
+                                    </td>
+                                </tr>
+                                <tr class="<?= ($header->status) ? 'warning' : 'success'; ?>">
+                                    <th>Status</th>
+                                    <td><?= ($header->status) ? 'In Process' : 'Done'; ?></td>
+                                </tr>
+                            </table>
                         </td>
                     </tr>
-                    <tr>
-                        <th>Date Order</th>
-                        <td><?php echo date('Y-m-d', $header->dateOrder); ?></td>
-                    </tr>
-                    <tr>
-                        <th>Customer</th>
-                        <td><?php echo $this->escapeHtml($header->kontragentShortName); ?></td>
-                    </tr>
                 </table>
-            </td>
-            <td>
-                <table class="cHeader table">
-                    <tr>
-                        <th>Air Operator</th>
-                        <td><?php echo $this->escapeHtml($header->airOperatorShortName); ?></td>
-                    </tr>
-                    <tr>
-                        <th>Aircraft</th>
-                        <td><?php echo $this->escapeHtml($header->aircraftTypeName); ?>
-                            (<?php echo $this->escapeHtml($header->aircraft); ?>)
-                        </td>
-                    </tr>
-                    <tr class="<?= ($header->status) ? 'warning' : 'success'; ?>">
-                        <th>Status</th><td><?= ($header->status) ? 'In Process' : 'Done'; ?></td>
-                    </tr>
-                </table>
-            </td>
-            <td>
-                <div>
-                    <ul class="nav nav-pills">
-                        <li class="disabled"><a href="#">Operations:</a></li>
-                        <li>
-                            <a class="btn" href="<?php echo $this->url('flight', array('action' => 'edit-header', 'id' => $header->id)); ?>">Edit</a>
-                        </li>
-                        <li>
-                            <a class="btn" href="<?php echo $this->url('flight', array('action' => 'delete-header', 'id' => $header->id)); ?>">Delete</a>
-                        </li>
-                    </ul>
-                </div>
+            </div>
 
-                <div>
-                    <ul class="nav nav-pills">
-                        <li class="disabled"><a href="#">Add service:</a></li>
-                        <li>
-                            <a href="<?php echo $this->url('leg', array('action' => 'add', 'id' => $header->id)); ?>">LEG</a>
-                        </li>
-                        <li>
-                            <a href="<?php echo $this->url('refuel', array('action' => 'add', 'id' => $header->id)); ?>">Refuel</a>
-                        </li>
-                        <li class="disabled"><a href="#">Permission</a></li>
-                        <li class="disabled"><a href="#">Hotel</a></li>
-                        <li class="disabled"><a href="#">FPL/PPL/SLOT</a></li>
-                        <li class="disabled"><a href="#">Charter</a></li>
-                    </ul>
-                </div>
+            <? if (count($legs) > 0): ?>
+                <?php echo $this->partial('widgets/legTable.phtml', array('legs' => $legs)); ?>
+            <? endif; ?>
 
-            </td>
-        </tr>
-    </table>
+            <? if (count($refuels) > 0): ?>
+                <?php echo $this->partial('widgets/refuelTable.phtml', array('refuels' => $refuels)); ?>
+            <? endif; ?>
+        </div>
+    </div>
 </div>
 
-<? if (count($legs) > 0): ?>
-    <?php echo $this->partial('widgets/legTable.phtml', array('legs' => $legs)); ?>
-<? endif; ?>
 
-<? if (count($refuels) > 0): ?>
-    <?php echo $this->partial('widgets/refuelTable.phtml', array('refuels' => $refuels)); ?>
-<? endif; ?>
