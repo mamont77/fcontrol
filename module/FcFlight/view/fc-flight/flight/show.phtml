@@ -17,14 +17,20 @@ $this->headTitle($title);
             <ul class="nav nav-list">
                 <li class="nav-header">Operations</li>
                 <li class="active">
-                    <a href="<?php echo $this->url('flight', array('action' => 'status-header', 'id' => $header->id)); ?>">Change
-                        status</a>
+                    <a href="<?php echo $this->url('flight', array('action' => 'status-header', 'id' => $header->id)); ?>">
+                        <i class="icon-refresh"></i> Change status</a>
                 </li>
                 <li class="<?= ($header->status) ? '' : 'disabled' ?>">
-                    <a href="<?php echo $this->url('flight', array('action' => 'edit-header', 'id' => $header->id)); ?>">Edit</a>
+
+                    <a href="<?php echo $this->url('flight', array('action' => 'edit-header', 'id' => $header->id)); ?>">
+                        <i class="icon-edit"></i> Edit
+                    </a>
                 </li>
                 <li class="<?= ($header->status) ? '' : 'disabled' ?>">
-                    <a href="<?php echo $this->url('flight', array('action' => 'delete-header', 'id' => $header->id)); ?>">Delete</a>
+
+                    <a href="<?php echo $this->url('flight', array('action' => 'delete-header', 'id' => $header->id)); ?>">
+                        <i class="icon-remove"></i> Delete
+                    </a>
                 </li>
                 <li class="divider"></li>
             </ul>
@@ -32,11 +38,11 @@ $this->headTitle($title);
                 <li class="nav-header">Add service</li>
                 <li class="<?= ($header->status) ? '' : 'disabled' ?>">
                     <a href="<?php echo $this->url('leg', array('action' => 'add', 'id' => $header->id)); ?>">
-                        LEG</a>
+                        <i class="icon-plane"></i> LEG</a>
                 </li>
                 <li class="<?= ($header->status) ? '' : 'disabled' ?>">
                     <a href="<?php echo $this->url('refuel', array('action' => 'add', 'id' => $header->id)); ?>">
-                        Refuel</a>
+                        <i class="icon-plane"></i> Refuel</a>
                 </li>
                 <li class="disabled"><a href="#">Permission</a></li>
                 <li class="disabled"><a href="#">Hotel</a></li>
