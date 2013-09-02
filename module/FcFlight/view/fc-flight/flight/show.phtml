@@ -3,27 +3,14 @@
     <li class="active"><?= $header->refNumberOrder ?></li>
 </ul>
 <?php
+/**
+ * @var $this FcFlight\Controller\FlightController
+ */
 $title = 'Browse: Flight';
 $this->headTitle($title);
 
 ?>
 <legend><?php echo $this->escapeHtml($title); ?></legend>
-
-<div>
-    <ul class="nav nav-pills">
-        <li class="disabled"><a href="#">Add service:</a></li>
-        <li>
-            <a href="<?php echo $this->url('leg', array('action' => 'add', 'id' => $header->id)); ?>">LEG</a>
-        </li>
-        <li>
-            <a href="<?php echo $this->url('refuel', array('action' => 'add', 'id' => $header->id)); ?>">Refuel</a>
-        </li>
-        <li class="disabled"><a href="#">Permission</a></li>
-        <li class="disabled"><a href="#">Hotel</a></li>
-        <li class="disabled"><a href="#">FPL/PPL/SLOT</a></li>
-        <li class="disabled"><a href="#">Charter</a></li>
-    </ul>
-</div>
 
 <?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
 
@@ -64,6 +51,36 @@ $this->headTitle($title);
                         <th>Status</th><td><?= ($header->status) ? 'In Process' : 'Done'; ?></td>
                     </tr>
                 </table>
+            </td>
+            <td>
+                <div>
+                    <ul class="nav nav-pills">
+                        <li class="disabled"><a href="#">Operations:</a></li>
+                        <li>
+                            <a class="btn" href="<?php echo $this->url('flight', array('action' => 'edit-header', 'id' => $header->id)); ?>">Edit</a>
+                        </li>
+                        <li>
+                            <a class="btn" href="<?php echo $this->url('flight', array('action' => 'delete-header', 'id' => $header->id)); ?>">Delete</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <ul class="nav nav-pills">
+                        <li class="disabled"><a href="#">Add service:</a></li>
+                        <li>
+                            <a href="<?php echo $this->url('leg', array('action' => 'add', 'id' => $header->id)); ?>">LEG</a>
+                        </li>
+                        <li>
+                            <a href="<?php echo $this->url('refuel', array('action' => 'add', 'id' => $header->id)); ?>">Refuel</a>
+                        </li>
+                        <li class="disabled"><a href="#">Permission</a></li>
+                        <li class="disabled"><a href="#">Hotel</a></li>
+                        <li class="disabled"><a href="#">FPL/PPL/SLOT</a></li>
+                        <li class="disabled"><a href="#">Charter</a></li>
+                    </ul>
+                </div>
+
             </td>
         </tr>
     </table>
