@@ -17,7 +17,7 @@ $this->headTitle($title);
             <ul class="nav nav-list">
                 <li class="nav-header">Operations</li>
                 <li class="active">
-                    <a href="<?php echo $this->url('flight', array('action' => 'status-header', 'id' => $header->id)); ?>">
+                    <a href="#switchStatus" data-toggle="modal" role="button">
                         <i class="icon-refresh"></i> Change status</a>
                 </li>
                 <li class="<?= ($header->status) ? '' : 'disabled' ?>">
@@ -50,6 +50,21 @@ $this->headTitle($title);
                 <li class="disabled"><a href="#">Charter</a></li>
                 <li class="divider"></li>
             </ul>
+
+            <div id="switchStatus" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="switchStatusLabel" aria-hidden="true">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="switchStatusLabel">Change status warring</h3>
+                </div>
+                <div class="modal-body">
+                    <p>ARE YOU COMPLETELY SURE TO CHANGE STATUS FOR FLIGHT<br /><b><?= $header->refNumberOrder ?></b>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                    <a class="btn btn-primary" href="<?php echo $this->url('flight', array('action' => 'status-header', 'id' => $header->id)); ?>">
+                        Change status</a>
+                </div>
+            </div>
 
         </div>
         <div class="span10">
