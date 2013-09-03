@@ -1,7 +1,15 @@
 <ul class="breadcrumb">
     <li><a href="/">Home</a> <span class="divider">/</span></li>
+    <?php
+      if (($header->status)) {
+          echo '<li><a href="/flights/active">In process</a> <span class="divider">/</span></li>';
+      } else {
+          echo '<li><a href="/flights/archived">Archived</a> <span class="divider">/</span></li>';
+      }
+    ?>
     <li class="active"><?= $header->refNumberOrder ?></li>
 </ul>
+
 <?php
 /**
  * @var $this FcFlight\Controller\FlightController
@@ -114,11 +122,11 @@ $this->headTitle($title);
             </div>
 
             <? if (count($legs) > 0): ?>
-                <?php echo $this->partial('widgets/legTable.phtml', array('legs' => $legs)); ?>
+                <?php echo $this->partial('widgets/tables/leg.phtml', array('legs' => $legs)); ?>
             <? endif; ?>
 
             <? if (count($refuels) > 0): ?>
-                <?php echo $this->partial('widgets/refuelTable.phtml', array('refuels' => $refuels)); ?>
+                <?php echo $this->partial('widgets/tables/refuel.phtml', array('refuels' => $refuels)); ?>
             <? endif; ?>
         </div>
     </div>

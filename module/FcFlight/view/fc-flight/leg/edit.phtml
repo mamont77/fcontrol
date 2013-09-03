@@ -68,7 +68,7 @@ $form->setAttribute('action', $this->url('leg', array('action' => 'edit', 'id' =
 $form->prepare();
 ?>
 
-<?php echo $this->partial('widgets/legTable.phtml', array('legs' => $legs)); ?>
+<?php echo $this->partial('widgets/tables/leg.phtml', array('legs' => $legs)); ?>
 
 <?php if ($form->getMessages()): ?>
     <div class="alert alert-error">

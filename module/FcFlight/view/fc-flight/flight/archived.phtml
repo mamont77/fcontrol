@@ -24,19 +24,61 @@ if ($order) {
        class="btn btn-primary">Add Flight</a>
 </p>
 
-<?php echo $this->partial('widgets/headerTable.phtml', array(
-    'data' => $pagination,
-    'url_order' => $url_order,
-    'order_by' => $order_by,
-    'route' => $route,
-)); ?>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span2">
+            <form>
+                <fieldset>
+                    <legend>Search</legend>
+                    <label>Date from</label>
+                    <input type="text" name="dateOrderFrom" class="input-medium" placeholder="____-__-__" />
+                    <label>Date to</label>
+                    <input type="text" name="dateOrderTo" class="input-medium" placeholder="____-__-__" />
+                    <label>Status</label>
+                    <label class="radio">
+                        <input type="radio" name="status" id="any" value="" checked />
+                        Any
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="status" id="inProcess" value="1" />
+                        In process
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="status" id="done" value="0" />
+                        Done
+                    </label>
+                    <label>Customer</label>
+                    <input type="text" name="customer" class="input-medium" />
+                    <label>Air Operator</label>
+                    <input type="text" name="airOperator" class="input-medium" />
+                    <label>Aircraft</label>
+                    <input type="text" name="aircraft" class="input-medium" />
 
-<?php
-echo $this->paginationControl(
-    $pagination, 'Sliding', 'libraries-pagination-slide', array(
-        'order_by' => $order_by,
-        'order' => $order,
-        'route' => $route,
-    )
-);
-?>
+                    <button type="submit" name="submit" class="btn">Find</button>
+                </fieldset>
+            </form>
+        </div>
+        <div class="span10">
+            <?php echo $this->partial('widgets/tables/header.phtml', array(
+                'data' => $pagination,
+                'url_order' => $url_order,
+                'order_by' => $order_by,
+                'route' => $route,
+            )); ?>
+
+            <?php
+            echo $this->paginationControl(
+                $pagination, 'Sliding', 'libraries-pagination-slide', array(
+                    'order_by' => $order_by,
+                    'order' => $order,
+                    'route' => $route,
+                )
+            );
+            ?>        </div>
+    </div>
+</div>
+
+
+
+
+
