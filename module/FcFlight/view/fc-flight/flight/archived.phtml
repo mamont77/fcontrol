@@ -19,11 +19,6 @@ if ($order) {
 
 <?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
 
-<p>
-    <a href="<?php echo $this->url('flight', array('action' => 'add-header')); ?>"
-       class="btn btn-primary">Add Flight</a>
-</p>
-
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span2">
@@ -59,6 +54,12 @@ if ($order) {
             </form>
         </div>
         <div class="span10">
+
+            <p>
+                <a href="<?php echo $this->url('flight', array('action' => 'add-header')); ?>"
+                   class="btn btn-primary">Add Flight</a>
+            </p>
+
             <?php echo $this->partial('widgets/tables/header.phtml', array(
                 'data' => $pagination,
                 'url_order' => $url_order,
@@ -74,7 +75,8 @@ if ($order) {
                     'route' => $route,
                 )
             );
-            ?>        </div>
+            ?>
+        </div>
     </div>
 </div>
 
