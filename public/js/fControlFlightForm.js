@@ -32,4 +32,11 @@
         }
     };
 
+    fControl.behaviors.flightSearchForm = {
+        attach:function (context, settings) {
+            var $form = $('form#flightSearch');
+            $($form).find('#dateOrderFrom, #dateOrderTo').mask('9999-99-99');
+        }
+    };
+
 })(jQuery);

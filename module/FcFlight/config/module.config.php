@@ -53,6 +53,16 @@ return array(
                     ),
                 ),
             ),
+            'flightsSearch' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '/flights/search',
+                    'defaults' => array(
+                        'controller' => 'FcFlight\Controller\Flight',
+                        'action' => 'searchResult',
+                    ),
+                ),
+            ),
             'flight' => array(
                 'type' => 'segment',
                 'options' => array(

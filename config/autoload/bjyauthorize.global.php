@@ -119,6 +119,7 @@ return array(
                 array('route' => 'home', 'roles' => array('guest', 'user')),
                 array('route' => 'flightsActive', 'roles' => array('user')),
                 array('route' => 'flightsArchived', 'roles' => array('user')),
+                array('route' => 'flightsSearch', 'roles' => array('user')),
                 array('route' => 'flight', 'roles' => array('user')),
                 array('route' => 'browse', 'roles' => array('user')),
                 array('route' => 'leg', 'roles' => array('user')),

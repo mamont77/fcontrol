@@ -21,39 +21,10 @@ if ($order) {
 
 <div class="container-fluid">
     <div class="row-fluid">
-        <div class="span2">
-            <form>
-                <fieldset>
-                    <legend>Search</legend>
-                    <label>Date from</label>
-                    <input type="text" name="dateOrderFrom" class="input-medium" placeholder="____-__-__" />
-                    <label>Date to</label>
-                    <input type="text" name="dateOrderTo" class="input-medium" placeholder="____-__-__" />
-                    <label>Status</label>
-                    <label class="radio">
-                        <input type="radio" name="status" id="any" value="" checked />
-                        Any
-                    </label>
-                    <label class="radio">
-                        <input type="radio" name="status" id="inProcess" value="1" />
-                        In process
-                    </label>
-                    <label class="radio">
-                        <input type="radio" name="status" id="done" value="0" />
-                        Done
-                    </label>
-                    <label>Customer</label>
-                    <input type="text" name="customer" class="input-medium" />
-                    <label>Air Operator</label>
-                    <input type="text" name="airOperator" class="input-medium" />
-                    <label>Aircraft</label>
-                    <input type="text" name="aircraft" class="input-medium" />
-
-                    <button type="submit" name="submit" class="btn">Find</button>
-                </fieldset>
-            </form>
+        <div class="span2 leftPanes">
+            <?php echo $this->partial('widgets/search/default.phtml', array('form' => $searchForm)); ?>
         </div>
-        <div class="span10">
+        <div class="span10 rightPanes">
 
             <p>
                 <a href="<?php echo $this->url('flight', array('action' => 'add-header')); ?>"

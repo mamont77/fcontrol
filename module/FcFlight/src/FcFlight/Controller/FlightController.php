@@ -5,6 +5,7 @@ namespace FcFlight\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use FcFlight\Form\FlightHeaderForm;
+use FcFlight\Form\SearchForm;
 use Zend\Db\Sql\Select;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\Iterator as paginatorIterator;
@@ -81,6 +82,7 @@ class FlightController extends AbstractActionController
             'order_by' => $orderBy,
             'order' => $orderAs,
             'data' => $data,
+            'searchForm' => new SearchForm(),
             'route' => 'flightsActive',
         ));
     }
@@ -118,6 +120,7 @@ class FlightController extends AbstractActionController
             'order' => $orderAs,
             'page' => $page,
             'pagination' => $pagination,
+            'searchForm' => new SearchForm(),
             'route' => 'flightsArchived',
         ));
     }
@@ -292,7 +295,36 @@ class FlightController extends AbstractActionController
             array(
                 'action' => 'show',
                 'refNumberOrder' => $data->refNumberOrder,
-            ));    }
+            ));
+    }
+
+    public function searchResultAction()
+    {
+
+        $searchForm = new SearchForm();
+
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $filter = $this->getServiceLocator()->get('FcFlight\Filter\SearchFilter');
+            $searchForm->setInputFilter($filter->getInputFilter());
+            $searchForm->setData($request->getPost());
+
+            if ($searchForm->isValid()) {
+                $data = $searchForm->getData();
+                $filter->exchangeArray($data);
+//                $refNumberOrder = $this->getFlightHeaderModel()->add($filter);
+//                $this->flashMessenger()->addSuccessMessage("Flights '"
+//                . $refNumberOrder . "' was successfully added.");
+//                return $this->redirect()->toRoute('browse',
+//                    array(
+//                        'action' => 'show',
+//                        'refNumberOrder' => $refNumberOrder,
+//                    ));
+            }
+        }
+        return array('form' => $searchForm);
+
+    }
 
     /**
      * @return array|object

@@ -7,6 +7,7 @@ use FcFlight\Model\FlightHeaderModel;
 use FcFlight\Model\LegModel;
 use FcFlight\Model\RefuelModel;
 use FcFlight\Filter\FlightHeaderFilter;
+use FcFlight\Filter\SearchFilter;
 use FcFlight\Filter\LegFilter;
 use FcFlight\Filter\RefuelFilter;
 
@@ -85,6 +86,10 @@ class Module
                 'FcFlight\Filter\FlightHeaderFilter' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     return new FlightHeaderFilter($dbAdapter);
+                },
+                'FcFlight\Filter\SearchFilter' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new SearchFilter($dbAdapter);
                 },
                 'FcFlight\Filter\LegFilter' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
