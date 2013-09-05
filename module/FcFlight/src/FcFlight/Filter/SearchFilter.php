@@ -141,6 +141,19 @@ class SearchFilter implements InputFilterAwareInterface
                             ),
                         ),
                     ),
+                    array(
+                        'name' => 'Callback',
+                        'options' => array(
+                            'messages' => array(
+                                \Zend\Validator\Callback::INVALID_VALUE => 'The "date to" is less than the "date from"',
+                            ),
+                            'callback' => function ($value, $context) {
+                                $dateOrderFrom = \DateTime::createFromFormat('Y-m-d', $context['dateOrderFrom']);
+                                $dateOrderTo = \DateTime::createFromFormat('Y-m-d', $value);
+                                return $dateOrderTo >= $dateOrderFrom;
+                            },
+                        ),
+                    ),
                 ),
             )));
 

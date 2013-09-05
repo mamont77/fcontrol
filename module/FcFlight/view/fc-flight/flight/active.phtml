@@ -13,7 +13,6 @@ if ($order) {
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 
-<?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
 
 <div class="container-fluid">
     <div class="row-fluid">
@@ -21,6 +20,7 @@ if ($order) {
             <?php echo $this->partial('widgets/search/default.phtml', array('form' => $searchForm)); ?>
         </div>
         <div class="span10 rightPanes">
+            <?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
 
             <p>
                 <a href="<?php echo $this->url('flight', array('action' => 'add-header')); ?>"

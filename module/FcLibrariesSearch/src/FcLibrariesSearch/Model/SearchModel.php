@@ -7,6 +7,10 @@ use Zend\Db\Adapter\Adapter;
 use Zend\Db\Sql\Select;
 use Zend\Db\ResultSet\ResultSet;
 
+/**
+ * Class SearchModel
+ * @package FcLibrariesSearch\Model
+ */
 class SearchModel extends AbstractTableGateway
 {
     /**

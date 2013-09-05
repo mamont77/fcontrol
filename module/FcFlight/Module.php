@@ -4,6 +4,7 @@ namespace FcFlight;
 use Zend\ModuleManager\ModuleManager;
 use Zend\Mvc\MvcEvent;
 use FcFlight\Model\FlightHeaderModel;
+use FcFlight\Model\SearchModel;
 use FcFlight\Model\LegModel;
 use FcFlight\Model\RefuelModel;
 use FcFlight\Filter\FlightHeaderFilter;
@@ -74,6 +75,10 @@ class Module
                 'FcFlight\Model\FlightHeaderModel' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     return new FlightHeaderModel($dbAdapter);
+                },
+                'FcFlight\Model\SearchModel' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new SearchModel($dbAdapter);
                 },
                 'FcFlight\Model\LegModel' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');

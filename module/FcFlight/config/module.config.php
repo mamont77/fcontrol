@@ -3,6 +3,7 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'FcFlight\Controller\Flight' => 'FcFlight\Controller\FlightController',
+            'FcFlight\Controller\Search' => 'FcFlight\Controller\SearchController',
             'FcFlight\Controller\Leg' => 'FcFlight\Controller\LegController',
             'FcFlight\Controller\Refuel' => 'FcFlight\Controller\RefuelController',
         ),
@@ -54,11 +55,11 @@ return array(
                 ),
             ),
             'flightsSearch' => array(
-                'type' => 'Literal',
+                'type' => 'segment',
                 'options' => array(
                     'route' => '/flights/search',
                     'defaults' => array(
-                        'controller' => 'FcFlight\Controller\Flight',
+                        'controller' => 'FcFlight\Controller\Search',
                         'action' => 'searchResult',
                     ),
                 ),

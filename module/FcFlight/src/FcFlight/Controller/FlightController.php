@@ -298,34 +298,6 @@ class FlightController extends AbstractActionController
             ));
     }
 
-    public function searchResultAction()
-    {
-
-        $searchForm = new SearchForm();
-
-        $request = $this->getRequest();
-        if ($request->isPost()) {
-            $filter = $this->getServiceLocator()->get('FcFlight\Filter\SearchFilter');
-            $searchForm->setInputFilter($filter->getInputFilter());
-            $searchForm->setData($request->getPost());
-
-            if ($searchForm->isValid()) {
-                $data = $searchForm->getData();
-                $filter->exchangeArray($data);
-//                $refNumberOrder = $this->getFlightHeaderModel()->add($filter);
-//                $this->flashMessenger()->addSuccessMessage("Flights '"
-//                . $refNumberOrder . "' was successfully added.");
-//                return $this->redirect()->toRoute('browse',
-//                    array(
-//                        'action' => 'show',
-//                        'refNumberOrder' => $refNumberOrder,
-//                    ));
-            }
-        }
-        return array('form' => $searchForm);
-
-    }
-
     /**
      * @return array|object
      */

@@ -6,6 +6,10 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use FcLibrariesSearch\Form\AdvancedSearchForm;
 
+/**
+ * Class SearchController
+ * @package FcLibrariesSearch\Controller
+ */
 class SearchController extends AbstractActionController
 {
     /**
@@ -34,10 +38,9 @@ class SearchController extends AbstractActionController
             if ($form->isValid()) {
                 $data = $form->getData();
                 $filter->exchangeArray($data);
-//                \Zend\Debug\Debug::dump($data);
                 $result = $this->getSearchModel()->findAdvancedSearchResult($data['text'], $data['library']);
                 if (count($result) == 0) {
-                    $result = 'Not found!';
+                    $result = 'Result not found!';
                 }
 
                 $library = $data['library'];
