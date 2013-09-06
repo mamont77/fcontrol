@@ -145,8 +145,8 @@ class FlightHeaderModel extends AbstractTableGateway
     public function getByRefNumberOrder($refNumberOrder)
     {
         $refNumberOrder = (string)$refNumberOrder;
-        $select = new Select();
-        $select->from($this->table);
+
+        $select = $this->getSql()->select();
         $select->columns(array('id', 'refNumberOrder', 'dateOrder', 'kontragent', 'airOperator', 'aircraft', 'status'));
         $select->join(array('library_kontragent' => 'library_kontragent'),
             'library_kontragent.id = flightBaseHeaderForm.kontragent',
@@ -161,10 +161,12 @@ class FlightHeaderModel extends AbstractTableGateway
             'library_aircraft_type.id = library_aircraft.aircraft_type',
             array('aircraftTypeName' => 'name'), 'left');
         $select->where(array('refNumberOrder' => $refNumberOrder));
-        $resultSet = $this->selectWith($select);
-        $resultSet->buffer();
+        $row = $this->selectWith($select)->current();
+        if (!$row) {
+            throw new \Exception("Could not find row $refNumberOrder");
+        }
 
-        return $resultSet;
+        return $row;
     }
 
     public function getRefNumberOrderById($id)

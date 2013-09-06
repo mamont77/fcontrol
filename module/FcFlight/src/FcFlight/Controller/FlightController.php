@@ -140,22 +140,9 @@ class FlightController extends AbstractActionController
         }
 
         $header = $this->getFlightHeaderModel()->getByRefNumberOrder($refNumberOrder);
-        $header->current();
-
-        foreach ($header as $item)
-        {
-
-            if (!$item->id) {
-                throw new \Exception("Could not find row $refNumberOrder");
-            }
-            $header = $item;
-            break;
-        }
 
         $legs = $this->getLegModel()->getByHeaderId($header->id);
         $refuels = $this->getRefuelModel()->getByHeaderId($header->id);
-
-//        \Zend\Debug\Debug::dump($refuel);
 
         return new ViewModel(array(
             'header' => $header,
