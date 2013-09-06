@@ -84,15 +84,30 @@ class SearchModel extends AbstractTableGateway
         }
 
         if ($object->customer != '') {
-            $select->where->like('library_kontragent.short_name', $object->customer . '%');
+            $select->where
+                ->NEST
+                ->like('library_kontragent.name', $object->customer . '%')
+                ->OR
+                ->like('library_kontragent.short_name', $object->customer . '%')
+                ->UNNEST;
         }
 
         if ($object->airOperator != '') {
-            $select->where->like('library_air_operator.short_name', $object->airOperator . '%');
+            $select->where
+                ->NEST
+                ->like('library_air_operator.name', $object->airOperator . '%')
+                ->OR
+                ->like('library_air_operator.short_name', $object->airOperator . '%')
+                ->UNNEST;
         }
 
         if ($object->aircraft != '') {
-            $select->where->like('library_aircraft_type.name', $object->aircraft . '%');
+            $select->where
+                ->NEST
+                ->like('library_aircraft_type.name', $object->aircraft . '%')
+                ->OR
+                ->like('library_aircraft.reg_number', $object->aircraft . '%')
+                ->UNNEST;
         }
 
         $select->order('dateOrder ' . Select::ORDER_DESCENDING);
