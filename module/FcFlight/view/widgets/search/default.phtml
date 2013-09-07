@@ -23,8 +23,6 @@ $displayOptions = array(
 );
 $formType = 'vertical';
 $form = $this->form;
-//\Zend\Debug\Debug::dump($form);
-//$form->setAttribute('action', $this->url('flightsSearch', array('action' => 'search')));
 $form->prepare();
 
 echo $this->formTwb()->openTag($form, $formType);

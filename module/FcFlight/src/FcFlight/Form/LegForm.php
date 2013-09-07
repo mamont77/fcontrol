@@ -92,7 +92,7 @@ class LegForm extends BaseForm
                         ),
                         'options' => array(
                             'label' => 'ICAO (IATA)',
-                            'empty_option' => '-- Please select --',
+                            'empty_option' => '-- Select --',
                             'value_options' => $this->flightNumberIcaoAndIata,
                         ),
                     ),
@@ -132,14 +132,29 @@ class LegForm extends BaseForm
                             'required' => true,
                             'id' => 'apDepIcaoAndIata',
                             'size' => 5,
+                            'value' => ($options['preSelected']['apDepIcaoAndIata'])
+                                ? $options['preSelected']['apDepIcaoAndIata']
+                                : null,
                         ),
                         'options' => array(
                             'label' => 'IATA (ICAO)',
-                            'empty_option' => '-- Please select --',
+                            'empty_option' => '-- Select --',
                             'value_options' => $this->appIcaoAndIata,
                         ),
                     ),
                 ),
+                //only for $options['preSelected']['apDepIcaoAndIata'] not empty
+                array(
+                    'spec' => array(
+                        'name' => 'apDepIcaoAndIataHidden',
+                        'attributes' => array(
+                            'id' => 'apDepIcaoAndIataHidden',
+                            'type' => 'hidden',
+                            'value' => $options['preSelected']['apDepIcaoAndIata'],
+                        ),
+                    ),
+                ),
+
                 //apDepTime
                 array(
                     'spec' => array(
@@ -180,7 +195,7 @@ class LegForm extends BaseForm
                         ),
                         'options' => array(
                             'label' => 'IATA (ICAO)',
-                            'empty_option' => '-- Please select --',
+                            'empty_option' => '-- Select --',
                             'value_options' => $this->appIcaoAndIata,
                         ),
                     ),

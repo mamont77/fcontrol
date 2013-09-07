@@ -97,8 +97,6 @@ class RefuelController extends FlightController
 
         $refuels = $this->getRefuelModel()->getByHeaderId($data->headerId);
 
-//\Zend\Debug\Debug::dump($data);
-
         $form->bind($data);
         $form->get('submitBtn')->setAttribute('value', 'Save');
 

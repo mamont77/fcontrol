@@ -75,7 +75,9 @@ class LegModel extends AbstractTableGateway
             'arr.id = flightBaseDataForm.apArrIcaoAndIata',
             array('apArrIcao' => 'code_icao', 'apArrIata' => 'code_iata'), 'left');
         $select->where(array('headerId' => $id));
-        $select->order('dateOfFlight ' . $select::ORDER_ASCENDING);
+        $select->order(array('dateOfFlight ' . $select::ORDER_ASCENDING, 'id ' . $select::ORDER_ASCENDING));
+//        \Zend\Debug\Debug::dump($select->getSqlString());
+
         $resultSet = $this->selectWith($select);
         $resultSet->buffer();
 

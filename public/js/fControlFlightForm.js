@@ -18,10 +18,21 @@
 
     fControl.behaviors.flightLegForm = {
         attach:function (context, settings) {
-            var $form = $('form#leg');
+            var $form = $('form#leg'),
+                apDepIcaoAndIata,
+                preSelectedValue;
             $($form).find('#dateOfFlight').mask('99-99-9999');
             $($form).find('#apDepTime').mask('99:99');
             $($form).find('#apArrTime').mask('99:99');
+            apDepIcaoAndIata = $form.find('#apDepIcaoAndIata');
+            preSelectedValue = apDepIcaoAndIata.val();
+            console.log(preSelectedValue);
+            if (preSelectedValue > 0) {
+                apDepIcaoAndIata.find('option').each(function(){
+                    $(this).prop('disabled', true);
+                });
+                apDepIcaoAndIata.find('option:selected').prop('disabled', false)
+            }
         }
     };
 

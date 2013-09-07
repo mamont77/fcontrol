@@ -26,7 +26,6 @@ if ($order) {
         <div class="span10 rightPanes">
             <?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
 
-<!--            --><?//=\Zend\Debug\Debug::dump(strlen($data));?>
             <? if (is_string($data) && strlen($data) > 0): ?>
                 <legend>Search Result</legend>
                 <div class="alert alert-error">

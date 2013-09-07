@@ -27,17 +27,27 @@ class LegController extends FlightController
 
         $refNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($headerId);
 
+        $legs = $this->getLegModel()->getByHeaderId($headerId);
+        $lastLeg = end($legs);
+
+        if ($lastLeg) {
+            $preSelectedApDep = $lastLeg['apArrIcaoAndIata'];
+        } else {
+            $preSelectedApDep = null;
+        }
+
         $form = new LegForm('leg',
             array(
                 'headerId' => $headerId,
                 'libraries' => array(
                     'flightNumberIcaoAndIata' => $this->getAirOperators(),
                     'appIcaoAndIata' => $this->getAirports(),
-                )
+                ),
+                'preSelected' => array(
+                    'apDepIcaoAndIata' => $preSelectedApDep,
+                ),
             )
         );
-
-        $legs = $this->getLegModel()->getByHeaderId($headerId);
 
         $request = $this->getRequest();
         if ($request->isPost()) {
