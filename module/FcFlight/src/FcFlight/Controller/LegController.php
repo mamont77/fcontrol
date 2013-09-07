@@ -2,12 +2,9 @@
 
 namespace FcFlight\Controller;
 
-use Zend\Debug\Debug;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use FcFlight\Form\LegForm;
-use Zend\Db\Sql\Select;
-use Zend\Paginator\Paginator;
 
 class LegController extends FlightController
 {
@@ -31,8 +28,10 @@ class LegController extends FlightController
         $lastLeg = end($legs);
 
         if ($lastLeg) {
+            $dateOfFlight = $lastLeg['dateOfFlight'];
             $preSelectedApDep = $lastLeg['apArrIcaoAndIata'];
         } else {
+            $dateOfFlight = null;
             $preSelectedApDep = null;
         }
 
@@ -43,8 +42,11 @@ class LegController extends FlightController
                     'flightNumberIcaoAndIata' => $this->getAirOperators(),
                     'appIcaoAndIata' => $this->getAirports(),
                 ),
-                'preSelected' => array(
-                    'apDepIcaoAndIata' => $preSelectedApDep,
+                'previousValues' => array(
+                    'dateOfFlight' => $dateOfFlight,
+                    'preSelected' => array(
+                        'apDepIcaoAndIata' => $preSelectedApDep,
+                    ),
                 ),
             )
         );

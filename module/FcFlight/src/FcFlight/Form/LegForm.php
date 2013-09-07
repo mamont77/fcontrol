@@ -60,6 +60,14 @@ class LegForm extends BaseForm
         ));
 
         $this->add(array(
+            'name' => 'previousDateOfFlight',
+            'attributes' => array(
+                'type' => 'hidden',
+                'value' => $options['previousValues']['dateOfFlight'],
+            ),
+        ));
+
+        $this->add(array(
             'name' => 'dateOfFlight',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
@@ -132,8 +140,8 @@ class LegForm extends BaseForm
                             'required' => true,
                             'id' => 'apDepIcaoAndIata',
                             'size' => 5,
-                            'value' => ($options['preSelected']['apDepIcaoAndIata'])
-                                ? $options['preSelected']['apDepIcaoAndIata']
+                            'value' => ($options['previousValues']['preSelected']['apDepIcaoAndIata'])
+                                ? $options['previousValues']['preSelected']['apDepIcaoAndIata']
                                 : null,
                         ),
                         'options' => array(
@@ -143,14 +151,14 @@ class LegForm extends BaseForm
                         ),
                     ),
                 ),
-                //only for $options['preSelected']['apDepIcaoAndIata'] not empty
+                //only for $options['previousValues']['preSelected']['apDepIcaoAndIata'] not empty
                 array(
                     'spec' => array(
                         'name' => 'apDepIcaoAndIataHidden',
                         'attributes' => array(
                             'id' => 'apDepIcaoAndIataHidden',
                             'type' => 'hidden',
-                            'value' => $options['preSelected']['apDepIcaoAndIata'],
+                            'value' => $options['previousValues']['preSelected']['apDepIcaoAndIata'],
                         ),
                     ),
                 ),

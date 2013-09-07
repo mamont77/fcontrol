@@ -53,7 +53,7 @@ class LegModel extends AbstractTableGateway
      */
     public function getByHeaderId($id)
     {
-        $id = (string)$id;
+        $id = (int)$id;
         $select = new Select();
         $select->from($this->table);
         $select->columns(array('id',
@@ -103,6 +103,23 @@ class LegModel extends AbstractTableGateway
         }
 
         return $data;
+    }
+
+    public function getLastByHeaderId($id)
+    {
+        $id = (int)$id;
+        $select = $this->getSql()->select();
+        $select->where(array('headerId' => $id));
+        $select->order(array('id ' . $select::ORDER_DESCENDING));
+        $select->limit(1);
+        $row = $this->selectWith($select)->current();
+        if (!$row) {
+            throw new \Exception("Could not find row $id");
+        }
+
+        $row->dateOfFlight = date('d/m/Y', $row->dateOfFlight);
+
+        return $row;
     }
 
     /**

@@ -5,8 +5,6 @@ namespace FcFlight\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use FcFlight\Form\RefuelForm;
-use Zend\Db\Sql\Select;
-use Zend\Paginator\Paginator;
 
 class RefuelController extends FlightController
 {
