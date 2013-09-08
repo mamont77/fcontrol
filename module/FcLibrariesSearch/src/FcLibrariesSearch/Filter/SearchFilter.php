@@ -7,7 +7,7 @@ use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\Db\Adapter\Adapter;
 
-class AdvancedSearchFilter extends \FcLibraries\Filter\BaseFilter
+class SearchFilter extends \FcLibraries\Filter\BaseFilter
 {
     /**
      * @var string

@@ -4,6 +4,7 @@ namespace FcLibrariesSearch;
 use Zend\ModuleManager\ModuleManager;
 use Zend\Mvc\MvcEvent;
 use FcLibrariesSearch\Model\SearchModel;
+use FcLibrariesSearch\Filter\SearchFilter;
 use FcLibrariesSearch\Filter\AdvancedSearchFilter;
 
 class Module
@@ -61,6 +62,10 @@ class Module
                 'FcLibrariesSearch\Model\SearchModel' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     return new SearchModel($dbAdapter);
+                },
+                'FcLibrariesSearch\Filter\SearchFilter' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new SearchFilter($dbAdapter);
                 },
                 'FcLibrariesSearch\Filter\AdvancedSearchFilter' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
