@@ -27,6 +27,14 @@ class RefuelController extends FlightController
 
         $refNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($this->headerId);
 
+        $refuels = $this->getRefuelModel()->getByHeaderId($this->headerId);
+        $lastRefuel = end($refuels);
+        if ($lastRefuel) {
+            $previousDate = $lastRefuel['date'];
+        } else {
+            $previousDate = null;
+        }
+
         $form = new RefuelForm('refuel',
             array(
                 'headerId' => $this->headerId,
@@ -34,11 +42,12 @@ class RefuelController extends FlightController
                     'airports' => $this->getParentLeg(),
                     'agents' => $this->getKontragents(),
                     'units' => $this->getUnits(),
-                )
+                ),
+                'previousValues' => array(
+                    'previousDate' => $previousDate,
+                ),
             )
         );
-
-        $refuels = $this->getRefuelModel()->getByHeaderId($this->headerId);
 
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -83,17 +92,26 @@ class RefuelController extends FlightController
         $data = $this->getRefuelModel()->get($id);
         $this->headerId = (int)$data->headerId;
 
+        $refuels = $this->getRefuelModel()->getByHeaderId($this->headerId);
+        $lastRefuel = end($refuels);
+        if ($lastRefuel) {
+            $previousDate = $lastRefuel['date'];
+        } else {
+            $previousDate = null;
+        }
+
         $form = new RefuelForm('refuel',
             array(
                 'libraries' => array(
                     'airports' => $this->getParentLeg(),
                     'agents' => $this->getKontragents(),
                     'units' => $this->getUnits(),
-                )
+                ),
+                'previousValues' => array(
+                    'previousDate' => $previousDate,
+                ),
             )
         );
-
-        $refuels = $this->getRefuelModel()->getByHeaderId($data->headerId);
 
         $form->bind($data);
         $form->get('submitBtn')->setAttribute('value', 'Save');

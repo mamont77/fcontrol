@@ -76,6 +76,14 @@ class RefuelForm extends BaseForm
         ));
 
         $this->add(array(
+            'name' => 'previousDate',
+            'attributes' => array(
+                'type' => 'hidden',
+                'value' => $options['previousValues']['previousDate'],
+            ),
+        ));
+
+        $this->add(array(
             'name' => 'airport',
             'type' => 'Zend\Form\Element\Select',
             'attributes' => array(

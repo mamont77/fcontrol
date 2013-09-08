@@ -122,6 +122,11 @@ class RefuelFilter implements InputFilterAwareInterface
             )));
 
             $inputFilter->add($factory->createInput(array(
+                'name' => 'previousDate',
+                'required' => false,
+            )));
+
+            $inputFilter->add($factory->createInput(array(
                 'name' => 'airport',
                 'required' => true,
             )));
@@ -141,6 +146,9 @@ class RefuelFilter implements InputFilterAwareInterface
                             ),
                         ),
                     ),
+                    array(
+                        'name' => 'FcFlight\Validator\FlightDateChecker',
+                    )
                 ),
             )));
 

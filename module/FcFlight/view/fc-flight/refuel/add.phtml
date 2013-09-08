@@ -59,8 +59,9 @@ $form->prepare();
 <?php endif; ?>
 
 <?php
-    echo $this->formTwb()->openTag($form, $formType);
-    echo $this->formRowTwb($form->get('headerId'));
+echo $this->formTwb()->openTag($form, $formType);
+echo $this->formRowTwb($form->get('headerId'));
+echo $this->formRowTwb($form->get('previousDate'));
 ?>
 
 <div class="row-fluid">
