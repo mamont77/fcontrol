@@ -6,7 +6,6 @@ use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\Db\Adapter\Adapter;
-use FcFlight\Validator\FcFlightDateOfFlight;
 
 class LegFilter implements InputFilterAwareInterface
 {
@@ -197,7 +196,7 @@ class LegFilter implements InputFilterAwareInterface
                         ),
                     ),
                     array(
-                        'name' => 'FcFlight\Validator\dateOfFlight',
+                        'name' => 'FcFlight\Validator\FlightDateChecker',
                     )
                 ),
             )));

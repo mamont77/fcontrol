@@ -39,7 +39,7 @@ class Module
     public function getValidatorConfig() {
         return array(
             'invokables' => array(
-                'dateOfFlight' => 'FcFlight\Validator\dateOfFlight'
+                'dateOfFlight' => 'FcFlight\Validator\FlightDateChecker'
             ),
         );
     }
