@@ -33,7 +33,6 @@ class LegFilter implements InputFilterAwareInterface
     //Real fields
     public $id;
     public $headerId;
-    public $previousDateOfFlight;
     public $dateOfFlight;
     public $flightNumberIcaoAndIata;
     public $flightNumberText;
@@ -84,7 +83,6 @@ class LegFilter implements InputFilterAwareInterface
         //Real fields
         $this->id = (isset($data['id'])) ? $data['id'] : null;
         $this->headerId = (isset($data['headerId'])) ? $data['headerId'] : null;
-        $this->previousDateOfFlight = (isset($data['previousDateOfFlight'])) ? $data['previousDateOfFlight'] : null;
         $this->dateOfFlight = (isset($data['dateOfFlight'])) ? $data['dateOfFlight'] : null;
         if (isset($data['flightNumber']['flightNumberIcaoAndIata'])) {
             $this->flightNumberIcaoAndIata = $data['flightNumber']['flightNumberIcaoAndIata'];
@@ -176,7 +174,7 @@ class LegFilter implements InputFilterAwareInterface
             )));
 
             $inputFilter->add($factory->createInput(array(
-                'name' => 'previousDateOfFlight',
+                'name' => 'previousDate',
                 'required' => false,
             )));
 

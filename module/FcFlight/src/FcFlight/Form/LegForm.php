@@ -60,10 +60,10 @@ class LegForm extends BaseForm
         ));
 
         $this->add(array(
-            'name' => 'previousDateOfFlight',
+            'name' => 'previousDate',
             'attributes' => array(
                 'type' => 'hidden',
-                'value' => $options['previousValues']['dateOfFlight'],
+                'value' => $options['previousValues']['previousDate'],
             ),
         ));
 

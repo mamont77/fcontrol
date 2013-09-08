@@ -28,10 +28,10 @@ class LegController extends FlightController
         $lastLeg = end($legs);
 
         if ($lastLeg) {
-            $dateOfFlight = $lastLeg['dateOfFlight'];
+            $previousDate = $lastLeg['dateOfFlight'];
             $preSelectedApDep = $lastLeg['apArrIcaoAndIata'];
         } else {
-            $dateOfFlight = null;
+            $previousDate = null;
             $preSelectedApDep = null;
         }
 
@@ -43,7 +43,7 @@ class LegController extends FlightController
                     'appIcaoAndIata' => $this->getAirports(),
                 ),
                 'previousValues' => array(
-                    'dateOfFlight' => $dateOfFlight,
+                    'previousDate' => $previousDate,
                     'preSelected' => array(
                         'apDepIcaoAndIata' => $preSelectedApDep,
                     ),
@@ -91,6 +91,18 @@ class LegController extends FlightController
         $refNumberOrder = $this->getLegModel()->getHeaderRefNumberOrderByLegId($id);
 
         $data = $this->getLegModel()->get($id);
+
+        $legs = $this->getLegModel()->getByHeaderId($data->headerId);
+        $lastLeg = end($legs);
+
+        if ($lastLeg) {
+            $previousDate = $lastLeg['dateOfFlight'];
+            $preSelectedApDep = $lastLeg['apArrIcaoAndIata'];
+        } else {
+            $previousDate = null;
+            $preSelectedApDep = null;
+        }
+
         $data->flightNumber['flightNumberIcaoAndIata'] = $data->flightNumberIcaoAndIata;
         $data->flightNumber['flightNumberText'] = $data->flightNumberText;
         $data->apDep['apDepIcaoAndIata'] = $data->apDepIcaoAndIata;
@@ -103,12 +115,15 @@ class LegController extends FlightController
                 'libraries' => array(
                     'flightNumberIcaoAndIata' => $this->getAirOperators(),
                     'appIcaoAndIata' => $this->getAirports(),
-                )
+                ),
+                'previousValues' => array(
+                    'previousDate' => $previousDate,
+                    'preSelected' => array(
+                        'apDepIcaoAndIata' => $preSelectedApDep,
+                    ),
+                ),
             )
         );
-
-        $legs = $this->getLegModel()->getByHeaderId($data->headerId);
-
 
         $form->bind($data);
         $form->get('submitBtn')->setAttribute('value', 'Save');
