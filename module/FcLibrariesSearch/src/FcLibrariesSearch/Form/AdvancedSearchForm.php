@@ -32,6 +32,7 @@ class AdvancedSearchForm extends Form
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder' => 'Search term...',
+                'class' => 'input-medium',
             ),
             'options' => array(
                 'label' => 'Text',
@@ -57,7 +58,7 @@ class AdvancedSearchForm extends Form
                 ),
             ),
             'attributes' => array(
-                'value' => 'library_airport'
+                'value' => 'library_airport',
             )
         ));
 

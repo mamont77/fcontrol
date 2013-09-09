@@ -1,0 +1,25 @@
+<?php
+$displayOptions = array(
+    'elements' => array(
+        'text' => array(
+            'required' => true,
+        ),
+    ),
+);
+$formType = 'vertical';
+$form = $this->form;
+$form->prepare();
+
+echo $this->formTwb()->openTag($form, $formType);
+
+echo'<legend>Search</legend>';
+echo $this->formRowTwb($form->get('text'), $formType, $displayOptions['elements']['text']);
+echo $this->formRowTwb($form->get('library'));
+
+echo $this->formRowTwb($form->get('csrf'));
+
+echo $this->formActionsTwb(array($form->get('submitBtn'), $formType));
+
+echo $this->formTwb()->closeTag();
+
+?>

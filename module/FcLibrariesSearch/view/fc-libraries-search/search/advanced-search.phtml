@@ -9,94 +9,68 @@ $title = 'Advanced search';
 $this->headTitle($title);
 ?>
 
-<?php
-$displayOptions = array(
-    'elements' => array(
-        'text' => array(
-            'required' => true,
-        ),
-    ),
-);
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span2 leftPanes">
+            <?php echo $this->partial('widgets/form/search/default.phtml', array('form' => $form)); ?>
+        </div>
+        <div class="span10 rightPanes">
+            <?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
 
-//Form object
-$form = $this->form;
-//$formType = \DluTwBootstrap\Form\FormUtil::FORM_TYPE_SEARCH;
-$validData = $this->validData;
-$form->prepare();
+            <? if (count($result) > 0): ?>
+                    <legend>Search Result</legend>
+                    <?php
+                    switch ($library) {
+                        case 'library_aircraft':
+                            $widgetName = 'aircraftTable';
+                            break;
 
-$form = $this->form;
-//$form->setAttribute('action', $this->url('zfcadmin/advanced_search', array('action' => 'advancedSearch')));
-$form->prepare();
-if ($form->getMessages()):
-    ?>
-    <div class="alert alert-error">
-        <button class="close" data-dismiss="alert" type="button">×</button>
-        <strong>Invalid input!</strong>
-        The form field are not filled out correctly.
+                        case 'library_aircraft_type':
+                            $widgetName = 'aircraftTypeTable';
+                            break;
+
+                        case 'library_air_operator':
+                            $widgetName = 'airOperatorTable';
+                            break;
+
+                        case 'library_airport':
+                            $widgetName = 'airportTable';
+                            break;
+
+                        case 'library_city':
+                            $widgetName = 'cityTable';
+                            break;
+
+                        case 'library_country':
+                            $widgetName = 'countryTable';
+                            break;
+
+                        case 'library_currency':
+                            $widgetName = 'currencyTable';
+                            break;
+
+                        case 'library_kontragent':
+                            $widgetName = 'kontragentTable';
+                            break;
+
+                        case 'library_region':
+                            $widgetName = 'regionTable';
+                            break;
+
+                        case 'library_unit':
+                            $widgetName = 'unitTable';
+                            break;
+
+                        default:
+                            // skip it
+                            break;
+                    }
+                    ?>
+
+                    <?php echo $this->partial('widgets/' . $widgetName . '.phtml', array('result' => $result)); ?>
+
+            <? endif; ?>
+
+        </div>
     </div>
-<?php
-endif;
-?>
-
-<div id="advancedSearchForm">
-    <?php
-    echo $this->formTwb($form, $formType, $displayOptions);
-    ?>
 </div>
-<? if (count($result) > 0): ?>
-<div id="advancedSearchResult">
-    <legend>Search Result</legend>
-
-    <?php
-    switch ($library) {
-        case 'library_aircraft':
-            $widgetName = 'aircraftTable';
-            break;
-
-        case 'library_aircraft_type':
-            $widgetName = 'aircraftTypeTable';
-            break;
-
-        case 'library_air_operator':
-            $widgetName = 'airOperatorTable';
-            break;
-
-        case 'library_airport':
-            $widgetName = 'airportTable';
-            break;
-
-        case 'library_city':
-            $widgetName = 'cityTable';
-            break;
-
-        case 'library_country':
-            $widgetName = 'countryTable';
-            break;
-
-        case 'library_currency':
-            $widgetName = 'currencyTable';
-            break;
-
-        case 'library_kontragent':
-            $widgetName = 'kontragentTable';
-            break;
-
-        case 'library_region':
-            $widgetName = 'regionTable';
-            break;
-
-        case 'library_unit':
-            $widgetName = 'unitTable';
-            break;
-
-        default:
-            // skip it
-            break;
-    }
-    ?>
-
-    <?php echo $this->partial('widgets/' . $widgetName . '.phtml', array('result' => $result)); ?>
-
-</div>
-<? endif; ?>
-
