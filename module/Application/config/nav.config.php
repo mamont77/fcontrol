@@ -21,45 +21,46 @@ return array(
                 'route' => 'zfcadmin/libraries',
                 'pages' => array(
                     array(
-                        'label' => 'Regions',
-                        'route' => 'zfcadmin/regions',
-                    ),
-                    array(
-                        'label' => 'Countries',
-                        'route' => 'zfcadmin/countries',
-                    ),
-                    array(
-                        'label' => 'Cities',
-                        'route' => 'zfcadmin/cities',
-                    ),
-                    array(
-                        'label' => 'Airports',
-                        'route' => 'zfcadmin/airports',
+                        'label' => 'Aircrafts',
+                        'route' => 'zfcadmin/aircrafts',
                     ),
                     array(
                         'label' => 'Types Aircraft',
                         'route' => 'zfcadmin/aircraft_types',
                     ),
                     array(
-                        'label' => 'Aircrafts',
-                        'route' => 'zfcadmin/aircrafts',
-                    ),
-                    array(
                         'label' => 'Air Operators',
                         'route' => 'zfcadmin/air_operators',
+                    ),
+                    array(
+                        'label' => 'Airports',
+                        'route' => 'zfcadmin/airports',
+                    ),
+                    array(
+                        'label' => 'Cities',
+                        'route' => 'zfcadmin/cities',
+                    ),
+                    array(
+                        'label' => 'Countries',
+                        'route' => 'zfcadmin/countries',
+                    ),
+                    array(
+                        'label' => 'Currencies',
+                        'route' => 'zfcadmin/currencies',
                     ),
                     array(
                         'label' => 'Kontragents',
                         'route' => 'zfcadmin/kontragents',
                     ),
                     array(
+                        'label' => 'Regions',
+                        'route' => 'zfcadmin/regions',
+                    ),
+                    array(
                         'label' => 'Units',
                         'route' => 'zfcadmin/units',
                     ),
-                    array(
-                        'label' => 'Currencies',
-                        'route' => 'zfcadmin/currencies',
-                    ),
+
                     array(
                         'type'      => 'uri',
                         'divider'   => true,
