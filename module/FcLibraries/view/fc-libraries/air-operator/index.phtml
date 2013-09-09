@@ -14,81 +14,93 @@ if ($order) {
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 
-<?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
 
-<p>
-    <a href="<?php echo $this->url('zfcadmin/air_operator', array('action' => 'add')); ?>"
-       class="btn btn-primary">Add Air Operator</a>
-</p>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span2 leftPanes">
+            <?php echo $this->partial('fc-libraries-search/widgets/form/search/default.phtml', array('form' => $searchForm)); ?>
+        </div>
+        <div class="span10 rightPanes">
 
-<table class="table table-bordered table-hover table-condensed">
-    <tr>
-        <th>
-            <a href="<?php echo $this->url($route, array('order_by' => 'name', 'order' => $url_order)); ?>">
-                Name of Air Operator
-                <?php if ($order_by == 'name'): ?>
-                    <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
-                <?php endif; ?>
-            </a>
-        </th>
-        <th>
-            <a href="<?php echo $this->url($route, array('order_by' => 'short_name', 'order' => $url_order)); ?>">
-                Short name of Air Operator
-                <?php if ($order_by == 'short_name'): ?>
-                    <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
-                <?php endif; ?>
-            </a>
-        </th>
-        <th>
-            <a href="<?php echo $this->url($route, array('order_by' => 'code_icao', 'order' => $url_order)); ?>">
-                Code ICAO
-                <?php if ($order_by == 'code_icao'): ?>
-                    <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
-                <?php endif; ?>
-            </a>
-        </th>
-        <th>
-            <a href="<?php echo $this->url($route, array('order_by' => 'code_iata', 'order' => $url_order)); ?>">
-                Code IATA
-                <?php if ($order_by == 'code_iata'): ?>
-                    <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
-                <?php endif; ?>
-            </a>
-        </th>
-        <th>
-            <a href="<?php echo $this->url($route, array('order_by' => 'country_name', 'order' => $url_order)); ?>">
-                Country
-                <?php if ($order_by == 'country_name'): ?>
-                    <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
-                <?php endif; ?>
-            </a>
-        </th>
-        <th>Actions</th>
-    </tr>
-    <?php foreach ($pagination as $row) : ?>
-        <tr>
-            <td><?php echo $this->escapeHtml($row->name); ?></td>
-            <td><?php echo $this->escapeHtml($row->short_name); ?></td>
-            <td><?php echo $this->escapeHtml($row->code_icao); ?></td>
-            <td><?php echo $this->escapeHtml($row->code_iata); ?></td>
-            <td><?php echo $this->escapeHtml($row->country_name); ?></td>
-            <td>
-                <a title="Edit"
-                   href="<?php echo $this->url('zfcadmin/air_operator', array('action' => 'edit', 'id' => $row->id)); ?>"><i
-                        class="icon-edit"></i></a>
-                <a title="Remove"
-                   href="<?php echo $this->url('zfcadmin/air_operator', array('action' => 'delete', 'id' => $row->id)); ?>"><i
-                        class="icon-remove"></i></a>
-            </td>
-        </tr>
-    <?php endforeach; ?>
-</table>
-<?php
-echo $this->paginationControl(
-    $pagination, 'Sliding', 'libraries-pagination-slide', array(
-        'order_by' => $order_by,
-        'order' => $order,
-        'route' => $route,
-    )
-);
-?>
+            <?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
+
+            <p>
+                <a href="<?php echo $this->url('zfcadmin/air_operator', array('action' => 'add')); ?>"
+                   class="btn btn-primary">Add Air Operator</a>
+            </p>
+
+            <table class="table table-bordered table-hover table-condensed">
+                <tr>
+                    <th>
+                        <a href="<?php echo $this->url($route, array('order_by' => 'name', 'order' => $url_order)); ?>">
+                            Name of Air Operator
+                            <?php if ($order_by == 'name'): ?>
+                                <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
+                            <?php endif; ?>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="<?php echo $this->url($route, array('order_by' => 'short_name', 'order' => $url_order)); ?>">
+                            Short name of Air Operator
+                            <?php if ($order_by == 'short_name'): ?>
+                                <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
+                            <?php endif; ?>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="<?php echo $this->url($route, array('order_by' => 'code_icao', 'order' => $url_order)); ?>">
+                            Code ICAO
+                            <?php if ($order_by == 'code_icao'): ?>
+                                <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
+                            <?php endif; ?>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="<?php echo $this->url($route, array('order_by' => 'code_iata', 'order' => $url_order)); ?>">
+                            Code IATA
+                            <?php if ($order_by == 'code_iata'): ?>
+                                <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
+                            <?php endif; ?>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="<?php echo $this->url($route, array('order_by' => 'country_name', 'order' => $url_order)); ?>">
+                            Country
+                            <?php if ($order_by == 'country_name'): ?>
+                                <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
+                            <?php endif; ?>
+                        </a>
+                    </th>
+                    <th>Actions</th>
+                </tr>
+                <?php foreach ($pagination as $row) : ?>
+                    <tr>
+                        <td><?php echo $this->escapeHtml($row->name); ?></td>
+                        <td><?php echo $this->escapeHtml($row->short_name); ?></td>
+                        <td><?php echo $this->escapeHtml($row->code_icao); ?></td>
+                        <td><?php echo $this->escapeHtml($row->code_iata); ?></td>
+                        <td><?php echo $this->escapeHtml($row->country_name); ?></td>
+                        <td>
+                            <a title="Edit"
+                               href="<?php echo $this->url('zfcadmin/air_operator', array('action' => 'edit', 'id' => $row->id)); ?>"><i
+                                    class="icon-edit"></i></a>
+                            <a title="Remove"
+                               href="<?php echo $this->url('zfcadmin/air_operator', array('action' => 'delete', 'id' => $row->id)); ?>"><i
+                                    class="icon-remove"></i></a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </table>
+            <?php
+            echo $this->paginationControl(
+                $pagination, 'Sliding', 'libraries-pagination-slide', array(
+                    'order_by' => $order_by,
+                    'order' => $order,
+                    'route' => $route,
+                )
+            );
+            ?>
+
+        </div>
+    </div>
+</div>

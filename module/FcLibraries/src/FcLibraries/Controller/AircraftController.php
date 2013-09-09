@@ -5,13 +5,26 @@ namespace FcLibraries\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use FcLibraries\Form\AircraftForm;
+use FcLibrariesSearch\Form\SearchForm;
 use Zend\Db\Sql\Select;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\Iterator as paginatorIterator;
 
+/**
+ * Class AircraftController
+ * @package FcLibraries\Controller
+ */
 class AircraftController extends AbstractActionController implements ControllerInterface
 {
+
+    /**
+     * @var
+     */
     protected $aircraftModel;
+
+    /**
+     * @var
+     */
     protected $aircraftTypeModel;
 
     /**
@@ -42,6 +55,7 @@ class AircraftController extends AbstractActionController implements ControllerI
             'page' => $page,
             'pagination' => $pagination,
             'route' => 'zfcadmin/aircrafts',
+            'searchForm' => new SearchForm('aircraftSearch', array('library' => 'library_aircraft')),
         ));
     }
 

@@ -16,7 +16,7 @@ class SearchForm extends Form
      * @param null $name
      * @param array $options
      */
-    public function __construct($name = null)
+    public function __construct($name = null, $options = array())
     {
         parent::__construct($name);
 
@@ -32,6 +32,7 @@ class SearchForm extends Form
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'placeholder' => 'Search term...',
+                'class' => 'input-medium',
             ),
             'options' => array(
                 'label' => 'Text',
@@ -42,6 +43,7 @@ class SearchForm extends Form
             'name' => 'library',
             'attributes' => array(
                 'type' => 'hidden',
+                'value' => $options['library'],
             ),
         ));
 

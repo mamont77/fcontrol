@@ -5,13 +5,26 @@ namespace FcLibraries\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use FcLibraries\Form\CountryForm;
+use FcLibrariesSearch\Form\SearchForm;
 use Zend\Db\Sql\Select;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\Iterator as paginatorIterator;
 
+/**
+ * Class CountryController
+ * @package FcLibraries\Controller
+ */
 class CountryController extends AbstractActionController implements ControllerInterface
 {
+
+    /**
+     * @var
+     */
     protected $countryModel;
+
+    /**
+     * @var
+     */
     protected $regionModel;
 
     /**
@@ -42,6 +55,7 @@ class CountryController extends AbstractActionController implements ControllerIn
             'page' => $page,
             'pagination' => $pagination,
             'route' => 'zfcadmin/countries',
+            'searchForm' => new SearchForm('aircraftSearch', array('library' => 'library_country')),
         ));
     }
 

@@ -5,13 +5,26 @@ namespace FcLibraries\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use FcLibraries\Form\CityForm;
+use FcLibrariesSearch\Form\SearchForm;
 use Zend\Db\Sql\Select;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\Iterator as paginatorIterator;
 
+/**
+ * Class CityController
+ * @package FcLibraries\Controller
+ */
 class CityController extends AbstractActionController implements ControllerInterface
 {
+
+    /**
+     * @var
+     */
     protected $countryModel;
+
+    /**
+     * @var
+     */
     protected $cityModel;
 
     /**
@@ -42,6 +55,7 @@ class CityController extends AbstractActionController implements ControllerInter
             'page' => $page,
             'pagination' => $pagination,
             'route' => 'zfcadmin/cities',
+            'searchForm' => new SearchForm('aircraftSearch', array('library' => 'library_city')),
         ));
     }
 

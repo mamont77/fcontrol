@@ -12,7 +12,7 @@ $this->headTitle($title);
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span2 leftPanes">
-            <?php echo $this->partial('widgets/form/search/default.phtml', array('form' => $form)); ?>
+            <?php echo $this->partial('fc-libraries-search/widgets/form/search/default.phtml', array('form' => $form)); ?>
         </div>
         <div class="span10 rightPanes">
             <?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
@@ -67,7 +67,7 @@ $this->headTitle($title);
                     }
                     ?>
 
-                    <?php echo $this->partial('widgets/' . $widgetName . '.phtml', array('result' => $result)); ?>
+                    <?php echo $this->partial('fc-libraries-search/widgets/' . $widgetName . '.phtml', array('result' => $result)); ?>
 
             <? endif; ?>
 

@@ -9,8 +9,16 @@ use Zend\Db\Sql\Select;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\Iterator as paginatorIterator;
 
+/**
+ * Class CurrencyController
+ * @package FcLibraries\Controller
+ */
 class CurrencyController extends AbstractActionController implements ControllerInterface
 {
+
+    /**
+     * @var
+     */
     protected $currencyModel;
 
     /**

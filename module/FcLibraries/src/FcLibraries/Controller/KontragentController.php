@@ -5,12 +5,21 @@ namespace FcLibraries\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use FcLibraries\Form\KontragentForm;
+use FcLibrariesSearch\Form\SearchForm;
 use Zend\Db\Sql\Select;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\Iterator as paginatorIterator;
 
+/**
+ * Class KontragentController
+ * @package FcLibraries\Controller
+ */
 class KontragentController extends AbstractActionController implements ControllerInterface
 {
+
+    /**
+     * @var
+     */
     protected $kontragentModel;
 
     /**
@@ -41,6 +50,7 @@ class KontragentController extends AbstractActionController implements Controlle
             'page' => $page,
             'pagination' => $pagination,
             'route' => 'zfcadmin/kontragents',
+            'searchForm' => new SearchForm('aircraftSearch', array('library' => 'library_kontragent')),
         ));
     }
 
