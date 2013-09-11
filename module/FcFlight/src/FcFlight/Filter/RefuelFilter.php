@@ -148,7 +148,10 @@ class RefuelFilter implements InputFilterAwareInterface
                     ),
                     array(
                         'name' => 'FcFlight\Validator\FlightDateChecker',
-                    )
+                    ),
+                    array(
+                        'name' => 'FcFlight\Validator\FlightYearChecker',
+                    ),
                 ),
             )));
 

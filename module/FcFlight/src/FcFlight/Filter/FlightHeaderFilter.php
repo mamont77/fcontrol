@@ -123,6 +123,9 @@ class FlightHeaderFilter implements InputFilterAwareInterface
                             ),
                         ),
                     ),
+                    array(
+                        'name' => 'FcFlight\Validator\FlightYearChecker',
+                    ),
                 ),
             )));
 

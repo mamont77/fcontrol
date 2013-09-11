@@ -30,7 +30,7 @@ class FlightDateChecker extends AbstractValidator
         $this->setValue($value);
 
         $currentDate = \DateTime::createFromFormat('d-m-Y', $value);
-        $previousDate = \DateTime::createFromFormat('d/m/Y', $options['previousDate']);
+        $previousDate = \DateTime::createFromFormat('d-m-Y', $options['previousDate']);
 
         if ($currentDate < $previousDate) {
             $this->error(self::GREATER_OR_EQUAL);
