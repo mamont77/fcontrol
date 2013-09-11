@@ -116,10 +116,10 @@ class FlightHeaderFilter implements InputFilterAwareInterface
                     array(
                         'name' => 'Date',
                         'options' => array(
-                            'format' => 'Y-m-d',
+                            'format' => 'd-m-Y',
                             'messages' => array(
-                                'dateFalseFormat' => 'Invalid date format, must be YY-mm-dd',
-                                'dateInvalidDate' => 'Invalid date, must be YY-mm-dd'
+                                'dateFalseFormat' => 'Invalid date format, must be dd-mm-YY',
+                                'dateInvalidDate' => 'Invalid date, must be dd-mm-YY'
                             ),
                         ),
                     ),

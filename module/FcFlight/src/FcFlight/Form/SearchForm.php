@@ -32,11 +32,11 @@ class SearchForm extends BaseForm
             'name' => 'dateOrderFrom',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'placeholder' => '____-__-__',
                 'class' => 'input-medium',
             ),
             'options' => array(
                 'label' => 'Date from',
+                'description' => 'DD-MM-YYYY',
             ),
         ));
 
@@ -44,11 +44,11 @@ class SearchForm extends BaseForm
             'name' => 'dateOrderTo',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'placeholder' => '____-__-__',
                 'class' => 'input-medium',
             ),
             'options' => array(
                 'label' => 'Date to',
+                'description' => 'DD-MM-YYYY',
             ),
         ));
 

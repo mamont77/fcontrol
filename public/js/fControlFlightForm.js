@@ -3,7 +3,7 @@
     fControl.behaviors.flightHeaderForm = {
         attach:function (context, settings) {
             var $form = $('form#flightHeader');
-            $($form).find('#dateOrder').mask('9999-99-99');
+            $($form).find('#dateOrder').mask('99-99-9999');
             $($form).find('#hint-aircraft').text('GegNumber: ' + ($form).find('#aircraft').val());
             $form.on('change', '#aircraft', function () {
                 var $hint = $form.find('#hint-aircraft');
@@ -46,7 +46,7 @@
     fControl.behaviors.flightSearchForm = {
         attach:function (context, settings) {
             var $form = $('form#flightSearch');
-            $($form).find('#dateOrderFrom, #dateOrderTo').mask('9999-99-99');
+            $($form).find('#dateOrderFrom, #dateOrderTo').mask('99-99-9999');
         }
     };
 

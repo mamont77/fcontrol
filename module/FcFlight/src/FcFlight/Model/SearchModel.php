@@ -43,10 +43,10 @@ class SearchModel extends AbstractTableGateway
         $this->setTable('flightBaseHeaderForm');
 
         if ($object->dateOrderFrom != '') {
-            $object->dateOrderFrom = \DateTime::createFromFormat('Y-m-d', $object->dateOrderFrom)->getTimestamp();
+            $object->dateOrderFrom = \DateTime::createFromFormat('d-m-Y', $object->dateOrderFrom)->getTimestamp();
         }
         if ($object->dateOrderTo != '') {
-            $object->dateOrderTo = \DateTime::createFromFormat('Y-m-d', $object->dateOrderTo)->getTimestamp();
+            $object->dateOrderTo = \DateTime::createFromFormat('d-m-Y', $object->dateOrderTo)->getTimestamp();
         }
 
         $select = new Select();

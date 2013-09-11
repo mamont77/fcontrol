@@ -80,11 +80,8 @@ class FlightHeaderModel extends AbstractTableGateway
      */
     public function add(FlightHeaderFilter $object)
     {
-        /*
-         * $dateOrder = '1977-03-10';//YYYY-MM-DD
-         * $dateOrder = '2014-03-10';//YYYY-MM-DD
-         */
-        $dateOrder = strtotime($object->dateOrder);
+        $dateOrder = \DateTime::createFromFormat('d-m-Y', $object->dateOrder);
+        $dateOrder = $dateOrder->getTimestamp();
 
         $data = array(
             'refNumberOrder' => $this->getLastRefNumberOrder($dateOrder),
@@ -119,7 +116,7 @@ class FlightHeaderModel extends AbstractTableGateway
         $id = (int)$object->id;
         $oldData = $this->get($id);
         if ($oldData) {
-            if ($oldData->dateOrder != date('Y-m-d', $data['dateOrder'])) {
+            if ($oldData->dateOrder != date('d-m-Y', $data['dateOrder'])) {
                 $data['refNumberOrder'] = $this->getLastRefNumberOrder($dateOrder);
             }
             $this->update($data, array('id' => $id));
@@ -176,7 +173,7 @@ class FlightHeaderModel extends AbstractTableGateway
     }
 
     /**
-     * @param $dateOrder
+     * @param int $dateOrder
      * @return string
      */
     public function getLastRefNumberOrder($dateOrder)

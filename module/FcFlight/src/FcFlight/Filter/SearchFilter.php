@@ -116,10 +116,10 @@ class SearchFilter implements InputFilterAwareInterface
                     array(
                         'name' => 'Date',
                         'options' => array(
-                            'format' => 'Y-m-d',
+                            'format' => 'd-m-Y',
                             'messages' => array(
-                                'dateFalseFormat' => 'Invalid date format, must be YYYY-mm-dd',
-                                'dateInvalidDate' => 'Invalid date, must be YYYY-mm-dd'
+                                'dateFalseFormat' => 'Invalid date format, must be dd-mm-YYYY',
+                                'dateInvalidDate' => 'Invalid date, must be dd-mm-YYYY'
                             ),
                         ),
                     ),
@@ -134,10 +134,10 @@ class SearchFilter implements InputFilterAwareInterface
                     array(
                         'name' => 'Date',
                         'options' => array(
-                            'format' => 'Y-m-d',
+                            'format' => 'd-m-Y',
                             'messages' => array(
-                                'dateFalseFormat' => 'Invalid date format, must be YYYY-mm-dd',
-                                'dateInvalidDate' => 'Invalid date, must be YYYY-mm-dd'
+                                'dateFalseFormat' => 'Invalid date format, must be dd-mm-YYYY',
+                                'dateInvalidDate' => 'Invalid date, must be dd-mm-YYYY'
                             ),
                         ),
                     ),
@@ -148,8 +148,8 @@ class SearchFilter implements InputFilterAwareInterface
                                 \Zend\Validator\Callback::INVALID_VALUE => 'The "date to" is less than the "date from"',
                             ),
                             'callback' => function ($value, $context) {
-                                $dateOrderFrom = \DateTime::createFromFormat('Y-m-d', $context['dateOrderFrom']);
-                                $dateOrderTo = \DateTime::createFromFormat('Y-m-d', $value);
+                                $dateOrderFrom = \DateTime::createFromFormat('d-m-Y', $context['dateOrderFrom']);
+                                $dateOrderTo = \DateTime::createFromFormat('d-m-Y', $value);
                                 return $dateOrderTo >= $dateOrderFrom;
                             },
                         ),

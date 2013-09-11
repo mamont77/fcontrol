@@ -40,7 +40,7 @@ class LegModel extends AbstractTableGateway
         if (!$row) {
             throw new \Exception("Could not find row $id");
         }
-        $row->dateOfFlight = date('d/m/Y', $row->dateOfFlight);
+        $row->dateOfFlight = date('d-m-Y', $row->dateOfFlight);
         $row->apDepTime = date('H:i', $row->apDepTime);
         $row->apArrTime = date('H:i', $row->apArrTime);
 
@@ -86,7 +86,7 @@ class LegModel extends AbstractTableGateway
             //Real fields
             $data[$row->id]['id'] = $row->id;
             $data[$row->id]['headerId'] = $row->headerId;
-            $data[$row->id]['dateOfFlight'] = date('d/m/Y', $row->dateOfFlight);
+            $data[$row->id]['dateOfFlight'] = date('d-m-Y', $row->dateOfFlight);
             $data[$row->id]['flightNumberIcaoAndIata'] = $row->flightNumberIcaoAndIata;
             $data[$row->id]['flightNumberText'] = $row->flightNumberText;
             $data[$row->id]['apDepIcaoAndIata'] = $row->apDepIcaoAndIata;
@@ -117,7 +117,7 @@ class LegModel extends AbstractTableGateway
             throw new \Exception("Could not find row $id");
         }
 
-        $row->dateOfFlight = date('d/m/Y', $row->dateOfFlight);
+        $row->dateOfFlight = date('d-m-Y', $row->dateOfFlight);
 
         return $row;
     }

@@ -40,7 +40,7 @@ class RefuelModel extends AbstractTableGateway
         if (!$row) {
             throw new \Exception("Could not find row $id");
         }
-        $row->date = date('d/m/Y', $row->date);
+        $row->date = date('d-m-Y', $row->date);
 
         return $row;
     }
@@ -82,7 +82,7 @@ class RefuelModel extends AbstractTableGateway
             $data[$row->id]['id'] = $row->id;
             $data[$row->id]['headerId'] = $row->headerId;
             $data[$row->id]['airport'] = $row->airport;
-            $data[$row->id]['date'] = date('d/m/Y', $row->date);//DD-MM-YYYY
+            $data[$row->id]['date'] = date('d-m-Y', $row->date);
             $data[$row->id]['agent'] = $row->agent;
             $data[$row->id]['quantity'] = $row->quantity;
             $data[$row->id]['unit'] = $row->unit;

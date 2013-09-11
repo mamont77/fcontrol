@@ -66,7 +66,7 @@ class FlightHeaderForm extends BaseForm
             ),
             'options' => array(
                 'label' => 'Date Order',
-                'description' => 'YYYY-MM-DD',
+                'description' => 'DD-MM-YYYY',
             ),
         ));
 
