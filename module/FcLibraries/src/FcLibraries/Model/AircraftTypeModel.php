@@ -8,6 +8,10 @@ use Zend\Db\Sql\Select;
 use FcLibraries\Model\BaseModel;
 use FcLibraries\Filter\AircraftTypeFilter;
 
+/**
+ * Class AircraftTypeModel
+ * @package FcLibraries\Model
+ */
 class AircraftTypeModel extends BaseModel
 {
     /**

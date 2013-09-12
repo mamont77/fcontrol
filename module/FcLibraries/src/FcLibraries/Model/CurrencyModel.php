@@ -8,6 +8,10 @@ use Zend\Db\Sql\Select;
 use FcLibraries\Model\BaseModel;
 use FcLibraries\Filter\CurrencyFilter;
 
+/**
+ * Class CurrencyModel
+ * @package FcLibraries\Model
+ */
 class CurrencyModel extends BaseModel
 {
     /**

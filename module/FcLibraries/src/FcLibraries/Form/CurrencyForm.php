@@ -5,7 +5,10 @@ namespace FcLibraries\Form;
 use Zend\Form\Form;
 use Zend\Form\Element;
 
-
+/**
+ * Class CurrencyForm
+ * @package FcLibraries\Form
+ */
 class CurrencyForm extends Form
 {
     protected $_formName = 'currency';

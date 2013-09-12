@@ -8,6 +8,10 @@ use Zend\Db\Sql\Select;
 use FcLibraries\Model\BaseModel;
 use FcLibraries\Filter\KontragentFilter;
 
+/**
+ * Class KontragentModel
+ * @package FcLibraries\Model
+ */
 class KontragentModel extends BaseModel
 {
     /**

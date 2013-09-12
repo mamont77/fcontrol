@@ -7,6 +7,10 @@ use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\Db\Adapter\Adapter;
 
+/**
+ * Class RegionFilter
+ * @package FcLibraries\Filter
+ */
 class RegionFilter extends BaseFilter
 {
 

@@ -1,0 +1,50 @@
+<ul class="breadcrumb">
+    <li><a href="/">Home</a> <span class="divider">/</span></li>
+    <li><a href="<?=$this->url('zfcadmin/libraries', array('action' => 'index'));?>">Libraries</a> <span class="divider">/</span></li>
+    <li><a href="<?=$this->url('zfcadmin/airports', array('action' => 'index'));?>">Types Airports</a> <span class="divider">/</span></li>
+    <li class="active">Edit form</li>
+</ul>
+<?php
+$title = 'Edit Airport';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<?php
+$displayOptions = array(
+    'class' => 'form-horizontal',
+    'elements' => array(
+        'name' => array(
+            'required' => true,
+        ),
+        'short_name' => array(
+            'required' => true,
+        ),
+        'code_iata' => array(
+            'required' => true,
+        ),
+        'city_id' => array(
+            'required' => true,
+        ),
+    ),
+);
+$form = $this->form;
+$form->setAttribute('action', $this->url(
+    'zfcadmin/airport',
+    array(
+        'action' => 'edit',
+        'id'     => $this->id,
+    )
+));
+$form->prepare();
+?>
+
+<?php if ($form->getMessages()): ?>
+<div class="alert alert-error">
+    <button class="close" data-dismiss="alert" type="button">×</button>
+    <strong>Invalid input!</strong>
+    Form fields are not filled in correctly.
+</div>
+<?php endif; ?>
+
+<?php echo $this->formTwb($form, $formType, $displayOptions); ?>

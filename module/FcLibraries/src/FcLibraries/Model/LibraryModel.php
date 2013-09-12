@@ -6,6 +6,10 @@ use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 
+/**
+ * Class LibraryModel
+ * @package FcLibraries\Model
+ */
 class LibraryModel implements InputFilterAwareInterface
 {
     /**

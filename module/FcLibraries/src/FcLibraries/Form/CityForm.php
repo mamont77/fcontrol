@@ -5,6 +5,10 @@ namespace FcLibraries\Form;
 use Zend\Form\Form;
 use Zend\Form\Element;
 
+/**
+ * Class CityForm
+ * @package FcLibraries\Form
+ */
 class CityForm extends Form
 {
     /**

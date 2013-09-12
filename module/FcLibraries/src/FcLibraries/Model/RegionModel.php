@@ -8,6 +8,10 @@ use Zend\Db\Sql\Select;
 use FcLibraries\Model\BaseModel;
 use FcLibraries\Filter\RegionFilter;
 
+/**
+ * Class RegionModel
+ * @package FcLibraries\Model
+ */
 class RegionModel extends BaseModel
 {
     /**

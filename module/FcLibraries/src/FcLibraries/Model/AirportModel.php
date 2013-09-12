@@ -8,6 +8,10 @@ use Zend\Db\Sql\Select;
 use FcLibraries\Model\BaseModel;
 use FcLibraries\Filter\AirportFilter;
 
+/**
+ * Class AirportModel
+ * @package FcLibraries\Model
+ */
 class AirportModel extends BaseModel
 {
     protected $table = 'library_airport';

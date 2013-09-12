@@ -8,6 +8,10 @@ use Zend\Db\Sql\Select;
 use FcLibraries\Model\BaseModel;
 use FcLibraries\Filter\AirOperatorFilter;
 
+/**
+ * Class AirOperatorModel
+ * @package FcLibraries\Model
+ */
 class AirOperatorModel extends BaseModel
 {
     /**

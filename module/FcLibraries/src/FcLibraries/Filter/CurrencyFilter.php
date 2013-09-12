@@ -7,6 +7,10 @@ use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\Db\Adapter\Adapter;
 
+/**
+ * Class CurrencyFilter
+ * @package FcLibraries\Filter
+ */
 class CurrencyFilter extends BaseFilter
 {
 

@@ -6,6 +6,10 @@ use Zend\Db\TableGateway\AbstractTableGateway;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\ResultSet\ResultSet;
 
+/**
+ * Class BaseModel
+ * @package FcLibraries\Model
+ */
 class BaseModel extends AbstractTableGateway
 {
     /**

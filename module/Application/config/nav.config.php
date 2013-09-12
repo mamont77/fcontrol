@@ -37,6 +37,10 @@ return array(
                         'route' => 'zfcadmin/airports',
                     ),
                     array(
+                        'label' => 'Base of Permits',
+                        'route' => 'zfcadmin/base_of_permits',
+                    ),
+                    array(
                         'label' => 'Cities',
                         'route' => 'zfcadmin/cities',
                     ),

@@ -5,7 +5,10 @@ namespace FcLibraries\Form;
 use Zend\Form\Form;
 use Zend\Form\Element;
 
-
+/**
+ * Class KontragentForm
+ * @package FcLibraries\Form
+ */
 class KontragentForm extends Form
 {
     protected $_formName = 'kontragent';

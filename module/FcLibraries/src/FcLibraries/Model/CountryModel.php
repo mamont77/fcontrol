@@ -8,6 +8,10 @@ use Zend\Db\Sql\Select;
 use FcLibraries\Model\BaseModel;
 use FcLibraries\Filter\CountryFilter;
 
+/**
+ * Class CountryModel
+ * @package FcLibraries\Model
+ */
 class CountryModel extends BaseModel
 {
     protected $table = 'library_country';

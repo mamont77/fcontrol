@@ -7,6 +7,10 @@ use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\Db\Adapter\Adapter;
 
+/**
+ * Class AirportFilter
+ * @package FcLibraries\Filter
+ */
 class AirportFilter extends BaseFilter
 {
     /**

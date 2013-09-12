@@ -5,6 +5,10 @@ namespace FcLibraries\Form;
 use Zend\Form\Form;
 use Zend\Form\Element;
 
+/**4
+ * Class RegionForm
+ * @package FcLibraries\Form
+ */
 class RegionForm extends Form
 {
     protected $_formName = 'region';

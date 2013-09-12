@@ -3,26 +3,29 @@ namespace FcLibraries;
 
 use Zend\ModuleManager\ModuleManager;
 use Zend\Mvc\MvcEvent;
-use FcLibraries\Model\RegionModel;
-use FcLibraries\Filter\RegionFilter;
-use FcLibraries\Model\CountryModel;
-use FcLibraries\Filter\CountryFilter;
-use FcLibraries\Model\CityModel;
-use FcLibraries\Filter\CityFilter;
-use FcLibraries\Model\AirportModel;
-use FcLibraries\Filter\AirportFilter;
-use FcLibraries\Model\AircraftTypeModel;
-use FcLibraries\Filter\AircraftTypeFilter;
 use FcLibraries\Model\AircraftModel;
 use FcLibraries\Filter\AircraftFilter;
+use FcLibraries\Model\AircraftTypeModel;
+use FcLibraries\Filter\AircraftTypeFilter;
 use FcLibraries\Model\AirOperatorModel;
 use FcLibraries\Filter\AirOperatorFilter;
-use FcLibraries\Model\KontragentModel;
-use FcLibraries\Filter\KontragentFilter;
-use FcLibraries\Model\UnitModel;
-use FcLibraries\Filter\UnitFilter;
+use FcLibraries\Model\AirportModel;
+use FcLibraries\Filter\AirportFilter;
+use FcLibraries\Model\BaseOfPermitModel;
+use FcLibraries\Filter\BaseOfPermitFilter;
+use FcLibraries\Model\CityModel;
+use FcLibraries\Filter\CityFilter;
+use FcLibraries\Model\CountryModel;
+use FcLibraries\Filter\CountryFilter;
 use FcLibraries\Model\CurrencyModel;
 use FcLibraries\Filter\CurrencyFilter;
+use FcLibraries\Model\KontragentModel;
+use FcLibraries\Filter\KontragentFilter;
+use FcLibraries\Model\RegionModel;
+use FcLibraries\Filter\RegionFilter;
+use FcLibraries\Model\UnitModel;
+use FcLibraries\Filter\UnitFilter;
+
 
 class Module
 {
@@ -76,37 +79,13 @@ class Module
         return array(
             'invokables' => array(),
             'factories' => array(
-                'FcLibraries\Model\RegionModel' => function ($sm) {
+                'FcLibraries\Model\AircraftModel' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new RegionModel($dbAdapter);
+                    return new AircraftModel($dbAdapter);
                 },
-                'FcLibraries\Filter\RegionFilter' => function ($sm) {
+                'FcLibraries\Filter\AircraftFilter' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new RegionFilter($dbAdapter);
-                },
-                'FcLibraries\Model\CountryModel' => function ($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new CountryModel($dbAdapter);
-                },
-                'FcLibraries\Filter\CountryFilter' => function ($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new CountryFilter($dbAdapter);
-                },
-                'FcLibraries\Model\CityModel' => function ($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new CityModel($dbAdapter);
-                },
-                'FcLibraries\Filter\CityFilter' => function ($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new CityFilter($dbAdapter);
-                },
-                'FcLibraries\Model\AirportModel' => function ($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new AirportModel($dbAdapter);
-                },
-                'FcLibraries\Filter\AirportFilter' => function ($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new AirportFilter($dbAdapter);
+                    return new AircraftFilter($dbAdapter);
                 },
                 'FcLibraries\Model\AircraftTypeModel' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
@@ -116,14 +95,6 @@ class Module
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     return new AircraftTypeFilter($dbAdapter);
                 },
-                'FcLibraries\Model\AircraftModel' => function ($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new AircraftModel($dbAdapter);
-                },
-                'FcLibraries\Filter\AircraftFilter' => function ($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new AircraftFilter($dbAdapter);
-                },
                 'FcLibraries\Model\AirOperatorModel' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     return new AirOperatorModel($dbAdapter);
@@ -132,22 +103,37 @@ class Module
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     return new AirOperatorFilter($dbAdapter);
                 },
-                'FcLibraries\Model\KontragentModel' => function ($sm) {
+                'FcLibraries\Model\AirportModel' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new KontragentModel($dbAdapter);
+                    return new AirportModel($dbAdapter);
                 },
-                'FcLibraries\Filter\KontragentFilter' => function ($sm) {
+                'FcLibraries\Filter\AirportFilter' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new KontragentFilter($dbAdapter);
+                    return new AirportFilter($dbAdapter);
                 },
-
-                'FcLibraries\Model\UnitModel' => function ($sm) {
+                'FcLibraries\Model\BaseOfPermitModel' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new UnitModel($dbAdapter);
+                    return new BaseOfPermitModel($dbAdapter);
                 },
-                'FcLibraries\Filter\UnitFilter' => function ($sm) {
+                'FcLibraries\Filter\BaseOfPermitFilter' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new UnitFilter($dbAdapter);
+                    return new BaseOfPermitFilter($dbAdapter);
+                },
+                'FcLibraries\Model\CityModel' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new CityModel($dbAdapter);
+                },
+                'FcLibraries\Filter\CityFilter' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new CityFilter($dbAdapter);
+                },
+                'FcLibraries\Model\CountryModel' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new CountryModel($dbAdapter);
+                },
+                'FcLibraries\Filter\CountryFilter' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new CountryFilter($dbAdapter);
                 },
                 'FcLibraries\Model\CurrencyModel' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
@@ -157,6 +143,31 @@ class Module
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     return new CurrencyFilter($dbAdapter);
                 },
+                'FcLibraries\Model\KontragentModel' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new KontragentModel($dbAdapter);
+                },
+                'FcLibraries\Filter\KontragentFilter' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new KontragentFilter($dbAdapter);
+                },
+                'FcLibraries\Model\RegionModel' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new RegionModel($dbAdapter);
+                },
+                'FcLibraries\Filter\RegionFilter' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new RegionFilter($dbAdapter);
+                },
+                'FcLibraries\Model\UnitModel' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new UnitModel($dbAdapter);
+                },
+                'FcLibraries\Filter\UnitFilter' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new UnitFilter($dbAdapter);
+                },
+
             ),
         );
     }
