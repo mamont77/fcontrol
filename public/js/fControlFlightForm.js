@@ -26,7 +26,6 @@
             $($form).find('#apArrTime').mask('99:99');
             apDepIcaoAndIata = $form.find('#apDepIcaoAndIata');
             preSelectedValue = apDepIcaoAndIata.val();
-            console.log(preSelectedValue);
             if (preSelectedValue > 0) {
                 apDepIcaoAndIata.find('option').each(function(){
                     $(this).prop('disabled', true);

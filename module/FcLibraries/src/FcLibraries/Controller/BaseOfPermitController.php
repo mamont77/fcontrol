@@ -9,6 +9,7 @@ use FcLibrariesSearch\Form\SearchForm;
 use Zend\Db\Sql\Select;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\Iterator as paginatorIterator;
+use Zend\Json\Json as Json;
 
 /**
  * Class BaseOfPermitController
@@ -69,12 +70,7 @@ class BaseOfPermitController extends AbstractActionController implements Control
      */
     public function addAction()
     {
-        $form = new BaseOfPermitForm('base_of_permit',
-            array(
-            'countries' => $this->getCountries(),
-            'airports' => $this->getAirports()
-            )
-        );
+        $form = new BaseOfPermitForm('base_of_permit', array('countries' => $this->getCountries()));
 
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -166,6 +162,39 @@ class BaseOfPermitController extends AbstractActionController implements Control
     }
 
     /**
+     * @return \Zend\Http\Response
+     */
+    public function getAirportsAction()
+    {
+
+        $id = (int)$this->params()->fromRoute('id', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('zfcadmin/base_of_permit', array(
+                'action' => 'add'
+            ));
+        }
+
+        $data = $this->getAirportModel()->getByCountryId($id);
+
+        $result = array(
+            'countryId' => $id,
+            'airports' => array(),
+        );
+        foreach ($data as $row) {
+            $result['airports']['id_' . $row->id] = $row->name;
+        }
+        uasort($result['airports'], array($this, 'sortLibrary'));
+
+        $view = new ViewModel(array(
+            'data' => Json::encode($result),
+        ));
+
+        $view->setTerminal(true);
+
+        return $view;
+    }
+
+    /**
      * @return array|object
      */
     private function getBaseOfPermitModel()
@@ -210,10 +239,12 @@ class BaseOfPermitController extends AbstractActionController implements Control
     }
 
     /**
-     * @return mixed
+     * @param $a
+     * @param $b
+     * @return bool
      */
-    private function getAirports()
+    protected function sortLibrary($a, $b)
     {
-        return $this->getAirportModel()->fetchAll();
+        return $a > $b;
     }
 }

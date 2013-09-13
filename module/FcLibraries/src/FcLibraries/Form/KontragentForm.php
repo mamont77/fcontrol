@@ -56,6 +56,7 @@ class KontragentForm extends Form
             'type' => 'Zend\Form\Element\Textarea',
             'attributes' => array(
                 'required' => true,
+                'rows' => 5,
                 'maxlength' => '50',
             ),
             'options' => array(

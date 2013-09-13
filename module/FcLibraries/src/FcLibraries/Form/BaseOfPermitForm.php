@@ -17,12 +17,6 @@ class BaseOfPermitForm extends Form
     protected $countries = array();
 
     /**
-     * @var array
-     */
-    protected $airports = array();
-
-
-    /**
      * @param null $name
      * @param array $options
      */
@@ -30,7 +24,6 @@ class BaseOfPermitForm extends Form
     {
         parent::__construct($name);
         $this->setCountries($options['countries']);
-        $this->setAirports($options['countries']);
 
         $this->setAttribute('method', 'post');
 
@@ -38,6 +31,15 @@ class BaseOfPermitForm extends Form
             'name' => 'id',
             'attributes' => array(
                 'type' => 'hidden',
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'airportId',
+            'attributes' => array(
+                'id' => 'airportId',
+                'type' => 'hidden',
+                'value' => 0,
             ),
         ));
 
@@ -54,69 +56,56 @@ class BaseOfPermitForm extends Form
                 'value_options' => $this->countries,
             ),
         ));
-//
-//        $this->add(array(
-//            'name' => 'name',
-//            'type' => 'Zend\Form\Element\Text',
-//            'attributes' => array(
-//                'required' => true,
-//                'maxlength' => '30',
-//            ),
-//            'options' => array(
-//                'label' => 'Name of Airport',
-//            ),
-//        ));
-//
-//        $this->add(array(
-//            'name' => 'short_name',
-//            'type' => 'Zend\Form\Element\Text',
-//            'attributes' => array(
-//                'required' => true,
-//                'maxlength' => '30',
-//            ),
-//            'options' => array(
-//                'label' => 'Short Name',
-//            ),
-//        ));
-//
-//        $this->add(array(
-//            'name' => 'code_icao',
-//            'type' => 'Zend\Form\Element\Text',
-//            'attributes' => array(
-//                'minlength' => '4',
-//                'maxlength' => '4',
-//            ),
-//            'options' => array(
-//                'label' => 'Code ICAO',
-//            ),
-//        ));
-//
-//        $this->add(array(
-//            'name' => 'code_iata',
-//            'type' => 'Zend\Form\Element\Text',
-//            'attributes' => array(
-//                'required' => true,
-//                'minlength' => '3',
-//                'maxlength' => '3',
-//            ),
-//            'options' => array(
-//                'label' => 'Code IATA',
-//            ),
-//        ));
-//
-//        $this->add(array(
-//            'name' => 'city_id',
-//            'type' => 'Zend\Form\Element\Select',
-//            'attributes' => array(
-//                'required' => true,
-//                'size' => 5,
-//            ),
-//            'options' => array(
-//                'label' => 'City',
-//                'empty_option' => '-- Please select --',
-//                'value_options' => $this->cities,
-//            ),
-//        ));
+
+        $this->add(array(
+            'name' => 'termValidity',
+            'type' => 'Zend\Form\Element\Text',
+            'attributes' => array(
+                'required' => true,
+                'maxlength' => '2',
+            ),
+            'options' => array(
+                'label' => 'Term validity',
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'termToTake',
+            'type' => 'Zend\Form\Element\Text',
+            'attributes' => array(
+                'required' => true,
+                'maxlength' => '2',
+            ),
+            'options' => array(
+                'label' => 'Term to take',
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'airports',
+            'type' => 'Zend\Form\Element\Select',
+            'attributes' => array(
+                'required' => true,
+                'size' => 5,
+                'disabled' => true,
+            ),
+            'options' => array(
+                'label' => 'Airports',
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'infoToTake',
+            'type' => 'Zend\Form\Element\Textarea',
+            'attributes' => array(
+                'required' => true,
+                'rows' => 5,
+                'maxlength' => '400',
+            ),
+            'options' => array(
+                'label' => 'Info to take',
+            ),
+        ));
 
         $this->add(new Element\Csrf('csrf'));
 
@@ -159,18 +148,10 @@ class BaseOfPermitForm extends Form
     }
 
     /**
-     * @param \Zend\Db\ResultSet\ResultSet $data
+     * @param $a
+     * @param $b
+     * @return bool
      */
-    private function setAirports(\Zend\Db\ResultSet\ResultSet $data)
-    {
-        if (!$this->airports) {
-            foreach ($data as $row) {
-                $this->airports[$row->id] = $row->name;
-            }
-            uasort($this->airports, array($this, 'sortLibrary'));
-        }
-    }
-
     protected function sortLibrary($a, $b)
     {
         return $a > $b;
