@@ -55,7 +55,7 @@ class AirOperatorController extends AbstractActionController implements Controll
             'page' => $page,
             'pagination' => $pagination,
             'route' => 'zfcadmin/air_operators',
-            'searchForm' => new SearchForm('aircraftSearch', array('library' => 'library_air_operator')),
+            'searchForm' => new SearchForm('librarySearch', array('library' => 'library_air_operator')),
         ));
     }
 

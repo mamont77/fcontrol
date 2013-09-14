@@ -46,7 +46,7 @@ class BaseOfPermitController extends AbstractActionController implements Control
             $this->params()->fromRoute('order') : Select::ORDER_ASCENDING;
         $page = $this->params()->fromRoute('page') ? (int)$this->params()->fromRoute('page') : 1;
 
-        $data = $this->getAirportModel()->fetchAll($select->order($order_by . ' ' . $order));
+        $data = $this->getBaseOfPermitModel()->fetchAll($select->order($order_by . ' ' . $order));
         $itemsPerPage = 20;
 
         $data->current();
@@ -60,8 +60,8 @@ class BaseOfPermitController extends AbstractActionController implements Control
             'order' => $order,
             'page' => $page,
             'pagination' => $pagination,
-            'route' => 'zfcadmin/airports',
-            'searchForm' => new SearchForm('aircraftSearch', array('library' => 'library_airport')),
+            'route' => 'zfcadmin/base_of_permits',
+            'searchForm' => new SearchForm('librarySearch', array('library' => 'library_base_of_permits')),
         ));
     }
 
@@ -77,13 +77,11 @@ class BaseOfPermitController extends AbstractActionController implements Control
             $filter = $this->getServiceLocator()->get('FcLibraries\Filter\BaseOfPermitFilter');
             $form->setInputFilter($filter->getInputFilter());
             $form->setData($request->getPost());
-
             if ($form->isValid()) {
                 $data = $form->getData();
                 $filter->exchangeArray($data);
                 $this->getBaseOfPermitModel()->add($filter);
-                $this->flashMessenger()->addSuccessMessage("Base of Permit '"
-                . $data['name'] . "' was successfully added.");
+                $this->flashMessenger()->addSuccessMessage("Base of Permit was successfully added.");
                 return $this->redirect()->toRoute('zfcadmin/base_of_permit', array(
                     'action' => 'add'
                 ));

@@ -50,7 +50,7 @@ class KontragentController extends AbstractActionController implements Controlle
             'page' => $page,
             'pagination' => $pagination,
             'route' => 'zfcadmin/kontragents',
-            'searchForm' => new SearchForm('aircraftSearch', array('library' => 'library_kontragent')),
+            'searchForm' => new SearchForm('librarySearch', array('library' => 'library_kontragent')),
         ));
     }
 

@@ -14,7 +14,7 @@ use FcLibraries\Filter\BaseOfPermitFilter;
  */
 class BaseOfPermitModel extends BaseModel
 {
-    protected $table = 'library_airport';
+    protected $table = 'library_base_of_permit';
 
     /**
      * @param \Zend\Db\Adapter\Adapter $adapter
@@ -23,7 +23,7 @@ class BaseOfPermitModel extends BaseModel
     {
         $this->adapter = $adapter;
         $this->resultSetPrototype = new ResultSet();
-        $this->resultSetPrototype->setArrayObjectPrototype(new AirportFilter($this->adapter));
+        $this->resultSetPrototype->setArrayObjectPrototype(new BaseOfPermitFilter($this->adapter));
 
         $this->initialize();
     }
@@ -37,16 +37,21 @@ class BaseOfPermitModel extends BaseModel
         if (null === $select)
             $select = new Select();
         $select->from($this->table);
-        $select->columns(array('id', 'name', 'short_name', 'code_icao', 'code_iata'));
-        $select->join(array('city' => 'library_city'),
-            'library_airport.city_id = city.id',
-            array('city_name' => 'name'), 'left');
-        $select->join(array('country' => 'library_country'),
-            'city.country_id = country.id',
-            array('country_name' => 'name'), 'left');
-        $select->join(array('region' => 'library_region'),
-            'country.region_id = region.id',
-            array('region_name' => 'name'), 'left');
+        $select->columns(array('id', 'airportId', 'termValidity', 'termToTake', 'infoToTake'));
+        $select->join(array('airport' => 'library_airport'),
+            'library_base_of_permit.airportId = airport.id',
+            array('airportName' => 'name', 'cityId' => 'city_id'), 'left');
+
+//        $select->join(array('city' => 'library_city'),
+//            'library_airport.city_id = city.id',
+//            array('cityName' => 'name'), 'left');
+
+
+//            'airport.city_id = country.id',
+//            array('country_name' => 'name'), 'left');
+//        $select->join(array('region' => 'library_region'),
+//            'country.region_id = region.id',
+//            array('region_name' => 'name'), 'left');
         $resultSet = $this->selectWith($select);
         $resultSet->buffer();
 
@@ -54,32 +59,30 @@ class BaseOfPermitModel extends BaseModel
     }
 
     /**
-     * @param AirportFilter $object
+     * @param BaseOfPermitFilter $object
      */
-    public function add(AirportFilter $object)
+    public function add(BaseOfPermitFilter $object)
     {
         $data = array(
-            'name' => $object->name,
-            'short_name' => $object->short_name,
-            'code_icao' => $object->code_icao,
-            'code_iata' => $object->code_iata,
-            'city_id' => $object->city_id,
+            'airportId' => $object->airportId,
+            'termValidity' => $object->termValidity,
+            'termToTake' => $object->termToTake,
+            'infoToTake' => $object->infoToTake,
         );
         $this->insert($data);
     }
 
     /**
-     * @param AirportFilter $object
+     * @param BaseOfPermitFilter $object
      * @throws \Exception
      */
-    public function save(AirportFilter $object)
+    public function save(BaseOfPermitFilter $object)
     {
         $data = array(
-            'name' => $object->name,
-            'short_name' => $object->short_name,
-            'code_icao' => $object->code_icao,
-            'code_iata' => $object->code_iata,
-            'city_id' => $object->city_id,
+            'airportId' => $object->airportId,
+            'termValidity' => $object->termValidity,
+            'termToTake' => $object->termToTake,
+            'infoToTake' => $object->infoToTake,
         );
         $id = (int)$object->id;
         if ($this->get($id)) {
@@ -88,5 +91,4 @@ class BaseOfPermitModel extends BaseModel
             throw new \Exception('Form id does not exist');
         }
     }
-
 }

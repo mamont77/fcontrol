@@ -55,7 +55,7 @@ class AircraftController extends AbstractActionController implements ControllerI
             'page' => $page,
             'pagination' => $pagination,
             'route' => 'zfcadmin/aircrafts',
-            'searchForm' => new SearchForm('aircraftSearch', array('library' => 'library_aircraft')),
+            'searchForm' => new SearchForm('librarySearch', array('library' => 'library_aircraft')),
         ));
     }
 

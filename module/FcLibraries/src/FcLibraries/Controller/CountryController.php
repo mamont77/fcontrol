@@ -55,7 +55,7 @@ class CountryController extends AbstractActionController implements ControllerIn
             'page' => $page,
             'pagination' => $pagination,
             'route' => 'zfcadmin/countries',
-            'searchForm' => new SearchForm('aircraftSearch', array('library' => 'library_country')),
+            'searchForm' => new SearchForm('librarySearch', array('library' => 'library_country')),
         ));
     }
 

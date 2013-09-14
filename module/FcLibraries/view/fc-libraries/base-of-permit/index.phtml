@@ -89,6 +89,9 @@ if ($order) {
                     <th>Actions</th>
                 </tr>
                 <?php foreach ($pagination as $row) : ?>
+                    <?php \Zend\Debug\Debug::dump($row); ?>
+                <?php endforeach; ?>
+                <?php foreach ($pagination as $row) : ?>
                     <tr>
                         <td><?php echo $this->escapeHtml($row->name); ?></td>
                         <td><?php echo $this->escapeHtml($row->short_name); ?></td>
@@ -109,10 +112,10 @@ if ($order) {
             <?php
             echo $this->paginationControl(
                 $pagination, 'Sliding', 'libraries-pagination-slide', array(
-                    'order_by' => $order_by,
-                    'order' => $order,
-                    'route' => $route,
-                ));
+                'order_by' => $order_by,
+                'order' => $order,
+                'route' => $route,
+            ));
             ?>
         </div>
     </div>

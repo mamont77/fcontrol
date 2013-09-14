@@ -55,7 +55,7 @@ class CityController extends AbstractActionController implements ControllerInter
             'page' => $page,
             'pagination' => $pagination,
             'route' => 'zfcadmin/cities',
-            'searchForm' => new SearchForm('aircraftSearch', array('library' => 'library_city')),
+            'searchForm' => new SearchForm('librarySearch', array('library' => 'library_city')),
         ));
     }
 

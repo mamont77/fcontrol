@@ -16,34 +16,36 @@ class BaseOfPermitFilter extends BaseFilter
     /**
      * @var string
      */
-    protected $table = 'library_airport';
+    protected $table = 'library_base_of_permit';
 
+    // Real fields
     public $id;
-    public $name;
-    public $short_name;
-    public $code_icao;
-    public $code_iata;
-    public $city_id;
-    public $city_name;
-    public $country_id;
-    public $country_name;
-    public $region_name;
+    public $airportId;
+    public $termValidity;
+    public $termToTake;
+    public $infoToTake;
+
+    //Virtual fields
+    public $countryId;
+    public $cityId;
 
     /**
      * @param $data
      */
     public function exchangeArray($data)
     {
+        // Real fields
         $this->id = (isset($data['id'])) ? $data['id'] : null;
-        $this->name = (isset($data['name'])) ? $data['name'] : null;
-        $this->short_name = (isset($data['short_name'])) ? $data['short_name'] : null;
-        $this->code_icao = (isset($data['code_icao'])) ? $data['code_icao'] : null;
-        $this->code_iata = (isset($data['code_iata'])) ? $data['code_iata'] : null;
-        $this->city_id = (isset($data['city_id'])) ? $data['city_id'] : null;
-        $this->city_name = (isset($data['city_name'])) ? $data['city_name'] : null;
-        $this->country_id = (isset($data['country_id'])) ? $data['country_id'] : null;
-        $this->country_name = (isset($data['country_name'])) ? $data['country_name'] : null;
-        $this->region_name = (isset($data['region_name'])) ? $data['region_name'] : null;
+        $this->airportId = (isset($data['airportId'])) ? $data['airportId'] : null;
+        $this->termValidity = (isset($data['termValidity'])) ? $data['termValidity'] : null;
+        $this->termToTake = (isset($data['termToTake'])) ? $data['termToTake'] : null;
+        $this->infoToTake = (isset($data['infoToTake'])) ? $data['infoToTake'] : null;
+
+        //Virtual fields
+        $this->countryId = (isset($data['countryId'])) ? $data['countryId'] : null;
+        $this->cityId = (isset($data['cityId'])) ? $data['cityId'] : null;
+
+
     }
 
     /**
@@ -59,12 +61,22 @@ class BaseOfPermitFilter extends BaseFilter
                 'name' => 'id',
                 'required' => true,
                 'filters' => array(
+                    array(
+                        'name' => 'Int'
+                    ),
+                ),
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'airportId',
+                'required' => true,
+                'filters' => array(
                     array('name' => 'Int'),
                 ),
             )));
 
             $inputFilter->add($factory->createInput(array(
-                'name' => 'name',
+                'name' => 'termValidity',
                 'required' => true,
                 'filters' => $this->defaultFilters,
                 'validators' => array(
@@ -73,14 +85,17 @@ class BaseOfPermitFilter extends BaseFilter
                         'options' => array(
                             'encoding' => 'UTF-8',
                             'min' => 1,
-                            'max' => 30,
+                            'max' => 2,
                         ),
                     ),
+                    array(
+                        'name' => 'Digits',
+                    )
                 ),
             )));
 
             $inputFilter->add($factory->createInput(array(
-                'name' => 'short_name',
+                'name' => 'termToTake',
                 'required' => true,
                 'filters' => $this->defaultFilters,
                 'validators' => array(
@@ -89,14 +104,22 @@ class BaseOfPermitFilter extends BaseFilter
                         'options' => array(
                             'encoding' => 'UTF-8',
                             'min' => 1,
-                            'max' => 30,
+                            'max' => 2,
                         ),
                     ),
+                    array(
+                        'name' => 'Digits',
+                    )
                 ),
             )));
 
             $inputFilter->add($factory->createInput(array(
-                'name' => 'code_icao',
+                'name' => 'airports',
+                'required' => false,
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'infoToTake',
                 'required' => true,
                 'filters' => $this->defaultFilters,
                 'validators' => array(
@@ -104,33 +127,11 @@ class BaseOfPermitFilter extends BaseFilter
                         'name' => 'StringLength',
                         'options' => array(
                             'encoding' => 'UTF-8',
-                            'min' => 4,
-                            'max' => 4,
+                            'min' => 1,
+                            'max' => 400,
                         ),
                     ),
                 ),
-            )));
-
-            $inputFilter->add($factory->createInput(array(
-                'name' => 'code_iata',
-                'required' => true,
-                'filters' => $this->defaultFilters,
-                'validators' => array(
-                    array(
-                        'name' => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min' => 3,
-                            'max' => 3,
-                        ),
-                    ),
-                    $this->_noRecordExistsValidators($this->table, 'code_iata', $this->id),
-                ),
-            )));
-
-            $inputFilter->add($factory->createInput(array(
-                'name' => 'city_id',
-                'required' => true,
             )));
 
             $this->inputFilter = $inputFilter;

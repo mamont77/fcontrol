@@ -55,7 +55,7 @@ class AirportController extends AbstractActionController implements ControllerIn
             'page' => $page,
             'pagination' => $pagination,
             'route' => 'zfcadmin/airports',
-            'searchForm' => new SearchForm('aircraftSearch', array('library' => 'library_airport')),
+            'searchForm' => new SearchForm('librarySearch', array('library' => 'library_airport')),
         ));
     }
 
