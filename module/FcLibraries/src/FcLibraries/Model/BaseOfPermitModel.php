@@ -38,20 +38,21 @@ class BaseOfPermitModel extends BaseModel
             $select = new Select();
         $select->from($this->table);
         $select->columns(array('id', 'airportId', 'termValidity', 'termToTake', 'infoToTake'));
+
         $select->join(array('airport' => 'library_airport'),
             'library_base_of_permit.airportId = airport.id',
             array('airportName' => 'name', 'cityId' => 'city_id'), 'left');
 
-//        $select->join(array('city' => 'library_city'),
-//            'library_airport.city_id = city.id',
-//            array('cityName' => 'name'), 'left');
+        $select->join(array('city' => 'library_city'),
+            'airport.city_id = city.id',
+            array('cityName' => 'name', 'countryId' => 'country_id'), 'left');
 
+        $select->join(array('country' => 'library_country'),
+            'city.country_id = country.id',
+            array('countryName' => 'name', 'countryCode' => 'code'), 'left');
 
-//            'airport.city_id = country.id',
-//            array('country_name' => 'name'), 'left');
-//        $select->join(array('region' => 'library_region'),
-//            'country.region_id = region.id',
-//            array('region_name' => 'name'), 'left');
+//        \Zend\Debug\Debug::dump($select->getSqlString());
+
         $resultSet = $this->selectWith($select);
         $resultSet->buffer();
 

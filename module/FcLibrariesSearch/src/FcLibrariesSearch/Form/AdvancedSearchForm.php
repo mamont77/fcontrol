@@ -49,6 +49,7 @@ class AdvancedSearchForm extends Form
                     'library_aircraft_type' => 'Type of Aircraft',
                     'library_air_operator' => 'Air Operator',
                     'library_airport' => 'Airport',
+                    'library_base_of_permit' => 'Base of Permit',
                     'library_city' => 'City',
                     'library_country' => 'Country',
                     'library_currency' => 'Currency',

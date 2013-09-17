@@ -41,7 +41,7 @@ class BaseOfPermitController extends AbstractActionController implements Control
         $select = new Select();
 
         $order_by = $this->params()->fromRoute('order_by') ?
-            $this->params()->fromRoute('order_by') : 'name';
+            $this->params()->fromRoute('order_by') : 'airportName';
         $order = $this->params()->fromRoute('order') ?
             $this->params()->fromRoute('order') : Select::ORDER_ASCENDING;
         $page = $this->params()->fromRoute('page') ? (int)$this->params()->fromRoute('page') : 1;
@@ -61,7 +61,7 @@ class BaseOfPermitController extends AbstractActionController implements Control
             'page' => $page,
             'pagination' => $pagination,
             'route' => 'zfcadmin/base_of_permits',
-            'searchForm' => new SearchForm('librarySearch', array('library' => 'library_base_of_permits')),
+            'searchForm' => new SearchForm('librarySearch', array('library' => 'library_base_of_permit')),
         ));
     }
 

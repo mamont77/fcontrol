@@ -91,6 +91,23 @@ class SearchModel extends AbstractTableGateway
                 $select->order('name ' . Select::ORDER_ASCENDING);
                 break;
 
+            case 'library_base_of_permit':
+                $select->columns(array('id', 'airportId', 'termValidity', 'termToTake', 'infoToTake'));
+                $select->join(array('airport' => 'library_airport'),
+                    'library_base_of_permit.airportId = airport.id',
+                    array('airportName' => 'name', 'cityId' => 'city_id'), 'left');
+                $select->join(array('city' => 'library_city'),
+                    'airport.city_id = city.id',
+                    array('cityName' => 'name', 'countryId' => 'country_id'), 'left');
+                $select->join(array('country' => 'library_country'),
+                    'city.country_id = country.id',
+                    array('countryName' => 'name', 'countryCode' => 'code'), 'left');
+                $select->where->like('infoToTake', $text . '%')
+                    ->or
+                    ->like('airport.name', $text . '%');
+                $select->order('airportName ' . Select::ORDER_ASCENDING);
+                break;
+
             case 'library_city':
                 $select->columns(array('id', 'name', 'country_id'));
                 $select->join(array('country' => 'library_country'),

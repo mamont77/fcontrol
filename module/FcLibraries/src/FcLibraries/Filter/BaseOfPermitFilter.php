@@ -28,6 +28,10 @@ class BaseOfPermitFilter extends BaseFilter
     //Virtual fields
     public $countryId;
     public $cityId;
+    public $airportName;
+    public $cityName;
+    public $countryName;
+    public $countryCode;
 
     /**
      * @param $data
@@ -44,8 +48,10 @@ class BaseOfPermitFilter extends BaseFilter
         //Virtual fields
         $this->countryId = (isset($data['countryId'])) ? $data['countryId'] : null;
         $this->cityId = (isset($data['cityId'])) ? $data['cityId'] : null;
-
-
+        $this->airportName = (isset($data['airportName'])) ? $data['airportName'] : null;
+        $this->cityName = (isset($data['cityName'])) ? $data['cityName'] : null;
+        $this->countryName = (isset($data['countryName'])) ? $data['countryName'] : null;
+        $this->countryCode = (isset($data['countryCode'])) ? $data['countryCode'] : null;
     }
 
     /**

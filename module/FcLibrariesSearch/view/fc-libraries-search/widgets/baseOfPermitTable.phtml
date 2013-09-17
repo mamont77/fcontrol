@@ -1,0 +1,52 @@
+<h4>Base of Permit</h4>
+<?php
+if (is_string($result)) {
+    ?>
+    <div class="alert alert-error">
+        <?= $result; ?>
+    </div>
+<?php
+} else {
+    ?>
+    <table class="table table-bordered table-hover table-striped table-condensed">
+        <tr>
+            <th>
+                    Airport
+            </th>
+            <th>
+                    City
+            </th>
+            <th>
+                    Country
+            </th>
+            <th>
+                    Term validity
+            </th>
+            <th>
+                    Term to take
+            </th>
+            <th>
+                Info to take
+            </th>
+            <th>Actions</th>
+        </tr>
+        <?php foreach ($result as $row) : ?>
+            <tr>
+                <td><?php echo $this->escapeHtml($row->airportName); ?></td>
+                <td><?php echo $this->escapeHtml($row->cityName); ?></td>
+                <td><?php echo $this->escapeHtml($row->countryName); ?></td>
+                <td><?php echo $this->escapeHtml($row->termValidity); ?></td>
+                <td><?php echo $this->escapeHtml($row->termToTake); ?></td>
+                <td><?php echo $this->escapeHtml($row->infoToTake); ?></td>
+                <td>
+                    <a title="Edit" href="<?php echo $this->url('zfcadmin/base_of_permit',
+                        array('action' => 'edit', 'id' => $row->id));?>"><i class="icon-edit"></i></a>
+                    <a title="Remove" href="<?php echo $this->url('zfcadmin/base_of_permit',
+                        array('action' => 'delete', 'id' => $row->id));?>"><i class="icon-remove"></i></a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+<?php
+}
+?>
