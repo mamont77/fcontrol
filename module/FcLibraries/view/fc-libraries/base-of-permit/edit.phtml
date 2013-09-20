@@ -1,11 +1,11 @@
 <ul class="breadcrumb">
     <li><a href="/">Home</a> <span class="divider">/</span></li>
     <li><a href="<?=$this->url('zfcadmin/libraries', array('action' => 'index'));?>">Libraries</a> <span class="divider">/</span></li>
-    <li><a href="<?=$this->url('zfcadmin/airports', array('action' => 'index'));?>">Types Airports</a> <span class="divider">/</span></li>
+    <li><a href="<?=$this->url('zfcadmin/base_of_permits', array('action' => 'index'));?>">Base of Permits</a> <span class="divider">/</span></li>
     <li class="active">Edit form</li>
 </ul>
 <?php
-$title = 'Edit Airport';
+$title = 'Edit Base of Permit';
 $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
@@ -14,23 +14,26 @@ $this->headTitle($title);
 $displayOptions = array(
     'class' => 'form-horizontal',
     'elements' => array(
-        'name' => array(
+        'countryId' => array(
             'required' => true,
         ),
-        'short_name' => array(
+        'termValidity' => array(
             'required' => true,
         ),
-        'code_iata' => array(
+        'termToTake' => array(
             'required' => true,
         ),
-        'city_id' => array(
+        'airports' => array(
+            'required' => true,
+        ),
+        'infoToTake' => array(
             'required' => true,
         ),
     ),
 );
 $form = $this->form;
 $form->setAttribute('action', $this->url(
-    'zfcadmin/airport',
+    'zfcadmin/base_of_permit',
     array(
         'action' => 'edit',
         'id'     => $this->id,

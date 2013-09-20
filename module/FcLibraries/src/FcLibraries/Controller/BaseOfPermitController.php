@@ -97,27 +97,26 @@ class BaseOfPermitController extends AbstractActionController implements Control
     {
         $id = (int)$this->params()->fromRoute('id', 0);
         if (!$id) {
-            return $this->redirect()->toRoute('zfcadmin/airport', array(
+            return $this->redirect()->toRoute('zfcadmin/base_of_permit', array(
                 'action' => 'add'
             ));
         }
-        $data = $this->getAirportModel()->get($id);
+        $data = $this->getBaseOfPermitModel()->get($id);
 
-        $form = new AirportForm('airport', array('cities' => $this->getCities()));
+        $form = new BaseOfPermitForm('base_of_permit', array('countries' => $this->getCountries()));
         $form->bind($data);
         $form->get('submitBtn')->setAttribute('value', 'Save');
 
         $request = $this->getRequest();
         if ($request->isPost()) {
-            $filter = $this->getServiceLocator()->get('FcLibraries\Filter\AirportFilter');
+            $filter = $this->getServiceLocator()->get('FcLibraries\Filter\BaseOfPermitFilter');
             $form->setInputFilter($filter->getInputFilter());
             $form->setData($request->getPost());
             if ($form->isValid()) {
                 $data = $form->getData();
-                $this->getAirportModel()->save($data);
-                $this->flashMessenger()->addSuccessMessage("Airport '"
-                . $data->name . "' was successfully saved.");
-                return $this->redirect()->toRoute('zfcadmin/airports');
+                $this->getBaseOfPermitModel()->save($data);
+                $this->flashMessenger()->addSuccessMessage("Base of Permit was successfully saved.");
+                return $this->redirect()->toRoute('zfcadmin/base_of_permits');
             }
         }
 

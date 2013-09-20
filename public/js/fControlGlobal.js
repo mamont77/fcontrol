@@ -1,4 +1,4 @@
-var fControl = fControl || { 'settings':{}, 'behaviors':{}, 'locale':{} };
+var fControl = fControl || { 'settings': {}, 'behaviors': {}, 'locale': {} };
 
 // Allow other JavaScript libraries to use $.
 jQuery.noConflict();
@@ -32,10 +32,10 @@ jQuery.noConflict();
      * Attach all registered behaviors to a page element.
      *
      * Behaviors are event-triggered actions that attach to page elements, enhancing
-     * default non-JavaScript UIs. Behaviors are registered in the Drupal.behaviors
+     * default non-JavaScript UIs. Behaviors are registered in the fControl.behaviors
      * object using the method 'attach' and optionally also 'detach' as follows:
      * @code
-     *    Drupal.behaviors.behaviorName = {
+     *    fControl.behaviors.behaviorName = {
  *      attach: function (context, settings) {
  *        ...
  *      },
@@ -45,7 +45,7 @@ jQuery.noConflict();
  *    };
      * @endcode
      *
-     * Drupal.attachBehaviors is added below to the jQuery ready event and so
+     * fControl.attachBehaviors is added below to the jQuery ready event and so
      * runs on initial page load. Developers implementing AHAH/Ajax in their
      * solutions should also call this function after new page content has been
      * loaded, feeding in an element to be processed, in order to attach all
@@ -66,7 +66,7 @@ jQuery.noConflict();
      *   is used.
      * @param settings
      *   An object containing settings for the current context. If none given, the
-     *   global Drupal.settings object is used.
+     *   global fControl.settings object is used.
      */
     fControl.attachBehaviors = function (context, settings) {
         context = context || document;
@@ -88,7 +88,7 @@ jQuery.noConflict();
      * content.
      *
      * Such implementations should look for the class name that was added in their
-     * corresponding Drupal.behaviors.behaviorName.attach implementation, i.e.
+     * corresponding fControl.behaviors.behaviorName.attach implementation, i.e.
      * behaviorName-processed, to ensure the behavior is detached only from
      * previously processed elements.
      *
@@ -97,14 +97,14 @@ jQuery.noConflict();
      *   is used.
      * @param settings
      *   An object containing settings for the current context. If none given, the
-     *   global Drupal.settings object is used.
+     *   global fControl.settings object is used.
      * @param trigger
      *   A string containing what's causing the behaviors to be detached. The
      *   possible triggers are:
      *   - unload: (default) The context element is being removed from the DOM.
      *   - move: The element is about to be moved within the DOM (for example,
      *     during a tabledrag row swap). After the move is completed,
-     *     Drupal.attachBehaviors() is called, so that the behavior can undo
+     *     fControl.attachBehaviors() is called, so that the behavior can undo
      *     whatever it did in response to the move. Many behaviors won't need to
      *     do anything simply in response to the element being moved, but because
      *     IFRAME elements reload their "src" when being moved within the DOM,
