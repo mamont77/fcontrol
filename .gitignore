@@ -10,3 +10,4 @@ composer.lock
 /public/mamont/backup/dumper.cfg.php
 /data/a_city.sql
 /data/cacharte_db.sql
+/data/logs

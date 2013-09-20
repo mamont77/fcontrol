@@ -54,7 +54,7 @@
                 airportsField = $form.find('#airports'),
                 airportIdField = $form.find('#airportId'),
                 ajaxPath = '/admin/libraries/base_of_permit/get-airports/';
-            
+
             if (countriesField.val() > 0) {
                 $.getJSON(ajaxPath + countriesField.val(), function (data) {
                     airportsField.prop('disabled', false);
