@@ -60,6 +60,44 @@ class BaseOfPermitModel extends BaseModel
     }
 
     /**
+     * @param $id
+     * @return array|\ArrayObject|null
+     * @throws \Exception
+     */
+    public function get($id)
+    {
+        $id = (int)$id;
+//        $rowSet = $this->select(array('id' => $id));
+        $select = new Select();
+        $select->from($this->table);
+        $select->columns(array('id', 'airportId', 'termValidity', 'termToTake', 'infoToTake'));
+
+        $select->join(array('airport' => 'library_airport'),
+            'library_base_of_permit.airportId = airport.id',
+            array('airportName' => 'name', 'cityId' => 'city_id'), 'left');
+
+        $select->join(array('city' => 'library_city'),
+            'airport.city_id = city.id',
+            array('cityName' => 'name', 'countryId' => 'country_id'), 'left');
+
+        $select->join(array('country' => 'library_country'),
+            'city.country_id = country.id',
+            array('countryName' => 'name', 'countryCode' => 'code'), 'left');
+
+        $select->where(array('library_base_of_permit.id' => $id));
+
+//        \Zend\Debug\Debug::dump($select->getSqlString());
+
+        $resultSet = $this->selectWith($select);
+        $row = $resultSet->current();
+        if (!$row) {
+            throw new \Exception("Could not find row $id");
+        }
+
+        return $row;
+    }
+
+    /**
      * @param BaseOfPermitFilter $object
      */
     public function add(BaseOfPermitFilter $object)

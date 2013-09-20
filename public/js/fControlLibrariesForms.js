@@ -5,16 +5,17 @@
     fControl.behaviors.setRouters = {
         attach: function (context, settings) {
             routesForForms = {
-                'region': 'admin/libraries/regions',
-                'country': 'admin/libraries/countries',
-                'city': 'admin/libraries/cities',
-                'airport': 'admin/libraries/airports',
-                'aircraft_type': 'admin/libraries/aircraft_types',
                 'aircraft': 'admin/libraries/aircrafts',
+                'aircraft_type': 'admin/libraries/aircraft_types',
                 'air_operator': 'admin/libraries/air_operators',
-                'kontragent': 'admin/libraries/kontragents',
-                'unit': 'admin/libraries/units',
+                'airport': 'admin/libraries/airports',
+                'base_of_permit': 'admin/libraries/base_of_permits',
+                'city': 'admin/libraries/cities',
+                'country': 'admin/libraries/countries',
                 'currency': 'admin/libraries/currencies',
+                'kontragent': 'admin/libraries/kontragents',
+                'region': 'admin/libraries/regions',
+                'unit': 'admin/libraries/units',
                 'flightHeader': ''
             }
         }

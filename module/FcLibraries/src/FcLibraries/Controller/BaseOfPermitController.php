@@ -134,7 +134,7 @@ class BaseOfPermitController extends AbstractActionController implements Control
     {
         $id = (int)$this->params()->fromRoute('id', 0);
         if (!$id) {
-            return $this->redirect()->toRoute('zfcadmin/airports');
+            return $this->redirect()->toRoute('zfcadmin/base_of_permits');
         }
 
         $request = $this->getRequest();
@@ -144,18 +144,18 @@ class BaseOfPermitController extends AbstractActionController implements Control
             if ($del == 'Yes') {
                 $id = (int)$request->getPost('id');
                 $name = (string)$request->getPost('name');
-                $this->getAirportModel()->remove($id);
-                $this->flashMessenger()->addSuccessMessage("Airport '"
+                $this->getBaseOfPermitModel()->remove($id);
+                $this->flashMessenger()->addSuccessMessage("Base of Permit '"
                 . $name . "' was successfully deleted.");
             }
 
             // Redirect to list
-            return $this->redirect()->toRoute('zfcadmin/airports');
+            return $this->redirect()->toRoute('zfcadmin/base_of_permits');
         }
 
         return array(
             'id' => $id,
-            'data' => $this->getAirportModel()->get($id)
+            'data' => $this->getBaseOfPermitModel()->get($id)
         );
     }
 
