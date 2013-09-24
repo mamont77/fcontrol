@@ -37,7 +37,7 @@ if ($order) {
         </th>
         <th>Role</th>
         <th>Status</th>
-        <th>Actions</th>
+        <th class="actions">Actions</th>
     </tr>
     <?php foreach ($pagination as $user) : ?>
         <tr>
@@ -51,7 +51,7 @@ if ($order) {
                 } else {
                     echo 'Banned';
                 };?>
-            <td>
+            <td class="actions">
                 <a title="Edit" href="<?php echo $this->url('zfcadmin/user',
                     array('action' => 'edit', 'id' => $user->user_id));?>"><i class="icon-edit"></i></a>
                 <a title="Remove" href="<?php echo $this->url('zfcadmin/user',

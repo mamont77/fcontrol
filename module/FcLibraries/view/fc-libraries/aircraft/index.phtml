@@ -45,13 +45,13 @@ if ($order) {
                             <?php endif; ?>
                         </a>
                     </th>
-                    <th>Actions</th>
+                    <th class="actions">Actions</th>
                 </tr>
                 <?php foreach ($pagination as $row) : ?>
                     <tr>
                         <td><?php echo $this->escapeHtml($row->aircraft_type_name); ?></td>
                         <td><?php echo $this->escapeHtml($row->reg_number); ?></td>
-                        <td>
+                        <td class="actions">
                             <a title="Edit" href="<?php echo $this->url('zfcadmin/aircraft',
                                 array('action' => 'edit', 'id' => $row->id));?>"><i class="icon-edit"></i></a>
                             <a title="Remove" href="<?php echo $this->url('zfcadmin/aircraft',

@@ -32,7 +32,7 @@ if (is_string($result)) {
             <th>
                 SITA
             </th>
-            <th>Actions</th>
+            <th class="actions">Actions</th>
         </tr>
         <?php foreach ($result as $row) : ?>
             <tr>
@@ -65,7 +65,7 @@ if (is_string($result)) {
                 <td><?php echo $this->escapeHtml($row->fax); ?></td>
                 <td><?php echo $this->escapeHtml($row->mail); ?></td>
                 <td><?php echo $this->escapeHtml($row->sita); ?></td>
-                <td>
+                <td class="actions">
                     <a title="Edit" href="<?php echo $this->url('zfcadmin/kontragent',
                         array('action' => 'edit', 'id' => $row->id));?>"><i class="icon-edit"></i></a>
                     <a title="Remove" href="<?php echo $this->url('zfcadmin/kontragent',

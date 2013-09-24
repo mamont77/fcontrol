@@ -1,0 +1,33 @@
+.navbar.navbar-fixed-top {
+    display: none;
+}
+
+.breadcrumb {
+    display: none;
+}
+
+.container-fluid .span2.leftPanes {
+    display: none;
+}
+
+.span10.rightPanes #header {
+    /*border: 1px solid #000000;*/
+    /*margin-bottom: 2em;*/
+}
+
+.span10.rightPanes legend {
+    /*border-bottom: 1px solid #e5e5e5;*/
+    /*margin-bottom: 1em;*/
+}
+
+th.actions, td.actions {
+    display: none;
+}
+
+footer {
+    display: none;
+}
+
+#zend-developer-toolbar, .zdt-toolbar-entry, .zdf-toolbar-hide-button {
+    display: none;
+}
