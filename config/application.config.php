@@ -19,8 +19,10 @@ return array(
         'FcLibraries',
         'FcLibrariesSearch',
         'FcFlight',
+        'FcLogEvents',
         'DluTwBootstrap',
         'SuperMessenger',
+        'DBLog',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

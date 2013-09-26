@@ -26,7 +26,10 @@ use FcLibraries\Filter\RegionFilter;
 use FcLibraries\Model\UnitModel;
 use FcLibraries\Filter\UnitFilter;
 
-
+/**
+ * Class Module
+ * @package FcLibraries
+ */
 class Module
 {
     /**
@@ -51,13 +54,19 @@ class Module
         );
     }
 
-     public function init(ModuleManager $moduleManager)
+    /**
+     * @param ModuleManager $moduleManager
+     */
+    public function init(ModuleManager $moduleManager)
      {
          $sharedEvents = $moduleManager->getEventManager()->getSharedManager();
          $sharedEvents->attach(__NAMESPACE__, 'dispatch', array($this, 'onModuleDispatch'));
      }
 
-     public function onModuleDispatch(MvcEvent $e)
+    /**
+     * @param MvcEvent $e
+     */
+    public function onModuleDispatch(MvcEvent $e)
      {
          //Set the layout template for every action in this module
          $controller = $e->getTarget();
@@ -167,7 +176,6 @@ class Module
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     return new UnitFilter($dbAdapter);
                 },
-
             ),
         );
     }

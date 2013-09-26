@@ -66,14 +66,19 @@ return array(
                     ),
 
                     array(
-                        'type'      => 'uri',
-                        'divider'   => true,
+                        'type' => 'uri',
+                        'divider' => true,
                     ),
                     array(
                         'label' => 'Advanced search',
                         'route' => 'zfcadmin/advanced_search',
                     ),
                 ),
+            ),
+            array(
+                'label' => 'Logs',
+                'route' => 'zfcadmin/logs',
+                'action' => 'index',
             ),
             array(
                 'label' => 'Users',

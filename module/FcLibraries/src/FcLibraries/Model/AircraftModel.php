@@ -77,5 +77,4 @@ class AircraftModel extends BaseModel
             throw new \Exception('Form id does not exist');
         }
     }
-
 }

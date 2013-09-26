@@ -76,8 +76,13 @@ class AircraftController extends AbstractActionController implements ControllerI
                 $data = $form->getData();
                 $filter->exchangeArray($data);
                 $this->getAircraftModel()->add($filter);
-                $this->flashMessenger()->addSuccessMessage("Aircraft '"
-                        . $data['reg_number'] . "' was successfully added.");
+
+                $message = "Aircraft '" . $data['reg_number'] . "' was successfully added.";
+                $this->flashMessenger()->addSuccessMessage($message);
+                $logger = $this->getServiceLocator()->get('logger');
+                $logger->addExtra(array('username' => $this->getCurrentUserName()));
+                $logger->Info($message);
+
                 return $this->redirect()->toRoute('zfcadmin/aircraft', array(
                     'action' => 'add'
                 ));
@@ -111,8 +116,13 @@ class AircraftController extends AbstractActionController implements ControllerI
             if ($form->isValid()) {
                 $data = $form->getData();
                 $this->getAircraftModel()->save($data);
-                $this->flashMessenger()->addSuccessMessage("Aircraft '"
-                        . $data->name . "' was successfully saved.");
+
+                $message = "Aircraft '" . $data->reg_number . "' was successfully saved.";
+                $this->flashMessenger()->addSuccessMessage($message);
+                $logger = $this->getServiceLocator()->get('logger');
+                $logger->addExtra(array('username' => $this->getCurrentUserName()));
+                $logger->Notice($message);
+
                 return $this->redirect()->toRoute('zfcadmin/aircrafts');
             }
         }
@@ -141,8 +151,12 @@ class AircraftController extends AbstractActionController implements ControllerI
                 $id = (int)$request->getPost('id');
                 $reg_number = (string) $request->getPost('reg_number');
                 $this->getAircraftModel()->remove($id);
-                $this->flashMessenger()->addSuccessMessage("Aircraft '"
-                        . $reg_number . "' was successfully deleted.");
+
+                $message = "Aircraft '" . $reg_number . "' was successfully deleted.";
+                $this->flashMessenger()->addSuccessMessage($message);
+                $logger = $this->getServiceLocator()->get('logger');
+                $logger->addExtra(array('username' => $this->getCurrentUserName()));
+                $logger->Warn($message);
             }
 
             // Redirect to list
@@ -185,5 +199,18 @@ class AircraftController extends AbstractActionController implements ControllerI
     private function getAircraftTypes()
     {
         return $this->getAircraftTypeModel()->fetchAll();
+    }
+
+    /**
+     * Get the display name of the user
+     *
+     * @return mixed
+     */
+    public function getCurrentUserName()
+    {
+        if ($this->zfcUserAuthentication()->hasIdentity()) {
+            return $this->zfcUserAuthentication()->getIdentity()->getUsername();
+        }
+        return null;
     }
 }

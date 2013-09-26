@@ -31,3 +31,6 @@
 [submodule "vendor/SuperMessenger"]
 	path = vendor/SuperMessenger
 	url = git://github.com/blanchonvincent/SuperMessenger.git
+[submodule "vendor/DBLog"]
+	path = vendor/DBLog
+	url = https://github.com/mnshankar/log-to-database.git
