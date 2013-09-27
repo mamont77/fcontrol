@@ -113,6 +113,7 @@ return array(
                 array('controller' => 'FcFlight\Controller\Leg', 'roles' => array('user')),
                 array('controller' => 'FcFlight\Controller\Refuel', 'roles' => array('user')),
                 array('controller' => 'FcLogEvents\Controller\Index', 'roles' => array('user')),
+                array('controller' => 'FcLogEvents\Controller\Search', 'roles' => array('user')),
             ),
 
             /* If this guard is specified here (i.e. it is enabled), it will block
@@ -166,7 +167,8 @@ return array(
                 array('route' => 'zfcadmin/units', 'roles' => array('admin')),
                 array('route' => 'zfcadmin/unit', 'roles' => array('admin')),
                 array('route' => 'zfcadmin/advanced_search', 'roles' => array('admin')),
-                array('route' => 'zfcadmin/logs', 'roles' => array('user')),
+                array('route' => 'logs', 'roles' => array('user')),
+                array('route' => 'logsSearch', 'roles' => array('user')),
             ),
         ),
 

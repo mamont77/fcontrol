@@ -77,7 +77,7 @@ return array(
             ),
             array(
                 'label' => 'Logs',
-                'route' => 'zfcadmin/logs',
+                'route' => 'logs',
                 'action' => 'index',
             ),
             array(

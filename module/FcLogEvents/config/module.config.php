@@ -3,27 +3,34 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'FcLogEvents\Controller\Index' => 'FcLogEvents\Controller\IndexController',
+            'FcLogEvents\Controller\Search' => 'FcLogEvents\Controller\SearchController',
         ),
     ),
 
     'router' => array(
         'routes' => array(
-            'zfcadmin' => array(
-                'child_routes' => array(
-                    'logs' => array(
-                        'type' => 'segment',
-                        'options' => array(
-                            'route' => '/logs[/page/:page][/order_by/:order_by][/:order]',
-                            'constraints' => array(
-                                'page' => '[0-9]+',
-                                'order_by' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                'order' => 'ASC|DESC',
-                            ),
-                            'defaults' => array(
-                                'controller' => 'FcLogEvents\Controller\Index',
-                                'action' => 'index',
-                            ),
-                        ),
+            'logs' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/logs/list[/page/:page][/order_by/:order_by][/:order]',
+                    'constraints' => array(
+                        'page' => '[0-9]+',
+                        'order_by' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'order' => 'ASC|DESC',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'FcLogEvents\Controller\Index',
+                        'action' => 'index',
+                    ),
+                ),
+            ),
+            'logsSearch' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/logs/search',
+                    'defaults' => array(
+                        'controller' => 'FcLogEvents\Controller\Search',
+                        'action' => 'searchResult',
                     ),
                 ),
             ),

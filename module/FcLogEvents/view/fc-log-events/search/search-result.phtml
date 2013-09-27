@@ -1,0 +1,49 @@
+<?php
+$title = 'Search page';
+$this->headTitle($title);
+?>
+
+<ul class="breadcrumb">
+    <li><a href="/">Home</a> <span class="divider">/</span></li>
+    <li class="active"><?= $title; ?></li>
+</ul>
+
+<?php
+
+$url_order = 'ASC';
+if ($order) {
+    $url_order = $order == 'ASC' ? 'DESC' : 'ASC';
+}
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span2 leftPanes">
+            <?php echo $this->partial('fc-log-events/widgets/form/search/default.phtml', array('form' => $searchForm)); ?>
+        </div>
+        <div class="span10 rightPanes">
+            <?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
+
+            <? if (is_string($data) && strlen($data) > 0): ?>
+                <legend>Search Result</legend>
+                <div class="alert alert-error">
+                    <?= $data; ?>
+                </div>
+            <? else: ?>
+                <? if (is_object($data) && count($data) > 0): ?>
+                    <legend>Search Result</legend>
+                    <div id="searchResult">
+                        <?php echo $this->partial('fc-log-events/widgets/tables/logs/lite.phtml', array(
+                            'data' => $data,
+                            'route' => $route,
+                        )); ?>
+                    </div>
+                <? endif; ?>
+            <? endif; ?>
+
+        </div>
+    </div>
+</div>
+

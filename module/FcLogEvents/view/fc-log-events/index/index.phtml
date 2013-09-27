@@ -15,7 +15,7 @@ if ($order) {
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span2 leftPanes">
-            <!--            --><?php //echo $this->partial('fc-libraries-search/widgets/form/search/default.phtml', array('form' => $searchForm)); ?>
+                        <?php echo $this->partial('fc-log-events/widgets/form/search/default.phtml', array('form' => $searchForm)); ?>
         </div>
         <div class="span10 rightPanes">
             <?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>

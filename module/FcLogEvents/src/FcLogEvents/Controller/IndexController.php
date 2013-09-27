@@ -5,6 +5,7 @@ namespace FcLogEvents\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Db\Sql\Select;
+use FcLogEvents\Form\SearchForm;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\Iterator as paginatorIterator;
 
@@ -46,8 +47,8 @@ class IndexController extends AbstractActionController
             'order' => $order,
             'page' => $page,
             'pagination' => $pagination,
-            'route' => 'zfcadmin/logs',
-//            'searchForm' => new SearchForm('librarySearch', array('library' => 'log_table')),
+            'route' => 'logs',
+            'searchForm' => new SearchForm(),
         ));
     }
 

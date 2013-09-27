@@ -1,0 +1,36 @@
+<?php
+$displayOptions = array(
+    'elements' => array(
+        'dateFrom' => array(
+            'required' => false,
+        ),
+        'dateTo' => array(
+            'required' => false,
+        ),
+        'priority' => array(
+            'required' => false,
+        ),
+        'username' => array(
+            'required' => false,
+        ),
+    ),
+);
+$formType = 'vertical';
+$form = $this->form;
+$form->prepare();
+
+echo $this->formTwb()->openTag($form, $formType);
+
+echo'<legend>Search</legend>';
+echo $this->formRowTwb($form->get('dateFrom'), $formType, $displayOptions['elements']['dateFrom']);
+echo $this->formRowTwb($form->get('dateTo'), $formType, $displayOptions['elements']['dateTo']);
+echo $this->formRowTwb($form->get('priority'), $formType, $displayOptions['elements']['priority']);
+echo $this->formRowTwb($form->get('username'), $formType, $displayOptions['elements']['username']);
+
+echo $this->formRowTwb($form->get('csrf'));
+
+echo $this->formActionsTwb(array($form->get('submitBtn'), $formType));
+
+echo $this->formTwb()->closeTag();
+
+?>

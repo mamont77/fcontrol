@@ -4,6 +4,8 @@ namespace FcLogEvents;
 use Zend\ModuleManager\ModuleManager;
 use Zend\Mvc\MvcEvent;
 use FcLogEvents\Model\FcLogEventsModel;
+use FcLogEvents\Model\SearchModel;
+use FcLogEvents\Filter\SearchFilter;
 use FcLogEvents\Filter\FcLogEventsFilter;
 
 /**
@@ -69,6 +71,14 @@ class Module
                 'FcLogEvents\Filter\FcLogEventsFilter' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     return new FcLogEventsFilter($dbAdapter);
+                },
+                'FcLogEvents\Model\SearchModel' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new SearchModel($dbAdapter);
+                },
+                'FcLogEvents\Model\SearchFilter' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    return new SearchFilter($dbAdapter);
                 },
             ),
         );
