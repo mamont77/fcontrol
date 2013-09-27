@@ -9,10 +9,10 @@ use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\Iterator as paginatorIterator;
 
 /**
- * Class FcLogEventsController
+ * Class IndexController
  * @package FcLogEvents\Controller
  */
-class FcLogEventsController extends AbstractActionController
+class IndexController extends AbstractActionController
 {
     /**
      * @var

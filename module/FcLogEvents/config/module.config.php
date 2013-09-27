@@ -2,7 +2,7 @@
 return array(
     'controllers' => array(
         'invokables' => array(
-            'FcLogEvents\Controller\FcLogEvents' => 'FcLogEvents\Controller\FcLogEventsController',
+            'FcLogEvents\Controller\Index' => 'FcLogEvents\Controller\IndexController',
         ),
     ),
 
@@ -20,7 +20,7 @@ return array(
                                 'order' => 'ASC|DESC',
                             ),
                             'defaults' => array(
-                                'controller' => 'FcLogEvents\Controller\FcLogEvents',
+                                'controller' => 'FcLogEvents\Controller\Index',
                                 'action' => 'index',
                             ),
                         ),
