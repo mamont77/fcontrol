@@ -71,7 +71,7 @@ class SearchModel extends AbstractTableGateway
         }
 
         if ($object->username != '') {
-            $select->where->like('username.username', $object->username . '%');
+            $select->where->like('log_table.username', $object->username . '%');
         }
 
         $select->order('timestamp ' . Select::ORDER_DESCENDING);

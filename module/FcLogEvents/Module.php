@@ -76,7 +76,7 @@ class Module
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     return new SearchModel($dbAdapter);
                 },
-                'FcLogEvents\Model\SearchFilter' => function ($sm) {
+                'FcLogEvents\Filter\SearchFilter' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     return new SearchFilter($dbAdapter);
                 },

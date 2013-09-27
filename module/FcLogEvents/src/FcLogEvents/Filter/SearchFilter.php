@@ -32,7 +32,7 @@ class SearchFilter implements InputFilterAwareInterface
     /**
      * @var string
      */
-    public $user;
+    public $username;
 
     /**
      * @var array
@@ -66,7 +66,7 @@ class SearchFilter implements InputFilterAwareInterface
         $this->dateFrom = (isset($data['dateFrom'])) ? $data['dateFrom'] : null;
         $this->dateTo = (isset($data['dateTo'])) ? $data['dateTo'] : null;
         $this->priority = (isset($data['priority'])) ? $data['priority'] : null;
-        $this->user = (isset($data['user'])) ? $data['user'] : null;
+        $this->username = (isset($data['username'])) ? $data['username'] : null;
     }
 
     /**
