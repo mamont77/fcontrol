@@ -160,7 +160,7 @@ class AircraftController extends AbstractActionController implements ControllerI
             }
 
             // Redirect to list
-            return $this->redirect()->toRoute('zfcadmin/countries');
+            return $this->redirect()->toRoute('zfcadmin/aircrafts');
         }
 
         return array(
