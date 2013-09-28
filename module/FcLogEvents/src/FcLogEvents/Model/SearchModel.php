@@ -65,7 +65,7 @@ class SearchModel extends AbstractTableGateway
                 new Expression('FROM_UNIXTIME(?)', $object->dateTo));
         } else {
             if ($object->dateFrom != '') {
-                $select->where->greaterThanOrEqualTo('logstimestamp',
+                $select->where->greaterThanOrEqualTo('logs.timestamp',
                     new Expression('FROM_UNIXTIME(?)', $object->dateFrom));
             }
 

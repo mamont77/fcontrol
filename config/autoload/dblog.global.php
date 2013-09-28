@@ -15,30 +15,14 @@ return array(
             'extra' => array(
                 'url' => 'url',
                 'ipaddress' => 'ipaddress',
-                'username' => 'username'
+                'username' => 'username',
+                'component' => 'component',
             ),
         )
     ),
     'controllers' => array(
         'invokables' => array(
             'DBLog\Controller\DBLog' => 'DBLog\Controller\DBLogController',
-        ),
-    ),
-    'router' => array(
-        'routes' => array(
-            'dblog' => array(
-                'type' => 'segment',
-                'options' => array(
-                    'route' => '/dblog',
-                    'constraints' => array(
-                        'action' => 'index',
-                    ),
-                    'defaults' => array(
-                        'controller' => 'DBLog\Controller\DBLog',
-                        'action' => 'index',
-                    ),
-                ),
-            ),
         ),
     ),
     'view_manager' => array(

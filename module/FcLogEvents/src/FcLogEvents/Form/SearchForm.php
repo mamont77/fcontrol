@@ -64,7 +64,7 @@ class SearchForm extends Form
                 ),
             ),
             'attributes' => array(
-//                'value' => '2'
+                'value' => ''
             )
         ));
 
