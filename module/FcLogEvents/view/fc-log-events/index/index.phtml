@@ -23,17 +23,17 @@ if ($order) {
             <table class="table table-bordered table-hover table-condensed">
                 <tr>
                     <th>
-                        <a href="<?php echo $this->url($route, array('order_by' => 'username', 'order' => $url_order)); ?>">
+                        <a href="<?php echo $this->url($route, array('order_by' => 'userName', 'order' => $url_order)); ?>">
                             User
-                            <?php if ($order_by == 'username'): ?>
+                            <?php if ($order_by == 'userName'): ?>
                                 <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
                             <?php endif; ?>
                         </a>
                     </th>
                     <th>
-                        <a href="<?php echo $this->url($route, array('order_by' => 'ipaddress', 'order' => $url_order)); ?>">
+                        <a href="<?php echo $this->url($route, array('order_by' => 'ipAddress', 'order' => $url_order)); ?>">
                             IP
-                            <?php if ($order_by == 'ipaddress'): ?>
+                            <?php if ($order_by == 'ipAddress'): ?>
                                 <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
                             <?php endif; ?>
                         </a>
@@ -77,8 +77,8 @@ if ($order) {
                     $row->timestamp = date('d-m-Y H:i:s', $row->timestamp);
                     ?>
                     <tr class="<?= $trClass; ?>">
-                        <td><?php echo $this->escapeHtml($row->username); ?></td>
-                        <td><?php echo $this->escapeHtml($row->ipaddress); ?></td>
+                        <td><?php echo $this->escapeHtml($row->userName); ?></td>
+                        <td><?php echo $this->escapeHtml($row->ipAddress); ?></td>
                         <td><?php echo $this->escapeHtml($row->priorityName); ?></td>
                         <td><?php echo $this->escapeHtml($row->timestamp); ?></td>
                         <td><?php echo $this->escapeHtml($row->message); ?></td>

@@ -57,7 +57,7 @@ class SearchModel extends AbstractTableGateway
         $select = new Select();
         $select->from($this->table);
 
-        $select->columns(array('id', 'message', 'priority', 'priorityName', 'username', 'url', 'ipaddress', 'timestamp'));
+        $select->columns(array('id', 'message', 'priority', 'priorityName', 'userName', 'url', 'ipAddress', 'timestamp'));
 
         if ($object->dateFrom != '' && $object->dateTo != '') {
             $select->where->between('logs.timestamp',
@@ -65,7 +65,7 @@ class SearchModel extends AbstractTableGateway
                 new Expression('FROM_UNIXTIME(?)', $object->dateTo));
         } else {
             if ($object->dateFrom != '') {
-                $select->where->greaterThanOrEqualTo('logstimestamp',
+                $select->where->greaterThanOrEqualTo('logs.timestamp',
                     new Expression('FROM_UNIXTIME(?)', $object->dateFrom));
             }
 
@@ -79,8 +79,8 @@ class SearchModel extends AbstractTableGateway
             $select->where->equalTo('logs.priority', (int)$object->priority);
         }
 
-        if ($object->username != '') {
-            $select->where->like('logs.username', $object->username . '%');
+        if ($object->userName != '') {
+            $select->where->like('logs.username', $object->userName . '%');
         }
 
         $select->order('timestamp ' . Select::ORDER_DESCENDING);

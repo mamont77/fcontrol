@@ -10,7 +10,7 @@ $displayOptions = array(
         'priority' => array(
             'required' => false,
         ),
-        'username' => array(
+        'userName' => array(
             'required' => false,
         ),
     ),
@@ -25,7 +25,7 @@ echo'<legend>Search</legend>';
 echo $this->formRowTwb($form->get('dateFrom'), $formType, $displayOptions['elements']['dateFrom']);
 echo $this->formRowTwb($form->get('dateTo'), $formType, $displayOptions['elements']['dateTo']);
 echo $this->formRowTwb($form->get('priority'), $formType, $displayOptions['elements']['priority']);
-echo $this->formRowTwb($form->get('username'), $formType, $displayOptions['elements']['username']);
+echo $this->formRowTwb($form->get('userName'), $formType, $displayOptions['elements']['userName']);
 
 echo $this->formRowTwb($form->get('csrf'));
 

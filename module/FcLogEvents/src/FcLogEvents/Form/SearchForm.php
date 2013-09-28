@@ -64,12 +64,12 @@ class SearchForm extends Form
                 ),
             ),
             'attributes' => array(
-//                'value' => '2'
+                'value' => ''
             )
         ));
 
         $this->add(array(
-            'name' => 'username',
+            'name' => 'userName',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'class' => 'input-medium',

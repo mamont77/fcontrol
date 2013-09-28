@@ -30,7 +30,7 @@ class SearchController extends AbstractActionController
         if ($request->isPost()) {
 
             $data = $request->getPost();
-            if ($data->dateFrom == '' && $data->dateTo == '' && $data->priority == '' && $data->username == '') {
+            if ($data->dateFrom == '' && $data->dateTo == '' && $data->priority == '' && $data->userName == '') {
                 $result = 'Result not found. Enter one or more fields.';
             } else {
                 $filter = $this->getServiceLocator()->get('FcLogEvents\Filter\SearchFilter');
