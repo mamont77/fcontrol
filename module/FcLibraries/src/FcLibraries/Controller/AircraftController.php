@@ -120,7 +120,7 @@ class AircraftController extends AbstractActionController implements ControllerI
                 $message = "Aircraft '" . $data->reg_number . "' was successfully saved.";
                 $this->flashMessenger()->addSuccessMessage($message);
                 $logger = $this->getServiceLocator()->get('logger');
-                $logger->addExtra(array('username' => $this->getCurrentUserName()));
+                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'aircraft'));
                 $logger->Notice($message);
 
                 return $this->redirect()->toRoute('zfcadmin/aircrafts');
@@ -155,7 +155,7 @@ class AircraftController extends AbstractActionController implements ControllerI
                 $message = "Aircraft '" . $reg_number . "' was successfully deleted.";
                 $this->flashMessenger()->addSuccessMessage($message);
                 $logger = $this->getServiceLocator()->get('logger');
-                $logger->addExtra(array('username' => $this->getCurrentUserName()));
+                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'aircraft'));
                 $logger->Warn($message);
             }
 
