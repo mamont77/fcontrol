@@ -49,6 +49,33 @@ class AircraftModel extends BaseModel
     }
 
     /**
+     * @param $id
+     * @return array|\ArrayObject|null
+     * @throws \Exception
+     */
+    public function get($id)
+    {
+        $id = (int)$id;
+        $select = new Select();
+        $select->from($this->table);
+        $select->columns(array('id', 'aircraft_type', 'reg_number'));
+
+        $select->join(array('t' => 'library_aircraft_type'),
+            't.id = library_aircraft.aircraft_type',
+            array('aircraft_type_name' => 'name'), 'left');
+
+        $select->where(array($this->table . '.id' => $id));
+
+        $resultSet = $this->selectWith($select);
+        $row = $resultSet->current();
+        if (!$row) {
+            throw new \Exception("Could not find row $id");
+        }
+
+        return $row;
+    }
+
+    /**
      * @param \FcLibraries\Filter\AircraftFilter $object
      */
     public function add(AircraftFilter $object)
@@ -58,6 +85,8 @@ class AircraftModel extends BaseModel
             'reg_number' => $object->reg_number,
         );
         $this->insert($data);
+
+        return $this->getLastInsertValue();
     }
 
     /**

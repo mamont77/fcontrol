@@ -75,13 +75,24 @@ class AircraftController extends AbstractActionController implements ControllerI
             if ($form->isValid()) {
                 $data = $form->getData();
                 $filter->exchangeArray($data);
-                $this->getAircraftModel()->add($filter);
+                $lastId = $this->getAircraftModel()->add($filter);
 
                 $message = "Aircraft '" . $data['reg_number'] . "' was successfully added.";
                 $this->flashMessenger()->addSuccessMessage($message);
+                $newRecord = $this->getAircraftModel()->get($lastId);
+                $logMessage = array(
+                    'description' => $message,
+                    'data' => array(
+                        'new' => array(
+                            'id' => $newRecord->id,
+                            'Type Aircraft' => $newRecord->aircraft_type_name,
+                            'Reg Number' => $newRecord->reg_number,
+                        ),
+                    ),
+                );
                 $logger = $this->getServiceLocator()->get('logger');
                 $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'aircraft'));
-                $logger->Info($message);
+                $logger->Info(serialize($logMessage));
 
                 return $this->redirect()->toRoute('zfcadmin/aircraft', array(
                     'action' => 'add'

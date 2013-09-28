@@ -67,7 +67,6 @@ class BaseOfPermitModel extends BaseModel
     public function get($id)
     {
         $id = (int)$id;
-//        $rowSet = $this->select(array('id' => $id));
         $select = new Select();
         $select->from($this->table);
         $select->columns(array('id', 'airportId', 'termValidity', 'termToTake', 'infoToTake'));

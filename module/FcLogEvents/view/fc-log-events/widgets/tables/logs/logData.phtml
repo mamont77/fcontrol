@@ -1,0 +1,55 @@
+<?php
+
+$data = unserialize($data);
+//\Zend\Debug\Debug::dump($data);
+
+?>
+<blockquote><?= $data['description']; ?></blockquote>
+<table class="table table-bordered">
+    <? if (isset($data['data']['new'])): ?>
+        <?php
+        $rows = array_keys($data['data']['new']);
+        ?>
+        <tr>
+            <td></td>
+            <?php
+            foreach ($rows as $row) {
+                echo '<td>' . $row . '</td>';
+            }
+            ?>
+        </tr>
+        <tr>
+            <td>New:</td>
+            <?php
+            foreach ($data['data']['new'] as $row) {
+                echo '<td>' . $row . '</td>';
+            }
+            ?>
+        </tr>
+    <? endif; ?>
+
+    <? if (isset($data['data']['old'])): ?>
+        <?php
+        $rows = array_keys($data['data']['old']);
+        ?>
+        <? if (!isset($data['data']['old'])): ?>
+            <tr>
+                <td></td>
+                <?php
+                foreach ($rows as $row) {
+                    echo '<td>' . $row . '</td>';
+                }
+                ?>
+            </tr>
+        <? endif; ?>
+    <tr>
+        <td>Old:</td>
+        <?php
+        foreach ($data['data']['new'] as $row) {
+            echo '<td>' . $row . '</td>';
+        }
+        ?>
+    </tr>
+    <? endif; ?>
+
+</table>
