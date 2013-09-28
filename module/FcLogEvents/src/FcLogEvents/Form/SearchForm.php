@@ -23,9 +23,9 @@ class SearchForm extends Form
 
         $this->setName('logsSearch');
         $this->setAttributes(array(
-                'method' => 'post',
-                'action' => '/logs/search',
-            ));
+            'method' => 'post',
+            'action' => '/logs/search',
+        ));
 
         $this->add(array(
             'name' => 'dateFrom',
@@ -57,7 +57,7 @@ class SearchForm extends Form
             'options' => array(
                 'label' => 'Priority',
                 'value_options' => array(
-                    '' => 'ANY',
+                    '' => 'Any',
                     '6' => 'Info',
                     '5' => 'Notice',
                     '4' => 'Warring',
@@ -108,7 +108,7 @@ class SearchForm extends Form
         //Submit button
         $this->add(array(
             'name' => 'submitBtn',
-            'type'       => 'Zend\Form\Element\Submit',
+            'type' => 'Zend\Form\Element\Submit',
             'attributes' => array(
                 'value' => 'Find',
             ),
