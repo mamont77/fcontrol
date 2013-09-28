@@ -76,6 +76,8 @@ if ($order) {
                         default:
                             $trClass = 'default';
                     }
+                    $row->timestamp = \DateTime::createFromFormat('Y-m-d H:i:s', $row->timestamp)->getTimestamp();
+                    $row->timestamp = date('d-m-Y H:i:s', $row->timestamp);
                     ?>
                     <tr class="<?= $trClass; ?>">
                         <td><?php echo $this->escapeHtml($row->username); ?></td>
