@@ -32,7 +32,7 @@ class SearchFilter implements InputFilterAwareInterface
     /**
      * @var string
      */
-    public $userName;
+    public $username;
 
     /**
      * @var array
@@ -66,7 +66,7 @@ class SearchFilter implements InputFilterAwareInterface
         $this->dateFrom = (isset($data['dateFrom'])) ? $data['dateFrom'] : null;
         $this->dateTo = (isset($data['dateTo'])) ? $data['dateTo'] : null;
         $this->priority = (isset($data['priority'])) ? $data['priority'] : null;
-        $this->userName = (isset($data['userName'])) ? $data['userName'] : null;
+        $this->username = (isset($data['username'])) ? $data['username'] : null;
     }
 
     /**
@@ -151,7 +151,7 @@ class SearchFilter implements InputFilterAwareInterface
             )));
 
             $inputFilter->add($factory->createInput(array(
-                'name' => 'userName',
+                'name' => 'username',
                 'required' => false,
                 'filters' => $this->defaultFilters,
                 'validators' => array(

@@ -23,9 +23,9 @@ class FcLogEventsFilter
     public $message;
     public $priority;
     public $priorityName;
-    public $userName;
+    public $username;
     public $url;
-    public $ipAddress;
+    public $ipaddress;
     public $timestamp;
 
     /**
@@ -71,9 +71,9 @@ class FcLogEventsFilter
         $this->message = (isset($data['message'])) ? $data['message'] : null;
         $this->priority = (isset($data['priority'])) ? $data['priority'] : null;
         $this->priorityName = (isset($data['priorityName'])) ? $data['priorityName'] : null;
-        $this->userName = (isset($data['userName'])) ? $data['userName'] : null;
+        $this->username = (isset($data['username'])) ? $data['username'] : null;
         $this->url = (isset($data['url'])) ? $data['url'] : null;
-        $this->ipAddress = (isset($data['ipAddress'])) ? $data['ipAddress'] : null;
+        $this->ipaddress = (isset($data['ipaddress'])) ? $data['ipaddress'] : null;
         $this->timestamp = (isset($data['timestamp'])) ? $data['timestamp'] : null;
     }
 

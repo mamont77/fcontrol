@@ -80,7 +80,7 @@ class AircraftController extends AbstractActionController implements ControllerI
                 $message = "Aircraft '" . $data['reg_number'] . "' was successfully added.";
                 $this->flashMessenger()->addSuccessMessage($message);
                 $logger = $this->getServiceLocator()->get('logger');
-                $logger->addExtra(array('username' => $this->getCurrentUserName()));
+                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'aircraft'));
                 $logger->Info($message);
 
                 return $this->redirect()->toRoute('zfcadmin/aircraft', array(
