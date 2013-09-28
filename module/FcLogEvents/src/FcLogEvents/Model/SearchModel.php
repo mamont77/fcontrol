@@ -17,7 +17,7 @@ class SearchModel extends AbstractTableGateway
     /**
      * @var string
      */
-    protected $table = 'log_table';
+    protected $table = 'logs';
 
     /**
      * @param \Zend\Db\Adapter\Adapter $adapter
@@ -41,7 +41,7 @@ class SearchModel extends AbstractTableGateway
      */
     public function findSearchResult($object)
     {
-        $this->setTable('log_table');
+        $this->setTable('logs');
 
         if ($object->dateFrom != '') {
             $object->dateFrom = \DateTime::createFromFormat('d-m-Y', $object->dateFrom)
@@ -60,27 +60,27 @@ class SearchModel extends AbstractTableGateway
         $select->columns(array('id', 'message', 'priority', 'priorityName', 'username', 'url', 'ipaddress', 'timestamp'));
 
         if ($object->dateFrom != '' && $object->dateTo != '') {
-            $select->where->between('log_table.timestamp',
+            $select->where->between('logs.timestamp',
                 new Expression('FROM_UNIXTIME(?)', $object->dateFrom),
                 new Expression('FROM_UNIXTIME(?)', $object->dateTo));
         } else {
             if ($object->dateFrom != '') {
-                $select->where->greaterThanOrEqualTo('log_table.timestamp',
+                $select->where->greaterThanOrEqualTo('logstimestamp',
                     new Expression('FROM_UNIXTIME(?)', $object->dateFrom));
             }
 
             if ($object->dateTo != '') {
-                $select->where->lessThanOrEqualTo('log_table.timestamp',
+                $select->where->lessThanOrEqualTo('logs.timestamp',
                     new Expression('FROM_UNIXTIME(?)', $object->dateTo));
             }
         }
 
         if ($object->priority) {
-            $select->where->equalTo('log_table.priority', (int)$object->priority);
+            $select->where->equalTo('logs.priority', (int)$object->priority);
         }
 
         if ($object->username != '') {
-            $select->where->like('log_table.username', $object->username . '%');
+            $select->where->like('logs.username', $object->username . '%');
         }
 
         $select->order('timestamp ' . Select::ORDER_DESCENDING);

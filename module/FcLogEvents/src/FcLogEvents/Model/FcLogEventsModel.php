@@ -14,7 +14,7 @@ use FcLogEvents\Filter\FcLogEventsFilter;
  */
 class FcLogEventsModel extends AbstractTableGateway
 {
-    protected $table = 'log_table';
+    protected $table = 'logs';
 
     /**
      * @param \Zend\Db\Adapter\Adapter $adapter

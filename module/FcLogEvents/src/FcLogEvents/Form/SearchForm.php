@@ -57,6 +57,7 @@ class SearchForm extends Form
             'options' => array(
                 'label' => 'Priority',
                 'value_options' => array(
+                    '' => 'ANY',
                     '6' => 'Info',
                     '5' => 'Notice',
                     '4' => 'Warring',

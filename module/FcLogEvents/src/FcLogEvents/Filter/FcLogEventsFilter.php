@@ -17,7 +17,7 @@ class FcLogEventsFilter
     /**
      * @var string
      */
-    protected $table = 'log_table';
+    protected $table = 'logs';
 
     public $id;
     public $message;
