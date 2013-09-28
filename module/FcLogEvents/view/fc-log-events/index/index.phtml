@@ -55,6 +55,14 @@ if ($order) {
                         </a>
                     </th>
                     <th>
+                        <a href="<?php echo $this->url($route, array('order_by' => 'component', 'order' => $url_order)); ?>">
+                            Component
+                            <?php if ($order_by == 'component'): ?>
+                                <i class="icon-chevron-<?php echo $url_order == 'ASC' ? 'down' : 'up' ?>"></i>
+                            <?php endif; ?>
+                        </a>
+                    </th>
+                    <th>
                         Message
                     </th>
                 </tr>
@@ -81,6 +89,7 @@ if ($order) {
                         <td><?php echo $this->escapeHtml($row->ipaddress); ?></td>
                         <td><?php echo $this->escapeHtml($row->priorityName); ?></td>
                         <td><?php echo $this->escapeHtml($row->timestamp); ?></td>
+                        <td><?php echo $this->escapeHtml($row->component); ?></td>
                         <td><?php echo $this->escapeHtml($row->message); ?></td>
                     </tr>
                 <?php endforeach; ?>

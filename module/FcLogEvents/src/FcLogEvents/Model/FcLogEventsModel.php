@@ -37,7 +37,8 @@ class FcLogEventsModel extends AbstractTableGateway
         if (null === $select)
             $select = new Select();
         $select->from($this->table);
-        $select->columns(array('id', 'message', 'priority', 'priorityName', 'username', 'url', 'ipaddress', 'timestamp'));
+        $select->columns(array('id', 'message', 'priority', 'priorityName',
+            'username', 'url', 'ipaddress', 'timestamp', 'component'));
         $resultSet = $this->selectWith($select);
         $resultSet->buffer();
 

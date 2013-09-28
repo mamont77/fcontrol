@@ -27,6 +27,7 @@ class FcLogEventsFilter
     public $url;
     public $ipaddress;
     public $timestamp;
+    public $component;
 
     /**
      * @var
@@ -75,6 +76,7 @@ class FcLogEventsFilter
         $this->url = (isset($data['url'])) ? $data['url'] : null;
         $this->ipaddress = (isset($data['ipaddress'])) ? $data['ipaddress'] : null;
         $this->timestamp = (isset($data['timestamp'])) ? $data['timestamp'] : null;
+        $this->component = (isset($data['component'])) ? $data['component'] : null;
     }
 
     /**

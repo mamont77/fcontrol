@@ -57,7 +57,8 @@ class SearchModel extends AbstractTableGateway
         $select = new Select();
         $select->from($this->table);
 
-        $select->columns(array('id', 'message', 'priority', 'priorityName', 'username', 'url', 'ipaddress', 'timestamp'));
+        $select->columns(array('id', 'message', 'priority', 'priorityName',
+            'username', 'url', 'ipaddress', 'timestamp', 'component'));
 
         if ($object->dateFrom != '' && $object->dateTo != '') {
             $select->where->between('logs.timestamp',
