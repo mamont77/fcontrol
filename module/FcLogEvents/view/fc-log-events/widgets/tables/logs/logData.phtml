@@ -1,16 +1,26 @@
 <?php
-
 $data = unserialize($data);
-//\Zend\Debug\Debug::dump($data);
-
+switch ($priority) {
+    case 4:
+        $trClass = 'error';
+        break;
+    case 5:
+        $trClass = 'warning';
+        break;
+    case 6:
+        $trClass = 'info';
+        break;
+    default:
+        $trClass = 'default';
+}
 ?>
 <blockquote><?= $data['description']; ?></blockquote>
 <table class="table table-bordered">
-    <? if (isset($data['data']['new'])): ?>
+    <? if (!empty($data['data']['old'])): ?>
         <?php
-        $rows = array_keys($data['data']['new']);
+        $rows = array_keys($data['data']['old']);
         ?>
-        <tr>
+        <tr class="<?= $trClass; ?>">
             <td></td>
             <?php
             foreach ($rows as $row) {
@@ -18,6 +28,29 @@ $data = unserialize($data);
             }
             ?>
         </tr>
+        <tr>
+            <td>Old:</td>
+            <?php
+            foreach ($data['data']['old'] as $row) {
+                echo '<td>' . $row . '</td>';
+            }
+            ?>
+        </tr>
+    <? endif; ?>
+    <? if (!empty($data['data']['new'])): ?>
+        <?php
+        $rows = array_keys($data['data']['new']);
+        ?>
+        <? if (empty($data['data']['old'])): ?>
+            <tr class="<?= $trClass; ?>">
+                <td></td>
+                <?php
+                foreach ($rows as $row) {
+                    echo '<td>' . $row . '</td>';
+                }
+                ?>
+            </tr>
+        <? endif; ?>
         <tr>
             <td>New:</td>
             <?php
@@ -27,29 +60,4 @@ $data = unserialize($data);
             ?>
         </tr>
     <? endif; ?>
-
-    <? if (isset($data['data']['old'])): ?>
-        <?php
-        $rows = array_keys($data['data']['old']);
-        ?>
-        <? if (!isset($data['data']['old'])): ?>
-            <tr>
-                <td></td>
-                <?php
-                foreach ($rows as $row) {
-                    echo '<td>' . $row . '</td>';
-                }
-                ?>
-            </tr>
-        <? endif; ?>
-    <tr>
-        <td>Old:</td>
-        <?php
-        foreach ($data['data']['new'] as $row) {
-            echo '<td>' . $row . '</td>';
-        }
-        ?>
-    </tr>
-    <? endif; ?>
-
 </table>

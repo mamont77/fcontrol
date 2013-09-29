@@ -1,4 +1,4 @@
-<table class="table table-bordered table-hover table-condensed">
+<table class="table table-bordered table-striped table-hover table-condensed">
     <tr>
         <th>
             User
@@ -15,35 +15,24 @@
         <th>
             Component
         </th>
-        <th>
-            Message
-        </th>
     </tr>
     <?php foreach ($data as $row) : ?>
         <?php
-        switch ($row->priority) {
-            case 4:
-                $trClass = 'error';
-                break;
-            case 5:
-                $trClass = 'warning';
-                break;
-            case 6:
-                $trClass = 'info';
-                break;
-            default:
-                $trClass = 'default';
-        }
         $row->timestamp = \DateTime::createFromFormat('Y-m-d H:i:s', $row->timestamp)->getTimestamp();
         $row->timestamp = date('d-m-Y H:i:s', $row->timestamp);
         ?>
-        <tr class="<?= $trClass; ?>">
-            <td><?php echo $this->escapeHtml($row->username); ?></td>
-            <td><?php echo $this->escapeHtml($row->ipaddress); ?></td>
-            <td><?php echo $this->escapeHtml($row->priorityName); ?></td>
-            <td><?php echo $this->escapeHtml($row->timestamp); ?></td>
-            <td><?php echo $this->escapeHtml($row->component); ?></td>
-            <td><?php echo $this->escapeHtml($row->message); ?></td>
+        <tr>
+            <td colspan="5">
+                <p class="muted text-right">
+                    <strong><?php echo $this->escapeHtml($row->username); ?></strong> |
+                    <?php echo $this->escapeHtml($row->ipaddress); ?> |
+                    <?php echo $this->escapeHtml($row->timestamp); ?> |
+                    <strong><?php echo $this->escapeHtml($row->component); ?></strong> |
+                    <strong><?php echo $this->escapeHtml($row->priorityName); ?></strong>
+                </p>
+                <?php echo $this->partial('fc-log-events/widgets/tables/logs/logData.phtml',
+                    array('data' => $row->message, 'priority' => $row->priority)); ?>
+            </td>
         </tr>
     <?php endforeach; ?>
 </table>
