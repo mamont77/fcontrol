@@ -28,7 +28,7 @@
                     <?php echo $this->escapeHtml($row->ipaddress); ?> |
                     <?php echo $this->escapeHtml($row->timestamp); ?> |
                     <strong><?php echo $this->escapeHtml($row->component); ?></strong> |
-                    <strong><?php echo $this->escapeHtml($row->priorityName); ?></strong>
+                    <span class="label"><?php echo $this->escapeHtml($row->priorityName); ?></span>
                 </p>
                 <?php echo $this->partial('fc-log-events/widgets/tables/logs/logData.phtml',
                     array('data' => $row->message, 'priority' => $row->priority)); ?>
