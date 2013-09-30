@@ -153,17 +153,6 @@ class SearchFilter implements InputFilterAwareInterface
             $inputFilter->add($factory->createInput(array(
                 'name' => 'username',
                 'required' => false,
-                'filters' => $this->defaultFilters,
-                'validators' => array(
-                    array(
-                        'name' => 'StringLength',
-                        'options' => array(
-                            'encoding' => 'UTF-8',
-                            'min' => 2,
-                            'max' => 32,
-                        ),
-                    ),
-                ),
             )));
 
             $this->inputFilter = $inputFilter;
