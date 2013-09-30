@@ -21,6 +21,11 @@ class IndexController extends AbstractActionController
     protected $logEventsModel;
 
     /**
+     * @var
+     */
+    protected $userModel;
+
+    /**
      * @return array|\Zend\View\Model\ViewModel
      */
     public function indexAction()
@@ -42,13 +47,21 @@ class IndexController extends AbstractActionController
             ->setItemCountPerPage($itemsPerPage)
             ->setPageRange(7);
 
+        $select = new Select();
+        $userList = $this->getUserModel()->fetchAll($select->order('username ' . Select::ORDER_ASCENDING));
+
         return new ViewModel(array(
             'order_by' => $order_by,
             'order' => $order,
             'page' => $page,
             'pagination' => $pagination,
             'route' => 'logs',
-            'searchForm' => new SearchForm(),
+            'searchForm' => new SearchForm(
+                'logsSearch',
+                array(
+                    'usersList' => $userList
+                )
+            ),
         ));
     }
 
@@ -62,5 +75,17 @@ class IndexController extends AbstractActionController
             $this->logEventsModel = $sm->get('FcLogEvents\Model\FcLogEventsModel');
         }
         return $this->logEventsModel;
+    }
+
+    /**
+     * @return array|object
+     */
+    public function getUserModel()
+    {
+        if (!$this->userModel) {
+            $sm = $this->getServiceLocator();
+            $this->userModel = $sm->get('FcAdmin\Model\UserTable');
+        }
+        return $this->userModel;
     }
 }

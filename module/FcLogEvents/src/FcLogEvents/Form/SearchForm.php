@@ -14,12 +14,19 @@ class SearchForm extends Form
 {
 
     /**
-     * @param null $name
-     * @param array $options
+     * @var array
      */
-    public function __construct($name = null)
+    protected $users;
+
+    /**
+     * @param null $name
+     * @param array $params
+     */
+    public function __construct($name = null, $params = array())
     {
         parent::__construct($name);
+
+        $this->setUsers($params['usersList']);
 
         $this->setName('logsSearch');
         $this->setAttributes(array(
@@ -60,7 +67,7 @@ class SearchForm extends Form
                     '' => 'Any',
                     '6' => 'Info',
                     '5' => 'Notice',
-                    '4' => 'Warring',
+                    '4' => 'Warning',
                 ),
             ),
             'attributes' => array(
@@ -79,26 +86,18 @@ class SearchForm extends Form
             ),
         ));
 
-
         $this->add(array(
-            'name' => 'airOperator',
-            'type' => 'Zend\Form\Element\Text',
+            'name' => 'username',
+            'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
+                'required' => true,
+                'size' => 5,
                 'class' => 'input-medium',
             ),
             'options' => array(
-                'label' => 'Air Operator',
-            ),
-        ));
-
-        $this->add(array(
-            'name' => 'aircraft',
-            'type' => 'Zend\Form\Element\Text',
-            'attributes' => array(
-                'class' => 'input-medium',
-            ),
-            'options' => array(
-                'label' => 'Aircraft',
+                'label' => 'User',
+                'empty_option' => '-- Select --',
+                'value_options' => $this->getUsers(),
             ),
         ));
 
@@ -113,7 +112,25 @@ class SearchForm extends Form
                 'value' => 'Find',
             ),
         ));
+    }
 
+    /**
+     * @param \Zend\Db\ResultSet\ResultSet $data
+     */
+    private function setUsers(\Zend\Db\ResultSet\ResultSet $data)
+    {
+        if (!$this->users) {
+            foreach ($data as $row) {
+                $this->users[$row->username] = $row->username;
+            }
+        }
+    }
 
+    /**
+     * @return array
+     */
+    private function getUsers()
+    {
+        return $this->users;
     }
 }

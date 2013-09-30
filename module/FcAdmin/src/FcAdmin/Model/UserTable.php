@@ -7,11 +7,21 @@ use Zend\Db\Adapter\Adapter;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\Select;
 
+/**
+ * Class UserTable
+ * @package FcAdmin\Model
+ */
 class UserTable extends AbstractTableGateway
 {
 
+    /**
+     * @var string
+     */
     protected $table = 'user';
 
+    /**
+     * @param Adapter $adapter
+     */
     public function __construct(Adapter $adapter)
     {
         $this->adapter = $adapter;
@@ -21,6 +31,10 @@ class UserTable extends AbstractTableGateway
         $this->initialize();
     }
 
+    /**
+     * @param Select $select
+     * @return null|\Zend\Db\ResultSet\ResultSetInterface
+     */
     public function fetchAll(Select $select = null)
     {
         if (null === $select)
@@ -34,6 +48,11 @@ class UserTable extends AbstractTableGateway
         return $resultSet;
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     * @throws \Exception
+     */
     public function getUser($id)
     {
         $id = (int)$id;
@@ -54,6 +73,11 @@ class UserTable extends AbstractTableGateway
         return $row;
     }
 
+    /**
+     * @param User $user
+     * @return int
+     * @throws \Exception
+     */
     public function saveUser(User $user)
     {
         $userData = array(
@@ -77,6 +101,9 @@ class UserTable extends AbstractTableGateway
         return $this->getLastInsertValue();
     }
 
+    /**
+     * @param $id
+     */
     public function deleteUser($id)
     {
         $this->delete(array('user_id' => $id));

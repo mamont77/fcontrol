@@ -4,6 +4,7 @@ namespace FcLogEvents\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Zend\Db\Sql\Select;
 use FcLogEvents\Form\SearchForm;
 
 /**
@@ -18,13 +19,25 @@ class SearchController extends AbstractActionController
     protected $searchModel;
 
     /**
+     * @var
+     */
+    protected $userModel;
+
+    /**
      * @return ViewModel
      */
     public function searchResultAction()
     {
 
+        $select = new Select();
+        $userList = $this->getUserModel()->fetchAll($select->order('username ' . Select::ORDER_ASCENDING));
+
         $result = '';
-        $searchForm = new SearchForm();
+        $searchForm = new SearchForm('logsSearch',
+            array(
+                'usersList' => $userList
+            ));
+
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -64,5 +77,17 @@ class SearchController extends AbstractActionController
             $this->searchModel = $sm->get('FcLogEvents\Model\SearchModel');
         }
         return $this->searchModel;
+    }
+
+    /**
+     * @return array|object
+     */
+    public function getUserModel()
+    {
+        if (!$this->userModel) {
+            $sm = $this->getServiceLocator();
+            $this->userModel = $sm->get('FcAdmin\Model\UserTable');
+        }
+        return $this->userModel;
     }
 }
