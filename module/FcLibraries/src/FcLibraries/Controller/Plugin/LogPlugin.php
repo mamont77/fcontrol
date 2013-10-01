@@ -30,11 +30,7 @@ class LogPlugin extends AbstractPlugin
      */
     public function setOldLogRecord($data)
     {
-        $this->oldRecord = array(
-            'id' => $data->id,
-            'Type Aircraft' => $data->aircraft_type_name,
-            'Reg Number' => $data->reg_number,
-        );
+        $this->oldRecord = $data;
     }
 
     /**
@@ -42,11 +38,7 @@ class LogPlugin extends AbstractPlugin
      */
     public function setNewLogRecord($data)
     {
-        $this->newRecord = array(
-            'id' => $data->id,
-            'Type Aircraft' => $data->aircraft_type_name,
-            'Reg Number' => $data->reg_number,
-        );
+        $this->newRecord = $data;
     }
 
     /**

@@ -15,7 +15,7 @@ switch ($priority) {
 }
 ?>
 <blockquote><?= $data['description']; ?></blockquote>
-<table class="table table-bordered">
+<table class="table table-bordered table-hover table-condensed">
     <? if (!empty($data['data']['old'])): ?>
         <?php
         $rows = array_keys($data['data']['old']);
