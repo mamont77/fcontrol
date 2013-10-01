@@ -47,6 +47,7 @@ class AircraftTypeModel extends BaseModel
 
     /**
      * @param AircraftTypeFilter $object
+     * @return int
      */
     public function add(AircraftTypeFilter $object)
     {
@@ -54,6 +55,8 @@ class AircraftTypeModel extends BaseModel
             'name' => $object->name,
         );
         $this->insert($data);
+
+        return $this->getLastInsertValue();
     }
 
     /**

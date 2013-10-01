@@ -76,7 +76,8 @@ class AircraftModel extends BaseModel
     }
 
     /**
-     * @param \FcLibraries\Filter\AircraftFilter $object
+     * @param AircraftFilter $object
+     * @return int
      */
     public function add(AircraftFilter $object)
     {

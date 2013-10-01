@@ -9,6 +9,7 @@ use FcLibrariesSearch\Form\SearchForm;
 use Zend\Db\Sql\Select;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\Iterator as paginatorIterator;
+use FcLibraries\Controller\Plugin\LogPlugin as LogPlugin;
 
 /**
  * Class AircraftTypeController
@@ -21,6 +22,11 @@ class AircraftTypeController extends AbstractActionController implements Control
      * @var
      */
     protected $aircraftTypeModel;
+
+    /**
+     * @var array
+     */
+    protected $dataForLogger = array();
 
     /**
      * @return array|\Zend\View\Model\ViewModel
@@ -70,9 +76,20 @@ class AircraftTypeController extends AbstractActionController implements Control
             if ($form->isValid()) {
                 $data = $form->getData();
                 $filter->exchangeArray($data);
-                $this->getAircraftTypeModel()->add($filter);
-                $this->flashMessenger()->addSuccessMessage("Type Aircraft '"
-                        . $data['name'] . "' was successfully added.");
+                $lastId = $this->getAircraftTypeModel()->add($filter);
+
+                $message = "Type Aircraft '" . $data['name'] . "' was successfully added.";
+                $this->flashMessenger()->addSuccessMessage($message);
+
+                $loggerPlugin = new LogPlugin();
+                $this->setDataForLogger($this->getAircraftTypeModel()->get($lastId));
+                $loggerPlugin->setNewLogRecord($this->dataForLogger);
+                $loggerPlugin->setLogMessage($message);
+
+                $logger = $this->getServiceLocator()->get('logger');
+                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'aircraft type'));
+                $logger->Info($loggerPlugin->getLogMessage());
+
                 return $this->redirect()->toRoute('zfcadmin/aircraft_type',
                     array(
                         'action' => 'add'
@@ -95,6 +112,10 @@ class AircraftTypeController extends AbstractActionController implements Control
         }
         $data = $this->getAircraftTypeModel()->get($id);
 
+        $this->setDataForLogger($data);
+        $loggerPlugin = new LogPlugin();
+        $loggerPlugin->setOldLogRecord($this->dataForLogger);
+
         $form = new AircraftTypeForm();
         $form->bind($data);
         $form->get('submitBtn')->setAttribute('value', 'Save');
@@ -107,8 +128,18 @@ class AircraftTypeController extends AbstractActionController implements Control
             if ($form->isValid()) {
                 $data = $form->getData();
                 $this->getAircraftTypeModel()->save($data);
-                $this->flashMessenger()->addSuccessMessage("Type Aircraft '"
-                        . $data->name . "' was successfully saved.");
+
+                $message = "Type Aircraft '" . $data->name . "' was successfully saved.";
+                $this->flashMessenger()->addSuccessMessage($message);
+
+                $this->setDataForLogger($this->getAircraftTypeModel()->get($id));
+                $loggerPlugin->setNewLogRecord($this->dataForLogger);
+                $loggerPlugin->setLogMessage($message);
+
+                $logger = $this->getServiceLocator()->get('logger');
+                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'aircraft type'));
+                $logger->Notice($loggerPlugin->getLogMessage());
+
                 return $this->redirect()->toRoute('zfcadmin/aircraft_type');
             }
         }
@@ -135,10 +166,21 @@ class AircraftTypeController extends AbstractActionController implements Control
 
             if ($del == 'Yes') {
                 $id = (int)$request->getPost('id');
+
+                $loggerPlugin = new LogPlugin();
+                $this->setDataForLogger($this->getAircraftTypeModel()->get($id));
+                $loggerPlugin->setOldLogRecord($this->dataForLogger);
+
                 $name = (string) $request->getPost('name');
                 $this->getAircraftTypeModel()->remove($id);
-                $this->flashMessenger()->addSuccessMessage("Type Aircraft '"
-                        . $name . "' was successfully deleted.");
+
+                $message = "Type Aircraft '" . $name . "' was successfully deleted.";
+                $this->flashMessenger()->addSuccessMessage($message);
+
+                $loggerPlugin->setLogMessage($message);
+                $logger = $this->getServiceLocator()->get('logger');
+                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'aircraft type'));
+                $logger->Warn($loggerPlugin->getLogMessage());
             }
 
             // Redirect to list
@@ -161,5 +203,29 @@ class AircraftTypeController extends AbstractActionController implements Control
             $this->aircraftTypeModel = $sm->get('FcLibraries\Model\AircraftTypeModel');
         }
         return $this->aircraftTypeModel;
+    }
+
+    /**
+     * Get the display name of the user
+     *
+     * @return mixed
+     */
+    public function getCurrentUserName()
+    {
+        if ($this->zfcUserAuthentication()->hasIdentity()) {
+            return $this->zfcUserAuthentication()->getIdentity()->getUsername();
+        }
+        return null;
+    }
+
+    /**
+     * @param $data
+     */
+    protected function setDataForLogger($data)
+    {
+        $this->dataForLogger = array(
+            'id' => $data->id,
+            'Type Aircraft' => $data->name,
+        );
     }
 }
