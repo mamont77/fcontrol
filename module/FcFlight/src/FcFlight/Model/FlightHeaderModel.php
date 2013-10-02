@@ -28,24 +28,6 @@ class FlightHeaderModel extends AbstractTableGateway
     }
 
     /**
-     * @param $id
-     * @return array|\ArrayObject|null
-     * @throws \Exception
-     */
-    public function get($id)
-    {
-        $id = (int)$id;
-        $rowSet = $this->select(array('id' => $id));
-        $row = $rowSet->current();
-        if (!$row) {
-            throw new \Exception("Could not find row $id");
-        }
-        $row->dateOrder = date('Y-m-d', $row->dateOrder);
-
-        return $row;
-    }
-
-    /**
      * @param \Zend\Db\Sql\Select $select
      * @return null|\Zend\Db\ResultSet\ResultSetInterface
      */
@@ -75,8 +57,49 @@ class FlightHeaderModel extends AbstractTableGateway
     }
 
     /**
-     * @param \FcFlight\Filter\FlightHeaderFilter $object
-     * @return mixed
+     * @param $id
+     * @return array|\ArrayObject|null
+     * @throws \Exception
+     */
+    public function get($id)
+    {
+        $id = (int)$id;
+        $select = new Select();
+        $select->from($this->table);
+        $select->columns(array('id', 'refNumberOrder', 'dateOrder', 'kontragent', 'airOperator', 'aircraft', 'status'));
+
+        $select->join(array('library_kontragent' => 'library_kontragent'),
+            'library_kontragent.id = flightBaseHeaderForm.kontragent',
+            array('kontragentShortName' => 'short_name'), 'left');
+
+        $select->join(array('library_air_operator' => 'library_air_operator'),
+            'library_air_operator.id = flightBaseHeaderForm.airOperator',
+            array('airOperatorShortName' => 'short_name'), 'left');
+
+        $select->join(array('library_aircraft' => 'library_aircraft'),
+            'library_aircraft.reg_number = flightBaseHeaderForm.aircraft',
+            array('aircraftType' => 'aircraft_type'), 'left');
+
+        $select->join(array('library_aircraft_type' => 'library_aircraft_type'),
+            'library_aircraft_type.id = library_aircraft.aircraft_type',
+            array('aircraftTypeName' => 'name'), 'left');
+
+        $select->where(array($this->table . '.id' => $id));
+
+        $resultSet = $this->selectWith($select);
+        $row = $resultSet->current();
+        if (!$row) {
+            throw new \Exception("Could not find row $id");
+        }
+
+        $row->dateOrder = date('Y-m-d', $row->dateOrder);
+
+        return $row;
+    }
+
+    /**
+     * @param FlightHeaderFilter $object
+     * @return array
      */
     public function add(FlightHeaderFilter $object)
     {
@@ -93,7 +116,10 @@ class FlightHeaderModel extends AbstractTableGateway
         );
         $this->insert($data);
 
-        return $data['refNumberOrder'];
+        return array(
+            'lastInsertValue' => $this->getLastInsertValue(),
+            'refNumberOrder' => $data['refNumberOrder'],
+        );
     }
 
     /**

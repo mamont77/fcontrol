@@ -58,8 +58,8 @@ class RefuelController extends FlightController
             if ($form->isValid()) {
                 $data = $form->getData();
                 $filter->exchangeArray($data);
-                $summaryData = $this->getRefuelModel()->add($filter);
-                $this->flashMessenger()->addSuccessMessage('Refuel ' . $summaryData . ' was successfully added.');
+                $data = $this->getRefuelModel()->add($filter);
+                $this->flashMessenger()->addSuccessMessage('Refuel ' . $data['hash'] . ' was successfully added.');
                 return $this->redirect()->toRoute('refuel',
                     array(
                         'action' => 'add',

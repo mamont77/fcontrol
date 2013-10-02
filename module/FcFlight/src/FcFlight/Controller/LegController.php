@@ -60,8 +60,8 @@ class LegController extends FlightController
             if ($form->isValid()) {
                 $data = $form->getData();
                 $filter->exchangeArray($data);
-                $summaryData = $this->getLegModel()->add($filter);
-                $this->flashMessenger()->addSuccessMessage('Leg ' . $summaryData . ' was successfully added.');
+                $data = $this->getLegModel()->add($filter);
+                $this->flashMessenger()->addSuccessMessage('Leg ' . $data['hash'] . ' was successfully added.');
                 return $this->redirect()->toRoute('leg',
                     array(
                         'action' => 'add',

@@ -35,11 +35,39 @@ class LegModel extends AbstractTableGateway
     public function get($id)
     {
         $id = (int)$id;
-        $rowSet = $this->select(array('id' => $id));
-        $row = $rowSet->current();
+        $select = new Select();
+        $select->from($this->table);
+
+        $select->columns(array('id',
+            'headerId',
+            'dateOfFlight',
+            'flightNumberIcaoAndIata',
+            'flightNumberText',
+            'apDepIcaoAndIata',
+            'apDepTime',
+            'apArrIcaoAndIata',
+            'apArrTime'));
+
+        $select->join(array('library_air_operator' => 'library_air_operator'),
+            'library_air_operator.id = flightBaseDataForm.flightNumberIcaoAndIata',
+            array('flightNumberIcao' => 'code_icao', 'flightNumberIata' => 'code_iata'), 'left');
+
+        $select->join(array('dep' => 'library_airport'),
+            'dep.id = flightBaseDataForm.apDepIcaoAndIata',
+            array('apDepIcao' => 'code_icao', 'apDepIata' => 'code_iata'), 'left');
+
+        $select->join(array('arr' => 'library_airport'),
+            'arr.id = flightBaseDataForm.apArrIcaoAndIata',
+            array('apArrIcao' => 'code_icao', 'apArrIata' => 'code_iata'), 'left');
+
+        $select->where(array($this->table . '.id' => $id));
+
+        $resultSet = $this->selectWith($select);
+        $row = $resultSet->current();
         if (!$row) {
             throw new \Exception("Could not find row $id");
         }
+
         $row->dateOfFlight = date('d-m-Y', $row->dateOfFlight);
         $row->apDepTime = date('H:i', $row->apDepTime);
         $row->apArrTime = date('H:i', $row->apArrTime);
@@ -124,7 +152,7 @@ class LegModel extends AbstractTableGateway
 
     /**
      * @param LegFilter $object
-     * @return string
+     * @return array
      */
     public function add(LegFilter $object)
     {
@@ -146,7 +174,10 @@ class LegModel extends AbstractTableGateway
 
         $this->insert($data);
 
-        return $hash;
+        return array(
+            'lastInsertValue' => $this->getLastInsertValue(),
+            'hash' => $hash,
+        );
     }
 
     /**

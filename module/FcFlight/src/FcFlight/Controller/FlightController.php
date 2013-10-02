@@ -176,13 +176,13 @@ class FlightController extends AbstractActionController
             if ($form->isValid()) {
                 $data = $form->getData();
                 $filter->exchangeArray($data);
-                $refNumberOrder = $this->getFlightHeaderModel()->add($filter);
+                $data = $this->getFlightHeaderModel()->add($filter);
                 $this->flashMessenger()->addSuccessMessage("Flights '"
-                . $refNumberOrder . "' was successfully added.");
+                . $data['refNumberOrder'] . "' was successfully added.");
                 return $this->redirect()->toRoute('browse',
                     array(
                         'action' => 'show',
-                        'refNumberOrder' => $refNumberOrder,
+                        'refNumberOrder' => $data['refNumberOrder'],
                     ));
             }
         }

@@ -35,11 +35,37 @@ class RefuelModel extends AbstractTableGateway
     public function get($id)
     {
         $id = (int)$id;
-        $rowSet = $this->select(array('id' => $id));
-        $row = $rowSet->current();
+        $select = new Select();
+        $select->from($this->table);
+
+        $select->columns(array('id',
+            'headerId',
+            'airport',
+            'date',
+            'agent',
+            'quantity',
+            'unit'));
+
+        $select->join(array('library_airport' => 'library_airport'),
+            'library_airport.id = flightRefuelForm.airport',
+            array('airportName' => 'name', 'airportIcao' => 'code_icao', 'airportIata' => 'code_iata'), 'left');
+
+        $select->join(array('library_kontragent' => 'library_kontragent'),
+            'library_kontragent.id = flightRefuelForm.agent',
+            array('agentName' => 'name'), 'left');
+        
+        $select->join(array('library_unit' => 'library_unit'),
+            'library_unit.id = flightRefuelForm.unit',
+            array('unitName' => 'name'), 'left');
+
+        $select->where(array($this->table . '.id' => $id));
+
+        $resultSet = $this->selectWith($select);
+        $row = $resultSet->current();
         if (!$row) {
             throw new \Exception("Could not find row $id");
         }
+
         $row->date = date('d-m-Y', $row->date);
 
         return $row;
@@ -99,7 +125,7 @@ class RefuelModel extends AbstractTableGateway
 
     /**
      * @param RefuelFilter $object
-     * @return string
+     * @return array
      */
     public function add(RefuelFilter $object)
     {
@@ -117,7 +143,10 @@ class RefuelModel extends AbstractTableGateway
 
         $this->insert($data);
 
-        return $hash;
+        return array(
+            'lastInsertValue' => $this->getLastInsertValue(),
+            'hash' => $hash,
+        );
     }
 
     /**
