@@ -9,6 +9,7 @@ use FcLibrariesSearch\Form\SearchForm;
 use Zend\Db\Sql\Select;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\Iterator as paginatorIterator;
+use FcLibraries\Controller\Plugin\LogPlugin as LogPlugin;
 
 /**
  * Class CountryController
@@ -26,6 +27,11 @@ class CountryController extends AbstractActionController implements ControllerIn
      * @var
      */
     protected $regionModel;
+
+    /**
+     * @var array
+     */
+    protected $dataForLogger = array();
 
     /**
      * @return array|\Zend\View\Model\ViewModel
@@ -75,9 +81,20 @@ class CountryController extends AbstractActionController implements ControllerIn
             if ($form->isValid()) {
                 $data = $form->getData();
                 $filter->exchangeArray($data);
-                $this->getCountryModel()->add($filter);
-                $this->flashMessenger()->addSuccessMessage("Country '"
-                        . $data['name'] . "' was successfully added.");
+                $lastId = $this->getCountryModel()->add($filter);
+
+                $message = "Country '" . $data['name'] . "' was successfully added.";
+                $this->flashMessenger()->addSuccessMessage($message);
+
+                $loggerPlugin = new LogPlugin();
+                $this->setDataForLogger($this->getCountryModel()->get($lastId));
+                $loggerPlugin->setNewLogRecord($this->dataForLogger);
+                $loggerPlugin->setLogMessage($message);
+
+                $logger = $this->getServiceLocator()->get('logger');
+                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'country'));
+                $logger->Info($loggerPlugin->getLogMessage());
+
                 return $this->redirect()->toRoute('zfcadmin/country', array(
                     'action' => 'add'
                 ));
@@ -99,6 +116,10 @@ class CountryController extends AbstractActionController implements ControllerIn
         }
         $data = $this->getCountryModel()->get($id);
 
+        $this->setDataForLogger($data);
+        $loggerPlugin = new LogPlugin();
+        $loggerPlugin->setOldLogRecord($this->dataForLogger);
+
         $form = new CountryForm('country', array('regions' => $this->getRegions()));
         $form->bind($data);
         $form->get('submitBtn')->setAttribute('value', 'Save');
@@ -111,8 +132,18 @@ class CountryController extends AbstractActionController implements ControllerIn
             if ($form->isValid()) {
                 $data = $form->getData();
                 $this->getCountryModel()->save($data);
-                $this->flashMessenger()->addSuccessMessage("Country '"
-                        . $data->name . "' was successfully saved.");
+
+                $message = "Country '" . $data->name . "' was successfully saved.";
+                $this->flashMessenger()->addSuccessMessage($message);
+
+                $this->setDataForLogger($this->getCountryModel()->get($id));
+                $loggerPlugin->setNewLogRecord($this->dataForLogger);
+                $loggerPlugin->setLogMessage($message);
+
+                $logger = $this->getServiceLocator()->get('logger');
+                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'country'));
+                $logger->Notice($loggerPlugin->getLogMessage());
+
                 return $this->redirect()->toRoute('zfcadmin/countries');
             }
         }
@@ -139,10 +170,21 @@ class CountryController extends AbstractActionController implements ControllerIn
 
             if ($del == 'Yes') {
                 $id = (int)$request->getPost('id');
-                $name = (string) $request->getPost('name');
+
+                $loggerPlugin = new LogPlugin();
+                $this->setDataForLogger($this->getCountryModel()->get($id));
+                $loggerPlugin->setOldLogRecord($this->dataForLogger);
+
+                $name = (string)$request->getPost('name');
                 $this->getCountryModel()->remove($id);
-                $this->flashMessenger()->addSuccessMessage("Country '"
-                        . $name . "' was successfully deleted.");
+
+                $message = "Country '" . $name . "' was successfully deleted.";
+                $this->flashMessenger()->addSuccessMessage($message);
+
+                $loggerPlugin->setLogMessage($message);
+                $logger = $this->getServiceLocator()->get('logger');
+                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'country'));
+                $logger->Warn($loggerPlugin->getLogMessage());
             }
 
             // Redirect to list
@@ -185,5 +227,31 @@ class CountryController extends AbstractActionController implements ControllerIn
     private function getRegions()
     {
         return $this->getRegionModel()->fetchAll();
+    }
+
+    /**
+     * Get the display name of the user
+     *
+     * @return mixed
+     */
+    public function getCurrentUserName()
+    {
+        if ($this->zfcUserAuthentication()->hasIdentity()) {
+            return $this->zfcUserAuthentication()->getIdentity()->getUsername();
+        }
+        return null;
+    }
+
+    /**
+     * @param $data
+     */
+    protected function setDataForLogger($data)
+    {
+        $this->dataForLogger = array(
+            'id' => $data->id,
+            'Name' => $data->name,
+            'Region' => $data->region_name,
+            'Code' => $data->code,
+        );
     }
 }

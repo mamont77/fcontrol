@@ -31,7 +31,7 @@ class UnitModel extends BaseModel
     }
 
     /**
-     * @param \Zend\Db\Sql\Select $select
+     * @param Select $select
      * @return null|\Zend\Db\ResultSet\ResultSetInterface
      */
     public function fetchAll(Select $select = null)
@@ -46,7 +46,8 @@ class UnitModel extends BaseModel
     }
 
     /**
-     * @param \FcLibraries\Filter\UnitFilter $object
+     * @param UnitFilter $object
+     * @return int
      */
     public function add(UnitFilter $object)
     {
@@ -54,6 +55,8 @@ class UnitModel extends BaseModel
             'name' => $object->name,
         );
         $this->insert($data);
+
+        return $this->getLastInsertValue();
     }
 
     /**

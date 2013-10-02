@@ -9,6 +9,7 @@ use FcLibrariesSearch\Form\SearchForm;
 use Zend\Db\Sql\Select;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\Iterator as paginatorIterator;
+use FcLibraries\Controller\Plugin\LogPlugin as LogPlugin;
 
 /**
  * Class AirportController
@@ -26,6 +27,11 @@ class AirportController extends AbstractActionController implements ControllerIn
      * @var
      */
     protected $cityModel;
+
+    /**
+     * @var array
+     */
+    protected $dataForLogger = array();
 
     /**
      * @return array|\Zend\View\Model\ViewModel
@@ -75,9 +81,20 @@ class AirportController extends AbstractActionController implements ControllerIn
             if ($form->isValid()) {
                 $data = $form->getData();
                 $filter->exchangeArray($data);
-                $this->getAirportModel()->add($filter);
-                $this->flashMessenger()->addSuccessMessage("Airport '"
-                        . $data['name'] . "' was successfully added.");
+                $lastId = $this->getAirportModel()->add($filter);
+
+                $message = "Airport '" . $data['name'] . "' was successfully added.";
+                $this->flashMessenger()->addSuccessMessage($message);
+
+                $loggerPlugin = new LogPlugin();
+                $this->setDataForLogger($this->getAirportModel()->get($lastId));
+                $loggerPlugin->setNewLogRecord($this->dataForLogger);
+                $loggerPlugin->setLogMessage($message);
+
+                $logger = $this->getServiceLocator()->get('logger');
+                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'airport'));
+                $logger->Info($loggerPlugin->getLogMessage());
+
                 return $this->redirect()->toRoute('zfcadmin/airport', array(
                     'action' => 'add'
                 ));
@@ -99,6 +116,10 @@ class AirportController extends AbstractActionController implements ControllerIn
         }
         $data = $this->getAirportModel()->get($id);
 
+        $this->setDataForLogger($data);
+        $loggerPlugin = new LogPlugin();
+        $loggerPlugin->setOldLogRecord($this->dataForLogger);
+
         $form = new AirportForm('airport', array('cities' => $this->getCities()));
         $form->bind($data);
         $form->get('submitBtn')->setAttribute('value', 'Save');
@@ -111,8 +132,18 @@ class AirportController extends AbstractActionController implements ControllerIn
             if ($form->isValid()) {
                 $data = $form->getData();
                 $this->getAirportModel()->save($data);
-                $this->flashMessenger()->addSuccessMessage("Airport '"
-                        . $data->name . "' was successfully saved.");
+
+                $message = "Airport '" . $data->name . "' was successfully saved.";
+                $this->flashMessenger()->addSuccessMessage($message);
+
+                $this->setDataForLogger($this->getAirportModel()->get($id));
+                $loggerPlugin->setNewLogRecord($this->dataForLogger);
+                $loggerPlugin->setLogMessage($message);
+
+                $logger = $this->getServiceLocator()->get('logger');
+                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'airport'));
+                $logger->Notice($loggerPlugin->getLogMessage());
+
                 return $this->redirect()->toRoute('zfcadmin/airports');
             }
         }
@@ -139,10 +170,21 @@ class AirportController extends AbstractActionController implements ControllerIn
 
             if ($del == 'Yes') {
                 $id = (int)$request->getPost('id');
-                $name = (string) $request->getPost('name');
+
+                $loggerPlugin = new LogPlugin();
+                $this->setDataForLogger($this->getAirportModel()->get($id));
+                $loggerPlugin->setOldLogRecord($this->dataForLogger);
+
+                $name = (string)$request->getPost('name');
                 $this->getAirportModel()->remove($id);
-                $this->flashMessenger()->addSuccessMessage("Airport '"
-                        . $name . "' was successfully deleted.");
+
+                $message = "Airport '" . $name . "' was successfully deleted.";
+                $this->flashMessenger()->addSuccessMessage($message);
+
+                $loggerPlugin->setLogMessage($message);
+                $logger = $this->getServiceLocator()->get('logger');
+                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'airport'));
+                $logger->Warn($loggerPlugin->getLogMessage());
             }
 
             // Redirect to list
@@ -185,5 +227,35 @@ class AirportController extends AbstractActionController implements ControllerIn
     private function getCities()
     {
         return $this->getCityModel()->fetchAll();
+    }
+
+    /**
+     * Get the display name of the user
+     *
+     * @return mixed
+     */
+    public function getCurrentUserName()
+    {
+        if ($this->zfcUserAuthentication()->hasIdentity()) {
+            return $this->zfcUserAuthentication()->getIdentity()->getUsername();
+        }
+        return null;
+    }
+
+    /**
+     * @param $data
+     */
+    protected function setDataForLogger($data)
+    {
+        $this->dataForLogger = array(
+            'id' => $data->id,
+            'Name' => $data->name,
+            'Short Name' => $data->short_name,
+            'Code ICAO' => $data->code_icao,
+            'Code IATA' => $data->code_iata,
+            'City' => $data->city_name,
+            'Country' => $data->country_name,
+            'Region' => $data->region_name,
+        );
     }
 }

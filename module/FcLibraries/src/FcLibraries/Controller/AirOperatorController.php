@@ -9,6 +9,7 @@ use FcLibrariesSearch\Form\SearchForm;
 use Zend\Db\Sql\Select;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\Iterator as paginatorIterator;
+use FcLibraries\Controller\Plugin\LogPlugin as LogPlugin;
 
 /**
  * Class AirOperatorController
@@ -26,6 +27,11 @@ class AirOperatorController extends AbstractActionController implements Controll
      * @var
      */
     protected $countryModel;
+
+    /**
+     * @var array
+     */
+    protected $dataForLogger = array();
 
     /**
      * @return array|\Zend\View\Model\ViewModel
@@ -75,9 +81,20 @@ class AirOperatorController extends AbstractActionController implements Controll
             if ($form->isValid()) {
                 $data = $form->getData();
                 $filter->exchangeArray($data);
-                $this->getAirOperatorModel()->add($filter);
-                $this->flashMessenger()->addSuccessMessage("Air Operator '"
-                        . $data['name'] . "' was successfully added.");
+                $lastId = $this->getAirOperatorModel()->add($filter);
+
+                $message = "Air Operator '" . $data['name'] . "' was successfully added.";
+                $this->flashMessenger()->addSuccessMessage($message);
+
+                $loggerPlugin = new LogPlugin();
+                $this->setDataForLogger($this->getAirOperatorModel()->get($lastId));
+                $loggerPlugin->setNewLogRecord($this->dataForLogger);
+                $loggerPlugin->setLogMessage($message);
+
+                $logger = $this->getServiceLocator()->get('logger');
+                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'air operator'));
+                $logger->Info($loggerPlugin->getLogMessage());
+
                 return $this->redirect()->toRoute('zfcadmin/air_operator',
                     array(
                         'action' => 'add'
@@ -100,6 +117,10 @@ class AirOperatorController extends AbstractActionController implements Controll
         }
         $data = $this->getAirOperatorModel()->get($id);
 
+        $this->setDataForLogger($data);
+        $loggerPlugin = new LogPlugin();
+        $loggerPlugin->setOldLogRecord($this->dataForLogger);
+
         $form = new AirOperatorForm('air_operator', array('countries' => $this->getCountries()));
         $form->bind($data);
         $form->get('submitBtn')->setAttribute('value', 'Save');
@@ -112,8 +133,18 @@ class AirOperatorController extends AbstractActionController implements Controll
             if ($form->isValid()) {
                 $data = $form->getData();
                 $this->getAirOperatorModel()->save($data);
-                $this->flashMessenger()->addSuccessMessage("Air Operator '"
-                        . $data->name . "' was successfully saved.");
+
+                $message = "Air Operator '" . $data->name . "' was successfully saved.";
+                $this->flashMessenger()->addSuccessMessage($message);
+
+                $this->setDataForLogger($this->getAirOperatorModel()->get($id));
+                $loggerPlugin->setNewLogRecord($this->dataForLogger);
+                $loggerPlugin->setLogMessage($message);
+
+                $logger = $this->getServiceLocator()->get('logger');
+                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'air operator'));
+                $logger->Notice($loggerPlugin->getLogMessage());
+
                 return $this->redirect()->toRoute('zfcadmin/air_operators');
             }
         }
@@ -140,10 +171,22 @@ class AirOperatorController extends AbstractActionController implements Controll
 
             if ($del == 'Yes') {
                 $id = (int)$request->getPost('id');
+
+                $loggerPlugin = new LogPlugin();
+                $this->setDataForLogger($this->getAirOperatorModel()->get($id));
+                $loggerPlugin->setOldLogRecord($this->dataForLogger);
+
                 $name = (string) $request->getPost('name');
                 $this->getAirOperatorModel()->remove($id);
-                $this->flashMessenger()->addSuccessMessage("Air Operator '"
-                        . $name . "' was successfully deleted.");
+
+                $message = "Air Operator '" . $name . "' was successfully deleted.";
+                $this->flashMessenger()->addSuccessMessage($message);
+
+                $loggerPlugin->setLogMessage($message);
+                $logger = $this->getServiceLocator()->get('logger');
+                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'aircraft'));
+                $logger->Warn($loggerPlugin->getLogMessage());
+
             }
 
             // Redirect to list
@@ -186,5 +229,33 @@ class AirOperatorController extends AbstractActionController implements Controll
     private function getCountries()
     {
         return $this->getCountryModel()->fetchAll();
+    }
+
+    /**
+     * Get the display name of the user
+     *
+     * @return mixed
+     */
+    public function getCurrentUserName()
+    {
+        if ($this->zfcUserAuthentication()->hasIdentity()) {
+            return $this->zfcUserAuthentication()->getIdentity()->getUsername();
+        }
+        return null;
+    }
+
+    /**
+     * @param $data
+     */
+    protected function setDataForLogger($data)
+    {
+        $this->dataForLogger = array(
+            'id' => $data->id,
+            'Name of Air Operator' => $data->name,
+            'Short name of Air Operator' => $data->short_name,
+            'Code ICAO' => $data->code_icao,
+            'Code IATA' => $data->code_iata,
+            'Country' => $data->country_name,
+        );
     }
 }

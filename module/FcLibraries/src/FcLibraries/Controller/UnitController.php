@@ -8,6 +8,7 @@ use FcLibraries\Form\UnitForm;
 use Zend\Db\Sql\Select;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\Iterator as paginatorIterator;
+use FcLibraries\Controller\Plugin\LogPlugin as LogPlugin;
 
 /**
  * Class UnitController
@@ -20,6 +21,11 @@ class UnitController extends AbstractActionController implements ControllerInter
      * @var
      */
     protected $unitModel;
+
+    /**
+     * @var array
+     */
+    protected $dataForLogger = array();
 
     /**
      * @return array|\Zend\View\Model\ViewModel
@@ -68,9 +74,20 @@ class UnitController extends AbstractActionController implements ControllerInter
             if ($form->isValid()) {
                 $data = $form->getData();
                 $filter->exchangeArray($data);
-                $this->getUnitModel()->add($filter);
-                $this->flashMessenger()->addSuccessMessage("Unit '"
-                        . $data['name'] . "' was successfully added.");
+                $lastId = $this->getUnitModel()->add($filter);
+
+                $message = "Unit '" . $data['name'] . "' was successfully added.";
+                $this->flashMessenger()->addSuccessMessage($message);
+
+                $loggerPlugin = new LogPlugin();
+                $this->setDataForLogger($this->getUnitModel()->get($lastId));
+                $loggerPlugin->setNewLogRecord($this->dataForLogger);
+                $loggerPlugin->setLogMessage($message);
+
+                $logger = $this->getServiceLocator()->get('logger');
+                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'unit'));
+                $logger->Info($loggerPlugin->getLogMessage());
+
                 return $this->redirect()->toRoute('zfcadmin/unit',
                     array(
                         'action' => 'add'
@@ -93,6 +110,10 @@ class UnitController extends AbstractActionController implements ControllerInter
         }
         $data = $this->getUnitModel()->get($id);
 
+        $this->setDataForLogger($data);
+        $loggerPlugin = new LogPlugin();
+        $loggerPlugin->setOldLogRecord($this->dataForLogger);
+
         $form = new UnitForm();
         $form->bind($data);
         $form->get('submitBtn')->setAttribute('value', 'Save');
@@ -105,8 +126,18 @@ class UnitController extends AbstractActionController implements ControllerInter
             if ($form->isValid()) {
                 $data = $form->getData();
                 $this->getUnitModel()->save($data);
-                $this->flashMessenger()->addSuccessMessage("Unit '"
-                        . $data->name . "' was successfully saved.");
+
+                $message = "Unit '" . $data->name . "' was successfully saved.";
+                $this->flashMessenger()->addSuccessMessage($message);
+
+                $this->setDataForLogger($this->getUnitModel()->get($id));
+                $loggerPlugin->setNewLogRecord($this->dataForLogger);
+                $loggerPlugin->setLogMessage($message);
+
+                $logger = $this->getServiceLocator()->get('logger');
+                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'unit'));
+                $logger->Notice($loggerPlugin->getLogMessage());
+
                 return $this->redirect()->toRoute('zfcadmin/units');
             }
         }
@@ -133,10 +164,21 @@ class UnitController extends AbstractActionController implements ControllerInter
 
             if ($del == 'Yes') {
                 $id = (int)$request->getPost('id');
+
+                $loggerPlugin = new LogPlugin();
+                $this->setDataForLogger($this->getUnitModel()->get($id));
+                $loggerPlugin->setOldLogRecord($this->dataForLogger);
+
                 $name = (string) $request->getPost('name');
                 $this->getUnitModel()->remove($id);
-                $this->flashMessenger()->addSuccessMessage("Unit '"
-                        . $name . "' was successfully deleted.");
+
+                $message = "Unit '" . $name . "' was successfully deleted.";
+                $this->flashMessenger()->addSuccessMessage($message);
+
+                $loggerPlugin->setLogMessage($message);
+                $logger = $this->getServiceLocator()->get('logger');
+                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'unit'));
+                $logger->Warn($loggerPlugin->getLogMessage());
             }
 
             // Redirect to list
@@ -159,5 +201,29 @@ class UnitController extends AbstractActionController implements ControllerInter
             $this->unitModel = $sm->get('FcLibraries\Model\UnitModel');
         }
         return $this->unitModel;
+    }
+
+    /**
+     * Get the display name of the user
+     *
+     * @return mixed
+     */
+    public function getCurrentUserName()
+    {
+        if ($this->zfcUserAuthentication()->hasIdentity()) {
+            return $this->zfcUserAuthentication()->getIdentity()->getUsername();
+        }
+        return null;
+    }
+
+    /**
+     * @param $data
+     */
+    protected function setDataForLogger($data)
+    {
+        $this->dataForLogger = array(
+            'id' => $data->id,
+            'Name' => $data->name,
+        );
     }
 }

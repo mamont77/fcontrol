@@ -46,7 +46,8 @@ class CurrencyModel extends BaseModel
     }
 
     /**
-     * @param \FcLibraries\Filter\CurrencyFilter $object
+     * @param CurrencyFilter $object
+     * @return int
      */
     public function add(CurrencyFilter $object)
     {
@@ -55,6 +56,8 @@ class CurrencyModel extends BaseModel
             'currency' => $object->currency,
         );
         $this->insert($data);
+
+        return $this->getLastInsertValue();
     }
 
     /**

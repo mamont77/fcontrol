@@ -98,6 +98,7 @@ class BaseOfPermitModel extends BaseModel
 
     /**
      * @param BaseOfPermitFilter $object
+     * @return int
      */
     public function add(BaseOfPermitFilter $object)
     {
@@ -108,6 +109,8 @@ class BaseOfPermitModel extends BaseModel
             'infoToTake' => $object->infoToTake,
         );
         $this->insert($data);
+
+        return $this->getLastInsertValue();
     }
 
     /**

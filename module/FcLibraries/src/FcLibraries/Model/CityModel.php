@@ -48,7 +48,35 @@ class CityModel extends BaseModel
     }
 
     /**
-     * @param \FcLibraries\Filter\CityFilter $object
+     * @param $id
+     * @return array|\ArrayObject|null
+     * @throws \Exception
+     */
+    public function get($id)
+    {
+        $id = (int)$id;
+        $select = new Select();
+        $select->from($this->table);
+        $select->columns(array('id', 'name', 'country_id'));
+
+        $select->join(array('c' => 'library_country'),
+            'c.id = library_city.country_id',
+            array('country_name' => 'name'), 'left');
+
+        $select->where(array($this->table . '.id' => $id));
+
+        $resultSet = $this->selectWith($select);
+        $row = $resultSet->current();
+        if (!$row) {
+            throw new \Exception("Could not find row $id");
+        }
+
+        return $row;
+    }
+
+    /**
+     * @param CityFilter $object
+     * @return int
      */
     public function add(CityFilter $object)
     {
@@ -57,6 +85,8 @@ class CityModel extends BaseModel
             'country_id' => $object->country_id,
         );
         $this->insert($data);
+
+        return $this->getLastInsertValue();
     }
 
     /**

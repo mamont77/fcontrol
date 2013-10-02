@@ -47,6 +47,7 @@ class KontragentModel extends BaseModel
 
     /**
      * @param KontragentFilter $object
+     * @return int
      */
     public function add(KontragentFilter $object)
     {
@@ -62,6 +63,8 @@ class KontragentModel extends BaseModel
             'sita' => $object->sita,
         );
         $this->insert($data);
+
+        return $this->getLastInsertValue();
     }
 
     /**

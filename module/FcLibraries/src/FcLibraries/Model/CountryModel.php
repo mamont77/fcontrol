@@ -29,7 +29,7 @@ class CountryModel extends BaseModel
     }
 
     /**
-     * @param \Zend\Db\Sql\Select $select
+     * @param Select $select
      * @return null|\Zend\Db\ResultSet\ResultSetInterface
      */
     public function fetchAll(Select $select = null)
@@ -49,7 +49,35 @@ class CountryModel extends BaseModel
     }
 
     /**
-     * @param \FcLibraries\Filter\CountryFilter $object
+     * @param $id
+     * @return array|\ArrayObject|null
+     * @throws \Exception
+     */
+    public function get($id)
+    {
+        $id = (int)$id;
+        $select = new Select();
+        $select->from($this->table);
+        $select->columns(array('id', 'name', 'code', 'region_id'));
+
+        $select->join(array('r' => 'library_region'),
+            'r.id = library_country.region_id',
+            array('region_name' => 'name') , 'left');
+
+        $select->where(array($this->table . '.id' => $id));
+
+        $resultSet = $this->selectWith($select);
+        $row = $resultSet->current();
+        if (!$row) {
+            throw new \Exception("Could not find row $id");
+        }
+
+        return $row;
+    }
+
+    /**
+     * @param CountryFilter $object
+     * @return int
      */
     public function add(CountryFilter $object)
     {
@@ -59,6 +87,8 @@ class CountryModel extends BaseModel
             'code' => $object->code,
         );
         $this->insert($data);
+
+        return $this->getLastInsertValue();
     }
 
     /**

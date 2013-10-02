@@ -54,7 +54,43 @@ class AirportModel extends BaseModel
     }
 
     /**
+     * @param $id
+     * @return array|\ArrayObject|null
+     * @throws \Exception
+     */
+    public function get($id)
+    {
+        $id = (int)$id;
+        $select = new Select();
+        $select->from($this->table);
+        $select->columns(array('id', 'name', 'short_name', 'code_icao', 'code_iata', 'city_id'));
+
+        $select->join(array('city' => 'library_city'),
+            'library_airport.city_id = city.id',
+            array('city_name' => 'name'), 'left');
+
+        $select->join(array('country' => 'library_country'),
+            'city.country_id = country.id',
+            array('country_name' => 'name'), 'left');
+
+        $select->join(array('region' => 'library_region'),
+            'country.region_id = region.id',
+            array('region_name' => 'name'), 'left');
+
+        $select->where(array($this->table . '.id' => $id));
+
+        $resultSet = $this->selectWith($select);
+        $row = $resultSet->current();
+        if (!$row) {
+            throw new \Exception("Could not find row $id");
+        }
+
+        return $row;
+    }
+
+    /**
      * @param AirportFilter $object
+     * @return int
      */
     public function add(AirportFilter $object)
     {
@@ -66,6 +102,8 @@ class AirportModel extends BaseModel
             'city_id' => $object->city_id,
         );
         $this->insert($data);
+
+        return $this->getLastInsertValue();
     }
 
     /**

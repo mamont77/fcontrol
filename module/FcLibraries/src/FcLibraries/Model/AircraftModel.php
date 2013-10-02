@@ -17,7 +17,7 @@ class AircraftModel extends BaseModel
     protected $table = 'library_aircraft';
 
     /**
-     * @param \Zend\Db\Adapter\Adapter $adapter
+     * @param Adapter $adapter
      */
     public function __construct(Adapter $adapter)
     {
@@ -29,7 +29,7 @@ class AircraftModel extends BaseModel
     }
 
     /**
-     * @param \Zend\Db\Sql\Select $select
+     * @param Select $select
      * @return null|\Zend\Db\ResultSet\ResultSetInterface
      */
     public function fetchAll(Select $select = null)
@@ -91,7 +91,7 @@ class AircraftModel extends BaseModel
     }
 
     /**
-     * @param \FcLibraries\Filter\AircraftFilter $object
+     * @param AircraftFilter $object
      * @throws \Exception
      */
     public function save(AircraftFilter $object)

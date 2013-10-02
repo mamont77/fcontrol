@@ -9,6 +9,7 @@ use FcLibrariesSearch\Form\SearchForm;
 use Zend\Db\Sql\Select;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\Iterator as paginatorIterator;
+use FcLibraries\Controller\Plugin\LogPlugin as LogPlugin;
 
 /**
  * Class KontragentController
@@ -21,6 +22,11 @@ class KontragentController extends AbstractActionController implements Controlle
      * @var
      */
     protected $kontragentModel;
+
+    /**
+     * @var array
+     */
+    protected $dataForLogger = array();
 
     /**
      * @return array|\Zend\View\Model\ViewModel
@@ -69,9 +75,20 @@ class KontragentController extends AbstractActionController implements Controlle
             if ($form->isValid()) {
                 $data = $form->getData();
                 $filter->exchangeArray($data);
-                $this->getKontragentModel()->add($filter);
-                $this->flashMessenger()->addSuccessMessage("Kontragent '"
-                        . $data['name'] . "' was successfully added.");
+                $lastId = $this->getKontragentModel()->add($filter);
+
+                $message = "Kontragent '" . $data['name'] . "' was successfully added.";
+                $this->flashMessenger()->addSuccessMessage($message);
+
+                $loggerPlugin = new LogPlugin();
+                $this->setDataForLogger($this->getKontragentModel()->get($lastId));
+                $loggerPlugin->setNewLogRecord($this->dataForLogger);
+                $loggerPlugin->setLogMessage($message);
+
+                $logger = $this->getServiceLocator()->get('logger');
+                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'kontragent'));
+                $logger->Info($loggerPlugin->getLogMessage());
+
                 return $this->redirect()->toRoute('zfcadmin/kontragent',
                     array(
                         'action' => 'add'
@@ -94,6 +111,10 @@ class KontragentController extends AbstractActionController implements Controlle
         }
         $data = $this->getKontragentModel()->get($id);
 
+        $this->setDataForLogger($data);
+        $loggerPlugin = new LogPlugin();
+        $loggerPlugin->setOldLogRecord($this->dataForLogger);
+
         $form = new KontragentForm();
         $form->bind($data);
         $form->get('submitBtn')->setAttribute('value', 'Save');
@@ -106,8 +127,18 @@ class KontragentController extends AbstractActionController implements Controlle
             if ($form->isValid()) {
                 $data = $form->getData();
                 $this->getKontragentModel()->save($data);
-                $this->flashMessenger()->addSuccessMessage("Kontragent '"
-                        . $data->name . "' was successfully saved.");
+
+                $message = "Kontragent '" . $data->name . "' was successfully saved.";
+                $this->flashMessenger()->addSuccessMessage($message);
+
+                $this->setDataForLogger($this->getKontragentModel()->get($id));
+                $loggerPlugin->setNewLogRecord($this->dataForLogger);
+                $loggerPlugin->setLogMessage($message);
+
+                $logger = $this->getServiceLocator()->get('logger');
+                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'kontragent'));
+                $logger->Notice($loggerPlugin->getLogMessage());
+
                 return $this->redirect()->toRoute('zfcadmin/kontragents');
             }
         }
@@ -134,10 +165,21 @@ class KontragentController extends AbstractActionController implements Controlle
 
             if ($del == 'Yes') {
                 $id = (int)$request->getPost('id');
+
+                $loggerPlugin = new LogPlugin();
+                $this->setDataForLogger($this->getKontragentModel()->get($id));
+                $loggerPlugin->setOldLogRecord($this->dataForLogger);
+
                 $name = (string) $request->getPost('name');
                 $this->getKontragentModel()->remove($id);
-                $this->flashMessenger()->addSuccessMessage("Kontragent '"
-                        . $name . "' was successfully deleted.");
+
+                $message = "Kontragent '" . $name . "' was successfully deleted.";
+                $this->flashMessenger()->addSuccessMessage($message);
+
+                $loggerPlugin->setLogMessage($message);
+                $logger = $this->getServiceLocator()->get('logger');
+                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'kontragent'));
+                $logger->Warn($loggerPlugin->getLogMessage());
             }
 
             // Redirect to list
@@ -160,5 +202,37 @@ class KontragentController extends AbstractActionController implements Controlle
             $this->kontragentModel = $sm->get('FcLibraries\Model\KontragentModel');
         }
         return $this->kontragentModel;
+    }
+
+    /**
+     * Get the display name of the user
+     *
+     * @return mixed
+     */
+    public function getCurrentUserName()
+    {
+        if ($this->zfcUserAuthentication()->hasIdentity()) {
+            return $this->zfcUserAuthentication()->getIdentity()->getUsername();
+        }
+        return null;
+    }
+
+    /**
+     * @param $data
+     */
+    protected function setDataForLogger($data)
+    {
+        $this->dataForLogger = array(
+            'ID number' => $data->id,
+            'Name of Kontragent' => $data->name,
+            'Short name of Kontragent' => $data->short_name,
+            'Address' => $data->address,
+            'Phone 1' => $data->phone1,
+            'Phone 2' => $data->phone2,
+            'Phone 3' => $data->phone3,
+            'Fax' => $data->fax,
+            'E-mail' => $data->mail,
+            'SITA' => $data->sita,
+        );
     }
 }

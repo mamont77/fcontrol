@@ -46,7 +46,8 @@ class RegionModel extends BaseModel
     }
 
     /**
-     * @param \FcLibraries\Filter\RegionFilter $object
+     * @param RegionFilter $object
+     * @return int
      */
     public function add(RegionFilter $object)
     {
@@ -54,6 +55,8 @@ class RegionModel extends BaseModel
             'name' => $object->name,
         );
         $this->insert($data);
+
+        return $this->getLastInsertValue();
     }
 
     /**

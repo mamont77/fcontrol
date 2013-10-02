@@ -51,7 +51,35 @@ class AirOperatorModel extends BaseModel
     }
 
     /**
+     * @param $id
+     * @return array|\ArrayObject|null
+     * @throws \Exception
+     */
+    public function get($id)
+    {
+        $id = (int)$id;
+        $select = new Select();
+        $select->from($this->table);
+        $select->columns(array('id', 'name', 'short_name', 'code_icao', 'code_iata', 'country'));
+
+        $select->join(array('c' => 'library_country'),
+            'c.id = library_air_operator.country',
+            array('country_name' => 'name'), 'left');
+
+        $select->where(array($this->table . '.id' => $id));
+
+        $resultSet = $this->selectWith($select);
+        $row = $resultSet->current();
+        if (!$row) {
+            throw new \Exception("Could not find row $id");
+        }
+
+        return $row;
+    }
+
+    /**
      * @param AirOperatorFilter $object
+     * @return int
      */
     public function add(AirOperatorFilter $object)
     {
@@ -63,6 +91,8 @@ class AirOperatorModel extends BaseModel
             'country' => $object->country,
         );
         $this->insert($data);
+
+        return $this->getLastInsertValue();
     }
 
     /**

@@ -9,6 +9,7 @@ use FcLibrariesSearch\Form\SearchForm;
 use Zend\Db\Sql\Select;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\Iterator as paginatorIterator;
+use FcLibraries\Controller\Plugin\LogPlugin as LogPlugin;
 
 /**
  * Class CityController
@@ -26,6 +27,11 @@ class CityController extends AbstractActionController implements ControllerInter
      * @var
      */
     protected $cityModel;
+
+    /**
+     * @var array
+     */
+    protected $dataForLogger = array();
 
     /**
      * @return array|\Zend\View\Model\ViewModel
@@ -75,9 +81,20 @@ class CityController extends AbstractActionController implements ControllerInter
             if ($form->isValid()) {
                 $data = $form->getData();
                 $filter->exchangeArray($data);
-                $this->getCityModel()->add($filter);
-                $this->flashMessenger()->addSuccessMessage("City '"
-                        . $data['name'] . "' was successfully added.");
+                $lastId = $this->getCityModel()->add($filter);
+
+                $message = "City '" . $data['name'] . "' was successfully added.";
+                $this->flashMessenger()->addSuccessMessage($message);
+
+                $loggerPlugin = new LogPlugin();
+                $this->setDataForLogger($this->getCityModel()->get($lastId));
+                $loggerPlugin->setNewLogRecord($this->dataForLogger);
+                $loggerPlugin->setLogMessage($message);
+
+                $logger = $this->getServiceLocator()->get('logger');
+                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'city'));
+                $logger->Info($loggerPlugin->getLogMessage());
+
                 return $this->redirect()->toRoute('zfcadmin/city', array(
                     'action' => 'add'
                 ));
@@ -99,6 +116,10 @@ class CityController extends AbstractActionController implements ControllerInter
         }
         $data = $this->getCityModel()->get($id);
 
+        $this->setDataForLogger($data);
+        $loggerPlugin = new LogPlugin();
+        $loggerPlugin->setOldLogRecord($this->dataForLogger);
+
         $form = new CityForm('city', array('countries' => $this->getCountries()));
         $form->bind($data);
         $form->get('submitBtn')->setAttribute('value', 'Save');
@@ -111,8 +132,18 @@ class CityController extends AbstractActionController implements ControllerInter
             if ($form->isValid()) {
                 $data = $form->getData();
                 $this->getCityModel()->save($data);
-                $this->flashMessenger()->addSuccessMessage("City '"
-                        . $data->name . "' was successfully saved.");
+
+                $message = "City '" . $data->name . "' was successfully saved.";
+                $this->flashMessenger()->addSuccessMessage($message);
+
+                $this->setDataForLogger($this->getCityModel()->get($id));
+                $loggerPlugin->setNewLogRecord($this->dataForLogger);
+                $loggerPlugin->setLogMessage($message);
+
+                $logger = $this->getServiceLocator()->get('logger');
+                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'city'));
+                $logger->Notice($loggerPlugin->getLogMessage());
+
                 return $this->redirect()->toRoute('zfcadmin/cities');
             }
         }
@@ -139,10 +170,21 @@ class CityController extends AbstractActionController implements ControllerInter
 
             if ($del == 'Yes') {
                 $id = (int)$request->getPost('id');
-                $name = (string) $request->getPost('name');
+
+                $loggerPlugin = new LogPlugin();
+                $this->setDataForLogger($this->getCityModel()->get($id));
+                $loggerPlugin->setOldLogRecord($this->dataForLogger);
+
+                $name = (string)$request->getPost('name');
                 $this->getCityModel()->remove($id);
-                $this->flashMessenger()->addSuccessMessage("City '"
-                        . $name . "' was successfully deleted.");
+
+                $message = "City '" . $name . "' was successfully deleted.";
+                $this->flashMessenger()->addSuccessMessage($message);
+
+                $loggerPlugin->setLogMessage($message);
+                $logger = $this->getServiceLocator()->get('logger');
+                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'city'));
+                $logger->Warn($loggerPlugin->getLogMessage());
             }
 
             // Redirect to list
@@ -185,5 +227,30 @@ class CityController extends AbstractActionController implements ControllerInter
     private function getCountries()
     {
         return $this->getCountryModel()->fetchAll();
+    }
+
+    /**
+     * Get the display name of the user
+     *
+     * @return mixed
+     */
+    public function getCurrentUserName()
+    {
+        if ($this->zfcUserAuthentication()->hasIdentity()) {
+            return $this->zfcUserAuthentication()->getIdentity()->getUsername();
+        }
+        return null;
+    }
+
+    /**
+     * @param $data
+     */
+    protected function setDataForLogger($data)
+    {
+        $this->dataForLogger = array(
+            'id' => $data->id,
+            'Name' => $data->name,
+            'Country' => $data->country_name,
+        );
     }
 }
