@@ -92,7 +92,7 @@ class FlightHeaderModel extends AbstractTableGateway
             throw new \Exception("Could not find row $id");
         }
 
-        $row->dateOrder = date('Y-m-d', $row->dateOrder);
+        $row->dateOrder = date('d-m-Y', $row->dateOrder);
 
         return $row;
     }
