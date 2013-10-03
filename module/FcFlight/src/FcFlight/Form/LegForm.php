@@ -128,7 +128,7 @@ class LegForm extends BaseForm
             'name' => 'apDep',
             'type' => 'Zend\Form\Fieldset',
             'options' => array(
-                'legend' => 'App Dep',
+                'legend' => 'Ap Dep',
             ),
             'elements' => array(
                 //apDepIcaoAndIata
@@ -188,7 +188,7 @@ class LegForm extends BaseForm
             'name' => 'apArr',
             'type' => 'Zend\Form\Fieldset',
             'options' => array(
-                'legend' => 'App Arr',
+                'legend' => 'Ap Arr',
             ),
             'elements' => array(
                 //apArrIcaoAndIata

@@ -5,9 +5,15 @@ namespace FcFlight\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use FcFlight\Form\LegForm;
+use FcLibraries\Controller\Plugin\LogPlugin as LogPlugin;
 
 class LegController extends FlightController
 {
+
+    /**
+     * @var array
+     */
+    protected $dataForLogger = array();
 
     /**
      * @return array|\Zend\Http\Response
@@ -61,7 +67,19 @@ class LegController extends FlightController
                 $data = $form->getData();
                 $filter->exchangeArray($data);
                 $data = $this->getLegModel()->add($filter);
-                $this->flashMessenger()->addSuccessMessage('Leg ' . $data['hash'] . ' was successfully added.');
+
+                $message = "Leg '" . $data['hash'] . "' was successfully added.";
+                $this->flashMessenger()->addSuccessMessage($message);
+
+                $loggerPlugin = new LogPlugin();
+                $this->setDataForLogger($this->getLegModel()->get($data['lastInsertValue']));
+                $loggerPlugin->setNewLogRecord($this->dataForLogger);
+                $loggerPlugin->setLogMessage($message);
+
+                $logger = $this->getServiceLocator()->get('logger');
+                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'leg'));
+                $logger->Info($loggerPlugin->getLogMessage());
+
                 return $this->redirect()->toRoute('leg',
                     array(
                         'action' => 'add',
@@ -103,6 +121,10 @@ class LegController extends FlightController
             $preSelectedApDep = null;
         }
 
+        $this->setDataForLogger($data);
+        $loggerPlugin = new LogPlugin();
+        $loggerPlugin->setOldLogRecord($this->dataForLogger);
+
         $data->flightNumber['flightNumberIcaoAndIata'] = $data->flightNumberIcaoAndIata;
         $data->flightNumber['flightNumberText'] = $data->flightNumberText;
         $data->apDep['apDepIcaoAndIata'] = $data->apDepIcaoAndIata;
@@ -138,7 +160,17 @@ class LegController extends FlightController
             if ($form->isValid()) {
                 $data = $form->getData();
                 $summaryData = $this->getLegModel()->save($data);
-                $this->flashMessenger()->addSuccessMessage('Leg ' . $summaryData . ' was successfully saved.');
+
+                $message = "Leg '" . $summaryData . "' was successfully saved.";
+                $this->flashMessenger()->addSuccessMessage($message);
+
+                $this->setDataForLogger($this->getLegModel()->get($id));
+                $loggerPlugin->setNewLogRecord($this->dataForLogger);
+                $loggerPlugin->setLogMessage($message);
+
+                $logger = $this->getServiceLocator()->get('logger');
+                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'leg'));
+                $logger->Notice($loggerPlugin->getLogMessage());
 
                 return $this->redirect()->toRoute('browse',
                     array(
@@ -172,9 +204,21 @@ class LegController extends FlightController
         if ($request->isPost()) {
             $del = $request->getPost('del', 'No');
             if ($del == 'Yes') {
+
+                $loggerPlugin = new LogPlugin();
+                $this->setDataForLogger($this->getLegModel()->get($id));
+                $loggerPlugin->setOldLogRecord($this->dataForLogger);
+
                 $id = (int)$request->getPost('id');
                 $this->getLegModel()->remove($id);
-                $this->flashMessenger()->addSuccessMessage("Leg was successfully deleted.");
+
+                $message = "Leg was successfully deleted.";
+                $this->flashMessenger()->addSuccessMessage($message);
+
+                $loggerPlugin->setLogMessage($message);
+                $logger = $this->getServiceLocator()->get('logger');
+                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'leg'));
+                $logger->Warn($loggerPlugin->getLogMessage());
             }
 
             $redirectPath = (string)$request->getPost('referer');
@@ -187,6 +231,36 @@ class LegController extends FlightController
             'referer' => $refUri,
             'refNumberOrder' => $refNumberOrder,
             'leg' => $this->getLegModel()->get($id)
+        );
+    }
+
+    /**
+     * Get the display name of the user
+     *
+     * @return mixed
+     */
+    public function getCurrentUserName()
+    {
+        if ($this->zfcUserAuthentication()->hasIdentity()) {
+            return $this->zfcUserAuthentication()->getIdentity()->getUsername();
+        }
+        return null;
+    }
+
+    /**
+     * @param $data
+     */
+    protected function setDataForLogger($data)
+    {
+        $this->dataForLogger = array(
+            'id' => $data->id,
+            'Date of Flight' => $data->dateOfFlight,
+            'Flight Number (ICAO/IATA/Text)' => $data->flightNumberIcao . '/'
+                . $data->flightNumberIata . '/' . $data->flightNumberText,
+            'Ap Dep (ICAO/IATA/Time)' => $data->apDepIcao . '/'
+                . $data->apDepIata . '/' . $data->apDepTime,
+            'Ap Arr (ICAO/IATA/Time)' => $data->apArrIcao . '/'
+                . $data->apArrIata . '/' . $data->apArrTime,
         );
     }
 }

@@ -9,53 +9,49 @@ use FcFlight\Form\SearchForm;
 use Zend\Db\Sql\Select;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\Iterator as paginatorIterator;
+use FcLibraries\Controller\Plugin\LogPlugin as LogPlugin;
 
 class FlightController extends AbstractActionController
 {
+    /**
+     * @var
+     */
     protected $flightHeaderModel;
+
+    /**
+     * @var
+     */
     protected $legModel;
+
+    /**
+     * @var
+     */
     protected $refuelModel;
+
+    /**
+     * @var
+     */
     protected $kontragentModel;
+
+    /**
+     * @var
+     */
     protected $airOperatorModel;
+
+    /**
+     * @var
+     */
     protected $aircraftModel;
+
+    /**
+     * @var
+     */
     protected $airportModel;
 
     /**
-     * @return array|\Zend\View\Model\ViewModel
+     * @var array
      */
-//    public function indexAction()
-//    {
-//        $select = new Select();
-//
-//        $orderByMaster = 'dateOrder';
-//        $orderAsType = Select::ORDER_DESCENDING;
-//
-//        $orderBy = $this->params()->fromRoute('order_by') ? $this->params()->fromRoute('order_by') : $orderByMaster;
-//        $orderAs = $this->params()->fromRoute('order') ? $this->params()->fromRoute('order') : $orderAsType;
-//
-//        $page = $this->params()->fromRoute('page') ? (int)$this->params()->fromRoute('page') : 1;
-//        if ($orderBy == $orderByMaster && $orderAsType == $orderAs) {
-//            $data = $this->getFlightHeaderModel()->fetchAll($select->order($orderBy . ' ' . $orderAs
-//            . ', id ' . $orderAs));
-//        } else {
-//            $data = $this->getFlightHeaderModel()->fetchAll($select->order($orderBy . ' ' . $orderAs));
-//        }
-//        $itemsPerPage = 20;
-//        $data->current();
-//
-//        $pagination = new Paginator(new paginatorIterator($data));
-//        $pagination->setCurrentPageNumber($page)
-//            ->setItemCountPerPage($itemsPerPage)
-//            ->setPageRange(7);
-//
-//        return new ViewModel(array(
-//            'order_by' => $orderBy,
-//            'order' => $orderAs,
-//            'page' => $page,
-//            'pagination' => $pagination,
-//            'route' => 'flightsActive',
-//        ));
-//    }
+    protected $dataForLogger = array();
 
     /**
      * @return ViewModel
@@ -177,8 +173,19 @@ class FlightController extends AbstractActionController
                 $data = $form->getData();
                 $filter->exchangeArray($data);
                 $data = $this->getFlightHeaderModel()->add($filter);
-                $this->flashMessenger()->addSuccessMessage("Flights '"
-                . $data['refNumberOrder'] . "' was successfully added.");
+
+                $message = "Flights '" . $data['refNumberOrder'] . "' was successfully added.";
+                $this->flashMessenger()->addSuccessMessage($message);
+
+                $loggerPlugin = new LogPlugin();
+                $this->setDataForLogger($this->getFlightHeaderModel()->get($data['lastInsertValue']));
+                $loggerPlugin->setNewLogRecord($this->dataForLogger);
+                $loggerPlugin->setLogMessage($message);
+
+                $logger = $this->getServiceLocator()->get('logger');
+                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'flight'));
+                $logger->Info($loggerPlugin->getLogMessage());
+
                 return $this->redirect()->toRoute('browse',
                     array(
                         'action' => 'show',
@@ -202,6 +209,10 @@ class FlightController extends AbstractActionController
         }
         $data = $this->getFlightHeaderModel()->get($id);
 
+        $this->setDataForLogger($data);
+        $loggerPlugin = new LogPlugin();
+        $loggerPlugin->setOldLogRecord($this->dataForLogger);
+
         $form = new FlightHeaderForm('flightHeader',
             array(
                 'libraries' => array(
@@ -223,8 +234,18 @@ class FlightController extends AbstractActionController
             if ($form->isValid()) {
                 $data = $form->getData();
                 $refNumberOrder = $this->getFlightHeaderModel()->save($data);
-                $this->flashMessenger()->addSuccessMessage("Flights '"
-                . $refNumberOrder . "' was successfully saved.");
+
+                $message = "Flights '" . $refNumberOrder . "' was successfully saved.";
+                $this->flashMessenger()->addSuccessMessage($message);
+
+                $this->setDataForLogger($this->getFlightHeaderModel()->get($id));
+                $loggerPlugin->setNewLogRecord($this->dataForLogger);
+                $loggerPlugin->setLogMessage($message);
+
+                $logger = $this->getServiceLocator()->get('logger');
+                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'flight'));
+                $logger->Notice($loggerPlugin->getLogMessage());
+
                 return $this->redirect()->toRoute('home');
             }
         }
@@ -251,10 +272,21 @@ class FlightController extends AbstractActionController
 
             if ($del == 'Yes') {
                 $id = (int)$request->getPost('id');
+
+                $loggerPlugin = new LogPlugin();
+                $this->setDataForLogger($this->getFlightHeaderModel()->get($id));
+                $loggerPlugin->setOldLogRecord($this->dataForLogger);
+
                 $refNumberOrder = (string)$request->getPost('refNumberOrder');
                 $this->getFlightHeaderModel()->remove($id);
-                $this->flashMessenger()->addSuccessMessage("Flights '"
-                . $refNumberOrder . "' was successfully deleted.");
+
+                $message = "Flights '" . $refNumberOrder . "' was successfully deleted.";
+                $this->flashMessenger()->addSuccessMessage($message);
+
+                $loggerPlugin->setLogMessage($message);
+                $logger = $this->getServiceLocator()->get('logger');
+                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'flight'));
+                $logger->Warn($loggerPlugin->getLogMessage());
             }
 
             // Redirect to list
@@ -278,11 +310,25 @@ class FlightController extends AbstractActionController
         }
         $data = $this->getFlightHeaderModel()->get($id);
 
+        $this->setDataForLogger($data);
+        $loggerPlugin = new LogPlugin();
+        $loggerPlugin->setOldLogRecord($this->dataForLogger);
+
         $data->status = ($data->status) ? 0 : 1;
 
         $this->getFlightHeaderModel()->save($data);
-        $this->flashMessenger()->addSuccessMessage("Status for flights '"
-        . $data->refNumberOrder . "' was successfully switched.");
+
+        $message = "Status for flights '" . $data->refNumberOrder . "' was successfully switched.";
+        $this->flashMessenger()->addSuccessMessage($message);
+
+        $this->setDataForLogger($data);
+        $loggerPlugin->setNewLogRecord($this->dataForLogger);
+        $loggerPlugin->setLogMessage($message);
+
+        $logger = $this->getServiceLocator()->get('logger');
+        $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'flight'));
+        $logger->Notice($loggerPlugin->getLogMessage());
+
         return $this->redirect()->toRoute('browse',
             array(
                 'action' => 'show',
@@ -397,5 +443,34 @@ class FlightController extends AbstractActionController
             $this->refuelModel = $sm->get('FcFlight\Model\RefuelModel');
         }
         return $this->refuelModel;
+    }
+
+    /**
+     * Get the display name of the user
+     *
+     * @return mixed
+     */
+    public function getCurrentUserName()
+    {
+        if ($this->zfcUserAuthentication()->hasIdentity()) {
+            return $this->zfcUserAuthentication()->getIdentity()->getUsername();
+        }
+        return null;
+    }
+
+    /**
+     * @param $data
+     */
+    protected function setDataForLogger($data)
+    {
+        $this->dataForLogger = array(
+            'id' => $data->id,
+            'Date Order' => $data->dateOrder,
+            'Ref Number' => $data->refNumberOrder,
+            'Customer' => $data->kontragentShortName,
+            'Air Operator' => $data->airOperatorShortName,
+            'Aircraft' => $data->aircraft . ' (' . $data->aircraftTypeName . ')',
+            'Status' => ($data->status == 1) ? 'In process' : 'Done'
+        );
     }
 }
