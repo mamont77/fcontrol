@@ -41,7 +41,7 @@ class KontragentController extends AbstractActionController implements Controlle
             $this->params()->fromRoute('order') : Select::ORDER_ASCENDING;
         $page = $this->params()->fromRoute('page') ? (int)$this->params()->fromRoute('page') : 1;
 
-        $data = $this->getKontragentModel()->fetchAll($select->order($order_by . ' ' . $order));
+        $data = $this->CommonData()->getKontragentModel()->fetchAll($select->order($order_by . ' ' . $order));
         $itemsPerPage = 20;
 
         $data->current();
@@ -75,13 +75,13 @@ class KontragentController extends AbstractActionController implements Controlle
             if ($form->isValid()) {
                 $data = $form->getData();
                 $filter->exchangeArray($data);
-                $lastId = $this->getKontragentModel()->add($filter);
+                $lastId = $this->CommonData()->getKontragentModel()->add($filter);
 
                 $message = "Kontragent '" . $data['name'] . "' was successfully added.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
                 $loggerPlugin = new LogPlugin();
-                $this->setDataForLogger($this->getKontragentModel()->get($lastId));
+                $this->setDataForLogger($this->CommonData()->getKontragentModel()->get($lastId));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
@@ -109,7 +109,7 @@ class KontragentController extends AbstractActionController implements Controlle
                 'action' => 'add'
             ));
         }
-        $data = $this->getKontragentModel()->get($id);
+        $data = $this->CommonData()->getKontragentModel()->get($id);
 
         $this->setDataForLogger($data);
         $loggerPlugin = new LogPlugin();
@@ -126,12 +126,12 @@ class KontragentController extends AbstractActionController implements Controlle
             $form->setData($request->getPost());
             if ($form->isValid()) {
                 $data = $form->getData();
-                $this->getKontragentModel()->save($data);
+                $this->CommonData()->getKontragentModel()->save($data);
 
                 $message = "Kontragent '" . $data->name . "' was successfully saved.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
-                $this->setDataForLogger($this->getKontragentModel()->get($id));
+                $this->setDataForLogger($this->CommonData()->getKontragentModel()->get($id));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
@@ -167,11 +167,11 @@ class KontragentController extends AbstractActionController implements Controlle
                 $id = (int)$request->getPost('id');
 
                 $loggerPlugin = new LogPlugin();
-                $this->setDataForLogger($this->getKontragentModel()->get($id));
+                $this->setDataForLogger($this->CommonData()->getKontragentModel()->get($id));
                 $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
                 $name = (string) $request->getPost('name');
-                $this->getKontragentModel()->remove($id);
+                $this->CommonData()->getKontragentModel()->remove($id);
 
                 $message = "Kontragent '" . $name . "' was successfully deleted.";
                 $this->flashMessenger()->addSuccessMessage($message);
@@ -188,20 +188,8 @@ class KontragentController extends AbstractActionController implements Controlle
 
         return array(
             'id' => $id,
-            'data' => $this->getKontragentModel()->get($id)
+            'data' => $this->CommonData()->getKontragentModel()->get($id)
         );
-    }
-
-    /**
-     * @return array|object
-     */
-    public function getKontragentModel()
-    {
-        if (!$this->kontragentModel) {
-            $sm = $this->getServiceLocator();
-            $this->kontragentModel = $sm->get('FcLibraries\Model\KontragentModel');
-        }
-        return $this->kontragentModel;
     }
 
     /**

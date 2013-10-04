@@ -40,7 +40,7 @@ class CurrencyController extends AbstractActionController implements ControllerI
             $this->params()->fromRoute('order') : Select::ORDER_ASCENDING;
         $page = $this->params()->fromRoute('page') ? (int)$this->params()->fromRoute('page') : 1;
 
-        $data = $this->getCurrencyModel()->fetchAll($select->order($order_by . ' ' . $order));
+        $data = $this->CommonData()->getCurrencyModel()->fetchAll($select->order($order_by . ' ' . $order));
         $itemsPerPage = 20;
 
         $data->current();
@@ -74,13 +74,13 @@ class CurrencyController extends AbstractActionController implements ControllerI
             if ($form->isValid()) {
                 $data = $form->getData();
                 $filter->exchangeArray($data);
-                $lastId = $this->getCurrencyModel()->add($filter);
+                $lastId = $this->CommonData()->getCurrencyModel()->add($filter);
 
                 $message = "Currency '" . $data['name'] . "' was successfully added.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
                 $loggerPlugin = new LogPlugin();
-                $this->setDataForLogger($this->getCurrencyModel()->get($lastId));
+                $this->setDataForLogger($this->CommonData()->getCurrencyModel()->get($lastId));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
@@ -108,7 +108,7 @@ class CurrencyController extends AbstractActionController implements ControllerI
                 'action' => 'add'
             ));
         }
-        $data = $this->getCurrencyModel()->get($id);
+        $data = $this->CommonData()->getCurrencyModel()->get($id);
 
         $this->setDataForLogger($data);
         $loggerPlugin = new LogPlugin();
@@ -125,12 +125,12 @@ class CurrencyController extends AbstractActionController implements ControllerI
             $form->setData($request->getPost());
             if ($form->isValid()) {
                 $data = $form->getData();
-                $this->getCurrencyModel()->save($data);
+                $this->CommonData()->getCurrencyModel()->save($data);
 
                 $message = "Currency '" . $data->name . "' was successfully saved.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
-                $this->setDataForLogger($this->getCurrencyModel()->get($id));
+                $this->setDataForLogger($this->CommonData()->getCurrencyModel()->get($id));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
@@ -166,11 +166,11 @@ class CurrencyController extends AbstractActionController implements ControllerI
                 $id = (int)$request->getPost('id');
 
                 $loggerPlugin = new LogPlugin();
-                $this->setDataForLogger($this->getCurrencyModel()->get($id));
+                $this->setDataForLogger($this->CommonData()->getCurrencyModel()->get($id));
                 $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
                 $name = (string)$request->getPost('name');
-                $this->getCurrencyModel()->remove($id);
+                $this->CommonData()->getCurrencyModel()->remove($id);
 
                 $message = "Currency '" . $name . "' was successfully deleted.";
                 $this->flashMessenger()->addSuccessMessage($message);
@@ -187,20 +187,8 @@ class CurrencyController extends AbstractActionController implements ControllerI
 
         return array(
             'id' => $id,
-            'data' => $this->getCurrencyModel()->get($id)
+            'data' => $this->CommonData()->getCurrencyModel()->get($id)
         );
-    }
-
-    /**
-     * @return array|object
-     */
-    public function getCurrencyModel()
-    {
-        if (!$this->currencyModel) {
-            $sm = $this->getServiceLocator();
-            $this->currencyModel = $sm->get('FcLibraries\Model\CurrencyModel');
-        }
-        return $this->currencyModel;
     }
 
     /**

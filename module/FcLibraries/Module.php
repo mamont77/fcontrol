@@ -89,15 +89,35 @@ class Module
             'factories' => array(
                 'CommonData' => function ($sm) {
                         $serviceLocator = $sm->getServiceLocator();
+                        $aircraftModel = $serviceLocator->get('FcLibraries\Model\AircraftModel');
                         $aircraftTypeModel = $serviceLocator->get('FcLibraries\Model\AircraftTypeModel');
+                        $airOperatorModel = $serviceLocator->get('FcLibraries\Model\AirOperatorModel');
+                        $airportModel = $serviceLocator->get('FcLibraries\Model\AirportModel');
+                        $baseOfPermitModel = $serviceLocator->get('FcLibraries\Model\BaseOfPermitModel');
+                        $cityModel = $serviceLocator->get('FcLibraries\Model\CityModel');
+                        $countryModel = $serviceLocator->get('FcLibraries\Model\CountryModel');
+                        $currencyModel = $serviceLocator->get('FcLibraries\Model\CurrencyModel');
+                        $kontragentModel = $serviceLocator->get('FcLibraries\Model\KontragentModel');
+                        $regionModel = $serviceLocator->get('FcLibraries\Model\RegionModel');
+                        $unitModel = $serviceLocator->get('FcLibraries\Model\UnitModel');
                         $controllerPlugin = new Controller\Plugin\CommonData;
-                        $controllerPlugin->setAircraftTypeModel($aircraftTypeModel);
+                        $controllerPlugin->setAircraftModel($aircraftModel)
+                            ->setAircraftModel($aircraftModel)
+                            ->setAircraftTypeModel($aircraftTypeModel)
+                            ->setAirOperatorModel($airOperatorModel)
+                            ->setAirportModel($airportModel)
+                            ->setBaseOfPermitModel($baseOfPermitModel)
+                            ->setCityModel($cityModel)
+                            ->setCountryModel($countryModel)
+                            ->setCurrencyModel($currencyModel)
+                            ->setKontragentModel($kontragentModel)
+                            ->setRegionModel($regionModel)
+                            ->setUnitModel($unitModel);
                         return $controllerPlugin;
                     },
             ),
         );
     }
-
 
     /**
      * @return array

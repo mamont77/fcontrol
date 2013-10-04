@@ -40,7 +40,7 @@ class UnitController extends AbstractActionController implements ControllerInter
             $this->params()->fromRoute('order') : Select::ORDER_ASCENDING;
         $page = $this->params()->fromRoute('page') ? (int)$this->params()->fromRoute('page') : 1;
 
-        $data = $this->getUnitModel()->fetchAll($select->order($order_by . ' ' . $order));
+        $data = $this->CommonData()->getUnitModel()->fetchAll($select->order($order_by . ' ' . $order));
         $itemsPerPage = 20;
 
         $data->current();
@@ -74,13 +74,13 @@ class UnitController extends AbstractActionController implements ControllerInter
             if ($form->isValid()) {
                 $data = $form->getData();
                 $filter->exchangeArray($data);
-                $lastId = $this->getUnitModel()->add($filter);
+                $lastId = $this->CommonData()->getUnitModel()->add($filter);
 
                 $message = "Unit '" . $data['name'] . "' was successfully added.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
                 $loggerPlugin = new LogPlugin();
-                $this->setDataForLogger($this->getUnitModel()->get($lastId));
+                $this->setDataForLogger($this->CommonData()->getUnitModel()->get($lastId));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
@@ -108,7 +108,7 @@ class UnitController extends AbstractActionController implements ControllerInter
                 'action' => 'add'
             ));
         }
-        $data = $this->getUnitModel()->get($id);
+        $data = $this->CommonData()->getUnitModel()->get($id);
 
         $this->setDataForLogger($data);
         $loggerPlugin = new LogPlugin();
@@ -125,12 +125,12 @@ class UnitController extends AbstractActionController implements ControllerInter
             $form->setData($request->getPost());
             if ($form->isValid()) {
                 $data = $form->getData();
-                $this->getUnitModel()->save($data);
+                $this->CommonData()->getUnitModel()->save($data);
 
                 $message = "Unit '" . $data->name . "' was successfully saved.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
-                $this->setDataForLogger($this->getUnitModel()->get($id));
+                $this->setDataForLogger($this->CommonData()->getUnitModel()->get($id));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
@@ -166,11 +166,11 @@ class UnitController extends AbstractActionController implements ControllerInter
                 $id = (int)$request->getPost('id');
 
                 $loggerPlugin = new LogPlugin();
-                $this->setDataForLogger($this->getUnitModel()->get($id));
+                $this->setDataForLogger($this->CommonData()->getUnitModel()->get($id));
                 $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
                 $name = (string) $request->getPost('name');
-                $this->getUnitModel()->remove($id);
+                $this->CommonData()->getUnitModel()->remove($id);
 
                 $message = "Unit '" . $name . "' was successfully deleted.";
                 $this->flashMessenger()->addSuccessMessage($message);
@@ -187,20 +187,8 @@ class UnitController extends AbstractActionController implements ControllerInter
 
         return array(
             'id' => $id,
-            'data' => $this->getUnitModel()->get($id)
+            'data' => $this->CommonData()->getUnitModel()->get($id)
         );
-    }
-
-    /**
-     * @return array|object
-     */
-    public function getUnitModel()
-    {
-        if (!$this->unitModel) {
-            $sm = $this->getServiceLocator();
-            $this->unitModel = $sm->get('FcLibraries\Model\UnitModel');
-        }
-        return $this->unitModel;
     }
 
     /**

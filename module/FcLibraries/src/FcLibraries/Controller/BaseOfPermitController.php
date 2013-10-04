@@ -51,7 +51,7 @@ class BaseOfPermitController extends AbstractActionController implements Control
             $this->params()->fromRoute('order') : Select::ORDER_ASCENDING;
         $page = $this->params()->fromRoute('page') ? (int)$this->params()->fromRoute('page') : 1;
 
-        $data = $this->getBaseOfPermitModel()->fetchAll($select->order($order_by . ' ' . $order));
+        $data = $this->CommonData()->getBaseOfPermitModel()->fetchAll($select->order($order_by . ' ' . $order));
         $itemsPerPage = 20;
 
         $data->current();
@@ -75,7 +75,7 @@ class BaseOfPermitController extends AbstractActionController implements Control
      */
     public function addAction()
     {
-        $form = new BaseOfPermitForm('base_of_permit', array('countries' => $this->getCountries()));
+        $form = new BaseOfPermitForm('base_of_permit', array('countries' => $this->CommonData()->getCountries()));
 
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -85,13 +85,13 @@ class BaseOfPermitController extends AbstractActionController implements Control
             if ($form->isValid()) {
                 $data = $form->getData();
                 $filter->exchangeArray($data);
-                $lastId = $this->getBaseOfPermitModel()->add($filter);
+                $lastId = $this->CommonData()->getBaseOfPermitModel()->add($filter);
 
                 $message = "Base of Permit was successfully added.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
                 $loggerPlugin = new LogPlugin();
-                $this->setDataForLogger($this->getBaseOfPermitModel()->get($lastId));
+                $this->setDataForLogger($this->CommonData()->getBaseOfPermitModel()->get($lastId));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
@@ -118,13 +118,13 @@ class BaseOfPermitController extends AbstractActionController implements Control
                 'action' => 'add'
             ));
         }
-        $data = $this->getBaseOfPermitModel()->get($id);
+        $data = $this->CommonData()->getBaseOfPermitModel()->get($id);
 
         $this->setDataForLogger($data);
         $loggerPlugin = new LogPlugin();
         $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
-        $form = new BaseOfPermitForm('base_of_permit', array('countries' => $this->getCountries()));
+        $form = new BaseOfPermitForm('base_of_permit', array('countries' => $this->CommonData()->getCountries()));
         $form->bind($data);
         $form->get('submitBtn')->setAttribute('value', 'Save');
 
@@ -135,12 +135,12 @@ class BaseOfPermitController extends AbstractActionController implements Control
             $form->setData($request->getPost());
             if ($form->isValid()) {
                 $data = $form->getData();
-                $this->getBaseOfPermitModel()->save($data);
+                $this->CommonData()->getBaseOfPermitModel()->save($data);
 
                 $message = "Base of Permit was successfully saved.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
-                $this->setDataForLogger($this->getBaseOfPermitModel()->get($id));
+                $this->setDataForLogger($this->CommonData()->getBaseOfPermitModel()->get($id));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
@@ -176,11 +176,11 @@ class BaseOfPermitController extends AbstractActionController implements Control
                 $id = (int)$request->getPost('id');
 
                 $loggerPlugin = new LogPlugin();
-                $this->setDataForLogger($this->getBaseOfPermitModel()->get($id));
+                $this->setDataForLogger($this->CommonData()->getBaseOfPermitModel()->get($id));
                 $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
                 $name = (string)$request->getPost('name');
-                $this->getBaseOfPermitModel()->remove($id);
+                $this->CommonData()->getBaseOfPermitModel()->remove($id);
 
                 $message = "Base of Permit '" . $name . "' was successfully deleted.";
                 $this->flashMessenger()->addSuccessMessage($message);
@@ -197,7 +197,7 @@ class BaseOfPermitController extends AbstractActionController implements Control
 
         return array(
             'id' => $id,
-            'data' => $this->getBaseOfPermitModel()->get($id)
+            'data' => $this->CommonData()->getBaseOfPermitModel()->get($id)
         );
     }
 
@@ -214,7 +214,7 @@ class BaseOfPermitController extends AbstractActionController implements Control
             ));
         }
 
-        $data = $this->getAirportModel()->getByCountryId($id);
+        $data = $this->CommonData()->getAirportModel()->getByCountryId($id);
 
         $result = array(
             'countryId' => $id,
@@ -223,7 +223,7 @@ class BaseOfPermitController extends AbstractActionController implements Control
         foreach ($data as $row) {
             $result['airports']['id_' . $row->id] = $row->name;
         }
-        uasort($result['airports'], array($this, 'sortLibrary'));
+        uasort($result['airports'], array($this->CommonData(), 'sortLibrary'));
 
         $view = new ViewModel(array(
             'data' => Json::encode($result),
@@ -232,60 +232,6 @@ class BaseOfPermitController extends AbstractActionController implements Control
         $view->setTerminal(true);
 
         return $view;
-    }
-
-    /**
-     * @return array|object
-     */
-    private function getBaseOfPermitModel()
-    {
-        if (!$this->baseOfPermitModel) {
-            $sm = $this->getServiceLocator();
-            $this->baseOfPermitModel = $sm->get('FcLibraries\Model\BaseOfPermitModel');
-        }
-        return $this->baseOfPermitModel;
-    }
-
-    /**
-     * @return array|object
-     */
-    public function getCountryModel()
-    {
-        if (!$this->countryModel) {
-            $sm = $this->getServiceLocator();
-            $this->countryModel = $sm->get('FcLibraries\Model\CountryModel');
-        }
-        return $this->countryModel;
-    }
-
-    /**
-     * @return array|object
-     */
-    private function getAirportModel()
-    {
-        if (!$this->airportModel) {
-            $sm = $this->getServiceLocator();
-            $this->airportModel = $sm->get('FcLibraries\Model\AirportModel');
-        }
-        return $this->airportModel;
-    }
-
-    /**
-     * @return mixed
-     */
-    private function getCountries()
-    {
-        return $this->getCountryModel()->fetchAll();
-    }
-
-    /**
-     * @param $a
-     * @param $b
-     * @return bool
-     */
-    protected function sortLibrary($a, $b)
-    {
-        return $a > $b;
     }
 
     /**

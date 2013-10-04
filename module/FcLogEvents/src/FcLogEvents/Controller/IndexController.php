@@ -39,7 +39,7 @@ class IndexController extends AbstractActionController
         $page = $this->params()->fromRoute('page') ? (int)$this->params()->fromRoute('page') : 1;
 
         $data = $this->getFcLogEventsModel()->fetchAll($select->order($order_by . ' ' . $order));
-        $itemsPerPage = 20;
+        $itemsPerPage = 50;
 
         $data->current();
         $pagination = new Paginator(new paginatorIterator($data));

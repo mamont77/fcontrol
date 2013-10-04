@@ -46,7 +46,7 @@ class CityController extends AbstractActionController implements ControllerInter
             $this->params()->fromRoute('order') : Select::ORDER_ASCENDING;
         $page = $this->params()->fromRoute('page') ? (int)$this->params()->fromRoute('page') : 1;
 
-        $data = $this->getCityModel()->fetchAll($select->order($order_by . ' ' . $order));
+        $data = $this->CommonData()->getCityModel()->fetchAll($select->order($order_by . ' ' . $order));
         $itemsPerPage = 20;
 
         $data->current();
@@ -70,7 +70,7 @@ class CityController extends AbstractActionController implements ControllerInter
      */
     public function addAction()
     {
-        $form = new CityForm('city', array('countries' => $this->getCountries()));
+        $form = new CityForm('city', array('countries' => $this->CommonData()->getCountries()));
 
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -81,13 +81,13 @@ class CityController extends AbstractActionController implements ControllerInter
             if ($form->isValid()) {
                 $data = $form->getData();
                 $filter->exchangeArray($data);
-                $lastId = $this->getCityModel()->add($filter);
+                $lastId = $this->CommonData()->getCityModel()->add($filter);
 
                 $message = "City '" . $data['name'] . "' was successfully added.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
                 $loggerPlugin = new LogPlugin();
-                $this->setDataForLogger($this->getCityModel()->get($lastId));
+                $this->setDataForLogger($this->CommonData()->getCityModel()->get($lastId));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
@@ -114,13 +114,13 @@ class CityController extends AbstractActionController implements ControllerInter
                 'action' => 'add'
             ));
         }
-        $data = $this->getCityModel()->get($id);
+        $data = $this->CommonData()->getCityModel()->get($id);
 
         $this->setDataForLogger($data);
         $loggerPlugin = new LogPlugin();
         $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
-        $form = new CityForm('city', array('countries' => $this->getCountries()));
+        $form = new CityForm('city', array('countries' => $this->CommonData()->getCountries()));
         $form->bind($data);
         $form->get('submitBtn')->setAttribute('value', 'Save');
 
@@ -131,12 +131,12 @@ class CityController extends AbstractActionController implements ControllerInter
             $form->setData($request->getPost());
             if ($form->isValid()) {
                 $data = $form->getData();
-                $this->getCityModel()->save($data);
+                $this->CommonData()->getCityModel()->save($data);
 
                 $message = "City '" . $data->name . "' was successfully saved.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
-                $this->setDataForLogger($this->getCityModel()->get($id));
+                $this->setDataForLogger($this->CommonData()->getCityModel()->get($id));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
@@ -172,11 +172,11 @@ class CityController extends AbstractActionController implements ControllerInter
                 $id = (int)$request->getPost('id');
 
                 $loggerPlugin = new LogPlugin();
-                $this->setDataForLogger($this->getCityModel()->get($id));
+                $this->setDataForLogger($this->CommonData()->getCityModel()->get($id));
                 $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
                 $name = (string)$request->getPost('name');
-                $this->getCityModel()->remove($id);
+                $this->CommonData()->getCityModel()->remove($id);
 
                 $message = "City '" . $name . "' was successfully deleted.";
                 $this->flashMessenger()->addSuccessMessage($message);
@@ -193,40 +193,8 @@ class CityController extends AbstractActionController implements ControllerInter
 
         return array(
             'id' => $id,
-            'data' => $this->getCityModel()->get($id)
+            'data' => $this->CommonData()->getCityModel()->get($id)
         );
-    }
-
-    /**
-     * @return array|object
-     */
-    public function getCityModel()
-    {
-        if (!$this->cityModel) {
-            $sm = $this->getServiceLocator();
-            $this->cityModel = $sm->get('FcLibraries\Model\CityModel');
-        }
-        return $this->cityModel;
-    }
-
-    /**
-     * @return array|object
-     */
-    private function getCountryModel()
-    {
-        if (!$this->country) {
-            $sm = $this->getServiceLocator();
-            $this->countryModel = $sm->get('FcLibraries\Model\CountryModel');
-        }
-        return $this->countryModel;
-    }
-
-    /**
-     * @return mixed
-     */
-    private function getCountries()
-    {
-        return $this->getCountryModel()->fetchAll();
     }
 
     /**
