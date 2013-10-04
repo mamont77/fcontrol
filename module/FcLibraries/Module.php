@@ -58,27 +58,46 @@ class Module
      * @param ModuleManager $moduleManager
      */
     public function init(ModuleManager $moduleManager)
-     {
-         $sharedEvents = $moduleManager->getEventManager()->getSharedManager();
-         $sharedEvents->attach(__NAMESPACE__, 'dispatch', array($this, 'onModuleDispatch'));
-     }
+    {
+        $sharedEvents = $moduleManager->getEventManager()->getSharedManager();
+        $sharedEvents->attach(__NAMESPACE__, 'dispatch', array($this, 'onModuleDispatch'));
+    }
 
     /**
      * @param MvcEvent $e
      */
     public function onModuleDispatch(MvcEvent $e)
-     {
-         //Set the layout template for every action in this module
-         $controller = $e->getTarget();
-         $controller->layout('layout/layout');
+    {
+        //Set the layout template for every action in this module
+        $controller = $e->getTarget();
+        $controller->layout('layout/layout');
 
-         //Set the main menu into the layout view model
-         $serviceManager = $e->getApplication()->getServiceManager();
-         $navBarContainer = $serviceManager->get('fcontrol_navigation');
+        //Set the main menu into the layout view model
+        $serviceManager = $e->getApplication()->getServiceManager();
+        $navBarContainer = $serviceManager->get('fcontrol_navigation');
 
-         $viewModel = $e->getViewModel();
-         $viewModel->setVariable('navBar', $navBarContainer);
-     }
+        $viewModel = $e->getViewModel();
+        $viewModel->setVariable('navBar', $navBarContainer);
+    }
+
+    /**
+     * @return array
+     */
+    public function getControllerPluginConfig()
+    {
+        return array(
+            'factories' => array(
+                'CommonData' => function ($sm) {
+                        $serviceLocator = $sm->getServiceLocator();
+                        $aircraftTypeModel = $serviceLocator->get('FcLibraries\Model\AircraftTypeModel');
+                        $controllerPlugin = new Controller\Plugin\CommonData;
+                        $controllerPlugin->setAircraftTypeModel($aircraftTypeModel);
+                        return $controllerPlugin;
+                    },
+            ),
+        );
+    }
+
 
     /**
      * @return array
@@ -89,93 +108,93 @@ class Module
             'invokables' => array(),
             'factories' => array(
                 'FcLibraries\Model\AircraftModel' => function ($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new AircraftModel($dbAdapter);
-                },
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new AircraftModel($dbAdapter);
+                    },
                 'FcLibraries\Filter\AircraftFilter' => function ($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new AircraftFilter($dbAdapter);
-                },
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new AircraftFilter($dbAdapter);
+                    },
                 'FcLibraries\Model\AircraftTypeModel' => function ($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new AircraftTypeModel($dbAdapter);
-                },
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new AircraftTypeModel($dbAdapter);
+                    },
                 'FcLibraries\Filter\AircraftTypeFilter' => function ($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new AircraftTypeFilter($dbAdapter);
-                },
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new AircraftTypeFilter($dbAdapter);
+                    },
                 'FcLibraries\Model\AirOperatorModel' => function ($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new AirOperatorModel($dbAdapter);
-                },
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new AirOperatorModel($dbAdapter);
+                    },
                 'FcLibraries\Filter\AirOperatorFilter' => function ($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new AirOperatorFilter($dbAdapter);
-                },
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new AirOperatorFilter($dbAdapter);
+                    },
                 'FcLibraries\Model\AirportModel' => function ($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new AirportModel($dbAdapter);
-                },
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new AirportModel($dbAdapter);
+                    },
                 'FcLibraries\Filter\AirportFilter' => function ($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new AirportFilter($dbAdapter);
-                },
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new AirportFilter($dbAdapter);
+                    },
                 'FcLibraries\Model\BaseOfPermitModel' => function ($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new BaseOfPermitModel($dbAdapter);
-                },
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new BaseOfPermitModel($dbAdapter);
+                    },
                 'FcLibraries\Filter\BaseOfPermitFilter' => function ($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new BaseOfPermitFilter($dbAdapter);
-                },
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new BaseOfPermitFilter($dbAdapter);
+                    },
                 'FcLibraries\Model\CityModel' => function ($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new CityModel($dbAdapter);
-                },
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new CityModel($dbAdapter);
+                    },
                 'FcLibraries\Filter\CityFilter' => function ($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new CityFilter($dbAdapter);
-                },
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new CityFilter($dbAdapter);
+                    },
                 'FcLibraries\Model\CountryModel' => function ($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new CountryModel($dbAdapter);
-                },
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new CountryModel($dbAdapter);
+                    },
                 'FcLibraries\Filter\CountryFilter' => function ($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new CountryFilter($dbAdapter);
-                },
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new CountryFilter($dbAdapter);
+                    },
                 'FcLibraries\Model\CurrencyModel' => function ($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new CurrencyModel($dbAdapter);
-                },
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new CurrencyModel($dbAdapter);
+                    },
                 'FcLibraries\Filter\CurrencyFilter' => function ($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new CurrencyFilter($dbAdapter);
-                },
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new CurrencyFilter($dbAdapter);
+                    },
                 'FcLibraries\Model\KontragentModel' => function ($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new KontragentModel($dbAdapter);
-                },
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new KontragentModel($dbAdapter);
+                    },
                 'FcLibraries\Filter\KontragentFilter' => function ($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new KontragentFilter($dbAdapter);
-                },
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new KontragentFilter($dbAdapter);
+                    },
                 'FcLibraries\Model\RegionModel' => function ($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new RegionModel($dbAdapter);
-                },
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new RegionModel($dbAdapter);
+                    },
                 'FcLibraries\Filter\RegionFilter' => function ($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new RegionFilter($dbAdapter);
-                },
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new RegionFilter($dbAdapter);
+                    },
                 'FcLibraries\Model\UnitModel' => function ($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new UnitModel($dbAdapter);
-                },
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new UnitModel($dbAdapter);
+                    },
                 'FcLibraries\Filter\UnitFilter' => function ($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    return new UnitFilter($dbAdapter);
-                },
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new UnitFilter($dbAdapter);
+                    },
             ),
         );
     }

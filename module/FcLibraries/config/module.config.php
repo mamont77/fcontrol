@@ -17,6 +17,12 @@ return array(
         ),
     ),
 
+    'controller_plugins' => array(
+        'invokables' => array(
+            'FcLibraries\Controller\Plugin\CommonData' => 'FcLibraries\Controller\Plugin\CommonData',
+        ),
+    ),
+
     'router' => array(
         'routes' => array(
             'zfcadmin' => array(

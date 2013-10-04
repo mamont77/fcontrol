@@ -17,16 +17,10 @@ use FcLibraries\Controller\Plugin\LogPlugin as LogPlugin;
  */
 class AircraftController extends AbstractActionController implements ControllerInterface
 {
-
     /**
      * @var
      */
     protected $aircraftModel;
-
-    /**
-     * @var
-     */
-    protected $aircraftTypeModel;
 
     /**
      * @var array
@@ -70,7 +64,7 @@ class AircraftController extends AbstractActionController implements ControllerI
      */
     public function addAction()
     {
-        $form = new AircraftForm('aircraft', array('aircraft_types' => $this->getAircraftTypes()));
+        $form = new AircraftForm('aircraft', array('aircraft_types' => $this->CommonData()->getAircraftTypes()));
 
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -122,7 +116,7 @@ class AircraftController extends AbstractActionController implements ControllerI
         $loggerPlugin = new LogPlugin();
         $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
-        $form = new AircraftForm('aircraft', array('aircraft_types' => $this->getAircraftTypes()));
+        $form = new AircraftForm('aircraft', array('aircraft_types' => $this->CommonData()->getAircraftTypes()));
         $form->bind($data);
         $form->get('submitBtn')->setAttribute('value', 'Save');
 
@@ -212,25 +206,6 @@ class AircraftController extends AbstractActionController implements ControllerI
         return $this->aircraftModel;
     }
 
-    /**
-     * @return array|object
-     */
-    private function getAircraftTypeModel()
-    {
-        if (!$this->aircraftTypeModel) {
-            $sm = $this->getServiceLocator();
-            $this->aircraftTypeModel = $sm->get('FcLibraries\Model\AircraftTypeModel');
-        }
-        return $this->aircraftTypeModel;
-    }
-
-    /**
-     * @return mixed
-     */
-    private function getAircraftTypes()
-    {
-        return $this->getAircraftTypeModel()->fetchAll();
-    }
 
     /**
      * Get the display name of the user
