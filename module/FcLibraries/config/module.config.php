@@ -20,6 +20,7 @@ return array(
     'controller_plugins' => array(
         'invokables' => array(
             'FcLibraries\Controller\Plugin\CommonData' => 'FcLibraries\Controller\Plugin\CommonData',
+            'FcLibraries\Controller\Plugin\LogPlugin' => 'FcLibraries\Controller\Plugin\LogPlugin',
         ),
     ),
 

@@ -8,7 +8,6 @@ use FcLibraries\Form\CurrencyForm;
 use Zend\Db\Sql\Select;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\Iterator as paginatorIterator;
-use FcLibraries\Controller\Plugin\LogPlugin as LogPlugin;
 
 /**
  * Class CurrencyController
@@ -79,13 +78,13 @@ class CurrencyController extends AbstractActionController implements ControllerI
                 $message = "Currency '" . $data['name'] . "' was successfully added.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
-                $loggerPlugin = new LogPlugin();
+                $loggerPlugin = $this->LogPlugin();
                 $this->setDataForLogger($this->CommonData()->getCurrencyModel()->get($lastId));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
                 $logger = $this->getServiceLocator()->get('logger');
-                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'currency'));
+                $logger->addExtra(array('username' => $loggerPlugin->getCurrentUserName(), 'component' => 'currency'));
                 $logger->Info($loggerPlugin->getLogMessage());
 
                 return $this->redirect()->toRoute('zfcadmin/currency',
@@ -111,7 +110,7 @@ class CurrencyController extends AbstractActionController implements ControllerI
         $data = $this->CommonData()->getCurrencyModel()->get($id);
 
         $this->setDataForLogger($data);
-        $loggerPlugin = new LogPlugin();
+        $loggerPlugin = $this->LogPlugin();
         $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
         $form = new CurrencyForm();
@@ -135,7 +134,7 @@ class CurrencyController extends AbstractActionController implements ControllerI
                 $loggerPlugin->setLogMessage($message);
 
                 $logger = $this->getServiceLocator()->get('logger');
-                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'currency'));
+                $logger->addExtra(array('username' => $loggerPlugin->getCurrentUserName(), 'component' => 'currency'));
                 $logger->Notice($loggerPlugin->getLogMessage());
 
                 return $this->redirect()->toRoute('zfcadmin/currencies');
@@ -165,7 +164,7 @@ class CurrencyController extends AbstractActionController implements ControllerI
             if ($del == 'Yes') {
                 $id = (int)$request->getPost('id');
 
-                $loggerPlugin = new LogPlugin();
+                $loggerPlugin = $this->LogPlugin();
                 $this->setDataForLogger($this->CommonData()->getCurrencyModel()->get($id));
                 $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
@@ -177,7 +176,7 @@ class CurrencyController extends AbstractActionController implements ControllerI
 
                 $loggerPlugin->setLogMessage($message);
                 $logger = $this->getServiceLocator()->get('logger');
-                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'currency'));
+                $logger->addExtra(array('username' => $loggerPlugin->getCurrentUserName(), 'component' => 'currency'));
                 $logger->Warn($loggerPlugin->getLogMessage());
             }
 
@@ -189,19 +188,6 @@ class CurrencyController extends AbstractActionController implements ControllerI
             'id' => $id,
             'data' => $this->CommonData()->getCurrencyModel()->get($id)
         );
-    }
-
-    /**
-     * Get the display name of the user
-     *
-     * @return mixed
-     */
-    public function getCurrentUserName()
-    {
-        if ($this->zfcUserAuthentication()->hasIdentity()) {
-            return $this->zfcUserAuthentication()->getIdentity()->getUsername();
-        }
-        return null;
     }
 
     /**

@@ -8,7 +8,6 @@ use FcLibraries\Form\RegionForm;
 use Zend\Db\Sql\Select;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\Iterator as paginatorIterator;
-use FcLibraries\Controller\Plugin\LogPlugin as LogPlugin;
 
 /**
  * Class RegionController
@@ -79,13 +78,13 @@ class RegionController extends AbstractActionController implements ControllerInt
                 $message = "Region '" . $data['name'] . "' was successfully added.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
-                $loggerPlugin = new LogPlugin();
+                $loggerPlugin = $this->LogPlugin();
                 $this->setDataForLogger($this->CommonData()->getRegionModel()->get($lastId));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
                 $logger = $this->getServiceLocator()->get('logger');
-                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'region'));
+                $logger->addExtra(array('username' => $loggerPlugin->getCurrentUserName(), 'component' => 'region'));
                 $logger->Info($loggerPlugin->getLogMessage());
 
                 return $this->redirect()->toRoute('zfcadmin/region',
@@ -111,7 +110,7 @@ class RegionController extends AbstractActionController implements ControllerInt
         $data = $this->CommonData()->getRegionModel()->get($id);
 
         $this->setDataForLogger($data);
-        $loggerPlugin = new LogPlugin();
+        $loggerPlugin = $this->LogPlugin();
         $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
         $form = new RegionForm();
@@ -135,7 +134,7 @@ class RegionController extends AbstractActionController implements ControllerInt
                 $loggerPlugin->setLogMessage($message);
 
                 $logger = $this->getServiceLocator()->get('logger');
-                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'region'));
+                $logger->addExtra(array('username' => $loggerPlugin->getCurrentUserName(), 'component' => 'region'));
                 $logger->Notice($loggerPlugin->getLogMessage());
 
                 return $this->redirect()->toRoute('zfcadmin/regions');
@@ -165,7 +164,7 @@ class RegionController extends AbstractActionController implements ControllerInt
             if ($del == 'Yes') {
                 $id = (int)$request->getPost('id');
 
-                $loggerPlugin = new LogPlugin();
+                $loggerPlugin = $this->LogPlugin();
                 $this->setDataForLogger($this->CommonData()->getRegionModel()->get($id));
                 $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
@@ -177,7 +176,7 @@ class RegionController extends AbstractActionController implements ControllerInt
 
                 $loggerPlugin->setLogMessage($message);
                 $logger = $this->getServiceLocator()->get('logger');
-                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'region'));
+                $logger->addExtra(array('username' => $loggerPlugin->getCurrentUserName(), 'component' => 'region'));
                 $logger->Warn($loggerPlugin->getLogMessage());
             }
 
@@ -189,19 +188,6 @@ class RegionController extends AbstractActionController implements ControllerInt
             'id' => $id,
             'data' => $this->CommonData()->getRegionModel()->get($id)
         );
-    }
-
-    /**
-     * Get the display name of the user
-     *
-     * @return mixed
-     */
-    public function getCurrentUserName()
-    {
-        if ($this->zfcUserAuthentication()->hasIdentity()) {
-            return $this->zfcUserAuthentication()->getIdentity()->getUsername();
-        }
-        return null;
     }
 
     /**

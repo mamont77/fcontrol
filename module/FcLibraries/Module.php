@@ -115,6 +115,13 @@ class Module
                             ->setUnitModel($unitModel);
                         return $controllerPlugin;
                     },
+                'LogPlugin' => function ($sm) {
+                        $serviceLocator = $sm->getServiceLocator();
+                        $authService = $serviceLocator->get('zfcuser_auth_service');
+                        $controllerPlugin = new Controller\Plugin\LogPlugin;
+                        $controllerPlugin->setCurrentUserName($authService->getIdentity()->getUsername());
+                        return $controllerPlugin;
+                    },
             ),
         );
     }

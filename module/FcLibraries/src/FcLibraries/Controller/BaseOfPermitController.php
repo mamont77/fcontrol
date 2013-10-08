@@ -10,7 +10,6 @@ use Zend\Db\Sql\Select;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\Iterator as paginatorIterator;
 use Zend\Json\Json as Json;
-use FcLibraries\Controller\Plugin\LogPlugin as LogPlugin;
 
 /**
  * Class BaseOfPermitController
@@ -90,13 +89,13 @@ class BaseOfPermitController extends AbstractActionController implements Control
                 $message = "Base of Permit was successfully added.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
-                $loggerPlugin = new LogPlugin();
+                $loggerPlugin = $this->LogPlugin();
                 $this->setDataForLogger($this->CommonData()->getBaseOfPermitModel()->get($lastId));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
                 $logger = $this->getServiceLocator()->get('logger');
-                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'base of permit'));
+                $logger->addExtra(array('username' => $loggerPlugin->getCurrentUserName(), 'component' => 'base of permit'));
                 $logger->Info($loggerPlugin->getLogMessage());
 
                 return $this->redirect()->toRoute('zfcadmin/base_of_permit', array(
@@ -121,7 +120,7 @@ class BaseOfPermitController extends AbstractActionController implements Control
         $data = $this->CommonData()->getBaseOfPermitModel()->get($id);
 
         $this->setDataForLogger($data);
-        $loggerPlugin = new LogPlugin();
+        $loggerPlugin = $this->LogPlugin();
         $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
         $form = new BaseOfPermitForm('base_of_permit', array('countries' => $this->CommonData()->getCountries()));
@@ -145,7 +144,7 @@ class BaseOfPermitController extends AbstractActionController implements Control
                 $loggerPlugin->setLogMessage($message);
 
                 $logger = $this->getServiceLocator()->get('logger');
-                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'base of permit'));
+                $logger->addExtra(array('username' => $loggerPlugin->getCurrentUserName(), 'component' => 'base of permit'));
                 $logger->Notice($loggerPlugin->getLogMessage());
 
                 return $this->redirect()->toRoute('zfcadmin/base_of_permits');
@@ -175,7 +174,7 @@ class BaseOfPermitController extends AbstractActionController implements Control
             if ($del == 'Yes') {
                 $id = (int)$request->getPost('id');
 
-                $loggerPlugin = new LogPlugin();
+                $loggerPlugin = $this->LogPlugin();
                 $this->setDataForLogger($this->CommonData()->getBaseOfPermitModel()->get($id));
                 $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
@@ -187,7 +186,7 @@ class BaseOfPermitController extends AbstractActionController implements Control
 
                 $loggerPlugin->setLogMessage($message);
                 $logger = $this->getServiceLocator()->get('logger');
-                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'base of permit'));
+                $logger->addExtra(array('username' => $loggerPlugin->getCurrentUserName(), 'component' => 'base of permit'));
                 $logger->Warn($loggerPlugin->getLogMessage());
             }
 
@@ -232,19 +231,6 @@ class BaseOfPermitController extends AbstractActionController implements Control
         $view->setTerminal(true);
 
         return $view;
-    }
-
-    /**
-     * Get the display name of the user
-     *
-     * @return mixed
-     */
-    public function getCurrentUserName()
-    {
-        if ($this->zfcUserAuthentication()->hasIdentity()) {
-            return $this->zfcUserAuthentication()->getIdentity()->getUsername();
-        }
-        return null;
     }
 
     /**

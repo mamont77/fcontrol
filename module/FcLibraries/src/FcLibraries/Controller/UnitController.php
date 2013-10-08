@@ -8,7 +8,6 @@ use FcLibraries\Form\UnitForm;
 use Zend\Db\Sql\Select;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\Iterator as paginatorIterator;
-use FcLibraries\Controller\Plugin\LogPlugin as LogPlugin;
 
 /**
  * Class UnitController
@@ -79,13 +78,13 @@ class UnitController extends AbstractActionController implements ControllerInter
                 $message = "Unit '" . $data['name'] . "' was successfully added.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
-                $loggerPlugin = new LogPlugin();
+                $loggerPlugin = $this->LogPlugin();
                 $this->setDataForLogger($this->CommonData()->getUnitModel()->get($lastId));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
                 $logger = $this->getServiceLocator()->get('logger');
-                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'unit'));
+                $logger->addExtra(array('username' => $loggerPlugin->getCurrentUserName(), 'component' => 'unit'));
                 $logger->Info($loggerPlugin->getLogMessage());
 
                 return $this->redirect()->toRoute('zfcadmin/unit',
@@ -111,7 +110,7 @@ class UnitController extends AbstractActionController implements ControllerInter
         $data = $this->CommonData()->getUnitModel()->get($id);
 
         $this->setDataForLogger($data);
-        $loggerPlugin = new LogPlugin();
+        $loggerPlugin = $this->LogPlugin();
         $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
         $form = new UnitForm();
@@ -135,7 +134,7 @@ class UnitController extends AbstractActionController implements ControllerInter
                 $loggerPlugin->setLogMessage($message);
 
                 $logger = $this->getServiceLocator()->get('logger');
-                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'unit'));
+                $logger->addExtra(array('username' => $loggerPlugin->getCurrentUserName(), 'component' => 'unit'));
                 $logger->Notice($loggerPlugin->getLogMessage());
 
                 return $this->redirect()->toRoute('zfcadmin/units');
@@ -165,7 +164,7 @@ class UnitController extends AbstractActionController implements ControllerInter
             if ($del == 'Yes') {
                 $id = (int)$request->getPost('id');
 
-                $loggerPlugin = new LogPlugin();
+                $loggerPlugin = $this->LogPlugin();
                 $this->setDataForLogger($this->CommonData()->getUnitModel()->get($id));
                 $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
@@ -177,7 +176,7 @@ class UnitController extends AbstractActionController implements ControllerInter
 
                 $loggerPlugin->setLogMessage($message);
                 $logger = $this->getServiceLocator()->get('logger');
-                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'unit'));
+                $logger->addExtra(array('username' => $loggerPlugin->getCurrentUserName(), 'component' => 'unit'));
                 $logger->Warn($loggerPlugin->getLogMessage());
             }
 
@@ -189,19 +188,6 @@ class UnitController extends AbstractActionController implements ControllerInter
             'id' => $id,
             'data' => $this->CommonData()->getUnitModel()->get($id)
         );
-    }
-
-    /**
-     * Get the display name of the user
-     *
-     * @return mixed
-     */
-    public function getCurrentUserName()
-    {
-        if ($this->zfcUserAuthentication()->hasIdentity()) {
-            return $this->zfcUserAuthentication()->getIdentity()->getUsername();
-        }
-        return null;
     }
 
     /**

@@ -9,7 +9,6 @@ use FcLibrariesSearch\Form\SearchForm;
 use Zend\Db\Sql\Select;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\Iterator as paginatorIterator;
-use FcLibraries\Controller\Plugin\LogPlugin as LogPlugin;
 
 /**
  * Class AirportController
@@ -86,13 +85,13 @@ class AirportController extends AbstractActionController implements ControllerIn
                 $message = "Airport '" . $data['name'] . "' was successfully added.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
-                $loggerPlugin = new LogPlugin();
+                $loggerPlugin = $this->LogPlugin();
                 $this->setDataForLogger($this->CommonData()->getAirportModel()->get($lastId));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
                 $logger = $this->getServiceLocator()->get('logger');
-                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'airport'));
+                $logger->addExtra(array('username' => $loggerPlugin->getCurrentUserName(), 'component' => 'airport'));
                 $logger->Info($loggerPlugin->getLogMessage());
 
                 return $this->redirect()->toRoute('zfcadmin/airport', array(
@@ -117,7 +116,7 @@ class AirportController extends AbstractActionController implements ControllerIn
         $data = $this->CommonData()->getAirportModel()->get($id);
 
         $this->setDataForLogger($data);
-        $loggerPlugin = new LogPlugin();
+        $loggerPlugin = $this->LogPlugin();
         $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
         $form = new AirportForm('airport', array('cities' => $this->CommonData()->getCities()));
@@ -137,11 +136,10 @@ class AirportController extends AbstractActionController implements ControllerIn
                 $this->flashMessenger()->addSuccessMessage($message);
 
                 $this->setDataForLogger($this->CommonData()->getAirportModel()->get($id));
-                $loggerPlugin->setNewLogRecord($this->dataForLogger);
-                $loggerPlugin->setLogMessage($message);
+                $loggerPlugin->setNewLogRecord($this->dataForLogger)->setLogMessage($message);
 
                 $logger = $this->getServiceLocator()->get('logger');
-                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'airport'));
+                $logger->addExtra(array('username' => $loggerPlugin->getCurrentUserName(), 'component' => 'airport'));
                 $logger->Notice($loggerPlugin->getLogMessage());
 
                 return $this->redirect()->toRoute('zfcadmin/airports');
@@ -171,7 +169,7 @@ class AirportController extends AbstractActionController implements ControllerIn
             if ($del == 'Yes') {
                 $id = (int)$request->getPost('id');
 
-                $loggerPlugin = new LogPlugin();
+                $loggerPlugin = $this->LogPlugin();
                 $this->setDataForLogger($this->CommonData()->getAirportModel()->get($id));
                 $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
@@ -183,7 +181,7 @@ class AirportController extends AbstractActionController implements ControllerIn
 
                 $loggerPlugin->setLogMessage($message);
                 $logger = $this->getServiceLocator()->get('logger');
-                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'airport'));
+                $logger->addExtra(array('username' => $loggerPlugin->getCurrentUserName(), 'component' => 'airport'));
                 $logger->Warn($loggerPlugin->getLogMessage());
             }
 
@@ -195,19 +193,6 @@ class AirportController extends AbstractActionController implements ControllerIn
             'id' => $id,
             'data' => $this->CommonData()->getAirportModel()->get($id)
         );
-    }
-
-    /**
-     * Get the display name of the user
-     *
-     * @return mixed
-     */
-    public function getCurrentUserName()
-    {
-        if ($this->zfcUserAuthentication()->hasIdentity()) {
-            return $this->zfcUserAuthentication()->getIdentity()->getUsername();
-        }
-        return null;
     }
 
     /**

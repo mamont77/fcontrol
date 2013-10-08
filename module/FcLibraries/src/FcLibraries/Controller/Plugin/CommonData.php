@@ -87,6 +87,7 @@ class CommonData extends AbstractPlugin
         if (!$this->aircraftModel) {
             $this->aircraftModel = $model;
         }
+
         return $this;
     }
 
@@ -107,6 +108,7 @@ class CommonData extends AbstractPlugin
         if (!$this->aircraftTypeModel) {
             $this->aircraftTypeModel = $model;
         }
+
         return $this;
     }
 
@@ -124,7 +126,10 @@ class CommonData extends AbstractPlugin
      */
     public function setAirOperatorModel(AirOperatorModel $model)
     {
-        $this->airOperatorModel = $model;
+        if (!$this->airOperatorModel) {
+            $this->airOperatorModel = $model;
+        }
+
         return $this;
     }
 
@@ -142,7 +147,10 @@ class CommonData extends AbstractPlugin
      */
     public function setAirportModel(AirportModel $model)
     {
-        $this->airportModel = $model;
+        if (!$this->airportModel) {
+            $this->airportModel = $model;
+        }
+
         return $this;
     }
 
@@ -160,7 +168,10 @@ class CommonData extends AbstractPlugin
      */
     public function setBaseOfPermitModel(BaseOfPermitModel $model)
     {
-        $this->baseOfPermitModel = $model;
+        if (!$this->baseOfPermitModel) {
+            $this->baseOfPermitModel = $model;
+        }
+
         return $this;
     }
 
@@ -178,7 +189,10 @@ class CommonData extends AbstractPlugin
      */
     public function setCityModel(CityModel $model)
     {
-        $this->cityModel = $model;
+        if (!$this->cityModel) {
+            $this->cityModel = $model;
+        }
+
         return $this;
     }
 
@@ -196,7 +210,10 @@ class CommonData extends AbstractPlugin
      */
     public function setCountryModel(CountryModel $model)
     {
-        $this->countryModel = $model;
+        if (!$this->countryModel) {
+            $this->countryModel = $model;
+        }
+
         return $this;
     }
 
@@ -214,7 +231,10 @@ class CommonData extends AbstractPlugin
      */
     public function setCurrencyModel(CurrencyModel $model)
     {
-        $this->currencyModel = $model;
+        if (!$this->currencyModel) {
+            $this->currencyModel = $model;
+        }
+
         return $this;
     }
 
@@ -232,7 +252,10 @@ class CommonData extends AbstractPlugin
      */
     public function setKontragentModel(KontragentModel $model)
     {
-        $this->kontragentModel = $model;
+        if (!$this->kontragentModel) {
+            $this->kontragentModel = $model;
+        }
+
         return $this;
     }
 
@@ -250,7 +273,10 @@ class CommonData extends AbstractPlugin
      */
     public function setRegionModel(RegionModel $model)
     {
-        $this->regionModel = $model;
+        if (!$this->regionModel) {
+            $this->regionModel = $model;
+        }
+
         return $this;
     }
 
@@ -268,7 +294,10 @@ class CommonData extends AbstractPlugin
      */
     public function setUnitModel(UnitModel $model)
     {
-        $this->unitModel = $model;
+        if (!$this->unitModel) {
+            $this->unitModel = $model;
+        }
+
         return $this;
     }
 

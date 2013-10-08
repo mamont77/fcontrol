@@ -9,7 +9,6 @@ use FcLibrariesSearch\Form\SearchForm;
 use Zend\Db\Sql\Select;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\Iterator as paginatorIterator;
-use FcLibraries\Controller\Plugin\LogPlugin as LogPlugin;
 
 /**
  * Class AirOperatorController
@@ -86,13 +85,13 @@ class AirOperatorController extends AbstractActionController implements Controll
                 $message = "Air Operator '" . $data['name'] . "' was successfully added.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
-                $loggerPlugin = new LogPlugin();
+                $loggerPlugin = $this->LogPlugin();
                 $this->setDataForLogger($this->CommonData()->getAirOperatorModel()->get($lastId));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
                 $logger = $this->getServiceLocator()->get('logger');
-                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'air operator'));
+                $logger->addExtra(array('username' => $loggerPlugin->getCurrentUserName(), 'component' => 'air operator'));
                 $logger->Info($loggerPlugin->getLogMessage());
 
                 return $this->redirect()->toRoute('zfcadmin/air_operator',
@@ -118,7 +117,7 @@ class AirOperatorController extends AbstractActionController implements Controll
         $data = $this->CommonData()->getAirOperatorModel()->get($id);
 
         $this->setDataForLogger($data);
-        $loggerPlugin = new LogPlugin();
+        $loggerPlugin = $this->LogPlugin();
         $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
         $form = new AirOperatorForm('air_operator', array('countries' => $this->CommonData()->getCountries()));
@@ -138,11 +137,10 @@ class AirOperatorController extends AbstractActionController implements Controll
                 $this->flashMessenger()->addSuccessMessage($message);
 
                 $this->setDataForLogger($this->CommonData()->getAirOperatorModel()->get($id));
-                $loggerPlugin->setNewLogRecord($this->dataForLogger);
-                $loggerPlugin->setLogMessage($message);
+                $loggerPlugin->setNewLogRecord($this->dataForLogger)->setLogMessage($message);
 
                 $logger = $this->getServiceLocator()->get('logger');
-                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'air operator'));
+                $logger->addExtra(array('username' => $loggerPlugin->getCurrentUserName(), 'component' => 'air operator'));
                 $logger->Notice($loggerPlugin->getLogMessage());
 
                 return $this->redirect()->toRoute('zfcadmin/air_operators');
@@ -172,7 +170,7 @@ class AirOperatorController extends AbstractActionController implements Controll
             if ($del == 'Yes') {
                 $id = (int)$request->getPost('id');
 
-                $loggerPlugin = new LogPlugin();
+                $loggerPlugin = $this->LogPlugin();
                 $this->setDataForLogger($this->CommonData()->getAirOperatorModel()->get($id));
                 $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
@@ -184,7 +182,7 @@ class AirOperatorController extends AbstractActionController implements Controll
 
                 $loggerPlugin->setLogMessage($message);
                 $logger = $this->getServiceLocator()->get('logger');
-                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'aircraft'));
+                $logger->addExtra(array('username' => $loggerPlugin->getCurrentUserName(), 'component' => 'aircraft'));
                 $logger->Warn($loggerPlugin->getLogMessage());
 
             }
@@ -197,19 +195,6 @@ class AirOperatorController extends AbstractActionController implements Controll
             'id' => $id,
             'data' => $this->CommonData()->getAirOperatorModel()->get($id)
         );
-    }
-
-    /**
-     * Get the display name of the user
-     *
-     * @return mixed
-     */
-    public function getCurrentUserName()
-    {
-        if ($this->zfcUserAuthentication()->hasIdentity()) {
-            return $this->zfcUserAuthentication()->getIdentity()->getUsername();
-        }
-        return null;
     }
 
     /**

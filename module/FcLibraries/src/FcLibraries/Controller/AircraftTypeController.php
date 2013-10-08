@@ -9,7 +9,6 @@ use FcLibrariesSearch\Form\SearchForm;
 use Zend\Db\Sql\Select;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\Iterator as paginatorIterator;
-use FcLibraries\Controller\Plugin\LogPlugin as LogPlugin;
 
 /**
  * Class AircraftTypeController
@@ -81,13 +80,13 @@ class AircraftTypeController extends AbstractActionController implements Control
                 $message = "Type Aircraft '" . $data['name'] . "' was successfully added.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
-                $loggerPlugin = new LogPlugin();
+                $loggerPlugin = $this->LogPlugin();
                 $this->setDataForLogger($this->CommonData()->getAircraftTypeModel()->get($lastId));
-                $loggerPlugin->setNewLogRecord($this->dataForLogger);
-                $loggerPlugin->setLogMessage($message);
+                $loggerPlugin->setNewLogRecord($this->dataForLogger)->setLogMessage($message);
 
                 $logger = $this->getServiceLocator()->get('logger');
-                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'aircraft type'));
+                $logger->addExtra(array('username' => $loggerPlugin->getCurrentUserName(),
+                    'component' => 'aircraft type'));
                 $logger->Info($loggerPlugin->getLogMessage());
 
                 return $this->redirect()->toRoute('zfcadmin/aircraft_type',
@@ -113,7 +112,7 @@ class AircraftTypeController extends AbstractActionController implements Control
         $data = $this->CommonData()->getAircraftTypeModel()->get($id);
 
         $this->setDataForLogger($data);
-        $loggerPlugin = new LogPlugin();
+        $loggerPlugin = $this->LogPlugin();
         $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
         $form = new AircraftTypeForm();
@@ -133,11 +132,10 @@ class AircraftTypeController extends AbstractActionController implements Control
                 $this->flashMessenger()->addSuccessMessage($message);
 
                 $this->setDataForLogger($this->CommonData()->getAircraftTypeModel()->get($id));
-                $loggerPlugin->setNewLogRecord($this->dataForLogger);
-                $loggerPlugin->setLogMessage($message);
+                $loggerPlugin->setNewLogRecord($this->dataForLogger)->setLogMessage($message);
 
                 $logger = $this->getServiceLocator()->get('logger');
-                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'aircraft type'));
+                $logger->addExtra(array('username' => $loggerPlugin->getCurrentUserName(), 'component' => 'aircraft type'));
                 $logger->Notice($loggerPlugin->getLogMessage());
 
                 return $this->redirect()->toRoute('zfcadmin/aircraft_type');
@@ -167,7 +165,7 @@ class AircraftTypeController extends AbstractActionController implements Control
             if ($del == 'Yes') {
                 $id = (int)$request->getPost('id');
 
-                $loggerPlugin = new LogPlugin();
+                $loggerPlugin = $this->LogPlugin();
                 $this->setDataForLogger($this->CommonData()->getAircraftTypeModel()->get($id));
                 $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
@@ -179,7 +177,7 @@ class AircraftTypeController extends AbstractActionController implements Control
 
                 $loggerPlugin->setLogMessage($message);
                 $logger = $this->getServiceLocator()->get('logger');
-                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'aircraft type'));
+                $logger->addExtra(array('username' => $loggerPlugin->getCurrentUserName(), 'component' => 'aircraft type'));
                 $logger->Warn($loggerPlugin->getLogMessage());
             }
 
@@ -191,19 +189,6 @@ class AircraftTypeController extends AbstractActionController implements Control
             'id' => $id,
             'data' => $this->CommonData()->getAircraftTypeModel()->get($id)
         );
-    }
-
-    /**
-     * Get the display name of the user
-     *
-     * @return mixed
-     */
-    public function getCurrentUserName()
-    {
-        if ($this->zfcUserAuthentication()->hasIdentity()) {
-            return $this->zfcUserAuthentication()->getIdentity()->getUsername();
-        }
-        return null;
     }
 
     /**

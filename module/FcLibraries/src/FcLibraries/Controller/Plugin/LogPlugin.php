@@ -26,6 +26,11 @@ class LogPlugin extends AbstractPlugin
     protected $logMessage;
 
     /**
+     * @var string
+     */
+    protected $userName;
+
+    /**
      * @param $data
      */
     public function setOldLogRecord($data)
@@ -39,6 +44,8 @@ class LogPlugin extends AbstractPlugin
     public function setNewLogRecord($data)
     {
         $this->newRecord = $data;
+
+        return $this;
     }
 
     /**
@@ -54,6 +61,8 @@ class LogPlugin extends AbstractPlugin
             ),
         );
         $this->logMessage = serialize($this->logMessage);
+
+        return $this;
     }
 
     /**
@@ -78,5 +87,26 @@ class LogPlugin extends AbstractPlugin
     public function getLogMessage()
     {
         return $this->logMessage;
+    }
+
+    /**
+     * @param $userName
+     * @return $this
+     */
+    public function setCurrentUserName($userName)
+    {
+        $this->userName = $userName;
+
+        return $this;
+    }
+
+    /**
+     * Get the display name of the user
+     *
+     * @return string
+     */
+    public function getCurrentUserName()
+    {
+        return $this->userName;
     }
 }
