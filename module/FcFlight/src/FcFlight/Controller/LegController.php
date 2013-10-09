@@ -5,11 +5,9 @@ namespace FcFlight\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use FcFlight\Form\LegForm;
-use FcLibraries\Controller\Plugin\LogPlugin as LogPlugin;
 
 class LegController extends FlightController
 {
-
     /**
      * @var array
      */
@@ -28,9 +26,9 @@ class LegController extends FlightController
             ));
         }
 
-        $refNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($headerId);
+        $refNumberOrder = $this->CommonData()->getFlightHeaderModel()->getRefNumberOrderById($headerId);
 
-        $legs = $this->getLegModel()->getByHeaderId($headerId);
+        $legs = $this->CommonData()->getLegModel()->getByHeaderId($headerId);
         $lastLeg = end($legs);
 
         if ($lastLeg) {
@@ -45,8 +43,8 @@ class LegController extends FlightController
             array(
                 'headerId' => $headerId,
                 'libraries' => array(
-                    'flightNumberIcaoAndIata' => $this->getAirOperators(),
-                    'appIcaoAndIata' => $this->getAirports(),
+                    'flightNumberIcaoAndIata' => $this->CommonData()->getAirOperators(),
+                    'appIcaoAndIata' => $this->CommonData()->getAirports(),
                 ),
                 'previousValues' => array(
                     'previousDate' => $previousDate,
@@ -66,18 +64,18 @@ class LegController extends FlightController
             if ($form->isValid()) {
                 $data = $form->getData();
                 $filter->exchangeArray($data);
-                $data = $this->getLegModel()->add($filter);
+                $data = $this->CommonData()->getLegModel()->add($filter);
 
                 $message = "Leg '" . $data['hash'] . "' was successfully added.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
-                $loggerPlugin = new LogPlugin();
-                $this->setDataForLogger($this->getLegModel()->get($data['lastInsertValue']));
+                $loggerPlugin = $this->LogPlugin();
+                $this->setDataForLogger($this->CommonData()->getLegModel()->get($data['lastInsertValue']));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
                 $logger = $this->getServiceLocator()->get('logger');
-                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'leg'));
+                $logger->addExtra(array('username' => $loggerPlugin->getCurrentUserName(), 'component' => 'leg'));
                 $logger->Info($loggerPlugin->getLogMessage());
 
                 return $this->redirect()->toRoute('leg',
@@ -106,11 +104,11 @@ class LegController extends FlightController
             ));
         }
 
-        $refNumberOrder = $this->getLegModel()->getHeaderRefNumberOrderByLegId($id);
+        $refNumberOrder = $this->CommonData()->getLegModel()->getHeaderRefNumberOrderByLegId($id);
 
-        $data = $this->getLegModel()->get($id);
+        $data = $this->CommonData()->getLegModel()->get($id);
 
-        $legs = $this->getLegModel()->getByHeaderId($data->headerId);
+        $legs = $this->CommonData()->getLegModel()->getByHeaderId($data->headerId);
         $lastLeg = end($legs);
 
         if ($lastLeg) {
@@ -122,7 +120,7 @@ class LegController extends FlightController
         }
 
         $this->setDataForLogger($data);
-        $loggerPlugin = new LogPlugin();
+        $loggerPlugin = $this->LogPlugin();
         $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
         $data->flightNumber['flightNumberIcaoAndIata'] = $data->flightNumberIcaoAndIata;
@@ -135,8 +133,8 @@ class LegController extends FlightController
         $form = new LegForm('leg',
             array(
                 'libraries' => array(
-                    'flightNumberIcaoAndIata' => $this->getAirOperators(),
-                    'appIcaoAndIata' => $this->getAirports(),
+                    'flightNumberIcaoAndIata' => $this->CommonData()->getAirOperators(),
+                    'appIcaoAndIata' => $this->CommonData()->getAirports(),
                 ),
                 'previousValues' => array(
                     'previousDate' => $previousDate,
@@ -159,17 +157,17 @@ class LegController extends FlightController
 
             if ($form->isValid()) {
                 $data = $form->getData();
-                $summaryData = $this->getLegModel()->save($data);
+                $summaryData = $this->CommonData()->getLegModel()->save($data);
 
                 $message = "Leg '" . $summaryData . "' was successfully saved.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
-                $this->setDataForLogger($this->getLegModel()->get($id));
+                $this->setDataForLogger($this->CommonData()->getLegModel()->get($id));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
                 $logger = $this->getServiceLocator()->get('logger');
-                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'leg'));
+                $logger->addExtra(array('username' => $loggerPlugin->getCurrentUserName(), 'component' => 'leg'));
                 $logger->Notice($loggerPlugin->getLogMessage());
 
                 return $this->redirect()->toRoute('browse',
@@ -199,25 +197,25 @@ class LegController extends FlightController
 
         $request = $this->getRequest();
         $refUri = $request->getHeader('Referer')->uri()->getPath();
-        $refNumberOrder = $this->getLegModel()->getHeaderRefNumberOrderByLegId($id);
+        $refNumberOrder = $this->CommonData()->getLegModel()->getHeaderRefNumberOrderByLegId($id);
 
         if ($request->isPost()) {
             $del = $request->getPost('del', 'No');
             if ($del == 'Yes') {
 
-                $loggerPlugin = new LogPlugin();
-                $this->setDataForLogger($this->getLegModel()->get($id));
+                $loggerPlugin = $this->LogPlugin();
+                $this->setDataForLogger($this->CommonData()->getLegModel()->get($id));
                 $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
                 $id = (int)$request->getPost('id');
-                $this->getLegModel()->remove($id);
+                $this->CommonData()->getLegModel()->remove($id);
 
                 $message = "Leg was successfully deleted.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
                 $loggerPlugin->setLogMessage($message);
                 $logger = $this->getServiceLocator()->get('logger');
-                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'leg'));
+                $logger->addExtra(array('username' => $loggerPlugin->getCurrentUserName(), 'component' => 'leg'));
                 $logger->Warn($loggerPlugin->getLogMessage());
             }
 
@@ -230,21 +228,8 @@ class LegController extends FlightController
             'id' => $id,
             'referer' => $refUri,
             'refNumberOrder' => $refNumberOrder,
-            'leg' => $this->getLegModel()->get($id)
+            'leg' => $this->CommonData()->getLegModel()->get($id)
         );
-    }
-
-    /**
-     * Get the display name of the user
-     *
-     * @return mixed
-     */
-    public function getCurrentUserName()
-    {
-        if ($this->zfcUserAuthentication()->hasIdentity()) {
-            return $this->zfcUserAuthentication()->getIdentity()->getUsername();
-        }
-        return null;
     }
 
     /**

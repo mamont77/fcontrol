@@ -16,12 +16,6 @@ use Zend\Paginator\Adapter\Iterator as paginatorIterator;
  */
 class KontragentController extends AbstractActionController implements ControllerInterface
 {
-
-    /**
-     * @var
-     */
-    protected $kontragentModel;
-
     /**
      * @var array
      */

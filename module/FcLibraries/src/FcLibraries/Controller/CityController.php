@@ -16,17 +16,6 @@ use Zend\Paginator\Adapter\Iterator as paginatorIterator;
  */
 class CityController extends AbstractActionController implements ControllerInterface
 {
-
-    /**
-     * @var
-     */
-    protected $countryModel;
-
-    /**
-     * @var
-     */
-    protected $cityModel;
-
     /**
      * @var array
      */

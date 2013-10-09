@@ -9,45 +9,9 @@ use FcFlight\Form\SearchForm;
 use Zend\Db\Sql\Select;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\Iterator as paginatorIterator;
-use FcLibraries\Controller\Plugin\LogPlugin as LogPlugin;
 
 class FlightController extends AbstractActionController
 {
-    /**
-     * @var
-     */
-    protected $flightHeaderModel;
-
-    /**
-     * @var
-     */
-    protected $legModel;
-
-    /**
-     * @var
-     */
-    protected $refuelModel;
-
-    /**
-     * @var
-     */
-    protected $kontragentModel;
-
-    /**
-     * @var
-     */
-    protected $airOperatorModel;
-
-    /**
-     * @var
-     */
-    protected $aircraftModel;
-
-    /**
-     * @var
-     */
-    protected $airportModel;
-
     /**
      * @var array
      */
@@ -67,10 +31,10 @@ class FlightController extends AbstractActionController
         $orderAs = $this->params()->fromRoute('order') ? $this->params()->fromRoute('order') : $orderAsType;
 
         if ($orderBy == $orderByMaster && $orderAsType == $orderAs) {
-            $data = $this->getFlightHeaderModel()->fetchAll($select->order($orderBy . ' ' . $orderAs
+            $data = $this->CommonData()->getFlightHeaderModel()->fetchAll($select->order($orderBy . ' ' . $orderAs
             . ', id ' . $orderAs));
         } else {
-            $data = $this->getFlightHeaderModel()->fetchAll($select->order($orderBy . ' ' . $orderAs));
+            $data = $this->CommonData()->getFlightHeaderModel()->fetchAll($select->order($orderBy . ' ' . $orderAs));
         }
         $data->current();
 
@@ -98,10 +62,10 @@ class FlightController extends AbstractActionController
 
         $page = $this->params()->fromRoute('page') ? (int)$this->params()->fromRoute('page') : 1;
         if ($orderBy == $orderByMaster && $orderAsType == $orderAs) {
-            $data = $this->getFlightHeaderModel()->fetchAll($select->order($orderBy . ' ' . $orderAs
+            $data = $this->CommonData()->getFlightHeaderModel()->fetchAll($select->order($orderBy . ' ' . $orderAs
             . ', id ' . $orderAs), 0);
         } else {
-            $data = $this->getFlightHeaderModel()->fetchAll($select->order($orderBy . ' ' . $orderAs), 0);
+            $data = $this->CommonData()->getFlightHeaderModel()->fetchAll($select->order($orderBy . ' ' . $orderAs), 0);
         }
         $itemsPerPage = 20;
         $data->current();
@@ -135,10 +99,10 @@ class FlightController extends AbstractActionController
             ));
         }
 
-        $header = $this->getFlightHeaderModel()->getByRefNumberOrder($refNumberOrder);
+        $header = $this->CommonData()->getFlightHeaderModel()->getByRefNumberOrder($refNumberOrder);
 
-        $legs = $this->getLegModel()->getByHeaderId($header->id);
-        $refuels = $this->getRefuelModel()->getByHeaderId($header->id);
+        $legs = $this->CommonData()->getLegModel()->getByHeaderId($header->id);
+        $refuels = $this->CommonData()->getRefuelModel()->getByHeaderId($header->id);
 
         return new ViewModel(array(
             'header' => $header,
@@ -156,9 +120,9 @@ class FlightController extends AbstractActionController
         $form = new FlightHeaderForm('flightHeader',
             array(
                 'libraries' => array(
-                    'kontragent' => $this->getKontragents(),
-                    'air_operator' => $this->getAirOperators(),
-                    'aircraft' => $this->getAircrafts(),
+                    'kontragent' => $this->CommonData()->getKontragents(),
+                    'air_operator' => $this->CommonData()->getAirOperators(),
+                    'aircraft' => $this->CommonData()->getAircrafts(),
                 )
             )
         );
@@ -172,18 +136,18 @@ class FlightController extends AbstractActionController
             if ($form->isValid()) {
                 $data = $form->getData();
                 $filter->exchangeArray($data);
-                $data = $this->getFlightHeaderModel()->add($filter);
+                $data = $this->CommonData()->getFlightHeaderModel()->add($filter);
 
                 $message = "Flights '" . $data['refNumberOrder'] . "' was successfully added.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
-                $loggerPlugin = new LogPlugin();
-                $this->setDataForLogger($this->getFlightHeaderModel()->get($data['lastInsertValue']));
+                $loggerPlugin = $this->LogPlugin();
+                $this->setDataForLogger($this->CommonData()->getFlightHeaderModel()->get($data['lastInsertValue']));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
                 $logger = $this->getServiceLocator()->get('logger');
-                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'flight'));
+                $logger->addExtra(array('username' => $loggerPlugin->getCurrentUserName(), 'component' => 'flight'));
                 $logger->Info($loggerPlugin->getLogMessage());
 
                 return $this->redirect()->toRoute('browse',
@@ -207,18 +171,18 @@ class FlightController extends AbstractActionController
                 'action' => 'add'
             ));
         }
-        $data = $this->getFlightHeaderModel()->get($id);
+        $data = $this->CommonData()->getFlightHeaderModel()->get($id);
 
         $this->setDataForLogger($data);
-        $loggerPlugin = new LogPlugin();
+        $loggerPlugin = $this->LogPlugin();
         $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
         $form = new FlightHeaderForm('flightHeader',
             array(
                 'libraries' => array(
-                    'kontragent' => $this->getKontragents(),
-                    'air_operator' => $this->getAirOperators(),
-                    'aircraft' => $this->getAircrafts(),
+                    'kontragent' => $this->CommonData()->getKontragents(),
+                    'air_operator' => $this->CommonData()->getAirOperators(),
+                    'aircraft' => $this->CommonData()->getAircrafts(),
                 )
             )
         );
@@ -233,17 +197,17 @@ class FlightController extends AbstractActionController
             $form->setData($request->getPost());
             if ($form->isValid()) {
                 $data = $form->getData();
-                $refNumberOrder = $this->getFlightHeaderModel()->save($data);
+                $refNumberOrder = $this->CommonData()->getFlightHeaderModel()->save($data);
 
                 $message = "Flights '" . $refNumberOrder . "' was successfully saved.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
-                $this->setDataForLogger($this->getFlightHeaderModel()->get($id));
+                $this->setDataForLogger($this->CommonData()->getFlightHeaderModel()->get($id));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
                 $logger = $this->getServiceLocator()->get('logger');
-                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'flight'));
+                $logger->addExtra(array('username' => $loggerPlugin->getCurrentUserName(), 'component' => 'flight'));
                 $logger->Notice($loggerPlugin->getLogMessage());
 
                 return $this->redirect()->toRoute('home');
@@ -273,19 +237,19 @@ class FlightController extends AbstractActionController
             if ($del == 'Yes') {
                 $id = (int)$request->getPost('id');
 
-                $loggerPlugin = new LogPlugin();
-                $this->setDataForLogger($this->getFlightHeaderModel()->get($id));
+                $loggerPlugin = $this->LogPlugin();
+                $this->setDataForLogger($this->CommonData()->getFlightHeaderModel()->get($id));
                 $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
                 $refNumberOrder = (string)$request->getPost('refNumberOrder');
-                $this->getFlightHeaderModel()->remove($id);
+                $this->CommonData()->getFlightHeaderModel()->remove($id);
 
                 $message = "Flights '" . $refNumberOrder . "' was successfully deleted.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
                 $loggerPlugin->setLogMessage($message);
                 $logger = $this->getServiceLocator()->get('logger');
-                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'flight'));
+                $logger->addExtra(array('username' => $loggerPlugin->getCurrentUserName(), 'component' => 'flight'));
                 $logger->Warn($loggerPlugin->getLogMessage());
             }
 
@@ -295,7 +259,7 @@ class FlightController extends AbstractActionController
 
         return array(
             'id' => $id,
-            'data' => $this->getFlightHeaderModel()->get($id)
+            'data' => $this->CommonData()->getFlightHeaderModel()->get($id)
         );
     }
 
@@ -308,15 +272,15 @@ class FlightController extends AbstractActionController
         if (!$id) {
             return $this->redirect()->toRoute('home');
         }
-        $data = $this->getFlightHeaderModel()->get($id);
+        $data = $this->CommonData()->getFlightHeaderModel()->get($id);
 
         $this->setDataForLogger($data);
-        $loggerPlugin = new LogPlugin();
+        $loggerPlugin = $this->LogPlugin();
         $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
         $data->status = ($data->status) ? 0 : 1;
 
-        $this->getFlightHeaderModel()->save($data);
+        $this->CommonData()->getFlightHeaderModel()->save($data);
 
         $message = "Status for flights '" . $data->refNumberOrder . "' was successfully switched.";
         $this->flashMessenger()->addSuccessMessage($message);
@@ -326,7 +290,7 @@ class FlightController extends AbstractActionController
         $loggerPlugin->setLogMessage($message);
 
         $logger = $this->getServiceLocator()->get('logger');
-        $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'flight'));
+        $logger->addExtra(array('username' => $loggerPlugin->getCurrentUserName(), 'component' => 'flight'));
         $logger->Notice($loggerPlugin->getLogMessage());
 
         return $this->redirect()->toRoute('browse',
@@ -334,128 +298,6 @@ class FlightController extends AbstractActionController
                 'action' => 'show',
                 'refNumberOrder' => $data->refNumberOrder,
             ));
-    }
-
-    /**
-     * @return array|object
-     */
-    public function getFlightHeaderModel()
-    {
-        if (!$this->flightHeaderModel) {
-            $sm = $this->getServiceLocator();
-            $this->flightHeaderModel = $sm->get('FcFlight\Model\FlightHeaderModel');
-        }
-        return $this->flightHeaderModel;
-    }
-
-    /**
-     * @return array|object
-     */
-    public function getLegModel()
-    {
-        if (!$this->legModel) {
-            $sm = $this->getServiceLocator();
-            $this->legModel = $sm->get('FcFlight\Model\LegModel');
-        }
-        return $this->legModel;
-    }
-
-    public function getLibraryKontragentModel()
-    {
-        if (!$this->kontragentModel) {
-            $sm = $this->getServiceLocator();
-            $this->kontragentModel = $sm->get('FcLibraries\Model\KontragentModel');
-        }
-
-        return $this->kontragentModel;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getKontragents()
-    {
-        return $this->getLibraryKontragentModel()->fetchAll();
-    }
-
-
-    public function getLibraryAirOperatorModel()
-    {
-        if (!$this->airOperatorModel) {
-            $sm = $this->getServiceLocator();
-            $this->airOperatorModel = $sm->get('FcLibraries\Model\AirOperatorModel');
-        }
-
-        return $this->airOperatorModel;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAirOperators()
-    {
-        return $this->getLibraryAirOperatorModel()->fetchAll();
-    }
-
-    public function getLibraryAircraftModel()
-    {
-        if (!$this->aircraftModel) {
-            $sm = $this->getServiceLocator();
-            $this->aircraftModel = $sm->get('FcLibraries\Model\AircraftModel');
-        }
-
-        return $this->aircraftModel;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAircrafts()
-    {
-        return $this->getLibraryAircraftModel()->fetchAll();
-    }
-
-    public function getLibraryAirportModel()
-    {
-        if (!$this->airportModel) {
-            $sm = $this->getServiceLocator();
-            $this->airportModel = $sm->get('FcLibraries\Model\AirportModel');
-        }
-
-        return $this->airportModel;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAirports()
-    {
-        return $this->getLibraryAirportModel()->fetchAll();
-    }
-
-    /**
-     * @return array|object
-     */
-    public function getRefuelModel()
-    {
-        if (!$this->refuelModel) {
-            $sm = $this->getServiceLocator();
-            $this->refuelModel = $sm->get('FcFlight\Model\RefuelModel');
-        }
-        return $this->refuelModel;
-    }
-
-    /**
-     * Get the display name of the user
-     *
-     * @return mixed
-     */
-    public function getCurrentUserName()
-    {
-        if ($this->zfcUserAuthentication()->hasIdentity()) {
-            return $this->zfcUserAuthentication()->getIdentity()->getUsername();
-        }
-        return null;
     }
 
     /**

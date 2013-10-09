@@ -9,6 +9,13 @@ return array(
         ),
     ),
 
+    'controller_plugins' => array(
+        'invokables' => array(
+            'FcFlight\Controller\Plugin\CommonData' => 'FcFlight\Controller\Plugin\CommonData',
+            'FcFlight\Controller\Plugin\LogPlugin' => 'FcFlight\Controller\Plugin\LogPlugin',
+        ),
+    ),
+
     'router' => array(
         'routes' => array(
             'home' => array(

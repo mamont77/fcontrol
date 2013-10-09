@@ -15,12 +15,6 @@ use Zend\Paginator\Adapter\Iterator as paginatorIterator;
  */
 class UnitController extends AbstractActionController implements ControllerInterface
 {
-
-    /**
-     * @var
-     */
-    protected $unitModel;
-
     /**
      * @var array
      */

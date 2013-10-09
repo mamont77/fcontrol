@@ -15,12 +15,6 @@ use Zend\Paginator\Adapter\Iterator as paginatorIterator;
  */
 class CurrencyController extends AbstractActionController implements ControllerInterface
 {
-
-    /**
-     * @var
-     */
-    protected $currencyModel;
-
     /**
      * @var array
      */

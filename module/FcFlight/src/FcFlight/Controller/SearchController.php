@@ -13,11 +13,6 @@ use FcFlight\Form\SearchForm;
 class SearchController extends AbstractActionController
 {
     /**
-     * @var
-     */
-    protected $searchModel;
-
-    /**
      * @return ViewModel
      */
     public function searchResultAction()
@@ -44,7 +39,7 @@ class SearchController extends AbstractActionController
                 if ($searchForm->isValid()) {
                     $data = $searchForm->getData();
                     $filter->exchangeArray($data);
-                    $result = $this->getSearchModel()->findSearchResult($filter);
+                    $result = $this->CommonData()->getSearchModel()->findSearchResult($filter);
                     if (count($result) == 0) {
                         $result = 'Result not found!';
                     }
@@ -57,17 +52,5 @@ class SearchController extends AbstractActionController
             'searchForm' => $searchForm,
             'route' => 'flightsSearch',
         ));
-    }
-
-    /**
-     * @return array|object
-     */
-    public function getSearchModel()
-    {
-        if (!$this->searchModel) {
-            $sm = $this->getServiceLocator();
-            $this->searchModel = $sm->get('FcFlight\Model\SearchModel');
-        }
-        return $this->searchModel;
     }
 }

@@ -16,17 +16,6 @@ use Zend\Paginator\Adapter\Iterator as paginatorIterator;
  */
 class AirOperatorController extends AbstractActionController implements ControllerInterface
 {
-
-    /**
-     * @var
-     */
-    protected $airOperatorModel;
-
-    /**
-     * @var
-     */
-    protected $countryModel;
-
     /**
      * @var array
      */

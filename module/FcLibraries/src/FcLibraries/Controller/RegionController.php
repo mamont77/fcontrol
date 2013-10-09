@@ -15,12 +15,6 @@ use Zend\Paginator\Adapter\Iterator as paginatorIterator;
  */
 class RegionController extends AbstractActionController implements ControllerInterface
 {
-
-    /**
-     * @var
-     */
-    protected $regionModel;
-
     /**
      * @var array
      */

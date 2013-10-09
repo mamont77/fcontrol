@@ -17,11 +17,6 @@ use Zend\Paginator\Adapter\Iterator as paginatorIterator;
 class AircraftController extends AbstractActionController implements ControllerInterface
 {
     /**
-     * @var
-     */
-    protected $aircraftModel;
-
-    /**
      * @var array
      */
     protected $dataForLogger = array();

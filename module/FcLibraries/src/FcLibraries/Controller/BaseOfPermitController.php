@@ -18,21 +18,6 @@ use Zend\Json\Json as Json;
 class BaseOfPermitController extends AbstractActionController implements ControllerInterface
 {
     /**
-     * @var
-     */
-    protected $baseOfPermitModel;
-
-    /**
-     * @var
-     */
-    protected $countryModel;
-
-    /**
-     * @var
-     */
-    protected $airportModel;
-
-    /**
      * @var array
      */
     protected $dataForLogger = array();

@@ -5,7 +5,6 @@ namespace FcFlight\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use FcFlight\Form\RefuelForm;
-use FcLibraries\Controller\Plugin\LogPlugin as LogPlugin;
 
 class RefuelController extends FlightController
 {
@@ -14,11 +13,6 @@ class RefuelController extends FlightController
      * @var int
      */
     protected $headerId;
-
-    /**
-     * @var
-     */
-    protected $unitModel;
 
     /**
      * @var array
@@ -38,9 +32,9 @@ class RefuelController extends FlightController
             ));
         }
 
-        $refNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($this->headerId);
+        $refNumberOrder = $this->CommonData()->getFlightHeaderModel()->getRefNumberOrderById($this->headerId);
 
-        $refuels = $this->getRefuelModel()->getByHeaderId($this->headerId);
+        $refuels = $this->CommonData()->getRefuelModel()->getByHeaderId($this->headerId);
         $lastRefuel = end($refuels);
         if ($lastRefuel) {
             $previousDate = $lastRefuel['date'];
@@ -52,9 +46,9 @@ class RefuelController extends FlightController
             array(
                 'headerId' => $this->headerId,
                 'libraries' => array(
-                    'airports' => $this->getParentLeg(),
-                    'agents' => $this->getKontragents(),
-                    'units' => $this->getUnits(),
+                    'airports' => $this->CommonData()->getParentLeg($this->headerId),
+                    'agents' => $this->CommonData()->getKontragents(),
+                    'units' => $this->CommonData()->getUnits(),
                 ),
                 'previousValues' => array(
                     'previousDate' => $previousDate,
@@ -71,18 +65,18 @@ class RefuelController extends FlightController
             if ($form->isValid()) {
                 $data = $form->getData();
                 $filter->exchangeArray($data);
-                $data = $this->getRefuelModel()->add($filter);
+                $data = $this->CommonData()->getRefuelModel()->add($filter);
 
                 $message = "Refuel '" . $data['hash'] . "' was successfully added.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
-                $loggerPlugin = new LogPlugin();
-                $this->setDataForLogger($this->getRefuelModel()->get($data['lastInsertValue']));
+                $loggerPlugin = $this->LogPlugin();
+                $this->setDataForLogger($this->CommonData()->getRefuelModel()->get($data['lastInsertValue']));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
                 $logger = $this->getServiceLocator()->get('logger');
-                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'refuel'));
+                $logger->addExtra(array('username' => $loggerPlugin->getCurrentUserName(), 'component' => 'refuel'));
                 $logger->Info($loggerPlugin->getLogMessage());
 
                 return $this->redirect()->toRoute('refuel',
@@ -112,12 +106,12 @@ class RefuelController extends FlightController
             ));
         }
 
-        $refNumberOrder = $this->getRefuelModel()->getHeaderRefNumberOrderByRefuelId($id);
+        $refNumberOrder = $this->CommonData()->getRefuelModel()->getHeaderRefNumberOrderByRefuelId($id);
 
-        $data = $this->getRefuelModel()->get($id);
+        $data = $this->CommonData()->getRefuelModel()->get($id);
         $this->headerId = (int)$data->headerId;
 
-        $refuels = $this->getRefuelModel()->getByHeaderId($this->headerId);
+        $refuels = $this->CommonData()->getRefuelModel()->getByHeaderId($this->headerId);
         $lastRefuel = end($refuels);
         if ($lastRefuel) {
             $previousDate = $lastRefuel['date'];
@@ -126,15 +120,15 @@ class RefuelController extends FlightController
         }
 
         $this->setDataForLogger($data);
-        $loggerPlugin = new LogPlugin();
+        $loggerPlugin = $this->LogPlugin();
         $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
         $form = new RefuelForm('refuel',
             array(
                 'libraries' => array(
-                    'airports' => $this->getParentLeg(),
-                    'agents' => $this->getKontragents(),
-                    'units' => $this->getUnits(),
+                    'airports' => $this->CommonData()->getParentLeg($this->headerId),
+                    'agents' => $this->CommonData()->getKontragents(),
+                    'units' => $this->CommonData()->getUnits(),
                 ),
                 'previousValues' => array(
                     'previousDate' => $previousDate,
@@ -154,17 +148,17 @@ class RefuelController extends FlightController
 
             if ($form->isValid()) {
                 $data = $form->getData();
-                $summaryData = $this->getRefuelModel()->save($data);
+                $summaryData = $this->CommonData()->getRefuelModel()->save($data);
 
                 $message = "Refuel '" . $summaryData . "' was successfully saved.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
-                $this->setDataForLogger($this->getRefuelModel()->get($id));
+                $this->setDataForLogger($this->CommonData()->getRefuelModel()->get($id));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
                 $logger = $this->getServiceLocator()->get('logger');
-                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'refuel'));
+                $logger->addExtra(array('username' => $loggerPlugin->getCurrentUserName(), 'component' => 'refuel'));
                 $logger->Notice($loggerPlugin->getLogMessage());
 
                 return $this->redirect()->toRoute('browse',
@@ -194,25 +188,25 @@ class RefuelController extends FlightController
 
         $request = $this->getRequest();
         $refUri = $request->getHeader('Referer')->uri()->getPath();
-        $refNumberOrder = $this->getRefuelModel()->getHeaderRefNumberOrderByRefuelId($id);
+        $refNumberOrder = $this->CommonData()->getRefuelModel()->getHeaderRefNumberOrderByRefuelId($id);
 
         if ($request->isPost()) {
             $del = $request->getPost('del', 'No');
             if ($del == 'Yes') {
                 $id = (int)$request->getPost('id');
 
-                $loggerPlugin = new LogPlugin();
-                $this->setDataForLogger($this->getRefuelModel()->get($id));
+                $loggerPlugin = $this->LogPlugin();
+                $this->setDataForLogger($this->CommonData()->getRefuelModel()->get($id));
                 $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
-                $this->getRefuelModel()->remove($id);
+                $this->CommonData()->getRefuelModel()->remove($id);
 
                 $message = "Refuel was successfully deleted.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
                 $loggerPlugin->setLogMessage($message);
                 $logger = $this->getServiceLocator()->get('logger');
-                $logger->addExtra(array('username' => $this->getCurrentUserName(), 'component' => 'refuel'));
+                $logger->addExtra(array('username' => $loggerPlugin->getCurrentUserName(), 'component' => 'refuel'));
                 $logger->Warn($loggerPlugin->getLogMessage());
             }
 
@@ -225,50 +219,8 @@ class RefuelController extends FlightController
             'id' => $id,
             'referer' => $refUri,
             'refNumberOrder' => $refNumberOrder,
-            'data' => $this->getRefuelModel()->get($id)
+            'data' => $this->CommonData()->getRefuelModel()->get($id)
         );
-    }
-
-    /**
-     * @return array
-     */
-    private function getParentLeg()
-    {
-        return $this->getLegModel()->getByHeaderId($this->headerId);
-    }
-
-    /**
-     * @return array|object
-     */
-    public function getLibraryUnitModel()
-    {
-        if (!$this->unitModel) {
-            $sm = $this->getServiceLocator();
-            $this->unitModel = $sm->get('FcLibraries\Model\UnitModel');
-        }
-
-        return $this->unitModel;
-    }
-
-    /**
-     * @return mixed
-     */
-    private function getUnits()
-    {
-        return $this->getLibraryUnitModel()->fetchAll();
-    }
-
-    /**
-     * Get the display name of the user
-     *
-     * @return mixed
-     */
-    public function getCurrentUserName()
-    {
-        if ($this->zfcUserAuthentication()->hasIdentity()) {
-            return $this->zfcUserAuthentication()->getIdentity()->getUsername();
-        }
-        return null;
     }
 
     /**
