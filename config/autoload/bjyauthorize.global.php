@@ -111,6 +111,7 @@ return array(
                 array('controller' => 'FcFlight\Controller\Flight', 'roles' => array('user')),
                 array('controller' => 'FcFlight\Controller\Search', 'roles' => array('user')),
                 array('controller' => 'FcFlight\Controller\Leg', 'roles' => array('user')),
+                array('controller' => 'FcFlight\Controller\Permission', 'roles' => array('user')),
                 array('controller' => 'FcFlight\Controller\Refuel', 'roles' => array('user')),
                 array('controller' => 'FcLogEvents\Controller\Index', 'roles' => array('user')),
                 array('controller' => 'FcLogEvents\Controller\Search', 'roles' => array('user')),
@@ -136,6 +137,7 @@ return array(
                 array('route' => 'browse', 'roles' => array('user')),
 
                 array('route' => 'leg', 'roles' => array('user')),
+                array('route' => 'permission', 'roles' => array('user')),
                 array('route' => 'refuel', 'roles' => array('user')),
 
                 array('route' => 'zfcadmin', 'roles' => array('admin')),

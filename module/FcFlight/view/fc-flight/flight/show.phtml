@@ -52,7 +52,10 @@ $this->headTitle($title);
                     <a href="<?php echo $this->url('refuel', array('action' => 'add', 'id' => $header->id)); ?>">
                         <i class="icon-plane"></i> Refuel</a>
                 </li>
-                <li class="disabled"><a href="#">Permission</a></li>
+                <li class="<?= ($header->status) ? '' : 'disabled' ?>">
+                    <a href="<?php echo $this->url('permission', array('action' => 'add', 'id' => $header->id)); ?>">
+                        <i class="icon-plane"></i> Permission</a>
+                </li>
                 <li class="disabled"><a href="#">Hotel</a></li>
                 <li class="disabled"><a href="#">FPL/PPL/SLOT</a></li>
                 <li class="disabled"><a href="#">Charter</a></li>

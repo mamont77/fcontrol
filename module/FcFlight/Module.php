@@ -7,10 +7,12 @@ use FcFlight\Model\FlightHeaderModel;
 use FcFlight\Model\SearchModel;
 use FcFlight\Model\LegModel;
 use FcFlight\Model\RefuelModel;
+use FcFlight\Model\PermissionModel;
 use FcFlight\Filter\FlightHeaderFilter;
 use FcFlight\Filter\SearchFilter;
 use FcFlight\Filter\LegFilter;
 use FcFlight\Filter\RefuelFilter;
+use FcFlight\Filter\PermissionFilter;
 
 class Module
 {
@@ -88,6 +90,7 @@ class Module
                         $unitModel = $serviceLocator->get('FcLibraries\Model\UnitModel');
                         $flightHeaderModel = $serviceLocator->get('FcFlight\Model\FlightHeaderModel');
                         $legModel = $serviceLocator->get('FcFlight\Model\LegModel');
+                        $permissionModel = $serviceLocator->get('FcFlight\Model\PermissionModel');
                         $refuelModel = $serviceLocator->get('FcFlight\Model\RefuelModel');
                         $searchModel = $serviceLocator->get('FcFlight\Model\SearchModel');
                         $controllerPlugin = new Controller\Plugin\CommonData;
@@ -105,6 +108,7 @@ class Module
                             ->setUnitModel($unitModel)
                             ->setFlightHeaderModel($flightHeaderModel)
                             ->setLegModel($legModel)
+                            ->setPermissionModel($permissionModel)
                             ->setRefuelModel($refuelModel)
                             ->setSearchModel($searchModel);
                         return $controllerPlugin;
@@ -144,6 +148,10 @@ class Module
                         $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                         return new RefuelModel($dbAdapter);
                     },
+                'FcFlight\Model\PermissionModel' => function ($sm) {
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new PermissionModel($dbAdapter);
+                    },
                 'FcFlight\Filter\FlightHeaderFilter' => function ($sm) {
                         $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                         return new FlightHeaderFilter($dbAdapter);
@@ -159,6 +167,10 @@ class Module
                 'FcFlight\Filter\RefuelFilter' => function ($sm) {
                         $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                         return new RefuelFilter($dbAdapter);
+                    },
+                'FcFlight\Filter\PermissionFilter' => function ($sm) {
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new PermissionFilter($dbAdapter);
                     },
             ),
         );

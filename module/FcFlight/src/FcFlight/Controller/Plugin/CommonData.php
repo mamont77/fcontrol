@@ -22,6 +22,7 @@ use FcLibraries\Model\RegionModel;
 use FcLibraries\Model\UnitModel;
 use FcFlight\Model\FlightHeaderModel;
 use FcFlight\Model\LegModel;
+use FcFlight\Model\PermissionModel;
 use FcFlight\Model\RefuelModel;
 use FcFlight\Model\SearchModel;
 
@@ -91,6 +92,11 @@ class CommonData extends AbstractPlugin
      * @var LegModel
      */
     protected $legModel;
+
+    /**
+     * @var PermissionModel
+     */
+    protected $permissionModel;
 
     /**
      * @var RefuelModel
@@ -547,6 +553,31 @@ class CommonData extends AbstractPlugin
     public function getParentLeg($headerId)
     {
         return $this->getLegModel()->getByHeaderId($headerId);
+    }
+
+    /**
+     * Set Permission model
+     *
+     * @param PermissionModel $model
+     * @return $this
+     */
+    public function setPermissionModel(PermissionModel $model)
+    {
+        if (!$this->permissionModel) {
+            $this->permissionModel = $model;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get Permission model
+     *
+     * @return PermissionModel
+     */
+    public function getPermissionModel()
+    {
+        return $this->permissionModel;
     }
 
     /**

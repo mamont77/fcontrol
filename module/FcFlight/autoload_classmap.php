@@ -16,6 +16,7 @@ return array(
   'FcFlight\Form\SearchForm'             => __DIR__ . '/src/FcFlight/Form/SearchForm.php',
   'FcFlight\Model\FlightHeaderModel'     => __DIR__ . '/src/FcFlight/Model/FlightHeaderModel.php',
   'FcFlight\Model\LegModel'              => __DIR__ . '/src/FcFlight/Model/LegModel.php',
+  'FcFlight\Model\PermissionModel'       => __DIR__ . '/src/FcFlight/Model/PermissionModel.php',
   'FcFlight\Model\RefuelModel'           => __DIR__ . '/src/FcFlight/Model/RefuelModel.php',
   'FcFlight\Model\SearchModel'           => __DIR__ . '/src/FcFlight/Model/SearchModel.php',
   'FcFlight\Module'                      => __DIR__ . '/Module.php',
