@@ -14,7 +14,7 @@ use Zend\Paginator\Adapter\Iterator as paginatorIterator;
  * Class CountryController
  * @package FcLibraries\Controller
  */
-class CountryController extends AbstractActionController implements ControllerInterface
+class CountryController extends IndexController
 {
     /**
      * @var array
@@ -34,7 +34,7 @@ class CountryController extends AbstractActionController implements ControllerIn
             $this->params()->fromRoute('order') : Select::ORDER_ASCENDING;
         $page = $this->params()->fromRoute('page') ? (int)$this->params()->fromRoute('page') : 1;
 
-        $data = $this->CommonData()->getCountryModel()->fetchAll($select->order($order_by . ' ' . $order));
+        $data = $this->getCountryModel()->fetchAll($select->order($order_by . ' ' . $order));
         $itemsPerPage = 20;
 
         $data->current();
@@ -58,7 +58,7 @@ class CountryController extends AbstractActionController implements ControllerIn
      */
     public function addAction()
     {
-        $form = new CountryForm('country', array('regions' => $this->CommonData()->getRegions()));
+        $form = new CountryForm('country', array('regions' => $this->getRegions()));
 
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -69,13 +69,13 @@ class CountryController extends AbstractActionController implements ControllerIn
             if ($form->isValid()) {
                 $data = $form->getData();
                 $filter->exchangeArray($data);
-                $lastId = $this->CommonData()->getCountryModel()->add($filter);
+                $lastId = $this->getCountryModel()->add($filter);
 
                 $message = "Country '" . $data['name'] . "' was successfully added.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
                 $loggerPlugin = $this->LogPlugin();
-                $this->setDataForLogger($this->CommonData()->getCountryModel()->get($lastId));
+                $this->setDataForLogger($this->getCountryModel()->get($lastId));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
@@ -102,13 +102,13 @@ class CountryController extends AbstractActionController implements ControllerIn
                 'action' => 'add'
             ));
         }
-        $data = $this->CommonData()->getCountryModel()->get($id);
+        $data = $this->getCountryModel()->get($id);
 
         $this->setDataForLogger($data);
         $loggerPlugin = $this->LogPlugin();
         $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
-        $form = new CountryForm('country', array('regions' => $this->CommonData()->getRegions()));
+        $form = new CountryForm('country', array('regions' => $this->getRegions()));
         $form->bind($data);
         $form->get('submitBtn')->setAttribute('value', 'Save');
 
@@ -119,12 +119,12 @@ class CountryController extends AbstractActionController implements ControllerIn
             $form->setData($request->getPost());
             if ($form->isValid()) {
                 $data = $form->getData();
-                $this->CommonData()->getCountryModel()->save($data);
+                $this->getCountryModel()->save($data);
 
                 $message = "Country '" . $data->name . "' was successfully saved.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
-                $this->setDataForLogger($this->CommonData()->getCountryModel()->get($id));
+                $this->setDataForLogger($this->getCountryModel()->get($id));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
@@ -160,11 +160,11 @@ class CountryController extends AbstractActionController implements ControllerIn
                 $id = (int)$request->getPost('id');
 
                 $loggerPlugin = $this->LogPlugin();
-                $this->setDataForLogger($this->CommonData()->getCountryModel()->get($id));
+                $this->setDataForLogger($this->getCountryModel()->get($id));
                 $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
                 $name = (string)$request->getPost('name');
-                $this->CommonData()->getCountryModel()->remove($id);
+                $this->getCountryModel()->remove($id);
 
                 $message = "Country '" . $name . "' was successfully deleted.";
                 $this->flashMessenger()->addSuccessMessage($message);
@@ -181,7 +181,7 @@ class CountryController extends AbstractActionController implements ControllerIn
 
         return array(
             'id' => $id,
-            'data' => $this->CommonData()->getCountryModel()->get($id)
+            'data' => $this->getCountryModel()->get($id)
         );
     }
 

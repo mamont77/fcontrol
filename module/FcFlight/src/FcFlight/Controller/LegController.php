@@ -26,9 +26,9 @@ class LegController extends FlightController
             ));
         }
 
-        $refNumberOrder = $this->CommonData()->getFlightHeaderModel()->getRefNumberOrderById($headerId);
+        $refNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($headerId);
 
-        $legs = $this->CommonData()->getLegModel()->getByHeaderId($headerId);
+        $legs = $this->getLegModel()->getByHeaderId($headerId);
         $lastLeg = end($legs);
 
         if ($lastLeg) {
@@ -43,8 +43,8 @@ class LegController extends FlightController
             array(
                 'headerId' => $headerId,
                 'libraries' => array(
-                    'flightNumberIcaoAndIata' => $this->CommonData()->getAirOperators(),
-                    'appIcaoAndIata' => $this->CommonData()->getAirports(),
+                    'flightNumberIcaoAndIata' => $this->getAirOperators(),
+                    'appIcaoAndIata' => $this->getAirports(),
                 ),
                 'previousValues' => array(
                     'previousDate' => $previousDate,
@@ -64,13 +64,13 @@ class LegController extends FlightController
             if ($form->isValid()) {
                 $data = $form->getData();
                 $filter->exchangeArray($data);
-                $data = $this->CommonData()->getLegModel()->add($filter);
+                $data = $this->getLegModel()->add($filter);
 
                 $message = "Leg '" . $data['hash'] . "' was successfully added.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
                 $loggerPlugin = $this->LogPlugin();
-                $this->setDataForLogger($this->CommonData()->getLegModel()->get($data['lastInsertValue']));
+                $this->setDataForLogger($this->getLegModel()->get($data['lastInsertValue']));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
@@ -104,11 +104,11 @@ class LegController extends FlightController
             ));
         }
 
-        $refNumberOrder = $this->CommonData()->getLegModel()->getHeaderRefNumberOrderByLegId($id);
+        $refNumberOrder = $this->getLegModel()->getHeaderRefNumberOrderByLegId($id);
 
-        $data = $this->CommonData()->getLegModel()->get($id);
+        $data = $this->getLegModel()->get($id);
 
-        $legs = $this->CommonData()->getLegModel()->getByHeaderId($data->headerId);
+        $legs = $this->getLegModel()->getByHeaderId($data->headerId);
         $lastLeg = end($legs);
 
         if ($lastLeg) {
@@ -133,8 +133,8 @@ class LegController extends FlightController
         $form = new LegForm('leg',
             array(
                 'libraries' => array(
-                    'flightNumberIcaoAndIata' => $this->CommonData()->getAirOperators(),
-                    'appIcaoAndIata' => $this->CommonData()->getAirports(),
+                    'flightNumberIcaoAndIata' => $this->getAirOperators(),
+                    'appIcaoAndIata' => $this->getAirports(),
                 ),
                 'previousValues' => array(
                     'previousDate' => $previousDate,
@@ -157,12 +157,12 @@ class LegController extends FlightController
 
             if ($form->isValid()) {
                 $data = $form->getData();
-                $summaryData = $this->CommonData()->getLegModel()->save($data);
+                $summaryData = $this->getLegModel()->save($data);
 
                 $message = "Leg '" . $summaryData . "' was successfully saved.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
-                $this->setDataForLogger($this->CommonData()->getLegModel()->get($id));
+                $this->setDataForLogger($this->getLegModel()->get($id));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
@@ -197,18 +197,18 @@ class LegController extends FlightController
 
         $request = $this->getRequest();
         $refUri = $request->getHeader('Referer')->uri()->getPath();
-        $refNumberOrder = $this->CommonData()->getLegModel()->getHeaderRefNumberOrderByLegId($id);
+        $refNumberOrder = $this->getLegModel()->getHeaderRefNumberOrderByLegId($id);
 
         if ($request->isPost()) {
             $del = $request->getPost('del', 'No');
             if ($del == 'Yes') {
 
                 $loggerPlugin = $this->LogPlugin();
-                $this->setDataForLogger($this->CommonData()->getLegModel()->get($id));
+                $this->setDataForLogger($this->getLegModel()->get($id));
                 $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
                 $id = (int)$request->getPost('id');
-                $this->CommonData()->getLegModel()->remove($id);
+                $this->getLegModel()->remove($id);
 
                 $message = "Leg was successfully deleted.";
                 $this->flashMessenger()->addSuccessMessage($message);
@@ -228,7 +228,7 @@ class LegController extends FlightController
             'id' => $id,
             'referer' => $refUri,
             'refNumberOrder' => $refNumberOrder,
-            'leg' => $this->CommonData()->getLegModel()->get($id)
+            'leg' => $this->getLegModel()->get($id)
         );
     }
 

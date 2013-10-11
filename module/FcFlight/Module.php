@@ -75,44 +75,6 @@ class Module
     {
         return array(
             'factories' => array(
-                'CommonData' => function ($sm) {
-                        $serviceLocator = $sm->getServiceLocator();
-                        $aircraftModel = $serviceLocator->get('FcLibraries\Model\AircraftModel');
-                        $aircraftTypeModel = $serviceLocator->get('FcLibraries\Model\AircraftTypeModel');
-                        $airOperatorModel = $serviceLocator->get('FcLibraries\Model\AirOperatorModel');
-                        $airportModel = $serviceLocator->get('FcLibraries\Model\AirportModel');
-                        $baseOfPermitModel = $serviceLocator->get('FcLibraries\Model\BaseOfPermitModel');
-                        $cityModel = $serviceLocator->get('FcLibraries\Model\CityModel');
-                        $countryModel = $serviceLocator->get('FcLibraries\Model\CountryModel');
-                        $currencyModel = $serviceLocator->get('FcLibraries\Model\CurrencyModel');
-                        $kontragentModel = $serviceLocator->get('FcLibraries\Model\KontragentModel');
-                        $regionModel = $serviceLocator->get('FcLibraries\Model\RegionModel');
-                        $unitModel = $serviceLocator->get('FcLibraries\Model\UnitModel');
-                        $flightHeaderModel = $serviceLocator->get('FcFlight\Model\FlightHeaderModel');
-                        $legModel = $serviceLocator->get('FcFlight\Model\LegModel');
-                        $permissionModel = $serviceLocator->get('FcFlight\Model\PermissionModel');
-                        $refuelModel = $serviceLocator->get('FcFlight\Model\RefuelModel');
-                        $searchModel = $serviceLocator->get('FcFlight\Model\SearchModel');
-                        $controllerPlugin = new Controller\Plugin\CommonData;
-                        $controllerPlugin->setAircraftModel($aircraftModel)
-                            ->setAircraftModel($aircraftModel)
-                            ->setAircraftTypeModel($aircraftTypeModel)
-                            ->setAirOperatorModel($airOperatorModel)
-                            ->setAirportModel($airportModel)
-                            ->setBaseOfPermitModel($baseOfPermitModel)
-                            ->setCityModel($cityModel)
-                            ->setCountryModel($countryModel)
-                            ->setCurrencyModel($currencyModel)
-                            ->setKontragentModel($kontragentModel)
-                            ->setRegionModel($regionModel)
-                            ->setUnitModel($unitModel)
-                            ->setFlightHeaderModel($flightHeaderModel)
-                            ->setLegModel($legModel)
-                            ->setPermissionModel($permissionModel)
-                            ->setRefuelModel($refuelModel)
-                            ->setSearchModel($searchModel);
-                        return $controllerPlugin;
-                    },
                 'LogPlugin' => function ($sm) {
                         $serviceLocator = $sm->getServiceLocator();
                         $authService = $serviceLocator->get('zfcuser_auth_service');

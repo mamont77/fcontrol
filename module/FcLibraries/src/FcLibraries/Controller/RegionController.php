@@ -13,7 +13,7 @@ use Zend\Paginator\Adapter\Iterator as paginatorIterator;
  * Class RegionController
  * @package FcLibraries\Controller
  */
-class RegionController extends AbstractActionController implements ControllerInterface
+class RegionController extends IndexController
 {
     /**
      * @var array
@@ -33,7 +33,7 @@ class RegionController extends AbstractActionController implements ControllerInt
             $this->params()->fromRoute('order') : Select::ORDER_ASCENDING;
         $page = $this->params()->fromRoute('page') ? (int)$this->params()->fromRoute('page') : 1;
 
-        $data = $this->CommonData()->getRegionModel()->fetchAll($select->order($order_by . ' ' . $order));
+        $data = $this->getRegionModel()->fetchAll($select->order($order_by . ' ' . $order));
         $itemsPerPage = 20;
 
         $data->current();
@@ -67,13 +67,13 @@ class RegionController extends AbstractActionController implements ControllerInt
             if ($form->isValid()) {
                 $data = $form->getData();
                 $filter->exchangeArray($data);
-                $lastId = $this->CommonData()->getRegionModel()->add($filter);
+                $lastId = $this->getRegionModel()->add($filter);
 
                 $message = "Region '" . $data['name'] . "' was successfully added.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
                 $loggerPlugin = $this->LogPlugin();
-                $this->setDataForLogger($this->CommonData()->getRegionModel()->get($lastId));
+                $this->setDataForLogger($this->getRegionModel()->get($lastId));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
@@ -101,7 +101,7 @@ class RegionController extends AbstractActionController implements ControllerInt
                 'action' => 'add'
             ));
         }
-        $data = $this->CommonData()->getRegionModel()->get($id);
+        $data = $this->getRegionModel()->get($id);
 
         $this->setDataForLogger($data);
         $loggerPlugin = $this->LogPlugin();
@@ -118,12 +118,12 @@ class RegionController extends AbstractActionController implements ControllerInt
             $form->setData($request->getPost());
             if ($form->isValid()) {
                 $data = $form->getData();
-                $this->CommonData()->getRegionModel()->save($data);
+                $this->getRegionModel()->save($data);
 
                 $message = "Region '" . $data->name . "' was successfully saved.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
-                $this->setDataForLogger($this->CommonData()->getRegionModel()->get($id));
+                $this->setDataForLogger($this->getRegionModel()->get($id));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
@@ -159,11 +159,11 @@ class RegionController extends AbstractActionController implements ControllerInt
                 $id = (int)$request->getPost('id');
 
                 $loggerPlugin = $this->LogPlugin();
-                $this->setDataForLogger($this->CommonData()->getRegionModel()->get($id));
+                $this->setDataForLogger($this->getRegionModel()->get($id));
                 $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
                 $name = (string) $request->getPost('name');
-                $this->CommonData()->getRegionModel()->remove($id);
+                $this->getRegionModel()->remove($id);
 
                 $message = "Region '" . $name . "' was successfully deleted.";
                 $this->flashMessenger()->addSuccessMessage($message);
@@ -180,7 +180,7 @@ class RegionController extends AbstractActionController implements ControllerInt
 
         return array(
             'id' => $id,
-            'data' => $this->CommonData()->getRegionModel()->get($id)
+            'data' => $this->getRegionModel()->get($id)
         );
     }
 

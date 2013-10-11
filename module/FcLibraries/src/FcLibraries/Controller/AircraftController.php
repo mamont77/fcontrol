@@ -14,7 +14,7 @@ use Zend\Paginator\Adapter\Iterator as paginatorIterator;
  * Class AircraftController
  * @package FcLibraries\Controller
  */
-class AircraftController extends AbstractActionController implements ControllerInterface
+class AircraftController extends IndexController
 {
     /**
      * @var array
@@ -35,7 +35,7 @@ class AircraftController extends AbstractActionController implements ControllerI
         $page = $this->params()->fromRoute('page') ? (int)$this->params()->fromRoute('page') : 1;
 
 
-        $data = $this->commonData()->getAircraftModel()->fetchAll($select->order($order_by . ' ' . $order));
+        $data = $this->getAircraftModel()->fetchAll($select->order($order_by . ' ' . $order));
         $itemsPerPage = 20;
 
         $data->current();
@@ -59,10 +59,9 @@ class AircraftController extends AbstractActionController implements ControllerI
      */
     public function addAction()
     {
-        $commonData = $this->CommonData();
         $loggerPlugin = $this->LogPlugin();
 
-        $form = new AircraftForm('aircraft', array('aircraft_types' => $commonData->getAircraftTypes()));
+        $form = new AircraftForm('aircraft', array('aircraft_types' => $this->getAircraftTypes()));
 
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -74,12 +73,12 @@ class AircraftController extends AbstractActionController implements ControllerI
 
                 $data = $form->getData();
                 $filter->exchangeArray($data);
-                $lastId = $commonData->getAircraftModel()->add($filter);
+                $lastId = $this->getAircraftModel()->add($filter);
 
                 $message = "Aircraft '" . $data['reg_number'] . "' was successfully added.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
-                $this->setDataForLogger($commonData->getAircraftModel()->get($lastId));
+                $this->setDataForLogger($this->getAircraftModel()->get($lastId));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger)->setLogMessage($message);
 
                 $logger = $this->getServiceLocator()->get('logger');
@@ -106,16 +105,15 @@ class AircraftController extends AbstractActionController implements ControllerI
                 'action' => 'add'
             ));
         }
-        $commonData = $this->CommonData();
         $loggerPlugin = $this->LogPlugin();
 
 
-        $data = $commonData->getAircraftModel()->get($id);
+        $data = $this->getAircraftModel()->get($id);
 
         $this->setDataForLogger($data);
         $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
-        $form = new AircraftForm('aircraft', array('aircraft_types' => $commonData->getAircraftTypes()));
+        $form = new AircraftForm('aircraft', array('aircraft_types' => $this->getAircraftTypes()));
         $form->bind($data);
         $form->get('submitBtn')->setAttribute('value', 'Save');
 
@@ -127,12 +125,12 @@ class AircraftController extends AbstractActionController implements ControllerI
             if ($form->isValid()) {
                 $data = $form->getData();
 
-                $commonData->getAircraftModel()->save($data);
+                $this->getAircraftModel()->save($data);
 
                 $message = "Aircraft '" . $data->reg_number . "' was successfully saved.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
-                $this->setDataForLogger($commonData->getAircraftModel()->get($id));
+                $this->setDataForLogger($this->getAircraftModel()->get($id));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger)->setLogMessage($message);
 
                 $logger = $this->getServiceLocator()->get('logger');
@@ -158,7 +156,6 @@ class AircraftController extends AbstractActionController implements ControllerI
         if (!$id) {
             return $this->redirect()->toRoute('zfcadmin/aircrafts');
         }
-        $commonData = $this->CommonData();
         $loggerPlugin = $this->LogPlugin();
 
         $request = $this->getRequest();
@@ -168,11 +165,11 @@ class AircraftController extends AbstractActionController implements ControllerI
             if ($del == 'Yes') {
                 $id = (int)$request->getPost('id');
 
-                $this->setDataForLogger($commonData->getAircraftModel()->get($id));
+                $this->setDataForLogger($this->getAircraftModel()->get($id));
                 $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
                 $reg_number = (string)$request->getPost('reg_number');
-                $commonData->getAircraftModel()->remove($id);
+                $this->getAircraftModel()->remove($id);
 
                 $message = "Aircraft '" . $reg_number . "' was successfully deleted.";
                 $this->flashMessenger()->addSuccessMessage($message);
@@ -189,7 +186,7 @@ class AircraftController extends AbstractActionController implements ControllerI
 
         return array(
             'id' => $id,
-            'data' => $commonData->getAircraftModel()->get($id)
+            'data' => $this->getAircraftModel()->get($id)
         );
     }
 

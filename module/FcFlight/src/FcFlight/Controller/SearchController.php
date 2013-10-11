@@ -10,7 +10,7 @@ use FcFlight\Form\SearchForm;
  * Class SearchController
  * @package FcFlight\Controller
  */
-class SearchController extends AbstractActionController
+class SearchController extends FlightController
 {
     /**
      * @return ViewModel
@@ -39,7 +39,7 @@ class SearchController extends AbstractActionController
                 if ($searchForm->isValid()) {
                     $data = $searchForm->getData();
                     $filter->exchangeArray($data);
-                    $result = $this->CommonData()->getSearchModel()->findSearchResult($filter);
+                    $result = $this->getSearchModel()->findSearchResult($filter);
                     if (count($result) == 0) {
                         $result = 'Result not found!';
                     }

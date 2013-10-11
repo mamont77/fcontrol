@@ -15,7 +15,7 @@ use Zend\Json\Json as Json;
  * Class BaseOfPermitController
  * @package FcLibraries\Controller
  */
-class BaseOfPermitController extends AbstractActionController implements ControllerInterface
+class BaseOfPermitController extends IndexController
 {
     /**
      * @var array
@@ -35,7 +35,7 @@ class BaseOfPermitController extends AbstractActionController implements Control
             $this->params()->fromRoute('order') : Select::ORDER_ASCENDING;
         $page = $this->params()->fromRoute('page') ? (int)$this->params()->fromRoute('page') : 1;
 
-        $data = $this->CommonData()->getBaseOfPermitModel()->fetchAll($select->order($order_by . ' ' . $order));
+        $data = $this->getBaseOfPermitModel()->fetchAll($select->order($order_by . ' ' . $order));
         $itemsPerPage = 20;
 
         $data->current();
@@ -59,7 +59,7 @@ class BaseOfPermitController extends AbstractActionController implements Control
      */
     public function addAction()
     {
-        $form = new BaseOfPermitForm('base_of_permit', array('countries' => $this->CommonData()->getCountries()));
+        $form = new BaseOfPermitForm('base_of_permit', array('countries' => $this->getCountries()));
 
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -69,13 +69,13 @@ class BaseOfPermitController extends AbstractActionController implements Control
             if ($form->isValid()) {
                 $data = $form->getData();
                 $filter->exchangeArray($data);
-                $lastId = $this->CommonData()->getBaseOfPermitModel()->add($filter);
+                $lastId = $this->getBaseOfPermitModel()->add($filter);
 
                 $message = "Base of Permit was successfully added.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
                 $loggerPlugin = $this->LogPlugin();
-                $this->setDataForLogger($this->CommonData()->getBaseOfPermitModel()->get($lastId));
+                $this->setDataForLogger($this->getBaseOfPermitModel()->get($lastId));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
@@ -102,13 +102,13 @@ class BaseOfPermitController extends AbstractActionController implements Control
                 'action' => 'add'
             ));
         }
-        $data = $this->CommonData()->getBaseOfPermitModel()->get($id);
+        $data = $this->getBaseOfPermitModel()->get($id);
 
         $this->setDataForLogger($data);
         $loggerPlugin = $this->LogPlugin();
         $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
-        $form = new BaseOfPermitForm('base_of_permit', array('countries' => $this->CommonData()->getCountries()));
+        $form = new BaseOfPermitForm('base_of_permit', array('countries' => $this->getCountries()));
         $form->bind($data);
         $form->get('submitBtn')->setAttribute('value', 'Save');
 
@@ -119,12 +119,12 @@ class BaseOfPermitController extends AbstractActionController implements Control
             $form->setData($request->getPost());
             if ($form->isValid()) {
                 $data = $form->getData();
-                $this->CommonData()->getBaseOfPermitModel()->save($data);
+                $this->getBaseOfPermitModel()->save($data);
 
                 $message = "Base of Permit was successfully saved.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
-                $this->setDataForLogger($this->CommonData()->getBaseOfPermitModel()->get($id));
+                $this->setDataForLogger($this->getBaseOfPermitModel()->get($id));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
@@ -160,11 +160,11 @@ class BaseOfPermitController extends AbstractActionController implements Control
                 $id = (int)$request->getPost('id');
 
                 $loggerPlugin = $this->LogPlugin();
-                $this->setDataForLogger($this->CommonData()->getBaseOfPermitModel()->get($id));
+                $this->setDataForLogger($this->getBaseOfPermitModel()->get($id));
                 $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
                 $name = (string)$request->getPost('name');
-                $this->CommonData()->getBaseOfPermitModel()->remove($id);
+                $this->getBaseOfPermitModel()->remove($id);
 
                 $message = "Base of Permit '" . $name . "' was successfully deleted.";
                 $this->flashMessenger()->addSuccessMessage($message);
@@ -181,7 +181,7 @@ class BaseOfPermitController extends AbstractActionController implements Control
 
         return array(
             'id' => $id,
-            'data' => $this->CommonData()->getBaseOfPermitModel()->get($id)
+            'data' => $this->getBaseOfPermitModel()->get($id)
         );
     }
 
@@ -198,7 +198,7 @@ class BaseOfPermitController extends AbstractActionController implements Control
             ));
         }
 
-        $data = $this->CommonData()->getAirportModel()->getByCountryId($id);
+        $data = $this->getAirportModel()->getByCountryId($id);
 
         $result = array(
             'countryId' => $id,

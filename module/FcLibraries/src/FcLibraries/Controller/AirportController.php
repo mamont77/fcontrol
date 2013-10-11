@@ -14,7 +14,7 @@ use Zend\Paginator\Adapter\Iterator as paginatorIterator;
  * Class AirportController
  * @package FcLibraries\Controller
  */
-class AirportController extends AbstractActionController implements ControllerInterface
+class AirportController extends IndexController
 {
     /**
      * @var array
@@ -34,7 +34,7 @@ class AirportController extends AbstractActionController implements ControllerIn
             $this->params()->fromRoute('order') : Select::ORDER_ASCENDING;
         $page = $this->params()->fromRoute('page') ? (int)$this->params()->fromRoute('page') : 1;
 
-        $data = $this->CommonData()->getAirportModel()->fetchAll($select->order($order_by . ' ' . $order));
+        $data = $this->getAirportModel()->fetchAll($select->order($order_by . ' ' . $order));
         $itemsPerPage = 20;
 
         $data->current();
@@ -58,7 +58,7 @@ class AirportController extends AbstractActionController implements ControllerIn
      */
     public function addAction()
     {
-        $form = new AirportForm('airport', array('cities' => $this->CommonData()->getCities()));
+        $form = new AirportForm('airport', array('cities' => $this->getCities()));
 
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -69,13 +69,13 @@ class AirportController extends AbstractActionController implements ControllerIn
             if ($form->isValid()) {
                 $data = $form->getData();
                 $filter->exchangeArray($data);
-                $lastId = $this->CommonData()->getAirportModel()->add($filter);
+                $lastId = $this->getAirportModel()->add($filter);
 
                 $message = "Airport '" . $data['name'] . "' was successfully added.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
                 $loggerPlugin = $this->LogPlugin();
-                $this->setDataForLogger($this->CommonData()->getAirportModel()->get($lastId));
+                $this->setDataForLogger($this->getAirportModel()->get($lastId));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
@@ -102,13 +102,13 @@ class AirportController extends AbstractActionController implements ControllerIn
                 'action' => 'add'
             ));
         }
-        $data = $this->CommonData()->getAirportModel()->get($id);
+        $data = $this->getAirportModel()->get($id);
 
         $this->setDataForLogger($data);
         $loggerPlugin = $this->LogPlugin();
         $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
-        $form = new AirportForm('airport', array('cities' => $this->CommonData()->getCities()));
+        $form = new AirportForm('airport', array('cities' => $this->getCities()));
         $form->bind($data);
         $form->get('submitBtn')->setAttribute('value', 'Save');
 
@@ -119,12 +119,12 @@ class AirportController extends AbstractActionController implements ControllerIn
             $form->setData($request->getPost());
             if ($form->isValid()) {
                 $data = $form->getData();
-                $this->CommonData()->getAirportModel()->save($data);
+                $this->getAirportModel()->save($data);
 
                 $message = "Airport '" . $data->name . "' was successfully saved.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
-                $this->setDataForLogger($this->CommonData()->getAirportModel()->get($id));
+                $this->setDataForLogger($this->getAirportModel()->get($id));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger)->setLogMessage($message);
 
                 $logger = $this->getServiceLocator()->get('logger');
@@ -159,11 +159,11 @@ class AirportController extends AbstractActionController implements ControllerIn
                 $id = (int)$request->getPost('id');
 
                 $loggerPlugin = $this->LogPlugin();
-                $this->setDataForLogger($this->CommonData()->getAirportModel()->get($id));
+                $this->setDataForLogger($this->getAirportModel()->get($id));
                 $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
                 $name = (string)$request->getPost('name');
-                $this->CommonData()->getAirportModel()->remove($id);
+                $this->getAirportModel()->remove($id);
 
                 $message = "Airport '" . $name . "' was successfully deleted.";
                 $this->flashMessenger()->addSuccessMessage($message);
@@ -180,7 +180,7 @@ class AirportController extends AbstractActionController implements ControllerIn
 
         return array(
             'id' => $id,
-            'data' => $this->CommonData()->getAirportModel()->get($id)
+            'data' => $this->getAirportModel()->get($id)
         );
     }
 

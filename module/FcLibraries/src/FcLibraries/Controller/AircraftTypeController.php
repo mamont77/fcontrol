@@ -14,7 +14,7 @@ use Zend\Paginator\Adapter\Iterator as paginatorIterator;
  * Class AircraftTypeController
  * @package FcLibraries\Controller
  */
-class AircraftTypeController extends AbstractActionController implements ControllerInterface
+class AircraftTypeController extends IndexController
 {
     /**
      * @var array
@@ -34,7 +34,7 @@ class AircraftTypeController extends AbstractActionController implements Control
             $this->params()->fromRoute('order') : Select::ORDER_ASCENDING;
         $page = $this->params()->fromRoute('page') ? (int)$this->params()->fromRoute('page') : 1;
 
-        $data = $this->CommonData()->getAircraftTypeModel()->fetchAll($select->order($order_by . ' ' . $order));
+        $data = $this->getAircraftTypeModel()->fetchAll($select->order($order_by . ' ' . $order));
         $itemsPerPage = 20;
 
         $data->current();
@@ -69,13 +69,13 @@ class AircraftTypeController extends AbstractActionController implements Control
             if ($form->isValid()) {
                 $data = $form->getData();
                 $filter->exchangeArray($data);
-                $lastId = $this->CommonData()->getAircraftTypeModel()->add($filter);
+                $lastId = $this->getAircraftTypeModel()->add($filter);
 
                 $message = "Type Aircraft '" . $data['name'] . "' was successfully added.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
                 $loggerPlugin = $this->LogPlugin();
-                $this->setDataForLogger($this->CommonData()->getAircraftTypeModel()->get($lastId));
+                $this->setDataForLogger($this->getAircraftTypeModel()->get($lastId));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger)->setLogMessage($message);
 
                 $logger = $this->getServiceLocator()->get('logger');
@@ -103,7 +103,7 @@ class AircraftTypeController extends AbstractActionController implements Control
                 'action' => 'add'
             ));
         }
-        $data = $this->CommonData()->getAircraftTypeModel()->get($id);
+        $data = $this->getAircraftTypeModel()->get($id);
 
         $this->setDataForLogger($data);
         $loggerPlugin = $this->LogPlugin();
@@ -120,12 +120,12 @@ class AircraftTypeController extends AbstractActionController implements Control
             $form->setData($request->getPost());
             if ($form->isValid()) {
                 $data = $form->getData();
-                $this->CommonData()->getAircraftTypeModel()->save($data);
+                $this->getAircraftTypeModel()->save($data);
 
                 $message = "Type Aircraft '" . $data->name . "' was successfully saved.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
-                $this->setDataForLogger($this->CommonData()->getAircraftTypeModel()->get($id));
+                $this->setDataForLogger($this->getAircraftTypeModel()->get($id));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger)->setLogMessage($message);
 
                 $logger = $this->getServiceLocator()->get('logger');
@@ -160,11 +160,11 @@ class AircraftTypeController extends AbstractActionController implements Control
                 $id = (int)$request->getPost('id');
 
                 $loggerPlugin = $this->LogPlugin();
-                $this->setDataForLogger($this->CommonData()->getAircraftTypeModel()->get($id));
+                $this->setDataForLogger($this->getAircraftTypeModel()->get($id));
                 $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
                 $name = (string) $request->getPost('name');
-                $this->CommonData()->getAircraftTypeModel()->remove($id);
+                $this->getAircraftTypeModel()->remove($id);
 
                 $message = "Type Aircraft '" . $name . "' was successfully deleted.";
                 $this->flashMessenger()->addSuccessMessage($message);
@@ -181,7 +181,7 @@ class AircraftTypeController extends AbstractActionController implements Control
 
         return array(
             'id' => $id,
-            'data' => $this->CommonData()->getAircraftTypeModel()->get($id)
+            'data' => $this->getAircraftTypeModel()->get($id)
         );
     }
 
