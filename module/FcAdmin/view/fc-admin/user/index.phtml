@@ -44,7 +44,7 @@ if ($order) {
             <td><?php echo $this->escapeHtml($user->user_id); ?></td>
             <td><?php echo $this->escapeHtml($user->username); ?></td>
             <td><?php echo $this->escapeHtml($user->email); ?></td>
-            <td><?php echo $this->escapeHtml($user->role_id); ?></td>
+            <td><?php echo $this->escapeHtml($user->role_name); ?></td>
             <td>
                 <?php if ($user->state == 1) {
                     echo 'Active';

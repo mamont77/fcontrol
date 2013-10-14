@@ -53,9 +53,9 @@ class UserForm extends Form
             'options' => array(
                 'label' => 'Role',
                 'value_options' => array(
-                    'user' => 'User',
-                    'manager' => 'Manager',
-                    'admin' => 'Admin',
+                    '2' => 'User',
+                    '3' => 'Manager',
+                    '4' => 'Admin',
                 ),
             ),
             'value' => 'user',

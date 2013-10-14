@@ -41,7 +41,15 @@ class UserTable extends AbstractTableGateway
             $select = new Select();
         $select->from($this->table);
         $select->columns(array('user_id', 'email', 'username', 'state'));
-        $select->join('user_role_linker', "user_role_linker.user_id = user.user_id", array('role_id'), 'left');
+        $select->join('user_role_linker',
+            'user_role_linker.user_id = user.user_id',
+            array('role_id'), 'left');
+        $select->join('user_role',
+            'user_role.id = user_role_linker.role_id',
+            array('role_name' => 'role_id'), 'left');
+
+//        \Zend\Debug\Debug::dump($select->getSqlString());
+
         $resultSet = $this->selectWith($select);
         $resultSet->buffer();
 
@@ -61,7 +69,14 @@ class UserTable extends AbstractTableGateway
         $select->from('user');
         $select->columns(array('user_id', 'email', 'username', 'state'));
         $select->where(array('user.user_id' => $id));
-        $select->join('user_role_linker', "user_role_linker.user_id = user.user_id", array('role_id'), 'left');
+        $select->join('user_role_linker',
+            'user_role_linker.user_id = user.user_id',
+            array('role_id'), 'left');
+        $select->join('user_role',
+            'user_role.id = user_role_linker.role_id',
+            array('role_name' => 'role_id'), 'left');
+
+//        \Zend\Debug\Debug::dump($select->getSqlString());
 
         $rowSet = $this->selectWith($select);
         $row = $rowSet->current();
