@@ -36,7 +36,9 @@ return array(
             'BjyAuthorize\Provider\Role\Config' => array(
                 'guest' => array(),
                 'user' => array('children' => array(
-                    'admin' => array(),
+                    'manager' => array('children' => array(
+                        'admin' => array(),
+                    )),
                 )),
             ),
 
@@ -119,12 +121,12 @@ return array(
                 array('controller' => 'FcLibraries\Controller\Unit', 'roles' => array('admin')),
                 array('controller' => 'FcLibrariesSearch\Controller\Search', 'roles' => array('admin')),
                 array('controller' => 'FcFlight\Controller\Flight', 'roles' => array('user')),
-                array('controller' => 'FcFlight\Controller\Search', 'roles' => array('user')),
-                array('controller' => 'FcFlight\Controller\Leg', 'roles' => array('user')),
-                array('controller' => 'FcFlight\Controller\Permission', 'roles' => array('user')),
-                array('controller' => 'FcFlight\Controller\Refuel', 'roles' => array('user')),
-                array('controller' => 'FcLogEvents\Controller\Index', 'roles' => array('user')),
-                array('controller' => 'FcLogEvents\Controller\Search', 'roles' => array('user')),
+                array('controller' => 'FcFlight\Controller\Search', 'roles' => array('manager')),
+                array('controller' => 'FcFlight\Controller\Leg', 'roles' => array('manager')),
+                array('controller' => 'FcFlight\Controller\Permission', 'roles' => array('manager')),
+                array('controller' => 'FcFlight\Controller\Refuel', 'roles' => array('manager')),
+                array('controller' => 'FcLogEvents\Controller\Index', 'roles' => array('manager')),
+                array('controller' => 'FcLogEvents\Controller\Search', 'roles' => array('manager')),
             ),
 
             /* If this guard is specified here (i.e. it is enabled), it will block
@@ -142,13 +144,13 @@ return array(
 
                 array('route' => 'flightsActive', 'roles' => array('user')),
                 array('route' => 'flightsArchived', 'roles' => array('user')),
-                array('route' => 'flightsSearch', 'roles' => array('user')),
-                array('route' => 'flight', 'roles' => array('user')),
-                array('route' => 'browse', 'roles' => array('user')),
+                array('route' => 'flightsSearch', 'roles' => array('manager')),
+                array('route' => 'flight', 'roles' => array('manager')),
+                array('route' => 'browse', 'roles' => array('manager')),
 
-                array('route' => 'leg', 'roles' => array('user')),
-                array('route' => 'permission', 'roles' => array('user')),
-                array('route' => 'refuel', 'roles' => array('user')),
+                array('route' => 'leg', 'roles' => array('manager')),
+                array('route' => 'permission', 'roles' => array('manager')),
+                array('route' => 'refuel', 'roles' => array('manager')),
 
                 array('route' => 'zfcadmin', 'roles' => array('admin')),
                 array('route' => 'zfcadmin/dashboard', 'roles' => array('admin')),
@@ -179,8 +181,8 @@ return array(
                 array('route' => 'zfcadmin/units', 'roles' => array('admin')),
                 array('route' => 'zfcadmin/unit', 'roles' => array('admin')),
                 array('route' => 'zfcadmin/advanced_search', 'roles' => array('admin')),
-                array('route' => 'logs', 'roles' => array('user')),
-                array('route' => 'logsSearch', 'roles' => array('user')),
+                array('route' => 'logs', 'roles' => array('manager')),
+                array('route' => 'logsSearch', 'roles' => array('manager')),
             ),
         ),
 
