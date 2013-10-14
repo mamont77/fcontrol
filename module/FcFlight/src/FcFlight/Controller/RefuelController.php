@@ -32,9 +32,9 @@ class RefuelController extends FlightController
             ));
         }
 
-        $refNumberOrder = $this->CommonData()->getFlightHeaderModel()->getRefNumberOrderById($this->headerId);
+        $refNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($this->headerId);
 
-        $refuels = $this->CommonData()->getRefuelModel()->getByHeaderId($this->headerId);
+        $refuels = $this->getRefuelModel()->getByHeaderId($this->headerId);
         $lastRefuel = end($refuels);
         if ($lastRefuel) {
             $previousDate = $lastRefuel['date'];
@@ -46,9 +46,9 @@ class RefuelController extends FlightController
             array(
                 'headerId' => $this->headerId,
                 'libraries' => array(
-                    'airports' => $this->CommonData()->getParentLeg($this->headerId),
-                    'agents' => $this->CommonData()->getKontragents(),
-                    'units' => $this->CommonData()->getUnits(),
+                    'airports' => $this->getParentLeg($this->headerId),
+                    'agents' => $this->getKontragents(),
+                    'units' => $this->getUnits(),
                 ),
                 'previousValues' => array(
                     'previousDate' => $previousDate,
@@ -65,13 +65,13 @@ class RefuelController extends FlightController
             if ($form->isValid()) {
                 $data = $form->getData();
                 $filter->exchangeArray($data);
-                $data = $this->CommonData()->getRefuelModel()->add($filter);
+                $data = $this->getRefuelModel()->add($filter);
 
                 $message = "Refuel '" . $data['hash'] . "' was successfully added.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
                 $loggerPlugin = $this->LogPlugin();
-                $this->setDataForLogger($this->CommonData()->getRefuelModel()->get($data['lastInsertValue']));
+                $this->setDataForLogger($this->getRefuelModel()->get($data['lastInsertValue']));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
@@ -106,12 +106,12 @@ class RefuelController extends FlightController
             ));
         }
 
-        $refNumberOrder = $this->CommonData()->getRefuelModel()->getHeaderRefNumberOrderByRefuelId($id);
+        $refNumberOrder = $this->getRefuelModel()->getHeaderRefNumberOrderByRefuelId($id);
 
-        $data = $this->CommonData()->getRefuelModel()->get($id);
+        $data = $this->getRefuelModel()->get($id);
         $this->headerId = (int)$data->headerId;
 
-        $refuels = $this->CommonData()->getRefuelModel()->getByHeaderId($this->headerId);
+        $refuels = $this->getRefuelModel()->getByHeaderId($this->headerId);
         $lastRefuel = end($refuels);
         if ($lastRefuel) {
             $previousDate = $lastRefuel['date'];
@@ -126,9 +126,9 @@ class RefuelController extends FlightController
         $form = new RefuelForm('refuel',
             array(
                 'libraries' => array(
-                    'airports' => $this->CommonData()->getParentLeg($this->headerId),
-                    'agents' => $this->CommonData()->getKontragents(),
-                    'units' => $this->CommonData()->getUnits(),
+                    'airports' => $this->getParentLeg($this->headerId),
+                    'agents' => $this->getKontragents(),
+                    'units' => $this->getUnits(),
                 ),
                 'previousValues' => array(
                     'previousDate' => $previousDate,
@@ -148,12 +148,12 @@ class RefuelController extends FlightController
 
             if ($form->isValid()) {
                 $data = $form->getData();
-                $summaryData = $this->CommonData()->getRefuelModel()->save($data);
+                $summaryData = $this->getRefuelModel()->save($data);
 
                 $message = "Refuel '" . $summaryData . "' was successfully saved.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
-                $this->setDataForLogger($this->CommonData()->getRefuelModel()->get($id));
+                $this->setDataForLogger($this->getRefuelModel()->get($id));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
@@ -188,7 +188,7 @@ class RefuelController extends FlightController
 
         $request = $this->getRequest();
         $refUri = $request->getHeader('Referer')->uri()->getPath();
-        $refNumberOrder = $this->CommonData()->getRefuelModel()->getHeaderRefNumberOrderByRefuelId($id);
+        $refNumberOrder = $this->getRefuelModel()->getHeaderRefNumberOrderByRefuelId($id);
 
         if ($request->isPost()) {
             $del = $request->getPost('del', 'No');
@@ -196,10 +196,10 @@ class RefuelController extends FlightController
                 $id = (int)$request->getPost('id');
 
                 $loggerPlugin = $this->LogPlugin();
-                $this->setDataForLogger($this->CommonData()->getRefuelModel()->get($id));
+                $this->setDataForLogger($this->getRefuelModel()->get($id));
                 $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
-                $this->CommonData()->getRefuelModel()->remove($id);
+                $this->getRefuelModel()->remove($id);
 
                 $message = "Refuel was successfully deleted.";
                 $this->flashMessenger()->addSuccessMessage($message);
@@ -219,7 +219,7 @@ class RefuelController extends FlightController
             'id' => $id,
             'referer' => $refUri,
             'refNumberOrder' => $refNumberOrder,
-            'data' => $this->CommonData()->getRefuelModel()->get($id)
+            'data' => $this->getRefuelModel()->get($id)
         );
     }
 

@@ -14,7 +14,7 @@ use Zend\Paginator\Adapter\Iterator as paginatorIterator;
  * Class KontragentController
  * @package FcLibraries\Controller
  */
-class KontragentController extends AbstractActionController implements ControllerInterface
+class KontragentController extends IndexController
 {
     /**
      * @var array
@@ -34,7 +34,7 @@ class KontragentController extends AbstractActionController implements Controlle
             $this->params()->fromRoute('order') : Select::ORDER_ASCENDING;
         $page = $this->params()->fromRoute('page') ? (int)$this->params()->fromRoute('page') : 1;
 
-        $data = $this->CommonData()->getKontragentModel()->fetchAll($select->order($order_by . ' ' . $order));
+        $data = $this->getKontragentModel()->fetchAll($select->order($order_by . ' ' . $order));
         $itemsPerPage = 20;
 
         $data->current();
@@ -68,13 +68,13 @@ class KontragentController extends AbstractActionController implements Controlle
             if ($form->isValid()) {
                 $data = $form->getData();
                 $filter->exchangeArray($data);
-                $lastId = $this->CommonData()->getKontragentModel()->add($filter);
+                $lastId = $this->getKontragentModel()->add($filter);
 
                 $message = "Kontragent '" . $data['name'] . "' was successfully added.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
                 $loggerPlugin = $this->LogPlugin();
-                $this->setDataForLogger($this->CommonData()->getKontragentModel()->get($lastId));
+                $this->setDataForLogger($this->getKontragentModel()->get($lastId));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
@@ -102,7 +102,7 @@ class KontragentController extends AbstractActionController implements Controlle
                 'action' => 'add'
             ));
         }
-        $data = $this->CommonData()->getKontragentModel()->get($id);
+        $data = $this->getKontragentModel()->get($id);
 
         $this->setDataForLogger($data);
         $loggerPlugin = $this->LogPlugin();
@@ -119,12 +119,12 @@ class KontragentController extends AbstractActionController implements Controlle
             $form->setData($request->getPost());
             if ($form->isValid()) {
                 $data = $form->getData();
-                $this->CommonData()->getKontragentModel()->save($data);
+                $this->getKontragentModel()->save($data);
 
                 $message = "Kontragent '" . $data->name . "' was successfully saved.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
-                $this->setDataForLogger($this->CommonData()->getKontragentModel()->get($id));
+                $this->setDataForLogger($this->getKontragentModel()->get($id));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
@@ -160,11 +160,11 @@ class KontragentController extends AbstractActionController implements Controlle
                 $id = (int)$request->getPost('id');
 
                 $loggerPlugin = $this->LogPlugin();
-                $this->setDataForLogger($this->CommonData()->getKontragentModel()->get($id));
+                $this->setDataForLogger($this->getKontragentModel()->get($id));
                 $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
                 $name = (string) $request->getPost('name');
-                $this->CommonData()->getKontragentModel()->remove($id);
+                $this->getKontragentModel()->remove($id);
 
                 $message = "Kontragent '" . $name . "' was successfully deleted.";
                 $this->flashMessenger()->addSuccessMessage($message);
@@ -181,7 +181,7 @@ class KontragentController extends AbstractActionController implements Controlle
 
         return array(
             'id' => $id,
-            'data' => $this->CommonData()->getKontragentModel()->get($id)
+            'data' => $this->getKontragentModel()->get($id)
         );
     }
 

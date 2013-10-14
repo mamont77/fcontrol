@@ -13,7 +13,7 @@ use Zend\Paginator\Adapter\Iterator as paginatorIterator;
  * Class UnitController
  * @package FcLibraries\Controller
  */
-class UnitController extends AbstractActionController implements ControllerInterface
+class UnitController extends IndexController
 {
     /**
      * @var array
@@ -33,7 +33,7 @@ class UnitController extends AbstractActionController implements ControllerInter
             $this->params()->fromRoute('order') : Select::ORDER_ASCENDING;
         $page = $this->params()->fromRoute('page') ? (int)$this->params()->fromRoute('page') : 1;
 
-        $data = $this->CommonData()->getUnitModel()->fetchAll($select->order($order_by . ' ' . $order));
+        $data = $this->getUnitModel()->fetchAll($select->order($order_by . ' ' . $order));
         $itemsPerPage = 20;
 
         $data->current();
@@ -67,13 +67,13 @@ class UnitController extends AbstractActionController implements ControllerInter
             if ($form->isValid()) {
                 $data = $form->getData();
                 $filter->exchangeArray($data);
-                $lastId = $this->CommonData()->getUnitModel()->add($filter);
+                $lastId = $this->getUnitModel()->add($filter);
 
                 $message = "Unit '" . $data['name'] . "' was successfully added.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
                 $loggerPlugin = $this->LogPlugin();
-                $this->setDataForLogger($this->CommonData()->getUnitModel()->get($lastId));
+                $this->setDataForLogger($this->getUnitModel()->get($lastId));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
@@ -101,7 +101,7 @@ class UnitController extends AbstractActionController implements ControllerInter
                 'action' => 'add'
             ));
         }
-        $data = $this->CommonData()->getUnitModel()->get($id);
+        $data = $this->getUnitModel()->get($id);
 
         $this->setDataForLogger($data);
         $loggerPlugin = $this->LogPlugin();
@@ -118,12 +118,12 @@ class UnitController extends AbstractActionController implements ControllerInter
             $form->setData($request->getPost());
             if ($form->isValid()) {
                 $data = $form->getData();
-                $this->CommonData()->getUnitModel()->save($data);
+                $this->getUnitModel()->save($data);
 
                 $message = "Unit '" . $data->name . "' was successfully saved.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
-                $this->setDataForLogger($this->CommonData()->getUnitModel()->get($id));
+                $this->setDataForLogger($this->getUnitModel()->get($id));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
@@ -159,11 +159,11 @@ class UnitController extends AbstractActionController implements ControllerInter
                 $id = (int)$request->getPost('id');
 
                 $loggerPlugin = $this->LogPlugin();
-                $this->setDataForLogger($this->CommonData()->getUnitModel()->get($id));
+                $this->setDataForLogger($this->getUnitModel()->get($id));
                 $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
                 $name = (string) $request->getPost('name');
-                $this->CommonData()->getUnitModel()->remove($id);
+                $this->getUnitModel()->remove($id);
 
                 $message = "Unit '" . $name . "' was successfully deleted.";
                 $this->flashMessenger()->addSuccessMessage($message);
@@ -180,7 +180,7 @@ class UnitController extends AbstractActionController implements ControllerInter
 
         return array(
             'id' => $id,
-            'data' => $this->CommonData()->getUnitModel()->get($id)
+            'data' => $this->getUnitModel()->get($id)
         );
     }
 
