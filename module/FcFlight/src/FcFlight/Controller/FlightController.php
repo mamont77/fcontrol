@@ -32,6 +32,25 @@ class FlightController extends AbstractActionController
     /**
      * @var array
      */
+    protected $mapFields = array(
+        'id',
+        'refNumberOrder',
+        'dateOrder',
+        'kontragent',
+        'kontragentShortName',
+        'airOperator',
+        'airOperatorShortName',
+        'aircraft',
+        'aircraftType',
+        'aircraftTypeName',
+        'status',
+        'refuelStatus',
+        'permitStatus',
+    );
+
+    /**
+     * @var array
+     */
     protected $dataForLogger = array();
 
     /**
@@ -128,12 +147,34 @@ class FlightController extends AbstractActionController
         $orderAs = $this->params()->fromRoute('order') ? $this->params()->fromRoute('order') : $orderAsType;
 
         if ($orderBy == $orderByMaster && $orderAsType == $orderAs) {
-            $data = $this->getFlightHeaderModel()->fetchAll($select->order($orderBy . ' ' . $orderAs
+            $result = $this->getFlightHeaderModel()->fetchAll($select->order($orderBy . ' ' . $orderAs
                 . ', id ' . $orderAs));
         } else {
-            $data = $this->getFlightHeaderModel()->fetchAll($select->order($orderBy . ' ' . $orderAs));
+            $result = $this->getFlightHeaderModel()->fetchAll($select->order($orderBy . ' ' . $orderAs));
         }
-        $data->current();
+        $result->current();
+
+        $data = array();
+        foreach ($result as $key => $row) {
+            foreach ($this->mapFields as $field) {
+                if (isset($row->$field)) {
+                    $data[$key][$field] = $row->$field;
+                }
+            }
+            try {
+                $hasRefuel = $this->getRefuelModel()->getByHeaderId($data[$key]['id']);
+                if (!empty($hasRefuel)) {
+                    $data[$key]['refuelStatus'] = 'YES';
+                } else {
+                    $data[$key]['refuelStatus'] = 'NO';
+                }
+            } catch (Exception $e) {
+                // do nothing
+            }
+
+            // TODO: Fix me after Permission feature.
+            $data[$key]['permitStatus'] = 'NO';
+        }
 
         return new ViewModel(array(
             'order_by' => $orderBy,
@@ -159,15 +200,38 @@ class FlightController extends AbstractActionController
 
         $page = $this->params()->fromRoute('page') ? (int)$this->params()->fromRoute('page') : 1;
         if ($orderBy == $orderByMaster && $orderAsType == $orderAs) {
-            $data = $this->getFlightHeaderModel()->fetchAll($select->order($orderBy . ' ' . $orderAs
+            $result = $this->getFlightHeaderModel()->fetchAll($select->order($orderBy . ' ' . $orderAs
                 . ', id ' . $orderAs), 0);
         } else {
-            $data = $this->getFlightHeaderModel()->fetchAll($select->order($orderBy . ' ' . $orderAs), 0);
+            $result = $this->getFlightHeaderModel()->fetchAll($select->order($orderBy . ' ' . $orderAs), 0);
         }
         $itemsPerPage = 20;
-        $data->current();
+        $result->current();
 
-        $pagination = new Paginator(new paginatorIterator($data));
+        $data = array();
+        foreach ($result as $key => $row) {
+            foreach ($this->mapFields as $field) {
+                if (isset($row->$field)) {
+                    $data[$key][$field] = $row->$field;
+                }
+            }
+            try {
+                $hasRefuel = $this->getRefuelModel()->getByHeaderId($data[$key]['id']);
+                if (!empty($hasRefuel)) {
+                    $data[$key]['refuelStatus'] = 'YES';
+                } else {
+                    $data[$key]['refuelStatus'] = 'NO';
+                }
+            } catch (Exception $e) {
+                // do nothing
+            }
+
+            // TODO: Fix me after Permission feature.
+            $data[$key]['permitStatus'] = 'NO';
+
+        }
+
+        $pagination = new Paginator(new paginatorIterator($result));
         $pagination->setCurrentPageNumber($page)
             ->setItemCountPerPage($itemsPerPage)
             ->setPageRange(7);
@@ -175,6 +239,7 @@ class FlightController extends AbstractActionController
         return new ViewModel(array(
             'order_by' => $orderBy,
             'order' => $orderAs,
+            'data' => $data,
             'page' => $page,
             'pagination' => $pagination,
             'searchForm' => new SearchForm(),

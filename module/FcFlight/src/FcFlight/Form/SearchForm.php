@@ -58,9 +58,9 @@ class SearchForm extends BaseForm
             'options' => array(
                 'label' => 'Status',
                 'value_options' => array(
-                    '2' => 'Any',
-                    '1' => 'In process',
-                    '0' => 'Done',
+                    '2' => 'ANY',
+                    '1' => 'IN PROCESS',
+                    '0' => 'DONE',
                 ),
             ),
             'attributes' => array(

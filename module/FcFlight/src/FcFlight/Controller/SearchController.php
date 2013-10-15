@@ -41,14 +41,36 @@ class SearchController extends FlightController
                     $filter->exchangeArray($data);
                     $result = $this->getSearchModel()->findSearchResult($filter);
                     if (count($result) == 0) {
-                        $result = 'Result not found!';
+                        $data = 'Result not found!';
+                    } else {
+                        $data = array();
+                        foreach ($result as $key => $row) {
+                            foreach ($this->mapFields as $field) {
+                                if (isset($row->$field)) {
+                                    $data[$key][$field] = $row->$field;
+                                }
+                            }
+                            try {
+                                $hasRefuel = $this->getRefuelModel()->getByHeaderId($data[$key]['id']);
+                                if (!empty($hasRefuel)) {
+                                    $data[$key]['refuelStatus'] = 'YES';
+                                } else {
+                                    $data[$key]['refuelStatus'] = 'NO';
+                                }
+                            } catch (Exception $e) {
+                                // do nothing
+                            }
+
+                            // TODO: Fix me after Permission feature.
+                            $data[$key]['permitStatus'] = 'NO';
+                        }
                     }
                 }
             }
         }
 
         return new ViewModel(array(
-            'data' => $result,
+            'data' => $data,
             'searchForm' => $searchForm,
             'route' => 'flightsSearch',
         ));

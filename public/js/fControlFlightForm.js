@@ -44,8 +44,14 @@
 
     fControl.behaviors.flightSearchForm = {
         attach:function (context, settings) {
-            var $form = $('form#flightSearch');
+            var $form = $('form#flightSearch'),
+                $statusLabels;
             $($form).find('#dateOrderFrom, #dateOrderTo').mask('99-99-9999');
+
+            $statusLabels = $($form).find('#controls-status label');
+            $statusLabels.eq(0).addClass('labelAny');
+            $statusLabels.eq(1).addClass('labelInProcess');
+            $statusLabels.eq(2).addClass('labelDone');
         }
     };
 
