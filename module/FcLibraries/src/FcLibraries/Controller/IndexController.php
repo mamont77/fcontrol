@@ -266,4 +266,14 @@ class IndexController extends AbstractActionController
 
         return $this->unitModel;
     }
+
+    /**
+     * @param $a
+     * @param $b
+     * @return bool
+     */
+    public function sortLibrary($a, $b)
+    {
+        return $a > $b;
+    }
 }

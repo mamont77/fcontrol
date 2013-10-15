@@ -16,13 +16,5 @@ use Zend\Mvc\Controller\AbstractActionController;
  */
 class CommonData extends AbstractPlugin
 {
-    /**
-     * @param $a
-     * @param $b
-     * @return bool
-     */
-    public function sortLibrary($a, $b)
-    {
-        return $a > $b;
-    }
+
 }

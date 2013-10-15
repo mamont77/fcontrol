@@ -207,7 +207,7 @@ class BaseOfPermitController extends IndexController
         foreach ($data as $row) {
             $result['airports']['id_' . $row->id] = $row->name;
         }
-        uasort($result['airports'], array($this->CommonData(), 'sortLibrary'));
+        uasort($result['airports'], array($this, 'sortLibrary'));
 
         $view = new ViewModel(array(
             'data' => Json::encode($result),
