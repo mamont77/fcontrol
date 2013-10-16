@@ -1,0 +1,67 @@
+<legend>Type of Service: Refuel</legend>
+<div id="refuel">
+    <table class="table table-bordered table-hover table-condensed">
+        <tr>
+            <th colspan="3">
+
+            </th>
+            <th colspan="4">
+                Info
+            </th>
+            <th colspan="2">
+
+            </th>
+        </tr>
+        <tr>
+            <th>
+                Airport
+            </th>
+            <th>
+                Need?
+            </th>
+            <th>
+                Type
+            </th>
+            <th>
+                City
+            </th>
+            <th>
+                Country
+            </th>
+            <th>
+                Term validity
+            </th>
+            <th>
+                Term to take
+            </th>
+            <th>
+                Cneck
+            </th>
+            <th class="actions">Actions</th>
+        </tr>
+        <?php foreach ($refuels as $row) : ?>
+            <tr>
+                <td>
+                    <a rel="tooltip" href="#" data-toggle="tooltip" data-placement="top"
+                       title="" data-original-title="<?php echo $this->escapeHtml($row['airportName']); ?>">
+                        <?php echo $this->escapeHtml($row['icao']); ?> |
+                        <?php echo $this->escapeHtml($row['iata']); ?>
+                    </a>
+                </td>
+                <td><?=($row['isNeed']) ? 'YES' : 'NO'; ?></td>
+                <td><?php echo $this->escapeHtml($row['typeOfPermit']); ?></td>
+                <td><?php echo $this->escapeHtml($row['city']); ?></td>
+                <td><?php echo $this->escapeHtml($row['country']); ?></td>
+                <td><?php echo $this->escapeHtml($row['termValidity']); ?></td>
+                <td><?php echo $this->escapeHtml($row['termToTake']); ?></td>
+                <td><?php echo $this->escapeHtml($row['check']); ?></td>
+                <td class="actions">
+                    <a title="Edit" href="<?php echo $this->url('refuel',
+                        array('action' => 'edit', 'id' => $row['id']));?>"><i class="icon-edit"></i></a>
+                    <a title="Remove" href="<?php echo $this->url('refuel',
+                        array('action' => 'delete', 'id' => $row['id']));?>"><i class="icon-remove"></i></a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+</div>

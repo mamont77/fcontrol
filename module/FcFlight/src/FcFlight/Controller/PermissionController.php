@@ -9,6 +9,11 @@ use FcFlight\Form\PermissionForm;
 class PermissionController extends FlightController
 {
     /**
+     * @var int
+     */
+    protected $headerId;
+
+    /**
      * @var array
      */
     protected $dataForLogger = array();
@@ -19,15 +24,61 @@ class PermissionController extends FlightController
     public function addAction()
     {
 
-        $headerId = (int)$this->params()->fromRoute('id', 0);
-        if (!$headerId) {
+        $this->headerId = (int)$this->params()->fromRoute('id', 0);
+        if (!$this->headerId) {
             return $this->redirect()->toRoute('flight', array(
                 'action' => 'index'
             ));
         }
 
-        return array(
-            'headerId' => $headerId,
+        $refNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($this->headerId);
+
+        $permissions = $this->getPermissionModel()->getByHeaderId($this->headerId);
+
+        $form = new PermissionForm('permission',
+            array(
+                'headerId' => $this->headerId,
+                'libraries' => array(
+                    'airports' => $this->getParentLeg($this->headerId),
+                    'baseOfPermit' => $this->getBaseOfPermits(),
+                ),
+            )
+        );
+
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $filter = $this->getServiceLocator()->get('FcFlight\Filter\PermissionFilter');
+            $form->setInputFilter($filter->getInputFilter());
+            $form->setData($request->getPost());
+
+            if ($form->isValid()) {
+                $data = $form->getData();
+                $filter->exchangeArray($data);
+                $data = $this->getPermissionModel()->add($filter);
+
+                $message = "Permission was successfully added.";
+                $this->flashMessenger()->addSuccessMessage($message);
+
+                $loggerPlugin = $this->LogPlugin();
+                $this->setDataForLogger($this->getPermissionModel()->get($data['lastInsertValue']));
+                $loggerPlugin->setNewLogRecord($this->dataForLogger);
+                $loggerPlugin->setLogMessage($message);
+
+                $logger = $this->getServiceLocator()->get('logger');
+                $logger->addExtra(array('username' => $loggerPlugin->getCurrentUserName(), 'component' => 'permission'));
+                $logger->Info($loggerPlugin->getLogMessage());
+
+                return $this->redirect()->toRoute('permission',
+                    array(
+                        'action' => 'add',
+                        'id' => $this->headerId,
+                    ));
+            }
+        }
+        return array('form' => $form,
+            'headerId' => $this->headerId,
+            'refNumberOrder' => $refNumberOrder,
+            'permissions' => $permissions,
         );
     }
 

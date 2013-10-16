@@ -57,14 +57,17 @@ class PermissionModel extends AbstractTableGateway
     {
         $data = array(
             'headerId' => (int)$object->headerId,
+            'airportId' => (int)$object->airportId,
+            'isNeed' => (int)$object->isNeed,
+            'typeOfPermit' => (string)$object->typeOfPermit,
+            'baseOfPermitId' => (int)$object->baseOfPermitId,
+            'check' => (string)$object->check,
         );
-        $hash = '';
 
         $this->insert($data);
 
         return array(
             'lastInsertValue' => $this->getLastInsertValue(),
-            'hash' => $hash,
         );
     }
 
@@ -97,4 +100,60 @@ class PermissionModel extends AbstractTableGateway
     {
         $this->delete(array('id' => $id));
     }
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function getByHeaderId($id)
+    {
+        $id = (int)$id;
+        $select = new Select();
+        $select->from($this->table);
+        $select->columns(array('id',
+            'headerId',
+            'airportId',
+            'isNeed',
+            'typeOfPermit',
+            'baseOfPermitId',
+            'check'));
+
+        $select->join(array('airport' => 'library_airport'),
+            'airport.id = flightPermissionForm.airportId',
+            array('icao' => 'code_icao', 'iata' => 'code_iata', 'airportName' => 'name'), 'left');
+
+        $select->join(array('base_of_permit' => 'library_base_of_permit'),
+            'base_of_permit.id = flightPermissionForm.baseOfPermitId',
+            array('baseOfPermitAirportId' => 'airportId', 'termValidity' => 'termValidity', 'termToTake' => 'termToTake'), 'left');
+
+        $select->where(array('headerId' => $id));
+        $select->order(array('airportId ' . $select::ORDER_ASCENDING, 'id ' . $select::ORDER_ASCENDING));
+//        \Zend\Debug\Debug::dump($select->getSqlString());
+
+        $resultSet = $this->selectWith($select);
+        $resultSet->buffer();
+
+        $data = array();
+        foreach ($resultSet as $row) {
+//            \Zend\Debug\Debug::dump($row);
+            //Real fields
+            $data[$row->id]['id'] = $row->id;
+            $data[$row->id]['headerId'] = $row->headerId;
+            $data[$row->id]['airportId'] = $row->airportId;
+            $data[$row->id]['isNeed'] = $row->isNeed;
+            $data[$row->id]['typeOfPermit'] = $row->typeOfPermit;
+            $data[$row->id]['headerId'] = $row->headerId;
+            $data[$row->id]['baseOfPermitId'] = $row->baseOfPermitId;
+            $data[$row->id]['check'] = $row->check;
+            $data[$row->id]['icao'] = $row->icao;
+            $data[$row->id]['iata'] = $row->iata;
+            $data[$row->id]['airportName'] = $row->airportName;
+            $data[$row->id]['baseOfPermitAirportId'] = $row->baseOfPermitAirportId;
+            $data[$row->id]['termValidity'] = $row->termValidity;
+            $data[$row->id]['termToTake'] = $row->termToTake;
+        }
+
+        return $data;
+    }
+
 }

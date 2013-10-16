@@ -28,16 +28,19 @@ class PermissionFilter implements InputFilterAwareInterface
     //Real fields
     public $id;
     public $headerId;
+    public $airportId;
+    public $isNeed;
+    public $typeOfPermit;
+    public $baseOfPermitId;
+    public $check;
 
     //Virtual fields
-
-    /**
-     * @var array
-     */
-    protected $defaultFilters = array(
-        array('name' => 'StripTags'),
-        array('name' => 'StringTrim'),
-    );
+    public $icao;
+    public $iata;
+    public $airportName;
+    public $baseOfPermitAirportId;
+    public $termValidity;
+    public $termToTake;
 
     /**
      * @param \Zend\Db\Adapter\Adapter $dbAdapter
@@ -65,9 +68,19 @@ class PermissionFilter implements InputFilterAwareInterface
         //Real fields
         $this->id = (isset($data['id'])) ? $data['id'] : null;
         $this->headerId = (isset($data['headerId'])) ? $data['headerId'] : null;
+        $this->airportId = (isset($data['airportId'])) ? $data['airportId'] : null;
+        $this->isNeed = (isset($data['isNeed'])) ? $data['isNeed'] : null;
+        $this->typeOfPermit = (isset($data['typeOfPermit'])) ? $data['typeOfPermit'] : null;
+        $this->baseOfPermitId = (isset($data['baseOfPermitId'])) ? $data['baseOfPermitId'] : null;
+        $this->check = (isset($data['check'])) ? $data['check'] : null;
 
         //Virtual fields
-
+        $this->icao = (isset($data['icao'])) ? $data['icao'] : null;
+        $this->iata = (isset($data['iata'])) ? $data['iata'] : null;
+        $this->airportName = (isset($data['airportName'])) ? $data['airportName'] : null;
+        $this->baseOfPermitAirportId = (isset($data['baseOfPermitAirportId'])) ? $data['baseOfPermitAirportId'] : null;
+        $this->termValidity = (isset($data['termValidity'])) ? $data['termValidity'] : null;
+        $this->termToTake = (isset($data['termToTake'])) ? $data['termToTake'] : null;
     }
 
     /**
@@ -101,6 +114,31 @@ class PermissionFilter implements InputFilterAwareInterface
 
             $inputFilter->add($factory->createInput(array(
                 'name' => 'headerId',
+                'required' => true,
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'airportId',
+                'required' => true,
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'isNeed',
+                'required' => false,
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'typeOfPermit',
+                'required' => true,
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'baseOfPermitId',
+                'required' => true,
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'check',
                 'required' => true,
             )));
 
