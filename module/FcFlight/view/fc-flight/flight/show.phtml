@@ -131,6 +131,10 @@ $this->headTitle($title);
             <? if (count($refuels) > 0): ?>
                 <?php echo $this->partial('widgets/tables/refuel.phtml', array('refuels' => $refuels)); ?>
             <? endif; ?>
+
+            <? if (count($permissions) > 0): ?>
+                <?php echo $this->partial('widgets/tables/permission.phtml', array('permissions' => $permissions)); ?>
+            <? endif; ?>
         </div>
     </div>
 </div>

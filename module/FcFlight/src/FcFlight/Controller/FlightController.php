@@ -172,8 +172,23 @@ class FlightController extends AbstractActionController
                 // do nothing
             }
 
-            // TODO: Fix me after Permission feature.
-            $data[$key]['permitStatus'] = 'NO';
+            try {
+                $hasPermission = $this->getPermissionModel()->getByHeaderId($data[$key]['id']);
+                if (!empty($hasPermission)) {
+                    $data[$key]['permitStatus'] = 'CNFMD';
+
+                    foreach ($hasPermission as $row){
+                        if ($row['check'] != 'RECEIVED') {
+                            $data[$key]['permitStatus'] = 'YES';
+                            continue;
+                        }
+                    }
+                } else {
+                    $data[$key]['permitStatus'] = 'NO';
+                }
+            } catch (Exception $e) {
+                // do nothing
+            }
         }
 
         return new ViewModel(array(
@@ -226,9 +241,23 @@ class FlightController extends AbstractActionController
                 // do nothing
             }
 
-            // TODO: Fix me after Permission feature.
-            $data[$key]['permitStatus'] = 'NO';
+            try {
+                $hasPermission = $this->getPermissionModel()->getByHeaderId($data[$key]['id']);
+                if (!empty($hasPermission)) {
+                    $data[$key]['permitStatus'] = 'CNFMD';
 
+                    foreach ($hasPermission as $row){
+                        if ($row['check'] != 'RECEIVED') {
+                            $data[$key]['permitStatus'] = 'YES';
+                            continue;
+                        }
+                    }
+                } else {
+                    $data[$key]['permitStatus'] = 'NO';
+                }
+            } catch (Exception $e) {
+                // do nothing
+            }
         }
 
         $pagination = new Paginator(new paginatorIterator($result));
@@ -265,11 +294,13 @@ class FlightController extends AbstractActionController
 
         $legs = $this->getLegModel()->getByHeaderId($header->id);
         $refuels = $this->getRefuelModel()->getByHeaderId($header->id);
+        $permissions = $this->getPermissionModel()->getByHeaderId($header->id);
 
         return new ViewModel(array(
             'header' => $header,
             'legs' => $legs,
             'refuels' => $refuels,
+            'permissions' => $permissions,
         ));
     }
 

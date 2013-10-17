@@ -41,7 +41,7 @@ $form->setAttribute('action', $this->url('permission', array('action' => 'add', 
 $form->prepare();
 ?>
 
-<?php echo $this->partial('widgets/tables/permission.phtml', array('refuels' => $permissions)); ?>
+<?php echo $this->partial('widgets/tables/permission.phtml', array('permissions' => $permissions)); ?>
 
 
 <?php if ($form->getMessages()): ?>
