@@ -38,7 +38,8 @@ class PermissionFilter implements InputFilterAwareInterface
     public $icao;
     public $iata;
     public $airportName;
-    public $baseOfPermitAirportId;
+    public $cityName;
+    public $countryName;
     public $termValidity;
     public $termToTake;
 
@@ -78,7 +79,8 @@ class PermissionFilter implements InputFilterAwareInterface
         $this->icao = (isset($data['icao'])) ? $data['icao'] : null;
         $this->iata = (isset($data['iata'])) ? $data['iata'] : null;
         $this->airportName = (isset($data['airportName'])) ? $data['airportName'] : null;
-        $this->baseOfPermitAirportId = (isset($data['baseOfPermitAirportId'])) ? $data['baseOfPermitAirportId'] : null;
+        $this->cityName = (isset($data['cityName'])) ? $data['cityName'] : null;
+        $this->countryName = (isset($data['countryName'])) ? $data['countryName'] : null;
         $this->termValidity = (isset($data['termValidity'])) ? $data['termValidity'] : null;
         $this->termToTake = (isset($data['termToTake'])) ? $data['termToTake'] : null;
     }

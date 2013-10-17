@@ -1,4 +1,4 @@
-<legend>Type of Service: Refuel</legend>
+<legend>Type of Service: Permission</legend>
 <div id="refuel">
     <table class="table table-bordered table-hover table-condensed">
         <tr>
@@ -50,8 +50,8 @@
                 </td>
                 <td><?=($row['isNeed']) ? 'YES' : 'NO'; ?></td>
                 <td><?php echo $this->escapeHtml($row['typeOfPermit']); ?></td>
-                <td><?php echo $this->escapeHtml($row['city']); ?></td>
-                <td><?php echo $this->escapeHtml($row['country']); ?></td>
+                <td><?php echo $this->escapeHtml($row['cityName']); ?></td>
+                <td><?php echo $this->escapeHtml($row['countryName']); ?></td>
                 <td><?php echo $this->escapeHtml($row['termValidity']); ?></td>
                 <td><?php echo $this->escapeHtml($row['termToTake']); ?></td>
                 <td><?php echo $this->escapeHtml($row['check']); ?></td>

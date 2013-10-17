@@ -119,12 +119,24 @@ class PermissionModel extends AbstractTableGateway
             'check'));
 
         $select->join(array('airport' => 'library_airport'),
-            'airport.id = flightPermissionForm.airportId',
+            'flightPermissionForm.airportId = airport.id',
             array('icao' => 'code_icao', 'iata' => 'code_iata', 'airportName' => 'name'), 'left');
 
-        $select->join(array('base_of_permit' => 'library_base_of_permit'),
-            'base_of_permit.id = flightPermissionForm.baseOfPermitId',
+        $select->join(array('baseOfPermission' => 'library_base_of_permit'),
+            'flightPermissionForm.BaseOfPermitId = baseOfPermission.id',
             array('baseOfPermitAirportId' => 'airportId', 'termValidity' => 'termValidity', 'termToTake' => 'termToTake'), 'left');
+
+        $select->join(array('airport2' => 'library_airport'),
+            'baseOfPermission.airportId = airport2.id',
+            array('cityId' => 'city_id'), 'left');
+
+        $select->join(array('city' => 'library_city'),
+            'airport2.city_id = city.id',
+            array('countryId' => 'country_id', 'cityName' => 'name'), 'left');
+
+        $select->join(array('country' => 'library_country'),
+            'city.country_id = country.id',
+            array('regionId' => 'region_id', 'countryName' => 'name'), 'left');
 
         $select->where(array('headerId' => $id));
         $select->order(array('airportId ' . $select::ORDER_ASCENDING, 'id ' . $select::ORDER_ASCENDING));
@@ -142,13 +154,15 @@ class PermissionModel extends AbstractTableGateway
             $data[$row->id]['airportId'] = $row->airportId;
             $data[$row->id]['isNeed'] = $row->isNeed;
             $data[$row->id]['typeOfPermit'] = $row->typeOfPermit;
-            $data[$row->id]['headerId'] = $row->headerId;
             $data[$row->id]['baseOfPermitId'] = $row->baseOfPermitId;
             $data[$row->id]['check'] = $row->check;
+
+            //Virtual fields
             $data[$row->id]['icao'] = $row->icao;
             $data[$row->id]['iata'] = $row->iata;
             $data[$row->id]['airportName'] = $row->airportName;
-            $data[$row->id]['baseOfPermitAirportId'] = $row->baseOfPermitAirportId;
+            $data[$row->id]['cityName'] = $row->cityName;
+            $data[$row->id]['countryName'] = $row->countryName;
             $data[$row->id]['termValidity'] = $row->termValidity;
             $data[$row->id]['termToTake'] = $row->termToTake;
         }
