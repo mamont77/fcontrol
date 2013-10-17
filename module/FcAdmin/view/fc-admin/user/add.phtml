@@ -38,16 +38,7 @@ $form->setAttribute('action', $this->url('zfcadmin/user', array('action' => 'add
 $form->prepare();
 ?>
 
-<div class="alert alert-info">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <h4>About user roles!</h4>
-    <ul>
-        <li><strong>User</strong> - has access only to the home page.</li>
-        <li><strong>Manager</strong> - can add the main form of flights, as well as any sub forms.
-            Has access to the logs. Does not have access to the management of libraries and users.</li>
-        <li><strong>Admin</strong> - has full access.</li>
-    </ul>
-</div>
+
 
 <?php if ($form->getMessages()): ?>
 <div class="alert alert-error">
@@ -57,4 +48,19 @@ $form->prepare();
 </div>
 <?php endif; ?>
 
-<?php echo $this->formTwb($form, $formType, $displayOptions); ?>
+<div class="row">
+    <div class="span6">
+        <?php echo $this->formTwb($form, $formType, $displayOptions); ?>
+    </div>
+    <div class="span6">
+        <div class="alert alert-info">
+            <h4>About user roles!</h4>
+            <ul>
+                <li><strong>User</strong> - has access only to the home page.</li>
+                <li><strong>Manager</strong> - can add the main form of flights, as well as any sub forms.
+                    Has access to the logs. Does not have access to the management of libraries and users.</li>
+                <li><strong>Admin</strong> - has full access.</li>
+            </ul>
+        </div>
+    </div>
+</div>
