@@ -38,6 +38,34 @@ class PermissionModel extends AbstractTableGateway
         $select = new Select();
         $select->from($this->table);
 
+        $select->columns(array('id',
+            'headerId',
+            'airportId',
+            'isNeed',
+            'typeOfPermit',
+            'baseOfPermitId',
+            'check'));
+
+        $select->join(array('airport' => 'library_airport'),
+            'flightPermissionForm.airportId = airport.id',
+            array('icao' => 'code_icao', 'iata' => 'code_iata', 'airportName' => 'name'), 'left');
+
+        $select->join(array('baseOfPermission' => 'library_base_of_permit'),
+            'flightPermissionForm.BaseOfPermitId = baseOfPermission.id',
+            array('baseOfPermitAirportId' => 'airportId', 'termValidity' => 'termValidity', 'termToTake' => 'termToTake'), 'left');
+
+        $select->join(array('airport2' => 'library_airport'),
+            'baseOfPermission.airportId = airport2.id',
+            array('cityId' => 'city_id'), 'left');
+
+        $select->join(array('city' => 'library_city'),
+            'airport2.city_id = city.id',
+            array('countryId' => 'country_id', 'cityName' => 'name'), 'left');
+
+        $select->join(array('country' => 'library_country'),
+            'city.country_id = country.id',
+            array('regionId' => 'region_id', 'countryName' => 'name'), 'left');
+
         $select->where(array($this->table . '.id' => $id));
 
         $resultSet = $this->selectWith($select);

@@ -123,6 +123,14 @@ class PermissionController extends FlightController
     {
         $this->dataForLogger = array(
             'id' => $data->id,
+            'Airport' => $data->airportName . ' (' . $data->icao . '/' . $data->iata . ')',
+            'Need' => ($data->isNeed) ? 'YES' : 'NO',
+            'Type' => $data->typeOfPermit,
+            'City' => $data->cityName,
+            'Country' => $data->countryName,
+            'Term validity' => $data->termValidity,
+            'Term to take' => $data->termToTake,
+            'Check' => $data->check,
         );
     }
 }
