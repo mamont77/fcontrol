@@ -204,4 +204,16 @@ class PermissionModel extends AbstractTableGateway
         return $data;
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function getHeaderRefNumberOrderByPermissionId($id)
+    {
+        $row = $this->get($id);
+        $headerModel = new FlightHeaderModel($this->getAdapter());
+
+        return $headerModel->getRefNumberOrderById($row->headerId);
+    }
+
 }

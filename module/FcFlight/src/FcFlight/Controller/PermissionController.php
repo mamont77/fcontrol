@@ -115,10 +115,38 @@ class PermissionController extends FlightController
 
         $request = $this->getRequest();
         $refUri = $request->getHeader('Referer')->uri()->getPath();
+        $refNumberOrder = $this->getPermissionModel()->getHeaderRefNumberOrderByPermissionId($id);
+
+        if ($request->isPost()) {
+            $del = $request->getPost('del', 'No');
+            if ($del == 'Yes') {
+                $id = (int)$request->getPost('id');
+
+                $loggerPlugin = $this->LogPlugin();
+                $this->setDataForLogger($this->getPermissionModel()->get($id));
+                $loggerPlugin->setOldLogRecord($this->dataForLogger);
+
+                $this->getPermissionModel()->remove($id);
+
+                $message = "Permission was successfully deleted.";
+                $this->flashMessenger()->addSuccessMessage($message);
+
+                $loggerPlugin->setLogMessage($message);
+                $logger = $this->getServiceLocator()->get('logger');
+                $logger->addExtra(array('username' => $loggerPlugin->getCurrentUserName(), 'component' => 'permission'));
+                $logger->Warn($loggerPlugin->getLogMessage());
+            }
+
+            $redirectPath = (string)$request->getPost('referer');
+            // Redirect to back
+            return $this->redirect()->toUrl($redirectPath);
+        }
 
         return array(
             'id' => $id,
             'referer' => $refUri,
+            'refNumberOrder' => $refNumberOrder,
+            'data' => $this->getPermissionModel()->get($id)
         );
     }
 
