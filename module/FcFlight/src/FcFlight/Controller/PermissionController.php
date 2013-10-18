@@ -100,7 +100,65 @@ class PermissionController extends FlightController
             ));
         }
 
-        return array();
+        $refNumberOrder = $this->getPermissionModel()->getHeaderRefNumberOrderByPermissionId($id);
+
+        $data = $this->getPermissionModel()->get($id);
+        $this->headerId = (int)$data->headerId;
+
+        $permissions = $this->getPermissionModel()->getByHeaderId($this->headerId);
+
+        $this->setDataForLogger($data);
+        $loggerPlugin = $this->LogPlugin();
+        $loggerPlugin->setOldLogRecord($this->dataForLogger);
+
+        $form = new PermissionForm('permission',
+            array(
+                'headerId' => $this->headerId,
+                'libraries' => array(
+                    'airports' => $this->getParentLeg($this->headerId),
+                    'baseOfPermit' => $this->getBaseOfPermits(),
+                ),
+            )
+        );
+
+        $form->bind($data);
+        $form->get('submitBtn')->setAttribute('value', 'Save');
+
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+            $filter = $this->getServiceLocator()->get('FcFlight\Filter\PermissionFilter');
+            $form->setInputFilter($filter->getInputFilter());
+            $form->setData($request->getPost());
+
+            if ($form->isValid()) {
+                $data = $form->getData();
+                $this->getPermissionModel()->save($data);
+
+                $message = "Permission was successfully saved.";
+                $this->flashMessenger()->addSuccessMessage($message);
+
+                $this->setDataForLogger($this->getPermissionModel()->get($id));
+                $loggerPlugin->setNewLogRecord($this->dataForLogger);
+                $loggerPlugin->setLogMessage($message);
+
+                $logger = $this->getServiceLocator()->get('logger');
+                $logger->addExtra(array('username' => $loggerPlugin->getCurrentUserName(), 'component' => 'permission'));
+                $logger->Notice($loggerPlugin->getLogMessage());
+
+                return $this->redirect()->toRoute('browse',
+                    array(
+                        'action' => 'show',
+                        'refNumberOrder' => $refNumberOrder,
+                    ));
+            }
+        }
+
+        return array('form' => $form,
+            'id' => $data->id,
+            'refNumberOrder' => $refNumberOrder,
+            'permissions' => $permissions,
+        );
     }
 
     /**

@@ -107,15 +107,18 @@ class PermissionModel extends AbstractTableGateway
 
     /**
      * @param PermissionFilter $object
-     * @return string
      * @throws \Exception
      */
     public function save(PermissionFilter $object)
     {
         $data = array(
             'headerId' => (int)$object->headerId,
+            'airportId' => (int)$object->airportId,
+            'isNeed' => (int)$object->isNeed,
+            'typeOfPermit' => (string)$object->typeOfPermit,
+            'baseOfPermitId' => (int)$object->baseOfPermitId,
+            'check' => (string)$object->check,
         );
-        $hash = '';
 
         $id = (int)$object->id;
         if ($this->get($id)) {
@@ -123,8 +126,6 @@ class PermissionModel extends AbstractTableGateway
         } else {
             throw new \Exception('Form id does not exist');
         }
-
-        return $hash;
     }
 
     /**
@@ -173,7 +174,7 @@ class PermissionModel extends AbstractTableGateway
             array('regionId' => 'region_id', 'countryName' => 'name'), 'left');
 
         $select->where(array('headerId' => $id));
-        $select->order(array('airportId ' . $select::ORDER_ASCENDING, 'id ' . $select::ORDER_ASCENDING));
+        $select->order(array('id ' . $select::ORDER_ASCENDING, 'airportId ' . $select::ORDER_ASCENDING));
 //        \Zend\Debug\Debug::dump($select->getSqlString());
 
         $resultSet = $this->selectWith($select);
