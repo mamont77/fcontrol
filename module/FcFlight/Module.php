@@ -11,11 +11,13 @@ use FcFlight\Model\SearchModel;
 use FcFlight\Model\LegModel;
 use FcFlight\Model\RefuelModel;
 use FcFlight\Model\PermissionModel;
+use FcFlight\Model\HotelModel;
 use FcFlight\Filter\FlightHeaderFilter;
 use FcFlight\Filter\SearchFilter;
 use FcFlight\Filter\LegFilter;
 use FcFlight\Filter\RefuelFilter;
 use FcFlight\Filter\PermissionFilter;
+use FcFlight\Filter\HotelFilter;
 
 /**
  * Class Module
@@ -130,6 +132,10 @@ class Module
                         $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                         return new PermissionModel($dbAdapter);
                     },
+                'FcFlight\Model\HotelModel' => function ($sm) {
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new HotelModel($dbAdapter);
+                    },
                 'FcFlight\Filter\FlightHeaderFilter' => function ($sm) {
                         $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                         return new FlightHeaderFilter($dbAdapter);
@@ -149,6 +155,10 @@ class Module
                 'FcFlight\Filter\PermissionFilter' => function ($sm) {
                         $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                         return new PermissionFilter($dbAdapter);
+                    },
+                'FcFlight\Filter\HotelFilter' => function ($sm) {
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new HotelFilter($dbAdapter);
                     },
             ),
         );

@@ -1,0 +1,36 @@
+<legend>Type of Service: Hotel</legend>
+<div id="hotel">
+    <table class="table table-bordered table-hover table-condensed">
+        <tr>
+            <th>
+                Airport
+            </th>
+            <th>
+                ?
+            </th>
+            <th>
+                Agent
+            </th>
+            <th class="actions">Actions</th>
+        </tr>
+        <?php foreach ($hotels as $row) : ?>
+            <tr>
+                <td>
+                    <a rel="tooltip" href="#" data-toggle="tooltip" data-placement="top"
+                       title="" data-original-title="<?php echo $this->escapeHtml($row['airportName']); ?>">
+                        <?php echo $this->escapeHtml($row['icao']); ?> |
+                        <?php echo $this->escapeHtml($row['iata']); ?>
+                    </a>
+                </td>
+                <td></td>
+                <td><?php echo $this->escapeHtml($row['agentName']); ?></td>
+                <td class="actions">
+                    <a title="Edit" href="<?php echo $this->url('hotel',
+                        array('action' => 'edit', 'id' => $row['id']));?>"><i class="icon-edit"></i></a>
+                    <a title="Remove" href="<?php echo $this->url('hotel',
+                        array('action' => 'delete', 'id' => $row['id']));?>"><i class="icon-remove"></i></a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+</div>
