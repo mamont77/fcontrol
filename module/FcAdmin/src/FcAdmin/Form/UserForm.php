@@ -1,10 +1,16 @@
 <?php
-
+/**
+ * @namespace
+ */
 namespace FcAdmin\Form;
 
 use Zend\Form\Form;
 use Zend\Form\Element;
 
+/**
+ * Class UserForm
+ * @package FcAdmin\Form
+ */
 class UserForm extends Form
 {
 

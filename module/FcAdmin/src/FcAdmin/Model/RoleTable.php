@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @namespace
+ */
 namespace FcAdmin\Model;
 
 use Zend\Db\TableGateway\AbstractTableGateway;
@@ -7,6 +9,10 @@ use Zend\Db\Adapter\Adapter;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\Select;
 
+/**
+ * Class RoleTable
+ * @package FcAdmin\Model
+ */
 class RoleTable extends AbstractTableGateway
 {
     protected $table = 'user_role_linker';

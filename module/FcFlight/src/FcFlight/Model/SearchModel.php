@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @namespace
+ */
 namespace FcFlight\Model;
 
 use Zend\Db\TableGateway\AbstractTableGateway;

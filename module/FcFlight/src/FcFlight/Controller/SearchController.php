@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @namespace
+ */
 namespace FcFlight\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;

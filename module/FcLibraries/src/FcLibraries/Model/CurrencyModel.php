@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @namespace
+ */
 namespace FcLibraries\Model;
 
 use Zend\Db\Adapter\Adapter;

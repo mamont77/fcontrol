@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @namespace
+ */
 namespace FcFlight\Form;
 
 use Zend\Form\Form;
@@ -112,7 +114,5 @@ class SearchForm extends BaseForm
                 'value' => 'Find',
             ),
         ));
-
-
     }
 }

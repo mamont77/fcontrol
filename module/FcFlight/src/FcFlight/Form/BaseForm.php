@@ -1,10 +1,16 @@
 <?php
-
+/**
+ * @namespace
+ */
 namespace FcFlight\Form;
 
 use Zend\Form\Form;
 use \Zend\Db\ResultSet\ResultSet;
 
+/**
+ * Class BaseForm
+ * @package FcFlight\Form
+ */
 class BaseForm extends Form
 {
     /**
@@ -54,6 +60,11 @@ class BaseForm extends Form
         return $this;
     }
 
+    /**
+     * @param $a
+     * @param $b
+     * @return bool
+     */
     protected function sortLibrary($a, $b)
     {
         return $a > $b;

@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @namespace
+ */
 namespace FcLibraries\Controller\Plugin;
 
 use Zend\Mvc\Controller\Plugin\AbstractPlugin;

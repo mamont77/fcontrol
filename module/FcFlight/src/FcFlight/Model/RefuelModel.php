@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @namespace
+ */
 namespace FcFlight\Model;
 
 use Zend\Db\TableGateway\AbstractTableGateway;
@@ -8,6 +10,10 @@ use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\Select;
 use FcFlight\Filter\RefuelFilter;
 
+/**
+ * Class RefuelModel
+ * @package FcFlight\Model
+ */
 class RefuelModel extends AbstractTableGateway
 {
 
@@ -186,6 +192,10 @@ class RefuelModel extends AbstractTableGateway
         $this->delete(array('id' => $id));
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function getHeaderRefNumberOrderByRefuelId($id)
     {
         $row = $this->get($id);

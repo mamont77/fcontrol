@@ -1,4 +1,7 @@
 <?php
+/**
+ * @namespace
+ */
 namespace FcFlight;
 
 use Zend\ModuleManager\ModuleManager;
@@ -14,6 +17,10 @@ use FcFlight\Filter\LegFilter;
 use FcFlight\Filter\RefuelFilter;
 use FcFlight\Filter\PermissionFilter;
 
+/**
+ * Class Module
+ * @package FcFlight
+ */
 class Module
 {
     /**
@@ -38,6 +45,9 @@ class Module
         );
     }
 
+    /**
+     * @return array
+     */
     public function getValidatorConfig()
     {
         return array(
@@ -48,12 +58,18 @@ class Module
         );
     }
 
+    /**
+     * @param ModuleManager $moduleManager
+     */
     public function init(ModuleManager $moduleManager)
     {
         $sharedEvents = $moduleManager->getEventManager()->getSharedManager();
         $sharedEvents->attach(__NAMESPACE__, 'dispatch', array($this, 'onModuleDispatch'));
     }
 
+    /**
+     * @param MvcEvent $e
+     */
     public function onModuleDispatch(MvcEvent $e)
     {
         //Set the layout template for every action in this module

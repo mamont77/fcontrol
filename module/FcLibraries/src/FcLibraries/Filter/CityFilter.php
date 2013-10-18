@@ -1,4 +1,7 @@
 <?php
+/**
+ * @namespace
+ */
 namespace FcLibraries\Filter;
 
 use Zend\InputFilter\Factory as InputFactory;

@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @namespace
+ */
 namespace FcFlight\Model;
 
 use Zend\Db\TableGateway\AbstractTableGateway;
@@ -8,6 +10,10 @@ use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\Select;
 use FcFlight\Filter\LegFilter;
 
+/**
+ * Class LegModel
+ * @package FcFlight\Model
+ */
 class LegModel extends AbstractTableGateway
 {
 
@@ -133,6 +139,11 @@ class LegModel extends AbstractTableGateway
         return $data;
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     * @throws \Exception
+     */
     public function getLastByHeaderId($id)
     {
         $id = (int)$id;
@@ -221,6 +232,10 @@ class LegModel extends AbstractTableGateway
         $this->delete(array('id' => $id));
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function getHeaderRefNumberOrderByLegId($id)
     {
         $row = $this->get($id);

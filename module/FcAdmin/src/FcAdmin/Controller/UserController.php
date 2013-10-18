@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @namespace
+ */
 namespace FcAdmin\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
@@ -10,11 +12,18 @@ use Zend\Db\Sql\Select;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\Iterator as paginatorIterator;
 
+/**
+ * Class UserController
+ * @package FcAdmin\Controller
+ */
 class UserController extends AbstractActionController
 {
     protected $userTable;
     protected $roleTable;
 
+    /**
+     * @return array|ViewModel
+     */
     public function indexAction()
     {
         $select = new Select();
@@ -43,6 +52,9 @@ class UserController extends AbstractActionController
         ));
     }
 
+    /**
+     * @return array
+     */
     public function addAction()
     {
         $form = new UserForm();
@@ -68,6 +80,9 @@ class UserController extends AbstractActionController
         return array('form' => $form);
     }
 
+    /**
+     * @return array
+     */
     public function editAction()
     {
         $id = (int) $this->params()->fromRoute('id', 0);
@@ -107,6 +122,9 @@ class UserController extends AbstractActionController
         );
     }
 
+    /**
+     * @return array
+     */
     public function deleteAction()
     {
         $id = (int) $this->params()->fromRoute('id', 0);
@@ -134,6 +152,9 @@ class UserController extends AbstractActionController
         );
     }
 
+    /**
+     * @return array|object
+     */
     public function getUserTable()
     {
         if (!$this->userTable) {
@@ -143,6 +164,9 @@ class UserController extends AbstractActionController
         return $this->userTable;
     }
 
+    /**
+     * @return array|object
+     */
     public function getRoleTable()
     {
         if (!$this->roleTable) {

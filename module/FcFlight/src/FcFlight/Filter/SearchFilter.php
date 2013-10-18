@@ -1,4 +1,7 @@
 <?php
+/**
+ * @namespace
+ */
 namespace FcFlight\Filter;
 
 use Zend\InputFilter\Factory as InputFactory;

@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @namespace
+ */
 namespace FcLibraries\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;

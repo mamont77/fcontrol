@@ -1,11 +1,18 @@
 <?php
-
+/**
+ * @namespace
+ */
 namespace FcAdmin\Model;
+
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 
+/**
+ * Class Role
+ * @package FcAdmin\Model
+ */
 class Role implements InputFilterAwareInterface
 {
 

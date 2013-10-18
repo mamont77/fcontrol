@@ -12,6 +12,7 @@ return array(
   'FcLibraries\Controller\CurrencyController'     => __DIR__ . '/src/FcLibraries/Controller/CurrencyController.php',
   'FcLibraries\Controller\IndexController'        => __DIR__ . '/src/FcLibraries/Controller/IndexController.php',
   'FcLibraries\Controller\KontragentController'   => __DIR__ . '/src/FcLibraries/Controller/KontragentController.php',
+  'FcLibraries\Controller\Plugin\CommonData'      => __DIR__ . '/src/FcLibraries/Controller/Plugin/CommonData.php',
   'FcLibraries\Controller\Plugin\LogPlugin'       => __DIR__ . '/src/FcLibraries/Controller/Plugin/LogPlugin.php',
   'FcLibraries\Controller\RegionController'       => __DIR__ . '/src/FcLibraries/Controller/RegionController.php',
   'FcLibraries\Controller\UnitController'         => __DIR__ . '/src/FcLibraries/Controller/UnitController.php',

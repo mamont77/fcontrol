@@ -1,11 +1,11 @@
 <?php
-
+/**
+ * @namespace
+ */
 namespace FcFlight\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use FcFlight\Form\FlightHeaderForm;
-use FcFlight\Form\SearchForm;
 use Zend\Db\Sql\Select;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\Iterator as paginatorIterator;
@@ -20,13 +20,18 @@ use FcLibraries\Model\CurrencyModel;
 use FcLibraries\Model\KontragentModel;
 use FcLibraries\Model\RegionModel;
 use FcLibraries\Model\UnitModel;
-use FcFcFlight\Model\FlightHeaderModel;
-use FcFcFlight\Model\LegModel;
-use FcFcFlight\Model\PermissionModel;
-use FcFcFlight\Model\RefuelModel;
-use FcFcFlight\Model\SearchModel;
+use FcFlight\Model\FlightHeaderModel;
+use FcFlight\Model\LegModel;
+use FcFlight\Model\PermissionModel;
+use FcFlight\Model\RefuelModel;
+use FcFlight\Model\SearchModel;
+use FcFlight\Form\FlightHeaderForm;
+use FcFlight\Form\SearchForm;
 
-
+/**
+ * Class FlightController
+ * @package FcFlight\Controller
+ */
 class FlightController extends AbstractActionController
 {
     /**

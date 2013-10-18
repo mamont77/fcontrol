@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @namespace
+ */
 namespace FcLogEvents\Filter;
 
 use Zend\InputFilter\Factory as InputFactory;

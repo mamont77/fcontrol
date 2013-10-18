@@ -1,10 +1,16 @@
 <?php
-
+/**
+ * @namespace
+ */
 namespace FcFlight\Form;
 
 use Zend\Form\Element;
 use \Zend\Db\ResultSet\ResultSet;
 
+/**
+ * Class RefuelForm
+ * @package FcFlight\Form
+ */
 class RefuelForm extends BaseForm
 {
     /**

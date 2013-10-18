@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @namespace
+ */
 namespace FcFlight\Validator;
 
 use Zend\Validator\AbstractValidator;

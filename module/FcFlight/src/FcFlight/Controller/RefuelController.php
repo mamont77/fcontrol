@@ -1,11 +1,17 @@
 <?php
-
+/**
+ * @namespace
+ */
 namespace FcFlight\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use FcFlight\Form\RefuelForm;
 
+/**
+ * Class RefuelController
+ * @package FcFlight\Controller
+ */
 class RefuelController extends FlightController
 {
 

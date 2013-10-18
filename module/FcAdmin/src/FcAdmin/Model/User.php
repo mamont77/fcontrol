@@ -1,12 +1,19 @@
 <?php
-
+/**
+ * @namespace
+ */
 namespace FcAdmin\Model;
+
 use Zend\InputFilter\Factory as InputFactory;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\Crypt\Password\Bcrypt;
 
+/**
+ * Class User
+ * @package FcAdmin\Model
+ */
 class User implements InputFilterAwareInterface
 {
 

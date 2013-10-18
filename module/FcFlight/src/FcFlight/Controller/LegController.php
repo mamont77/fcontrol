@@ -1,11 +1,17 @@
 <?php
-
+/**
+ * @namespace
+ */
 namespace FcFlight\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use FcFlight\Form\LegForm;
 
+/**
+ * Class LegController
+ * @package FcFlight\Controller
+ */
 class LegController extends FlightController
 {
     /**

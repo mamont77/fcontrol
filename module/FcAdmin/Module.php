@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @namespace
+ */
 namespace FcAdmin;
 
 use Zend\ModuleManager\ModuleManager;
@@ -7,8 +9,15 @@ use Zend\Mvc\MvcEvent;
 use FcAdmin\Model\UserTable;
 use FcAdmin\Model\RoleTable;
 
+/**
+ * Class Module
+ * @package FcAdmin
+ */
 class Module
 {
+    /**
+     * @return array
+     */
     public function getAutoloaderConfig()
     {
         return array(
@@ -23,6 +32,9 @@ class Module
         );
     }
 
+    /**
+     * @return array
+     */
     public function getServiceConfig()
     {
         return array(
@@ -41,17 +53,26 @@ class Module
         );
     }
 
+    /**
+     * @return mixed
+     */
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';
     }
 
+    /**
+     * @param ModuleManager $moduleManager
+     */
     public function init(ModuleManager $moduleManager)
     {
         $sharedEvents = $moduleManager->getEventManager()->getSharedManager();
         $sharedEvents->attach(__NAMESPACE__, 'dispatch', array($this, 'onModuleDispatch'));
     }
 
+    /**
+     * @param MvcEvent $e
+     */
     public function onModuleDispatch(MvcEvent $e)
     {
         //Set the layout template for every action in this module

@@ -1,10 +1,16 @@
 <?php
-
+/**
+ * @namespace
+ */
 namespace FcFlight\Form;
 
 use Zend\Form\Form;
 use Zend\Form\Element;
 
+/**
+ * Class FlightHeaderForm
+ * @package FcFlight\Form
+ */
 class FlightHeaderForm extends BaseForm
 {
     protected $_formName = 'flightHeader';

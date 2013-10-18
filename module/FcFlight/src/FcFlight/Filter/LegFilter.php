@@ -1,4 +1,7 @@
 <?php
+/**
+ * @namespace
+ */
 namespace FcFlight\Filter;
 
 use Zend\InputFilter\Factory as InputFactory;
@@ -7,6 +10,10 @@ use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 use Zend\Db\Adapter\Adapter;
 
+/**
+ * Class LegFilter
+ * @package FcFlight\Filter
+ */
 class LegFilter implements InputFilterAwareInterface
 {
 

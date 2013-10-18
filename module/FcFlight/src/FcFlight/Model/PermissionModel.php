@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @namespace
+ */
 namespace FcFlight\Model;
 
 use Zend\Db\TableGateway\AbstractTableGateway;
@@ -8,6 +10,10 @@ use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\Select;
 use FcFlight\Filter\PermissionFilter;
 
+/**
+ * Class PermissionModel
+ * @package FcFlight\Model
+ */
 class PermissionModel extends AbstractTableGateway
 {
 

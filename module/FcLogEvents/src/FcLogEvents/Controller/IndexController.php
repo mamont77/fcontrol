@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @namespace
+ */
 namespace FcLogEvents\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;

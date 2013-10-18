@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @namespace
+ */
 namespace FcLogEvents\Form;
 
 use Zend\Form\Form;

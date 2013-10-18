@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @namespace
+ */
 namespace FcLogEvents\Model;
 
 use Zend\Db\TableGateway\AbstractTableGateway;

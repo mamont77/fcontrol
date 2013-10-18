@@ -1,4 +1,7 @@
 <?php
+/**
+ * @namespace
+ */
 namespace FcLibrariesSearch;
 
 use Zend\ModuleManager\ModuleManager;
@@ -7,6 +10,10 @@ use FcLibrariesSearch\Model\SearchModel;
 use FcLibrariesSearch\Filter\SearchFilter;
 use FcLibrariesSearch\Filter\AdvancedSearchFilter;
 
+/**
+ * Class Module
+ * @package FcLibrariesSearch
+ */
 class Module
 {
     /**
@@ -31,13 +38,19 @@ class Module
         );
     }
 
-     public function init(ModuleManager $moduleManager)
+    /**
+     * @param ModuleManager $moduleManager
+     */
+    public function init(ModuleManager $moduleManager)
      {
          $sharedEvents = $moduleManager->getEventManager()->getSharedManager();
          $sharedEvents->attach(__NAMESPACE__, 'dispatch', array($this, 'onModuleDispatch'));
      }
 
-     public function onModuleDispatch(MvcEvent $e)
+    /**
+     * @param MvcEvent $e
+     */
+    public function onModuleDispatch(MvcEvent $e)
      {
          //Set the layout template for every action in this module
          $controller = $e->getTarget();

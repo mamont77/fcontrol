@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @namespace
+ */
 namespace FcAdmin\Model;
 
 use Zend\Db\TableGateway\AbstractTableGateway;

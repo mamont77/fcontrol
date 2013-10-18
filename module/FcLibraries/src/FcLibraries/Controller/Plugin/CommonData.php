@@ -4,6 +4,9 @@
  * @author Ruslan Piskarev
  */
 
+/**
+ * @namespace
+ */
 namespace FcLibraries\Controller\Plugin;
 
 use Zend\Di\ServiceLocator;

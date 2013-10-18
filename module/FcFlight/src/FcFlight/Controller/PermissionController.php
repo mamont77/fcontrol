@@ -1,11 +1,17 @@
 <?php
-
+/**
+ * @namespace
+ */
 namespace FcFlight\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use FcFlight\Form\PermissionForm;
 
+/**
+ * Class PermissionController
+ * @package FcFlight\Controller
+ */
 class PermissionController extends FlightController
 {
     /**

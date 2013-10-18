@@ -1,4 +1,7 @@
 <?php
+/**
+ * @namespace
+ */
 namespace FcLibraries;
 
 use Zend\ModuleManager\ModuleManager;

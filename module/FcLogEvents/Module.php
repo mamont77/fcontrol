@@ -1,4 +1,7 @@
 <?php
+/**
+ * @namespace
+ */
 namespace FcLogEvents;
 
 use Zend\ModuleManager\ModuleManager;

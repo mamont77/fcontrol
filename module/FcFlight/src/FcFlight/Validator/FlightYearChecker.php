@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @namespace
+ */
 namespace FcFlight\Validator;
 
 use Zend\Validator\AbstractValidator;
@@ -21,7 +23,6 @@ class FlightYearChecker extends AbstractValidator
 
     /**
      * @param mixed $value
-     * @param array $options
      * @return bool
      */
     public function isValid($value)

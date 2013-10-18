@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @namespace
+ */
 namespace FcLibrariesSearch\Model;
 
 use Zend\Db\TableGateway\AbstractTableGateway;

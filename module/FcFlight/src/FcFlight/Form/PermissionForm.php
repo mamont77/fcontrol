@@ -1,11 +1,17 @@
 <?php
-
+/**
+ * @namespace
+ */
 namespace FcFlight\Form;
 
 use Zend\Form\Element;
 use Zend\Form\Form;
 use \Zend\Db\ResultSet\ResultSet;
 
+/**
+ * Class PermissionForm
+ * @package FcFlight\Form
+ */
 class PermissionForm extends BaseForm
 {
     /**
