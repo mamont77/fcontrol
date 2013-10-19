@@ -34,7 +34,7 @@ class RefuelController extends FlightController
         $this->headerId = (int)$this->params()->fromRoute('id', 0);
         if (!$this->headerId) {
             return $this->redirect()->toRoute('flight', array(
-                'action' => 'index'
+                'action' => 'active'
             ));
         }
 
@@ -108,7 +108,7 @@ class RefuelController extends FlightController
         $id = (int)$this->params()->fromRoute('id', 0);
         if (!$id) {
             return $this->redirect()->toRoute('flight', array(
-                'action' => 'index'
+                'action' => 'active'
             ));
         }
 

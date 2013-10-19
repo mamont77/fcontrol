@@ -36,13 +36,14 @@ class HotelFilter implements InputFilterAwareInterface
     public $id;
     public $headerId;
     public $airportId;
+    public $isNeed;
     public $agentId;
 
     //Virtual fields
     public $icao;
     public $iata;
     public $airportName;
-    public $agentName;
+    public $kontragentShortName;
 
     /**
      * @param \Zend\Db\Adapter\Adapter $dbAdapter
@@ -71,10 +72,14 @@ class HotelFilter implements InputFilterAwareInterface
         $this->id = (isset($data['id'])) ? $data['id'] : null;
         $this->headerId = (isset($data['headerId'])) ? $data['headerId'] : null;
         $this->airportId = (isset($data['airportId'])) ? $data['airportId'] : null;
+        $this->isNeed = (isset($data['isNeed'])) ? $data['isNeed'] : null;
         $this->agentId = (isset($data['agentId'])) ? $data['agentId'] : null;
 
         //Virtual fields
-        $this->agentName = (isset($data['agentName'])) ? $data['agentName'] : null;
+        $this->icao = (isset($data['icao'])) ? $data['icao'] : null;
+        $this->iata = (isset($data['iata'])) ? $data['iata'] : null;
+        $this->airportName = (isset($data['airportName'])) ? $data['airportName'] : null;
+        $this->kontragentShortName = (isset($data['kontragentShortName'])) ? $data['kontragentShortName'] : null;
     }
 
     /**
@@ -117,7 +122,7 @@ class HotelFilter implements InputFilterAwareInterface
             )));
 
             $inputFilter->add($factory->createInput(array(
-                'name' => '?',
+                'name' => 'isNeed',
                 'required' => false,
             )));
 

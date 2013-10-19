@@ -24,6 +24,7 @@ use FcFlight\Model\FlightHeaderModel;
 use FcFlight\Model\LegModel;
 use FcFlight\Model\PermissionModel;
 use FcFlight\Model\RefuelModel;
+use FcFlight\Model\HotelModel;
 use FcFlight\Model\SearchModel;
 use FcFlight\Form\FlightHeaderForm;
 use FcFlight\Form\SearchForm;
@@ -132,6 +133,11 @@ class FlightController extends AbstractActionController
      * @var RefuelModel
      */
     protected $refuelModel;
+
+    /**
+     * @var HotelModel
+     */
+    protected $hotelModel;
 
     /**
      * @var SearchModel
@@ -300,12 +306,14 @@ class FlightController extends AbstractActionController
         $legs = $this->getLegModel()->getByHeaderId($header->id);
         $refuels = $this->getRefuelModel()->getByHeaderId($header->id);
         $permissions = $this->getPermissionModel()->getByHeaderId($header->id);
+        $hotels = $this->getHotelModel()->getByHeaderId($header->id);
 
         return new ViewModel(array(
             'header' => $header,
             'legs' => $legs,
             'refuels' => $refuels,
             'permissions' => $permissions,
+            'hotels' => $hotels,
         ));
     }
 
@@ -839,6 +847,20 @@ class FlightController extends AbstractActionController
         return $this->refuelModel;
     }
 
+    /**
+     * Get Hotel model
+     *
+     * @return HotelModel
+     */
+    public function getHotelModel()
+    {
+        if (!$this->hotelModel) {
+            $sm = $this->getServiceLocator();
+            $this->hotelModel = $sm->get('FcFlight\Model\HotelModel');
+        }
+
+        return $this->hotelModel;
+    }
     /**
      * Get Search model
      *

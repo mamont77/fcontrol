@@ -56,7 +56,10 @@ $this->headTitle($title);
                     <a href="<?php echo $this->url('permission', array('action' => 'add', 'id' => $header->id)); ?>">
                         <i class="icon-plane"></i> Permission</a>
                 </li>
-                <li class="disabled"><a href="#">Hotel</a></li>
+                <li class="<?= ($header->status) ? '' : 'disabled' ?>">
+                    <a href="<?php echo $this->url('hotel', array('action' => 'add', 'id' => $header->id)); ?>">
+                        <i class="icon-plane"></i> Hotel</a>
+                </li>
                 <li class="disabled"><a href="#">FPL/PPL/SLOT</a></li>
                 <li class="disabled"><a href="#">Charter</a></li>
                 <li class="divider"></li>
@@ -134,6 +137,10 @@ $this->headTitle($title);
 
             <? if (count($permissions) > 0): ?>
                 <?php echo $this->partial('widgets/tables/permission.phtml', array('permissions' => $permissions)); ?>
+            <? endif; ?>
+
+            <? if (count($hotels) > 0): ?>
+                <?php echo $this->partial('widgets/tables/hotel.phtml', array('hotels' => $hotels)); ?>
             <? endif; ?>
         </div>
     </div>

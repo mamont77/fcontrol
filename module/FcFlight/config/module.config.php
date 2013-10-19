@@ -7,6 +7,7 @@ return array(
             'FcFlight\Controller\Leg' => 'FcFlight\Controller\LegController',
             'FcFlight\Controller\Refuel' => 'FcFlight\Controller\RefuelController',
             'FcFlight\Controller\Permission' => 'FcFlight\Controller\PermissionController',
+            'FcFlight\Controller\Hotel' => 'FcFlight\Controller\HotelController',
         ),
     ),
 
@@ -138,6 +139,20 @@ return array(
                     ),
                     'defaults' => array(
                         'controller' => 'FcFlight\Controller\Permission',
+                        'action' => 'index',
+                    ),
+                ),
+            ),
+            'hotel' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/hotel[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'FcFlight\Controller\Hotel',
                         'action' => 'index',
                     ),
                 ),

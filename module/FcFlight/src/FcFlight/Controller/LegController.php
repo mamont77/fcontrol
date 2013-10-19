@@ -28,7 +28,7 @@ class LegController extends FlightController
         $headerId = (int)$this->params()->fromRoute('id', 0);
         if (!$headerId) {
             return $this->redirect()->toRoute('flight', array(
-                'action' => 'index'
+                'action' => 'active'
             ));
         }
 
@@ -106,7 +106,7 @@ class LegController extends FlightController
         $id = (int)$this->params()->fromRoute('id', 0);
         if (!$id) {
             return $this->redirect()->toRoute('flight', array(
-                'action' => 'index'
+                'action' => 'active'
             ));
         }
 

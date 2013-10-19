@@ -17,7 +17,7 @@ class HotelForm extends BaseForm
     /**
      * @var string
      */
-    protected $_formName = 'permission';
+    protected $_formName = 'hotel';
 
     /**
      * @var array
@@ -54,8 +54,7 @@ class HotelForm extends BaseForm
             array('apArrIata', 'apArrIcao'), 'array');
         $this->setAirports($this->airportsApDep, $this->airportsApArr);
 
-        $this->setLibrary('agents', $options['libraries']['agents'], 'id',
-            'agentName', 'object');//FIXME
+        $this->setLibrary('agents', $options['libraries']['agents'], 'id', 'name');
 
         $this->setName($this->_formName);
         $this->setAttribute('method', 'post');
@@ -90,10 +89,10 @@ class HotelForm extends BaseForm
         ));
 
         $this->add(array(
-            'name' => '?',
+            'name' => 'isNeed',
             'type' => 'Zend\Form\Element\Checkbox',
             'options' => array(
-                'label' => '?',
+                'label' => 'Need?',
                 'checked_value' => '1',
                 'unchecked_value' => '0'
             ),
@@ -107,7 +106,7 @@ class HotelForm extends BaseForm
                 'size' => 5,
             ),
             'options' => array(
-                'label' => 'Base of Permit',
+                'label' => 'Agent',
                 'empty_option' => '-- Please select --',
                 'value_options' => $this->getAgents(),
             ),
