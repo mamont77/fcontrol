@@ -875,4 +875,22 @@ class FlightController extends AbstractActionController
 
         return $this->searchModel;
     }
+
+    /**
+     * @param $refNumberOrder
+     * @return string
+     */
+    public function redirectForDoneStatus($refNumberOrder) {
+        $data = $this->getFlightHeaderModel()->getByRefNumberOrder($refNumberOrder);
+        if($data->status == 0) {
+            $this->flashMessenger()->addErrorMessage('This flight ' . $refNumberOrder . ' has a status "Done".');
+
+            return $this->redirect()->toRoute('browse',
+                array(
+                    'action' => 'show',
+                    'refNumberOrder' => $refNumberOrder,
+                ));
+        }
+        return $data->status;
+    }
 }

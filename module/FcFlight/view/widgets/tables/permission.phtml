@@ -57,9 +57,9 @@
                 <td><?php echo $this->escapeHtml($row['check']); ?></td>
                 <td class="actions">
                     <a title="Edit" href="<?php echo $this->url('permission',
-                        array('action' => 'edit', 'id' => $row['id']));?>"><i class="icon-edit"></i></a>
+                        array('action' => 'edit', 'id' => $row['id']));?>" class="<?=($status) ? '': 'disabled' ;?>"><i class="icon-edit"></i></a>
                     <a title="Remove" href="<?php echo $this->url('permission',
-                        array('action' => 'delete', 'id' => $row['id']));?>"><i class="icon-remove"></i></a>
+                        array('action' => 'delete', 'id' => $row['id']));?>" class="<?=($status) ? '': 'disabled' ;?>"><i class="icon-remove"></i></a>
                 </td>
             </tr>
         <?php endforeach; ?>

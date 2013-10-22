@@ -33,6 +33,7 @@ class LegController extends FlightController
         }
 
         $refNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($headerId);
+        $this->redirectForDoneStatus($refNumberOrder);
 
         $legs = $this->getLegModel()->getByHeaderId($headerId);
         $lastLeg = end($legs);
@@ -111,6 +112,7 @@ class LegController extends FlightController
         }
 
         $refNumberOrder = $this->getLegModel()->getHeaderRefNumberOrderByLegId($id);
+        $this->redirectForDoneStatus($refNumberOrder);
 
         $data = $this->getLegModel()->get($id);
 
@@ -204,6 +206,7 @@ class LegController extends FlightController
         $request = $this->getRequest();
         $refUri = $request->getHeader('Referer')->uri()->getPath();
         $refNumberOrder = $this->getLegModel()->getHeaderRefNumberOrderByLegId($id);
+        $this->redirectForDoneStatus($refNumberOrder);
 
         if ($request->isPost()) {
             $del = $request->getPost('del', 'No');

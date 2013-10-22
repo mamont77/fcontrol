@@ -38,6 +38,9 @@ class HotelController extends FlightController
 
         $refNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($this->headerId);
 
+        $this->redirectForDoneStatus($refNumberOrder);
+
+
         $hotels = $this->getHotelModel()->getByHeaderId($this->headerId);
 
         $form = new HotelForm('hotel',
@@ -99,10 +102,11 @@ class HotelController extends FlightController
             ));
         }
 
-        $refNumberOrder = $this->getHotelModel()->getHeaderRefNumberOrderByHotelId($id);
-
+        $refNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($id);
         $data = $this->getHotelModel()->get($id);
         $this->headerId = (int)$data->headerId;
+
+        $this->redirectForDoneStatus($refNumberOrder);
 
         $hotels = $this->getHotelModel()->getByHeaderId($this->headerId);
 
@@ -172,7 +176,9 @@ class HotelController extends FlightController
 
         $request = $this->getRequest();
         $refUri = $request->getHeader('Referer')->uri()->getPath();
-        $refNumberOrder = $this->getHotelModel()->getHeaderRefNumberOrderByHotelId($id);
+        $refNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($id);
+
+        $this->redirectForDoneStatus($refNumberOrder);
 
         if ($request->isPost()) {
             $del = $request->getPost('del', 'No');

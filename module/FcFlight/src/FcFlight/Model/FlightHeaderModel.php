@@ -16,7 +16,6 @@ use FcFlight\Filter\FlightHeaderFilter;
  */
 class FlightHeaderModel extends AbstractTableGateway
 {
-
     /**
      * @var string
      */
@@ -205,10 +204,27 @@ class FlightHeaderModel extends AbstractTableGateway
         return $row;
     }
 
+    /**
+     * Get Reg Number Order from Main data
+     *
+     * @param $id
+     * @return mixed
+     */
     public function getRefNumberOrderById($id)
     {
         $row = $this->get($id);
         return $row->refNumberOrder;
+    }
+
+    /**
+     * Get status from Main data
+     * @param $id
+     * @return mixed
+     */
+    public function getStatusById($id)
+    {
+        $row = $this->get($id);
+        return $row->status;
     }
 
     /**

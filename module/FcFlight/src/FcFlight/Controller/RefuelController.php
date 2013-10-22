@@ -39,6 +39,7 @@ class RefuelController extends FlightController
         }
 
         $refNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($this->headerId);
+        $this->redirectForDoneStatus($refNumberOrder);
 
         $refuels = $this->getRefuelModel()->getByHeaderId($this->headerId);
         $lastRefuel = end($refuels);
@@ -113,6 +114,7 @@ class RefuelController extends FlightController
         }
 
         $refNumberOrder = $this->getRefuelModel()->getHeaderRefNumberOrderByRefuelId($id);
+        $this->redirectForDoneStatus($refNumberOrder);
 
         $data = $this->getRefuelModel()->get($id);
         $this->headerId = (int)$data->headerId;
@@ -195,6 +197,7 @@ class RefuelController extends FlightController
         $request = $this->getRequest();
         $refUri = $request->getHeader('Referer')->uri()->getPath();
         $refNumberOrder = $this->getRefuelModel()->getHeaderRefNumberOrderByRefuelId($id);
+        $this->redirectForDoneStatus($refNumberOrder);
 
         if ($request->isPost()) {
             $del = $request->getPost('del', 'No');

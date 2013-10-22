@@ -7,4 +7,12 @@
         }
     };
 
+    fControl.behaviors.DisabledLinks = {
+        attach:function (context, settings) {
+            $( "a.disabled" ).click(function() {
+                return false;
+            });
+        }
+    }
+
 })(jQuery);

@@ -83,6 +83,8 @@ $this->headTitle($title);
         </div>
         <div class="span10 rightPanes">
             <?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
+            <?php echo $this->flashMessenger()->render('info', array('alert', 'alert-info')); ?>
+            <?php echo $this->flashMessenger()->render('error', array('alert', 'alert-error')); ?>
 
             <div id="header">
                 <table id="flightBrowse">
@@ -128,19 +130,19 @@ $this->headTitle($title);
             </div>
 
             <? if (count($legs) > 0): ?>
-                <?php echo $this->partial('widgets/tables/leg.phtml', array('legs' => $legs)); ?>
+                <?php echo $this->partial('widgets/tables/leg.phtml', array('legs' => $legs, 'status' => $header->status)); ?>
             <? endif; ?>
 
             <? if (count($refuels) > 0): ?>
-                <?php echo $this->partial('widgets/tables/refuel.phtml', array('refuels' => $refuels)); ?>
+                <?php echo $this->partial('widgets/tables/refuel.phtml', array('refuels' => $refuels, 'status' => $header->status)); ?>
             <? endif; ?>
 
             <? if (count($permissions) > 0): ?>
-                <?php echo $this->partial('widgets/tables/permission.phtml', array('permissions' => $permissions)); ?>
+                <?php echo $this->partial('widgets/tables/permission.phtml', array('permissions' => $permissions, 'status' => $header->status)); ?>
             <? endif; ?>
 
             <? if (count($hotels) > 0): ?>
-                <?php echo $this->partial('widgets/tables/hotel.phtml', array('hotels' => $hotels)); ?>
+                <?php echo $this->partial('widgets/tables/hotel.phtml', array('hotels' => $hotels, 'status' => $header->status)); ?>
             <? endif; ?>
         </div>
     </div>
