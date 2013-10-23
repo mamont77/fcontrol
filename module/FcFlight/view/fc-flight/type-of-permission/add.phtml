@@ -4,13 +4,13 @@
         <a href="<?= $this->url('browse', array('action' => 'show', 'refNumberOrder' => $this->refNumberOrder)); ?>"><?= $this->refNumberOrder ?></a>
         <span class="divider">/</span>
     </li>
-    <li class="active">Hotel form</li>
+    <li class="active">FPL/PPL/SLOT form</li>
 </ul>
-<!--<div class="alert alert-info">-->
-<!--    <strong>Warning!</strong> Page in development.-->
-<!--</div>-->
+<div class="alert alert-info">
+    <strong>Warning!</strong> Page in development.
+</div>
 <?php
-$title = 'Add Hotel';
+$title = 'Add FPL/PPL/SLOT';
 $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
@@ -22,17 +22,14 @@ $displayOptions = array(
         'airportId' => array(
             'required' => true,
         ),
-        'agentId' => array(
-            'required' => true,
-        ),
     ),
 );
 $form = $this->form;
-$form->setAttribute('action', $this->url('hotel', array('action' => 'add', 'id' => $this->headerId)));
+$form->setAttribute('action', $this->url('typeOfPermission', array('action' => 'add', 'id' => $this->headerId)));
 $form->prepare();
 ?>
 
-<?php echo $this->partial('widgets/tables/hotel.phtml', array('hotels' => $hotels)); ?>
+<?php echo $this->partial('widgets/tables/type-of-permission.phtml', array('typeOfPermissions' => $typeOfPermissions, 'status' => $headerStatus)); ?>
 
 
 <?php if ($form->getMessages()): ?>
