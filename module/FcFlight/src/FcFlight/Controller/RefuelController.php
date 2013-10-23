@@ -39,8 +39,7 @@ class RefuelController extends FlightController
         }
 
         $refNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($this->headerId);
-        $this->redirectForDoneStatus($refNumberOrder);
-
+        $headerStatus = $this->redirectForDoneStatus($refNumberOrder);
         $refuels = $this->getRefuelModel()->getByHeaderId($this->headerId);
         $lastRefuel = end($refuels);
         if ($lastRefuel) {
@@ -95,9 +94,9 @@ class RefuelController extends FlightController
         }
         return array('form' => $form,
             'headerId' => $this->headerId,
+            'headerStatus' => $headerStatus,
             'refNumberOrder' => $refNumberOrder,
             'refuels' => $refuels,
-
         );
     }
 
@@ -114,11 +113,9 @@ class RefuelController extends FlightController
         }
 
         $refNumberOrder = $this->getRefuelModel()->getHeaderRefNumberOrderByRefuelId($id);
-        $this->redirectForDoneStatus($refNumberOrder);
-
+        $headerStatus = $this->redirectForDoneStatus($refNumberOrder);
         $data = $this->getRefuelModel()->get($id);
         $this->headerId = (int)$data->headerId;
-
         $refuels = $this->getRefuelModel()->getByHeaderId($this->headerId);
         $lastRefuel = end($refuels);
         if ($lastRefuel) {
@@ -179,6 +176,7 @@ class RefuelController extends FlightController
 
         return array('form' => $form,
             'id' => $data->id,
+            'headerStatus' => $headerStatus,
             'refNumberOrder' => $refNumberOrder,
             'refuels' => $refuels,
         );

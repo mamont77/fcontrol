@@ -168,4 +168,16 @@ class HotelModel extends AbstractTableGateway
 
         return $data;
     }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function getHeaderRefNumberOrderByHotelId($id)
+    {
+        $row = $this->get($id);
+        $headerModel = new FlightHeaderModel($this->getAdapter());
+
+        return $headerModel->getRefNumberOrderById($row->headerId);
+    }
 }

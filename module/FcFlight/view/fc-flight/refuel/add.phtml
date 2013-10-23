@@ -46,7 +46,7 @@ $form->setAttribute('action', $this->url('refuel', array('action' => 'add', 'id'
 $form->prepare();
 ?>
 
-<?php echo $this->partial('widgets/tables/refuel.phtml', array('refuels' => $refuels)); ?>
+<?php echo $this->partial('widgets/tables/refuel.phtml', array('refuels' => $refuels, 'status' => $headerStatus)); ?>
 
 <?php if ($form->getMessages()): ?>
     <div class="alert alert-error">

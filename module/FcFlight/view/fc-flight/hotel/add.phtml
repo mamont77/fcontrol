@@ -32,7 +32,7 @@ $form->setAttribute('action', $this->url('hotel', array('action' => 'add', 'id' 
 $form->prepare();
 ?>
 
-<?php echo $this->partial('widgets/tables/hotel.phtml', array('hotels' => $hotels)); ?>
+<?php echo $this->partial('widgets/tables/hotel.phtml', array('hotels' => $hotels, 'status' => $headerStatus)); ?>
 
 
 <?php if ($form->getMessages()): ?>

@@ -33,8 +33,7 @@ class LegController extends FlightController
         }
 
         $refNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($headerId);
-        $this->redirectForDoneStatus($refNumberOrder);
-
+        $headerStatus = $this->redirectForDoneStatus($refNumberOrder);
         $legs = $this->getLegModel()->getByHeaderId($headerId);
         $lastLeg = end($legs);
 
@@ -94,6 +93,7 @@ class LegController extends FlightController
         }
         return array('form' => $form,
             'headerId' => $headerId,
+            'headerStatus' => $headerStatus,
             'refNumberOrder' => $refNumberOrder,
             'legs' => $legs,
         );
@@ -112,10 +112,8 @@ class LegController extends FlightController
         }
 
         $refNumberOrder = $this->getLegModel()->getHeaderRefNumberOrderByLegId($id);
-        $this->redirectForDoneStatus($refNumberOrder);
-
+        $headerStatus = $this->redirectForDoneStatus($refNumberOrder);
         $data = $this->getLegModel()->get($id);
-
         $legs = $this->getLegModel()->getByHeaderId($data->headerId);
         $lastLeg = end($legs);
 
@@ -188,6 +186,7 @@ class LegController extends FlightController
 
         return array('form' => $form,
             'id' => $data->id,
+            'headerStatus' => $headerStatus,
             'refNumberOrder' => $refNumberOrder,
             'legs' => $legs,
         );

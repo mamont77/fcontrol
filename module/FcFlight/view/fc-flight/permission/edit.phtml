@@ -38,7 +38,7 @@ $form->setAttribute('action', $this->url('permission', array('action' => 'edit',
 $form->prepare();
 ?>
 
-<?php echo $this->partial('widgets/tables/permission.phtml', array('permissions' => $permissions)); ?>
+<?php echo $this->partial('widgets/tables/permission.phtml', array('permissions' => $permissions, 'status' => $headerStatus)); ?>
 
 <?php if ($form->getMessages()): ?>
     <div class="alert alert-error">

@@ -37,10 +37,7 @@ class HotelController extends FlightController
         }
 
         $refNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($this->headerId);
-
-        $this->redirectForDoneStatus($refNumberOrder);
-
-
+        $headerStatus = $this->redirectForDoneStatus($refNumberOrder);
         $hotels = $this->getHotelModel()->getByHeaderId($this->headerId);
 
         $form = new HotelForm('hotel',
@@ -85,6 +82,7 @@ class HotelController extends FlightController
         }
         return array('form' => $form,
             'headerId' => $this->headerId,
+            'headerStatus' => $headerStatus,
             'refNumberOrder' => $refNumberOrder,
             'hotels' => $hotels,
         );
@@ -102,12 +100,12 @@ class HotelController extends FlightController
             ));
         }
 
-        $refNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($id);
+        $refNumberOrder = $this->getHotelModel()->getHeaderRefNumberOrderByHotelId($id);
+
         $data = $this->getHotelModel()->get($id);
         $this->headerId = (int)$data->headerId;
 
-        $this->redirectForDoneStatus($refNumberOrder);
-
+        $headerStatus = $this->redirectForDoneStatus($refNumberOrder);
         $hotels = $this->getHotelModel()->getByHeaderId($this->headerId);
 
         $this->setDataForLogger($data);
@@ -159,6 +157,7 @@ class HotelController extends FlightController
 
         return array('form' => $form,
             'id' => $data->id,
+            'headerStatus' => $headerStatus,
             'refNumberOrder' => $refNumberOrder,
             'hotels' => $hotels,
         );
@@ -176,7 +175,7 @@ class HotelController extends FlightController
 
         $request = $this->getRequest();
         $refUri = $request->getHeader('Referer')->uri()->getPath();
-        $refNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($id);
+        $refNumberOrder = $this->getHotelModel()->getHeaderRefNumberOrderByHotelId($id);
 
         $this->redirectForDoneStatus($refNumberOrder);
 

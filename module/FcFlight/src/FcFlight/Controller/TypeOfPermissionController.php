@@ -99,12 +99,12 @@ class TypeOfPermissionController extends FlightController
             ));
         }
 
-        $refNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($id);
+        $refNumberOrder = $this->getTypeOfPermissionModel()->getHeaderRefNumberOrderByTypeOfPermissionId($id);
+
         $data = $this->getTypeOfPermissionModel()->get($id);
         $this->headerId = (int)$data->headerId;
 
         $headerStatus = $this->redirectForDoneStatus($refNumberOrder);
-
         $typeOfPermissions = $this->getTypeOfPermissionModel()->getByHeaderId($this->headerId);
 
         $this->setDataForLogger($data);
@@ -173,7 +173,7 @@ class TypeOfPermissionController extends FlightController
 
         $request = $this->getRequest();
         $refUri = $request->getHeader('Referer')->uri()->getPath();
-        $refNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($id);
+        $refNumberOrder = $this->getTypeOfPermissionModel()->getHeaderRefNumberOrderByTypeOfPermissionId($id);
 
         $this->redirectForDoneStatus($refNumberOrder);
 
@@ -220,8 +220,8 @@ class TypeOfPermissionController extends FlightController
             'Airport' => $data->airportName . ' (' . $data->icao . '/' . $data->iata . ')',
             'Slot Ap Dep' => ($data->slotApDep) ? 'YES' : 'NO',
             'Slot Ap Arr' => ($data->slotApArr) ? 'YES' : 'NO',
-            'fpl' => ($data->fpl) ? 'YES' : 'NO',
-            'ppl' => ($data->ppl) ? 'YES' : 'NO',
+            'FPL' => ($data->fpl) ? 'YES' : 'NO',
+            'PPL' => ($data->ppl) ? 'YES' : 'NO',
         );
     }
 }
