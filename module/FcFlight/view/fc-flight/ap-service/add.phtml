@@ -1,0 +1,48 @@
+<ul class="breadcrumb">
+    <li><a href="/">Home</a> <span class="divider">/</span></li>
+    <li>
+        <a href="<?= $this->url('browse', array('action' => 'show', 'refNumberOrder' => $this->refNumberOrder)); ?>"><?= $this->refNumberOrder ?></a>
+        <span class="divider">/</span>
+    </li>
+    <li class="active">AP Service form</li>
+</ul>
+<!--<div class="alert alert-info">-->
+<!--    <strong>Warning!</strong> Page in development.-->
+<!--</div>-->
+<?php
+$title = 'Add AP Service';
+$this->headTitle($title);
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<?php
+$displayOptions = array(
+    'class' => 'form-horizontal',
+    'elements' => array(
+        'airportId' => array(
+            'required' => true,
+        ),
+        'agentId' => array(
+            'required' => true,
+        ),
+    ),
+);
+$form = $this->form;
+$form->setAttribute('action', $this->url('apService', array('action' => 'add', 'id' => $this->headerId)));
+$form->prepare();
+?>
+
+<?php echo $this->partial('widgets/tables/ap-service.phtml', array('apServices' => $apServices, 'status' => $headerStatus)); ?>
+
+
+<?php if ($form->getMessages()): ?>
+    <div class="alert alert-error">
+        <button class="close" data-dismiss="alert" type="button">×</button>
+        <strong>Invalid input!</strong>
+        Form fields are not filled in correctly.
+    </div>
+<?php else: ?>
+    <?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
+<?php endif; ?>
+
+<?php echo $this->formTwb($form, $formType, $displayOptions); ?>

@@ -9,15 +9,15 @@ use Zend\Form\Form;
 use \Zend\Db\ResultSet\ResultSet;
 
 /**
- * Class HotelForm
+ * Class TransferForm
  * @package FcFlight\Form
  */
-class HotelForm extends BaseForm
+class TransferForm extends BaseForm
 {
     /**
      * @var string
      */
-    protected $_formName = 'hotel';
+    protected $_formName = 'transfer';
 
     /**
      * @var array

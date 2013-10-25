@@ -8,6 +8,9 @@ return array(
             'FcFlight\Controller\Refuel' => 'FcFlight\Controller\RefuelController',
             'FcFlight\Controller\Permission' => 'FcFlight\Controller\PermissionController',
             'FcFlight\Controller\Hotel' => 'FcFlight\Controller\HotelController',
+            'FcFlight\Controller\Transfer' => 'FcFlight\Controller\TransferController',
+            'FcFlight\Controller\ApService' => 'FcFlight\Controller\ApServiceController',
+            'FcFlight\Controller\Handing' => 'FcFlight\Controller\HandingController',
             'FcFlight\Controller\TypeOfPermission' => 'FcFlight\Controller\TypeOfPermissionController',
         ),
     ),
@@ -154,6 +157,48 @@ return array(
                     ),
                     'defaults' => array(
                         'controller' => 'FcFlight\Controller\Hotel',
+                        'action' => 'index',
+                    ),
+                ),
+            ),
+            'transfer' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/transfer[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'FcFlight\Controller\Transfer',
+                        'action' => 'index',
+                    ),
+                ),
+            ),
+            'apService' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/ap-service[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'FcFlight\Controller\ApService',
+                        'action' => 'index',
+                    ),
+                ),
+            ),
+            'handing' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/handing[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'FcFlight\Controller\Handing',
                         'action' => 'index',
                     ),
                 ),

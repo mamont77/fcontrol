@@ -25,6 +25,9 @@ use FcFlight\Model\LegModel;
 use FcFlight\Model\PermissionModel;
 use FcFlight\Model\RefuelModel;
 use FcFlight\Model\HotelModel;
+use FcFlight\Model\TransferModel;
+use FcFlight\Model\ApServiceModel;
+use FcFlight\Model\HandingModel;
 use FcFlight\Model\TypeOfPermissionModel;
 use FcFlight\Model\SearchModel;
 use FcFlight\Form\FlightHeaderForm;
@@ -313,6 +316,9 @@ class FlightController extends AbstractActionController
         $refuels = $this->getRefuelModel()->getByHeaderId($header->id);
         $permissions = $this->getPermissionModel()->getByHeaderId($header->id);
         $hotels = $this->getHotelModel()->getByHeaderId($header->id);
+        $transfers = $this->getTransferModel()->getByHeaderId($header->id);
+        $apServices = $this->getApServiceModel()->getByHeaderId($header->id);
+        $handing = $this->getHandingModel()->getByHeaderId($header->id);
         $typeOfPermissions = $this->getTypeOfPermissionModel()->getByHeaderId($header->id);
 
         return new ViewModel(array(
@@ -321,6 +327,9 @@ class FlightController extends AbstractActionController
             'refuels' => $refuels,
             'permissions' => $permissions,
             'hotels' => $hotels,
+            'transfers' => $transfers,
+            'apServices' => $apServices,
+            'handing' => $handing,
             'typeOfPermissions' => $typeOfPermissions,
         ));
     }
@@ -868,6 +877,36 @@ class FlightController extends AbstractActionController
         }
 
         return $this->hotelModel;
+    }
+
+    /**
+     * Get Transfer model
+     *
+     * @return TransferModel
+     */
+    public function getTransferModel()
+    {
+        return $this->getServiceLocator()->get('FcFlight\Model\TransferModel');
+    }
+
+    /**
+     * Get ApService model
+     *
+     * @return ApServiceModel
+     */
+    public function getApServiceModel()
+    {
+        return $this->getServiceLocator()->get('FcFlight\Model\ApServiceModel');
+    }
+
+    /**
+     * Get Handing model
+     *
+     * @return HandingModel
+     */
+    public function getHandingModel()
+    {
+        return $this->getServiceLocator()->get('FcFlight\Model\HandingModel');
     }
 
     /**

@@ -61,6 +61,18 @@ $this->headTitle($title);
                         <i class="icon-plane"></i> Hotel</a>
                 </li>
                 <li class="<?= ($header->status) ? '' : 'disabled' ?>">
+                    <a href="<?php echo $this->url('transfer', array('action' => 'add', 'id' => $header->id)); ?>">
+                        <i class="icon-plane"></i> Transfer</a>
+                </li>
+                <li class="<?= ($header->status) ? '' : 'disabled' ?>">
+                    <a href="<?php echo $this->url('apService', array('action' => 'add', 'id' => $header->id)); ?>">
+                        <i class="icon-plane"></i> AP Service</a>
+                </li>
+                <li class="<?= ($header->status) ? '' : 'disabled' ?>">
+                    <a href="<?php echo $this->url('handing', array('action' => 'add', 'id' => $header->id)); ?>">
+                        <i class="icon-plane"></i> Handing</a>
+                </li>
+                <li class="<?= ($header->status) ? '' : 'disabled' ?>">
                     <a href="<?php echo $this->url('typeOfPermission', array('action' => 'add', 'id' => $header->id)); ?>">
                         <i class="icon-plane"></i> FPL/PPL/SLOT</a>
                 </li>
@@ -146,6 +158,18 @@ $this->headTitle($title);
 
             <? if (count($hotels) > 0): ?>
                 <?php echo $this->partial('widgets/tables/hotel.phtml', array('hotels' => $hotels, 'status' => $header->status)); ?>
+            <? endif; ?>
+
+            <? if (count($transfers) > 0): ?>
+                <?php echo $this->partial('widgets/tables/transfer.phtml', array('transfers' => $transfers, 'status' => $header->status)); ?>
+            <? endif; ?>
+
+            <? if (count($apServices) > 0): ?>
+                <?php echo $this->partial('widgets/tables/ap-service.phtml', array('apServices' => $apServices, 'status' => $header->status)); ?>
+            <? endif; ?>
+
+            <? if (count($handing) > 0): ?>
+                <?php echo $this->partial('widgets/tables/handing.phtml', array('handing' => $handing, 'status' => $header->status)); ?>
             <? endif; ?>
 
             <? if (count($typeOfPermissions) > 0): ?>
