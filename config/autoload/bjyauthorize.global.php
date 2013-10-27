@@ -130,7 +130,7 @@ return array(
                 array('controller' => 'FcFlight\Controller\ApService', 'roles' => array('manager')),
                 array('controller' => 'FcFlight\Controller\Handing', 'roles' => array('manager')),
                 array('controller' => 'FcFlight\Controller\TypeOfPermission', 'roles' => array('manager')),
-                array('controller' => 'FcLogEvents\Controller\Index', 'roles' => array('manager')),
+                array('controller' => 'FcLogEvents\Controller\Index', 'roles' => array('guest', 'manager')),
                 array('controller' => 'FcLogEvents\Controller\Search', 'roles' => array('manager')),
             ),
 
@@ -192,6 +192,7 @@ return array(
                 array('route' => 'zfcadmin/unit', 'roles' => array('admin')),
                 array('route' => 'zfcadmin/advanced_search', 'roles' => array('admin')),
                 array('route' => 'logs', 'roles' => array('manager')),
+                array('route' => 'cron', 'roles' => array('guest', 'manager')),
                 array('route' => 'logsSearch', 'roles' => array('manager')),
             ),
         ),

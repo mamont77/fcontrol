@@ -25,12 +25,22 @@ return array(
                 ),
             ),
             'logsSearch' => array(
-                'type' => 'segment',
+                'type' => 'literal',
                 'options' => array(
                     'route' => '/logs/search',
                     'defaults' => array(
                         'controller' => 'FcLogEvents\Controller\Search',
                         'action' => 'searchResult',
+                    ),
+                ),
+            ),
+            'cron' => array(
+                'type' => 'literal',
+                'options' => array(
+                    'route' => '/logs/cron',
+                    'defaults' => array(
+                        'controller' => 'FcLogEvents\Controller\Index',
+                        'action' => 'cron',
                     ),
                 ),
             ),

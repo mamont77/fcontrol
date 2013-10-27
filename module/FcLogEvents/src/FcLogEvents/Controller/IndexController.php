@@ -17,6 +17,12 @@ use Zend\Paginator\Adapter\Iterator as paginatorIterator;
  */
 class IndexController extends AbstractActionController
 {
+
+    /**
+     * Period in day
+     */
+    const PERIOD = 128;
+
     /**
      * @var
      */
@@ -65,6 +71,21 @@ class IndexController extends AbstractActionController
                 )
             ),
         ));
+    }
+
+    /**
+     * Remove old log data from DB.
+     *
+     * @return ViewModel
+     */
+    public function cronAction()
+    {
+        $this->getFcLogEventsModel()->cleaningOldData(self::PERIOD);
+
+        $view = new ViewModel(array('data' => ''));
+        $view->setTerminal(true);
+
+        return $view;
     }
 
     /**
