@@ -7,6 +7,8 @@ namespace FcFlight\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use FcFlight\Form\LegForm;
+use Zend\Json\Json as Json;
+
 
 /**
  * Class LegController
@@ -36,26 +38,28 @@ class LegController extends FlightController
         $headerStatus = $this->redirectForDoneStatus($refNumberOrder);
         $legs = $this->getLegModel()->getByHeaderId($headerId);
         $lastLeg = end($legs);
-
         if ($lastLeg) {
             $previousDate = $lastLeg['dateOfFlight'];
-            $preSelectedApDep = $lastLeg['apArrIcaoAndIata'];
+            $previousApArrCountryId = $lastLeg['apArrCountryId'];
+            $previousApArrAirportId = $lastLeg['apArrAirportId'];
         } else {
             $previousDate = null;
-            $preSelectedApDep = null;
+            $previousApArrCountryId = null;
+            $previousApArrAirportId = null;
         }
 
         $form = new LegForm('leg',
             array(
                 'headerId' => $headerId,
                 'libraries' => array(
-                    'flightNumberIcaoAndIata' => $this->getAirOperators(),
-                    'appIcaoAndIata' => $this->getAirports(),
+                    'flightNumberAirports' => $this->getAirOperators(),
+                    'countries' => $this->getCountries(),
                 ),
                 'previousValues' => array(
                     'previousDate' => $previousDate,
                     'preSelected' => array(
-                        'apDepIcaoAndIata' => $preSelectedApDep,
+                        'apDepCountryId' => $previousApArrCountryId,
+                        'apDepAirportId' => $previousApArrAirportId,
                     ),
                 ),
             )
@@ -119,7 +123,7 @@ class LegController extends FlightController
 
         if ($lastLeg) {
             $previousDate = $lastLeg['dateOfFlight'];
-            $preSelectedApDep = $lastLeg['apArrIcaoAndIata'];
+            $preSelectedApDep = $lastLeg['apArrAirportId'];
         } else {
             $previousDate = null;
             $preSelectedApDep = null;
@@ -129,18 +133,18 @@ class LegController extends FlightController
         $loggerPlugin = $this->LogPlugin();
         $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
-        $data->flightNumber['flightNumberIcaoAndIata'] = $data->flightNumberIcaoAndIata;
+        $data->flightNumber['flightNumberAirportId'] = $data->flightNumberAirportId;
         $data->flightNumber['flightNumberText'] = $data->flightNumberText;
-        $data->apDep['apDepIcaoAndIata'] = $data->apDepIcaoAndIata;
+        $data->apDep['apDepAirportId'] = $data->apDepAirportId;
         $data->apDep['apDepTime'] = $data->apDepTime;
-        $data->apArr['apArrIcaoAndIata'] = $data->apArrIcaoAndIata;
+        $data->apArr['apArrAirportId'] = $data->apArrAirportId;
         $data->apArr['apArrTime'] = $data->apArrTime;
 
         $form = new LegForm('leg',
             array(
                 'libraries' => array(
-                    'flightNumberIcaoAndIata' => $this->getAirOperators(),
-                    'appIcaoAndIata' => $this->getAirports(),
+                    'flightNumberAirports' => $this->getAirOperators(),
+                    'countries' => $this->getCountries(),
                 ),
                 'previousValues' => array(
                     'previousDate' => $previousDate,
@@ -238,6 +242,40 @@ class LegController extends FlightController
             'refNumberOrder' => $refNumberOrder,
             'leg' => $this->getLegModel()->get($id)
         );
+    }
+
+    /**
+     * @return \Zend\Http\Response
+     */
+    public function getAirportsAction()
+    {
+
+        $id = (int)$this->params()->fromRoute('id', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('flight', array(
+                'action' => 'active'
+            ));
+        }
+
+        $data = $this->getAirportModel()->getByCountryId($id);
+
+        $result = array(
+            'countryId' => $id,
+            'airports' => array(),
+        );
+        foreach ($data as $row) {
+            $result['airports']['id_' . $row->id]['name'] = $row->name;
+            $result['airports']['id_' . $row->id]['code'] = $row->code_icao . ' (' . $row->code_iata . ')';
+        }
+        uasort($result['airports'], array($this, 'sortLibrary'));
+
+        $view = new ViewModel(array(
+            'data' => Json::encode($result),
+        ));
+
+        $view->setTerminal(true);
+
+        return $view;
     }
 
     /**

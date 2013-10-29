@@ -41,20 +41,32 @@ class LegFilter implements InputFilterAwareInterface
     public $id;
     public $headerId;
     public $dateOfFlight;
-    public $flightNumberIcaoAndIata;
+    public $flightNumberAirportId;
     public $flightNumberText;
-    public $apDepIcaoAndIata;
+    public $apDepAirportId;
     public $apDepTime;
-    public $apArrIcaoAndIata;
+    public $apArrAirportId;
     public $apArrTime;
 
     //Virtual fields
     public $flightNumberIcao;
     public $flightNumberIata;
+    public $apDepAirports;
+    public $apArrAirports;
     public $apDepIcao;
     public $apDepIata;
     public $apArrIcao;
     public $apArrIata;
+
+    public $apDepCityName;
+    public $apDepCountryId;
+    public $apDepCountryName;
+    public $apDepCountryCode;
+
+    public $apArrCityName;
+    public $apArrCountryId;
+    public $apArrCountryName;
+    public $apArrCountryCode;
 
     /**
      * @var array
@@ -91,44 +103,48 @@ class LegFilter implements InputFilterAwareInterface
         $this->id = (isset($data['id'])) ? $data['id'] : null;
         $this->headerId = (isset($data['headerId'])) ? $data['headerId'] : null;
         $this->dateOfFlight = (isset($data['dateOfFlight'])) ? $data['dateOfFlight'] : null;
-        if (isset($data['flightNumber']['flightNumberIcaoAndIata'])) {
-            $this->flightNumberIcaoAndIata = $data['flightNumber']['flightNumberIcaoAndIata'];
-        } else if (isset($data['flightNumberIcaoAndIata'])) {
-            $this->flightNumberIcaoAndIata = $data['flightNumberIcaoAndIata'];
+
+        $this->apDepAirportId = (isset($data['apDepAirportId'])) ? $data['apDepAirportId'] : null;
+        $this->apArrAirportId = (isset($data['apArrAirportId'])) ? $data['apArrAirportId'] : null;
+
+        if (isset($data['flightNumber']['flightNumberAirportId'])) {
+            $this->flightNumberAirportId = $data['flightNumber']['flightNumberAirportId'];
+        } elseif (isset($data['flightNumberAirportId'])) {
+            $this->flightNumberAirportId = $data['flightNumberAirportId'];
         } else {
-            $this->flightNumberIcaoAndIata = null;
+            $this->flightNumberAirportId = null;
         }
         if (isset($data['flightNumber']['flightNumberText'])) {
             $this->flightNumberText = $data['flightNumber']['flightNumberText'];
-        } else if (isset($data['flightNumberText'])) {
+        } elseif (isset($data['flightNumberText'])) {
             $this->flightNumberText = $data['flightNumberText'];
         } else {
             $this->flightNumberText = null;
         }
-        if (isset($data['apDep']['apDepIcaoAndIata'])) {
-            $this->apDepIcaoAndIata = $data['apDep']['apDepIcaoAndIata'];
-        } else if (isset($data['apDepIcaoAndIata'])) {
-            $this->apDepIcaoAndIata = $data['apDepIcaoAndIata'];
+        if (isset($data['apDep']['apDepAirports'])) {
+            $this->apDepAirports = $data['apDep']['apDepAirports'];
+        } elseif (isset($data['apDepAirports'])) {
+            $this->apDepAirports = $data['apDepAirports'];
         } else {
-            $this->apDepIcaoAndIata = null;
+            $this->apDepAirports = null;
         }
         if (isset($data['apDep']['apDepTime'])) {
             $this->apDepTime = $data['apDep']['apDepTime'];
-        } else if (isset($data['apDepTime'])) {
+        } elseif (isset($data['apDepTime'])) {
             $this->apDepTime = $data['apDepTime'];
         } else {
             $this->apDepTime = null;
         }
-        if (isset($data['apArr']['apArrIcaoAndIata'])) {
-            $this->apArrIcaoAndIata = $data['apArr']['apArrIcaoAndIata'];
-        } else if (isset($data['apArrIcaoAndIata'])) {
-            $this->apArrIcaoAndIata = $data['apArrIcaoAndIata'];
+        if (isset($data['apArr']['apArrAirports'])) {
+            $this->apArrAirports = $data['apArr']['apArrAirports'];
+        } elseif (isset($data['apArrAirports'])) {
+            $this->apArrAirports = $data['apArrAirports'];
         } else {
-            $this->apArrIcaoAndIata = null;
+            $this->apArrAirports = null;
         }
         if (isset($data['apArr']['apArrTime'])) {
             $this->apArrTime = $data['apArr']['apArrTime'];
-        } else if (isset($data['apArrTime'])) {
+        } elseif (isset($data['apArrTime'])) {
             $this->apArrTime = $data['apArrTime'];
         } else {
             $this->apArrTime = null;
@@ -137,11 +153,22 @@ class LegFilter implements InputFilterAwareInterface
         //Virtual fields
         $this->flightNumberIcao = (isset($data['flightNumberIcao'])) ? $data['flightNumberIcao'] : null;
         $this->flightNumberIata = (isset($data['flightNumberIata'])) ? $data['flightNumberIata'] : null;
+        $this->apDepAirports = (isset($data['apDepAirports'])) ? $data['apDepAirports'] : null;
+        $this->apArrAirports = (isset($data['apArrAirports'])) ? $data['apArrAirports'] : null;
         $this->apDepIcao = (isset($data['apDepIcao'])) ? $data['apDepIcao'] : null;
         $this->apDepIata = (isset($data['apDepIata'])) ? $data['apDepIata'] : null;
         $this->apArrIcao = (isset($data['apArrIcao'])) ? $data['apArrIcao'] : null;
         $this->apArrIata = (isset($data['apArrIata'])) ? $data['apArrIata'] : null;
 
+        $this->apDepCityName = (isset($data['apDepCityName'])) ? $data['apDepCityName'] : null;
+        $this->apDepCountryId = (isset($data['apDepCountryId'])) ? $data['apDepCountryId'] : null;
+        $this->apDepCountryName = (isset($data['apDepCountryName'])) ? $data['apDepCountryName'] : null;
+        $this->apDepCountryCode = (isset($data['apDepCountryCode'])) ? $data['apDepCountryCode'] : null;
+
+        $this->apArrCityName = (isset($data['apArrCityName'])) ? $data['apArrCityName'] : null;
+        $this->apArrCountryId = (isset($data['apArrCountryId'])) ? $data['apArrCountryId'] : null;
+        $this->apArrCountryName = (isset($data['apArrCountryName'])) ? $data['apArrCountryName'] : null;
+        $this->apArrCountryCode = (isset($data['apArrCountryCode'])) ? $data['apArrCountryCode'] : null;
     }
 
     /**
@@ -177,12 +204,47 @@ class LegFilter implements InputFilterAwareInterface
 
             $inputFilter->add($factory->createInput(array(
                 'name' => 'headerId',
+                'filters' => array(
+                    array('name' => 'Int'),
+                ),
                 'required' => true,
             )));
 
             $inputFilter->add($factory->createInput(array(
                 'name' => 'previousDate',
                 'required' => false,
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'preSelectedApDepCountryId',
+                'filters' => array(
+                    array('name' => 'Int'),
+                ),
+                'required' => false,
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'preSelectedApDepAirportId',
+                'filters' => array(
+                    array('name' => 'Int'),
+                ),
+                'required' => false,
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'apDepAirportId',
+                'required' => true,
+                'filters' => array(
+                    array('name' => 'Int'),
+                ),
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'apArrAirportId',
+                'required' => true,
+                'filters' => array(
+                    array('name' => 'Int'),
+                ),
             )));
 
             $inputFilter->add($factory->createInput(array(
@@ -212,7 +274,7 @@ class LegFilter implements InputFilterAwareInterface
             $flightNumberInputFilter = new InputFilter();
 
             $flightNumberInputFilter->add($factory->createInput(array(
-                'name' => 'flightNumberIcaoAndIata',
+                'name' => 'flightNumberAirportId',
                 'required' => true,
             )));
 
@@ -237,7 +299,7 @@ class LegFilter implements InputFilterAwareInterface
             $apDepInputFilter = new InputFilter();
 
             $apDepInputFilter->add($factory->createInput(array(
-                'name' => 'apDepIcaoAndIata',
+                'name' => 'apDepAirports',
                 'required' => true,
             )));
 
@@ -269,7 +331,7 @@ class LegFilter implements InputFilterAwareInterface
             $apArrInputFilter = new InputFilter();
 
             $apArrInputFilter->add($factory->createInput(array(
-                'name' => 'apArrIcaoAndIata',
+                'name' => 'apArrAirports',
                 'required' => true,
             )));
 

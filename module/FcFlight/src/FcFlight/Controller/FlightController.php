@@ -935,6 +935,16 @@ class FlightController extends AbstractActionController
     }
 
     /**
+     * @param $a
+     * @param $b
+     * @return bool
+     */
+    public function sortLibrary($a, $b)
+    {
+        return $a > $b;
+    }
+
+    /**
      * @param $refNumberOrder
      * @return string
      */

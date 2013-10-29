@@ -24,7 +24,7 @@ $displayOptions = array(
         'flightNumber' => array(
             'display_legend' => true,
             'elements' => array(
-                'flightNumberIcaoAndIata' => array(
+                'flightNumberAirportId' => array(
                     'required' => true,
                     'class' => 'span8',
                 ),
@@ -37,7 +37,11 @@ $displayOptions = array(
         'apDep' => array(
             'display_legend' => true,
             'elements' => array(
-                'apDepIcaoAndIata' => array(
+                'apDepCountries' => array(
+                    'required' => true,
+                    'class' => 'span8',
+                ),
+                'apDepAirports' => array(
                     'required' => true,
                     'class' => 'span8',
                 ),
@@ -50,7 +54,11 @@ $displayOptions = array(
         'apArr' => array(
             'display_legend' => true,
             'elements' => array(
-                'apArrIcaoAndIata' => array(
+                'apArrCountries' => array(
+                    'required' => true,
+                    'class' => 'span8',
+                ),
+                'apArrAirports' => array(
                     'required' => true,
                     'class' => 'span8',
                 ),
@@ -84,10 +92,8 @@ $form->prepare();
 $flightNumber = $form->get('flightNumber');
 $apDep = $form->get('apDep');
 $apArr = $form->get('apArr');
+
 echo $this->formTwb()->openTag($form, $formType);
-echo $this->formRowTwb($form->get('id'));
-echo $this->formRowTwb($form->get('headerId'));
-echo $this->formRowTwb($form->get('previousDate'));
 echo $this->formRowTwb($form->get('dateOfFlight'), $formType, $displayOptions['elements']['dateOfFlight']);
 
 ?>
@@ -96,7 +102,7 @@ echo $this->formRowTwb($form->get('dateOfFlight'), $formType, $displayOptions['e
     <div class="span4">
         <?php
         echo $this->formFieldsetTwb()->openTag($flightNumber, $formType, $displayOptions['fieldsets']['flightNumber'], true, true, true);
-        echo $this->formRowTwb($flightNumber->get('flightNumberIcaoAndIata'), $formType, $displayOptions['fieldsets']['flightNumber']['elements']['flightNumberIcaoAndIata']);
+        echo $this->formRowTwb($flightNumber->get('flightNumberAirportId'), $formType, $displayOptions['fieldsets']['flightNumber']['elements']['flightNumberAirportId']);
         echo $this->formRowTwb($flightNumber->get('flightNumberText'), $formType, $displayOptions['fieldsets']['flightNumber']['elements']['flightNumberText']);
         echo $this->formFieldsetTwb()->closeTag();
         ?>
@@ -104,7 +110,8 @@ echo $this->formRowTwb($form->get('dateOfFlight'), $formType, $displayOptions['e
     <div class="span4">
         <?php
         echo $this->formFieldsetTwb()->openTag($apDep, $formType, $displayOptions['fieldsets']['apDep']);
-        echo $this->formRowTwb($apDep->get('apDepIcaoAndIata'), $formType, $displayOptions['fieldsets']['apDep']['elements']['apDepIcaoAndIata']);
+        echo $this->formRowTwb($apDep->get('apDepCountries'), $formType, $displayOptions['fieldsets']['apDep']['elements']['apDepCountries']);
+        echo $this->formRowTwb($apDep->get('apDepAirports'), $formType, $displayOptions['fieldsets']['apDep']['elements']['apDepAirports']);
         echo $this->formRowTwb($apDep->get('apDepTime'), $formType, $displayOptions['fieldsets']['apDep']['elements']['apDepTime']);
         echo $this->formFieldsetTwb()->closeTag();
         ?>
@@ -112,7 +119,8 @@ echo $this->formRowTwb($form->get('dateOfFlight'), $formType, $displayOptions['e
     <div class="span4">
         <?php
         echo $this->formFieldsetTwb()->openTag($apArr, $formType, $displayOptions['fieldsets']['apArr']);
-        echo $this->formRowTwb($apArr->get('apArrIcaoAndIata'), $formType, $displayOptions['fieldsets']['apArr']['elements']['apArrIcaoAndIata']);
+        echo $this->formRowTwb($apArr->get('apArrCountries'), $formType, $displayOptions['fieldsets']['apArr']['elements']['apArrCountries']);
+        echo $this->formRowTwb($apArr->get('apArrAirports'), $formType, $displayOptions['fieldsets']['apArr']['elements']['apArrAirports']);
         echo $this->formRowTwb($apArr->get('apArrTime'), $formType, $displayOptions['fieldsets']['apArr']['elements']['apArrTime']);
         echo $this->formFieldsetTwb()->closeTag();
         ?>
@@ -131,4 +139,10 @@ $actions = array(
 </div>
 
 <?php
+echo $this->formRowTwb($form->get('headerId'));
+echo $this->formRowTwb($form->get('previousDate'));
+echo $this->formRowTwb($form->get('preSelectedApDepCountryId'));
+echo $this->formRowTwb($form->get('preSelectedApDepAirportId'));
+echo $this->formRowTwb($form->get('apDepAirportId'));
+echo $this->formRowTwb($form->get('apArrAirportId'));
 echo $this->formTwb()->closeTag();

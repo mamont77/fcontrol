@@ -22,13 +22,12 @@ class LegForm extends BaseForm
     /**
      * @var array
      */
-    protected $flightNumberIcaoAndIata = array();
+    protected $flightNumberAirports = array();
 
     /**
      * @var array
      */
-    protected $appIcaoAndIata = array();
-
+    protected $countries = array();
 
     /**
      * @param null $name
@@ -42,10 +41,9 @@ class LegForm extends BaseForm
 
         parent::__construct($this->_formName);
 
-        $this->setLibrary('flightNumberIcaoAndIata', $options['libraries']['flightNumberIcaoAndIata'],
+        $this->setLibrary('flightNumberAirports', $options['libraries']['flightNumberAirports'],
             'id', array('code_icao', 'code_iata'));
-        $this->setLibrary('appIcaoAndIata', $options['libraries']['appIcaoAndIata'],
-            'id', array('code_iata', 'code_icao'));
+        $this->setLibrary('countries', $options['libraries']['countries'], 'id', 'name');
 
         $this->setName($this->_formName);
         $this->setAttribute('method', 'post');
@@ -65,11 +63,54 @@ class LegForm extends BaseForm
             ),
         ));
 
+        // используется при валидации в FlightDateChecker
         $this->add(array(
             'name' => 'previousDate',
             'attributes' => array(
                 'type' => 'hidden',
                 'value' => $options['previousValues']['previousDate'],
+            ),
+        ));
+
+        // необходим, что бы при добавлении очередной строки выбрать Country в Ap Dep
+        // после чего заблокировать это поле для редактирования
+        $this->add(array(
+            'name' => 'preSelectedApDepCountryId',
+            'attributes' => array(
+                'id' => 'preSelectedApDepCountryId',
+                'type' => 'hidden',
+                'value' => $options['previousValues']['preSelected']['apDepCountryId'],
+            ),
+        ));
+
+        // необходим, что бы при добавлении очередной строки выбрать Airport (IATA (ICAO)) в Ap Dep
+        // после чего заблокировать это поле для редактирования
+        $this->add(array(
+            'name' => 'preSelectedApDepAirportId',
+            'attributes' => array(
+                'id' => 'preSelectedApDepAirportId',
+                'type' => 'hidden',
+                'value' => $options['previousValues']['preSelected']['apDepAirportId'],
+            ),
+        ));
+
+        // эти данные будут записаны в БД, а также участвуют в рендеринге формы после того как ajax возмет аэропорты
+        $this->add(array(
+            'name' => 'apDepAirportId',
+            'attributes' => array(
+                'id' => 'apDepAirportId',
+                'type' => 'hidden',
+                'value' => 0,
+            ),
+        ));
+
+        // эти данные будут записаны в БД, а также участвуют в рендеринге формы после того как ajax возмет аэропорты
+        $this->add(array(
+            'name' => 'apArrAirportId',
+            'attributes' => array(
+                'id' => 'apArrAirportId',
+                'type' => 'hidden',
+                'value' => 0,
             ),
         ));
 
@@ -94,20 +135,20 @@ class LegForm extends BaseForm
                 'legend' => 'Flight Number',
             ),
             'elements' => array(
-                //flightNumberIcaoAndIata
+                //flightNumberAirportId
                 array(
                     'spec' => array(
-                        'name' => 'flightNumberIcaoAndIata',
+                        'name' => 'flightNumberAirportId',
                         'type' => 'Zend\Form\Element\Select',
                         'attributes' => array(
                             'required' => true,
-                            'id' => 'flightNumberIcaoAndIata',
+                            'id' => 'flightNumberAirportId',
                             'size' => 5,
                         ),
                         'options' => array(
                             'label' => 'ICAO (IATA)',
                             'empty_option' => '-- Select --',
-                            'value_options' => $this->flightNumberIcaoAndIata,
+                            'value_options' => $this->flightNumberAirports,
                         ),
                     ),
                 ),
@@ -137,38 +178,39 @@ class LegForm extends BaseForm
                 'legend' => 'Ap Dep',
             ),
             'elements' => array(
-                //apDepIcaoAndIata
                 array(
                     'spec' => array(
-                        'name' => 'apDepIcaoAndIata',
+                        'name' => 'apDepCountries',
                         'type' => 'Zend\Form\Element\Select',
                         'attributes' => array(
                             'required' => true,
-                            'id' => 'apDepIcaoAndIata',
+                            'id' => 'apDepCountries',
                             'size' => 5,
-                            'value' => ($options['previousValues']['preSelected']['apDepIcaoAndIata'])
-                                ? $options['previousValues']['preSelected']['apDepIcaoAndIata']
-                                : null,
+                        ),
+                        'options' => array(
+                            'label' => 'Country',
+                            'empty_option' => '-- Select --',
+                            'value_options' => $this->countries,
+                        ),
+                    ),
+                ),
+                //apDepIcaoAndIata
+                array(
+                    'spec' => array(
+                        'name' => 'apDepAirports',
+                        'type' => 'Zend\Form\Element\Select',
+                        'attributes' => array(
+                            'required' => true,
+                            'id' => 'apDepAirports',
+                            'size' => 5,
+                            'disabled' => true,
                         ),
                         'options' => array(
                             'label' => 'IATA (ICAO)',
-                            'empty_option' => '-- Select --',
-                            'value_options' => $this->appIcaoAndIata,
+//                            'description' => ' ',
                         ),
                     ),
                 ),
-                //only for $options['previousValues']['preSelected']['apDepIcaoAndIata'] not empty
-                array(
-                    'spec' => array(
-                        'name' => 'apDepIcaoAndIataHidden',
-                        'attributes' => array(
-                            'id' => 'apDepIcaoAndIataHidden',
-                            'type' => 'hidden',
-                            'value' => $options['previousValues']['preSelected']['apDepIcaoAndIata'],
-                        ),
-                    ),
-                ),
-
                 //apDepTime
                 array(
                     'spec' => array(
@@ -197,20 +239,36 @@ class LegForm extends BaseForm
                 'legend' => 'Ap Arr',
             ),
             'elements' => array(
-                //apArrIcaoAndIata
                 array(
                     'spec' => array(
-                        'name' => 'apArrIcaoAndIata',
+                        'name' => 'apArrCountries',
                         'type' => 'Zend\Form\Element\Select',
                         'attributes' => array(
                             'required' => true,
-                            'id' => 'apArrIcaoAndIata',
+                            'id' => 'apArrCountries',
                             'size' => 5,
                         ),
                         'options' => array(
-                            'label' => 'IATA (ICAO)',
+                            'label' => 'Country',
                             'empty_option' => '-- Select --',
-                            'value_options' => $this->appIcaoAndIata,
+                            'value_options' => $this->countries,
+                        ),
+                    ),
+                ),
+                //apArrIcaoAndIata
+                array(
+                    'spec' => array(
+                        'name' => 'apArrAirports',
+                        'type' => 'Zend\Form\Element\Select',
+                        'attributes' => array(
+                            'required' => true,
+                            'id' => 'apArrAirports',
+                            'size' => 5,
+                            'disabled' => true,
+                        ),
+                        'options' => array(
+                            'label' => 'IATA (ICAO)',
+//                            'description' => ' ',
                         ),
                     ),
                 ),
