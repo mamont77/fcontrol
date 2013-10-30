@@ -120,13 +120,14 @@ class LegController extends FlightController
         $data = $this->getLegModel()->get($id);
         $legs = $this->getLegModel()->getByHeaderId($data->headerId);
         $lastLeg = end($legs);
-
         if ($lastLeg) {
             $previousDate = $lastLeg['dateOfFlight'];
-            $preSelectedApDep = $lastLeg['apArrAirportId'];
+            $previousApArrCountryId = $lastLeg['apArrCountryId'];
+            $previousApArrAirportId = $lastLeg['apArrAirportId'];
         } else {
             $previousDate = null;
-            $preSelectedApDep = null;
+            $previousApArrCountryId = null;
+            $previousApArrAirportId = null;
         }
 
         $this->setDataForLogger($data);
@@ -135,9 +136,11 @@ class LegController extends FlightController
 
         $data->flightNumber['flightNumberAirportId'] = $data->flightNumberAirportId;
         $data->flightNumber['flightNumberText'] = $data->flightNumberText;
-        $data->apDep['apDepAirportId'] = $data->apDepAirportId;
+        $data->apDep['apDepCountries'] = $data->apDepCountries;
+        $data->apDep['apDepAirports'] = $data->apDepAirports;
         $data->apDep['apDepTime'] = $data->apDepTime;
-        $data->apArr['apArrAirportId'] = $data->apArrAirportId;
+        $data->apArr['apArrCountries'] = $data->apDepCountries;
+        $data->apArr['apArrAirports'] = $data->apDepAirports;
         $data->apArr['apArrTime'] = $data->apArrTime;
 
         $form = new LegForm('leg',
@@ -149,7 +152,8 @@ class LegController extends FlightController
                 'previousValues' => array(
                     'previousDate' => $previousDate,
                     'preSelected' => array(
-                        'apDepIcaoAndIata' => $preSelectedApDep,
+                        'apDepCountryId' => $previousApArrCountryId,
+                        'apDepAirportId' => $previousApArrAirportId,
                     ),
                 ),
             )

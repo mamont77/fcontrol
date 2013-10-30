@@ -51,6 +51,8 @@ class LegFilter implements InputFilterAwareInterface
     //Virtual fields
     public $flightNumberIcao;
     public $flightNumberIata;
+    public $apDepCountries;
+    public $apArrCountries;
     public $apDepAirports;
     public $apArrAirports;
     public $apDepIcao;
@@ -58,15 +60,15 @@ class LegFilter implements InputFilterAwareInterface
     public $apArrIcao;
     public $apArrIata;
 
-    public $apDepCityName;
+//    public $apDepCityName;
     public $apDepCountryId;
-    public $apDepCountryName;
-    public $apDepCountryCode;
+//    public $apDepCountryName;
+//    public $apDepCountryCode;
 
-    public $apArrCityName;
+//    public $apArrCityName;
     public $apArrCountryId;
-    public $apArrCountryName;
-    public $apArrCountryCode;
+//    public $apArrCountryName;
+//    public $apArrCountryCode;
 
     /**
      * @var array
@@ -99,13 +101,15 @@ class LegFilter implements InputFilterAwareInterface
      */
     public function exchangeArray(array $data)
     {
-        //Real fields
+//        \Zend\Debug\Debug::dump($data);
+        //Fields for form and view
         $this->id = (isset($data['id'])) ? $data['id'] : null;
         $this->headerId = (isset($data['headerId'])) ? $data['headerId'] : null;
-        $this->dateOfFlight = (isset($data['dateOfFlight'])) ? $data['dateOfFlight'] : null;
-
+        $this->apDepCountryId = (isset($data['apDepCountryId'])) ? $data['apDepCountryId'] : null;
+        $this->apArrCountryId = (isset($data['apArrCountryId'])) ? $data['apArrCountryId'] : null;
         $this->apDepAirportId = (isset($data['apDepAirportId'])) ? $data['apDepAirportId'] : null;
         $this->apArrAirportId = (isset($data['apArrAirportId'])) ? $data['apArrAirportId'] : null;
+        $this->dateOfFlight = (isset($data['dateOfFlight'])) ? $data['dateOfFlight'] : null;
 
         if (isset($data['flightNumber']['flightNumberAirportId'])) {
             $this->flightNumberAirportId = $data['flightNumber']['flightNumberAirportId'];
@@ -121,10 +125,18 @@ class LegFilter implements InputFilterAwareInterface
         } else {
             $this->flightNumberText = null;
         }
+
+        if (isset($data['apDep']['apDepCountries'])) {
+            $this->apDepCountries = $data['apDep']['apDepCountries'];
+        } elseif (isset($data['apDepCountryId'])) {
+            $this->apDepCountries = $data['apDepCountryId'];
+        } else {
+            $this->apDepCountries = null;
+        }
         if (isset($data['apDep']['apDepAirports'])) {
             $this->apDepAirports = $data['apDep']['apDepAirports'];
-        } elseif (isset($data['apDepAirports'])) {
-            $this->apDepAirports = $data['apDepAirports'];
+        } elseif (isset($data['apDepAirportId'])) {
+            $this->apDepAirports = $data['apDepAirportId'];
         } else {
             $this->apDepAirports = null;
         }
@@ -135,10 +147,18 @@ class LegFilter implements InputFilterAwareInterface
         } else {
             $this->apDepTime = null;
         }
+
+        if (isset($data['apArr']['apArrCountries'])) {
+            $this->apArrCountries = $data['apArr']['apArrCountries'];
+        } elseif (isset($data['apArrCountryId'])) {
+            $this->apArrCountries = $data['apArrCountryId'];
+        } else {
+            $this->apArrCountries = null;
+        }
         if (isset($data['apArr']['apArrAirports'])) {
             $this->apArrAirports = $data['apArr']['apArrAirports'];
-        } elseif (isset($data['apArrAirports'])) {
-            $this->apArrAirports = $data['apArrAirports'];
+        } elseif (isset($data['apArrAirportId'])) {
+            $this->apArrAirports = $data['apArrAirportId'];
         } else {
             $this->apArrAirports = null;
         }
@@ -150,25 +170,23 @@ class LegFilter implements InputFilterAwareInterface
             $this->apArrTime = null;
         }
 
-        //Virtual fields
+        //Fields only for view
         $this->flightNumberIcao = (isset($data['flightNumberIcao'])) ? $data['flightNumberIcao'] : null;
         $this->flightNumberIata = (isset($data['flightNumberIata'])) ? $data['flightNumberIata'] : null;
-        $this->apDepAirports = (isset($data['apDepAirports'])) ? $data['apDepAirports'] : null;
-        $this->apArrAirports = (isset($data['apArrAirports'])) ? $data['apArrAirports'] : null;
+
         $this->apDepIcao = (isset($data['apDepIcao'])) ? $data['apDepIcao'] : null;
         $this->apDepIata = (isset($data['apDepIata'])) ? $data['apDepIata'] : null;
+
         $this->apArrIcao = (isset($data['apArrIcao'])) ? $data['apArrIcao'] : null;
         $this->apArrIata = (isset($data['apArrIata'])) ? $data['apArrIata'] : null;
 
-        $this->apDepCityName = (isset($data['apDepCityName'])) ? $data['apDepCityName'] : null;
-        $this->apDepCountryId = (isset($data['apDepCountryId'])) ? $data['apDepCountryId'] : null;
-        $this->apDepCountryName = (isset($data['apDepCountryName'])) ? $data['apDepCountryName'] : null;
-        $this->apDepCountryCode = (isset($data['apDepCountryCode'])) ? $data['apDepCountryCode'] : null;
+//        $this->apDepCityName = (isset($data['apDepCityName'])) ? $data['apDepCityName'] : null;
+//        $this->apDepCountryName = (isset($data['apDepCountryName'])) ? $data['apDepCountryName'] : null;
+//        $this->apDepCountryCode = (isset($data['apDepCountryCode'])) ? $data['apDepCountryCode'] : null;
 
-        $this->apArrCityName = (isset($data['apArrCityName'])) ? $data['apArrCityName'] : null;
-        $this->apArrCountryId = (isset($data['apArrCountryId'])) ? $data['apArrCountryId'] : null;
-        $this->apArrCountryName = (isset($data['apArrCountryName'])) ? $data['apArrCountryName'] : null;
-        $this->apArrCountryCode = (isset($data['apArrCountryCode'])) ? $data['apArrCountryCode'] : null;
+//        $this->apArrCityName = (isset($data['apArrCityName'])) ? $data['apArrCityName'] : null;
+//        $this->apArrCountryName = (isset($data['apArrCountryName'])) ? $data['apArrCountryName'] : null;
+//        $this->apArrCountryCode = (isset($data['apArrCountryCode'])) ? $data['apArrCountryCode'] : null;
     }
 
     /**

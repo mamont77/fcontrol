@@ -54,17 +54,33 @@ class LegModel extends AbstractTableGateway
             'apArrAirportId',
             'apArrTime'));
 
-        $select->join(array('library_air_operator' => 'library_air_operator'),
-            'library_air_operator.id = flightLegForm.flightNumberAirportId',
+        $select->join(array('AirOperator' => 'library_air_operator'),
+            'AirOperator.id = flightLegForm.flightNumberAirportId',
             array('flightNumberIcao' => 'code_icao', 'flightNumberIata' => 'code_iata'), 'left');
 
-        $select->join(array('dep' => 'library_airport'),
-            'dep.id = flightLegForm.apDepAirportId',
-            array('apDepIcao' => 'code_icao', 'apDepIata' => 'code_iata'), 'left');
+        $select->join(array('ApDepAirport' => 'library_airport'),
+            'ApDepAirport.id = flightLegForm.apDepAirportId',
+            array('apDepName' => 'name', 'apDepIcao' => 'code_icao', 'apDepIata' => 'code_iata'), 'left');
 
-        $select->join(array('arr' => 'library_airport'),
-            'arr.id = flightLegForm.apArrAirportId',
-            array('apArrIcao' => 'code_icao', 'apArrIata' => 'code_iata'), 'left');
+        $select->join(array('ApDepCity' => 'library_city'),
+            'ApDepCity.id = ApDepAirport.city_id',
+            array('apDepCityId' => 'id', 'apDepCityName' => 'name'), 'left');
+
+        $select->join(array('ApDepCountry' => 'library_country'),
+            'ApDepCountry.id = ApDepCity.country_id',
+            array('apDepCountryId' => 'id', 'apDepCountryName' => 'name', 'apDepCountryCode' => 'code'), 'left');
+
+        $select->join(array('ApArrAirport' => 'library_airport'),
+            'ApArrAirport.id = flightLegForm.apArrAirportId',
+            array('apArrName' => 'name', 'apArrIcao' => 'code_icao', 'apArrIata' => 'code_iata'), 'left');
+
+        $select->join(array('ApArrCity' => 'library_city'),
+            'ApArrCity.id = ApArrAirport.city_id',
+            array('apArrCityId' => 'id', 'apArrCityName' => 'name'), 'left');
+
+        $select->join(array('ApArrCountry' => 'library_country'),
+            'ApArrCountry.id = ApArrCity.country_id',
+            array('apArrCountryId' => 'id', 'apArrCountryName' => 'name', 'apArrCountryCode' => 'code'), 'left');
 
         $select->where(array($this->table . '.id' => $id));
 
