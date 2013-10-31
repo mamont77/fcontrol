@@ -119,7 +119,9 @@ class LegController extends FlightController
         $headerStatus = $this->redirectForDoneStatus($refNumberOrder);
         $data = $this->getLegModel()->get($id);
         $legs = $this->getLegModel()->getByHeaderId($data->headerId);
-        $lastLeg = end($legs);
+
+        $lastLeg = array_slice($legs, -2, 1);
+        $lastLeg = $lastLeg[0];
         if ($lastLeg) {
             $previousDate = $lastLeg['dateOfFlight'];
             $previousApArrCountryId = $lastLeg['apArrCountryId'];
@@ -139,8 +141,8 @@ class LegController extends FlightController
         $data->apDep['apDepCountries'] = $data->apDepCountries;
         $data->apDep['apDepAirports'] = $data->apDepAirports;
         $data->apDep['apDepTime'] = $data->apDepTime;
-        $data->apArr['apArrCountries'] = $data->apDepCountries;
-        $data->apArr['apArrAirports'] = $data->apDepAirports;
+        $data->apArr['apArrCountries'] = $data->apArrCountries;
+        $data->apArr['apArrAirports'] = $data->apArrAirports;
         $data->apArr['apArrTime'] = $data->apArrTime;
 
         $form = new LegForm('leg',

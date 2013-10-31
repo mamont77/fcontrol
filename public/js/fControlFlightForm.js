@@ -9,9 +9,11 @@
                     'data-name="' + val['name'] + '">' + val['code'] + '</option>');
             });
             if (airportId) {
-                $airportField.find('option').each(function () {
-                    $(this).prop('disabled', true);
-                });
+                if ($airportField.selector === 'form#leg #apDepAirports') {
+                    $airportField.find('option').each(function () {
+                        $(this).prop('disabled', true);
+                    });
+                }
                 $airportField.find('[value="id_' + airportId + '"]').attr('selected', 'selected').prop('disabled', false);
             }
             $airportField.prop('disabled', false);
@@ -50,6 +52,8 @@
             $($form).find('#apDepTime').mask('99:99');
             $($form).find('#apArrTime').mask('99:99');
 
+            // если данные являются продолжением цепочки leg, то выбираем значения в Ap Dep
+            // из предыдущего Ap Arr
             if (preSelectedApDepCountryId > 0 && preSelectedApDepAirportId > 0) {
                 $apDepCountries.find('option').each(function () {
                     $(this).prop('disabled', true);
@@ -59,6 +63,7 @@
                 $apDepAirportId.val(preSelectedApDepAirportId);
             }
 
+            // при редактировании данных, если уже есть $apArrAirportId, то отрисовываем поле IATA (ICAO)
             if ($apArrAirportId.val() > 0) {
                 var currentCountryId = $apArrCountries.val();
                 renderAirportsByCountry($apArrAirports, currentCountryId, $apArrAirportId.val());
