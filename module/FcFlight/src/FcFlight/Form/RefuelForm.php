@@ -55,9 +55,9 @@ class RefuelForm extends BaseForm
 
         parent::__construct($this->_formName);
 
-        $this->setLibrary('airportsApDep', $options['libraries']['airports'], 'apDepIcaoAndIata',
+        $this->setLibrary('airportsApDep', $options['libraries']['airports'], 'apDepAirportId',
             array('apDepIata', 'apDepIcao'), 'array');
-        $this->setLibrary('airportsApArr', $options['libraries']['airports'], 'apArrIcaoAndIata',
+        $this->setLibrary('airportsApArr', $options['libraries']['airports'], 'apArrAirportId',
             array('apArrIata', 'apArrIcao'), 'array');
         $this->setAirports($this->airportsApDep, $this->airportsApArr);
         $this->setLibrary('agents', $options['libraries']['agents'], 'id', 'name');
