@@ -215,6 +215,17 @@ class LegController extends FlightController
         $request = $this->getRequest();
         $refUri = $request->getHeader('Referer')->uri()->getPath();
         $refNumberOrder = $this->getLegModel()->getHeaderRefNumberOrderByLegId($id);
+
+        if (!$this->getLegModel()->thisLegIsTheLastOne($id)) {
+            $this->flashMessenger()->addErrorMessage('This LEG is not the last.');
+            return $this->redirect()->toRoute('browse',
+                array(
+                    'action' => 'show',
+                    'refNumberOrder' => $refNumberOrder,
+                ));
+        }
+
+
         $this->redirectForDoneStatus($refNumberOrder);
 
         if ($request->isPost()) {

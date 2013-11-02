@@ -288,4 +288,27 @@ class LegModel extends AbstractTableGateway
 
         return $headerModel->getRefNumberOrderById($row->headerId);
     }
+
+    /**
+     * @param $id
+     * @return bool
+     */
+    public function thisLegIsTheLastOne($id)
+    {
+        $id = (int)$id;
+
+        $leg = $this->get($id);
+        $headerId = $leg->headerId;
+
+        $select = new Select();
+        $select->from($this->table);
+
+        $select->where(array('headerId' => $headerId));
+        $select->where->greaterThanOrEqualTo($this->table . '.id', $id);
+
+        $resultSet = $this->selectWith($select);
+        $resultSet->buffer();
+
+        return (count($resultSet) == 1) ? true : false;
+    }
 }

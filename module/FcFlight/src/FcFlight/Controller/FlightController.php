@@ -173,9 +173,12 @@ class FlightController extends AbstractActionController
             $result = $this->getFlightHeaderModel()->fetchAll($select->order($orderBy . ' ' . $orderAs));
         }
         $result->current();
-
         $data = array();
         foreach ($result as $key => $row) {
+            if (!$row->id) {
+                continue;
+            }
+
             foreach ($this->mapFields as $field) {
                 if (isset($row->$field)) {
                     $data[$key][$field] = $row->$field;
