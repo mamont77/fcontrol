@@ -6,10 +6,14 @@ $basePath = $this->basePath();
 //Twitter Bootstrap styles
 //$this->headLink()->appendStylesheet($basePath . '/css/bootstrap.css');
 $this->headLink()->appendStylesheet($basePath . '/css/bootstrap.min.css', 'all');
+
 //Twitter Bootstrap style override by DluTwBootstrap
 $this->headLink()->appendStylesheet($basePath . '/css/dlu-tw-bootstrap.css', 'all');
 //Twitter Bootstrap responsive styles
 $this->headLink()->appendStylesheet($basePath . '/css/bootstrap-responsive.min.css', 'all');
+
+$this->headLink()->appendStylesheet($basePath . '/css/typeahead.js-bootstrap.css', 'all');
+
 //fControl style
 $this->headLink()->appendStylesheet($basePath . '/css/style.css', 'all');
 $this->headLink()->appendStylesheet($basePath . '/css/print.css', 'print');
@@ -18,6 +22,8 @@ $this->headLink()->appendStylesheet($basePath . '/css/print.css', 'print');
 $this->inlineScript()->appendFile($basePath . '/js/jquery-1.10.2.min.js');
 //$this->inlineScript()->appendFile($basePath . '/js/bootstrap.js');
 $this->inlineScript()->appendFile($basePath . '/js/bootstrap.min.js');
+$this->inlineScript()->appendFile($basePath . '/js/typeahead.min.js');
+$this->inlineScript()->appendFile($basePath . '/js/hogan.js');
 $this->inlineScript()->appendFile($basePath . '/js/jquery.maskedinput.min.js');
 $this->inlineScript()->appendFile($basePath . '/js/fControlGlobal.js');
 $this->inlineScript()->appendFile($basePath . '/js/fControlNav.js');

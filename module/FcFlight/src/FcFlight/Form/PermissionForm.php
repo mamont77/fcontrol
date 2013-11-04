@@ -22,6 +22,11 @@ class PermissionForm extends BaseForm
     /**
      * @var array
      */
+    protected $agents = array();
+
+    /**
+     * @var array
+     */
     protected $airportsApDep = array();
 
     /**
@@ -47,6 +52,9 @@ class PermissionForm extends BaseForm
         }
 
         parent::__construct($this->_formName);
+
+        $this->setLibrary('agents', $options['libraries']['agents'], 'id',
+            array('name', 'countryName'), 'object');
 
         $this->setLibrary('airportsApDep', $options['libraries']['airports'], 'apDepAirportId',
             array('apDepIata', 'apDepIcao'), 'array');
@@ -76,72 +84,72 @@ class PermissionForm extends BaseForm
         ));
 
         $this->add(array(
-            'name' => 'airportId',
+            'name' => 'agentId',
+            'type' => 'Zend\Form\Element\Text',
+            'attributes' => array(
+                'id' => 'agentId',
+                'class' => 'typeahead',
+                'required' => true,
+                'placeholder' => 'Agent',
+            ),
+            'options' => array(
+                'label' => 'Agent',
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'legId',
+            'type' => 'Zend\Form\Element\Text',
+            'attributes' => array(
+                'required' => true,
+                'maxlength' => '30',
+            ),
+            'options' => array(
+                'label' => 'LEG',
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'countryId',
+            'type' => 'Zend\Form\Element\Text',
+            'attributes' => array(
+                'required' => true,
+                'maxlength' => '30',
+            ),
+            'options' => array(
+                'label' => 'Country',
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'typeOfPermission',
             'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
                 'required' => true,
                 'size' => 5,
             ),
             'options' => array(
-                'label' => 'Airport',
-                'empty_option' => '-- Please select --',
-                'value_options' => $this->getAirports(),
-            ),
-        ));
-
-        $this->add(array(
-            'name' => 'isNeed',
-            'type' => 'Zend\Form\Element\Checkbox',
-            'options' => array(
-                'label' => 'Need?',
-                'checked_value' => '1',
-                'unchecked_value' => '0'
-            ),
-        ));
-
-        $this->add(array(
-            'type' => 'Zend\Form\Element\Radio',
-            'name' => 'typeOfPermit',
-            'options' => array(
-                'label' => 'Type of Permit',
+                'label' => 'Type of permission',
                 'value_options' => array(
-                    'LANDING' => 'LANDING',
-                    'OVERFLIGHT' => 'OVERFLIGHT',
+                    'OFL' => 'OFL',
+                    'LND' => 'LND',
+                    'DG' => 'DG',
+                    'DIP' => 'DIP',
                 ),
             ),
-            'attributes' => array(
-//                'value' => 'LANDING'
-            )
         ));
 
         $this->add(array(
-            'name' => 'baseOfPermitId',
-            'type' => 'Zend\Form\Element\Select',
+            'name' => 'permission',
+            'type' => 'Zend\Form\Element\Textarea',
             'attributes' => array(
                 'required' => true,
-                'size' => 5,
+                'rows' => 5,
+                'maxlength' => '400',
             ),
             'options' => array(
-                'label' => 'Base of Permit',
-                'empty_option' => '-- Please select --',
-                'value_options' => $this->getBaseOfPermit(),
+                'label' => 'Permission',
             ),
-        ));
-
-        $this->add(array(
-            'type' => 'Zend\Form\Element\Radio',
-            'name' => 'check',
-            'options' => array(
-                'label' => 'Check ',
-                'value_options' => array(
-                    'NO' => 'NO',
-                    'PROCESS' => 'PROCESS',
-                    'RECEIVED' => 'RECEIVED',
-                ),
-            ),
-            'attributes' => array(
-//                'value' => 'PROCESS'
-            )
         ));
 
         $this->add(new Element\Csrf('csrf'));
@@ -154,6 +162,7 @@ class PermissionForm extends BaseForm
             ),
             'attributes' => array(
                 'type' => 'submit',
+                'class' => 'btn btn-primary',
                 'value' => 'Add',
             ),
         ));
@@ -168,6 +177,14 @@ class PermissionForm extends BaseForm
         $compare = $a + $b;
         uasort($compare, array($this, 'sortLibrary'));
         $this->airports = $compare;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAgents()
+    {
+        return $this->agents;
     }
 
     /**

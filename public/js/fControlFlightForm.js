@@ -105,6 +105,24 @@
         }
     };
 
+    fControl.behaviors.permissionForm = {
+        attach: function (context, settings) {
+            var $form = $('form#permission'),
+                $agentId = $form.find('#agentId.typeahead');
+
+            $agentId.typeahead({
+                name: 'agent',
+                prefetch: '/permission/get-agents',
+                template: [
+                    '<p class="repo-address">{{address}}</p>',
+                    '<p class="repo-name">{{name}}</p>',
+                    '<p class="repo-mail">{{mail}}</p>'
+                ].join(''),
+                engine: Hogan
+            });
+        }
+    };
+
     fControl.behaviors.flightSearchForm = {
         attach: function (context, settings) {
             var $form = $('form#flightSearch'),

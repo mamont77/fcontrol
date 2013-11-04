@@ -12,37 +12,9 @@
 <?php
 $title = 'Add Permission';
 $this->headTitle($title);
+
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
-
-<?php
-$displayOptions = array(
-    'class' => 'form-horizontal',
-    'elements' => array(
-        'airportId' => array(
-            'required' => true,
-        ),
-        'isNeed' => array(
-            'required' => false,
-        ),
-        'typeOfPermit' => array(
-            'required' => true,
-        ),
-        'baseOfPermitId' => array(
-            'required' => true,
-        ),
-        'check' => array(
-            'required' => true,
-        ),
-    ),
-);
-$form = $this->form;
-$form->setAttribute('action', $this->url('permission', array('action' => 'add', 'id' => $this->headerId, 'status' => $headerStatus)));
-$form->prepare();
-?>
-
-<?php echo $this->partial('widgets/tables/permission.phtml', array('permissions' => $permissions)); ?>
-
 
 <?php if ($form->getMessages()): ?>
     <div class="alert alert-error">
@@ -54,4 +26,103 @@ $form->prepare();
     <?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
 <?php endif; ?>
 
-<?php echo $this->formTwb($form, $formType, $displayOptions); ?>
+<div id="permission">
+    <?php
+    $form = $this->form;
+    $form->setAttribute('action', $this->url('permission', array('action' => 'add', 'id' => $this->headerId)));
+    $formLabel = $this->plugin('formLabel');
+    $form->prepare();
+    echo $this->form()->openTag($form) . PHP_EOL;
+    echo $this->formHidden($form->get('id')) . PHP_EOL;
+    echo $this->formHidden($form->get('headerId')) . PHP_EOL;
+    echo $this->formHidden($form->get('csrf')) . PHP_EOL;
+    ?>
+    <table class="table table-bordered table-hover table-condensed">
+        <tr>
+            <th>
+                Agent
+            </th>
+            <th>
+                LEG
+            </th>
+            <th>
+                Country
+            </th>
+            <th>
+                Type of permission
+            </th>
+            <th>
+                Permission
+            </th>
+            <th class="actions">Actions</th>
+        </tr>
+        <? foreach ($permissions as $row): ?>
+            <tr>
+                <td><?= $this->escapeHtml($row['agentName']) ?></td>
+                <td>
+                    <a rel="tooltip" href="#" data-toggle="tooltip" data-placement="top"
+                       title="" data-original-title="<?= $this->escapeHtml($row['legDescription']) ?>">
+                        <?= $this->escapeHtml($row['leg']) ?>
+                    </a>
+                </td>
+                <td><?= $this->escapeHtml($row['countryName']) ?></td>
+                <td><?= $this->escapeHtml($row['typeOfPermission']) ?></td>
+                <td><?= $this->escapeHtml($row['permission']) ?></td>
+                <td class="actions">
+                    <a title="Edit"
+                       href="<?= $this->url('permission', array('action' => 'edit', 'id' => $row['id'])) ?>"
+                       class="<? if (!$status): ?>disabled<? endif ?>"><i class="icon-edit"></i></a>
+                    <a title="Remove"
+                       href="<?= $this->url('permission', array('action' => 'delete', 'id' => $row['id'])) ?>"
+                       class="<? if (!$status): ?>disabled<? endif ?>"><i class="icon-remove"></i></a>
+                </td>
+            </tr>
+        <? endforeach ?>
+        <tr>
+            <td>
+                <?php
+                $field = $form->get('agentId');
+                echo $this->formInput($field);
+                echo $this->formElementErrors($field);
+                ?>
+            </td>
+            <td>
+                <?php
+                $field = $form->get('legId');
+                echo $this->formInput($field);
+                echo $this->formElementErrors($field);
+                ?>
+            </td>
+            <td>
+                <?php
+                $field = $form->get('countryId');
+                echo $this->formInput($field);
+                echo $this->formElementErrors($field);
+                ?>
+            </td>
+            <td>
+                <?php
+                $field = $form->get('typeOfPermission');
+                echo $this->formSelect($field);
+                echo $this->formElementErrors($field);
+                ?>
+            </td>
+            <td>
+                <?php
+                $field = $form->get('permission');
+                echo $this->formTextarea($field);
+                echo $this->formElementErrors($field);
+                ?>
+            </td>
+            <td>
+                <?php
+                $field = $form->get('submitBtn');
+                echo $this->formElement($field);
+                ?>
+            </td>
+        <tr>
+    </table>
+    <?php
+    echo $this->form()->closeTag();
+    ?>
+</div>

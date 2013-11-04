@@ -7,6 +7,7 @@ namespace FcFlight\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use FcFlight\Form\PermissionForm;
+use Zend\Json\Json as Json;
 
 /**
  * Class PermissionController
@@ -45,6 +46,8 @@ class PermissionController extends FlightController
             array(
                 'headerId' => $this->headerId,
                 'libraries' => array(
+                    'agents' => $this->getKontragents(),
+
                     'airports' => $this->getParentLeg($this->headerId),
                     'baseOfPermit' => $this->getBaseOfPermits(),
                 ),
@@ -208,6 +211,37 @@ class PermissionController extends FlightController
             'refNumberOrder' => $refNumberOrder,
             'data' => $this->getPermissionModel()->get($id)
         );
+    }
+
+    /**
+     * @return \Zend\Http\Response
+     */
+    public function getAgentsAction()
+    {
+        $data = $this->getKontragentModel()->fetchAll();
+
+        $result = array(
+        );
+        foreach ($data as $row) {
+            $result[] = array(
+                'value' => $row->name,
+                'name' => $row->name,
+                'address' => $row->address,
+                'mail' => $row->mail,
+                'tokens' => array(
+                    $row->name,
+                    $row->short_name,
+                    $row->mail,
+                ),
+            );
+        }
+
+        $view = new ViewModel(array(
+            'data' => Json::encode($result),
+        ));
+        $view->setTerminal(true);
+
+        return $view;
     }
 
     /**

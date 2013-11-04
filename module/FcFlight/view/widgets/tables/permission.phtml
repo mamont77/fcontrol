@@ -1,67 +1,45 @@
-<legend>Type of Service: Permission</legend>
+<legend>Permission</legend>
 <div id="permission">
     <table class="table table-bordered table-hover table-condensed">
         <tr>
-            <th colspan="3">
-
-            </th>
-            <th colspan="4">
-                Info
-            </th>
-            <th colspan="2">
-
-            </th>
-        </tr>
-        <tr>
             <th>
-                Airport
+                Agent
             </th>
             <th>
-                Need?
-            </th>
-            <th>
-                Type
-            </th>
-            <th>
-                City
+                LEG
             </th>
             <th>
                 Country
             </th>
             <th>
-                Term validity
+                Type of permission
             </th>
             <th>
-                Term to take
-            </th>
-            <th>
-                Check
+                Permission
             </th>
             <th class="actions">Actions</th>
         </tr>
-        <?php foreach ($permissions as $row) : ?>
+        <? foreach ($permissions as $row): ?>
             <tr>
+                <td><?= $this->escapeHtml($row['agentName']) ?></td>
                 <td>
                     <a rel="tooltip" href="#" data-toggle="tooltip" data-placement="top"
-                       title="" data-original-title="<?php echo $this->escapeHtml($row['airportName']); ?>">
-                        <?php echo $this->escapeHtml($row['icao']); ?> |
-                        <?php echo $this->escapeHtml($row['iata']); ?>
+                       title="" data-original-title="<?= $this->escapeHtml($row['legDescription']) ?>">
+                        <?= $this->escapeHtml($row['leg']) ?>
                     </a>
                 </td>
-                <td><strong><?=($row['isNeed']) ? 'YES' : 'NO'; ?></strong></td>
-                <td><?php echo $this->escapeHtml($row['typeOfPermit']); ?></td>
-                <td><?php echo $this->escapeHtml($row['cityName']); ?></td>
-                <td><?php echo $this->escapeHtml($row['countryName']); ?></td>
-                <td><?php echo $this->escapeHtml($row['termValidity']); ?></td>
-                <td><?php echo $this->escapeHtml($row['termToTake']); ?></td>
-                <td><?php echo $this->escapeHtml($row['check']); ?></td>
+                <td><?= $this->escapeHtml($row['countryName']) ?></td>
+                <td><?= $this->escapeHtml($row['typeOfPermission']) ?></td>
+                <td><?= $this->escapeHtml($row['permission']) ?></td>
                 <td class="actions">
-                    <a title="Edit" href="<?php echo $this->url('permission',
-                        array('action' => 'edit', 'id' => $row['id']));?>" class="<?=($status) ? '': 'disabled' ;?>"><i class="icon-edit"></i></a>
-                    <a title="Remove" href="<?php echo $this->url('permission',
-                        array('action' => 'delete', 'id' => $row['id']));?>" class="<?=($status) ? '': 'disabled' ;?>"><i class="icon-remove"></i></a>
+                    <a title="Edit"
+                       href="<?= $this->url('permission', array('action' => 'edit', 'id' => $row['id'])) ?>"
+                       class="<? if (!$status): ?>disabled<? endif ?>"><i class="icon-edit"></i></a>
+                    <a title="Remove"
+                       href="<?= $this->url('permission', array('action' => 'delete', 'id' => $row['id'])) ?>"
+                       class="<? if (!$status): ?>disabled<? endif ?>"><i class="icon-remove"></i></a>
                 </td>
             </tr>
-        <?php endforeach; ?>
+        <? endforeach ?>
     </table>
 </div>
