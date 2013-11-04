@@ -293,7 +293,7 @@ class LegModel extends AbstractTableGateway
      * @param $id
      * @return bool
      */
-    public function thisLegIsTheLastOne($id)
+    public function legIsLast($id)
     {
         $id = (int)$id;
 
@@ -303,12 +303,15 @@ class LegModel extends AbstractTableGateway
         $select = new Select();
         $select->from($this->table);
 
+        $select->columns(array('rows' => new \Zend\Db\Sql\Expression('COUNT(*)')));
+
         $select->where(array('headerId' => $headerId));
         $select->where->greaterThanOrEqualTo($this->table . '.id', $id);
+        $select->order(array('id ' . $select::ORDER_ASCENDING));
 
         $resultSet = $this->selectWith($select);
         $resultSet->buffer();
 
-        return (count($resultSet) == 1) ? true : false;
+        return ($resultSet == 1) ? true : false;
     }
 }

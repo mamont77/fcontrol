@@ -46,7 +46,8 @@
                 $apDepCountries = $form.find('#apDepCountries'),
                 $apDepAirports = $form.find('#apDepAirports'),
                 $apArrCountries = $form.find('#apArrCountries'),
-                $apArrAirports = $form.find('#apArrAirports');
+                $apArrAirports = $form.find('#apArrAirports'),
+                currentCountryId;
 
             $($form).find('#dateOfFlight').mask('99-99-9999');
             $($form).find('#apDepTime').mask('99:99');
@@ -65,7 +66,7 @@
 
             // при редактировании данных, если уже есть $apArrAirportId, то отрисовываем поле IATA (ICAO)
             if ($apArrAirportId.val() > 0) {
-                var currentCountryId = $apArrCountries.val();
+                currentCountryId = $apArrCountries.val();
                 renderAirportsByCountry($apArrAirports, currentCountryId, $apArrAirportId.val());
             }
 

@@ -213,10 +213,10 @@ class LegController extends FlightController
         }
 
         $request = $this->getRequest();
-        $refUri = $request->getHeader('Referer')->uri()->getPath();
         $refNumberOrder = $this->getLegModel()->getHeaderRefNumberOrderByLegId($id);
 
-        if (!$this->getLegModel()->thisLegIsTheLastOne($id)) {
+        // мы не можем удалить leg, если за ним идет цепочка строк
+        if (!$this->getLegModel()->legIsLast($id)) {
             $this->flashMessenger()->addErrorMessage('This LEG is not the last.');
             return $this->redirect()->toRoute('browse',
                 array(
@@ -248,14 +248,15 @@ class LegController extends FlightController
                 $logger->Warn($loggerPlugin->getLogMessage());
             }
 
-            $redirectPath = (string)$request->getPost('referer');
-            // Redirect to back
-            return $this->redirect()->toUrl($redirectPath);
+            return $this->redirect()->toRoute('browse',
+                array(
+                    'action' => 'show',
+                    'refNumberOrder' => $refNumberOrder,
+                ));
         }
 
         return array(
             'id' => $id,
-            'referer' => $refUri,
             'refNumberOrder' => $refNumberOrder,
             'leg' => $this->getLegModel()->get($id)
         );
