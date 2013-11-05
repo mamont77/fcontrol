@@ -1,7 +1,7 @@
 (function ($) {
     var ajaxPath = '/leg/get-airports/';
 
-    function renderAirportsByCountry ($airportField, countryId, airportId) {
+    function renderAirportsByCountry($airportField, countryId, airportId) {
         var ajaxPath = '/leg/get-airports/';
         $.getJSON(ajaxPath + countryId, function (data) {
             $.each(data['airports'], function (key, val) {
@@ -108,11 +108,19 @@
     fControl.behaviors.permissionForm = {
         attach: function (context, settings) {
             var $form = $('form#permission'),
-                $agentId = $form.find('#agentId.typeahead');
+                headerId = $form.find('#headerId').val(),
+                $agentId = $form.find('#agentId'),
+                $legId = $form.find('#legId'),
+                $countryId = $form.find('#countryId'),
+                $typeOfPermission = $form.find('#typeOfPermission'),
+                $agentsList = $form.find('#agentsList'),
+                $legsList = $form.find('#legsList'),
+                $countriesList = $form.find('#countriesList'),
+                $typeOfPermissionsList = $form.find('#typeOfPermissionsList');
 
-            $agentId.typeahead({
-                name: 'agent',
-                prefetch: '/permission/get-agents',
+            $agentsList.typeahead({
+                name: 'agents',
+                remote: '/permission/get-agents',
                 template: [
                     '<p class="repo-address">{{address}}</p>',
                     '<p class="repo-name">{{name}}</p>',
@@ -120,6 +128,54 @@
                 ].join(''),
                 engine: Hogan
             });
+
+            $agentsList.on("typeahead:selected typeahead:autocompleted", function (e, datum) {
+                $agentId.val(datum.id);
+            });
+
+            $legsList.typeahead({
+                name: 'legs_' + headerId,
+                remote: '/permission/get-legs/' + headerId,
+                template: [
+                    '<p class="repo-address">{{address}}</p>',
+                    '<p class="repo-name">{{name}}</p>',
+                    '<p class="repo-mail">{{mail}}</p>'
+                ].join(''),
+                engine: Hogan
+            });
+
+            $legsList.on("typeahead:selected typeahead:autocompleted", function (e, datum) {
+                $legId.val(datum.id);
+            });
+
+            $countriesList.typeahead({
+                name: 'countries',
+                prefetch: '/permission/get-countries',
+                template: [
+                    '<p class="repo-code">{{code}}</p>',
+                    '<p class="repo-name">{{name}}</p>'
+                ].join(''),
+                engine: Hogan
+            });
+
+            $countriesList.on("typeahead:selected typeahead:autocompleted", function (e, datum) {
+                $countryId.val(datum.id);
+            });
+
+            $typeOfPermissionsList.typeahead({
+                name: 'typeOfPermissions',
+                local: [
+                    'OFL',
+                    'LND',
+                    'DG',
+                    'DIP'
+                ]
+            });
+
+            $typeOfPermissionsList.on("typeahead:selected typeahead:autocompleted", function (e, datum) {
+                $typeOfPermission.val(datum.value);
+            });
+
         }
     };
 

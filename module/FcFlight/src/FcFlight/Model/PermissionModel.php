@@ -46,33 +46,34 @@ class PermissionModel extends AbstractTableGateway
 
         $select->columns(array('id',
             'headerId',
-            'airportId',
-            'isNeed',
-            'typeOfPermit',
-            'baseOfPermitId',
-            'check'));
+            'agentId',
+            'legId',
+            'countryId',
+            'typeOfPermission',
+            'permission'));
 
-        $select->join(array('airport' => 'library_airport'),
-            'flightPermissionForm.airportId = airport.id',
-            array('icao' => 'code_icao', 'iata' => 'code_iata', 'airportName' => 'name'), 'left');
+        $select->join(array('agent' => 'library_kontragent'),
+            'flightPermissionForm.agentId = agent.id',
+            array('agentName' => 'name', 'agentAddress' => 'address', 'agentMail' => 'mail'), 'left');
 
-        $select->join(array('baseOfPermission' => 'library_base_of_permit'),
-            'flightPermissionForm.BaseOfPermitId = baseOfPermission.id',
-            array('baseOfPermitAirportId' => 'airportId', 'termValidity' => 'termValidity', 'termToTake' => 'termToTake'), 'left');
+        $select->join(array('leg' => 'flightLegForm'),
+            'flightPermissionForm.legId = leg.id',
+            array('airportDepartureId' => 'apDepAirportId', 'airportArrivalId' => 'apArrAirportId'), 'left');
 
-        $select->join(array('airport2' => 'library_airport'),
-            'baseOfPermission.airportId = airport2.id',
-            array('cityId' => 'city_id'), 'left');
+        $select->join(array('airportDeparture' => 'library_airport'),
+            'leg.apDepAirportId = airportDeparture.id',
+            array('airportDepartureICAO' => 'code_icao', 'airportDepartureIATA' => 'code_iata'), 'left');
 
-        $select->join(array('city' => 'library_city'),
-            'airport2.city_id = city.id',
-            array('countryId' => 'country_id', 'cityName' => 'name'), 'left');
+        $select->join(array('airportArrival' => 'library_airport'),
+            'leg.apArrAirportId = airportArrival.id',
+            array('airportArrivalICAO' => 'code_icao', 'airportArrivalIATA' => 'code_iata'), 'left');
 
         $select->join(array('country' => 'library_country'),
-            'city.country_id = country.id',
-            array('regionId' => 'region_id', 'countryName' => 'name'), 'left');
+            'flightPermissionForm.countryId = country.id',
+            array('countryName' => 'name', 'countryCode' => 'code'), 'left');
 
-        $select->where(array($this->table . '.id' => $id));
+        $select->where(array('flightPermissionForm.id' => $id));
+//        \Zend\Debug\Debug::dump($select->getSqlString());
 
         $resultSet = $this->selectWith($select);
         $row = $resultSet->current();
@@ -91,11 +92,11 @@ class PermissionModel extends AbstractTableGateway
     {
         $data = array(
             'headerId' => (int)$object->headerId,
-            'airportId' => (int)$object->airportId,
-            'isNeed' => (int)$object->isNeed,
-            'typeOfPermit' => (string)$object->typeOfPermit,
-            'baseOfPermitId' => (int)$object->baseOfPermitId,
-            'check' => (string)$object->check,
+            'agentId' => (int)$object->agentId,
+            'legId' => (int)$object->legId,
+            'countryId' => (int)$object->countryId,
+            'typeOfPermission' => (string)$object->typeOfPermission,
+            'permission' => (string)$object->permission,
         );
 
         $this->insert($data);
@@ -113,11 +114,11 @@ class PermissionModel extends AbstractTableGateway
     {
         $data = array(
             'headerId' => (int)$object->headerId,
-            'airportId' => (int)$object->airportId,
-            'isNeed' => (int)$object->isNeed,
-            'typeOfPermit' => (string)$object->typeOfPermit,
-            'baseOfPermitId' => (int)$object->baseOfPermitId,
-            'check' => (string)$object->check,
+            'agentId' => (int)$object->agentId,
+            'legId' => (int)$object->legId,
+            'countryId' => (int)$object->countryId,
+            'typeOfPermission' => (string)$object->typeOfPermission,
+            'permission' => (string)$object->permission,
         );
 
         $id = (int)$object->id;
@@ -145,36 +146,38 @@ class PermissionModel extends AbstractTableGateway
         $id = (int)$id;
         $select = new Select();
         $select->from($this->table);
+
         $select->columns(array('id',
             'headerId',
-            'airportId',
-            'isNeed',
-            'typeOfPermit',
-            'baseOfPermitId',
-            'check'));
+            'agentId',
+            'legId',
+            'countryId',
+            'typeOfPermission',
+            'permission'));
 
-        $select->join(array('airport' => 'library_airport'),
-            'flightPermissionForm.airportId = airport.id',
-            array('icao' => 'code_icao', 'iata' => 'code_iata', 'airportName' => 'name'), 'left');
+        $select->join(array('agent' => 'library_kontragent'),
+            'flightPermissionForm.agentId = agent.id',
+            array('agentName' => 'name', 'agentAddress' => 'address', 'agentMail' => 'mail'), 'left');
 
-        $select->join(array('baseOfPermission' => 'library_base_of_permit'),
-            'flightPermissionForm.BaseOfPermitId = baseOfPermission.id',
-            array('baseOfPermitAirportId' => 'airportId', 'termValidity' => 'termValidity', 'termToTake' => 'termToTake'), 'left');
+        $select->join(array('leg' => 'flightLegForm'),
+            'flightPermissionForm.legId = leg.id',
+            array('airportDepartureId' => 'apDepAirportId', 'airportArrivalId' => 'apArrAirportId'), 'left');
 
-        $select->join(array('airport2' => 'library_airport'),
-            'baseOfPermission.airportId = airport2.id',
-            array('cityId' => 'city_id'), 'left');
+        $select->join(array('airportDeparture' => 'library_airport'),
+            'leg.apDepAirportId = airportDeparture.id',
+            array('airportDepartureICAO' => 'code_icao', 'airportDepartureIATA' => 'code_iata'), 'left');
 
-        $select->join(array('city' => 'library_city'),
-            'airport2.city_id = city.id',
-            array('countryId' => 'country_id', 'cityName' => 'name'), 'left');
+        $select->join(array('airportArrival' => 'library_airport'),
+            'leg.apArrAirportId = airportArrival.id',
+            array('airportArrivalICAO' => 'code_icao', 'airportArrivalIATA' => 'code_iata'), 'left');
 
         $select->join(array('country' => 'library_country'),
-            'city.country_id = country.id',
-            array('regionId' => 'region_id', 'countryName' => 'name'), 'left');
+            'flightPermissionForm.countryId = country.id',
+            array('countryName' => 'name', 'countryCode' => 'code'), 'left');
 
-        $select->where(array('headerId' => $id));
-        $select->order(array('id ' . $select::ORDER_ASCENDING, 'airportId ' . $select::ORDER_ASCENDING));
+        $select->where(array('flightPermissionForm.headerId' => $id));
+        $select->order(array('flightPermissionForm.legId ' . $select::ORDER_ASCENDING,
+            'flightPermissionForm.id ' . $select::ORDER_ASCENDING));
 //        \Zend\Debug\Debug::dump($select->getSqlString());
 
         $resultSet = $this->selectWith($select);
@@ -182,25 +185,30 @@ class PermissionModel extends AbstractTableGateway
 
         $data = array();
         foreach ($resultSet as $row) {
-//            \Zend\Debug\Debug::dump($row);
-            //Real fields
-            $data[$row->id]['id'] = $row->id;
-            $data[$row->id]['headerId'] = $row->headerId;
-            $data[$row->id]['airportId'] = $row->airportId;
-            $data[$row->id]['isNeed'] = $row->isNeed;
-            $data[$row->id]['typeOfPermit'] = $row->typeOfPermit;
-            $data[$row->id]['baseOfPermitId'] = $row->baseOfPermitId;
-            $data[$row->id]['check'] = $row->check;
 
-            //Virtual fields
-            $data[$row->id]['icao'] = $row->icao;
-            $data[$row->id]['iata'] = $row->iata;
-            $data[$row->id]['airportName'] = $row->airportName;
-            $data[$row->id]['cityName'] = $row->cityName;
-            $data[$row->id]['countryName'] = $row->countryName;
-            $data[$row->id]['termValidity'] = $row->termValidity;
-            $data[$row->id]['termToTake'] = $row->termToTake;
+            $data[$row->legId] = array(
+                'headerId' => $row->headerId,
+                'legName' => $row->airportDepartureICAO . ' (' . $row->airportDepartureIATA . ')'
+                    . ' ⇒ '
+                    . $row->airportArrivalICAO . ' (' . $row->airportArrivalIATA . ')',
+            );
         }
+
+        foreach ($resultSet as $row) {
+            $data[$row->legId]['permission'][$row->id] = array(
+                'agentId' => $row->agentId,
+                'agentName' => $row->agentName,
+                'agentAddress' => $row->agentAddress,
+                'agentMail' => $row->agentMail,
+                'countryId' => $row->countryId,
+                'countryName' => $row->countryName,
+                'countryCode' => $row->countryCode,
+                'typeOfPermission' => $row->typeOfPermission,
+                'permission' => $row->permission,
+            );
+        }
+
+//        \Zend\Debug\Debug::dump($data);
 
         return $data;
     }

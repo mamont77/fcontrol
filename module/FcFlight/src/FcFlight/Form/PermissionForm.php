@@ -6,7 +6,6 @@ namespace FcFlight\Form;
 
 use Zend\Form\Element;
 use Zend\Form\Form;
-use \Zend\Db\ResultSet\ResultSet;
 
 /**
  * Class PermissionForm
@@ -20,28 +19,6 @@ class PermissionForm extends BaseForm
     protected $_formName = 'permission';
 
     /**
-     * @var array
-     */
-    protected $agents = array();
-
-    /**
-     * @var array
-     */
-    protected $airportsApDep = array();
-
-    /**
-     * @var array
-     */
-    protected $airportsApArr = array();
-
-    /**
-     * @var array
-     */
-    protected $airports = array();
-
-    protected $baseOfPermit = array();
-
-    /**
      * @param null $name
      * @param array $options
      */
@@ -52,18 +29,6 @@ class PermissionForm extends BaseForm
         }
 
         parent::__construct($this->_formName);
-
-        $this->setLibrary('agents', $options['libraries']['agents'], 'id',
-            array('name', 'countryName'), 'object');
-
-        $this->setLibrary('airportsApDep', $options['libraries']['airports'], 'apDepAirportId',
-            array('apDepIata', 'apDepIcao'), 'array');
-        $this->setLibrary('airportsApArr', $options['libraries']['airports'], 'apArrAirportId',
-            array('apArrIata', 'apArrIcao'), 'array');
-        $this->setAirports($this->airportsApDep, $this->airportsApArr);
-
-        $this->setLibrary('baseOfPermit', $options['libraries']['baseOfPermit'], 'id',
-            array('cityName', 'countryName'), 'object');
 
         $this->setName($this->_formName);
         $this->setAttribute('method', 'post');
@@ -78,17 +43,18 @@ class PermissionForm extends BaseForm
         $this->add(array(
             'name' => 'headerId',
             'attributes' => array(
+                'id' => 'headerId',
                 'type' => 'hidden',
                 'value' => $options['headerId'],
             ),
         ));
 
         $this->add(array(
-            'name' => 'agentId',
+            'name' => 'agentsList',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'id' => 'agentId',
-                'class' => 'typeahead',
+                'id' => 'agentsList',
+                'class' => 'typeahead input-small',
                 'required' => true,
                 'placeholder' => 'Agent',
             ),
@@ -98,11 +64,21 @@ class PermissionForm extends BaseForm
         ));
 
         $this->add(array(
-            'name' => 'legId',
+            'name' => 'agentId',
+            'attributes' => array(
+                'id' => 'agentId',
+                'type' => 'hidden',
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'legsList',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
+                'id' => 'legsList',
+                'class' => 'typeahead input-small',
                 'required' => true,
-                'maxlength' => '30',
+                'placeholder' => 'LEG',
             ),
             'options' => array(
                 'label' => 'LEG',
@@ -110,11 +86,21 @@ class PermissionForm extends BaseForm
         ));
 
         $this->add(array(
-            'name' => 'countryId',
+            'name' => 'legId',
+            'attributes' => array(
+                'id' => 'legId',
+                'type' => 'hidden',
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'countriesList',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
+                'id' => 'countriesList',
+                'class' => 'typeahead input-small',
                 'required' => true,
-                'maxlength' => '30',
+                'placeholder' => 'Country',
             ),
             'options' => array(
                 'label' => 'Country',
@@ -122,30 +108,43 @@ class PermissionForm extends BaseForm
         ));
 
         $this->add(array(
-            'name' => 'typeOfPermission',
-            'type' => 'Zend\Form\Element\Select',
+            'name' => 'countryId',
             'attributes' => array(
+                'id' => 'countryId',
+                'type' => 'hidden',
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'typeOfPermissionsList',
+            'type' => 'Zend\Form\Element\Text',
+            'attributes' => array(
+                'id' => 'typeOfPermissionsList',
+                'class' => 'typeahead input-small',
                 'required' => true,
-                'size' => 5,
+                'placeholder' => 'Type of permission',
             ),
             'options' => array(
                 'label' => 'Type of permission',
-                'value_options' => array(
-                    'OFL' => 'OFL',
-                    'LND' => 'LND',
-                    'DG' => 'DG',
-                    'DIP' => 'DIP',
-                ),
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'typeOfPermission',
+            'attributes' => array(
+                'id' => 'typeOfPermission',
+                'type' => 'hidden',
             ),
         ));
 
         $this->add(array(
             'name' => 'permission',
-            'type' => 'Zend\Form\Element\Textarea',
+            'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
+                'class' => 'input-small',
                 'required' => true,
-                'rows' => 5,
-                'maxlength' => '400',
+                'placeholder' => 'Permission',
+                'maxlength' => '40',
             ),
             'options' => array(
                 'label' => 'Permission',
@@ -166,41 +165,5 @@ class PermissionForm extends BaseForm
                 'value' => 'Add',
             ),
         ));
-    }
-
-    /**
-     * @param array $a
-     * @param array $b
-     */
-    public function setAirports(array $a, array $b)
-    {
-        $compare = $a + $b;
-        uasort($compare, array($this, 'sortLibrary'));
-        $this->airports = $compare;
-    }
-
-    /**
-     * @return array
-     */
-    public function getAgents()
-    {
-        return $this->agents;
-    }
-
-    /**
-     * @return array
-     */
-    public function getAirports()
-    {
-        return $this->airports;
-    }
-
-
-    /**
-     * @return array
-     */
-    public function getBaseOfPermit()
-    {
-        return $this->baseOfPermit;
     }
 }

@@ -35,15 +35,16 @@ $this->headTitle($title);
     echo $this->form()->openTag($form) . PHP_EOL;
     echo $this->formHidden($form->get('id')) . PHP_EOL;
     echo $this->formHidden($form->get('headerId')) . PHP_EOL;
+    echo $this->formHidden($form->get('agentId')) . PHP_EOL;
+    echo $this->formHidden($form->get('legId')) . PHP_EOL;
+    echo $this->formHidden($form->get('countryId')) . PHP_EOL;
+    echo $this->formHidden($form->get('typeOfPermission')) . PHP_EOL;
     echo $this->formHidden($form->get('csrf')) . PHP_EOL;
     ?>
     <table class="table table-bordered table-hover table-condensed">
         <tr>
             <th>
                 Agent
-            </th>
-            <th>
-                LEG
             </th>
             <th>
                 Country
@@ -56,61 +57,64 @@ $this->headTitle($title);
             </th>
             <th class="actions">Actions</th>
         </tr>
-        <? foreach ($permissions as $row): ?>
-            <tr>
-                <td><?= $this->escapeHtml($row['agentName']) ?></td>
-                <td>
-                    <a rel="tooltip" href="#" data-toggle="tooltip" data-placement="top"
-                       title="" data-original-title="<?= $this->escapeHtml($row['legDescription']) ?>">
-                        <?= $this->escapeHtml($row['leg']) ?>
-                    </a>
-                </td>
-                <td><?= $this->escapeHtml($row['countryName']) ?></td>
-                <td><?= $this->escapeHtml($row['typeOfPermission']) ?></td>
-                <td><?= $this->escapeHtml($row['permission']) ?></td>
-                <td class="actions">
-                    <a title="Edit"
-                       href="<?= $this->url('permission', array('action' => 'edit', 'id' => $row['id'])) ?>"
-                       class="<? if (!$status): ?>disabled<? endif ?>"><i class="icon-edit"></i></a>
-                    <a title="Remove"
-                       href="<?= $this->url('permission', array('action' => 'delete', 'id' => $row['id'])) ?>"
-                       class="<? if (!$status): ?>disabled<? endif ?>"><i class="icon-remove"></i></a>
+        <? foreach ($permissions as $legId => $legData): ?>
+            <tr class="success">
+                <td colspan="5">
+                    <strong data-leg="<?= $legId ?>"><?= $this->escapeHtml($legData['legName']) ?></strong>
                 </td>
             </tr>
+            <? foreach ($legData['permission'] as $permissionId => $permissionData): ?>
+                <tr>
+                    <td><?= $this->escapeHtml($permissionData['agentName']) ?></td>
+                    <td><?= $this->escapeHtml($permissionData['countryName']) ?></td>
+                    <td><?= $this->escapeHtml($permissionData['typeOfPermission']) ?></td>
+                    <td><?= $this->escapeHtml($permissionData['permission']) ?></td>
+                    <td class="actions">
+                        <a title="Edit"
+                           href="<?= $this->url('permission', array('action' => 'edit', 'id' => $permissionId)) ?>"
+                           class="<? if (!$headerStatus): ?>disabled<? endif ?>"><i class="icon-edit"></i></a>
+                        <a title="Remove"
+                           href="<?= $this->url('permission', array('action' => 'delete', 'id' => $permissionId)) ?>"
+                           class="<? if (!$headerStatus): ?>disabled<? endif ?>"><i class="icon-remove"></i></a>
+                    </td>
+                </tr>
+            <? endforeach ?>
         <? endforeach ?>
+    </table>
+    <table class="table ">
         <tr>
             <td>
                 <?php
-                $field = $form->get('agentId');
+                $field = $form->get('agentsList');
                 echo $this->formInput($field);
                 echo $this->formElementErrors($field);
                 ?>
             </td>
             <td>
                 <?php
-                $field = $form->get('legId');
+                $field = $form->get('legsList');
                 echo $this->formInput($field);
                 echo $this->formElementErrors($field);
                 ?>
             </td>
             <td>
                 <?php
-                $field = $form->get('countryId');
+                $field = $form->get('countriesList');
                 echo $this->formInput($field);
                 echo $this->formElementErrors($field);
                 ?>
             </td>
             <td>
                 <?php
-                $field = $form->get('typeOfPermission');
-                echo $this->formSelect($field);
+                $field = $form->get('typeOfPermissionsList');
+                echo $this->formInput($field);
                 echo $this->formElementErrors($field);
                 ?>
             </td>
             <td>
                 <?php
                 $field = $form->get('permission');
-                echo $this->formTextarea($field);
+                echo $this->formInput($field);
                 echo $this->formElementErrors($field);
                 ?>
             </td>
@@ -120,7 +124,7 @@ $this->headTitle($title);
                 echo $this->formElement($field);
                 ?>
             </td>
-        <tr>
+        </tr>
     </table>
     <?php
     echo $this->form()->closeTag();

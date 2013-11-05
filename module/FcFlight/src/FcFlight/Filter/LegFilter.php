@@ -37,7 +37,7 @@ class LegFilter implements InputFilterAwareInterface
      */
     protected $apDepTimeValue = '';
 
-    //Real fields
+    //Fields for form and view
     public $id;
     public $headerId;
     public $dateOfFlight;
@@ -48,7 +48,7 @@ class LegFilter implements InputFilterAwareInterface
     public $apArrAirportId;
     public $apArrTime;
 
-    //Virtual fields
+    //Fields only for view
     public $flightNumberIcao;
     public $flightNumberIata;
     public $apDepCountries;

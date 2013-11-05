@@ -32,23 +32,36 @@ class PermissionFilter implements InputFilterAwareInterface
      */
     protected $table = '';
 
-    //Real fields
+    //Fields for form and view
     public $id;
     public $headerId;
-    public $airportId;
-    public $isNeed;
-    public $typeOfPermit;
-    public $baseOfPermitId;
-    public $check;
+    public $agentId;
+    public $legId;
+    public $countryId;
+    public $typeOfPermission;
+    public $permission;
 
-    //Virtual fields
-    public $icao;
-    public $iata;
-    public $airportName;
-    public $cityName;
+    //Fields only for view
+    public $agentName;
+    public $agentAddress;
+    public $agentMail;
+    public $airportDepartureId;
+    public $airportDepartureICAO;
+    public $airportDepartureIATA;
+    public $airportArrivalId;
+    public $airportArrivalICAO;
+    public $airportArrivalIATA;
+//    public $legName;
     public $countryName;
-    public $termValidity;
-    public $termToTake;
+    public $countryCode;
+
+    /**
+     * @var array
+     */
+    protected $defaultFilters = array(
+        array('name' => 'StripTags'),
+        array('name' => 'StringTrim'),
+    );
 
     /**
      * @param \Zend\Db\Adapter\Adapter $dbAdapter
@@ -76,20 +89,25 @@ class PermissionFilter implements InputFilterAwareInterface
         //Real fields
         $this->id = (isset($data['id'])) ? $data['id'] : null;
         $this->headerId = (isset($data['headerId'])) ? $data['headerId'] : null;
-        $this->airportId = (isset($data['airportId'])) ? $data['airportId'] : null;
-        $this->isNeed = (isset($data['isNeed'])) ? $data['isNeed'] : null;
-        $this->typeOfPermit = (isset($data['typeOfPermit'])) ? $data['typeOfPermit'] : null;
-        $this->baseOfPermitId = (isset($data['baseOfPermitId'])) ? $data['baseOfPermitId'] : null;
-        $this->check = (isset($data['check'])) ? $data['check'] : null;
+        $this->agentId = (isset($data['agentId'])) ? $data['agentId'] : null;
+        $this->legId = (isset($data['legId'])) ? $data['legId'] : null;
+        $this->countryId = (isset($data['countryId'])) ? $data['countryId'] : null;
+        $this->typeOfPermission = (isset($data['typeOfPermission'])) ? $data['typeOfPermission'] : null;
+        $this->permission = (isset($data['permission'])) ? $data['permission'] : null;
 
         //Virtual fields
-        $this->icao = (isset($data['icao'])) ? $data['icao'] : null;
-        $this->iata = (isset($data['iata'])) ? $data['iata'] : null;
-        $this->airportName = (isset($data['airportName'])) ? $data['airportName'] : null;
-        $this->cityName = (isset($data['cityName'])) ? $data['cityName'] : null;
+        $this->agentName = (isset($data['agentName'])) ? $data['agentName'] : null;
+//        $this->legName = (isset($data['legName'])) ? $data['legName'] : null;
+        $this->agentAddress = (isset($data['agentAddress'])) ? $data['agentAddress'] : null;
+        $this->agentMail = (isset($data['agentMail'])) ? $data['agentMail'] : null;
+        $this->airportDepartureId = (isset($data['airportDepartureId'])) ? $data['airportDepartureId'] : null;
+        $this->airportDepartureICAO = (isset($data['airportDepartureICAO'])) ? $data['airportDepartureICAO'] : null;
+        $this->airportDepartureIATA = (isset($data['airportDepartureIATA'])) ? $data['airportDepartureIATA'] : null;
+        $this->airportArrivalId = (isset($data['airportArrivalId'])) ? $data['airportArrivalId'] : null;
+        $this->airportArrivalICAO = (isset($data['airportArrivalICAO'])) ? $data['airportArrivalICAO'] : null;
+        $this->airportArrivalIATA = (isset($data['airportArrivalIATA'])) ? $data['airportArrivalIATA'] : null;
         $this->countryName = (isset($data['countryName'])) ? $data['countryName'] : null;
-        $this->termValidity = (isset($data['termValidity'])) ? $data['termValidity'] : null;
-        $this->termToTake = (isset($data['termToTake'])) ? $data['termToTake'] : null;
+        $this->countryCode = (isset($data['countryCode'])) ? $data['countryCode'] : null;
     }
 
     /**
@@ -124,31 +142,63 @@ class PermissionFilter implements InputFilterAwareInterface
             $inputFilter->add($factory->createInput(array(
                 'name' => 'headerId',
                 'required' => true,
+                'filters' => array(
+                    array('name' => 'Int'),
+                ),
             )));
 
             $inputFilter->add($factory->createInput(array(
-                'name' => 'airportId',
+                'name' => 'agentId',
                 'required' => true,
+                'filters' => array(
+                    array('name' => 'Int'),
+                ),
             )));
 
             $inputFilter->add($factory->createInput(array(
-                'name' => 'isNeed',
-                'required' => false,
-            )));
-
-            $inputFilter->add($factory->createInput(array(
-                'name' => 'typeOfPermit',
+                'name' => 'legId',
                 'required' => true,
+                'filters' => array(
+                    array('name' => 'Int'),
+                ),
             )));
 
             $inputFilter->add($factory->createInput(array(
-                'name' => 'baseOfPermitId',
+                'name' => 'countryId',
                 'required' => true,
+                'filters' => array(
+                    array('name' => 'Int'),
+                ),
             )));
 
             $inputFilter->add($factory->createInput(array(
-                'name' => 'check',
+                'name' => 'typeOfPermission',
                 'required' => true,
+                'filters' => $this->defaultFilters,
+                'validators' => array(
+                    array(
+                        'name' => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'max' => 3,
+                        ),
+                    ),
+                ),
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'permission',
+                'required' => true,
+                'filters' => $this->defaultFilters,
+                'validators' => array(
+                    array(
+                        'name' => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'max' => 40,
+                        ),
+                    ),
+                ),
             )));
 
             $this->inputFilter = $inputFilter;

@@ -16,14 +16,19 @@ use Zend\Json\Json as Json;
 class PermissionController extends FlightController
 {
     /**
-     * @var int
+     * @var integer
      */
-    protected $headerId;
+    protected $_headerId = null;
+
+    /**
+     * @var integer
+     */
+    protected $_permissionId = null;
 
     /**
      * @var array
      */
-    protected $dataForLogger = array();
+    protected $_dataForLogger = array();
 
     /**
      * @return array|\Zend\Http\Response
@@ -31,26 +36,23 @@ class PermissionController extends FlightController
     public function addAction()
     {
 
-        $this->headerId = (int)$this->params()->fromRoute('id', 0);
-        if (!$this->headerId) {
+        $id = (int)$this->params()->fromRoute('id', 0);
+        if (!$id) {
             return $this->redirect()->toRoute('flight', array(
                 'action' => 'active'
             ));
         }
 
-        $refNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($this->headerId);
+        $this->_setHeaderId($id);
+        $refNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($this->_getHeaderId());
         $headerStatus = $this->redirectForDoneStatus($refNumberOrder);
-        $permissions = $this->getPermissionModel()->getByHeaderId($this->headerId);
+        $permissions = $this->getPermissionModel()->getByHeaderId($this->_getHeaderId());
+
+
 
         $form = new PermissionForm('permission',
             array(
-                'headerId' => $this->headerId,
-                'libraries' => array(
-                    'agents' => $this->getKontragents(),
-
-                    'airports' => $this->getParentLeg($this->headerId),
-                    'baseOfPermit' => $this->getBaseOfPermits(),
-                ),
+                'headerId' => $this->_getHeaderId(),
             )
         );
 
@@ -64,13 +66,14 @@ class PermissionController extends FlightController
                 $data = $form->getData();
                 $filter->exchangeArray($data);
                 $data = $this->getPermissionModel()->add($filter);
+//                \Zend\Debug\Debug::dump($data);exit;
 
                 $message = "Permission was successfully added.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
                 $loggerPlugin = $this->LogPlugin();
-                $this->setDataForLogger($this->getPermissionModel()->get($data['lastInsertValue']));
-                $loggerPlugin->setNewLogRecord($this->dataForLogger);
+                $this->_setDataForLogger($this->getPermissionModel()->get($data['lastInsertValue']));
+                $loggerPlugin->setNewLogRecord($this->_dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
                 $logger = $this->getServiceLocator()->get('logger');
@@ -80,12 +83,12 @@ class PermissionController extends FlightController
                 return $this->redirect()->toRoute('permission',
                     array(
                         'action' => 'add',
-                        'id' => $this->headerId,
+                        'id' => $this->_getHeaderId(),
                     ));
             }
         }
         return array('form' => $form,
-            'headerId' => $this->headerId,
+            'headerId' => $this->_getHeaderId(),
             'headerStatus' => $headerStatus,
             'refNumberOrder' => $refNumberOrder,
             'permissions' => $permissions,
@@ -103,22 +106,23 @@ class PermissionController extends FlightController
                 'action' => 'active'
             ));
         }
+        $this->_setPermissionId($id);
 
-        $refNumberOrder = $this->getPermissionModel()->getHeaderRefNumberOrderByPermissionId($id);
+        $refNumberOrder = $this->getPermissionModel()->getHeaderRefNumberOrderByPermissionId($this->_getPermissionId());
         $headerStatus = $this->redirectForDoneStatus($refNumberOrder);
-        $data = $this->getPermissionModel()->get($id);
-        $this->headerId = (int)$data->headerId;
-        $permissions = $this->getPermissionModel()->getByHeaderId($this->headerId);
+        $data = $this->getPermissionModel()->get($this->_getPermissionId());
+        $this->_setHeaderId((int)$data->headerId);
+        $permissions = $this->getPermissionModel()->getByHeaderId($this->_getHeaderId());
 
-        $this->setDataForLogger($data);
+        $this->_setDataForLogger($data);
         $loggerPlugin = $this->LogPlugin();
-        $loggerPlugin->setOldLogRecord($this->dataForLogger);
+        $loggerPlugin->setOldLogRecord($this->_dataForLogger);
 
         $form = new PermissionForm('permission',
             array(
-                'headerId' => $this->headerId,
+                'headerId' => $this->_getHeaderId(),
                 'libraries' => array(
-                    'airports' => $this->getParentLeg($this->headerId),
+                    'airports' => $this->getParentLeg($this->_getHeaderId()),
                     'baseOfPermit' => $this->getBaseOfPermits(),
                 ),
             )
@@ -141,8 +145,8 @@ class PermissionController extends FlightController
                 $message = "Permission was successfully saved.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
-                $this->setDataForLogger($this->getPermissionModel()->get($id));
-                $loggerPlugin->setNewLogRecord($this->dataForLogger);
+                $this->_setDataForLogger($this->getPermissionModel()->get($id));
+                $loggerPlugin->setNewLogRecord($this->_dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
                 $logger = $this->getServiceLocator()->get('logger');
@@ -158,7 +162,7 @@ class PermissionController extends FlightController
         }
 
         return array('form' => $form,
-            'id' => $data->id,
+            'id' => $this->_getPermissionId(),
             'headerStatus' => $headerStatus,
             'refNumberOrder' => $refNumberOrder,
             'permissions' => $permissions,
@@ -174,22 +178,24 @@ class PermissionController extends FlightController
         if (!$id) {
             return $this->redirect()->toRoute('home');
         }
+        $this->_setPermissionId($id);
 
         $request = $this->getRequest();
         $refUri = $request->getHeader('Referer')->uri()->getPath();
-        $refNumberOrder = $this->getPermissionModel()->getHeaderRefNumberOrderByPermissionId($id);
+        $refNumberOrder = $this->getPermissionModel()->getHeaderRefNumberOrderByPermissionId($this->_getPermissionId());
         $this->redirectForDoneStatus($refNumberOrder);
 
         if ($request->isPost()) {
             $del = $request->getPost('del', 'No');
             if ($del == 'Yes') {
                 $id = (int)$request->getPost('id');
+                $this->_setPermissionId($id);
 
                 $loggerPlugin = $this->LogPlugin();
-                $this->setDataForLogger($this->getPermissionModel()->get($id));
-                $loggerPlugin->setOldLogRecord($this->dataForLogger);
+                $this->_setDataForLogger($this->getPermissionModel()->get($this->_getPermissionId()));
+                $loggerPlugin->setOldLogRecord($this->_dataForLogger);
 
-                $this->getPermissionModel()->remove($id);
+                $this->getPermissionModel()->remove($this->_getPermissionId());
 
                 $message = "Permission was successfully deleted.";
                 $this->flashMessenger()->addSuccessMessage($message);
@@ -206,24 +212,26 @@ class PermissionController extends FlightController
         }
 
         return array(
-            'id' => $id,
+            'id' => $this->_getPermissionId(),
             'referer' => $refUri,
             'refNumberOrder' => $refNumberOrder,
-            'data' => $this->getPermissionModel()->get($id)
+            'data' => $this->getPermissionModel()->get($this->_getPermissionId())
         );
     }
 
     /**
+     * Get Agents List for twitter-typeahead field
+     *
      * @return \Zend\Http\Response
      */
     public function getAgentsAction()
     {
         $data = $this->getKontragentModel()->fetchAll();
 
-        $result = array(
-        );
+        $result = array();
         foreach ($data as $row) {
             $result[] = array(
+                'id' => $row->id,
                 'value' => $row->name,
                 'name' => $row->name,
                 'address' => $row->address,
@@ -245,20 +253,122 @@ class PermissionController extends FlightController
     }
 
     /**
+     * Get LEGs List for twitter-typeahead field
+     *
+     * @return \Zend\Http\Response
+     */
+    public function getLegsAction()
+    {
+        $id = (int)$this->params()->fromRoute('id', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('home');
+        }
+
+        $data = $this->getLegModel()->getByHeaderId($id);
+
+        $result = array();
+        foreach ($data as $row) {
+            $leg = $row['apDepIcao'] . ' (' . $row['apDepIata'] . ')' . ' ⇒ '
+                . $row['apArrIcao'] . ' (' . $row['apArrIata'] . ')';
+
+            $result[] = array(
+                'id' => $row['id'],
+                'value' => $leg,
+                'name' => $leg,
+                'tokens' => array(
+                    $row['apDepIcao'],
+                    $row['apDepIata'],
+                    $row['apArrIcao'],
+                    $row['apArrIata'],
+                ),
+            );
+        }
+
+        $view = new ViewModel(array(
+            'data' => Json::encode($result),
+        ));
+        $view->setTerminal(true);
+
+        return $view;
+    }
+
+    /**
+     * Get Countries List for twitter-typeahead field
+     *
+     * @return \Zend\Http\Response
+     */
+    public function getCountriesAction()
+    {
+        $data = $this->getCountryModel()->fetchAll();
+
+        $result = array();
+        foreach ($data as $row) {
+            $result[] = array(
+                'id' => $row->id,
+                'value' => $row->name,
+                'name' => $row->name,
+                'code' => $row->code,
+                'tokens' => array(
+                    $row->name,
+                    $row->code,
+                ),
+            );
+        }
+
+        $view = new ViewModel(array(
+            'data' => Json::encode($result),
+        ));
+        $view->setTerminal(true);
+
+        return $view;
+    }
+
+    /**
      * @param $data
      */
-    protected function setDataForLogger($data)
+    protected function _setDataForLogger($data)
     {
-        $this->dataForLogger = array(
+        $this->_dataForLogger = array(
             'id' => $data->id,
-            'Airport' => $data->airportName . ' (' . $data->icao . '/' . $data->iata . ')',
-            'Need' => ($data->isNeed) ? 'YES' : 'NO',
-            'Type' => $data->typeOfPermit,
-            'City' => $data->cityName,
+            'Agent' => $data->agentName,
+            'LEG' => $data->airportDepartureICAO . ' (' . $data->airportDepartureIATA . ')'
+                . ' ⇒ '
+                . $data->airportArrivalICAO . ' (' . $data->airportArrivalIATA . ')',
             'Country' => $data->countryName,
-            'Term validity' => $data->termValidity,
-            'Term to take' => $data->termToTake,
-            'Check' => $data->check,
+            'Type of Permission' => $data->typeOfPermission,
+            'Permission' => $data->permission,
         );
+    }
+
+    /**
+     * @param $id
+     */
+    protected function _setHeaderId($id)
+    {
+        $this->_headerId = $id;
+    }
+
+    /**
+     * @return int
+     */
+    protected function _getHeaderId()
+    {
+        return $this->_headerId;
+    }
+
+    /**
+     * @param $id
+     */
+    protected function _setPermissionId($id)
+    {
+        $this->_permissionId = $id;
+    }
+
+    /**
+     * @return int
+     */
+    protected function _getPermissionId()
+    {
+        return $this->_permissionId;
     }
 }
