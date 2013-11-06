@@ -1,18 +1,19 @@
+<?php
+$title = 'Edit Permission';
+$this->headTitle($title);
+?>
 <ul class="breadcrumb">
     <li><a href="/">Home</a> <span class="divider">/</span></li>
     <li>
         <a href="<?= $this->url('browse', array('action' => 'show', 'refNumberOrder' => $this->refNumberOrder)); ?>"><?= $this->refNumberOrder ?></a>
         <span class="divider">/</span>
     </li>
-    <li class="active">Permission form</li>
+    <li class="active">Type of service: Permission</li>
 </ul>
-<?php
-$title = 'Edit Permission';
-$this->headTitle($title);
-?>
-<h1><?php echo $this->escapeHtml($title); ?></h1>
 
-<?php if ($form->getMessages()): ?>
+<h1><?= $this->escapeHtml($title) ?></h1>
+
+<?php if ($this->form->getMessages()): ?>
     <div class="alert alert-error">
         <button class="close" data-dismiss="alert" type="button">×</button>
         <strong>Invalid input!</strong>
@@ -24,16 +25,15 @@ $this->headTitle($title);
 
 <div id="permission">
 
-    <?php echo $this->partial('widgets/tables/permission.phtml', array(
+    <?= $this->partial('widgets/tables/permission.phtml', array(
             'currentId' => $this->id,
-            'permissions' => $permissions,
-            'status' => $headerStatus)
-    ); ?>
+            'permissions' => $this->permissions,
+            'status' => $this->headerStatus)
+    ) ?>
 
     <?php
     $form = $this->form;
     $form->setAttribute('action', $this->url('permission', array('action' => 'edit', 'id' => $this->id)));
-    $formLabel = $this->plugin('formLabel');
     $form->prepare();
     echo $this->form()->openTag($form) . PHP_EOL;
     echo $this->formHidden($form->get('id')) . PHP_EOL;

@@ -25,7 +25,6 @@ class PermissionController extends FlightController
      */
     public function addAction()
     {
-
         $headerId = (int)$this->params()->fromRoute('id', 0);
         if (!$headerId) {
             return $this->redirect()->toRoute('flight', array(
@@ -79,7 +78,8 @@ class PermissionController extends FlightController
                     ));
             }
         }
-        return array('form' => $form,
+        return array(
+            'form' => $form,
             'headerId' => $headerId,
             'headerStatus' => $headerStatus,
             'refNumberOrder' => $refNumberOrder,
@@ -154,7 +154,8 @@ class PermissionController extends FlightController
             }
         }
 
-        return array('form' => $form,
+        return array(
+            'form' => $form,
             'id' => $permissionId,
             'headerStatus' => $headerStatus,
             'refNumberOrder' => $refNumberOrder,
