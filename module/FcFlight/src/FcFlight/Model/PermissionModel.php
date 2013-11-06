@@ -44,13 +44,16 @@ class PermissionModel extends AbstractTableGateway
         $select = new Select();
         $select->from($this->table);
 
-        $select->columns(array('id',
+        $select->columns(array(
+            'id',
             'headerId',
             'agentId',
             'legId',
             'countryId',
             'typeOfPermission',
-            'permission'));
+            'permission',
+            'comment',
+        ));
 
         $select->join(array('agent' => 'library_kontragent'),
             'flightPermissionForm.agentId = agent.id',
@@ -97,6 +100,7 @@ class PermissionModel extends AbstractTableGateway
             'countryId' => (int)$object->countryId,
             'typeOfPermission' => (string)$object->typeOfPermission,
             'permission' => (string)$object->permission,
+            'comment' => (string)$object->comment,
         );
 
         $this->insert($data);
@@ -119,6 +123,7 @@ class PermissionModel extends AbstractTableGateway
             'countryId' => (int)$object->countryId,
             'typeOfPermission' => (string)$object->typeOfPermission,
             'permission' => (string)$object->permission,
+            'comment' => (string)$object->comment,
         );
 
         $id = (int)$object->id;
@@ -147,13 +152,16 @@ class PermissionModel extends AbstractTableGateway
         $select = new Select();
         $select->from($this->table);
 
-        $select->columns(array('id',
+        $select->columns(array(
+            'id',
             'headerId',
             'agentId',
             'legId',
             'countryId',
             'typeOfPermission',
-            'permission'));
+            'permission',
+            'comment',
+        ));
 
         $select->join(array('agent' => 'library_kontragent'),
             'flightPermissionForm.agentId = agent.id',
@@ -185,7 +193,6 @@ class PermissionModel extends AbstractTableGateway
 
         $data = array();
         foreach ($resultSet as $row) {
-
             $data[$row->legId] = array(
                 'headerId' => $row->headerId,
                 'legName' => $row->airportDepartureICAO . ' (' . $row->airportDepartureIATA . ')'
@@ -193,7 +200,6 @@ class PermissionModel extends AbstractTableGateway
                     . $row->airportArrivalICAO . ' (' . $row->airportArrivalIATA . ')',
             );
         }
-
         foreach ($resultSet as $row) {
             $data[$row->legId]['permission'][$row->id] = array(
                 'agentId' => $row->agentId,
@@ -205,10 +211,9 @@ class PermissionModel extends AbstractTableGateway
                 'countryCode' => $row->countryCode,
                 'typeOfPermission' => $row->typeOfPermission,
                 'permission' => $row->permission,
+                'comment' => $row->comment,
             );
         }
-
-//        \Zend\Debug\Debug::dump($data);
 
         return $data;
     }

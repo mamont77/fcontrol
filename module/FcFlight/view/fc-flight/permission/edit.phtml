@@ -80,6 +80,13 @@ $this->headTitle($title);
             </td>
             <td>
                 <?php
+                $field = $form->get('comment');
+                echo $this->formInput($field);
+                echo $this->formElementErrors($field);
+                ?>
+            </td>
+            <td>
+                <?php
                 $field = $form->get('submitBtn');
                 echo $this->formElement($field);
                 ?>

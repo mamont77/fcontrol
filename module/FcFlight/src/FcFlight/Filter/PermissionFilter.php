@@ -40,6 +40,7 @@ class PermissionFilter implements InputFilterAwareInterface
     public $countryId;
     public $typeOfPermission;
     public $permission;
+    public $comment;
 
     //Fields only for view
     public $agentName;
@@ -90,10 +91,10 @@ class PermissionFilter implements InputFilterAwareInterface
         $this->countryId = (isset($data['countryId'])) ? $data['countryId'] : null;
         $this->typeOfPermission = (isset($data['typeOfPermission'])) ? $data['typeOfPermission'] : null;
         $this->permission = (isset($data['permission'])) ? $data['permission'] : null;
+        $this->comment = (isset($data['comment'])) ? $data['comment'] : null;
 
         //Virtual fields
         $this->agentName = (isset($data['agentName'])) ? $data['agentName'] : null;
-//        $this->legName = (isset($data['legName'])) ? $data['legName'] : null;
         $this->agentAddress = (isset($data['agentAddress'])) ? $data['agentAddress'] : null;
         $this->agentMail = (isset($data['agentMail'])) ? $data['agentMail'] : null;
         $this->airportDepartureId = (isset($data['airportDepartureId'])) ? $data['airportDepartureId'] : null;
@@ -123,7 +124,6 @@ class PermissionFilter implements InputFilterAwareInterface
     {
         throw new \Exception("Not used");
     }
-
 
     /**
      * @return \Zend\InputFilter\InputFilter|\Zend\InputFilter\InputFilterInterface
@@ -192,6 +192,21 @@ class PermissionFilter implements InputFilterAwareInterface
                         'options' => array(
                             'encoding' => 'UTF-8',
                             'max' => 40,
+                        ),
+                    ),
+                ),
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'comment',
+                'required' => true,
+                'filters' => $this->defaultFilters,
+                'validators' => array(
+                    array(
+                        'name' => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'max' => 30,
                         ),
                     ),
                 ),

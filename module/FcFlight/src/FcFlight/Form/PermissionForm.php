@@ -144,8 +144,16 @@ class PermissionForm extends BaseForm
                 'placeholder' => 'Permission',
                 'maxlength' => '40',
             ),
-            'options' => array(
-                'label' => 'Permission',
+        ));
+
+        $this->add(array(
+            'name' => 'comment',
+            'type' => 'Zend\Form\Element\Text',
+            'attributes' => array(
+                'class' => 'input-medium',
+                'required' => true,
+                'placeholder' => 'Comment',
+                'maxlength' => '30',
             ),
         ));
 
