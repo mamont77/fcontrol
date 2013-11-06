@@ -19,6 +19,26 @@ class PermissionForm extends BaseForm
     protected $_formName = 'permission';
 
     /**
+     * @var array
+     */
+    protected $_agents = array();
+
+    /**
+     * @var array
+     */
+    protected $_legs = array();
+
+    /**
+     * @var array
+     */
+    protected $_countries = array();
+
+    /**
+     * @var array
+     */
+    protected $_typeOfPermissions = array();
+
+    /**
      * @param null $name
      * @param array $options
      */
@@ -29,6 +49,11 @@ class PermissionForm extends BaseForm
         }
 
         parent::__construct($this->_formName);
+
+        $this->setLibrary('_agents', $options['libraries']['agents'], 'id', 'name');
+        $this->_legs = $options['libraries']['legs'];
+        $this->setLibrary('_countries', $options['libraries']['countries'], 'id', 'name');
+        $this->_typeOfPermissions = $options['libraries']['typeOfPermissions'];
 
         $this->setName($this->_formName);
         $this->setAttribute('method', 'post');
@@ -50,90 +75,63 @@ class PermissionForm extends BaseForm
         ));
 
         $this->add(array(
-            'name' => 'agentsList',
-            'type' => 'Zend\Form\Element\Text',
-            'attributes' => array(
-                'id' => 'agentsList',
-                'class' => 'typeahead input-small',
-                'required' => true,
-                'placeholder' => 'Agent',
-            ),
-            'options' => array(
-                'label' => 'Agent',
-            ),
-        ));
-
-        $this->add(array(
             'name' => 'agentId',
+            'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
                 'id' => 'agentId',
-                'type' => 'hidden',
-            ),
-        ));
-
-        $this->add(array(
-            'name' => 'legsList',
-            'type' => 'Zend\Form\Element\Text',
-            'attributes' => array(
-                'id' => 'legsList',
-                'class' => 'typeahead input-small',
+                'class' => 'chosen input-medium',
+                'data-placeholder' => 'Agent',
                 'required' => true,
-                'placeholder' => 'LEG',
             ),
             'options' => array(
-                'label' => 'LEG',
+                'empty_option' => '',
+                'value_options' => $this->_agents,
             ),
         ));
 
         $this->add(array(
             'name' => 'legId',
+            'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
                 'id' => 'legId',
-                'type' => 'hidden',
-            ),
-        ));
-
-        $this->add(array(
-            'name' => 'countriesList',
-            'type' => 'Zend\Form\Element\Text',
-            'attributes' => array(
-                'id' => 'countriesList',
-                'class' => 'typeahead input-small',
+                'class' => 'chosen input-medium',
+                'data-placeholder' => 'LEG',
                 'required' => true,
-                'placeholder' => 'Country',
             ),
             'options' => array(
-                'label' => 'Country',
+                'empty_option' => '',
+                'value_options' => $this->_legs,
             ),
         ));
 
         $this->add(array(
             'name' => 'countryId',
+            'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
                 'id' => 'countryId',
-                'type' => 'hidden',
+                'class' => 'chosen input-medium',
+                'data-placeholder' => 'Country',
+                'required' => true,
+            ),
+            'options' => array(
+                'empty_option' => '',
+                'value_options' => $this->_countries,
             ),
         ));
 
-        $this->add(array(
-            'name' => 'typeOfPermissionsList',
-            'type' => 'Zend\Form\Element\Text',
-            'attributes' => array(
-                'id' => 'typeOfPermissionsList',
-                'class' => 'typeahead input-small',
-                'required' => true,
-                'placeholder' => 'Type of permission',
-            ),
-            'options' => array(
-                'label' => 'Type of permission',
-            ),
-        ));
 
         $this->add(array(
             'name' => 'typeOfPermission',
+            'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
                 'id' => 'typeOfPermission',
-                'type' => 'hidden',
+                'class' => 'chosen input-medium',
+                'data-placeholder' => 'Type of permission',
+                'required' => true,
+            ),
+            'options' => array(
+                'empty_option' => '',
+                'value_options' => $this->_typeOfPermissions,
             ),
         ));
 
@@ -141,7 +139,7 @@ class PermissionForm extends BaseForm
             'name' => 'permission',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'class' => 'input-small',
+                'class' => 'input-medium',
                 'required' => true,
                 'placeholder' => 'Permission',
                 'maxlength' => '40',

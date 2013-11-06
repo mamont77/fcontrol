@@ -1,43 +1,40 @@
-<legend>Permission</legend>
-<div id="permission">
-    <table class="table table-bordered table-hover table-condensed">
-        <tr>
-            <th>
-                Agent
-            </th>
-            <th>
-                Country
-            </th>
-            <th>
-                Type of permission
-            </th>
-            <th>
-                Permission
-            </th>
-            <th class="actions">Actions</th>
+<table class="table table-bordered table-hover table-condensed">
+    <tr>
+        <th>
+            Agent
+        </th>
+        <th>
+            Country
+        </th>
+        <th>
+            Type of permission
+        </th>
+        <th>
+            Permission
+        </th>
+        <th class="actions">Actions</th>
+    </tr>
+    <? foreach ($permissions as $legId => $legData): ?>
+        <tr class="success">
+            <td colspan="5">
+                <strong data-leg="<?= $legId ?>"><?= $this->escapeHtml($legData['legName']) ?></strong>
+            </td>
         </tr>
-        <? foreach ($permissions as $legId => $legData): ?>
-            <tr class="success">
-                <td colspan="5">
-                    <strong data-leg="<?= $legId ?>"><?= $this->escapeHtml($legData['legName']) ?></strong>
+        <? foreach ($legData['permission'] as $permissionId => $permissionData): ?>
+            <tr class="<? if ($permissionId == $currentId): ?><?= 'info' ?><? endif ?>">
+                <td><?= $this->escapeHtml($permissionData['agentName']) ?></td>
+                <td><?= $this->escapeHtml($permissionData['countryName']) ?></td>
+                <td><?= $this->escapeHtml($permissionData['typeOfPermission']) ?></td>
+                <td><?= $this->escapeHtml($permissionData['permission']) ?></td>
+                <td class="actions">
+                    <a title="Edit"
+                       href="<?= $this->url('permission', array('action' => 'edit', 'id' => $permissionId)) ?>"
+                       class="<? if (!$status): ?>disabled<? endif ?>"><i class="icon-edit"></i></a>
+                    <a title="Remove"
+                       href="<?= $this->url('permission', array('action' => 'delete', 'id' => $permissionId)) ?>"
+                       class="<? if (!$status): ?>disabled<? endif ?>"><i class="icon-remove"></i></a>
                 </td>
             </tr>
-            <? foreach ($legData['permission'] as $permissionId => $permissionData): ?>
-                <tr>
-                    <td><?= $this->escapeHtml($permissionData['agentName']) ?></td>
-                    <td><?= $this->escapeHtml($permissionData['countryName']) ?></td>
-                    <td><?= $this->escapeHtml($permissionData['typeOfPermission']) ?></td>
-                    <td><?= $this->escapeHtml($permissionData['permission']) ?></td>
-                    <td class="actions">
-                        <a title="Edit"
-                           href="<?= $this->url('permission', array('action' => 'edit', 'id' => $permissionId)) ?>"
-                           class="<? if (!$status): ?>disabled<? endif ?>"><i class="icon-edit"></i></a>
-                        <a title="Remove"
-                           href="<?= $this->url('permission', array('action' => 'delete', 'id' => $permissionId)) ?>"
-                           class="<? if (!$status): ?>disabled<? endif ?>"><i class="icon-remove"></i></a>
-                    </td>
-                </tr>
-            <? endforeach ?>
         <? endforeach ?>
-    </table>
-</div>
+    <? endforeach ?>
+</table>

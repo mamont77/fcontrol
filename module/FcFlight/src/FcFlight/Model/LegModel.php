@@ -314,4 +314,21 @@ class LegModel extends AbstractTableGateway
 
         return ($resultSet == 1) ? true : false;
     }
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function getListByHeaderId($id)
+    {
+        $data = $this->getByHeaderId($id);
+
+        $result = array();
+        foreach ($data as $row) {
+            $result[$row['id']] = $row['apDepIcao'] . ' (' . $row['apDepIata'] . ')' . ' ⇒ '
+                . $row['apArrIcao'] . ' (' . $row['apArrIata'] . ')';
+        }
+
+        return $result;
+    }
 }

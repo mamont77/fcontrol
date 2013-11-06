@@ -200,7 +200,7 @@ class FlightController extends AbstractActionController
                 if (!empty($hasPermission)) {
                     $data[$key]['permitStatus'] = 'CNFMD';
 
-                    foreach ($hasPermission as $row){
+                    foreach ($hasPermission as $row) {
                         if ($row['check'] != 'RECEIVED') {
                             $data[$key]['permitStatus'] = 'YES';
                             continue;
@@ -269,7 +269,7 @@ class FlightController extends AbstractActionController
                 if (!empty($hasPermission)) {
                     $data[$key]['permitStatus'] = 'CNFMD';
 
-                    foreach ($hasPermission as $row){
+                    foreach ($hasPermission as $row) {
                         if ($row['check'] != 'RECEIVED') {
                             $data[$key]['permitStatus'] = 'YES';
                             continue;
@@ -938,6 +938,19 @@ class FlightController extends AbstractActionController
     }
 
     /**
+     * @return array
+     */
+    public function geTypeOfPermissions()
+    {
+        return array(
+            'OFL' => 'OFL',
+            'LND' => 'LND',
+            'DG' => 'DG',
+            'DIP' => 'DIP',
+        );
+    }
+
+    /**
      * @param $a
      * @param $b
      * @return bool
@@ -951,9 +964,10 @@ class FlightController extends AbstractActionController
      * @param $refNumberOrder
      * @return string
      */
-    public function redirectForDoneStatus($refNumberOrder) {
+    public function redirectForDoneStatus($refNumberOrder)
+    {
         $data = $this->getFlightHeaderModel()->getByRefNumberOrder($refNumberOrder);
-        if($data->status == 0) {
+        if ($data->status == 0) {
             $this->flashMessenger()->addErrorMessage('This flight ' . $refNumberOrder . ' has a status "Done".');
 
             return $this->redirect()->toRoute('browse',

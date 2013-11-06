@@ -43,17 +43,13 @@ class PermissionFilter implements InputFilterAwareInterface
 
     //Fields only for view
     public $agentName;
-    public $agentAddress;
-    public $agentMail;
     public $airportDepartureId;
     public $airportDepartureICAO;
     public $airportDepartureIATA;
     public $airportArrivalId;
     public $airportArrivalICAO;
     public $airportArrivalIATA;
-//    public $legName;
     public $countryName;
-    public $countryCode;
 
     /**
      * @var array
