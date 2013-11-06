@@ -225,6 +225,7 @@ class PermissionController extends FlightController
             'Country' => $data->countryName,
             'Type of Permission' => $data->typeOfPermission,
             'Permission' => $data->permission,
+            'Comment' => $data->comment,
         );
     }
 }
