@@ -34,3 +34,6 @@
 [submodule "vendor/DBLog"]
 	path = vendor/DBLog
 	url = https://github.com/mnshankar/log-to-database.git
+[submodule "public/lib/table-fixed-header"]
+	path = public/lib/table-fixed-header
+	url = https://github.com/oma/table-fixed-header.git

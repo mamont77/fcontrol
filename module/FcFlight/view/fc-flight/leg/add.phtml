@@ -76,7 +76,14 @@ $form->setAttribute('action', $this->url('leg', array('action' => 'add', 'id' =>
 $form->prepare();
 ?>
 
-<?php echo $this->partial('widgets/tables/leg.phtml', array('legs' => $legs, 'status' => $headerStatus)); ?>
+<?=
+$this->partial('widgets/tables/leg.phtml',
+    array(
+        'legs' => $legs,
+        'status' => $headerStatus,
+        'fixedHeader' => true,
+    ))
+?>
 
 <?php if ($form->getMessages()): ?>
     <div class="alert alert-error">

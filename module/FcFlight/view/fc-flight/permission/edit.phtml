@@ -25,11 +25,13 @@ $this->headTitle($title);
 
 <div id="permission">
 
-    <?= $this->partial('widgets/tables/permission.phtml', array(
-            'currentId' => $this->id,
-            'permissions' => $this->permissions,
-            'status' => $this->headerStatus)
-    ) ?>
+    <?=
+    $this->partial('widgets/tables/permission.phtml', array(
+        'currentId' => $this->id,
+        'permissions' => $this->permissions,
+        'status' => $this->headerStatus,
+        'fixedHeader' => true,
+    )) ?>
 
     <?php
     $form = $this->form;

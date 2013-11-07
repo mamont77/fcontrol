@@ -1,6 +1,7 @@
 <legend>Type of Service: LEG</legend>
 <div id="leg">
-    <table class="table table-bordered table-hover table-condensed">
+    <table class="table table-bordered table-hover table-condensed <? if ($this->fixedHeader): ?> table-fixed-header<? endif ?>">
+        <thead class="header">
         <tr>
             <th rowspan="2">
                 Date of Flight
@@ -43,6 +44,8 @@
                 Time, UTC
             </th>
         </tr>
+        </thead>
+        <tbody>
         <?php
         $lastLeg = end($legs);
         $lastLeg = $lastLeg['id'];
@@ -72,5 +75,6 @@
                 </td>
             </tr>
         <?php endforeach; ?>
+        </tbody>
     </table>
 </div>

@@ -1,4 +1,5 @@
-<table class="table table-bordered table-hover table-condensed">
+<table class="table table-bordered table-hover table-condensed <? if ($this->fixedHeader): ?> table-fixed-header<? endif ?>">
+    <thead class="header">
     <tr>
         <th>
             Agent
@@ -17,6 +18,8 @@
         </th>
         <th class="actions">Actions</th>
     </tr>
+    </thead>
+    <tbody>
     <? foreach ($permissions as $legId => $legData): ?>
         <tr class="success">
             <td colspan="6">
@@ -41,4 +44,5 @@
             </tr>
         <? endforeach ?>
     <? endforeach ?>
+    </tbody>
 </table>

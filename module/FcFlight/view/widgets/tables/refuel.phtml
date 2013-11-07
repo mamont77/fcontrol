@@ -1,6 +1,8 @@
 <legend>Type of Service: Refuel</legend>
 <div id="refuel">
-    <table class="table table-bordered table-hover table-condensed">
+    <table
+        class="table table-bordered table-hover table-condensed <? if ($this->fixedHeader): ?> table-fixed-header<? endif ?>">
+        <thead class="header">
         <tr>
             <th>
                 Airport
@@ -34,6 +36,8 @@
             </th>
             <th class="actions">Actions</th>
         </tr>
+        </thead>
+        <tbody>
         <?php foreach ($refuels as $row) : ?>
             <tr>
                 <td>
@@ -55,12 +59,15 @@
 
                 <td class="actions">
                     <a title="Edit" href="<?php echo $this->url('refuel',
-                        array('action' => 'edit', 'id' => $row['id']));?>" class="<?=($status) ? '': 'disabled' ;?>"><i class="icon-edit"></i></a>
+                        array('action' => 'edit', 'id' => $row['id']));?>"
+                       class="<?= ($status) ? '' : 'disabled'; ?>"><i class="icon-edit"></i></a>
                     <a title="Remove" href="<?php echo $this->url('refuel',
-                        array('action' => 'delete', 'id' => $row['id']));?>" class="<?=($status) ? '': 'disabled' ;?>"><i class="icon-remove"></i></a>
+                        array('action' => 'delete', 'id' => $row['id']));?>"
+                       class="<?= ($status) ? '' : 'disabled'; ?>"><i class="icon-remove"></i></a>
                 </td>
             </tr>
         <?php endforeach; ?>
+        </tbody>
     </table>
     <div class="row-fluid">
         <div class="span6">

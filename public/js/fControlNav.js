@@ -13,6 +13,12 @@
                 return false;
             });
         }
+    };
+
+    fControl.behaviors.tableFixedHeader = {
+        attach:function (context, settings) {
+            $('.table-fixed-header').fixedHeader();
+        }
     }
 
 })(jQuery);
