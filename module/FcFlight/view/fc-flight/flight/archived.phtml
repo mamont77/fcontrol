@@ -35,21 +35,21 @@ if ($order) {
             </div>
         </div>
 
-        <?php echo $this->partial('widgets/tables/header.phtml', array(
+        <?= $this->partial('widgets/tables/header.phtml', array(
             'data' => $data,
             'url_order' => $url_order,
             'order_by' => $order_by,
             'route' => $route,
-        )); ?>
+            'fixedHeader' => true,
+        )) ?>
 
-        <?php
-        echo $this->paginationControl(
+        <?= $this->paginationControl(
             $pagination, 'Sliding', 'libraries-pagination-slide', array(
                 'order_by' => $order_by,
                 'order' => $order,
                 'route' => $route,
             )
-        );
+        )
         ?>
     </div>
 </div>

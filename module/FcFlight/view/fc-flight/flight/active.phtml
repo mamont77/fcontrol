@@ -36,12 +36,13 @@ if ($order) {
             </div>
         </div>
 
-        <?php echo $this->partial('widgets/tables/header.phtml', array(
+        <?= $this->partial('widgets/tables/header.phtml', array(
             'data' => $data,
             'url_order' => $url_order,
             'order_by' => $order_by,
             'route' => $route,
-        )); ?>
+            'fixedHeader' => true,
+        )) ?>
     </div>
 </div>
 
