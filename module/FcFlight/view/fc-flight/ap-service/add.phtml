@@ -32,7 +32,15 @@ $form->setAttribute('action', $this->url('apService', array('action' => 'add', '
 $form->prepare();
 ?>
 
-<?php echo $this->partial('widgets/tables/ap-service.phtml', array('apServices' => $apServices, 'status' => $headerStatus)); ?>
+<?=
+$this->partial('widgets/tables/ap-service.phtml',
+    array(
+        'apServices' => $apServices,
+        'status' => $headerStatus,
+        'fixedHeader' => true,
+    )
+)
+?>
 
 
 <?php if ($form->getMessages()): ?>
