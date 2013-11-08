@@ -113,20 +113,16 @@ $this->headTitle($title);
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>Date Order</th>
-                                    <td><?php echo date('d-m-Y', $header->dateOrder); ?></td>
-                                </tr>
-                                <tr>
-                                    <th>Customer</th>
-                                    <td><?php echo $this->escapeHtml($header->kontragentShortName); ?></td>
+                                    <th>Air Operator</th>
+                                    <td><?php echo $this->escapeHtml($header->airOperatorShortName); ?></td>
                                 </tr>
                             </table>
                         </td>
                         <td>
                             <table class="cHeader table">
                                 <tr>
-                                    <th>Air Operator</th>
-                                    <td><?php echo $this->escapeHtml($header->airOperatorShortName); ?></td>
+                                    <th>Date Order</th>
+                                    <td><?php echo date('d-m-Y', $header->dateOrder); ?></td>
                                 </tr>
                                 <tr>
                                     <th>Aircraft</th>
@@ -134,6 +130,15 @@ $this->headTitle($title);
                                         (<?php echo $this->escapeHtml($header->aircraft); ?>)
                                     </td>
                                 </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <table class="cHeader table">
+                                <tr>
+                                    <th>Customer</th>
+                                    <td><?php echo $this->escapeHtml($header->kontragentShortName); ?></td>
+                                </tr>
+                                <tr>
                                 <tr class="<?= ($header->status) ? 'warning' : 'success'; ?>">
                                     <th>Status</th>
                                     <td><?= ($header->status) ? 'In Process' : 'Done'; ?></td>
