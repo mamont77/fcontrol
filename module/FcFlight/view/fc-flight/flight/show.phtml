@@ -150,10 +150,12 @@ $this->headTitle($title);
             </div>
 
             <? if (count($legs) > 0): ?>
+                <legend>LEGs</legend>
                 <?php echo $this->partial('widgets/tables/leg.phtml', array('legs' => $legs, 'status' => $header->status)); ?>
             <? endif; ?>
 
             <? if (count($refuels) > 0): ?>
+                <legend>Refuels</legend>
                 <?php echo $this->partial('widgets/tables/refuel.phtml', array('refuels' => $refuels, 'status' => $header->status)); ?>
             <? endif; ?>
 
@@ -162,24 +164,9 @@ $this->headTitle($title);
                 <?= $this->partial('widgets/tables/permission.phtml', array('permissions' => $permissions, 'status' => $header->status)) ?>
             <? endif; ?>
 
-            <? if (count($hotels) > 0): ?>
-                <?php echo $this->partial('widgets/tables/hotel.phtml', array('hotels' => $hotels, 'status' => $header->status)); ?>
-            <? endif; ?>
-
-            <? if (count($transfers) > 0): ?>
-                <?php echo $this->partial('widgets/tables/transfer.phtml', array('transfers' => $transfers, 'status' => $header->status)); ?>
-            <? endif; ?>
-
             <? if (count($apServices) > 0): ?>
+                <legend>AP Services</legend>
                 <?php echo $this->partial('widgets/tables/ap-service.phtml', array('apServices' => $apServices, 'status' => $header->status)); ?>
-            <? endif; ?>
-
-            <? if (count($handing) > 0): ?>
-                <?php echo $this->partial('widgets/tables/handing.phtml', array('handing' => $handing, 'status' => $header->status)); ?>
-            <? endif; ?>
-
-            <? if (count($typeOfPermissions) > 0): ?>
-                <?php echo $this->partial('widgets/tables/type-of-permission.phtml', array('typeOfPermissions' => $typeOfPermissions, 'status' => $header->status)); ?>
             <? endif; ?>
         </div>
     </div>
