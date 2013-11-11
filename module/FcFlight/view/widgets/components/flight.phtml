@@ -96,3 +96,8 @@
         </div>
     </div>
 </div>
+
+<? if (count($this->legs) > 0): ?>
+    <legend>LEGs</legend>
+    <?php echo $this->partial('widgets/tables/leg.phtml', array('legs' => $this->legs, 'status' => $this->header->status)); ?>
+<? endif; ?>

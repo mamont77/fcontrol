@@ -28,14 +28,10 @@ $this->headTitle($title);
 $this->partial('widgets/components/flight.phtml',
     array(
         'header' => $this->header,
+        'legs' => $this->legs,
     )
 )
 ?>
-
-<? if (count($this->legs) > 0): ?>
-    <legend>LEGs</legend>
-    <?php echo $this->partial('widgets/tables/leg.phtml', array('legs' => $this->legs, 'status' => $this->header->status)); ?>
-<? endif; ?>
 
 <? if (count($this->refuels) > 0): ?>
     <legend>Refuels</legend>

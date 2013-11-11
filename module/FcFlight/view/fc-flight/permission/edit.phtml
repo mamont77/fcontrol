@@ -11,15 +11,16 @@ $this->headTitle($title);
     <li class="active">Type of service: Permission</li>
 </ul>
 
-<h1><?= $this->escapeHtml($title) ?></h1>
-
 <?=
 $this->partial('widgets/components/flight.phtml',
     array(
         'header' => $this->header,
+        'legs' => $this->legs,
     )
 )
 ?>
+
+<h1><?= $this->escapeHtml($title) ?></h1>
 
 <?php if ($this->form->getMessages()): ?>
     <div class="alert alert-error">

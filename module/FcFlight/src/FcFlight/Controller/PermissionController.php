@@ -35,6 +35,7 @@ class PermissionController extends FlightController
         $refNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($headerId);
         $this->redirectForDoneStatus($refNumberOrder);
         $header = $this->getFlightHeaderModel()->getByRefNumberOrder($refNumberOrder);
+        $legs = $this->getLegModel()->getByHeaderId($header->id);
         $permissions = $this->getPermissionModel()->getByHeaderId($headerId);
 
         $form = new PermissionForm('permission',
@@ -81,6 +82,7 @@ class PermissionController extends FlightController
         }
         return array(
             'header' => $header,
+            'legs' => $legs,
             'permissions' => $permissions,
             'form' => $form,
         );
@@ -99,9 +101,10 @@ class PermissionController extends FlightController
         }
 
         $refNumberOrder = $this->getPermissionModel()->getHeaderRefNumberOrderByPermissionId($permissionId);
-        $headerStatus = $this->redirectForDoneStatus($refNumberOrder);
+        $this->redirectForDoneStatus($refNumberOrder);
         $data = $this->getPermissionModel()->get($permissionId);
         $header = $this->getFlightHeaderModel()->getByRefNumberOrder($refNumberOrder);
+        $legs = $this->getLegModel()->getByHeaderId($header->id);
         $permissions = $this->getPermissionModel()->getByHeaderId($header->id);
 
         $this->_setDataForLogger($data);
@@ -156,6 +159,7 @@ class PermissionController extends FlightController
         return array(
             'id' => $permissionId,
             'header' => $header,
+            'legs' => $legs,
             'permissions' => $permissions,
             'form' => $form,
         );
