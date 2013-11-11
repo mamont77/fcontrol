@@ -33,7 +33,8 @@ class PermissionController extends FlightController
         }
 
         $refNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($headerId);
-        $headerStatus = $this->redirectForDoneStatus($refNumberOrder);
+        $this->redirectForDoneStatus($refNumberOrder);
+        $header = $this->getFlightHeaderModel()->getByRefNumberOrder($refNumberOrder);
         $permissions = $this->getPermissionModel()->getByHeaderId($headerId);
 
         $form = new PermissionForm('permission',
@@ -79,11 +80,9 @@ class PermissionController extends FlightController
             }
         }
         return array(
-            'form' => $form,
-            'headerId' => $headerId,
-            'headerStatus' => $headerStatus,
-            'refNumberOrder' => $refNumberOrder,
+            'header' => $header,
             'permissions' => $permissions,
+            'form' => $form,
         );
     }
 
@@ -102,8 +101,8 @@ class PermissionController extends FlightController
         $refNumberOrder = $this->getPermissionModel()->getHeaderRefNumberOrderByPermissionId($permissionId);
         $headerStatus = $this->redirectForDoneStatus($refNumberOrder);
         $data = $this->getPermissionModel()->get($permissionId);
-        $headerId = ((int)$data->headerId);
-        $permissions = $this->getPermissionModel()->getByHeaderId($headerId);
+        $header = $this->getFlightHeaderModel()->getByRefNumberOrder($refNumberOrder);
+        $permissions = $this->getPermissionModel()->getByHeaderId($header->id);
 
         $this->_setDataForLogger($data);
         $loggerPlugin = $this->LogPlugin();
@@ -111,10 +110,10 @@ class PermissionController extends FlightController
 
         $form = new PermissionForm('permission',
             array(
-                'headerId' => $headerId,
+                'headerId' => $header->id,
                 'libraries' => array(
                     'agents' => $this->getKontragents(),
-                    'legs' => $this->getLegModel()->getListByHeaderId($headerId),
+                    'legs' => $this->getLegModel()->getListByHeaderId($header->id),
                     'countries' => $this->getCountries(),
                     'typeOfPermissions' => $this->geTypeOfPermissions(),
                 ),
@@ -155,11 +154,10 @@ class PermissionController extends FlightController
         }
 
         return array(
-            'form' => $form,
             'id' => $permissionId,
-            'headerStatus' => $headerStatus,
-            'refNumberOrder' => $refNumberOrder,
+            'header' => $header,
             'permissions' => $permissions,
+            'form' => $form,
         );
     }
 

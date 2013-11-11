@@ -5,13 +5,21 @@ $this->headTitle($title);
 <ul class="breadcrumb">
     <li><a href="/">Home</a> <span class="divider">/</span></li>
     <li>
-        <a href="<?= $this->url('browse', array('action' => 'show', 'refNumberOrder' => $this->refNumberOrder)); ?>"><?= $this->refNumberOrder ?></a>
+        <a href="<?= $this->url('browse', array('action' => 'show', 'refNumberOrder' => $this->header->refNumberOrder)); ?>"><?= $this->header->refNumberOrder ?></a>
         <span class="divider">/</span>
     </li>
     <li class="active">Type of service: Permission</li>
 </ul>
 
 <h1><?= $this->escapeHtml($title) ?></h1>
+
+<?=
+$this->partial('widgets/components/flight.phtml',
+    array(
+        'header' => $this->header,
+    )
+)
+?>
 
 <?php if ($this->form->getMessages()): ?>
     <div class="alert alert-error">
@@ -29,7 +37,7 @@ $this->headTitle($title);
     $this->partial('widgets/tables/permission.phtml', array(
         'currentId' => $this->id,
         'permissions' => $this->permissions,
-        'status' => $this->headerStatus,
+        'status' => $this->header->status,
         'fixedHeader' => true,
     )) ?>
 

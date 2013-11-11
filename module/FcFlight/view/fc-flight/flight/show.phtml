@@ -24,104 +24,13 @@ $this->headTitle($title);
 <?php echo $this->flashMessenger()->render('info', array('alert', 'alert-info')); ?>
 <?php echo $this->flashMessenger()->render('error', array('alert', 'alert-error')); ?>
 
-<div id="header">
-    <table id="flightBrowse">
-        <tr>
-            <td>
-                <table class="cHeader table">
-                    <tr>
-                        <th>Reg Number Order</th>
-                        <td class="cRefNumberOrder">
-                            <?php echo $this->escapeHtml($this->header->refNumberOrder); ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Air Operator</th>
-                        <td><?php echo $this->escapeHtml($this->header->airOperatorShortName); ?></td>
-                    </tr>
-                </table>
-            </td>
-            <td>
-                <table class="cHeader table">
-                    <tr>
-                        <th>Date Order</th>
-                        <td><?php echo date('d-m-Y', $this->header->dateOrder); ?></td>
-                    </tr>
-                    <tr>
-                        <th>Aircraft</th>
-                        <td><?php echo $this->escapeHtml($this->header->aircraftTypeName); ?>
-                            (<?php echo $this->escapeHtml($this->header->aircraft); ?>)
-                        </td>
-                    </tr>
-                </table>
-            </td>
-            <td>
-                <table class="cHeader table">
-                    <tr>
-                        <th>Customer</th>
-                        <td><?php echo $this->escapeHtml($this->header->kontragentShortName); ?></td>
-                    </tr>
-                    <tr>
-                    <tr class="<?= ($this->header->status) ? 'warning' : 'success'; ?>">
-                        <th>Status</th>
-                        <td><?= ($this->header->status) ? 'In Process' : 'Done'; ?></td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
-</div>
-
-<div id="switchStatus" class="modal hide fade" tabindex="-1" role="dialog"
-     aria-labelledby="switchStatusLabel" aria-hidden="true">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h3 id="switchStatusLabel">Change status warring</h3>
-    </div>
-    <div class="modal-body">
-        <p>ARE YOU COMPLETELY SURE TO CHANGE STATUS FOR
-            FLIGHT<br/><b><?= $this->header->refNumberOrder ?></b>?</p>
-    </div>
-    <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-        <a class="btn btn-primary"
-           href="<?php echo $this->url('flight', array('action' => 'status-header', 'id' => $this->header->id)); ?>">
-            Change status</a>
-    </div>
-</div>
-
-<div class="btn-toolbar">
-    <div class="btn-group">
-        <div style="float: left; color: #999; font-size:12px; font-weight:bold; margin: 5px 10px 5px 0;">
-            OPERATIONS
-        </div>
-        <a class="btn btn-primary" href="#switchStatus" data-toggle="modal" role="button">
-            <i class="icon-refresh"></i> Change status</a>
-        <a class="btn btn-primary <?= ($this->header->status) ? '' : 'disabled' ?>"
-           href="<?= $this->url('flight', array('action' => 'edit-header', 'id' => $this->header->id)) ?>">
-            <i class="icon-share"></i> Clone</a>
-        <a class="btn btn-primary <?= ($this->header->status) ? '' : 'disabled' ?>"
-           href="<?= $this->url('flight', array('action' => 'edit-header', 'id' => $this->header->id)) ?>">
-            <i class="icon-edit"></i> Edit</a>
-    </div>
-    <div class="btn-group">
-        <div style="float: left; color: #999; font-size:12px; font-weight:bold; margin: 5px 10px 5px 0;">
-            ADD SERVICE
-        </div>
-        <a class="btn <?= ($this->header->status) ? '' : 'disabled' ?>"
-           href="<?= $this->url('leg', array('action' => 'add', 'id' => $this->header->id)) ?>">
-            <i class="icon-plane"></i> LEG</a>
-        <a class="btn <?= ($this->header->status) ? '' : 'disabled' ?>"
-           href="<?= $this->url('refuel', array('action' => 'add', 'id' => $this->header->id)) ?>">
-            <i class="icon-plane"></i> Refuel</a>
-        <a class="btn <?= ($this->header->status) ? '' : 'disabled' ?>"
-           href="<?= $this->url('permission', array('action' => 'add', 'id' => $this->header->id)) ?>">
-            <i class="icon-plane"></i> Permission</a>
-        <a class="btn <?= ($this->header->status) ? '' : 'disabled' ?>"
-           href="<?= $this->url('apService', array('action' => 'add', 'id' => $this->header->id)) ?>">
-            <i class="icon-plane"></i> AP Service</a>
-    </div>
-</div>
+<?=
+$this->partial('widgets/components/flight.phtml',
+    array(
+        'header' => $this->header,
+    )
+)
+?>
 
 <? if (count($this->legs) > 0): ?>
     <legend>LEGs</legend>
