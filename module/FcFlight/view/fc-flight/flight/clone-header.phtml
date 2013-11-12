@@ -1,0 +1,52 @@
+<?php
+$title = 'Clone Flight: ' . $this->header->refNumberOrder;
+$this->headTitle($title);
+?>
+<ul class="breadcrumb">
+    <li><a href="/">Home</a> <span class="divider">/</span></li>
+    <li>
+        <a href="<?= $this->url('browse', array('action' => 'show', 'refNumberOrder' => $this->header->refNumberOrder)); ?>"><?= $this->header->refNumberOrder ?></a>
+        <span class="divider">/</span>
+    </li>
+    <li class="active">Flight form</li>
+</ul>
+
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<?php
+$displayOptions = array(
+    'elements' => array(
+        'dateOrder' => array(
+            'required' => true,
+        ),
+        'kontragent' => array(
+            'required' => true,
+        ),
+        'airOperator' => array(
+            'required' => true,
+        ),
+        'aircraft' => array(
+            'required' => true,
+        ),
+    ),
+);
+$form = $this->form;
+$form->setAttribute('action', $this->url(
+    'flight',
+    array(
+        'action' => 'clone-header',
+        'id'     => $this->id,
+    )
+));
+$form->prepare();
+?>
+
+<?php if ($form->getMessages()): ?>
+    <div class="alert alert-error">
+        <button class="close" data-dismiss="alert" type="button">×</button>
+        <strong>Invalid input!</strong>
+        Form fields are not filled in correctly.
+    </div>
+<?php endif; ?>
+
+<?php echo $this->formTwb($form, $formType, $displayOptions); ?>

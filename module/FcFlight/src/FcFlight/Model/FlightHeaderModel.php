@@ -41,7 +41,7 @@ class FlightHeaderModel extends AbstractTableGateway
         if (null === $select)
             $select = new Select();
         $select->from($this->table);
-        $select->columns(array('id', 'refNumberOrder', 'dateOrder', 'kontragent', 'airOperator', 'aircraft', 'status'));
+        $select->columns(array('id', 'parentId', 'refNumberOrder', 'dateOrder', 'kontragent', 'airOperator', 'aircraft', 'status'));
 
         $select->join(array('library_kontragent' => 'library_kontragent'),
             'library_kontragent.id = flightBaseHeaderForm.kontragent',
@@ -78,7 +78,7 @@ class FlightHeaderModel extends AbstractTableGateway
         $id = (int)$id;
         $select = new Select();
         $select->from($this->table);
-        $select->columns(array('id', 'refNumberOrder', 'dateOrder', 'kontragent', 'airOperator', 'aircraft', 'status'));
+        $select->columns(array('id', 'parentId', 'refNumberOrder', 'dateOrder', 'kontragent', 'airOperator', 'aircraft', 'status'));
 
         $select->join(array('library_kontragent' => 'library_kontragent'),
             'library_kontragent.id = flightBaseHeaderForm.kontragent',
@@ -118,7 +118,13 @@ class FlightHeaderModel extends AbstractTableGateway
         $dateOrder = \DateTime::createFromFormat('d-m-Y', $object->dateOrder);
         $dateOrder = $dateOrder->getTimestamp();
 
+        if (empty($object->id)) {
+            $object->id = null;
+        }
+
+
         $data = array(
+            'parentId' => $object->id,
             'refNumberOrder' => $this->getLastRefNumberOrder($dateOrder),
             'dateOrder' => $dateOrder,
             'kontragent' => $object->kontragent,
@@ -126,6 +132,8 @@ class FlightHeaderModel extends AbstractTableGateway
             'aircraft' => $object->aircraft,
             'status' => $object->status,
         );
+
+
         $this->insert($data);
 
         return array(
@@ -182,7 +190,7 @@ class FlightHeaderModel extends AbstractTableGateway
         $refNumberOrder = (string)$refNumberOrder;
 
         $select = $this->getSql()->select();
-        $select->columns(array('id', 'refNumberOrder', 'dateOrder', 'kontragent', 'airOperator', 'aircraft', 'status'));
+        $select->columns(array('id', 'parentId', 'refNumberOrder', 'dateOrder', 'kontragent', 'airOperator', 'aircraft', 'status'));
         $select->join(array('library_kontragent' => 'library_kontragent'),
             'library_kontragent.id = flightBaseHeaderForm.kontragent',
             array('kontragentShortName' => 'short_name'), 'left');

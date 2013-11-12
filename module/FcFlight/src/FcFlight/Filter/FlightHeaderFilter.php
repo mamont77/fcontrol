@@ -33,6 +33,8 @@ class FlightHeaderFilter implements InputFilterAwareInterface
     protected $table = '';
 
     public $id;
+    public $parentId;
+    public $parentRefNumberOrder;
     public $refNumberOrder;
     public $dateOrder;
     public $kontragent;
@@ -74,6 +76,8 @@ class FlightHeaderFilter implements InputFilterAwareInterface
     public function exchangeArray($data)
     {
         $this->id = (isset($data['id'])) ? $data['id'] : null;
+        $this->parentId = (isset($data['parentId'])) ? $data['parentId'] : null;
+        $this->parentRefNumberOrder = (isset($data['parentRefNumberOrder'])) ? $data['parentRefNumberOrder'] : null;
         $this->refNumberOrder = (isset($data['refNumberOrder'])) ? $data['refNumberOrder'] : null;
         $this->dateOrder = (isset($data['dateOrder'])) ? $data['dateOrder'] : null;
         $this->kontragent = (isset($data['kontragent'])) ? $data['kontragent'] : null;

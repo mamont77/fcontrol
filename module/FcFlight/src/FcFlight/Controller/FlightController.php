@@ -314,6 +314,9 @@ class FlightController extends AbstractActionController
         }
 
         $header = $this->getFlightHeaderModel()->getByRefNumberOrder($refNumberOrder);
+        if ($header->parentId) {
+            $header->parentRefNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($header->parentId);
+        }
 
         $legs = $this->getLegModel()->getByHeaderId($header->id);
         $refuels = $this->getRefuelModel()->getByHeaderId($header->id);
@@ -449,6 +452,78 @@ class FlightController extends AbstractActionController
     /**
      * @return array|\Zend\Http\Response
      */
+    public function cloneHeaderAction()
+    {
+
+        $headerId = (int)$this->params()->fromRoute('id', 0);
+        if (!$headerId) {
+            return $this->redirect()->toRoute('flight', array(
+                'action' => 'add'
+            ));
+        }
+        $header = $this->getFlightHeaderModel()->get($headerId);
+
+        $form = new FlightHeaderForm('flightHeader',
+            array(
+                'libraries' => array(
+                    'kontragent' => $this->getKontragents(),
+                    'air_operator' => $this->getAirOperators(),
+                    'aircraft' => $this->getAircrafts(),
+                )
+            )
+        );
+
+        $form->bind($header);
+        $form->get('submitBtn')->setAttribute('value', 'Save');
+
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $filter = $this->getServiceLocator()->get('FcFlight\Filter\FlightHeaderFilter');
+            $form->setInputFilter($filter->getInputFilter());
+            $form->setData($request->getPost());
+
+            if ($form->isValid()) {
+                $data = $form->getData();
+                $parentHeader = $this->getFlightHeaderModel()->get($data->id);
+                $parentHeader->status = 0;
+
+                $this->setDataForLogger($parentHeader);
+                $loggerPlugin = $this->LogPlugin();
+                $loggerPlugin->setOldLogRecord($this->dataForLogger);
+
+                $this->getFlightHeaderModel()->save($parentHeader);
+                $data = $this->getFlightHeaderModel()->add($data);
+
+                $message = 'Flights ' . $parentHeader->refNumberOrder
+                    . ' was successfully cloned as ' . $data['refNumberOrder'];
+                $this->flashMessenger()->addSuccessMessage($message);
+
+                $this->setDataForLogger($this->getFlightHeaderModel()->get($data['lastInsertValue']));
+                $loggerPlugin->setNewLogRecord($this->dataForLogger);
+                $loggerPlugin->setLogMessage($message);
+
+                $logger = $this->getServiceLocator()->get('logger');
+                $logger->addExtra(array('username' => $loggerPlugin->getCurrentUserName(), 'component' => 'flight'));
+                $logger->Info($loggerPlugin->getLogMessage());
+
+                return $this->redirect()->toRoute('browse',
+                    array(
+                        'action' => 'show',
+                        'refNumberOrder' => $data['refNumberOrder'],
+                    ));
+            }
+        }
+
+        return array(
+            'id' => $headerId,
+            'form' => $form,
+            'header' => $header,
+        );
+    }
+
+    /**
+     * @return array|\Zend\Http\Response
+     */
     public function deleteHeaderAction()
     {
         $id = (int)$this->params()->fromRoute('id', 0);
@@ -533,6 +608,7 @@ class FlightController extends AbstractActionController
     {
         $this->dataForLogger = array(
             'id' => $data->id,
+            'parentId' => $data->parentId,
             'Date Order' => $data->dateOrder,
             'Ref Number' => $data->refNumberOrder,
             'Customer' => $data->kontragentShortName,

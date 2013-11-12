@@ -6,12 +6,18 @@
                     <tr>
                         <th>Reg Number Order</th>
                         <td class="cRefNumberOrder">
-                            <?php echo $this->escapeHtml($this->header->refNumberOrder); ?>
+                            <?= $this->header->refNumberOrder ?>
+                            <? if ($this->header->parentRefNumberOrder): ?>
+                                <?= ' <small>(<a href="' .
+                                $this->url('browse',
+                                    array('action' => 'show', 'refNumberOrder' => $this->header->parentRefNumberOrder))
+                                . '">' . $this->header->parentRefNumberOrder . '</a>)</small>' ?>
+                            <? endif ?>
                         </td>
                     </tr>
                     <tr>
                         <th>Air Operator</th>
-                        <td><?php echo $this->escapeHtml($this->header->airOperatorShortName); ?></td>
+                        <td><?= $this->escapeHtml($this->header->airOperatorShortName) ?></td>
                     </tr>
                 </table>
             </td>
@@ -19,12 +25,12 @@
                 <table class="cHeader table">
                     <tr>
                         <th>Date Order</th>
-                        <td><?php echo date('d-m-Y', $this->header->dateOrder); ?></td>
+                        <td><?= date('d-m-Y', $this->header->dateOrder) ?></td>
                     </tr>
                     <tr>
                         <th>Aircraft</th>
-                        <td><?php echo $this->escapeHtml($this->header->aircraftTypeName); ?>
-                            (<?php echo $this->escapeHtml($this->header->aircraft); ?>)
+                        <td><?= $this->escapeHtml($this->header->aircraftTypeName) ?>
+                            (<?= $this->escapeHtml($this->header->aircraft) ?>)
                         </td>
                     </tr>
                 </table>
@@ -33,12 +39,12 @@
                 <table class="cHeader table">
                     <tr>
                         <th>Customer</th>
-                        <td><?php echo $this->escapeHtml($this->header->kontragentShortName); ?></td>
+                        <td><?= $this->escapeHtml($this->header->kontragentShortName) ?></td>
                     </tr>
                     <tr>
-                    <tr class="<?= ($this->header->status) ? 'warning' : 'success'; ?>">
+                    <tr class="<?= ($this->header->status) ? 'warning' : 'success' ?>">
                         <th>Status</th>
-                        <td><?= ($this->header->status) ? 'In Process' : 'Done'; ?></td>
+                        <td><?= ($this->header->status) ? 'In Process' : 'Done' ?></td>
                     </tr>
                 </table>
             </td>
@@ -58,7 +64,7 @@
         <div class="modal-footer">
             <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
             <a class="btn btn-primary"
-               href="<?php echo $this->url('flight', array('action' => 'status-header', 'id' => $this->header->id)); ?>">
+               href="<?= $this->url('flight', array('action' => 'status-header', 'id' => $this->header->id)) ?>">
                 Change status</a>
         </div>
     </div>
@@ -71,7 +77,7 @@
             <a class="btn btn-primary" href="#switchStatus" data-toggle="modal" role="button">
                 <i class="icon-refresh"></i> Change status</a>
             <a class="btn btn-primary <?= ($this->header->status) ? '' : 'disabled' ?>"
-               href="<?= $this->url('flight', array('action' => 'edit-header', 'id' => $this->header->id)) ?>">
+               href="<?= $this->url('flight', array('action' => 'clone-header', 'id' => $this->header->id)) ?>">
                 <i class="icon-share"></i> Clone</a>
             <a class="btn btn-primary <?= ($this->header->status) ? '' : 'disabled' ?>"
                href="<?= $this->url('flight', array('action' => 'edit-header', 'id' => $this->header->id)) ?>">
@@ -99,5 +105,5 @@
 
 <? if (count($this->legs) > 0): ?>
     <legend>LEGs</legend>
-    <?php echo $this->partial('widgets/tables/leg.phtml', array('legs' => $this->legs, 'status' => $this->header->status)); ?>
+    <?= $this->partial('widgets/tables/leg.phtml', array('legs' => $this->legs, 'status' => $this->header->status)) ?>
 <? endif; ?>
