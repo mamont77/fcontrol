@@ -35,7 +35,7 @@ class PermissionController extends FlightController
         $refNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($headerId);
         $this->redirectForDoneStatus($refNumberOrder);
         $header = $this->getFlightHeaderModel()->getByRefNumberOrder($refNumberOrder);
-        $legs = $this->getLegModel()->getByHeaderId($header->id);
+        $legs = $this->getLegModel()->getByHeaderId($headerId);
         $permissions = $this->getPermissionModel()->getByHeaderId($headerId);
 
         $form = new PermissionForm('permission',

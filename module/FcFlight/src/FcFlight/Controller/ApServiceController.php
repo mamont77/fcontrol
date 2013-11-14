@@ -15,11 +15,6 @@ use FcFlight\Form\ApServiceForm;
 class ApServiceController extends FlightController
 {
     /**
-     * @var int
-     */
-    protected $headerId;
-
-    /**
      * @var array
      */
     protected $dataForLogger = array();
@@ -29,22 +24,24 @@ class ApServiceController extends FlightController
      */
     public function addAction()
     {
-        $this->headerId = (int)$this->params()->fromRoute('id', 0);
-        if (!$this->headerId) {
+        $headerId = (int)$this->params()->fromRoute('id', 0);
+        if (!$headerId) {
             return $this->redirect()->toRoute('flight', array(
                 'action' => 'active'
             ));
         }
 
-        $refNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($this->headerId);
-        $headerStatus = $this->redirectForDoneStatus($refNumberOrder);
-        $apServices = $this->getApServiceModel()->getByHeaderId($this->headerId);
+        $refNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($headerId);
+        $this->redirectForDoneStatus($refNumberOrder);
+        $header = $this->getFlightHeaderModel()->getByRefNumberOrder($refNumberOrder);
+        $legs = $this->getLegModel()->getByHeaderId($headerId);
+        $apServices = $this->getApServiceModel()->getByHeaderId($headerId);
 
         $form = new ApServiceForm('apService',
             array(
-                'headerId' => $this->headerId,
+                'headerId' => $headerId,
                 'libraries' => array(
-                    'airports' => $this->getParentLeg($this->headerId),
+                    'airports' => $this->getParentLeg($headerId),
                     'agents' => $this->getKontragents(),
                 ),
             )
@@ -76,15 +73,15 @@ class ApServiceController extends FlightController
                 return $this->redirect()->toRoute('apService',
                     array(
                         'action' => 'add',
-                        'id' => $this->headerId,
+                        'id' => $headerId,
                     ));
             }
         }
-        return array('form' => $form,
-            'headerId' => $this->headerId,
-            'headerStatus' => $headerStatus,
-            'refNumberOrder' => $refNumberOrder,
+        return array(
+            'header' => $header,
+            'legs' => $legs,
             'apServices' => $apServices,
+            'form' => $form,
         );
     }
 
@@ -93,20 +90,21 @@ class ApServiceController extends FlightController
      */
     public function editAction()
     {
-        $id = (int)$this->params()->fromRoute('id', 0);
-        if (!$id) {
+        $serviceId = (int)$this->params()->fromRoute('id', 0);
+        if (!$serviceId) {
             return $this->redirect()->toRoute('flight', array(
                 'action' => 'active'
             ));
         }
 
-        $refNumberOrder = $this->getApServiceModel()->getHeaderRefNumberOrderByApServiceId($id);
+        $refNumberOrder = $this->getApServiceModel()->getHeaderRefNumberOrderByApServiceId($serviceId);
 
-        $data = $this->getApServiceModel()->get($id);
-        $this->headerId = (int)$data->headerId;
+        $data = $this->getApServiceModel()->get($serviceId);
+        $header = $this->getFlightHeaderModel()->getByRefNumberOrder($refNumberOrder);
+        $legs = $this->getLegModel()->getByHeaderId($header->id);
 
-        $headerStatus = $this->redirectForDoneStatus($refNumberOrder);
-        $apServices = $this->getApServiceModel()->getByHeaderId($this->headerId);
+        $this->redirectForDoneStatus($refNumberOrder);
+        $apServices = $this->getApServiceModel()->getByHeaderId($header->id);
 
         $this->setDataForLogger($data);
         $loggerPlugin = $this->LogPlugin();
@@ -114,9 +112,9 @@ class ApServiceController extends FlightController
 
         $form = new ApServiceForm('apService',
             array(
-                'headerId' => $this->headerId,
+                'headerId' => $header->id,
                 'libraries' => array(
-                    'airports' => $this->getParentLeg($this->headerId),
+                    'airports' => $this->getParentLeg($header->id),
                     'agents' => $this->getKontragents(),
                 ),
             )
@@ -139,7 +137,7 @@ class ApServiceController extends FlightController
                 $message = "ApService was successfully saved.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
-                $this->setDataForLogger($this->getApServiceModel()->get($id));
+                $this->setDataForLogger($this->getApServiceModel()->get($serviceId));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
@@ -155,11 +153,12 @@ class ApServiceController extends FlightController
             }
         }
 
-        return array('form' => $form,
+        return array(
             'id' => $data->id,
-            'headerStatus' => $headerStatus,
-            'refNumberOrder' => $refNumberOrder,
+            'header' => $header,
+            'legs' => $legs,
             'apServices' => $apServices,
+            'form' => $form,
         );
     }
 
@@ -168,27 +167,27 @@ class ApServiceController extends FlightController
      */
     public function deleteAction()
     {
-        $id = (int)$this->params()->fromRoute('id', 0);
-        if (!$id) {
+        $serviceId = (int)$this->params()->fromRoute('id', 0);
+        if (!$serviceId) {
             return $this->redirect()->toRoute('home');
         }
 
         $request = $this->getRequest();
         $refUri = $request->getHeader('Referer')->uri()->getPath();
-        $refNumberOrder = $this->getApServiceModel()->getHeaderRefNumberOrderByApServiceId($id);
+        $refNumberOrder = $this->getApServiceModel()->getHeaderRefNumberOrderByApServiceId($serviceId);
 
         $this->redirectForDoneStatus($refNumberOrder);
 
         if ($request->isPost()) {
             $del = $request->getPost('del', 'No');
             if ($del == 'Yes') {
-                $id = (int)$request->getPost('id');
+                $serviceId = (int)$request->getPost('id');
 
                 $loggerPlugin = $this->LogPlugin();
-                $this->setDataForLogger($this->getApServiceModel()->get($id));
+                $this->setDataForLogger($this->getApServiceModel()->get($serviceId));
                 $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
-                $this->getApServiceModel()->remove($id);
+                $this->getApServiceModel()->remove($serviceId);
 
                 $message = "ApService was successfully deleted.";
                 $this->flashMessenger()->addSuccessMessage($message);
@@ -205,10 +204,10 @@ class ApServiceController extends FlightController
         }
 
         return array(
-            'id' => $id,
+            'id' => $serviceId,
             'referer' => $refUri,
             'refNumberOrder' => $refNumberOrder,
-            'data' => $this->getApServiceModel()->get($id)
+            'data' => $this->getApServiceModel()->get($serviceId)
         );
     }
 

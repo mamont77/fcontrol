@@ -16,7 +16,7 @@
         </thead>
         <tbody>
         <?php foreach ($apServices as $row) : ?>
-            <tr>
+            <tr class="<? if ($row['id'] == $currentId): ?><?= 'info' ?><? endif ?>">
                 <td>
                     <a rel="tooltip" href="#" data-toggle="tooltip" data-placement="top"
                        title="" data-original-title="<?php echo $this->escapeHtml($row['airportName']); ?>">
