@@ -1,16 +1,17 @@
+<?php
+$title = 'Remove Refuel';
+$this->headTitle($title);
+?>
 <ul class="breadcrumb">
     <li><a href="/">Home</a> <span class="divider">/</span></li>
     <li>
         <a href="<?= $this->url('browse', array('action' => 'show', 'refNumberOrder' => $this->refNumberOrder)); ?>"><?= $this->refNumberOrder ?></a>
         <span class="divider">/</span>
     </li>
-    <li class="active">Refuel form</li>
+    <li class="active">Type of service: Refuel</li>
 </ul>
-<?php
-$title = 'Remove Refuel';
-$this->headTitle($title);
-?>
-<h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<h1><?= $title ?></h1>
 
 <p>Are you sure you want to delete?</p>
 <?php
@@ -22,7 +23,7 @@ $url = $this->url('refuel', array(
 
 <form action="<?php echo $url; ?>" method="post">
     <div>
-        <input type="hidden" name="id" value="<?php echo (int)$data->id; ?>"/>
+        <input type="hidden" name="id" value="<?= (int)$this->data->id ?>"/>
         <input type="hidden" name="referer" value="<?php echo $this->referer; ?>"/>
         <input type="submit" name="del" value="Yes" class="btn btn-warning"/>
         <input type="submit" name="del" value="No" class="btn btn-link" onclick="history.go(-1);"/>

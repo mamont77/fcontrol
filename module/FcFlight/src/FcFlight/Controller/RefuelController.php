@@ -16,11 +16,6 @@ class RefuelController extends FlightController
 {
 
     /**
-     * @var int
-     */
-    protected $headerId;
-
-    /**
      * @var array
      */
     protected $dataForLogger = array();
@@ -31,16 +26,18 @@ class RefuelController extends FlightController
     public function addAction()
     {
 
-        $this->headerId = (int)$this->params()->fromRoute('id', 0);
-        if (!$this->headerId) {
+        $headerId = (int)$this->params()->fromRoute('id', 0);
+        if (!$headerId) {
             return $this->redirect()->toRoute('flight', array(
                 'action' => 'active'
             ));
         }
 
-        $refNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($this->headerId);
-        $headerStatus = $this->redirectForDoneStatus($refNumberOrder);
-        $refuels = $this->getRefuelModel()->getByHeaderId($this->headerId);
+        $refNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($headerId);
+        $this->redirectForDoneStatus($refNumberOrder);
+        $header = $this->getFlightHeaderModel()->getByRefNumberOrder($refNumberOrder);
+        $legs = $this->getLegModel()->getByHeaderId($headerId);
+        $refuels = $this->getRefuelModel()->getByHeaderId($headerId);
         $lastRefuel = end($refuels);
         if ($lastRefuel) {
             $previousDate = $lastRefuel['date'];
@@ -50,9 +47,9 @@ class RefuelController extends FlightController
 
         $form = new RefuelForm('refuel',
             array(
-                'headerId' => $this->headerId,
+                'headerId' => $headerId,
                 'libraries' => array(
-                    'airports' => $this->getParentLeg($this->headerId),
+                    'airports' => $this->getParentLeg($headerId),
                     'agents' => $this->getKontragents(),
                     'units' => $this->getUnits(),
                 ),
@@ -88,15 +85,15 @@ class RefuelController extends FlightController
                 return $this->redirect()->toRoute('refuel',
                     array(
                         'action' => 'add',
-                        'id' => $this->headerId,
+                        'id' => $headerId,
                     ));
             }
         }
-        return array('form' => $form,
-            'headerId' => $this->headerId,
-            'headerStatus' => $headerStatus,
-            'refNumberOrder' => $refNumberOrder,
+        return array(
+            'header' => $header,
+            'legs' => $legs,
             'refuels' => $refuels,
+            'form' => $form,
         );
     }
 
@@ -105,18 +102,19 @@ class RefuelController extends FlightController
      */
     public function editAction()
     {
-        $id = (int)$this->params()->fromRoute('id', 0);
-        if (!$id) {
+        $refuelId = (int)$this->params()->fromRoute('id', 0);
+        if (!$refuelId) {
             return $this->redirect()->toRoute('flight', array(
                 'action' => 'active'
             ));
         }
 
-        $refNumberOrder = $this->getRefuelModel()->getHeaderRefNumberOrderByRefuelId($id);
-        $headerStatus = $this->redirectForDoneStatus($refNumberOrder);
-        $data = $this->getRefuelModel()->get($id);
-        $this->headerId = (int)$data->headerId;
-        $refuels = $this->getRefuelModel()->getByHeaderId($this->headerId);
+        $refNumberOrder = $this->getRefuelModel()->getHeaderRefNumberOrderByRefuelId($refuelId);
+        $this->redirectForDoneStatus($refNumberOrder);
+        $data = $this->getRefuelModel()->get($refuelId);
+        $header = $this->getFlightHeaderModel()->getByRefNumberOrder($refNumberOrder);
+        $legs = $this->getLegModel()->getByHeaderId($header->id);
+        $refuels = $this->getRefuelModel()->getByHeaderId($header->id);
         $lastRefuel = end($refuels);
         if ($lastRefuel) {
             $previousDate = $lastRefuel['date'];
@@ -131,7 +129,7 @@ class RefuelController extends FlightController
         $form = new RefuelForm('refuel',
             array(
                 'libraries' => array(
-                    'airports' => $this->getParentLeg($this->headerId),
+                    'airports' => $this->getParentLeg($header->id),
                     'agents' => $this->getKontragents(),
                     'units' => $this->getUnits(),
                 ),
@@ -158,7 +156,7 @@ class RefuelController extends FlightController
                 $message = "Refuel '" . $summaryData . "' was successfully saved.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
-                $this->setDataForLogger($this->getRefuelModel()->get($id));
+                $this->setDataForLogger($this->getRefuelModel()->get($refuelId));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger);
                 $loggerPlugin->setLogMessage($message);
 
@@ -174,11 +172,12 @@ class RefuelController extends FlightController
             }
         }
 
-        return array('form' => $form,
-            'id' => $data->id,
-            'headerStatus' => $headerStatus,
-            'refNumberOrder' => $refNumberOrder,
+        return array(
+            'id' => $refuelId,
+            'header' => $header,
+            'legs' => $legs,
             'refuels' => $refuels,
+            'form' => $form,
         );
     }
 
@@ -187,26 +186,26 @@ class RefuelController extends FlightController
      */
     public function deleteAction()
     {
-        $id = (int)$this->params()->fromRoute('id', 0);
-        if (!$id) {
+        $refuelId = (int)$this->params()->fromRoute('id', 0);
+        if (!$refuelId) {
             return $this->redirect()->toRoute('home');
         }
 
         $request = $this->getRequest();
         $refUri = $request->getHeader('Referer')->uri()->getPath();
-        $refNumberOrder = $this->getRefuelModel()->getHeaderRefNumberOrderByRefuelId($id);
+        $refNumberOrder = $this->getRefuelModel()->getHeaderRefNumberOrderByRefuelId($refuelId);
         $this->redirectForDoneStatus($refNumberOrder);
 
         if ($request->isPost()) {
             $del = $request->getPost('del', 'No');
             if ($del == 'Yes') {
-                $id = (int)$request->getPost('id');
+                $refuelId = (int)$request->getPost('id');
 
                 $loggerPlugin = $this->LogPlugin();
-                $this->setDataForLogger($this->getRefuelModel()->get($id));
+                $this->setDataForLogger($this->getRefuelModel()->get($refuelId));
                 $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
-                $this->getRefuelModel()->remove($id);
+                $this->getRefuelModel()->remove($refuelId);
 
                 $message = "Refuel was successfully deleted.";
                 $this->flashMessenger()->addSuccessMessage($message);
@@ -223,10 +222,10 @@ class RefuelController extends FlightController
         }
 
         return array(
-            'id' => $id,
+            'id' => $refuelId,
             'referer' => $refUri,
             'refNumberOrder' => $refNumberOrder,
-            'data' => $this->getRefuelModel()->get($id)
+            'data' => $this->getRefuelModel()->get($refuelId)
         );
     }
 

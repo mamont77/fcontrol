@@ -23,7 +23,7 @@ $url = $this->url('permission', array(
 
 <form action="<?php echo $url; ?>" method="post">
     <div>
-        <input type="hidden" name="id" value="<?php echo (int)$this->data->id; ?>"/>
+        <input type="hidden" name="id" value="<?= (int)$this->data->id ?>"/>
         <input type="hidden" name="referer" value="<?php echo $this->referer; ?>"/>
         <input type="submit" name="del" value="Yes" class="btn btn-warning"/>
         <input type="submit" name="del" value="No" class="btn btn-link" onclick="history.go(-1);"/>

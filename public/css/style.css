@@ -27,6 +27,7 @@ h1 {
     border: 1px solid #ccc;
     padding: 1em;
     background-color: #eee;
+    margin-bottom: 1em;
 }
 
 #flightBrowse {
