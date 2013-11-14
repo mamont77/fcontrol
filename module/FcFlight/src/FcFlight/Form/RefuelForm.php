@@ -21,27 +21,27 @@ class RefuelForm extends BaseForm
     /**
      * @var array
      */
-    protected $airportsApDep = array();
+    protected $_airportsApDep = array();
 
     /**
      * @var array
      */
-    protected $airportsApArr = array();
+    protected $_airportsApArr = array();
 
     /**
      * @var array
      */
-    protected $airports = array();
+    protected $_agents = array();
 
     /**
      * @var array
      */
-    protected $agents = array();
+    protected $_legs = array();
 
     /**
      * @var array
      */
-    protected $units = array();
+    protected $_units = array();
 
     /**
      * @param null $name
@@ -55,13 +55,9 @@ class RefuelForm extends BaseForm
 
         parent::__construct($this->_formName);
 
-        $this->setLibrary('airportsApDep', $options['libraries']['airports'], 'apDepAirportId',
-            array('apDepIata', 'apDepIcao'), 'array');
-        $this->setLibrary('airportsApArr', $options['libraries']['airports'], 'apArrAirportId',
-            array('apArrIata', 'apArrIcao'), 'array');
-        $this->setAirports($this->airportsApDep, $this->airportsApArr);
-        $this->setLibrary('agents', $options['libraries']['agents'], 'id', 'name');
-        $this->setLibrary('units', $options['libraries']['units'], 'id', 'name');
+        $this->setLibrary('_agents', $options['libraries']['agents'], 'id', 'name');
+        $this->_legs = $options['libraries']['legs'];
+        $this->setLibrary('_units', $options['libraries']['units'], 'id', 'name');
 
         $this->setName($this->_formName);
         $this->setAttribute('method', 'post');
@@ -90,43 +86,32 @@ class RefuelForm extends BaseForm
         ));
 
         $this->add(array(
-            'name' => 'airport',
+            'name' => 'agentId',
             'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
+                'id' => 'agentId',
+                'class' => 'chosen input-medium',
+                'data-placeholder' => 'Agent',
                 'required' => true,
-                'size' => 5,
             ),
             'options' => array(
-                'label' => 'Airport',
-                'empty_option' => '-- Please select --',
-                'value_options' => $this->getAirports(),
+                'empty_option' => '',
+                'value_options' => $this->_agents,
             ),
         ));
 
         $this->add(array(
-            'name' => 'date',
-            'type' => 'Zend\Form\Element\Text',
-            'attributes' => array(
-                'required' => true,
-                'maxlength' => '10',
-            ),
-            'options' => array(
-                'label' => 'Date',
-                'description' => 'DD-MM-YYYY',
-            ),
-        ));
-
-        $this->add(array(
-            'name' => 'agent',
+            'name' => 'legId',
             'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
+                'id' => 'legId',
+                'class' => 'chosen input-medium',
+                'data-placeholder' => 'LEG',
                 'required' => true,
-                'size' => 5,
             ),
             'options' => array(
-                'label' => 'Agent',
-                'empty_option' => '-- Please select --',
-                'value_options' => $this->agents,
+                'empty_option' => '',
+                'value_options' => $this->_legs,
             ),
         ));
 
@@ -134,25 +119,53 @@ class RefuelForm extends BaseForm
             'name' => 'quantity',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
+                'id' => 'quantity',
+                'class' => 'input-medium',
                 'required' => true,
                 'maxlength' => '10',
-            ),
-            'options' => array(
-                'label' => 'Quantity',
+                'placeholder' => 'Quantity',
             ),
         ));
 
         $this->add(array(
-            'name' => 'unit',
+            'name' => 'unitId',
             'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
+                'id' => 'unitId',
+                'class' => 'chosen input-medium',
+                'data-placeholder' => 'Unit',
                 'required' => true,
-                'size' => 5,
             ),
             'options' => array(
-                'label' => 'Unit',
-                'empty_option' => '-- Please select --',
-                'value_options' => $this->units,
+                'empty_option' => '',
+                'value_options' => $this->_units,
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'price',
+            'type' => 'Zend\Form\Element\Text',
+            'attributes' => array(
+                'id' => 'price',
+                'class' => 'input-medium',
+                'required' => true,
+                'maxlength' => '10',
+                'placeholder' => 'Price',
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'date',
+            'type' => 'Zend\Form\Element\Text',
+            'attributes' => array(
+                'id' => 'date',
+                'class' => 'input-medium',
+                'required' => true,
+                'maxlength' => '10',
+                'placeholder' => 'Date',
+            ),
+            'options' => array(
+                'description' => 'DD-MM-YYYY',
             ),
         ));
 
@@ -166,27 +179,9 @@ class RefuelForm extends BaseForm
             ),
             'attributes' => array(
                 'type' => 'submit',
+                'class' => 'btn btn-primary',
                 'value' => 'Add',
             ),
         ));
-    }
-
-    /**
-     * @param array $a
-     * @param array $b
-     */
-    public function setAirports(array $a, array $b)
-    {
-        $compare = $a + $b;
-        uasort($compare, array($this, 'sortLibrary'));
-        $this->airports = $compare;
-    }
-
-    /**
-     * @return array
-     */
-    public function getAirports()
-    {
-        return $this->airports;
     }
 }

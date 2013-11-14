@@ -1,6 +1,5 @@
 <div id="refuel">
-    <table
-        class="table table-bordered table-hover table-condensed <? if ($this->fixedHeader): ?> table-fixed-header<? endif ?>">
+    <table class="table table-bordered table-hover table-condensed <? if ($this->fixedHeader): ?> table-fixed-header<? endif ?>">
         <thead class="header">
         <tr>
             <th>
@@ -38,7 +37,7 @@
         </thead>
         <tbody>
         <?php foreach ($refuels as $row) : ?>
-            <tr>
+            <tr class="<? if ($row['id'] == $currentId): ?><?= 'info' ?><? endif ?>">
                 <td>
                     <a rel="tooltip" href="#" data-toggle="tooltip" data-placement="top"
                        title="" data-original-title="<?php echo $this->escapeHtml($row['airportName']); ?>">

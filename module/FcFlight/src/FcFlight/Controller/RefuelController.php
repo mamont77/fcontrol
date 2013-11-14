@@ -49,8 +49,8 @@ class RefuelController extends FlightController
             array(
                 'headerId' => $headerId,
                 'libraries' => array(
-                    'airports' => $this->getParentLeg($headerId),
                     'agents' => $this->getKontragents(),
+                    'legs' => $this->getLegModel()->getListByHeaderId($headerId),
                     'units' => $this->getUnits(),
                 ),
                 'previousValues' => array(
@@ -129,8 +129,8 @@ class RefuelController extends FlightController
         $form = new RefuelForm('refuel',
             array(
                 'libraries' => array(
-                    'airports' => $this->getParentLeg($header->id),
                     'agents' => $this->getKontragents(),
+                    'legs' => $this->getLegModel()->getListByHeaderId($header->id),
                     'units' => $this->getUnits(),
                 ),
                 'previousValues' => array(

@@ -10,9 +10,6 @@ $this->headTitle($title);
     </li>
     <li class="active">Type of service: Refuel</li>
 </ul>
-<!--<div class="alert alert-info">-->
-<!--    <strong>Warning!</strong> Page in development.-->
-<!--</div>-->
 
 <?=
 $this->partial('widgets/components/flight.phtml',
@@ -25,92 +22,97 @@ $this->partial('widgets/components/flight.phtml',
 
 <h1><?= $title ?></h1>
 
-<?php
-$displayOptions = array(
-    'elements' => array(
-        'airport' => array(
-            'required' => true,
-            'class' => 'span10',
-        ),
-        'date' => array(
-            'required' => true,
-            'class' => 'span10',
-        ),
-        'agent' => array(
-            'required' => true,
-            'class' => 'span10',
-        ),
-        'quantity' => array(
-            'required' => true,
-            'class' => 'span10',
-        ),
-        'unit' => array(
-            'required' => true,
-            'class' => 'span10',
-        ),
-    ),
-);
-//$formType = 'inline';
-$form = $this->form;
-$form->setAttribute('action', $this->url('refuel', array('action' => 'add', 'id' => $this->header->id)));
-$form->prepare();
-?>
-
-<?=
-$this->partial('widgets/tables/refuel.phtml',
-    array(
-        'refuels' => $this->refuels,
-        'status' => $this->header->status,
-        'fixedHeader' => true,
-    ))
-?>
-
-<?php if ($form->getMessages()): ?>
+<?php if ($this->form->getMessages()): ?>
     <div class="alert alert-error">
         <button class="close" data-dismiss="alert" type="button">×</button>
         <strong>Invalid input!</strong>
         Form fields are not filled in correctly.
     </div>
 <?php else: ?>
-    <?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
-<?php endif; ?>
-
-<?php
-echo $this->formTwb()->openTag($form, $formType);
-echo $this->formRowTwb($form->get('headerId'));
-echo $this->formRowTwb($form->get('previousDate'));
-?>
-
-<div class="row-fluid">
-    <div class="span4">
-        <?php
-        echo $this->formRowTwb($form->get('airport'), $formType, $displayOptions['elements']['airport']);
-        echo $this->formRowTwb($form->get('date'), $formType, $displayOptions['elements']['date']);
-        ?>
-    </div>
-    <div class="span4">
-        <?php
-        echo $this->formRowTwb($form->get('agent'), $formType, $displayOptions['elements']['agent']);
-        ?>
-    </div>
-    <div class="span4">
-        <?php
-        echo $this->formRowTwb($form->get('quantity'), $formType, $displayOptions['elements']['quantity']);
-        echo $this->formRowTwb($form->get('unit'), $formType, $displayOptions['elements']['unit']);
-        ?>
-    </div>
+    <?= $this->flashMessenger()->render('success', array('alert', 'alert-success')) ?>
+<?php endif ?>
+<div class="alert alert-info">
+    <strong>Warning!</strong> Page in development.
 </div>
+<div id="refuel">
+    <?=
+    $this->partial('widgets/tables/refuel.phtml',
+        array(
+            'refuels' => $this->refuels,
+            'status' => $this->header->status,
+            'fixedHeader' => true,
+        )) ?>
 
-<?php
+    <?php
+    $form = $this->form;
+    $form->setAttribute('action', $this->url('refuel', array('action' => 'add', 'id' => $this->header->id)));
+    $form->prepare();
+    // Get the form label plugin
+    $formLabel = $this->plugin('formLabel');
+    echo $this->form()->openTag($form) . PHP_EOL;
+    echo $this->formHidden($form->get('id')) . PHP_EOL;
+    echo $this->formHidden($form->get('headerId')) . PHP_EOL;
+    echo $this->formHidden($form->get('previousDate')) . PHP_EOL;
+    echo $this->formHidden($form->get('csrf')) . PHP_EOL;
+    ?>
 
-echo $this->formRowTwb($form->get('csrf'));
-$actions = array(
-    $form->get('submitBtn'),
-);
-?>
-<div class="form-actions">
-    <?= $this->formActionsTwb($actions, $formType); ?>
+    <table class="table ">
+        <tr>
+            <td>
+                <?php
+                $field = $form->get('agentId');
+                echo $this->formSelect($field);
+                echo $this->formElementErrors($field);
+                ?>
+            </td>
+            <td>
+                <?php
+                $field = $form->get('legId');
+                echo $this->formSelect($field);
+                echo $this->formElementErrors($field);
+                ?>
+            </td>
+            <td>
+                <?php
+                $field = $form->get('quantity');
+                echo $this->formInput($field);
+                echo '<p class="help-block" id="help-dateOrder">Под этим полем будет пересчитанное значение!<br />Или добавить поле ввода readonly?</p>';
+                echo $this->formElementErrors($field);
+                ?>
+            </td>
+            <td>
+                <?php
+                $field = $form->get('unitId');
+                echo $this->formSelect($field);
+                echo $this->formElementErrors($field);
+                ?>
+            </td>
+            <td>
+                <?php
+                $field = $form->get('price');
+                echo $this->formInput($field);
+                echo '<p class="help-block" id="help-dateOrder">Под этим полем будет Total (quantity*price)!<br />Или добавить поле ввода readonly?</p>';
+                echo $this->formElementErrors($field);
+                ?>
+            </td>
+            <td>
+                <?php
+                $field = $form->get('date');
+                echo $field->getOption('label');
+                echo $this->formInput($field);
+                echo '<p class="help-block" id="help-dateOrder">' . $field->getOption('description'). '<br />Говорили да забылось.<br />Это выпадающий список?<br />Можешь показать конкретный пример значений на любом полете? К примеру: http://fcontrol.rapvokzal.com/refuel/add/43</p>';
+                echo $this->formElementErrors($field);
+                ?>
+            </td>
+            <td>
+                <?php
+                $field = $form->get('submitBtn');
+                echo $this->formElement($field);
+                ?>
+            </td>
+        </tr>
+    </table>
+    <?php
+    echo $this->form()->closeTag();
+    ?>
 </div>
-
-<?php
-echo $this->formTwb()->closeTag();
