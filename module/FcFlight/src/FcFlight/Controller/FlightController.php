@@ -19,6 +19,7 @@ use FcLibraries\Model\CountryModel;
 use FcLibraries\Model\CurrencyModel;
 use FcLibraries\Model\KontragentModel;
 use FcLibraries\Model\RegionModel;
+use FcLibraries\Model\TypeOfApServiceModel;
 use FcLibraries\Model\UnitModel;
 use FcFlight\Model\FlightHeaderModel;
 use FcFlight\Model\LegModel;
@@ -112,6 +113,11 @@ class FlightController extends AbstractActionController
      * @var RegionModel
      */
     protected $regionModel;
+
+    /**
+     * @var TypeOfApServiceModel
+     */
+    protected $typeOfApServiceModel;
 
     /**
      * @var UnitModel
@@ -846,6 +852,29 @@ class FlightController extends AbstractActionController
     public function getRegions()
     {
         return $this->getRegionModel()->fetchAll();
+    }
+
+    /**
+     * @return TypeOfApServiceModel
+     */
+    public function getTypeOfApServiceModel()
+    {
+        if (!$this->typeOfApServiceModel) {
+            $sm = $this->getServiceLocator();
+            $this->typeOfApServiceModel = $sm->get('FcLibraries\Model\TypeOfApServiceModel');
+        }
+
+        return $this->typeOfApServiceModel;
+    }
+
+    /**
+     * Get TypeOfApService list
+     *
+     * @return null|\Zend\Db\ResultSet\ResultSetInterface
+     */
+    public function getTypeOfApServices()
+    {
+        return $this->getTypeOfApServiceModel()->fetchAll();
     }
 
     /**
