@@ -61,10 +61,13 @@ return array(
                         'route' => 'zfcadmin/regions',
                     ),
                     array(
+                        'label' => 'Type of AP Services',
+                        'route' => 'zfcadmin/type_of_ap_services',
+                    ),
+                    array(
                         'label' => 'Units',
                         'route' => 'zfcadmin/units',
                     ),
-
                     array(
                         'type' => 'uri',
                         'divider' => true,

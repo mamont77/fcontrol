@@ -155,6 +155,12 @@ class SearchModel extends AbstractTableGateway
                 $select->order('name ' . Select::ORDER_ASCENDING);
                 break;
 
+            case 'library_type_of_ap_service':
+                $select->columns(array('id', 'name'));
+                $select->where->like('name', $text . '%');
+                $select->order('name ' . Select::ORDER_ASCENDING);
+                break;
+
             default:
                 // skip it
                 break;

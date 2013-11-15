@@ -28,7 +28,8 @@ use FcLibraries\Model\RegionModel;
 use FcLibraries\Filter\RegionFilter;
 use FcLibraries\Model\UnitModel;
 use FcLibraries\Filter\UnitFilter;
-
+use FcLibraries\Model\TypeOfApServiceModel;
+use FcLibraries\Filter\TypeOfApServiceFilter;
 /**
  * Class Module
  * @package FcLibraries
@@ -196,6 +197,14 @@ class Module
                 'FcLibraries\Filter\UnitFilter' => function ($sm) {
                         $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                         return new UnitFilter($dbAdapter);
+                    },
+                'FcLibraries\Model\TypeOfApServiceModel' => function ($sm) {
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new TypeOfApServiceModel($dbAdapter);
+                    },
+                'FcLibraries\Filter\TypeOfApServiceFilter' => function ($sm) {
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new TypeOfApServiceFilter($dbAdapter);
                     },
             ),
         );

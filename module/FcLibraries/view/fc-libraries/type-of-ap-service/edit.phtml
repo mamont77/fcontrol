@@ -1,13 +1,14 @@
+<?php
+$title = 'Edit Type Of Ap Service';
+$this->headTitle($title);
+?>
 <ul class="breadcrumb">
     <li><a href="/">Home</a> <span class="divider">/</span></li>
     <li><a href="<?=$this->url('zfcadmin/libraries', array('action' => 'index'));?>">Libraries</a> <span class="divider">/</span></li>
-    <li><a href="<?=$this->url('zfcadmin/units', array('action' => 'index'));?>">Units</a> <span class="divider">/</span></li>
-    <li class="active">Add form</li>
+    <li><a href="<?=$this->url('zfcadmin/type_of_ap_services', array('action' => 'index'));?>">Type Of Ap Services</a> <span class="divider">/</span></li>
+    <li class="active">Edit form</li>
 </ul>
-<?php
-$title = 'Add Unit';
-$this->headTitle($title);
-?>
+
 <h1><?= $title ?></h1>
 
 <?php
@@ -20,7 +21,13 @@ $displayOptions = array(
     ),
 );
 $form = $this->form;
-$form->setAttribute('action', $this->url('zfcadmin/unit', array('action' => 'add')));
+$form->setAttribute('action', $this->url(
+    'zfcadmin/type_of_ap_service',
+    array(
+        'action' => 'edit',
+        'id'     => $this->id,
+    )
+));
 $form->prepare();
 ?>
 
@@ -30,8 +37,6 @@ $form->prepare();
     <strong>Invalid input!</strong>
     Form fields are not filled in correctly.
 </div>
-<?php else: ?>
-    <?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
 <?php endif; ?>
 
 <?php echo $this->formTwb($form, $formType, $displayOptions); ?>

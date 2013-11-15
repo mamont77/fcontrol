@@ -13,6 +13,7 @@ return array(
             'FcLibraries\Controller\Index' => 'FcLibraries\Controller\IndexController',
             'FcLibraries\Controller\Kontragent' => 'FcLibraries\Controller\KontragentController',
             'FcLibraries\Controller\Region' => 'FcLibraries\Controller\RegionController',
+            'FcLibraries\Controller\TypeOfApService' => 'FcLibraries\Controller\TypeOfApServiceController',
             'FcLibraries\Controller\Unit' => 'FcLibraries\Controller\UnitController',
         ),
     ),
@@ -324,6 +325,35 @@ return array(
                             ),
                             'defaults' => array(
                                 'controller' => 'FcLibraries\Controller\Region',
+                                'action' => 'index',
+                            ),
+                        ),
+                    ),
+                    'type_of_ap_services' => array(
+                        'type' => 'segment',
+                        'options' => array(
+                            'route' => '/libraries/type_of_ap_services[/page/:page][/order_by/:order_by][/:order]',
+                            'constraints' => array(
+                                'page' => '[0-9]+',
+                                'order_by' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'order' => 'ASC|DESC',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'FcLibraries\Controller\TypeOfApService',
+                                'action' => 'index',
+                            ),
+                        ),
+                    ),
+                    'type_of_ap_service' => array(
+                        'type' => 'segment',
+                        'options' => array(
+                            'route' => '/libraries/type_of_ap_service[/:action][/:id]',
+                            'constraints' => array(
+                                'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'id' => '[0-9]+',
+                            ),
+                            'defaults' => array(
+                                'controller' => 'FcLibraries\Controller\TypeOfApService',
                                 'action' => 'index',
                             ),
                         ),

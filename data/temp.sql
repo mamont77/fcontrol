@@ -1,27 +1,32 @@
-SELECT
-flightPermissionForm.id AS id, 
-flightPermissionForm.headerId AS headerId,
-flightPermissionForm.agentId AS agentId,
-flightPermissionForm.legId AS legId,
-flightPermissionForm.countryId AS countryId,
-flightPermissionForm.typeOfPermission AS typeOfPermission,
-flightPermissionForm.permission AS permission,
-agent.name AS agentName,
-agent.address AS agentAddress,
-agent.mail AS agentMail,
-leg.apDepAirportId AS airportDepartureId,
-leg.apArrAirportId AS airportArrivalId,
-airportDeparture.code_icao AS airportDepartureICAO,
-airportDeparture.code_iata AS airportDepartureIATA,
-airportArrival.code_icao AS airportArrivalICAO,
-airportArrival.code_iata AS airportArrivalIATA,
-country.name AS countryName,
-country.code AS countryCode
-FROM flightPermissionForm
-LEFT JOIN library_kontragent AS agent ON flightPermissionForm.agentId = agent.id
-LEFT JOIN flightLegForm AS leg ON flightPermissionForm.legId = leg.id
-LEFT JOIN library_airport AS airportDeparture ON leg.apDepAirportId = airportDeparture.id
-LEFT JOIN library_airport AS airportArrival ON leg.apArrAirportId = airportArrival.id
-LEFT JOIN library_country AS country ON flightPermissionForm.countryId = country.id
-WHERE flightPermissionForm.headerId = '30'
-ORDER BY flightPermissionForm.legId ASC, flightPermissionForm.id ASC
+-- --------------------------------------------------------
+-- Хост:                         127.0.0.1
+-- Версия сервера:               5.1.71-community-log - MySQL Community Server (GPL)
+-- ОС Сервера:                   Win32
+-- HeidiSQL Версия:              8.1.0.4545
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+-- Дамп структуры для таблица fcontrol.library_unit
+DROP TABLE IF EXISTS `library_type_of_service`;
+CREATE TABLE IF NOT EXISTS `library_type_of_service` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `name` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+-- Дамп данных таблицы fcontrol.library_unit: ~4 rows (приблизительно)
+/*!40000 ALTER TABLE `library_unit` DISABLE KEYS */;
+INSERT INTO `library_unit` (`id`, `name`) VALUES
+	(2, 'LTR'),
+	(4, 'MT'),
+	(5, 'PCS'),
+	(3, 'USG');
+/*!40000 ALTER TABLE `library_unit` ENABLE KEYS */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

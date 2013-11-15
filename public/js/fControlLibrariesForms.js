@@ -19,6 +19,7 @@
                 'currency': 'admin/libraries/currencies',
                 'kontragent': 'admin/libraries/kontragents',
                 'region': 'admin/libraries/regions',
+                'type_of_ap_service': 'admin/libraries/type_of_ap_services',
                 'unit': 'admin/libraries/units',
                 'flightHeader': ''
             }

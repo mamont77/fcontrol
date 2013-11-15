@@ -1,13 +1,14 @@
-<ul class="breadcrumb">
-    <li><a href="/">Home</a> <span class="divider">/</span></li>
-    <li><a href="<?=$this->url('zfcadmin/libraries', array('action' => 'index'));?>">Libraries</a> <span class="divider">/</span></li>
-    <li><a href="<?=$this->url('zfcadmin/units', array('action' => 'index'));?>">Units</a> <span class="divider">/</span></li>
-    <li class="active">Add form</li>
-</ul>
 <?php
-$title = 'Add Unit';
+$title = 'Add Type Of Ap Service';
 $this->headTitle($title);
 ?>
+<ul class="breadcrumb">
+    <li><a href="/">Home</a> <span class="divider">/</span></li>
+    <li><a href="<?= $this->url('zfcadmin/libraries', array('action' => 'index')) ?>">Libraries</a> <span class="divider">/</span></li>
+    <li><a href="<?= $this->url('zfcadmin/type_of_ap_services', array('action' => 'index')) ?>">Type Of Ap Services</a> <span class="divider">/</span></li>
+    <li class="active">Add form</li>
+</ul>
+
 <h1><?= $title ?></h1>
 
 <?php
@@ -20,7 +21,7 @@ $displayOptions = array(
     ),
 );
 $form = $this->form;
-$form->setAttribute('action', $this->url('zfcadmin/unit', array('action' => 'add')));
+$form->setAttribute('action', $this->url('zfcadmin/type_of_ap_service', array('action' => 'add')));
 $form->prepare();
 ?>
 

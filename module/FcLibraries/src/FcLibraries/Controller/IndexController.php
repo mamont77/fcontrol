@@ -17,6 +17,7 @@ use FcLibraries\Model\CountryModel;
 use FcLibraries\Model\CurrencyModel;
 use FcLibraries\Model\KontragentModel;
 use FcLibraries\Model\RegionModel;
+use FcLibraries\Model\TypeOfApServiceModel;
 use FcLibraries\Model\UnitModel;
 
 
@@ -77,6 +78,11 @@ class IndexController extends AbstractActionController
      * @var RegionModel
      */
     protected $regionModel;
+
+    /**
+     * @var TypeOfApServiceModel
+     */
+    protected $typeOfApServiceModel;
 
     /**
      * @var UnitModel
@@ -254,6 +260,19 @@ class IndexController extends AbstractActionController
     public function getRegions()
     {
         return $this->getRegionModel()->fetchAll();
+    }
+
+    /**
+     * @return TypeOfApServiceModel
+     */
+    public function getTypeOfApServiceModel()
+    {
+        if (!$this->typeOfApServiceModel) {
+            $sm = $this->getServiceLocator();
+            $this->typeOfApServiceModel = $sm->get('FcLibraries\Model\TypeOfApServiceModel');
+        }
+
+        return $this->typeOfApServiceModel;
     }
 
     /**

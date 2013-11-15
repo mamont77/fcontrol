@@ -57,6 +57,7 @@ class AdvancedSearchForm extends Form
                     'library_currency' => 'Currency',
                     'library_kontragent' => 'Kontragent',
                     'library_region' => 'Region',
+                    'library_type_of_ap_service' => 'Type of AP Service',
                     'library_unit' => 'Unit',
                 ),
             ),

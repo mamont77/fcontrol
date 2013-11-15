@@ -1,0 +1,31 @@
+<?php
+$title = 'Remove Type Of Ap Service';
+$this->headTitle($title);
+?>
+<ul class="breadcrumb">
+    <li><a href="/">Home</a> <span class="divider">/</span></li>
+    <li><a href="<?=$this->url('zfcadmin/libraries', array('action' => 'index'));?>">Libraries</a> <span class="divider">/</span></li>
+    <li><a href="<?=$this->url('zfcadmin/type_of_ap_services', array('action' => 'index'));?>">Type Of Ap Services</a> <span class="divider">/</span></li>
+    <li class="active">Remove form</li>
+</ul>
+
+<h1><?= $title ?></h1>
+
+<p>Are you sure you want to delete
+    <strong>'<?php echo $this->escapeHtml($data->name); ?>'</strong>?
+</p>
+<?php
+$url = $this->url('zfcadmin/type_of_ap_service', array(
+    'action' => 'delete',
+    'id'     => $this->id,
+));
+?>
+
+<form action="<?php echo $url; ?>" method="post">
+<div>
+    <input type="hidden" name="id" value="<?php echo (int)$data->id; ?>" />
+    <input type="hidden" name="name" value="<?php echo $this->escapeHtml($data->name); ?>" />
+    <input type="submit" name="del" value="Yes" class="btn btn-warning" />
+    <input type="submit" name="del" value="No" class="btn btn-link" />
+</div>
+</form>
