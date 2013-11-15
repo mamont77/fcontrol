@@ -140,7 +140,7 @@ class PermissionForm extends BaseForm
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'class' => 'input-medium',
-                'required' => true,
+                'required' => false,
                 'placeholder' => 'Permission',
                 'maxlength' => '40',
             ),
@@ -151,7 +151,7 @@ class PermissionForm extends BaseForm
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'class' => 'input-medium',
-                'required' => true,
+                'required' => false,
                 'placeholder' => 'Comment',
                 'maxlength' => '30',
             ),

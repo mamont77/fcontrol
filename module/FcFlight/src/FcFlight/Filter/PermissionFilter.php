@@ -184,7 +184,7 @@ class PermissionFilter implements InputFilterAwareInterface
 
             $inputFilter->add($factory->createInput(array(
                 'name' => 'permission',
-                'required' => true,
+                'required' => false,
                 'filters' => $this->defaultFilters,
                 'validators' => array(
                     array(
@@ -199,7 +199,7 @@ class PermissionFilter implements InputFilterAwareInterface
 
             $inputFilter->add($factory->createInput(array(
                 'name' => 'comment',
-                'required' => true,
+                'required' => false,
                 'filters' => $this->defaultFilters,
                 'validators' => array(
                     array(

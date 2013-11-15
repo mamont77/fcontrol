@@ -76,7 +76,7 @@ $this->partial('widgets/components/flight.phtml',
                 <?php
                 $field = $form->get('quantity');
                 echo $this->formInput($field);
-                echo '<p class="help-block" id="help-dateOrder">Под этим полем будет пересчитанное значение!<br />Или добавить поле ввода readonly?</p>';
+                echo '<p class="help-block" id="help-dateOrder">Под этим полем будет пересчитанное значение!<br />Или добавить поле ввода readonly? Пересчитываем оба поля!</p>';
                 echo $this->formElementErrors($field);
                 ?>
             </td>
@@ -100,7 +100,7 @@ $this->partial('widgets/components/flight.phtml',
                 $field = $form->get('date');
                 echo $field->getOption('label');
                 echo $this->formInput($field);
-                echo '<p class="help-block" id="help-dateOrder">' . $field->getOption('description'). '<br />Говорили да забылось.<br />Это выпадающий список?<br />Можешь показать конкретный пример значений на любом полете? К примеру: http://fcontrol.rapvokzal.com/refuel/add/43</p>';
+                echo '<p class="help-block" id="help-dateOrder">' . $field->getOption('description'). '<br />Говорили да забылось.<br />Это выпадающий список?<br />Можешь показать конкретный пример значений на любом полете? К примеру: http://fcontrol.rapvokzal.com/refuel/add/43. Подставить из лега, но с возможностью редактировать!</p>';
                 echo $this->formElementErrors($field);
                 ?>
             </td>
