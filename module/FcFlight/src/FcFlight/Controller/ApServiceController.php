@@ -38,7 +38,9 @@ class ApServiceController extends FlightController
         $apServices = $this->getApServiceModel()->getByHeaderId($headerId);
         $builtAirports = $this->buildAirportsFromLeg($legs);
 
+        $apServicesTotal = 0;
         foreach ($apServices as &$apService) {
+            $apServicesTotal += (float)$apService['priceUSD'];
             $builtId = $apService['legId'] . '-' . $apService['airportId'];
             if (array_key_exists($builtId, $builtAirports)) {
                 $apService['builtAirportName'] = $builtAirports[$builtId];
@@ -91,6 +93,7 @@ class ApServiceController extends FlightController
             'header' => $header,
             'legs' => $legs,
             'apServices' => $apServices,
+            'apServicesTotal' => $apServicesTotal,
             'form' => $form,
         );
     }
@@ -117,7 +120,9 @@ class ApServiceController extends FlightController
         $apServices = $this->getApServiceModel()->getByHeaderId($header->id);
         $builtAirports = $this->buildAirportsFromLeg($legs);
 
+        $apServicesTotal = 0;
         foreach ($apServices as &$apService) {
+            $apServicesTotal += (float)$apService['priceUSD'];
             $builtId = $apService['legId'] . '-' . $apService['airportId'];
             if (array_key_exists($builtId, $builtAirports)) {
                 $apService['builtAirportName'] = $builtAirports[$builtId];
@@ -177,6 +182,7 @@ class ApServiceController extends FlightController
             'header' => $header,
             'legs' => $legs,
             'apServices' => $apServices,
+            'apServicesTotal' => $apServicesTotal,
             'form' => $form,
         );
     }

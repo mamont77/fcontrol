@@ -37,6 +37,7 @@ $this->partial('widgets/components/flight.phtml',
     $this->partial('widgets/tables/ap-service.phtml',
         array(
             'apServices' => $this->apServices,
+            'apServicesTotal' => $this->apServicesTotal,
             'status' => $this->header->status,
             'fixedHeader' => true,
         )) ?>

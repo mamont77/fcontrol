@@ -45,7 +45,11 @@ $this->partial('widgets/components/flight.phtml',
 
 <? if (count($this->apServices) > 0): ?>
     <legend>AP Services</legend>
-    <?php echo $this->partial('widgets/tables/ap-service.phtml', array('apServices' => $this->apServices, 'status' => $this->header->status)); ?>
+    <?= $this->partial('widgets/tables/ap-service.phtml', array(
+        'apServices' => $this->apServices,
+        'apServicesTotal' => $this->apServicesTotal,
+        'status' => $this->header->status,
+    )) ?>
 <? endif; ?>
 
 

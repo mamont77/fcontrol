@@ -334,11 +334,12 @@ class FlightController extends AbstractActionController
         $typeOfPermissions = $this->getTypeOfPermissionModel()->getByHeaderId($header->id);
 
         $builtAirports = $this->buildAirportsFromLeg($legs);
+        $apServicesTotal = 0;
         foreach ($apServices as &$apService) {
+            $apServicesTotal += (float)$apService['priceUSD'];
             $builtId = $apService['legId'] . '-' . $apService['airportId'];
             if (array_key_exists($builtId, $builtAirports)) {
                 $apService['builtAirportName'] = $builtAirports[$builtId];
-
             }
         }
 
@@ -350,6 +351,7 @@ class FlightController extends AbstractActionController
             'hotels' => $hotels,
             'transfers' => $transfers,
             'apServices' => $apServices,
+            'apServicesTotal' => $apServicesTotal,
             'handing' => $handing,
             'typeOfPermissions' => $typeOfPermissions,
         ));
