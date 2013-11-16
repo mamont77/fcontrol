@@ -36,12 +36,21 @@ class ApServiceController extends FlightController
         $header = $this->getFlightHeaderModel()->getByRefNumberOrder($refNumberOrder);
         $legs = $this->getLegModel()->getByHeaderId($headerId);
         $apServices = $this->getApServiceModel()->getByHeaderId($headerId);
+        $builtAirports = $this->buildAirportsFromLeg($legs);
+
+        foreach ($apServices as &$apService) {
+            $builtId = $apService['legId'] . '-' . $apService['airportId'];
+            if (array_key_exists($builtId, $builtAirports)) {
+                $apService['builtAirportName'] = $builtAirports[$builtId];
+
+            }
+        }
 
         $form = new ApServiceForm('apService',
             array(
                 'headerId' => $headerId,
                 'libraries' => array(
-                    'airports' => $this->_buildAirportsFromLeg($legs),
+                    'airports' => $builtAirports,
                     'typeOfApServices' => $this->getTypeOfApServices(),
                     'agents' => $this->getKontragents(),
                 ),
@@ -106,7 +115,15 @@ class ApServiceController extends FlightController
 
         $this->redirectForDoneStatus($refNumberOrder);
         $apServices = $this->getApServiceModel()->getByHeaderId($header->id);
+        $builtAirports = $this->buildAirportsFromLeg($legs);
 
+        foreach ($apServices as &$apService) {
+            $builtId = $apService['legId'] . '-' . $apService['airportId'];
+            if (array_key_exists($builtId, $builtAirports)) {
+                $apService['builtAirportName'] = $builtAirports[$builtId];
+
+            }
+        }
         $this->setDataForLogger($data);
         $loggerPlugin = $this->LogPlugin();
         $loggerPlugin->setOldLogRecord($this->dataForLogger);
@@ -115,7 +132,7 @@ class ApServiceController extends FlightController
             array(
                 'headerId' => $header->id,
                 'libraries' => array(
-                    'airports' => $this->_buildAirportsFromLeg($legs),
+                    'airports' => $builtAirports,
                     'typeOfApServices' => $this->getTypeOfApServices(),
                     'agents' => $this->getKontragents(),
                 ),
@@ -213,31 +230,6 @@ class ApServiceController extends FlightController
         );
     }
 
-    /**
-     * @param $legs
-     * @return array
-     */
-    public function _buildAirportsFromLeg($legs)
-    {
-        $airports = array();
-        $legsCopy = $legs;
-        $legFirst = reset($legs);
-        $airports[$legFirst['id'] . '-' . $legFirst['apDepAirportId']] = $legFirst['apDepIcao'] . ' (' . $legFirst['apDepIata'] . '): '
-            . $legFirst['dateOfFlight'] . ' ' . $legFirst['apDepTime'];
-        foreach ($legs as $leg) {
-            $nextLeg = next($legsCopy);
-            $selectionValues = $leg['apArrIcao'] . ' (' . $leg['apArrIata'] . '): '
-                . $leg['dateOfFlight'] . ' ' . $leg['apArrTime'];
-
-            if (!is_bool($nextLeg)) {
-                $selectionValues .= ' ⇒ ' . $nextLeg['dateOfFlight'] . ' ' . $nextLeg['apDepTime']; //✈
-            }
-
-            $airports[$leg['id'] . '-' . $leg['apArrAirportId']] = $selectionValues;
-        }
-
-        return $airports;
-    }
     /**
      * @param $data
      */

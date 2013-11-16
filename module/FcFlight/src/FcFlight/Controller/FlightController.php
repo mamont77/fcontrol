@@ -333,6 +333,15 @@ class FlightController extends AbstractActionController
         $handing = $this->getHandingModel()->getByHeaderId($header->id);
         $typeOfPermissions = $this->getTypeOfPermissionModel()->getByHeaderId($header->id);
 
+        $builtAirports = $this->buildAirportsFromLeg($legs);
+        foreach ($apServices as &$apService) {
+            $builtId = $apService['legId'] . '-' . $apService['airportId'];
+            if (array_key_exists($builtId, $builtAirports)) {
+                $apService['builtAirportName'] = $builtAirports[$builtId];
+
+            }
+        }
+
         return new ViewModel(array(
             'header' => $header,
             'legs' => $legs,
@@ -1082,5 +1091,31 @@ class FlightController extends AbstractActionController
                 ));
         }
         return $data->status;
+    }
+
+    /**
+     * @param $legs
+     * @return array
+     */
+    public function buildAirportsFromLeg($legs)
+    {
+        $airports = array();
+        $legsCopy = $legs;
+        $legFirst = reset($legs);
+        $airports[$legFirst['id'] . '-' . $legFirst['apDepAirportId']] = $legFirst['apDepIcao'] . ' (' . $legFirst['apDepIata'] . '): '
+            . $legFirst['dateOfFlight'] . ' ' . $legFirst['apDepTime'];
+        foreach ($legs as $leg) {
+            $nextLeg = next($legsCopy);
+            $selectionValues = $leg['apArrIcao'] . ' (' . $leg['apArrIata'] . '): '
+                . $leg['dateOfFlight'] . ' ' . $leg['apArrTime'];
+
+            if (!is_bool($nextLeg)) {
+                $selectionValues .= ' ⇒ ' . $nextLeg['dateOfFlight'] . ' ' . $nextLeg['apDepTime']; //✈
+            }
+
+            $airports[$leg['id'] . '-' . $leg['apArrAirportId']] = $selectionValues;
+        }
+
+        return $airports;
     }
 }
