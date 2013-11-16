@@ -117,6 +117,7 @@ class ApServiceForm extends BaseForm
             'name' => 'price',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
+                'id' => 'price',
                 'class' => 'input-small',
                 'required' => true,
                 'placeholder' => 'Price',
@@ -143,6 +144,7 @@ class ApServiceForm extends BaseForm
             'name' => 'exchangeRate',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
+                'id' => 'exchangeRate',
                 'class' => 'input-small',
                 'required' => true,
                 'placeholder' => 'Exchange Rate',
@@ -154,6 +156,7 @@ class ApServiceForm extends BaseForm
             'name' => 'priceUSD',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
+                'id' => 'priceUSD',
                 'class' => 'input-small',
                 'required' => true,
                 'placeholder' => 'Price USD',

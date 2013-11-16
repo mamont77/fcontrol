@@ -20,6 +20,28 @@
         });
     }
 
+    function convertApServicePrice2Usd(currentValue, exchangeRateValue) {
+        var result = 0;
+        currentValue = parseFloat(currentValue);
+        exchangeRateValue = parseFloat(exchangeRateValue);
+        if (!isNaN(currentValue) && !isNaN(exchangeRateValue)) {
+            result = currentValue * exchangeRateValue;
+        }
+
+        return result.toFixed(2);
+    }
+
+    fControl.behaviors.allForms = {
+        attach: function (context, settings) {
+            $('.chosen').chosen(
+                {
+                    allow_single_deselect: true,
+                    no_results_text: 'Nothing found!'
+                }
+            );
+        }
+    };
+
     fControl.behaviors.flightHeaderForm = {
         attach: function (context, settings) {
             var $form = $('form#flightHeader');
@@ -105,99 +127,18 @@
         }
     };
 
-    fControl.behaviors.permissionForm = {
+    fControl.behaviors.ApServiceForm = {
         attach: function (context, settings) {
-//            var $form = $('form#permission'),
-//                headerId = $form.find('#headerId').val(),
-//                $agentId = $form.find('#agentId'),
-//                $legId = $form.find('#legId'),
-//                $countryId = $form.find('#countryId'),
-//                $typeOfPermission = $form.find('#typeOfPermission');
+            var $form = $('form#apService'),
+                $price = $($form).find('#price'),
+                $exchangeRate = $($form).find('#exchangeRate'),
+                $priceUsd = $($form).find('#priceUSD');
 
-//            var config = {
-//                '.chosen-select': {},
-//                '.agentId': {allow_single_deselect: true},
-//                '.chosen-select-no-single': {disable_search_threshold: 10},
-//                '.chosen-select-no-results': {no_results_text: 'Nothing found!'},
-//                '.chosen-select-width': {width: "95%"}
-//            };
-//
-//            for (var selector in config) {
-//                if (config.hasOwnProperty(selector)) {
-//                    $(selector).chosen(config[selector]);
-//                }
-//            }
-
-            $('.chosen').chosen(
-                {
-                    allow_single_deselect: true,
-                    no_results_text: 'Nothing found!'
-                }
-            );
-
-//                $agentsList = $form.find('#agentsList'),
-//                $legsList = $form.find('#legsList'),
-//                $countriesList = $form.find('#countriesList'),
-//                $typeOfPermissionsList = $form.find('#typeOfPermissionsList');
-
-//            $agentsList.typeahead({
-//                name: 'agents',
-//                remote: '/permission/get-agents',
-//                template: [
-//                    '<p class="repo-address">{{address}}</p>',
-//                    '<p class="repo-name">{{name}}</p>',
-//                    '<p class="repo-mail">{{mail}}</p>'
-//                ].join(''),
-//                engine: Hogan
-//            });
-//
-//            $agentsList.on("typeahead:selected typeahead:autocompleted", function (e, datum) {
-//                $agentId.val(datum.id);
-//            });
-//
-//            $legsList.typeahead({
-//                name: 'legs_' + headerId,
-//                remote: '/permission/get-legs/' + headerId,
-//                template: [
-//                    '<p class="repo-address">{{address}}</p>',
-//                    '<p class="repo-name">{{name}}</p>',
-//                    '<p class="repo-mail">{{mail}}</p>'
-//                ].join(''),
-//                engine: Hogan
-//            });
-//
-//            $legsList.on("typeahead:selected typeahead:autocompleted", function (e, datum) {
-//                $legId.val(datum.id);
-//            });
-//
-//            $countriesList.typeahead({
-//                name: 'countries',
-//                prefetch: '/permission/get-countries',
-//                template: [
-//                    '<p class="repo-code">{{code}}</p>',
-//                    '<p class="repo-name">{{name}}</p>'
-//                ].join(''),
-//                engine: Hogan
-//            });
-//
-//            $countriesList.on("typeahead:selected typeahead:autocompleted", function (e, datum) {
-//                $countryId.val(datum.id);
-//            });
-//
-//            $typeOfPermissionsList.typeahead({
-//                name: 'typeOfPermissions',
-//                local: [
-//                    'OFL',
-//                    'LND',
-//                    'DG',
-//                    'DIP'
-//                ]
-//            });
-//
-//            $typeOfPermissionsList.on("typeahead:selected typeahead:autocompleted", function (e, datum) {
-//                $typeOfPermission.val(datum.value);
-//            });
-
+            $price.keyup(function () {
+                var currentValue = $(this).val() || 0,
+                    exchangeRateValue = $exchangeRate.val() || 1;
+                $priceUsd.val(convertApServicePrice2Usd(currentValue, exchangeRateValue));
+            });
         }
     };
 
