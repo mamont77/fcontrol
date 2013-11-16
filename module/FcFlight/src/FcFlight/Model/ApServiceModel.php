@@ -76,9 +76,12 @@ class ApServiceModel extends AbstractTableGateway
 
         $resultSet = $this->selectWith($select);
         $row = $resultSet->current();
+
         if (!$row) {
             throw new \Exception("Could not find row $id");
         }
+
+        $row->airportId = $row->legId . '-' . $row->airportId;
 
         return $row;
     }

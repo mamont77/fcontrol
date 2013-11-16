@@ -1,3 +1,4 @@
+
 <?php
 $title = 'Edit AP Service';
 $this->headTitle($title);
@@ -22,35 +23,7 @@ $this->partial('widgets/components/flight.phtml',
 
 <h1><?= $title ?></h1>
 
-<?php
-$displayOptions = array(
-    'class' => 'form-horizontal',
-    'elements' => array(
-        'airportId' => array(
-            'required' => true,
-        ),
-        'agentId' => array(
-            'required' => true,
-        ),
-    ),
-);
-$form = $this->form;
-$form->setAttribute('action', $this->url('apService', array('action' => 'edit', 'id' => $this->id)));
-$form->prepare();
-?>
-
-<?=
-$this->partial('widgets/tables/ap-service.phtml',
-    array(
-        'currentId' => $this->id,
-        'apServices' => $this->apServices,
-        'status' => $this->header->status,
-        'fixedHeader' => true,
-    )
-)
-?>
-
-<?php if ($form->getMessages()): ?>
+<?php if ($this->form->getMessages()): ?>
     <div class="alert alert-error">
         <button class="close" data-dismiss="alert" type="button">×</button>
         <strong>Invalid input!</strong>
@@ -60,5 +33,84 @@ $this->partial('widgets/tables/ap-service.phtml',
     <?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
 <?php endif; ?>
 
-<?php echo $this->formTwb($form, $formType, $displayOptions); ?>
+<div id="apService">
+    <?=
+    $this->partial('widgets/tables/ap-service.phtml',
+        array(
+            'currentId' => $this->id,
+            'apServices' => $this->apServices,
+            'status' => $this->header->status,
+            'fixedHeader' => true,
+        )
+    )
+    ?>
 
+    <?php
+    $form = $this->form;
+    $form->setAttribute('action', $this->url('apService', array('action' => 'edit', 'id' => $this->id)));
+    $form->prepare();
+    echo $this->form()->openTag($form) . PHP_EOL;
+    echo $this->formHidden($form->get('id')) . PHP_EOL;
+    echo $this->formHidden($form->get('headerId')) . PHP_EOL;
+    echo $this->formHidden($form->get('csrf')) . PHP_EOL;
+    ?>
+
+    <table class="table ">
+        <tr>
+            <td>
+                <?php
+                $field = $form->get('airportId');
+                echo $this->formSelect($field);
+                echo $this->formElementErrors($field);
+                ?>
+            </td>
+            <td>
+                <?php
+                $field = $form->get('typeOfApServiceId');
+                echo $this->formSelect($field);
+                echo $this->formElementErrors($field);
+                ?>
+            </td>
+            <td>
+                <?php
+                $field = $form->get('agentId');
+                echo $this->formSelect($field);
+                echo $this->formElementErrors($field);
+                ?>
+            </td>
+            <td>
+                <?php
+                $field = $form->get('price');
+                echo $this->formInput($field);
+                echo $this->formElementErrors($field);
+                ?>
+            </td>
+            <td>
+                <?php
+                $field = $form->get('currency');
+                echo $this->formSelect($field);
+                echo $this->formElementErrors($field);
+                ?>
+            </td>
+            <td>
+                <?php
+                $field = $form->get('exchangeRate');
+                echo $this->formInput($field);
+                echo $this->formElementErrors($field);
+                ?>
+            </td>
+            <td>
+                <?php
+                $field = $form->get('priceUSD');
+                echo $this->formInput($field);
+                echo $this->formElementErrors($field);
+                ?>
+            </td>
+            <td>
+                <?php
+                $field = $form->get('submitBtn');
+                echo $this->formElement($field);
+                ?>
+            </td>
+        </tr>
+    </table>

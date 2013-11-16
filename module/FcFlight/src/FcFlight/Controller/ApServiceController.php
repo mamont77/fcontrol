@@ -37,28 +37,11 @@ class ApServiceController extends FlightController
         $legs = $this->getLegModel()->getByHeaderId($headerId);
         $apServices = $this->getApServiceModel()->getByHeaderId($headerId);
 
-        $airports = array();
-        $legsCopy = $legs;
-        $legFirst = reset($legs);
-        $airports[$legFirst['id'] . '-' . $legFirst['apDepAirportId']] = $legFirst['apDepIcao'] . ' (' . $legFirst['apDepIata'] . '): '
-            . $legFirst['dateOfFlight'] . ' ' . $legFirst['apDepTime'];
-        foreach ($legs as $leg) {
-            $nextLeg = next($legsCopy);
-            $selectionValues = $leg['apArrIcao'] . ' (' . $leg['apArrIata'] . '): '
-                . $leg['dateOfFlight'] . ' ' . $leg['apArrTime'];
-
-            if (!is_bool($nextLeg)) {
-                $selectionValues .= ' ⇒ ' . $nextLeg['dateOfFlight'] . ' ' . $nextLeg['apDepTime']; //✈
-            }
-
-            $airports[$leg['id'] . '-' . $leg['apArrAirportId']] = $selectionValues;
-        }
-
         $form = new ApServiceForm('apService',
             array(
                 'headerId' => $headerId,
                 'libraries' => array(
-                    'airports' => $airports,
+                    'airports' => $this->_buildAirportsFromLeg($legs),
                     'typeOfApServices' => $this->getTypeOfApServices(),
                     'agents' => $this->getKontragents(),
                 ),
@@ -132,7 +115,8 @@ class ApServiceController extends FlightController
             array(
                 'headerId' => $header->id,
                 'libraries' => array(
-                    'airports' => $this->getParentLeg($header->id),
+                    'airports' => $this->_buildAirportsFromLeg($legs),
+                    'typeOfApServices' => $this->getTypeOfApServices(),
                     'agents' => $this->getKontragents(),
                 ),
             )
@@ -229,6 +213,31 @@ class ApServiceController extends FlightController
         );
     }
 
+    /**
+     * @param $legs
+     * @return array
+     */
+    public function _buildAirportsFromLeg($legs)
+    {
+        $airports = array();
+        $legsCopy = $legs;
+        $legFirst = reset($legs);
+        $airports[$legFirst['id'] . '-' . $legFirst['apDepAirportId']] = $legFirst['apDepIcao'] . ' (' . $legFirst['apDepIata'] . '): '
+            . $legFirst['dateOfFlight'] . ' ' . $legFirst['apDepTime'];
+        foreach ($legs as $leg) {
+            $nextLeg = next($legsCopy);
+            $selectionValues = $leg['apArrIcao'] . ' (' . $leg['apArrIata'] . '): '
+                . $leg['dateOfFlight'] . ' ' . $leg['apArrTime'];
+
+            if (!is_bool($nextLeg)) {
+                $selectionValues .= ' ⇒ ' . $nextLeg['dateOfFlight'] . ' ' . $nextLeg['apDepTime']; //✈
+            }
+
+            $airports[$leg['id'] . '-' . $leg['apArrAirportId']] = $selectionValues;
+        }
+
+        return $airports;
+    }
     /**
      * @param $data
      */
