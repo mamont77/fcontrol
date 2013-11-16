@@ -50,8 +50,11 @@
      */
     fControl.behaviors.baseOfPermitForm = {
         attach: function (context, settings) {
-            var $form = $('form#base_of_permit'),
-                countriesField = $form.find('#countryId'),
+            var $form = $('form#base_of_permit');
+
+            if ($form.length == 0) return;
+
+            var countriesField = $form.find('#countryId'),
                 airportsField = $form.find('#airports'),
                 airportIdField = $form.find('#airportId'),
                 ajaxPath = '/admin/libraries/base_of_permit/get-airports/';

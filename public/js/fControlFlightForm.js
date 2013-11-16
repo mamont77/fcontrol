@@ -46,6 +46,9 @@
     fControl.behaviors.flightHeaderForm = {
         attach: function (context, settings) {
             var $form = $('form#flightHeader');
+
+            if ($form.length == 0) return;
+
             $($form).find('#dateOrder').mask('99-99-9999');
             $($form).find('#hint-aircraft').text('GegNumber: ' + ($form).find('#aircraft').val());
             $form.on('change', '#aircraft', function () {
@@ -61,8 +64,11 @@
 
     fControl.behaviors.flightLegForm = {
         attach: function (context, settings) {
-            var $form = $('form#leg'),
-                preSelectedApDepCountryId = $form.find('#preSelectedApDepCountryId').val(),
+            var $form = $('form#leg');
+
+            if ($form.length == 0) return;
+
+            var preSelectedApDepCountryId = $form.find('#preSelectedApDepCountryId').val(),
                 preSelectedApDepAirportId = $form.find('#preSelectedApDepAirportId').val(),
                 $apDepAirportId = $form.find('#apDepAirportId'),
                 $apArrAirportId = $form.find('#apArrAirportId'),
@@ -124,14 +130,20 @@
     fControl.behaviors.refuelForm = {
         attach: function (context, settings) {
             var $form = $('form#refuel');
+
+            if ($form.length == 0) return;
+
             $($form).find('#date').mask('99-99-9999');
         }
     };
 
     fControl.behaviors.ApServiceForm = {
         attach: function (context, settings) {
-            var $form = $('form#apService'),
-                $price = $($form).find('#price'),
+            var $form = $('form#apService');
+
+            if ($form.length == 0) return;
+
+            var $price = $($form).find('#price'),
                 $exchangeRate = $($form).find('#exchangeRate'),
                 $priceUsd = $($form).find('#priceUSD');
 
@@ -153,6 +165,9 @@
         attach: function (context, settings) {
             var $form = $('form#flightSearch'),
                 $statusLabels;
+
+            if ($form.length == 0) return;
+
             $($form).find('#dateOrderFrom, #dateOrderTo').mask('99-99-9999');
 
             $statusLabels = $($form).find('#controls-status label');
