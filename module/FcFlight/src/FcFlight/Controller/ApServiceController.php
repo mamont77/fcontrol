@@ -41,12 +41,12 @@ class ApServiceController extends FlightController
         $legsCopy = $legs;
         $legFirst = reset($legs);
         $airports[$legFirst['id'] . '-' . $legFirst['apDepAirportId']] = $legFirst['apDepIcao'] . ' (' . $legFirst['apDepIata'] . '): '
-            . $legFirst['dateOfFlight'] . ' ' . $legFirst['apDepTime'];;
+            . $legFirst['dateOfFlight'] . ' ' . $legFirst['apDepTime'];
         foreach ($legs as $leg) {
             $nextLeg = next($legsCopy);
-
             $selectionValues = $leg['apArrIcao'] . ' (' . $leg['apArrIata'] . '): '
                 . $leg['dateOfFlight'] . ' ' . $leg['apArrTime'];
+
             if (!is_bool($nextLeg)) {
                 $selectionValues .= ' ⇒ ' . $nextLeg['dateOfFlight'] . ' ' . $nextLeg['apDepTime']; //✈
             }

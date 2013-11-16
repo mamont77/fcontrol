@@ -16,11 +16,26 @@ use FcFlight\Filter\ApServiceFilter;
  */
 class ApServiceModel extends AbstractTableGateway
 {
-
     /**
      * @var string
      */
     protected $table = 'flightApServiceForm';
+
+    /**
+     * @var array
+     */
+    public $tableFields = array(
+        'id',
+        'headerId',
+        'legId',
+        'airportId',
+        'typeOfApServiceId',
+        'agentId',
+        'price',
+        'currency',
+        'exchangeRate',
+        'priceUSD',
+    );
 
     /**
      * @param \Zend\Db\Adapter\Adapter $adapter
@@ -43,16 +58,15 @@ class ApServiceModel extends AbstractTableGateway
         $id = (int)$id;
         $select = new Select();
         $select->from($this->table);
-        $select->columns(array('id',
-            'headerId',
-            'airportId',
-            'isNeed',
-            'agentId'
-        ));
+        $select->columns($this->tableFields);
 
         $select->join(array('airport' => 'library_airport'),
             'flightApServiceForm.airportId = airport.id',
             array('icao' => 'code_icao', 'iata' => 'code_iata', 'airportName' => 'name'), 'left');
+
+        $select->join(array('typeOfApService' => 'library_type_of_ap_service'),
+            'flightApServiceForm.typeOfApServiceId = typeOfApService.id',
+            array('typeOfApServiceName' => 'name'), 'left');
 
         $select->join(array('agent' => 'library_kontragent'),
             'flightApServiceForm.agentId = agent.id',
@@ -75,11 +89,21 @@ class ApServiceModel extends AbstractTableGateway
      */
     public function add(ApServiceFilter $object)
     {
+
+        $airport = explode('-', (string)$object->airportId);
+        $object->legId = $airport[0];
+        $object->airportId = $airport[1];
+
         $data = array(
             'headerId' => (int)$object->headerId,
+            'legId' => (int)$object->legId,
             'airportId' => (int)$object->airportId,
-            'isNeed' => (int)$object->isNeed,
-            'agentId' => (string)$object->agentId,
+            'typeOfApServiceId' => (int)$object->typeOfApServiceId,
+            'agentId' => (int)$object->agentId,
+            'price' => (float)$object->price,
+            'currency' => (string)$object->currency,
+            'exchangeRate' => (float)$object->exchangeRate,
+            'priceUSD' => (float)$object->priceUSD,
         );
 
         $this->insert($data);
@@ -95,11 +119,20 @@ class ApServiceModel extends AbstractTableGateway
      */
     public function save(ApServiceFilter $object)
     {
+        $airport = explode('-', (string)$object->airportId);
+        $object->legId = $airport[0];
+        $object->airportId = $airport[1];
+
         $data = array(
             'headerId' => (int)$object->headerId,
+            'legId' => (int)$object->legId,
             'airportId' => (int)$object->airportId,
-            'isNeed' => (int)$object->isNeed,
-            'agentId' => (string)$object->agentId,
+            'typeOfApServiceId' => (int)$object->typeOfApServiceId,
+            'agentId' => (int)$object->agentId,
+            'price' => (float)$object->price,
+            'currency' => (string)$object->currency,
+            'exchangeRate' => (float)$object->exchangeRate,
+            'priceUSD' => (float)$object->priceUSD,
         );
 
         $id = (int)$object->id;
@@ -127,16 +160,15 @@ class ApServiceModel extends AbstractTableGateway
         $id = (int)$id;
         $select = new Select();
         $select->from($this->table);
-        $select->columns(array('id',
-            'headerId',
-            'airportId',
-            'isNeed',
-            'agentId'
-        ));
+        $select->columns($this->tableFields);
 
         $select->join(array('airport' => 'library_airport'),
             'flightApServiceForm.airportId = airport.id',
             array('icao' => 'code_icao', 'iata' => 'code_iata', 'airportName' => 'name'), 'left');
+
+        $select->join(array('typeOfApService' => 'library_type_of_ap_service'),
+            'flightApServiceForm.typeOfApServiceId = typeOfApService.id',
+            array('typeOfApServiceName' => 'name'), 'left');
 
         $select->join(array('agent' => 'library_kontragent'),
             'flightApServiceForm.agentId = agent.id',
@@ -155,14 +187,19 @@ class ApServiceModel extends AbstractTableGateway
             //Real fields
             $data[$row->id]['id'] = $row->id;
             $data[$row->id]['headerId'] = $row->headerId;
+            $data[$row->id]['legId'] = $row->legId;
             $data[$row->id]['airportId'] = $row->airportId;
-            $data[$row->id]['isNeed'] = $row->isNeed;
             $data[$row->id]['agentId'] = $row->agentId;
+            $data[$row->id]['price'] = $row->price;
+            $data[$row->id]['currency'] = $row->currency;
+            $data[$row->id]['exchangeRate'] = $row->exchangeRate;
+            $data[$row->id]['priceUSD'] = $row->priceUSD;
 
             //Virtual fields
             $data[$row->id]['icao'] = $row->icao;
             $data[$row->id]['iata'] = $row->iata;
             $data[$row->id]['airportName'] = $row->airportName;
+            $data[$row->id]['typeOfApServiceName'] = $row->typeOfApServiceName;
             $data[$row->id]['kontragentShortName'] = $row->kontragentShortName;
         }
 

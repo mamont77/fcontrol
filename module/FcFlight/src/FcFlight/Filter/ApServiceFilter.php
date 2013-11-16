@@ -140,19 +140,9 @@ class ApServiceFilter implements InputFilterAwareInterface
             )));
 
             $inputFilter->add($factory->createInput(array(
-                'name' => 'legId',
-                'required' => true,
-                'filters' => array(
-                    array('name' => 'Int'),
-                ),
-            )));
-
-            $inputFilter->add($factory->createInput(array(
                 'name' => 'airportId',
                 'required' => true,
-                'filters' => array(
-                    array('name' => 'Int'),
-                ),
+                'filters' => $this->defaultFilters,
             )));
 
             $inputFilter->add($factory->createInput(array(
@@ -180,11 +170,14 @@ class ApServiceFilter implements InputFilterAwareInterface
                         'name' => 'StringLength',
                         'options' => array(
                             'encoding' => 'UTF-8',
-                            'min' => 16,
+                            'max' => 32,
                         ),
                     ),
                     array(
                         'name' => 'Float',
+                        'options' => array(
+                            'locale' => 'en',
+                        ),
                     ),
                 ),
             )));
@@ -209,11 +202,14 @@ class ApServiceFilter implements InputFilterAwareInterface
                         'name' => 'StringLength',
                         'options' => array(
                             'encoding' => 'UTF-8',
-                            'min' => 8,
+                            'max' => 16,
                         ),
                     ),
                     array(
                         'name' => 'Float',
+                        'options' => array(
+                            'locale' => 'en',
+                        ),
                     ),
                 ),
             )));
@@ -227,11 +223,14 @@ class ApServiceFilter implements InputFilterAwareInterface
                         'name' => 'StringLength',
                         'options' => array(
                             'encoding' => 'UTF-8',
-                            'min' => 8,
+                            'max' => 32,
                         ),
                     ),
                     array(
                         'name' => 'Float',
+                        'options' => array(
+                            'locale' => 'en',
+                        ),
                     ),
                 ),
             )));

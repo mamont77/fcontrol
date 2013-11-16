@@ -121,7 +121,7 @@ class ApServiceForm extends BaseForm
                 'class' => 'input-small',
                 'required' => true,
                 'placeholder' => 'Price',
-                'maxlength' => '16',
+                'maxlength' => '32',
             ),
         ));
 
@@ -148,7 +148,7 @@ class ApServiceForm extends BaseForm
                 'class' => 'input-small',
                 'required' => true,
                 'placeholder' => 'Exchange Rate',
-                'maxlength' => '8',
+                'maxlength' => '16',
             ),
         ));
 
@@ -160,7 +160,7 @@ class ApServiceForm extends BaseForm
                 'class' => 'input-small',
                 'required' => true,
                 'placeholder' => 'Price USD',
-                'maxlength' => '8',
+                'maxlength' => '32',
                 'readonly' => true,
             ),
         ));
