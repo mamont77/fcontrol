@@ -6,10 +6,13 @@
                 Airport
             </th>
             <th>
-                Need?
+                Type of AP service
             </th>
             <th>
                 Agent
+            </th>
+            <th>
+                Price USD
             </th>
             <th class="actions">Actions</th>
         </tr>
@@ -19,18 +22,19 @@
             <tr class="<? if ($row['id'] == $currentId): ?><?= 'info' ?><? endif ?>">
                 <td>
                     <a rel="tooltip" href="#" data-toggle="tooltip" data-placement="top"
-                       title="" data-original-title="<?php echo $this->escapeHtml($row['airportName']); ?>">
-                        <?php echo $this->escapeHtml($row['icao']); ?> |
-                        <?php echo $this->escapeHtml($row['iata']); ?>
+                       title="" data-original-title="<?= $this->escapeHtml($row['airportName']) ?>">
+                        <?= $this->escapeHtml($row['icao']) ?> |
+                        <?= $this->escapeHtml($row['iata']) ?>
                     </a>
                 </td>
-                <td><?=($row['isNeed']) ? 'YES' : 'NO'; ?></td>
-                <td><?php echo $this->escapeHtml($row['kontragentShortName']); ?></td>
+                <td><?= $this->escapeHtml($row['typeOfApServiceName']) ?></td>
+                <td><?= $this->escapeHtml($row['kontragentShortName']) ?></td>
+                <td><?= $this->escapeHtml($row['priceUSD']) ?></td>
                 <td class="actions">
-                    <a title="Edit" href="<?php echo $this->url('apService',
-                        array('action' => 'edit', 'id' => $row['id']));?>" class="<?=($status) ? '': 'disabled' ;?>"><i class="icon-edit"></i></a>
-                    <a title="Remove" href="<?php echo $this->url('apService',
-                        array('action' => 'delete', 'id' => $row['id']));?>" class="<?=($status) ? '': 'disabled' ;?>"><i class="icon-remove"></i></a>
+                    <a title="Edit" href="<?= $this->url('apService',
+                        array('action' => 'edit', 'id' => $row['id'])) ?>" class="<?= ($status) ? '': 'disabled' ?>"><i class="icon-edit"></i></a>
+                    <a title="Remove" href="<?= $this->url('apService',
+                        array('action' => 'delete', 'id' => $row['id'])) ?>" class="<?= ($status) ? '': 'disabled' ?>"><i class="icon-remove"></i></a>
                 </td>
             </tr>
         <?php endforeach; ?>
