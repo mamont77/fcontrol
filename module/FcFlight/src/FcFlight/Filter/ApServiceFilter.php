@@ -98,7 +98,7 @@ class ApServiceFilter implements InputFilterAwareInterface
         $this->icao = (isset($data['icao'])) ? $data['icao'] : null;
         $this->iata = (isset($data['iata'])) ? $data['iata'] : null;
         $this->airportName = (isset($data['airportName'])) ? $data['airportName'] : null;
-        $this->typeOfApServiceName = (isset($data['$typeOfApServiceName'])) ? $data['$typeOfApServiceName'] : null;
+        $this->typeOfApServiceName = (isset($data['typeOfApServiceName'])) ? $data['typeOfApServiceName'] : null;
         $this->kontragentShortName = (isset($data['kontragentShortName'])) ? $data['kontragentShortName'] : null;
     }
 

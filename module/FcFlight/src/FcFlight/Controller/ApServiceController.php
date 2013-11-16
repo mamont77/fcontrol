@@ -237,8 +237,12 @@ class ApServiceController extends FlightController
         $this->dataForLogger = array(
             'id' => $data->id,
             'Airport' => $data->airportName . ' (' . $data->icao . '/' . $data->iata . ')',
-            'Need' => ($data->isNeed) ? 'YES' : 'NO',
+            'Type of AP Service' => $data->typeOfApServiceName,
             'Agent' => $data->kontragentShortName,
+            'Price' => $data->price,
+            'Currency' => $data->currency,
+            'Exchange Rate' => $data->exchangeRate,
+            'Price USD' => $data->priceUSD,
         );
     }
 }
