@@ -161,6 +161,7 @@ class ApServiceForm extends BaseForm
                 'required' => true,
                 'placeholder' => 'Price USD',
                 'maxlength' => '8',
+                'readonly' => true,
             ),
         ));
 

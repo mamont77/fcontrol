@@ -39,6 +39,7 @@
                     no_results_text: 'Nothing found!'
                 }
             );
+            $('.chosen-drop .chosen-search input[type="text"]:first').focus();
         }
     };
 
@@ -134,9 +135,15 @@
                 $exchangeRate = $($form).find('#exchangeRate'),
                 $priceUsd = $($form).find('#priceUSD');
 
-            $price.keyup(function () {
+            $($price).bind("keyup change", function() {
                 var currentValue = $(this).val() || 0,
                     exchangeRateValue = $exchangeRate.val() || 1;
+                $priceUsd.val(convertApServicePrice2Usd(currentValue, exchangeRateValue));
+            });
+
+            $($exchangeRate).bind("keyup change", function() {
+                var exchangeRateValue = $(this).val() || 0,
+                    currentValue = $price.val() || 1;
                 $priceUsd.val(convertApServicePrice2Usd(currentValue, exchangeRateValue));
             });
         }
