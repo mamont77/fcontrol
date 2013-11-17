@@ -51,8 +51,8 @@
         ?>
 
         <?php foreach ($legs as $row) : ?>
-            <tr class="<? if ($row['id'] == $currentId): ?><?= 'info' ?><? endif ?>">
-                <td><strong><?= $this->escapeHtml($row['dateOfFlight']) ?></strong></td>
+            <tr data-legId="<?= $row['id'] ?>" class="<? if ($row['id'] == $currentId): ?><?= 'info' ?><? endif ?>">
+                <td class="date"><strong><?= $this->escapeHtml($row['dateOfFlight']) ?></strong></td>
                 <td><?= $this->escapeHtml($row['flightNumberIcao']) ?></td>
                 <td><?= $this->escapeHtml($row['flightNumberIata']) ?></td>
                 <td><?= $this->escapeHtml($row['flightNumberText']) ?></td>

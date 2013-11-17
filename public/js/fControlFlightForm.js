@@ -133,7 +133,21 @@
 
             if ($form.length == 0) return;
 
-            $($form).find('#date').mask('99-99-9999');
+            var $legData = $($form).find('#leg table'),
+                $legId = $($form).find('#legId'),
+                $quantityLtr = $($form).find('#quantityLtr'),
+                $quantityOtherUnits = $($form).find('#quantityOtherUnits'),
+                $unitId = $($form).find('#unitId'),
+                $priceUsd = $($form).find('#priceUsd'),
+                $totalPriceUsd = $($form).find('#totalPriceUsd'),
+                $date = $($form).find('#date');
+
+            $date.mask('99-99-9999');
+
+            $legId.change(function () {
+                var currentLegId = $(this).val();
+                //todo
+            });
         }
     };
 

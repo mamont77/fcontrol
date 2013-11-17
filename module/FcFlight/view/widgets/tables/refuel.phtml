@@ -1,5 +1,5 @@
 <div id="refuel">
-    <table class="table table-bordered table-hover table-condensed <? if ($this->fixedHeader): ?> table-fixed-header<? endif ?>">
+    <table class="table table-bordered table-hover table-condensed <? if ($this->fixedHeader): ?> table-fixed-header<? endif ?> refuelData">
         <thead class="header">
         <tr>
             <th>
@@ -45,7 +45,7 @@
                         <?php echo $this->escapeHtml($row['airportIata']); ?>
                     </a>
                 </td>
-                <td><strong><?php echo $this->escapeHtml($row['date']); ?></strong></td>
+                <td class="date"><strong><?php echo $this->escapeHtml($row['date']); ?></strong></td>
                 <td><?php echo $this->escapeHtml($row['agentName']); ?></td>
                 <td><?php echo $this->escapeHtml($row['quantity']); ?></td>
                 <td><?php echo $this->escapeHtml($row['unitName']); ?></td>

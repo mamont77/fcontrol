@@ -105,7 +105,7 @@ class RefuelForm extends BaseForm
             'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
                 'id' => 'legId',
-                'class' => 'chosen input-medium',
+                'class' => 'chosen input-large',
                 'data-placeholder' => 'LEG',
                 'required' => true,
             ),
@@ -116,14 +116,26 @@ class RefuelForm extends BaseForm
         ));
 
         $this->add(array(
-            'name' => 'quantity',
+            'name' => 'quantityLtr',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'id' => 'quantity',
-                'class' => 'input-medium',
+                'id' => 'quantityLtr',
+                'class' => 'input-small',
                 'required' => true,
                 'maxlength' => '10',
-                'placeholder' => 'Quantity',
+                'placeholder' => 'Quantity LTR',
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'quantityOtherUnits',
+            'type' => 'Zend\Form\Element\Text',
+            'attributes' => array(
+                'id' => 'quantityOtherUnits',
+                'class' => 'input-small',
+                'required' => true,
+                'maxlength' => '10',
+                'placeholder' => 'Quantity Other Units',
             ),
         ));
 
@@ -132,7 +144,7 @@ class RefuelForm extends BaseForm
             'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
                 'id' => 'unitId',
-                'class' => 'chosen input-medium',
+                'class' => 'chosen input-small',
                 'data-placeholder' => 'Unit',
                 'required' => true,
             ),
@@ -143,14 +155,26 @@ class RefuelForm extends BaseForm
         ));
 
         $this->add(array(
-            'name' => 'price',
+            'name' => 'priceUsd',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'id' => 'price',
-                'class' => 'input-medium',
+                'id' => 'priceUsd',
+                'class' => 'input-small',
                 'required' => true,
                 'maxlength' => '10',
-                'placeholder' => 'Price',
+                'placeholder' => 'Price USD',
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'totalPriceUsd',
+            'type' => 'Zend\Form\Element\Text',
+            'attributes' => array(
+                'id' => 'totalPriceUsd',
+                'class' => 'input-small',
+                'required' => true,
+                'maxlength' => '10',
+                'placeholder' => 'Total USD',
             ),
         ));
 
@@ -159,7 +183,7 @@ class RefuelForm extends BaseForm
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'id' => 'date',
-                'class' => 'input-medium',
+                'class' => 'input-small',
                 'required' => true,
                 'maxlength' => '10',
                 'placeholder' => 'Date',
