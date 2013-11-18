@@ -175,6 +175,7 @@ class RefuelForm extends BaseForm
                 'required' => true,
                 'maxlength' => '10',
                 'placeholder' => 'Total USD',
+                'readonly' => true,
             ),
         ));
 

@@ -1,6 +1,16 @@
 (function ($) {
+    /**
+     *
+     * @type {string}
+     */
     var ajaxPath = '/leg/get-airports/';
 
+    /**
+     *
+     * @param $airportField
+     * @param countryId
+     * @param airportId
+     */
     function renderAirportsByCountry($airportField, countryId, airportId) {
         var ajaxPath = '/leg/get-airports/';
         $.getJSON(ajaxPath + countryId, function (data) {
@@ -20,6 +30,12 @@
         });
     }
 
+    /**
+     *
+     * @param currentValue
+     * @param exchangeRateValue
+     * @returns {string}
+     */
     function convertApServicePrice2Usd(currentValue, exchangeRateValue) {
         var result = 0;
         currentValue = parseFloat(currentValue);
@@ -31,6 +47,101 @@
         return result.toFixed(2);
     }
 
+    /**
+     *
+     * @param quantityLtr
+     * @param priceUsd
+     * @returns {string}
+     */
+    function calculateRefuelTotalUsd(quantityLtr, priceUsd) {
+        var result = 0;
+        quantityLtr = parseFloat(quantityLtr);
+        priceUsd = parseFloat(priceUsd);
+
+        if (!isNaN(quantityLtr) && !isNaN(priceUsd)) {
+            result = quantityLtr * priceUsd;
+        }
+
+        return result.toFixed(2);
+    }
+
+    /**
+     *
+     * @param quantityLtr
+     * @param unit
+     * @returns {string}
+     */
+    function convertRefuelQuantityLtr2OtherUnits(quantityLtr, unit) {
+        var result = 0;
+        quantityLtr = parseFloat(quantityLtr);
+
+        if (!isNaN(quantityLtr) && unit != '') {
+            switch (unit) {
+                case 'LTR':
+                    result = quantityLtr;
+
+                    break;
+
+                case 'MT':
+                    result = (quantityLtr * 0.8) / 1000;
+
+                    break;
+
+                case 'PCS':
+                    result = 0;
+
+                    break;
+
+                case 'USG':
+                    result = quantityLtr / 3.7854;
+
+                    break;
+            }
+        }
+
+        return result.toFixed(2);
+    }
+
+    /**
+     *
+     * @param quantityOtherUnits
+     * @param unit
+     * @returns {string}
+     */
+    function convertRefuelQuantityOtherUnits2Ltr(quantityOtherUnits, unit) {
+        var result = 0;
+        quantityOtherUnits = parseFloat(quantityOtherUnits);
+
+        if (!isNaN(quantityOtherUnits) && unit != '') {
+            switch (unit) {
+                case 'LTR':
+                    result = quantityOtherUnits;
+
+                    break;
+
+                case 'MT':
+                    result = 1000 * (quantityOtherUnits / 0.8);
+
+                    break;
+
+                case 'PCS':
+                    result = 0;
+
+                    break;
+
+                case 'USG':
+                    result = quantityOtherUnits * 3.7854;
+
+                    break;
+            }
+        }
+
+        return result.toFixed(2);
+    }
+    /**
+     *
+     * @type {{attach: Function}}
+     */
     fControl.behaviors.allForms = {
         attach: function (context, settings) {
             $('.chosen').chosen(
@@ -43,6 +154,10 @@
         }
     };
 
+    /**
+     *
+     * @type {{attach: Function}}
+     */
     fControl.behaviors.flightHeaderForm = {
         attach: function (context, settings) {
             var $form = $('form#flightHeader');
@@ -62,6 +177,10 @@
         }
     };
 
+    /**
+     *
+     * @type {{attach: Function}}
+     */
     fControl.behaviors.flightLegForm = {
         attach: function (context, settings) {
             var $form = $('form#leg');
@@ -127,13 +246,18 @@
         }
     };
 
+    /**
+     *
+     * @type {{attach: Function}}
+     */
     fControl.behaviors.refuelForm = {
         attach: function (context, settings) {
             var $form = $('form#refuel');
 
             if ($form.length == 0) return;
 
-            var $legData = $($form).find('#leg table'),
+            var $legData = $('#leg table tbody tr'),
+                legDataMapped = {},
                 $legId = $($form).find('#legId'),
                 $quantityLtr = $($form).find('#quantityLtr'),
                 $quantityOtherUnits = $($form).find('#quantityOtherUnits'),
@@ -144,13 +268,60 @@
 
             $date.mask('99-99-9999');
 
-            $legId.change(function () {
-                var currentLegId = $(this).val();
-                //todo
+            $legData.each(function() {
+                var $row = $(this);
+
+                legDataMapped[$row.attr('data-legId')] = $row.find('.date').text();
             });
+
+            $legId.change(function () {
+                $date.val(legDataMapped[$(this).val()]);
+            });
+
+            $($quantityLtr).bind("keyup change", function() {
+                var quantityLtrValue = $(this).val() || 0,
+                    unitSelected = $unitId.find(':selected').text(),
+                    priceUsdValue = $priceUsd.val();
+                $quantityOtherUnits.val(convertRefuelQuantityLtr2OtherUnits(quantityLtrValue, unitSelected));
+                $totalPriceUsd.val(calculateRefuelTotalUsd(quantityLtrValue, priceUsdValue));
+            });
+
+            $($quantityOtherUnits).bind("keyup change", function() {
+                var quantityOtherUnitsValue = $(this).val() || 0,
+                    unitSelected = $unitId.find(':selected').text(),
+                    quantityLtrValue = convertRefuelQuantityOtherUnits2Ltr(quantityOtherUnitsValue, unitSelected),
+                    priceUsdValue = $priceUsd.val();
+
+                $quantityLtr.val(quantityLtrValue);
+                $totalPriceUsd.val(calculateRefuelTotalUsd(quantityLtrValue, priceUsdValue));
+
+            });
+
+            $unitId.change(function () {
+                var  unitSelected = $(this).find(':selected').text(),
+                    quantityLtrValue = $quantityLtr.val(),
+                    quantityOtherUnits = $quantityOtherUnits.val();
+
+                if (quantityLtrValue != '') {
+                    $quantityOtherUnits.val(convertRefuelQuantityLtr2OtherUnits(quantityLtrValue, unitSelected));
+                } else if (quantityOtherUnits != '') {
+                    $quantityLtr.val(convertRefuelQuantityOtherUnits2Ltr(quantityOtherUnits, unitSelected));
+                }
+            });
+
+            $($priceUsd).bind("keyup change", function() {
+                var quantityLtrValue = $quantityLtr.val(),
+                    priceUsdValue = $(this).val() || 0;
+                $totalPriceUsd.val(calculateRefuelTotalUsd(quantityLtrValue, priceUsdValue));
+            });
+
         }
     };
 
+    /**
+     *
+     * @type {{attach: Function}}
+     */
     fControl.behaviors.ApServiceForm = {
         attach: function (context, settings) {
             var $form = $('form#apService');
@@ -175,6 +346,10 @@
         }
     };
 
+    /**
+     *
+     * @type {{attach: Function}}
+     */
     fControl.behaviors.flightSearchForm = {
         attach: function (context, settings) {
             var $form = $('form#flightSearch'),
