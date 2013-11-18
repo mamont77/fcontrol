@@ -19,7 +19,7 @@ class FlightHeaderModel extends AbstractTableGateway
     /**
      * @var string
      */
-    protected $table = 'flightBaseHeaderForm';
+    protected $_table = 'flightBaseHeaderForm';
 
     /**
      * @param \Zend\Db\Adapter\Adapter $adapter
@@ -40,7 +40,7 @@ class FlightHeaderModel extends AbstractTableGateway
     {
         if (null === $select)
             $select = new Select();
-        $select->from($this->table);
+        $select->from($this->_table);
         $select->columns(array('id', 'parentId', 'refNumberOrder', 'dateOrder', 'kontragent', 'airOperator', 'aircraft', 'status'));
 
         $select->join(array('library_kontragent' => 'library_kontragent'),
@@ -77,7 +77,7 @@ class FlightHeaderModel extends AbstractTableGateway
     {
         $id = (int)$id;
         $select = new Select();
-        $select->from($this->table);
+        $select->from($this->_table);
         $select->columns(array('id', 'parentId', 'refNumberOrder', 'dateOrder', 'kontragent', 'airOperator', 'aircraft', 'status'));
 
         $select->join(array('library_kontragent' => 'library_kontragent'),
@@ -96,7 +96,7 @@ class FlightHeaderModel extends AbstractTableGateway
             'library_aircraft_type.id = library_aircraft.aircraft_type',
             array('aircraftTypeName' => 'name'), 'left');
 
-        $select->where(array($this->table . '.id' => $id));
+        $select->where(array($this->_table . '.id' => $id));
 
         $resultSet = $this->selectWith($select);
         $row = $resultSet->current();
@@ -273,7 +273,7 @@ class FlightHeaderModel extends AbstractTableGateway
     {
         $refNumberOrder = (string)$refNumberOrder;
         $select = new Select();
-        $select->from($this->table);
+        $select->from($this->_table);
         $select->columns(array('refNumberOrder'));
         $select->where->like('refNumberOrder', $refNumberOrder . '%');
         $resultSet = $this->selectWith($select);

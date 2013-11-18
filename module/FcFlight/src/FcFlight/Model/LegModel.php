@@ -20,7 +20,7 @@ class LegModel extends AbstractTableGateway
     /**
      * @var string
      */
-    protected $table = 'flightLegForm';
+    protected $_table = 'flightLegForm';
 
     /**
      * @param \Zend\Db\Adapter\Adapter $adapter
@@ -42,7 +42,7 @@ class LegModel extends AbstractTableGateway
     {
         $id = (int)$id;
         $select = new Select();
-        $select->from($this->table);
+        $select->from($this->_table);
 
         $select->columns(array('id',
             'headerId',
@@ -82,7 +82,7 @@ class LegModel extends AbstractTableGateway
             'ApArrCountry.id = ApArrCity.country_id',
             array('apArrCountryId' => 'id', 'apArrCountryName' => 'name', 'apArrCountryCode' => 'code'), 'left');
 
-        $select->where(array($this->table . '.id' => $id));
+        $select->where(array($this->_table . '.id' => $id));
 
         $resultSet = $this->selectWith($select);
         $row = $resultSet->current();
@@ -105,7 +105,7 @@ class LegModel extends AbstractTableGateway
     {
         $id = (int)$id;
         $select = new Select();
-        $select->from($this->table);
+        $select->from($this->_table);
 
         $select->columns(array('id',
             'headerId',
@@ -301,12 +301,12 @@ class LegModel extends AbstractTableGateway
         $headerId = $leg->headerId;
 
         $select = new Select();
-        $select->from($this->table);
+        $select->from($this->_table);
 
         $select->columns(array('rows' => new \Zend\Db\Sql\Expression('COUNT(*)')));
 
         $select->where(array('headerId' => $headerId));
-        $select->where->greaterThanOrEqualTo($this->table . '.id', $id);
+        $select->where->greaterThanOrEqualTo($this->_table . '.id', $id);
         $select->order(array('id ' . $select::ORDER_ASCENDING));
 
         $resultSet = $this->selectWith($select);

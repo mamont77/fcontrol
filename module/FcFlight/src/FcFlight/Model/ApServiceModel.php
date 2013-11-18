@@ -19,12 +19,12 @@ class ApServiceModel extends AbstractTableGateway
     /**
      * @var string
      */
-    protected $table = 'flightApServiceForm';
+    protected $_table = 'flightApServiceForm';
 
     /**
      * @var array
      */
-    public $tableFields = array(
+    public $_tableFields = array(
         'id',
         'headerId',
         'legId',
@@ -57,8 +57,8 @@ class ApServiceModel extends AbstractTableGateway
     {
         $id = (int)$id;
         $select = new Select();
-        $select->from($this->table);
-        $select->columns($this->tableFields);
+        $select->from($this->_table);
+        $select->columns($this->_tableFields);
 
         $select->join(array('airport' => 'library_airport'),
             'flightApServiceForm.airportId = airport.id',
@@ -72,7 +72,7 @@ class ApServiceModel extends AbstractTableGateway
             'flightApServiceForm.agentId = agent.id',
             array('kontragentShortName' => 'short_name'), 'left');
 
-        $select->where(array($this->table . '.id' => $id));
+        $select->where(array($this->_table . '.id' => $id));
 
         $resultSet = $this->selectWith($select);
         $row = $resultSet->current();
@@ -162,8 +162,8 @@ class ApServiceModel extends AbstractTableGateway
     {
         $id = (int)$id;
         $select = new Select();
-        $select->from($this->table);
-        $select->columns($this->tableFields);
+        $select->from($this->_table);
+        $select->columns($this->_tableFields);
 
         $select->join(array('airport' => 'library_airport'),
             'flightApServiceForm.airportId = airport.id',
