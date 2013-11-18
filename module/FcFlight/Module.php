@@ -14,7 +14,6 @@ use FcFlight\Model\PermissionModel;
 use FcFlight\Model\HotelModel;
 use FcFlight\Model\TransferModel;
 use FcFlight\Model\ApServiceModel;
-use FcFlight\Model\HandingModel;
 use FcFlight\Model\TypeOfPermissionModel;
 use FcFlight\Filter\FlightHeaderFilter;
 use FcFlight\Filter\SearchFilter;
@@ -24,7 +23,6 @@ use FcFlight\Filter\PermissionFilter;
 use FcFlight\Filter\HotelFilter;
 use FcFlight\Filter\TransferFilter;
 use FcFlight\Filter\ApServiceFilter;
-use FcFlight\Filter\HandingFilter;
 use FcFlight\Filter\TypeOfPermissionFilter;
 
 /**
@@ -152,10 +150,6 @@ class Module
                         $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                         return new ApServiceModel($dbAdapter);
                     },
-                'FcFlight\Model\HandingModel' => function ($sm) {
-                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                        return new HandingModel($dbAdapter);
-                    },
                 'FcFlight\Model\TypeOfPermissionModel' => function ($sm) {
                         $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                         return new TypeOfPermissionModel($dbAdapter);
@@ -191,10 +185,6 @@ class Module
                 'FcFlight\Filter\ApServiceFilter' => function ($sm) {
                         $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                         return new ApServiceFilter($dbAdapter);
-                    },
-                'FcFlight\Filter\HandingFilter' => function ($sm) {
-                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                        return new HandingFilter($dbAdapter);
                     },
                 'FcFlight\Filter\TypeOfPermissionFilter' => function ($sm) {
                         $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');

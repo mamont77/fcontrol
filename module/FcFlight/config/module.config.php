@@ -10,7 +10,6 @@ return array(
             'FcFlight\Controller\Hotel' => 'FcFlight\Controller\HotelController',
             'FcFlight\Controller\Transfer' => 'FcFlight\Controller\TransferController',
             'FcFlight\Controller\ApService' => 'FcFlight\Controller\ApServiceController',
-            'FcFlight\Controller\Handing' => 'FcFlight\Controller\HandingController',
             'FcFlight\Controller\TypeOfPermission' => 'FcFlight\Controller\TypeOfPermissionController',
         ),
     ),
@@ -185,20 +184,6 @@ return array(
                     ),
                     'defaults' => array(
                         'controller' => 'FcFlight\Controller\ApService',
-                        'action' => 'index',
-                    ),
-                ),
-            ),
-            'handing' => array(
-                'type' => 'segment',
-                'options' => array(
-                    'route' => '/handing[/:action][/:id]',
-                    'constraints' => array(
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id' => '[0-9]+',
-                    ),
-                    'defaults' => array(
-                        'controller' => 'FcFlight\Controller\Handing',
                         'action' => 'index',
                     ),
                 ),

@@ -28,7 +28,6 @@ use FcFlight\Model\RefuelModel;
 use FcFlight\Model\HotelModel;
 use FcFlight\Model\TransferModel;
 use FcFlight\Model\ApServiceModel;
-use FcFlight\Model\HandingModel;
 use FcFlight\Model\TypeOfPermissionModel;
 use FcFlight\Model\SearchModel;
 use FcFlight\Form\FlightHeaderForm;
@@ -330,7 +329,6 @@ class FlightController extends AbstractActionController
         $hotels = $this->getHotelModel()->getByHeaderId($header->id);
         $transfers = $this->getTransferModel()->getByHeaderId($header->id);
         $apServices = $this->getApServiceModel()->getByHeaderId($header->id);
-        $handing = $this->getHandingModel()->getByHeaderId($header->id);
         $typeOfPermissions = $this->getTypeOfPermissionModel()->getByHeaderId($header->id);
 
         $builtAirports = $this->buildAirportsFromLeg($legs);
@@ -1016,16 +1014,6 @@ class FlightController extends AbstractActionController
     public function getApServiceModel()
     {
         return $this->getServiceLocator()->get('FcFlight\Model\ApServiceModel');
-    }
-
-    /**
-     * Get Handing model
-     *
-     * @return HandingModel
-     */
-    public function getHandingModel()
-    {
-        return $this->getServiceLocator()->get('FcFlight\Model\HandingModel');
     }
 
     /**
