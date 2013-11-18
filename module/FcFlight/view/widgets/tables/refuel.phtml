@@ -3,67 +3,58 @@
         <thead class="header">
         <tr>
             <th>
-                Airport
-            </th>
-            <th>
-                Date
-            </th>
-            <th>
                 Agent
             </th>
             <th>
-                Quantity
+                Quantity LTR
             </th>
             <th>
                 Unit
             </th>
             <th>
-                Price
+                Price USD
             </th>
             <th>
-                Currency
+                Total USD
             </th>
             <th>
-                Unit
-            </th>
-            <th>
-                Total
-            </th>
-            <th>
-                Currency
+                Date
             </th>
             <th class="actions">Actions</th>
         </tr>
         </thead>
         <tbody>
-        <?php foreach ($refuels as $row) : ?>
-            <tr class="<? if ($row['id'] == $currentId): ?><?= 'info' ?><? endif ?>">
-                <td>
-                    <a rel="tooltip" href="#" data-toggle="tooltip" data-placement="top"
-                       title="" data-original-title="<?php echo $this->escapeHtml($row['airportName']); ?>">
-                        <?php echo $this->escapeHtml($row['airportIcao']); ?> |
-                        <?php echo $this->escapeHtml($row['airportIata']); ?>
-                    </a>
-                </td>
-                <td class="date"><strong><?php echo $this->escapeHtml($row['date']); ?></strong></td>
-                <td><?php echo $this->escapeHtml($row['agentName']); ?></td>
-                <td><?php echo $this->escapeHtml($row['quantity']); ?></td>
-                <td><?php echo $this->escapeHtml($row['unitName']); ?></td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-
-                <td class="actions">
-                    <a title="Edit" href="<?php echo $this->url('refuel',
-                        array('action' => 'edit', 'id' => $row['id']));?>"
-                       class="<?= ($status) ? '' : 'disabled'; ?>"><i class="icon-edit"></i></a>
-                    <a title="Remove" href="<?php echo $this->url('refuel',
-                        array('action' => 'delete', 'id' => $row['id']));?>"
-                       class="<?= ($status) ? '' : 'disabled'; ?>"><i class="icon-remove"></i></a>
+        <?php
+        $refuelsTotal = 0;
+        ?>
+        <? foreach ($this->refuels as $legId => $legData): ?>
+            <tr class="success">
+                <td colspan="7">
+                    <strong data-leg="<?= $legId ?>"><?= $this->escapeHtml($legData['legName']) ?></strong>
                 </td>
             </tr>
+            <? foreach ($legData['refuel'] as $refuelId => $refuelData): ?>
+                <?php
+                $refuelsTotal += (float)$refuelData['totalPriceUsd'];
+                ?>
+                <tr class="<? if ($refuelId == $this->currentId): ?><?= 'info' ?><? endif ?>">
+                    <td><?= $this->escapeHtml($refuelData['agentName']) ?></td>
+                    <td><?= $this->escapeHtml($refuelData['quantityLtr']) ?></td>
+                    <td><?= $this->escapeHtml($refuelData['unitName']) ?></td>
+                    <td><?= $this->escapeHtml($refuelData['priceUsd']) ?></td>
+                    <td><?= $this->escapeHtml($refuelData['totalPriceUsd']) ?></td>
+                    <td><?= $this->escapeHtml($refuelData['date']) ?></td>
+                    <td class="actions">
+                        <a title="Edit"
+                        <a title="Edit" href="<?= $this->url('refuel',
+                            array('action' => 'edit', 'id' => $refuelId)) ?>"
+                           class="<? if (!$this->status): ?>disabled<? endif ?>"><i class="icon-edit"></i></a>
+                        <a title="Remove"
+                           href="<?= $this->url('refuel', array('action' => 'delete', 'id' => $refuelId)) ?>"
+                           class="<? if (!$this->status): ?>disabled<? endif ?>"><i class="icon-remove"></i></a>
+                    </td>
+                </tr>
+            <? endforeach ?>
         <?php endforeach; ?>
         </tbody>
     </table>
@@ -77,11 +68,10 @@
                     <td>
                         Subtotal
                     </td>
-                    <td>-</td>
-                    <td>-</td>
+                    <td>USD</td>
+                    <td><?= $refuelsTotal ?></td>
                 </tr>
             </table>
         </div>
     </div>
-    "-" fields in development
 </div>

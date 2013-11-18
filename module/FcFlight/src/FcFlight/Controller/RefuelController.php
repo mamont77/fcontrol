@@ -38,12 +38,13 @@ class RefuelController extends FlightController
         $header = $this->getFlightHeaderModel()->getByRefNumberOrder($refNumberOrder);
         $legs = $this->getLegModel()->getByHeaderId($headerId);
         $refuels = $this->getRefuelModel()->getByHeaderId($headerId);
-        $lastRefuel = end($refuels);
-        if ($lastRefuel) {
-            $previousDate = $lastRefuel['date'];
-        } else {
-            $previousDate = null;
-        }
+
+//        $lastRefuel = end($refuels);
+//        if ($lastRefuel) {
+//            $previousDate = $lastRefuel['date'];
+//        } else {
+//            $previousDate = null;
+//        }
 
         $form = new RefuelForm('refuel',
             array(
@@ -54,7 +55,7 @@ class RefuelController extends FlightController
                     'units' => $this->getUnits(),
                 ),
                 'previousValues' => array(
-                    'previousDate' => $previousDate,
+//                    'previousDate' => $previousDate,
                 ),
             )
         );
@@ -115,12 +116,12 @@ class RefuelController extends FlightController
         $header = $this->getFlightHeaderModel()->getByRefNumberOrder($refNumberOrder);
         $legs = $this->getLegModel()->getByHeaderId($header->id);
         $refuels = $this->getRefuelModel()->getByHeaderId($header->id);
-        $lastRefuel = end($refuels);
-        if ($lastRefuel) {
-            $previousDate = $lastRefuel['date'];
-        } else {
-            $previousDate = null;
-        }
+//        $lastRefuel = end($refuels);
+//        if ($lastRefuel) {
+//            $previousDate = $lastRefuel['date'];
+//        } else {
+//            $previousDate = null;
+//        }
 
         $this->setDataForLogger($data);
         $loggerPlugin = $this->LogPlugin();
@@ -134,7 +135,7 @@ class RefuelController extends FlightController
                     'units' => $this->getUnits(),
                 ),
                 'previousValues' => array(
-                    'previousDate' => $previousDate,
+//                    'previousDate' => $previousDate,
                 ),
             )
         );

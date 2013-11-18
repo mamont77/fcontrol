@@ -69,16 +69,14 @@ $this->partial('widgets/components/flight.phtml',
             </td>
             <td>
                 <?php
-                $field = $form->get('date');
-                echo $field->getOption('label');
+                $field = $form->get('quantityLtr');
                 echo $this->formInput($field);
-                echo '<p class="help-block" id="help-dateOrder">' . $field->getOption('description'). '</p>';
                 echo $this->formElementErrors($field);
                 ?>
             </td>
             <td>
                 <?php
-                $field = $form->get('quantity');
+                $field = $form->get('quantityOtherUnits');
                 echo $this->formInput($field);
                 echo $this->formElementErrors($field);
                 ?>
@@ -87,6 +85,29 @@ $this->partial('widgets/components/flight.phtml',
                 <?php
                 $field = $form->get('unitId');
                 echo $this->formSelect($field);
+                echo $this->formElementErrors($field);
+                ?>
+            </td>
+            <td>
+                <?php
+                $field = $form->get('priceUsd');
+                echo $this->formInput($field);
+                echo $this->formElementErrors($field);
+                ?>
+            </td>
+            <td>
+                <?php
+                $field = $form->get('totalPriceUsd');
+                echo $this->formInput($field);
+                echo $this->formElementErrors($field);
+                ?>
+            </td>
+            <td>
+                <?php
+                $field = $form->get('date');
+                echo $field->getOption('label');
+                echo $this->formInput($field);
+                echo '<p class="help-block" id="help-dateOrder">' . $field->getOption('description'). '</p>';
                 echo $this->formElementErrors($field);
                 ?>
             </td>

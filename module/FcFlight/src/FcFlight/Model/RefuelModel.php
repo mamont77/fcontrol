@@ -136,27 +136,29 @@ class RefuelModel extends AbstractTableGateway
 
         $data = array();
         foreach ($resultSet as $row) {
-            //Fields for form and view
-            $data[$row->id]['id'] = $row->id;
-            $data[$row->id]['headerId'] = $row->headerId;
-            $data[$row->id]['agentId'] = $row->agentId;
-            $data[$row->id]['legId'] = $row->legId;
-            $data[$row->id]['quantityLtr'] = $row->quantityLtr;
-            $data[$row->id]['quantityOtherUnits'] = $row->quantityOtherUnits;
-            $data[$row->id]['unitId'] = $row->unitId;
-            $data[$row->id]['priceUsd'] = $row->priceUsd;
-            $data[$row->id]['totalPriceUsd'] = $row->totalPriceUsd;
-            $data[$row->id]['date'] = date('d-m-Y', $row->date);
-
-            //Fields only for view
-            $data[$row->id]['airportName'] = $row->airportName;
-            $data[$row->id]['airportIcao'] = $row->airportIcao;
-            $data[$row->id]['airportIata'] = $row->airportIata;
-            $data[$row->id]['agentName'] = $row->agentName;
-            $data[$row->id]['unitName'] = $row->unitName;
-
-
+            $data[$row->legId] = array(
+                'headerId' => $row->headerId,
+                'legName' => $row->airportDepartureICAO . ' (' . $row->airportDepartureIATA . ')'
+                    . ' ⇒ '
+                    . $row->airportArrivalICAO . ' (' . $row->airportArrivalIATA . ')',
+            );
         }
+        foreach ($resultSet as $row) {
+            $data[$row->legId]['refuel'][$row->id] = array(
+                'agentId' => $row->agentId,
+                'agentName' => $row->agentName,
+                'agentAddress' => $row->agentAddress,
+                'agentMail' => $row->agentMail,
+                'quantityLtr' => $row->quantityLtr,
+                'quantityOtherUnits' => $row->quantityOtherUnits,
+                'unitId' => $row->unitId,
+                'unitName' => $row->unitName,
+                'priceUsd' => $row->priceUsd,
+                'totalPriceUsd' => $row->totalPriceUsd,
+                'date' => date('d-m-Y', $row->date),
+            );
+        }
+
 
         return $data;
     }

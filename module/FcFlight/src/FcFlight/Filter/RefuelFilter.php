@@ -145,10 +145,10 @@ class RefuelFilter implements InputFilterAwareInterface
                 'required' => true,
             )));
 
-            $inputFilter->add($factory->createInput(array(
-                'name' => 'previousDate',
-                'required' => false,
-            )));
+//            $inputFilter->add($factory->createInput(array(
+//                'name' => 'previousDate',
+//                'required' => false,
+//            )));
 
             $inputFilter->add($factory->createInput(array(
                 'name' => 'agentId',
@@ -172,14 +172,20 @@ class RefuelFilter implements InputFilterAwareInterface
                 'filters' => $this->defaultFilters,
                 'validators' => array(
                     array(
-                        'name' => 'Regex',
+                        'name' => 'Float',
                         'options' => array(
-                            'pattern' => '/^(([^0]{1})([0-9])*|(0{1}))(\.\d{2})?$/',
-                            'messages' => array(
-                                'regexNotMatch' => 'Invalid quantity format. For example please enter: 100 or 500.50',
-                            ),
+                            'locale' => 'en',
                         ),
                     ),
+//                    array(
+//                        'name' => 'Regex',
+//                        'options' => array(
+//                            'pattern' => '/^(([^0]{1})([0-9])*|(0{1}))(\.\d{2})?$/',
+//                            'messages' => array(
+//                                'regexNotMatch' => 'Invalid quantity format. For example please enter: 100 or 500.50',
+//                            ),
+//                        ),
+//                    ),
                 ),
             )));
 
@@ -189,14 +195,20 @@ class RefuelFilter implements InputFilterAwareInterface
                 'filters' => $this->defaultFilters,
                 'validators' => array(
                     array(
-                        'name' => 'Regex',
+                        'name' => 'Float',
                         'options' => array(
-                            'pattern' => '/^(([^0]{1})([0-9])*|(0{1}))(\.\d{2})?$/',
-                            'messages' => array(
-                                'regexNotMatch' => 'Invalid quantity format. For example please enter: 100 or 500.50',
-                            ),
+                            'locale' => 'en',
                         ),
                     ),
+//                    array(
+//                        'name' => 'Regex',
+//                        'options' => array(
+//                            'pattern' => '/^(([^0]{1})([0-9])*|(0{1}))(\.\d{2})?$/',
+//                            'messages' => array(
+//                                'regexNotMatch' => 'Invalid quantity format. For example please enter: 100 or 500.50',
+//                            ),
+//                        ),
+//                    ),
                 ),
             )));
 
@@ -214,14 +226,20 @@ class RefuelFilter implements InputFilterAwareInterface
                 'filters' => $this->defaultFilters,
                 'validators' => array(
                     array(
-                        'name' => 'Regex',
+                        'name' => 'Float',
                         'options' => array(
-                            'pattern' => '/^(([^0]{1})([0-9])*|(0{1}))(\.\d{2})?$/',
-                            'messages' => array(
-                                'regexNotMatch' => 'Invalid quantity format. For example please enter: 100 or 500.50',
-                            ),
+                            'locale' => 'en',
                         ),
                     ),
+//                    array(
+//                        'name' => 'Regex',
+//                        'options' => array(
+//                            'pattern' => '/^(([^0]{1})([0-9])*|(0{1}))(\.\d{2})?$/',
+//                            'messages' => array(
+//                                'regexNotMatch' => 'Invalid quantity format. For example please enter: 100 or 500.50',
+//                            ),
+//                        ),
+//                    ),
                 ),
             )));
 
@@ -240,12 +258,12 @@ class RefuelFilter implements InputFilterAwareInterface
                             ),
                         ),
                     ),
-                    array(
-                        'name' => 'FcFlight\Validator\FlightDateChecker',
-                    ),
-                    array(
-                        'name' => 'FcFlight\Validator\FlightYearChecker',
-                    ),
+//                    array(
+//                        'name' => 'FcFlight\Validator\FlightDateChecker',
+//                    ),
+//                    array(
+//                        'name' => 'FcFlight\Validator\FlightYearChecker',
+//                    ),
                 ),
             )));
 

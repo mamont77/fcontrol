@@ -31,9 +31,11 @@ $this->partial('widgets/components/flight.phtml',
 <?php else: ?>
     <?= $this->flashMessenger()->render('success', array('alert', 'alert-success')) ?>
 <?php endif ?>
-<div class="alert alert-info">
-    <strong>Warning!</strong> Page in development.
-</div>
+
+<!--<div class="alert alert-info">-->
+<!--    <strong>Warning!</strong> Page in development.-->
+<!--</div>-->
+
 <div id="refuel">
     <?=
     $this->partial('widgets/tables/refuel.phtml',
@@ -52,7 +54,7 @@ $this->partial('widgets/components/flight.phtml',
     echo $this->form()->openTag($form) . PHP_EOL;
     echo $this->formHidden($form->get('id')) . PHP_EOL;
     echo $this->formHidden($form->get('headerId')) . PHP_EOL;
-    echo $this->formHidden($form->get('previousDate')) . PHP_EOL;
+//    echo $this->formHidden($form->get('previousDate')) . PHP_EOL;
     echo $this->formHidden($form->get('csrf')) . PHP_EOL;
     ?>
 
@@ -76,7 +78,6 @@ $this->partial('widgets/components/flight.phtml',
                 <?php
                 $field = $form->get('quantityLtr');
                 echo $this->formInput($field);
-//                echo '<p class="help-block" id="help-dateOrder">Под этим полем будет пересчитанное значение!<br />Или добавить поле ввода readonly? Пересчитываем оба поля!</p>';
                 echo $this->formElementErrors($field);
                 ?>
             </td>
@@ -98,7 +99,6 @@ $this->partial('widgets/components/flight.phtml',
                 <?php
                 $field = $form->get('priceUsd');
                 echo $this->formInput($field);
-//                echo '<p class="help-block" id="help-dateOrder">Под этим полем будет Total (quantity*price)!<br />Или добавить поле ввода readonly?</p>';
                 echo $this->formElementErrors($field);
                 ?>
             </td>
