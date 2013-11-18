@@ -33,7 +33,7 @@ class SearchModel extends AbstractTableGateway
      */
     public function setTable($table)
     {
-        $this->table = $table;
+        $this->_table = $table;
     }
 
     /**

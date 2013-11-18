@@ -20,6 +20,7 @@ class RefuelModel extends AbstractTableGateway
     /**
      * @var string
      */
+
     public $table = 'flightRefuelForm';
 
     /**
@@ -58,7 +59,7 @@ class RefuelModel extends AbstractTableGateway
     {
         $id = (int)$id;
         $select = new Select();
-        $select->from($this->table);
+        $select->from($this->_table);
 
         $select->columns($this->_tableFields);
 
@@ -74,7 +75,7 @@ class RefuelModel extends AbstractTableGateway
             'library_unit.id = flightRefuelForm.unit',
             array('unitName' => 'name'), 'left');
 
-        $select->where(array($this->table . '.id' => $id));
+        $select->where(array($this->_table . '.id' => $id));
 
         $resultSet = $this->selectWith($select);
         $row = $resultSet->current();
@@ -95,7 +96,11 @@ class RefuelModel extends AbstractTableGateway
     {
         $id = (string)$id;
         $select = new Select();
+<<<<<<< HEAD
         $select->from($this->table);
+=======
+        $select->from($this->_table);
+>>>>>>> f8739e1ef8482af907eeaad59ccd5beddef60ba7
 
         $select->columns($this->_tableFields);
 
