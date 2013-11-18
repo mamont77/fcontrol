@@ -330,12 +330,8 @@ class FlightController extends AbstractActionController
             'legs' => $legs,
             'refuels' => $refuels,
             'permissions' => $permissions,
-            'hotels' => $hotels,
-            'transfers' => $transfers,
             'apServices' => $apServices,
             'apServicesTotal' => $apServicesTotal,
-            'handing' => $handing,
-            'typeOfPermissions' => $typeOfPermissions,
         ));
     }
 
