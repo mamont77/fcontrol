@@ -12,7 +12,6 @@ return array(
   'FcFlight\Filter\LegFilter'                => __DIR__ . '/src/FcFlight/Filter/LegFilter.php',
   'FcFlight\Filter\PermissionFilter'         => __DIR__ . '/src/FcFlight/Filter/PermissionFilter.php',
   'FcFlight\Filter\RefuelFilter'             => __DIR__ . '/src/FcFlight/Filter/RefuelFilter.php',
-  'FcFlight\Filter\HotelFilter'              => __DIR__ . '/src/FcFlight/Filter/HotelFilter.php',
   'FcFlight\Filter\SearchFilter'             => __DIR__ . '/src/FcFlight/Filter/SearchFilter.php',
   'FcFlight\Form\BaseForm'                   => __DIR__ . '/src/FcFlight/Form/BaseForm.php',
   'FcFlight\Form\FlightHeaderForm'           => __DIR__ . '/src/FcFlight/Form/FlightHeaderForm.php',
