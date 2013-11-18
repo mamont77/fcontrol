@@ -26,7 +26,6 @@ use FcFlight\Model\LegModel;
 use FcFlight\Model\PermissionModel;
 use FcFlight\Model\RefuelModel;
 use FcFlight\Model\ApServiceModel;
-use FcFlight\Model\TypeOfPermissionModel;
 use FcFlight\Model\SearchModel;
 use FcFlight\Form\FlightHeaderForm;
 use FcFlight\Form\SearchForm;
@@ -140,11 +139,6 @@ class FlightController extends AbstractActionController
      * @var RefuelModel
      */
     protected $refuelModel;
-
-    /**
-     * @var TypeOfPermissionModel
-     */
-//    protected $typeOfPermissionModel;
 
     /**
      * @var SearchModel
@@ -320,7 +314,6 @@ class FlightController extends AbstractActionController
         $refuels = $this->getRefuelModel()->getByHeaderId($header->id);
         $permissions = $this->getPermissionModel()->getByHeaderId($header->id);
         $apServices = $this->getApServiceModel()->getByHeaderId($header->id);
-        $typeOfPermissions = $this->getTypeOfPermissionModel()->getByHeaderId($header->id);
 
         $builtAirports = $this->buildAirportsFromLeg($legs);
         $apServicesTotal = 0;
@@ -980,16 +973,6 @@ class FlightController extends AbstractActionController
     public function getApServiceModel()
     {
         return $this->getServiceLocator()->get('FcFlight\Model\ApServiceModel');
-    }
-
-    /**
-     * Get TypeOfPermission model
-     *
-     * @return TypeOfPermissionModel
-     */
-    public function getTypeOfPermissionModel()
-    {
-        return $this->getServiceLocator()->get('FcFlight\Model\TypeOfPermissionModel');
     }
 
     /**

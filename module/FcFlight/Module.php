@@ -12,14 +12,12 @@ use FcFlight\Model\LegModel;
 use FcFlight\Model\RefuelModel;
 use FcFlight\Model\PermissionModel;
 use FcFlight\Model\ApServiceModel;
-use FcFlight\Model\TypeOfPermissionModel;
 use FcFlight\Filter\FlightHeaderFilter;
 use FcFlight\Filter\SearchFilter;
 use FcFlight\Filter\LegFilter;
 use FcFlight\Filter\RefuelFilter;
 use FcFlight\Filter\PermissionFilter;
 use FcFlight\Filter\ApServiceFilter;
-use FcFlight\Filter\TypeOfPermissionFilter;
 
 /**
  * Class Module
@@ -138,10 +136,6 @@ class Module
                         $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                         return new ApServiceModel($dbAdapter);
                     },
-                'FcFlight\Model\TypeOfPermissionModel' => function ($sm) {
-                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                        return new TypeOfPermissionModel($dbAdapter);
-                    },
                 'FcFlight\Filter\FlightHeaderFilter' => function ($sm) {
                         $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                         return new FlightHeaderFilter($dbAdapter);
@@ -165,10 +159,6 @@ class Module
                 'FcFlight\Filter\ApServiceFilter' => function ($sm) {
                         $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                         return new ApServiceFilter($dbAdapter);
-                    },
-                'FcFlight\Filter\TypeOfPermissionFilter' => function ($sm) {
-                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                        return new TypeOfPermissionFilter($dbAdapter);
                     },
             ),
         );

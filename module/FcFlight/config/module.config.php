@@ -3,12 +3,11 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'FcFlight\Controller\Flight' => 'FcFlight\Controller\FlightController',
-            'FcFlight\Controller\Search' => 'FcFlight\Controller\SearchController',
             'FcFlight\Controller\Leg' => 'FcFlight\Controller\LegController',
             'FcFlight\Controller\Refuel' => 'FcFlight\Controller\RefuelController',
             'FcFlight\Controller\Permission' => 'FcFlight\Controller\PermissionController',
             'FcFlight\Controller\ApService' => 'FcFlight\Controller\ApServiceController',
-            'FcFlight\Controller\TypeOfPermission' => 'FcFlight\Controller\TypeOfPermissionController',
+            'FcFlight\Controller\Search' => 'FcFlight\Controller\SearchController',
         ),
     ),
 
@@ -154,20 +153,6 @@ return array(
                     ),
                     'defaults' => array(
                         'controller' => 'FcFlight\Controller\ApService',
-                        'action' => 'index',
-                    ),
-                ),
-            ),
-            'typeOfPermission' => array(
-                'type' => 'segment',
-                'options' => array(
-                    'route' => '/permission-type[/:action][/:id]',
-                    'constraints' => array(
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id' => '[0-9]+',
-                    ),
-                    'defaults' => array(
-                        'controller' => 'FcFlight\Controller\TypeOfPermission',
                         'action' => 'index',
                     ),
                 ),
