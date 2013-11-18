@@ -63,16 +63,24 @@ class RefuelModel extends AbstractTableGateway
 
         $select->columns($this->_tableFields);
 
-        $select->join(array('library_airport' => 'library_airport'),
-            'library_airport.id = flightRefuelForm.airport',
-            array('airportName' => 'name', 'airportIcao' => 'code_icao', 'airportIata' => 'code_iata'), 'left');
+        $select->join(array('agent' => 'library_kontragent'),
+            'flightRefuelForm.agentId = agent.id',
+            array('agentName' => 'name', 'agentAddress' => 'address', 'agentMail' => 'mail'), 'left');
 
-        $select->join(array('library_kontragent' => 'library_kontragent'),
-            'library_kontragent.id = flightRefuelForm.agent',
-            array('agentName' => 'name'), 'left');
-        
-        $select->join(array('library_unit' => 'library_unit'),
-            'library_unit.id = flightRefuelForm.unit',
+        $select->join(array('leg' => 'flightLegForm'),
+            'flightRefuelForm.legId = leg.id',
+            array('airportDepartureId' => 'apDepAirportId', 'airportArrivalId' => 'apArrAirportId'), 'left');
+
+        $select->join(array('airportDeparture' => 'library_airport'),
+            'leg.apDepAirportId = airportDeparture.id',
+            array('airportDepartureICAO' => 'code_icao', 'airportDepartureIATA' => 'code_iata'), 'left');
+
+        $select->join(array('airportArrival' => 'library_airport'),
+            'leg.apArrAirportId = airportArrival.id',
+            array('airportArrivalICAO' => 'code_icao', 'airportArrivalIATA' => 'code_iata'), 'left');
+
+        $select->join(array('unit' => 'library_unit'),
+            'flightRefuelForm.unitId = unit.id',
             array('unitName' => 'name'), 'left');
 
         $select->where(array($this->table . '.id' => $id));
@@ -120,8 +128,9 @@ class RefuelModel extends AbstractTableGateway
             'flightRefuelForm.unitId = unit.id',
             array('unitName' => 'name'), 'left');
 
-        $select->where(array('headerId' => $id));
+        $select->where(array($this->table . '.headerId' => $id));
         $select->order('date ' . $select::ORDER_ASCENDING);
+
         $resultSet = $this->selectWith($select);
         $resultSet->buffer();
 
