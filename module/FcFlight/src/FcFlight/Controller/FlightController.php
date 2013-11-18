@@ -25,7 +25,6 @@ use FcFlight\Model\FlightHeaderModel;
 use FcFlight\Model\LegModel;
 use FcFlight\Model\PermissionModel;
 use FcFlight\Model\RefuelModel;
-use FcFlight\Model\TransferModel;
 use FcFlight\Model\ApServiceModel;
 use FcFlight\Model\TypeOfPermissionModel;
 use FcFlight\Model\SearchModel;
@@ -320,7 +319,6 @@ class FlightController extends AbstractActionController
         $legs = $this->getLegModel()->getByHeaderId($header->id);
         $refuels = $this->getRefuelModel()->getByHeaderId($header->id);
         $permissions = $this->getPermissionModel()->getByHeaderId($header->id);
-        $transfers = $this->getTransferModel()->getByHeaderId($header->id);
         $apServices = $this->getApServiceModel()->getByHeaderId($header->id);
         $typeOfPermissions = $this->getTypeOfPermissionModel()->getByHeaderId($header->id);
 
@@ -972,16 +970,6 @@ class FlightController extends AbstractActionController
         }
 
         return $this->refuelModel;
-    }
-
-    /**
-     * Get Transfer model
-     *
-     * @return TransferModel
-     */
-    public function getTransferModel()
-    {
-        return $this->getServiceLocator()->get('FcFlight\Model\TransferModel');
     }
 
     /**

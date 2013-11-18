@@ -7,7 +7,6 @@ return array(
             'FcFlight\Controller\Leg' => 'FcFlight\Controller\LegController',
             'FcFlight\Controller\Refuel' => 'FcFlight\Controller\RefuelController',
             'FcFlight\Controller\Permission' => 'FcFlight\Controller\PermissionController',
-            'FcFlight\Controller\Transfer' => 'FcFlight\Controller\TransferController',
             'FcFlight\Controller\ApService' => 'FcFlight\Controller\ApServiceController',
             'FcFlight\Controller\TypeOfPermission' => 'FcFlight\Controller\TypeOfPermissionController',
         ),
@@ -141,20 +140,6 @@ return array(
                     ),
                     'defaults' => array(
                         'controller' => 'FcFlight\Controller\Permission',
-                        'action' => 'index',
-                    ),
-                ),
-            ),
-            'transfer' => array(
-                'type' => 'segment',
-                'options' => array(
-                    'route' => '/transfer[/:action][/:id]',
-                    'constraints' => array(
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id' => '[0-9]+',
-                    ),
-                    'defaults' => array(
-                        'controller' => 'FcFlight\Controller\Transfer',
                         'action' => 'index',
                     ),
                 ),
