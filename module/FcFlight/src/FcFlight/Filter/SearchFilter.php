@@ -16,6 +16,10 @@ use Zend\Db\Adapter\Adapter;
  */
 class SearchFilter implements InputFilterAwareInterface
 {
+    /**
+     * @var $inputFilter
+     */
+    protected $inputFilter;
 
     /**
      * @var string

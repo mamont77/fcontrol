@@ -19,12 +19,12 @@ class ApServiceModel extends AbstractTableGateway
     /**
      * @var string
      */
-    protected $table = 'flightApServiceForm';
+    public $table = 'flightApServiceForm';
 
     /**
      * @var array
      */
-    public $tableFields = array(
+    public $_tableFields = array(
         'id',
         'headerId',
         'legId',
@@ -58,7 +58,7 @@ class ApServiceModel extends AbstractTableGateway
         $id = (int)$id;
         $select = new Select();
         $select->from($this->table);
-        $select->columns($this->tableFields);
+        $select->columns($this->_tableFields);
 
         $select->join(array('airport' => 'library_airport'),
             'flightApServiceForm.airportId = airport.id',
@@ -163,7 +163,7 @@ class ApServiceModel extends AbstractTableGateway
         $id = (int)$id;
         $select = new Select();
         $select->from($this->table);
-        $select->columns($this->tableFields);
+        $select->columns($this->_tableFields);
 
         $select->join(array('airport' => 'library_airport'),
             'flightApServiceForm.airportId = airport.id',

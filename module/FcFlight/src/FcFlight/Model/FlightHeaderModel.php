@@ -19,7 +19,7 @@ class FlightHeaderModel extends AbstractTableGateway
     /**
      * @var string
      */
-    protected $table = 'flightBaseHeaderForm';
+    public $table = 'flightBaseHeaderForm';
 
     /**
      * @param \Zend\Db\Adapter\Adapter $adapter

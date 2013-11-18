@@ -20,7 +20,21 @@ class PermissionModel extends AbstractTableGateway
     /**
      * @var string
      */
-    protected $table = 'flightPermissionForm';
+    public $table = 'flightPermissionForm';
+
+    /**
+     * @var array
+     */
+    protected $_tableFields = array(
+        'id',
+        'headerId',
+        'agentId',
+        'legId',
+        'countryId',
+        'typeOfPermission',
+        'permission',
+        'comment',
+    );
 
     /**
      * @param \Zend\Db\Adapter\Adapter $adapter
@@ -44,16 +58,7 @@ class PermissionModel extends AbstractTableGateway
         $select = new Select();
         $select->from($this->table);
 
-        $select->columns(array(
-            'id',
-            'headerId',
-            'agentId',
-            'legId',
-            'countryId',
-            'typeOfPermission',
-            'permission',
-            'comment',
-        ));
+        $select->columns($this->_tableFields);
 
         $select->join(array('agent' => 'library_kontragent'),
             'flightPermissionForm.agentId = agent.id',
@@ -152,16 +157,7 @@ class PermissionModel extends AbstractTableGateway
         $select = new Select();
         $select->from($this->table);
 
-        $select->columns(array(
-            'id',
-            'headerId',
-            'agentId',
-            'legId',
-            'countryId',
-            'typeOfPermission',
-            'permission',
-            'comment',
-        ));
+        $select->columns($this->_tableFields);
 
         $select->join(array('agent' => 'library_kontragent'),
             'flightPermissionForm.agentId = agent.id',

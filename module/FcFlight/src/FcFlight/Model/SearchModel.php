@@ -18,7 +18,7 @@ class SearchModel extends AbstractTableGateway
     /**
      * @var string
      */
-    protected $table = '';
+    public $table = '';
 
     /**
      * @param \Zend\Db\Adapter\Adapter $adapter

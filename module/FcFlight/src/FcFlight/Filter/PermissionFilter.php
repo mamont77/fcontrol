@@ -30,7 +30,7 @@ class PermissionFilter implements InputFilterAwareInterface
     /**
      * @var string
      */
-    protected $table = '';
+    public $table = '';
 
     //Fields for form and view
     public $id;

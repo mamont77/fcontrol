@@ -30,7 +30,7 @@ class ApServiceFilter implements InputFilterAwareInterface
     /**
      * @var string
      */
-    protected $table = '';
+    public $table = '';
 
     //Real fields
     public $id;

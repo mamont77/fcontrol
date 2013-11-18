@@ -20,7 +20,7 @@ class LegModel extends AbstractTableGateway
     /**
      * @var string
      */
-    protected $table = 'flightLegForm';
+    public $table = 'flightLegForm';
 
     /**
      * @param \Zend\Db\Adapter\Adapter $adapter

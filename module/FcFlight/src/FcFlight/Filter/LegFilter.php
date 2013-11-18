@@ -30,7 +30,7 @@ class LegFilter implements InputFilterAwareInterface
     /**
      * @var string
      */
-    protected $table = '';
+    public $table = '';
 
     /**
      * @var string

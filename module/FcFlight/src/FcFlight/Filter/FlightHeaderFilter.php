@@ -30,7 +30,7 @@ class FlightHeaderFilter implements InputFilterAwareInterface
     /**
      * @var string
      */
-    protected $table = '';
+    public $table = '';
 
     public $id;
     public $parentId;
