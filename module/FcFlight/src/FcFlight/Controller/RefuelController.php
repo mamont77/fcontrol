@@ -18,7 +18,7 @@ class RefuelController extends FlightController
     /**
      * @var array
      */
-    protected $dataForLogger = array();
+    public $dataForLogger = array();
 
     /**
      * @return array|\Zend\Http\Response
@@ -233,15 +233,20 @@ class RefuelController extends FlightController
     /**
      * @param $data
      */
+
     protected function setDataForLogger($data)
     {
         $this->dataForLogger = array(
             'id' => $data->id,
-            'Date' => $data->date,
-            'Airport' => $data->airportName . ' (' . $data->airportIcao . '/' . $data->airportIata . ')',
             'Agent' => $data->agentName,
-            'Quantity' => $data->quantity,
+            'LEG' => $data->airportDepartureICAO . ' (' . $data->airportDepartureIATA . ')'
+                . ' ⇒ '
+                . $data->airportArrivalICAO . ' (' . $data->airportArrivalIATA . ')',
+            'Quantity LTR' => $data->quantityLtr,
             'Unit' => $data->unitName,
+            'Price USD' => $data->priceUsd,
+            'Total USD' => $data->totalPriceUsd,
+            'Date' => $data->date,
         );
     }
 }
