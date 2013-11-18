@@ -32,20 +32,27 @@ class RefuelFilter implements InputFilterAwareInterface
      */
     protected $table = '';
 
-    //Real fields
+    //Fields for form and view
     public $id;
     public $headerId;
-    public $airport;
+    public $agentId;
+    public $legId;
+    public $quantityLtr;
+    public $quantityOtherUnits;
+    public $unitId;
+    public $priceUsd;
+    public $totalPriceUsd;
     public $date;
-    public $agent;
-    public $quantity;
-    public $unit;
 
-    //Virtual fields
-    public $airportName;
-    public $airportIcao;
-    public $airportIata;
+
+    //Fields only for view
     public $agentName;
+    public $airportDepartureId;
+    public $airportDepartureICAO;
+    public $airportDepartureIATA;
+    public $airportArrivalId;
+    public $airportArrivalICAO;
+    public $airportArrivalIATA;
     public $unitName;
 
     /**
@@ -79,18 +86,28 @@ class RefuelFilter implements InputFilterAwareInterface
      */
     public function exchangeArray(array $data)
     {
-        //Real fields
+        //Fields for form and view
         $this->id = (isset($data['id'])) ? $data['id'] : null;
         $this->headerId = (isset($data['headerId'])) ? $data['headerId'] : null;
-        $this->airport = (isset($data['airport'])) ? $data['airport'] : null;
+        $this->agentId = (isset($data['agentId'])) ? $data['agentId'] : null;
+        $this->legId = (isset($data['legId'])) ? $data['legId'] : null;
+        $this->quantityLtr = (isset($data['quantityLtr'])) ? $data['quantityLtr'] : null;
+        $this->quantityOtherUnits = (isset($data['quantityOtherUnits'])) ? $data['quantityOtherUnits'] : null;
+        $this->unitId = (isset($data['unitId'])) ? $data['unitId'] : null;
+        $this->priceUsd = (isset($data['priceUsd'])) ? $data['priceUsd'] : null;
+        $this->totalPriceUsd = (isset($data['totalPriceUsd'])) ? $data['totalPriceUsd'] : null;
         $this->date = (isset($data['date'])) ? $data['date'] : null;
-        $this->agent = (isset($data['agent'])) ? $data['agent'] : null;
-        $this->quantity = (isset($data['quantity'])) ? $data['quantity'] : null;
-        $this->unit = (isset($data['unit'])) ? $data['unit'] : null;
-        $this->airportName = (isset($data['airportName'])) ? $data['airportName'] : null;
-        $this->airportIcao = (isset($data['airportIcao'])) ? $data['airportIcao'] : null;
-        $this->airportIata = (isset($data['airportIata'])) ? $data['airportIata'] : null;
+
+        //Fields only for view
         $this->agentName = (isset($data['agentName'])) ? $data['agentName'] : null;
+        $this->agentAddress = (isset($data['agentAddress'])) ? $data['agentAddress'] : null;
+        $this->agentMail = (isset($data['agentMail'])) ? $data['agentMail'] : null;
+        $this->airportDepartureId = (isset($data['airportDepartureId'])) ? $data['airportDepartureId'] : null;
+        $this->airportDepartureICAO = (isset($data['airportDepartureICAO'])) ? $data['airportDepartureICAO'] : null;
+        $this->airportDepartureIATA = (isset($data['airportDepartureIATA'])) ? $data['airportDepartureIATA'] : null;
+        $this->airportArrivalId = (isset($data['airportArrivalId'])) ? $data['airportArrivalId'] : null;
+        $this->airportArrivalICAO = (isset($data['airportArrivalICAO'])) ? $data['airportArrivalICAO'] : null;
+        $this->airportArrivalIATA = (isset($data['airportArrivalIATA'])) ? $data['airportArrivalIATA'] : null;
         $this->unitName = (isset($data['unitName'])) ? $data['unitName'] : null;
     }
 
@@ -134,8 +151,78 @@ class RefuelFilter implements InputFilterAwareInterface
             )));
 
             $inputFilter->add($factory->createInput(array(
-                'name' => 'airport',
+                'name' => 'agentId',
                 'required' => true,
+                'filters' => array(
+                    array('name' => 'Int'),
+                ),
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'legId',
+                'required' => true,
+                'filters' => array(
+                    array('name' => 'Int'),
+                ),
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'quantityLtr',
+                'required' => true,
+                'filters' => $this->defaultFilters,
+                'validators' => array(
+                    array(
+                        'name' => 'Regex',
+                        'options' => array(
+                            'pattern' => '/^(([^0]{1})([0-9])*|(0{1}))(\.\d{2})?$/',
+                            'messages' => array(
+                                'regexNotMatch' => 'Invalid quantity format. For example please enter: 100 or 500.50',
+                            ),
+                        ),
+                    ),
+                ),
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'quantityOtherUnits',
+                'required' => true,
+                'filters' => $this->defaultFilters,
+                'validators' => array(
+                    array(
+                        'name' => 'Regex',
+                        'options' => array(
+                            'pattern' => '/^(([^0]{1})([0-9])*|(0{1}))(\.\d{2})?$/',
+                            'messages' => array(
+                                'regexNotMatch' => 'Invalid quantity format. For example please enter: 100 or 500.50',
+                            ),
+                        ),
+                    ),
+                ),
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'unitId',
+                'required' => true,
+                'filters' => array(
+                    array('name' => 'Int'),
+                ),
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'priceUsd',
+                'required' => true,
+                'filters' => $this->defaultFilters,
+                'validators' => array(
+                    array(
+                        'name' => 'Regex',
+                        'options' => array(
+                            'pattern' => '/^(([^0]{1})([0-9])*|(0{1}))(\.\d{2})?$/',
+                            'messages' => array(
+                                'regexNotMatch' => 'Invalid quantity format. For example please enter: 100 or 500.50',
+                            ),
+                        ),
+                    ),
+                ),
             )));
 
             $inputFilter->add($factory->createInput(array(
@@ -160,33 +247,6 @@ class RefuelFilter implements InputFilterAwareInterface
                         'name' => 'FcFlight\Validator\FlightYearChecker',
                     ),
                 ),
-            )));
-
-            $inputFilter->add($factory->createInput(array(
-                'name' => 'agent',
-                'required' => true,
-            )));
-
-            $inputFilter->add($factory->createInput(array(
-                'name' => 'quantity',
-                'required' => true,
-                'filters' => $this->defaultFilters,
-                'validators' => array(
-                    array(
-                        'name' => 'Regex',
-                        'options' => array(
-                            'pattern' => '/^(([^0]{1})([0-9])*|(0{1}))(\.\d{2})?$/',
-                            'messages' => array(
-                                'regexNotMatch' => 'Invalid quantity format. For example please enter: 100 or 500.50',
-                            ),
-                        ),
-                    ),
-                ),
-            )));
-
-            $inputFilter->add($factory->createInput(array(
-                'name' => 'unit',
-                'required' => true,
             )));
 
             $this->inputFilter = $inputFilter;

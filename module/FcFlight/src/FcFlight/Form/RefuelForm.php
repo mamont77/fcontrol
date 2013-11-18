@@ -21,16 +21,6 @@ class RefuelForm extends BaseForm
     /**
      * @var array
      */
-    protected $_airportsApDep = array();
-
-    /**
-     * @var array
-     */
-    protected $_airportsApArr = array();
-
-    /**
-     * @var array
-     */
     protected $_agents = array();
 
     /**

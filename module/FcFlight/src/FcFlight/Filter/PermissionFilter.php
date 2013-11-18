@@ -83,7 +83,7 @@ class PermissionFilter implements InputFilterAwareInterface
      */
     public function exchangeArray(array $data)
     {
-        //Real fields
+        //Fields for form and view
         $this->id = (isset($data['id'])) ? $data['id'] : null;
         $this->headerId = (isset($data['headerId'])) ? $data['headerId'] : null;
         $this->agentId = (isset($data['agentId'])) ? $data['agentId'] : null;
@@ -93,7 +93,7 @@ class PermissionFilter implements InputFilterAwareInterface
         $this->permission = (isset($data['permission'])) ? $data['permission'] : null;
         $this->comment = (isset($data['comment'])) ? $data['comment'] : null;
 
-        //Virtual fields
+        //Fields only for view
         $this->agentName = (isset($data['agentName'])) ? $data['agentName'] : null;
         $this->agentAddress = (isset($data['agentAddress'])) ? $data['agentAddress'] : null;
         $this->agentMail = (isset($data['agentMail'])) ? $data['agentMail'] : null;
