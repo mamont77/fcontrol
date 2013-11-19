@@ -17,6 +17,16 @@ return array(
                 ),
             ),
             array(
+                'label' => 'Management',
+                'route' => 'home',
+                'pages' => array(
+                    array(
+                        'label' => 'Refuel',
+                        'route' => 'flightsActive',
+                    ),
+                ),
+            ),
+            array(
                 'label' => 'Libraries',
                 'route' => 'zfcadmin/libraries',
                 'pages' => array(
