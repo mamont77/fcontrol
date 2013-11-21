@@ -104,10 +104,10 @@ class ApServiceModel extends AbstractTableGateway
             'airportId' => (int)$object->airportId,
             'typeOfApServiceId' => (int)$object->typeOfApServiceId,
             'agentId' => (int)$object->agentId,
-            'price' => (float)$object->price,
+            'price' => (string)$object->price,
             'currency' => (string)$object->currency,
-            'exchangeRate' => (float)$object->exchangeRate,
-            'priceUSD' => (float)$object->priceUSD,
+            'exchangeRate' => (string)$object->exchangeRate,
+            'priceUSD' => (string)$object->priceUSD,
         );
 
         $this->insert($data);
@@ -133,10 +133,10 @@ class ApServiceModel extends AbstractTableGateway
             'airportId' => (int)$object->airportId,
             'typeOfApServiceId' => (int)$object->typeOfApServiceId,
             'agentId' => (int)$object->agentId,
-            'price' => (float)$object->price,
+            'price' => (string)$object->price,
             'currency' => (string)$object->currency,
-            'exchangeRate' => (float)$object->exchangeRate,
-            'priceUSD' => (float)$object->priceUSD,
+            'exchangeRate' => (string)$object->exchangeRate,
+            'priceUSD' => (string)$object->priceUSD,
         );
 
         $id = (int)$object->id;

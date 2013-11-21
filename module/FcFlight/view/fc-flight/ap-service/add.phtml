@@ -53,6 +53,17 @@ $this->partial('widgets/components/flight.phtml',
     ?>
 
     <table class="table ">
+        <thead>
+        <th>Airport</th>
+        <th>Type of AP Service</th>
+        <th>Agent</th>
+        <th>Price</th>
+        <th>Currency</th>
+        <th>Exchange Rate</th>
+        <th>Price USD</th>
+        <th></th>
+        </thead>
+        <tbody>
         <tr>
             <td>
                 <?php
@@ -110,6 +121,7 @@ $this->partial('widgets/components/flight.phtml',
                 ?>
             </td>
         </tr>
+        </tbody>
     </table>
     <?php
     echo $this->form()->closeTag();

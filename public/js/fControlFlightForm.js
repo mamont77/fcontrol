@@ -46,7 +46,7 @@
             //result = currentValue * (1 / exchangeRateValue);
         }
 
-        return result.toFixed(2);
+        return result.toFixed(4);
     }
 
     /**

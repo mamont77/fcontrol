@@ -171,9 +171,6 @@ class RefuelModel extends AbstractTableGateway
     {
         $date = \DateTime::createFromFormat('d-m-Y', $object->date);
 
-//        \Zend\Debug\Debug::dump($object->totalPriceUsd);
-//        \Zend\Debug\Debug::dump((float)$object->totalPriceUsd);
-
         $data = array(
             'headerId' => (int)$object->headerId,
             'agentId' => (int)$object->agentId,
@@ -208,11 +205,11 @@ class RefuelModel extends AbstractTableGateway
             'headerId' => (int)$object->headerId,
             'agentId' => (int)$object->agentId,
             'legId' => (int)$object->legId,
-            'quantityLtr' => (float)$object->quantityLtr,
-            'quantityOtherUnits' => (float)$object->quantityOtherUnits,
+            'quantityLtr' => (string)$object->quantityLtr,
+            'quantityOtherUnits' => (string)$object->quantityOtherUnits,
             'unitId' => (int)$object->unitId,
-            'priceUsd' => (float)$object->priceUsd,
-            'totalPriceUsd' => (float)$object->totalPriceUsd,
+            'priceUsd' => (string)$object->priceUsd,
+            'totalPriceUsd' => (string)$object->totalPriceUsd,
             'date' => (string)$date->getTimestamp(),
         );
         $hash = $object->date;
