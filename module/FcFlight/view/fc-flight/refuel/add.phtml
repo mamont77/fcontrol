@@ -62,14 +62,14 @@ $this->partial('widgets/components/flight.phtml',
         <tr>
             <td>
                 <?php
-                $field = $form->get('agentId');
+                $field = $form->get('legId');
                 echo $this->formSelect($field);
                 echo $this->formElementErrors($field);
                 ?>
             </td>
             <td>
                 <?php
-                $field = $form->get('legId');
+                $field = $form->get('agentId');
                 echo $this->formSelect($field);
                 echo $this->formElementErrors($field);
                 ?>
