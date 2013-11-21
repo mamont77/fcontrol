@@ -101,7 +101,6 @@ class LegFilter implements InputFilterAwareInterface
      */
     public function exchangeArray(array $data)
     {
-//        \Zend\Debug\Debug::dump($data);
         //Fields for form and view
         $this->id = (isset($data['id'])) ? $data['id'] : null;
         $this->headerId = (isset($data['headerId'])) ? $data['headerId'] : null;

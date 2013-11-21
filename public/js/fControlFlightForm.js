@@ -263,7 +263,7 @@
 
             var $legData = $('#leg table tbody tr'),
                 legDataMapped = {},
-                $legId = $($form).find('#legId'),
+                $airportId = $($form).find('#airportId'),
                 $quantityLtr = $($form).find('#quantityLtr'),
                 $quantityOtherUnits = $($form).find('#quantityOtherUnits'),
                 $unitId = $($form).find('#unitId'),
@@ -279,8 +279,11 @@
                 legDataMapped[$row.attr('data-legId')] = $row.find('.date').text();
             });
 
-            $legId.change(function () {
-                $date.val(legDataMapped[$(this).val()]);
+            $airportId.change(function () {
+                var legIdValue = $(this).val().split('-');
+
+                legIdValue = legIdValue[0];
+                $date.val(legDataMapped[legIdValue]);
             });
 
             $($quantityLtr).bind("keyup change", function () {

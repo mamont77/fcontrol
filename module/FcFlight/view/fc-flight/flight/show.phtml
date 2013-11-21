@@ -1,7 +1,4 @@
 <?php
-/**
- * @var $this FcFlight\Controller\FlightController
- */
 $title = 'Browse: Flight';
 $this->headTitle($title);
 ?>
@@ -35,21 +32,32 @@ $this->partial('widgets/components/flight.phtml',
 
 <? if (count($this->refuels) > 0): ?>
     <legend>Refuels</legend>
-    <?php echo $this->partial('widgets/tables/refuel.phtml', array('refuels' => $this->refuels, 'status' => $this->header->status)); ?>
+    <?= $this->partial('widgets/tables/refuel.phtml',
+        array(
+            'refuels' => $this->refuels,
+            'refuelsTotal' => $this->refuelsTotal,
+            'status' => $this->header->status,
+        )) ?>
 <? endif; ?>
 
 <? if (count($this->permissions) > 0): ?>
     <legend>Permission</legend>
-    <?= $this->partial('widgets/tables/permission.phtml', array('permissions' => $this->permissions, 'status' => $this->header->status)) ?>
+    <?= $this->partial('widgets/tables/permission.phtml',
+        array(
+            'permissions' => $this->permissions,
+            'status' => $this->header->status,
+        )) ?>
 <? endif; ?>
 
 <? if (count($this->apServices) > 0): ?>
     <legend>AP Services</legend>
-    <?= $this->partial('widgets/tables/ap-service.phtml', array(
-        'apServices' => $this->apServices,
-        'apServicesTotal' => $this->apServicesTotal,
-        'status' => $this->header->status,
-    )) ?>
+    <?=
+    $this->partial('widgets/tables/ap-service.phtml',
+        array(
+            'apServices' => $this->apServices,
+            'apServicesTotal' => $this->apServicesTotal,
+            'status' => $this->header->status,
+        )) ?>
 <? endif; ?>
 
 

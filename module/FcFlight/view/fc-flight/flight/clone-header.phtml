@@ -11,35 +11,7 @@ $this->headTitle($title);
     <li class="active">Flight form</li>
 </ul>
 
-<h1><?php echo $this->escapeHtml($title); ?></h1>
-
-<?php
-$displayOptions = array(
-    'elements' => array(
-        'dateOrder' => array(
-            'required' => true,
-        ),
-        'kontragent' => array(
-            'required' => true,
-        ),
-        'airOperator' => array(
-            'required' => true,
-        ),
-        'aircraft' => array(
-            'required' => true,
-        ),
-    ),
-);
-$form = $this->form;
-$form->setAttribute('action', $this->url(
-    'flight',
-    array(
-        'action' => 'clone-header',
-        'id'     => $this->id,
-    )
-));
-$form->prepare();
-?>
+<h1><?= $title ?></h1>
 
 <?php if ($form->getMessages()): ?>
     <div class="alert alert-error">
@@ -49,4 +21,97 @@ $form->prepare();
     </div>
 <?php endif; ?>
 
-<?php echo $this->formTwb($form, $formType, $displayOptions); ?>
+<?php
+$form = $this->form;
+$form->setAttribute('action', $this->url(
+    'flight',
+    array(
+        'action' => 'edit-header',
+        'id' => $this->id,
+    )
+));
+$form->prepare();
+// Get the form label plugin
+$formLabel = $this->plugin('formLabel');
+echo $this->form()->openTag($form) . PHP_EOL;
+echo $this->formHidden($form->get('id')) . PHP_EOL;
+echo $this->formHidden($form->get('csrf')) . PHP_EOL;
+?>
+
+<?php
+$form = $this->form;
+$form->setAttribute('action', $this->url('flight', array('action' => 'clone-header')));
+$form->prepare();
+// Get the form label plugin
+$formLabel = $this->plugin('formLabel');
+echo $this->form()->openTag($form) . PHP_EOL;
+echo $this->formHidden($form->get('id')) . PHP_EOL;
+echo $this->formHidden($form->get('csrf')) . PHP_EOL;
+?>
+
+<table class="table ">
+    <thead>
+    <tr>
+        <th>Date Order</th>
+        <th>Customer</th>
+        <th>Air Operator</th>
+        <th>Aircraft Type</th>
+        <th>Status</th>
+        <th colspan="2"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>
+            <?php
+            $field = $form->get('dateOrder');
+            echo $this->formInput($field);
+            echo '<p class="help-block" id="help-dateOrder">' . $field->getOption('description') . '</p>';
+            echo $this->formElementErrors($field);
+            ?>
+        </td>
+        <td>
+            <?php
+            $field = $form->get('kontragent');
+            echo $this->formSelect($field);
+            echo $this->formElementErrors($field);
+            ?>
+        </td>
+        <td>
+            <?php
+            $field = $form->get('airOperator');
+            echo $this->formSelect($field);
+            echo $this->formElementErrors($field);
+            ?>
+        </td>
+        <td>
+            <?php
+            $field = $form->get('aircraft');
+            echo $this->formSelect($field);
+            echo $this->formElementErrors($field);
+            ?>
+        </td>
+        <td>
+            <?php
+            $field = $form->get('status');
+            echo $this->formCheckbox($field);
+            echo $this->formElementErrors($field);
+            ?>
+        </td>
+        <td>
+            <?php
+            $field = $form->get('submitBtn');
+            echo $this->formElement($field);
+            ?>
+        </td>
+        <td>
+            <?php
+            $field = $form->get('cancel');
+            echo $this->formElement($field);
+            ?>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<?= $this->form()->closeTag() ?>
+

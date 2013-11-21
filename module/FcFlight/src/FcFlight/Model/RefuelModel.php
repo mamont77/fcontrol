@@ -31,6 +31,7 @@ class RefuelModel extends AbstractTableGateway
         'headerId',
         'agentId',
         'legId',
+        'airportId',
         'quantityLtr',
         'quantityOtherUnits',
         'unitId',
@@ -63,21 +64,14 @@ class RefuelModel extends AbstractTableGateway
 
         $select->columns($this->_tableFields);
 
+        $select->join(array('airport' => 'library_airport'),
+            'flightRefuelForm.airportId = airport.id',
+            array('icao' => 'code_icao', 'iata' => 'code_iata', 'airportName' => 'name'), 'left');
+
+
         $select->join(array('agent' => 'library_kontragent'),
             'flightRefuelForm.agentId = agent.id',
-            array('agentName' => 'name', 'agentAddress' => 'address', 'agentMail' => 'mail'), 'left');
-
-        $select->join(array('leg' => 'flightLegForm'),
-            'flightRefuelForm.legId = leg.id',
-            array('airportDepartureId' => 'apDepAirportId', 'airportArrivalId' => 'apArrAirportId'), 'left');
-
-        $select->join(array('airportDeparture' => 'library_airport'),
-            'leg.apDepAirportId = airportDeparture.id',
-            array('airportDepartureICAO' => 'code_icao', 'airportDepartureIATA' => 'code_iata'), 'left');
-
-        $select->join(array('airportArrival' => 'library_airport'),
-            'leg.apArrAirportId = airportArrival.id',
-            array('airportArrivalICAO' => 'code_icao', 'airportArrivalIATA' => 'code_iata'), 'left');
+            array('kontragentShortName' => 'short_name'), 'left');
 
         $select->join(array('unit' => 'library_unit'),
             'flightRefuelForm.unitId = unit.id',
@@ -92,6 +86,7 @@ class RefuelModel extends AbstractTableGateway
         }
 
         $row->date = date('d-m-Y', $row->date);
+        $row->airportId = $row->legId . '-' . $row->airportId;
 
         return $row;
     }
@@ -108,21 +103,13 @@ class RefuelModel extends AbstractTableGateway
 
         $select->columns($this->_tableFields);
 
+        $select->join(array('airport' => 'library_airport'),
+            'flightRefuelForm.airportId = airport.id',
+            array('icao' => 'code_icao', 'iata' => 'code_iata', 'airportName' => 'name'), 'left');
+
         $select->join(array('agent' => 'library_kontragent'),
             'flightRefuelForm.agentId = agent.id',
-            array('agentName' => 'name', 'agentAddress' => 'address', 'agentMail' => 'mail'), 'left');
-
-        $select->join(array('leg' => 'flightLegForm'),
-            'flightRefuelForm.legId = leg.id',
-            array('airportDepartureId' => 'apDepAirportId', 'airportArrivalId' => 'apArrAirportId'), 'left');
-
-        $select->join(array('airportDeparture' => 'library_airport'),
-            'leg.apDepAirportId = airportDeparture.id',
-            array('airportDepartureICAO' => 'code_icao', 'airportDepartureIATA' => 'code_iata'), 'left');
-
-        $select->join(array('airportArrival' => 'library_airport'),
-            'leg.apArrAirportId = airportArrival.id',
-            array('airportArrivalICAO' => 'code_icao', 'airportArrivalIATA' => 'code_iata'), 'left');
+            array('kontragentShortName' => 'short_name'), 'left');
 
         $select->join(array('unit' => 'library_unit'),
             'flightRefuelForm.unitId = unit.id',
@@ -136,29 +123,28 @@ class RefuelModel extends AbstractTableGateway
 
         $data = array();
         foreach ($resultSet as $row) {
-            $data[$row->legId] = array(
-                'headerId' => $row->headerId,
-                'legName' => $row->airportDepartureICAO . ' (' . $row->airportDepartureIATA . ')'
-                    . ' ⇒ '
-                    . $row->airportArrivalICAO . ' (' . $row->airportArrivalIATA . ')',
-            );
-        }
-        foreach ($resultSet as $row) {
-            $data[$row->legId]['refuel'][$row->id] = array(
-                'agentId' => $row->agentId,
-                'agentName' => $row->agentName,
-                'agentAddress' => $row->agentAddress,
-                'agentMail' => $row->agentMail,
-                'quantityLtr' => $row->quantityLtr,
-                'quantityOtherUnits' => $row->quantityOtherUnits,
-                'unitId' => $row->unitId,
-                'unitName' => $row->unitName,
-                'priceUsd' => $row->priceUsd,
-                'totalPriceUsd' => $row->totalPriceUsd,
-                'date' => date('d-m-Y', $row->date),
-            );
-        }
+            //Real fields
+            $data[$row->id]['id'] = $row->id;
+            $data[$row->id]['headerId'] = $row->headerId;
+            $data[$row->id]['legId'] = $row->legId;
+            $data[$row->id]['airportId'] = $row->airportId;
+            $data[$row->id]['agentId'] = $row->agentId;
+            $data[$row->id]['quantityLtr'] = $row->quantityLtr;
+            $data[$row->id]['quantityOtherUnits'] = $row->quantityOtherUnits;
+            $data[$row->id]['unitId'] = $row->unitId;
+            $data[$row->id]['priceUsd'] = $row->priceUsd;
+            $data[$row->id]['totalPriceUsd'] = $row->totalPriceUsd;
+            $data[$row->id]['date'] = $row->date;
 
+            //Virtual fields
+            $data[$row->id]['icao'] = $row->icao;
+            $data[$row->id]['iata'] = $row->iata;
+            $data[$row->id]['airportName'] = $row->airportName;
+            $data[$row->id]['kontragentShortName'] = $row->kontragentShortName;
+            $data[$row->id]['unitName'] = $row->unitName;
+
+        }
+//        \Zend\Debug\Debug::dump($data);
 
         return $data;
     }
@@ -170,11 +156,15 @@ class RefuelModel extends AbstractTableGateway
     public function add(RefuelFilter $object)
     {
         $date = \DateTime::createFromFormat('d-m-Y', $object->date);
+        $airport = explode('-', (string)$object->airportId);
+        $object->legId = $airport[0];
+        $object->airportId = $airport[1];
 
         $data = array(
             'headerId' => (int)$object->headerId,
             'agentId' => (int)$object->agentId,
             'legId' => (int)$object->legId,
+            'airportId' => (int)$object->airportId,
             'quantityLtr' => (string)$object->quantityLtr,
             'quantityOtherUnits' => (string)$object->quantityOtherUnits,
             'unitId' => (int)$object->unitId,
@@ -200,11 +190,15 @@ class RefuelModel extends AbstractTableGateway
     public function save(RefuelFilter $object)
     {
         $date = \DateTime::createFromFormat('d-m-Y', $object->date);
+        $airport = explode('-', (string)$object->airportId);
+        $object->legId = $airport[0];
+        $object->airportId = $airport[1];
 
         $data = array(
             'headerId' => (int)$object->headerId,
             'agentId' => (int)$object->agentId,
             'legId' => (int)$object->legId,
+            'airportId' => (int)$object->airportId,
             'quantityLtr' => (string)$object->quantityLtr,
             'quantityOtherUnits' => (string)$object->quantityOtherUnits,
             'unitId' => (int)$object->unitId,

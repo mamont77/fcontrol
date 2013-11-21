@@ -53,21 +53,23 @@ $this->partial('widgets/components/flight.phtml',
 
     <table class="table ">
         <thead>
-        <th>Airport</th>
-        <th>Date</th>
-        <th>Agent</th>
-        <th>Quantity LTR</th>
-        <th>Quantity in Selected Units</th>
-        <th>Unit</th>
-        <th>Price USD</th>
-        <th>Total USD</th>
-        <th></th>
+        <tr>
+            <th>Airport</th>
+            <th>Date</th>
+            <th>Agent</th>
+            <th>Quantity LTR</th>
+            <th>Quantity in Selected Units</th>
+            <th>Unit</th>
+            <th>Price USD</th>
+            <th>Total USD</th>
+            <th></th>
+        </tr>
         </thead>
         <tbody>
         <tr>
             <td>
                 <?php
-                $field = $form->get('agentId');
+                $field = $form->get('airportId');
                 echo $this->formSelect($field);
                 echo $this->formElementErrors($field);
                 ?>
@@ -77,13 +79,13 @@ $this->partial('widgets/components/flight.phtml',
                 $field = $form->get('date');
                 echo $field->getOption('label');
                 echo $this->formInput($field);
-                echo '<p class="help-block" id="help-dateOrder">' . $field->getOption('description'). '</p>';
+                echo '<p class="help-block" id="help-dateOrder">' . $field->getOption('description') . '</p>';
                 echo $this->formElementErrors($field);
                 ?>
             </td>
             <td>
                 <?php
-                $field = $form->get('legId');
+                $field = $form->get('agentId');
                 echo $this->formSelect($field);
                 echo $this->formElementErrors($field);
                 ?>

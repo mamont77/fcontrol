@@ -37,6 +37,7 @@ class RefuelFilter implements InputFilterAwareInterface
     public $headerId;
     public $agentId;
     public $legId;
+    public $airportId;
     public $quantityLtr;
     public $quantityOtherUnits;
     public $unitId;
@@ -46,13 +47,11 @@ class RefuelFilter implements InputFilterAwareInterface
 
 
     //Fields only for view
-    public $agentName;
-    public $airportDepartureId;
-    public $airportDepartureICAO;
-    public $airportDepartureIATA;
-    public $airportArrivalId;
-    public $airportArrivalICAO;
-    public $airportArrivalIATA;
+    public $icao;
+    public $iata;
+    public $airportName;
+    public $typeOfApServiceName;
+    public $kontragentShortName;
     public $unitName;
 
     /**
@@ -91,6 +90,7 @@ class RefuelFilter implements InputFilterAwareInterface
         $this->headerId = (isset($data['headerId'])) ? $data['headerId'] : null;
         $this->agentId = (isset($data['agentId'])) ? $data['agentId'] : null;
         $this->legId = (isset($data['legId'])) ? $data['legId'] : null;
+        $this->airportId = (isset($data['airportId'])) ? $data['airportId'] : null;
         $this->quantityLtr = (isset($data['quantityLtr'])) ? $data['quantityLtr'] : null;
         $this->quantityOtherUnits = (isset($data['quantityOtherUnits'])) ? $data['quantityOtherUnits'] : null;
         $this->unitId = (isset($data['unitId'])) ? $data['unitId'] : null;
@@ -99,15 +99,11 @@ class RefuelFilter implements InputFilterAwareInterface
         $this->date = (isset($data['date'])) ? $data['date'] : null;
 
         //Fields only for view
-        $this->agentName = (isset($data['agentName'])) ? $data['agentName'] : null;
-        $this->agentAddress = (isset($data['agentAddress'])) ? $data['agentAddress'] : null;
-        $this->agentMail = (isset($data['agentMail'])) ? $data['agentMail'] : null;
-        $this->airportDepartureId = (isset($data['airportDepartureId'])) ? $data['airportDepartureId'] : null;
-        $this->airportDepartureICAO = (isset($data['airportDepartureICAO'])) ? $data['airportDepartureICAO'] : null;
-        $this->airportDepartureIATA = (isset($data['airportDepartureIATA'])) ? $data['airportDepartureIATA'] : null;
-        $this->airportArrivalId = (isset($data['airportArrivalId'])) ? $data['airportArrivalId'] : null;
-        $this->airportArrivalICAO = (isset($data['airportArrivalICAO'])) ? $data['airportArrivalICAO'] : null;
-        $this->airportArrivalIATA = (isset($data['airportArrivalIATA'])) ? $data['airportArrivalIATA'] : null;
+        $this->icao = (isset($data['icao'])) ? $data['icao'] : null;
+        $this->iata = (isset($data['iata'])) ? $data['iata'] : null;
+        $this->airportName = (isset($data['airportName'])) ? $data['airportName'] : null;
+        $this->typeOfApServiceName = (isset($data['typeOfApServiceName'])) ? $data['typeOfApServiceName'] : null;
+        $this->kontragentShortName = (isset($data['kontragentShortName'])) ? $data['kontragentShortName'] : null;
         $this->unitName = (isset($data['unitName'])) ? $data['unitName'] : null;
     }
 
@@ -159,11 +155,9 @@ class RefuelFilter implements InputFilterAwareInterface
             )));
 
             $inputFilter->add($factory->createInput(array(
-                'name' => 'legId',
+                'name' => 'airportId',
                 'required' => true,
-                'filters' => array(
-                    array('name' => 'Int'),
-                ),
+                'filters' => $this->defaultFilters,
             )));
 
             $inputFilter->add($factory->createInput(array(

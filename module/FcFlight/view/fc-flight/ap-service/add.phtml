@@ -54,14 +54,16 @@ $this->partial('widgets/components/flight.phtml',
 
     <table class="table ">
         <thead>
-        <th>Airport</th>
-        <th>Type of AP Service</th>
-        <th>Agent</th>
-        <th>Price</th>
-        <th>Currency</th>
-        <th>Exchange Rate</th>
-        <th>Price USD</th>
-        <th></th>
+        <tr>
+            <th>Airport</th>
+            <th>Type of AP Service</th>
+            <th>Agent</th>
+            <th>Price</th>
+            <th>Currency</th>
+            <th>Exchange Rate</th>
+            <th>Price USD</th>
+            <th></th>
+        </tr>
         </thead>
         <tbody>
         <tr>
@@ -69,50 +71,50 @@ $this->partial('widgets/components/flight.phtml',
                 <?php
                 $field = $form->get('airportId');
                 echo $this->formSelect($field);
-                echo $this->formElementErrors($field);
                 ?>
+                <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
             </td>
             <td>
                 <?php
                 $field = $form->get('typeOfApServiceId');
                 echo $this->formSelect($field);
-                echo $this->formElementErrors($field);
                 ?>
+                <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
             </td>
             <td>
                 <?php
                 $field = $form->get('agentId');
                 echo $this->formSelect($field);
-                echo $this->formElementErrors($field);
                 ?>
+                <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
             </td>
             <td>
                 <?php
                 $field = $form->get('price');
                 echo $this->formInput($field);
-                echo $this->formElementErrors($field);
                 ?>
+                <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
             </td>
             <td>
                 <?php
                 $field = $form->get('currency');
                 echo $this->formSelect($field);
-                echo $this->formElementErrors($field);
                 ?>
+                <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
             </td>
             <td>
                 <?php
                 $field = $form->get('exchangeRate');
                 echo $this->formInput($field);
-                echo $this->formElementErrors($field);
                 ?>
+                <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
             </td>
             <td>
                 <?php
                 $field = $form->get('priceUSD');
                 echo $this->formInput($field);
-                echo $this->formElementErrors($field);
                 ?>
+                <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
             </td>
             <td>
                 <?php

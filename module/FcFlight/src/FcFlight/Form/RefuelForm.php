@@ -21,12 +21,12 @@ class RefuelForm extends BaseForm
     /**
      * @var array
      */
-    protected $_agents = array();
+    protected $_airports = array();
 
     /**
      * @var array
      */
-    protected $_legs = array();
+    protected $_agents = array();
 
     /**
      * @var array
@@ -45,8 +45,8 @@ class RefuelForm extends BaseForm
 
         parent::__construct($this->_formName);
 
+        $this->_airports = $options['libraries']['airports'];
         $this->setLibrary('_agents', $options['libraries']['agents'], 'id', 'name');
-        $this->_legs = $options['libraries']['legs'];
         $this->setLibrary('_units', $options['libraries']['units'], 'id', 'name');
 
         $this->setName($this->_formName);
@@ -76,6 +76,21 @@ class RefuelForm extends BaseForm
 //        ));
 
         $this->add(array(
+            'name' => 'airportId',
+            'type' => 'Zend\Form\Element\Select',
+            'attributes' => array(
+                'id' => 'airportId',
+                'class' => 'chosen input-xlarge',
+                'data-placeholder' => 'Airport',
+                'required' => true,
+            ),
+            'options' => array(
+                'empty_option' => '',
+                'value_options' => $this->_airports,
+            ),
+        ));
+
+        $this->add(array(
             'name' => 'agentId',
             'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
@@ -87,21 +102,6 @@ class RefuelForm extends BaseForm
             'options' => array(
                 'empty_option' => '',
                 'value_options' => $this->_agents,
-            ),
-        ));
-
-        $this->add(array(
-            'name' => 'legId',
-            'type' => 'Zend\Form\Element\Select',
-            'attributes' => array(
-                'id' => 'legId',
-                'class' => 'chosen input-large',
-                'data-placeholder' => 'LEG',
-                'required' => true,
-            ),
-            'options' => array(
-                'empty_option' => '',
-                'value_options' => $this->_legs,
             ),
         ));
 

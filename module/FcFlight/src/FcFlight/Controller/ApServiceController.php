@@ -44,7 +44,6 @@ class ApServiceController extends FlightController
             $builtId = $apService['legId'] . '-' . $apService['airportId'];
             if (array_key_exists($builtId, $builtAirports)) {
                 $apService['builtAirportName'] = $builtAirports[$builtId];
-
             }
         }
 
@@ -126,7 +125,6 @@ class ApServiceController extends FlightController
             $builtId = $apService['legId'] . '-' . $apService['airportId'];
             if (array_key_exists($builtId, $builtAirports)) {
                 $apService['builtAirportName'] = $builtAirports[$builtId];
-
             }
         }
         $this->setDataForLogger($data);

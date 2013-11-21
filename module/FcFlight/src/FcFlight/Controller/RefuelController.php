@@ -38,6 +38,16 @@ class RefuelController extends FlightController
         $header = $this->getFlightHeaderModel()->getByRefNumberOrder($refNumberOrder);
         $legs = $this->getLegModel()->getByHeaderId($headerId);
         $refuels = $this->getRefuelModel()->getByHeaderId($headerId);
+        $builtAirports = $this->buildAirportsFromLeg($legs);
+
+        $refuelsTotal = 0;
+        foreach ($refuels as &$refuel) {
+            $refuelsTotal += $refuel['totalPriceUsd'];
+            $builtId = $refuel['legId'] . '-' . $refuel['airportId'];
+            if (array_key_exists($builtId, $builtAirports)) {
+                $refuel['builtAirportName'] = $builtAirports[$builtId];
+            }
+        }
 
 //        $lastRefuel = end($refuels);
 //        if ($lastRefuel) {
@@ -50,8 +60,8 @@ class RefuelController extends FlightController
             array(
                 'headerId' => $headerId,
                 'libraries' => array(
+                    'airports' => $builtAirports,
                     'agents' => $this->getKontragents(),
-                    'legs' => $this->getLegModel()->getListByHeaderId($headerId),
                     'units' => $this->getUnits(),
                 ),
                 'previousValues' => array(
@@ -94,6 +104,7 @@ class RefuelController extends FlightController
             'header' => $header,
             'legs' => $legs,
             'refuels' => $refuels,
+            'refuelsTotal' => $refuelsTotal,
             'form' => $form,
         );
     }
@@ -116,6 +127,17 @@ class RefuelController extends FlightController
         $header = $this->getFlightHeaderModel()->getByRefNumberOrder($refNumberOrder);
         $legs = $this->getLegModel()->getByHeaderId($header->id);
         $refuels = $this->getRefuelModel()->getByHeaderId($header->id);
+        $builtAirports = $this->buildAirportsFromLeg($legs);
+
+        $refuelsTotal = 0;
+        foreach ($refuels as &$refuel) {
+            $refuelsTotal += $refuel['totalPriceUsd'];
+            $builtId = $refuel['legId'] . '-' . $refuel['airportId'];
+            if (array_key_exists($builtId, $builtAirports)) {
+                $refuel['builtAirportName'] = $builtAirports[$builtId];
+            }
+        }
+
 //        $lastRefuel = end($refuels);
 //        if ($lastRefuel) {
 //            $previousDate = $lastRefuel['date'];
@@ -130,8 +152,8 @@ class RefuelController extends FlightController
         $form = new RefuelForm('refuel',
             array(
                 'libraries' => array(
+                    'airports' => $builtAirports,
                     'agents' => $this->getKontragents(),
-                    'legs' => $this->getLegModel()->getListByHeaderId($header->id),
                     'units' => $this->getUnits(),
                 ),
                 'previousValues' => array(
@@ -178,6 +200,7 @@ class RefuelController extends FlightController
             'header' => $header,
             'legs' => $legs,
             'refuels' => $refuels,
+            'refuelsTotal' => $refuelsTotal,
             'form' => $form,
         );
     }

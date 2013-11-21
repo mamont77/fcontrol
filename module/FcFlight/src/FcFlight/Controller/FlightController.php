@@ -314,11 +314,19 @@ class FlightController extends AbstractActionController
         $refuels = $this->getRefuelModel()->getByHeaderId($header->id);
         $permissions = $this->getPermissionModel()->getByHeaderId($header->id);
         $apServices = $this->getApServiceModel()->getByHeaderId($header->id);
-
         $builtAirports = $this->buildAirportsFromLeg($legs);
+
+        $refuelsTotal = 0;
+        foreach ($refuels as &$refuel) {
+            $refuelsTotal += $refuel['totalPriceUsd'];
+            $builtId = $refuel['legId'] . '-' . $refuel['airportId'];
+            if (array_key_exists($builtId, $builtAirports)) {
+                $refuel['builtAirportName'] = $builtAirports[$builtId];
+            }
+        }
         $apServicesTotal = 0;
         foreach ($apServices as &$apService) {
-            $apServicesTotal += (float)$apService['priceUSD'];
+            $apServicesTotal += $apService['priceUSD'];
             $builtId = $apService['legId'] . '-' . $apService['airportId'];
             if (array_key_exists($builtId, $builtAirports)) {
                 $apService['builtAirportName'] = $builtAirports[$builtId];
@@ -329,6 +337,7 @@ class FlightController extends AbstractActionController
             'header' => $header,
             'legs' => $legs,
             'refuels' => $refuels,
+            'refuelsTotal' => $refuelsTotal,
             'permissions' => $permissions,
             'apServices' => $apServices,
             'apServicesTotal' => $apServicesTotal,
