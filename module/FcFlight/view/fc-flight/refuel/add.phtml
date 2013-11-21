@@ -54,16 +54,37 @@ $this->partial('widgets/components/flight.phtml',
     echo $this->form()->openTag($form) . PHP_EOL;
     echo $this->formHidden($form->get('id')) . PHP_EOL;
     echo $this->formHidden($form->get('headerId')) . PHP_EOL;
-//    echo $this->formHidden($form->get('previousDate')) . PHP_EOL;
+    //    echo $this->formHidden($form->get('previousDate')) . PHP_EOL;
     echo $this->formHidden($form->get('csrf')) . PHP_EOL;
     ?>
 
     <table class="table ">
+        <thead>
+        <td>Airport</td>
+        <td>Date</td>
+        <td>Agent</td>
+        <td>Quantity LTR</td>
+        <td>Quantity in Selected Units</td>
+        <td>Unit</td>
+        <td>Price USD</td>
+        <td>Total USD</td>
+        <td></td>
+        </thead>
+        <tbody>
         <tr>
             <td>
                 <?php
                 $field = $form->get('legId');
                 echo $this->formSelect($field);
+                echo $this->formElementErrors($field);
+                ?>
+            </td>
+            <td>
+                <?php
+                $field = $form->get('date');
+                echo $field->getOption('label');
+                echo $this->formInput($field);
+                echo '<p class="help-block" id="help-dateOrder">' . $field->getOption('description') . '</p>';
                 echo $this->formElementErrors($field);
                 ?>
             </td>
@@ -111,20 +132,12 @@ $this->partial('widgets/components/flight.phtml',
             </td>
             <td>
                 <?php
-                $field = $form->get('date');
-                echo $field->getOption('label');
-                echo $this->formInput($field);
-                echo '<p class="help-block" id="help-dateOrder">' . $field->getOption('description'). '</p>';
-                echo $this->formElementErrors($field);
-                ?>
-            </td>
-            <td>
-                <?php
                 $field = $form->get('submitBtn');
                 echo $this->formElement($field);
                 ?>
             </td>
         </tr>
+        </tbody>
     </table>
     <?php
     echo $this->form()->closeTag();

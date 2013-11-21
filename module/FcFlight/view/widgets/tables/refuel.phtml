@@ -3,6 +3,9 @@
         <thead class="header">
         <tr>
             <th>
+                Date
+            </th>
+            <th>
                 Agent
             </th>
             <th>
@@ -16,9 +19,6 @@
             </th>
             <th>
                 Total USD
-            </th>
-            <th>
-                Date
             </th>
             <th class="actions">Actions</th>
         </tr>
@@ -38,12 +38,12 @@
                 $refuelsTotal += (float)$refuelData['totalPriceUsd'];
                 ?>
                 <tr class="<? if ($refuelId == $this->currentId): ?><?= 'info' ?><? endif ?>">
+                    <td><?= $this->escapeHtml($refuelData['date']) ?></td>
                     <td><?= $this->escapeHtml($refuelData['agentName']) ?></td>
                     <td><?= $this->escapeHtml($refuelData['quantityLtr']) ?></td>
                     <td><?= $this->escapeHtml($refuelData['unitName']) ?></td>
                     <td><?= $this->escapeHtml($refuelData['priceUsd']) ?></td>
                     <td><?= $this->escapeHtml($refuelData['totalPriceUsd']) ?></td>
-                    <td><?= $this->escapeHtml($refuelData['date']) ?></td>
                     <td class="actions">
                         <a title="Edit"
                         <a title="Edit" href="<?= $this->url('refuel',
