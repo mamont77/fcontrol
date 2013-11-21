@@ -167,15 +167,6 @@
             if ($form.length == 0) return;
 
             $($form).find('#dateOrder').mask('99-99-9999');
-            $($form).find('#hint-aircraft').text('GegNumber: ' + ($form).find('#aircraft').val());
-            $form.on('change', '#aircraft', function () {
-                var $hint = $form.find('#hint-aircraft');
-                if ($(this).val() != '') {
-                    $hint.text('GegNumber: ' + $(this).val());
-                } else {
-                    $hint.text('GegNumber');
-                }
-            });
         }
     };
 

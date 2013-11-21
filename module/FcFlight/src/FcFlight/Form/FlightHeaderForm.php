@@ -44,7 +44,7 @@ class FlightHeaderForm extends BaseForm
 
         $this->setLibrary('kontragents', $options['libraries']['kontragent'], 'id', 'name');
         $this->setLibrary('airOperators', $options['libraries']['air_operator'], 'id', 'short_name'); //don't rename
-        $this->setLibrary('aircrafts', $options['libraries']['aircraft'], 'reg_number', 'aircraft_type_name');
+        $this->setLibrary('aircrafts', $options['libraries']['aircraft'], 'reg_number', array('aircraft_type_name', 'reg_number'));
 
         $this->setName($this->_formName);
         $this->setAttribute('method', 'post');
@@ -116,7 +116,6 @@ class FlightHeaderForm extends BaseForm
                 'label' => 'Aircraft Type',
                 'empty_option' => '-- Please select --',
                 'value_options' => $this->aircrafts,
-                'hint' => 'GegNumber',
             ),
         ));
 
