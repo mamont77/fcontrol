@@ -119,7 +119,7 @@ class ApServiceForm extends BaseForm
             'attributes' => array(
                 'id' => 'price',
                 'class' => 'input-small',
-                'required' => true,
+                'required' => false,
                 'placeholder' => 'Price',
                 'maxlength' => '32',
             ),
@@ -132,7 +132,7 @@ class ApServiceForm extends BaseForm
                 'id' => 'currency',
                 'class' => 'chosen input-small',
                 'data-placeholder' => 'Currency',
-                'required' => true,
+                'required' => false,
             ),
             'options' => array(
                 'empty_option' => '',
@@ -146,7 +146,7 @@ class ApServiceForm extends BaseForm
             'attributes' => array(
                 'id' => 'exchangeRate',
                 'class' => 'input-small',
-                'required' => true,
+                'required' => false,
                 'placeholder' => 'Exchange Rate',
                 'maxlength' => '16',
             ),
@@ -158,7 +158,7 @@ class ApServiceForm extends BaseForm
             'attributes' => array(
                 'id' => 'priceUSD',
                 'class' => 'input-small',
-                'required' => true,
+                'required' => false,
                 'placeholder' => 'Price USD',
                 'maxlength' => '32',
                 'readonly' => true,

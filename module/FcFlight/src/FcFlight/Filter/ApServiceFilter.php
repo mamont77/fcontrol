@@ -163,7 +163,7 @@ class ApServiceFilter implements InputFilterAwareInterface
 
             $inputFilter->add($factory->createInput(array(
                 'name' => 'price',
-                'required' => true,
+                'required' => false,
                 'filters' => $this->defaultFilters,
                 'validators' => array(
                     array(
@@ -184,7 +184,7 @@ class ApServiceFilter implements InputFilterAwareInterface
 
             $inputFilter->add($factory->createInput(array(
                 'name' => 'currency',
-                'required' => true,
+                'required' => false,
                 'filters' => $this->defaultFilters,
                 'validators' => array(
                     array(
@@ -195,7 +195,7 @@ class ApServiceFilter implements InputFilterAwareInterface
 
             $inputFilter->add($factory->createInput(array(
                 'name' => 'exchangeRate',
-                'required' => true,
+                'required' => false,
                 'filters' => $this->defaultFilters,
                 'validators' => array(
                     array(
@@ -216,7 +216,7 @@ class ApServiceFilter implements InputFilterAwareInterface
 
             $inputFilter->add($factory->createInput(array(
                 'name' => 'priceUSD',
-                'required' => true,
+                'required' => false,
                 'filters' => $this->defaultFilters,
                 'validators' => array(
                     array(
