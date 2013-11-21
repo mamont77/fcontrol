@@ -52,14 +52,17 @@ $this->partial('widgets/components/flight.phtml',
     ?>
 
     <table class="table ">
+        <thead>
+        <th>LEG</th>
+        <th>Country</th>
+        <th>Type of permission</th>
+        <th>Agent</th>
+        <th>Permission</th>
+        <th>Comment</th>
+        <th></th>
+        </thead>
+        <tbody>
         <tr>
-            <td>
-                <?php
-                $field = $form->get('agentId');
-                echo $this->formSelect($field);
-                echo $this->formElementErrors($field);
-                ?>
-            </td>
             <td>
                 <?php
                 $field = $form->get('legId');
@@ -77,6 +80,13 @@ $this->partial('widgets/components/flight.phtml',
             <td>
                 <?php
                 $field = $form->get('typeOfPermission');
+                echo $this->formSelect($field);
+                echo $this->formElementErrors($field);
+                ?>
+            </td>
+            <td>
+                <?php
+                $field = $form->get('agentId');
                 echo $this->formSelect($field);
                 echo $this->formElementErrors($field);
                 ?>
@@ -102,6 +112,7 @@ $this->partial('widgets/components/flight.phtml',
                 ?>
             </td>
         </tr>
+        </tbody>
     </table>
     <?php
     echo $this->form()->closeTag();
