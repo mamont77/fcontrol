@@ -41,9 +41,9 @@
         currentValue = parseFloat(currentValue);
         exchangeRateValue = parseFloat(exchangeRateValue);
         if (!isNaN(currentValue) && !isNaN(exchangeRateValue)) {
-            //result = currentValue * exchangeRateValue;
+            result = currentValue * exchangeRateValue;
             //доллары = количество валюты * (1/курс_валюты)
-            result = currentValue * (1 / exchangeRateValue);
+            //result = currentValue * (1 / exchangeRateValue);
         }
 
         return result.toFixed(2);
