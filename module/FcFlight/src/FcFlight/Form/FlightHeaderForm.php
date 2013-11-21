@@ -67,6 +67,9 @@ class FlightHeaderForm extends BaseForm
             'name' => 'dateOrder',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
+                'data-placeholder' => 'Date Order',
+                'class' => 'input-small',
+                'id' => 'dateOrder',
                 'required' => true,
                 'maxlength' => '10',
                 'value' => date('d-m-Y'),
@@ -81,12 +84,14 @@ class FlightHeaderForm extends BaseForm
             'name' => 'kontragent',
             'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
+                'data-placeholder' => 'Customer',
+                'class' => 'chosen input-medium',
+                'id' => 'kontragent',
                 'required' => true,
-                'size' => 5,
             ),
             'options' => array(
                 'label' => 'Customer',
-                'empty_option' => '-- Please select --',
+                'empty_option' => '',
                 'value_options' => $this->kontragents,
             ),
         ));
@@ -95,12 +100,14 @@ class FlightHeaderForm extends BaseForm
             'name' => 'airOperator',
             'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
+                'data-placeholder' => 'Air Operator',
+                'class' => 'chosen input-medium',
+                'id' => 'airOperator',
                 'required' => true,
-                'size' => 5,
             ),
             'options' => array(
                 'label' => 'Air Operator',
-                'empty_option' => '-- Please select --',
+                'empty_option' => '',
                 'value_options' => $this->airOperators,
             ),
         ));
@@ -109,12 +116,14 @@ class FlightHeaderForm extends BaseForm
             'name' => 'aircraft',
             'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
+                'data-placeholder' => 'Aircraft Type',
+                'class' => 'chosen input-medium',
+                'id' => 'aircraft',
                 'required' => true,
-                'size' => 5,
             ),
             'options' => array(
                 'label' => 'Aircraft Type',
-                'empty_option' => '-- Please select --',
+                'empty_option' => '',
                 'value_options' => $this->aircrafts,
             ),
         ));
@@ -143,6 +152,7 @@ class FlightHeaderForm extends BaseForm
             ),
             'attributes' => array(
                 'type' => 'submit',
+                'class' => 'btn btn-primary',
                 'value' => 'Add',
             ),
         ));
