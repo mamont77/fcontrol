@@ -288,7 +288,7 @@
                     unitSelected = $unitId.find(':selected').text(),
                     quantityOtherUnitsValue = convertRefuelQuantityLtr2OtherUnits(quantityLtrValue, unitSelected),
                     priceUsdValue = $priceUsd.val();
-                
+
                 $quantityOtherUnits.val(quantityOtherUnitsValue);
                 $totalPriceUsd.val(calculateRefuelTotalUsd(quantityOtherUnitsValue, priceUsdValue));
             });

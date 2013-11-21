@@ -12,6 +12,9 @@
                 Quantity LTR
             </th>
             <th>
+                Quantity in Selected Units
+            </th>
+            <th>
                 Unit
             </th>
             <th>
@@ -29,7 +32,7 @@
         ?>
         <? foreach ($this->refuels as $legId => $legData): ?>
             <tr class="success">
-                <td colspan="7">
+                <td colspan="8">
                     <strong data-leg="<?= $legId ?>"><?= $this->escapeHtml($legData['legName']) ?></strong>
                 </td>
             </tr>
@@ -41,6 +44,7 @@
                     <td><?= $this->escapeHtml($refuelData['date']) ?></td>
                     <td><?= $this->escapeHtml($refuelData['agentName']) ?></td>
                     <td><?= $this->escapeHtml($refuelData['quantityLtr']) ?></td>
+                    <td><?= $this->escapeHtml($refuelData['quantityOtherUnits']) ?></td>
                     <td><?= $this->escapeHtml($refuelData['unitName']) ?></td>
                     <td><?= $this->escapeHtml($refuelData['priceUsd']) ?></td>
                     <td><?= $this->escapeHtml($refuelData['totalPriceUsd']) ?></td>
