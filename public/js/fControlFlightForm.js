@@ -339,6 +339,7 @@
             if ($form.length == 0) return;
 
             var $price = $($form).find('#price'),
+                $currency = $($form).find('#currency'),
                 $exchangeRate = $($form).find('#exchangeRate'),
                 $priceUsd = $($form).find('#priceUSD');
 
@@ -352,6 +353,14 @@
                 var exchangeRateValue = $(this).val() || 0,
                     currentValue = $price.val() || 1;
                 $priceUsd.val(convertApServicePrice2Usd(currentValue, exchangeRateValue));
+            });
+
+            $currency.change(function () {
+                var value = $(this).val();
+
+                if (value == 'USD') {
+                    $exchangeRate.val(1);
+                }
             });
         }
     };
