@@ -69,6 +69,7 @@ class FlightHeaderForm extends BaseForm
             'attributes' => array(
                 'required' => true,
                 'maxlength' => '10',
+                'value' => date('d-m-Y'),
             ),
             'options' => array(
                 'label' => 'Date Order',
