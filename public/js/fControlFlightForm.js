@@ -51,20 +51,20 @@
 
     /**
      *
-     * @param quantityLtr
+     * @param quantity
      * @param priceUsd
      * @returns {string}
      */
-    function calculateRefuelTotalUsd(quantityLtr, priceUsd) {
+    function calculateRefuelTotalUsd(quantity, priceUsd) {
         var result = 0;
-        quantityLtr = parseFloat(quantityLtr);
+        quantity = parseFloat(quantity);
         priceUsd = parseFloat(priceUsd);
 
-        if (!isNaN(quantityLtr) && !isNaN(priceUsd)) {
-            result = quantityLtr * priceUsd;
+        if (!isNaN(quantity) && !isNaN(priceUsd)) {
+            result = quantity * priceUsd;
         }
 
-        return result.toFixed(2);
+        return result.toFixed(4);
     }
 
     /**
@@ -89,7 +89,7 @@
 
                     break;
 
-                case 'PCS':
+                case 'IG':
                     result = 0;
 
                     break;
@@ -126,7 +126,7 @@
 
                     break;
 
-                case 'PCS':
+                case 'IG':
                     result = 0;
 
                     break;
@@ -286,9 +286,11 @@
             $($quantityLtr).bind("keyup change", function () {
                 var quantityLtrValue = $(this).val() || 0,
                     unitSelected = $unitId.find(':selected').text(),
+                    quantityOtherUnitsValue = convertRefuelQuantityLtr2OtherUnits(quantityLtrValue, unitSelected),
                     priceUsdValue = $priceUsd.val();
-                $quantityOtherUnits.val(convertRefuelQuantityLtr2OtherUnits(quantityLtrValue, unitSelected));
-                $totalPriceUsd.val(calculateRefuelTotalUsd(quantityLtrValue, priceUsdValue));
+                
+                $quantityOtherUnits.val(quantityOtherUnitsValue);
+                $totalPriceUsd.val(calculateRefuelTotalUsd(quantityOtherUnitsValue, priceUsdValue));
             });
 
             $($quantityOtherUnits).bind("keyup change", function () {
@@ -298,8 +300,7 @@
                     priceUsdValue = $priceUsd.val();
 
                 $quantityLtr.val(quantityLtrValue);
-                $totalPriceUsd.val(calculateRefuelTotalUsd(quantityLtrValue, priceUsdValue));
-
+                $totalPriceUsd.val(calculateRefuelTotalUsd(quantityOtherUnitsValue, priceUsdValue));
             });
 
             $unitId.change(function () {
