@@ -90,7 +90,7 @@
                     break;
 
                 case 'IG':
-                    result = 0;
+                    result = quantityLtr / 4.54609188;
 
                     break;
 
@@ -127,7 +127,7 @@
                     break;
 
                 case 'IG':
-                    result = 0;
+                    result = quantityOtherUnits * 4.54609188;
 
                     break;
 
@@ -290,7 +290,6 @@
                     priceUsdValue = $priceUsd.val();
 
                 $quantityOtherUnits.val(quantityOtherUnitsValue);
-                console.log(quantityOtherUnitsValue);
                 $totalPriceUsd.val(calculateRefuelTotalUsd(quantityOtherUnitsValue, priceUsdValue));
             });
 
@@ -301,8 +300,6 @@
                     priceUsdValue = $priceUsd.val();
 
                 $quantityLtr.val(quantityLtrValue);
-                console.log(quantityOtherUnitsValue);
-
                 $totalPriceUsd.val(calculateRefuelTotalUsd(quantityOtherUnitsValue, priceUsdValue));
             });
 
