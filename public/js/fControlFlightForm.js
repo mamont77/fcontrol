@@ -140,6 +140,7 @@
 
         return result.toFixed(2);
     }
+
     /**
      *
      * @type {{attach: Function}}
@@ -180,8 +181,10 @@
 
             if ($form.length == 0) return;
 
-            var preSelectedApDepCountryId = $form.find('#preSelectedApDepCountryId').val(),
+            var preSelectedFlightNumberAirportId = $form.find('#preSelectedFlightNumberAirportId').val(),
+                preSelectedApDepCountryId = $form.find('#preSelectedApDepCountryId').val(),
                 preSelectedApDepAirportId = $form.find('#preSelectedApDepAirportId').val(),
+                $flightNumberAirportId = $form.find('#flightNumberAirportId'),
                 $apDepAirportId = $form.find('#apDepAirportId'),
                 $apArrAirportId = $form.find('#apArrAirportId'),
                 $apDepCountries = $form.find('#apDepCountries'),
@@ -193,6 +196,15 @@
             $($form).find('#dateOfFlight').mask('99-99-9999');
             $($form).find('#apDepTime').mask('99:99');
             $($form).find('#apArrTime').mask('99:99');
+
+            if (preSelectedFlightNumberAirportId > 0) {
+                $flightNumberAirportId.val(preSelectedFlightNumberAirportId);
+                $flightNumberAirportId.find('option').each(function () {
+                    $(this).prop('disabled', true);
+                });
+                $flightNumberAirportId.find('[value="' + preSelectedFlightNumberAirportId + '"]')
+                    .attr('selected', 'selected').prop('disabled', false);
+            }
 
             // если данные являются продолжением цепочки leg, то выбираем значения в Ap Dep
             // из предыдущего Ap Arr
@@ -261,7 +273,7 @@
 
             $date.mask('99-99-9999');
 
-            $legData.each(function() {
+            $legData.each(function () {
                 var $row = $(this);
 
                 legDataMapped[$row.attr('data-legId')] = $row.find('.date').text();
@@ -271,7 +283,7 @@
                 $date.val(legDataMapped[$(this).val()]);
             });
 
-            $($quantityLtr).bind("keyup change", function() {
+            $($quantityLtr).bind("keyup change", function () {
                 var quantityLtrValue = $(this).val() || 0,
                     unitSelected = $unitId.find(':selected').text(),
                     priceUsdValue = $priceUsd.val();
@@ -279,7 +291,7 @@
                 $totalPriceUsd.val(calculateRefuelTotalUsd(quantityLtrValue, priceUsdValue));
             });
 
-            $($quantityOtherUnits).bind("keyup change", function() {
+            $($quantityOtherUnits).bind("keyup change", function () {
                 var quantityOtherUnitsValue = $(this).val() || 0,
                     unitSelected = $unitId.find(':selected').text(),
                     quantityLtrValue = convertRefuelQuantityOtherUnits2Ltr(quantityOtherUnitsValue, unitSelected),
@@ -291,7 +303,7 @@
             });
 
             $unitId.change(function () {
-                var  unitSelected = $(this).find(':selected').text(),
+                var unitSelected = $(this).find(':selected').text(),
                     quantityLtrValue = $quantityLtr.val(),
                     quantityOtherUnits = $quantityOtherUnits.val();
 
@@ -302,7 +314,7 @@
                 }
             });
 
-            $($priceUsd).bind("keyup change", function() {
+            $($priceUsd).bind("keyup change", function () {
                 var quantityLtrValue = $quantityLtr.val(),
                     priceUsdValue = $(this).val() || 0;
                 $totalPriceUsd.val(calculateRefuelTotalUsd(quantityLtrValue, priceUsdValue));
@@ -325,13 +337,13 @@
                 $exchangeRate = $($form).find('#exchangeRate'),
                 $priceUsd = $($form).find('#priceUSD');
 
-            $($price).bind("keyup change", function() {
+            $($price).bind("keyup change", function () {
                 var currentValue = $(this).val() || 0,
                     exchangeRateValue = $exchangeRate.val() || 1;
                 $priceUsd.val(convertApServicePrice2Usd(currentValue, exchangeRateValue));
             });
 
-            $($exchangeRate).bind("keyup change", function() {
+            $($exchangeRate).bind("keyup change", function () {
                 var exchangeRateValue = $(this).val() || 0,
                     currentValue = $price.val() || 1;
                 $priceUsd.val(convertApServicePrice2Usd(currentValue, exchangeRateValue));

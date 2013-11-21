@@ -72,6 +72,16 @@ class LegForm extends BaseForm
             ),
         ));
 
+        // для всех ЛЕГов только одно значение, с первой строки
+        $this->add(array(
+            'name' => 'preSelectedFlightNumberAirportId',
+            'attributes' => array(
+                'id' => 'preSelectedFlightNumberAirportId',
+                'type' => 'hidden',
+                'value' => $options['previousValues']['preSelected']['flightNumberAirportId'],
+            ),
+        ));
+
         // необходим, что бы при добавлении очередной строки выбрать Country в Ap Dep
         // после чего заблокировать это поле для редактирования
         $this->add(array(

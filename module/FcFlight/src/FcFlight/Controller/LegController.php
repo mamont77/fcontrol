@@ -40,10 +40,12 @@ class LegController extends FlightController
         $lastLeg = end($legs);
         if ($lastLeg) {
             $previousDate = $lastLeg['dateOfFlight'];
+            $previousFlightNumberAirportId = $lastLeg['flightNumberAirportId'];
             $previousApArrCountryId = $lastLeg['apArrCountryId'];
             $previousApArrAirportId = $lastLeg['apArrAirportId'];
         } else {
             $previousDate = null;
+            $previousFlightNumberAirportId = null;
             $previousApArrCountryId = null;
             $previousApArrAirportId = null;
         }
@@ -58,6 +60,7 @@ class LegController extends FlightController
                 'previousValues' => array(
                     'previousDate' => $previousDate,
                     'preSelected' => array(
+                        'flightNumberAirportId' => $previousFlightNumberAirportId,
                         'apDepCountryId' => $previousApArrCountryId,
                         'apDepAirportId' => $previousApArrAirportId,
                     ),
@@ -124,10 +127,12 @@ class LegController extends FlightController
         $lastLeg = $lastLeg[0];
         if ($lastLeg) {
             $previousDate = $lastLeg['dateOfFlight'];
+            $previousFlightNumberAirportId = $lastLeg['flightNumberAirportId'];
             $previousApArrCountryId = $lastLeg['apArrCountryId'];
             $previousApArrAirportId = $lastLeg['apArrAirportId'];
         } else {
             $previousDate = null;
+            $previousFlightNumberAirportId = null;
             $previousApArrCountryId = null;
             $previousApArrAirportId = null;
         }
@@ -154,6 +159,7 @@ class LegController extends FlightController
                 'previousValues' => array(
                     'previousDate' => $previousDate,
                     'preSelected' => array(
+                        'flightNumberAirportId' => $previousFlightNumberAirportId,
                         'apDepCountryId' => $previousApArrCountryId,
                         'apDepAirportId' => $previousApArrAirportId,
                     ),
