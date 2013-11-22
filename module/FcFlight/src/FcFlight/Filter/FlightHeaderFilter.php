@@ -41,9 +41,15 @@ class FlightHeaderFilter implements InputFilterAwareInterface
     public $kontragentShortName;
     public $airOperator;
     public $airOperatorShortName;
-    public $aircraft;
-    public $aircraftType;
+    public $aircraftId;
+    public $aircraftName;
     public $aircraftTypeName;
+    public $alternativeAircraftId1;
+    public $alternativeAircraftName1;
+    public $alternativeAircraftTypeName1;
+    public $alternativeAircraftId2;
+    public $alternativeAircraftName2;
+    public $alternativeAircraftTypeName2;
     public $status;
 
     /**
@@ -84,9 +90,15 @@ class FlightHeaderFilter implements InputFilterAwareInterface
         $this->kontragentShortName = (isset($data['kontragentShortName'])) ? $data['kontragentShortName'] : null;
         $this->airOperator = (isset($data['airOperator'])) ? $data['airOperator'] : null;
         $this->airOperatorShortName = (isset($data['airOperatorShortName'])) ? $data['airOperatorShortName'] : null;
-        $this->aircraft = (isset($data['aircraft'])) ? $data['aircraft'] : null;
-        $this->aircraftType = (isset($data['aircraftType'])) ? $data['aircraftType'] : null;
+        $this->aircraftId = (isset($data['aircraftId'])) ? $data['aircraftId'] : null;
+        $this->aircraftName = (isset($data['aircraftName'])) ? $data['aircraftName'] : null;
         $this->aircraftTypeName = (isset($data['aircraftTypeName'])) ? $data['aircraftTypeName'] : null;
+        $this->alternativeAircraftId1 = (isset($data['alternativeAircraftId1'])) ? $data['alternativeAircraftId1'] : null;
+        $this->alternativeAircraftName1 = (isset($data['alternativeAircraftName1'])) ? $data['alternativeAircraftName1'] : null;
+        $this->alternativeAircraftTypeName1 = (isset($data['alternativeAircraftTypeName1'])) ? $data['alternativeAircraftTypeName1'] : null;
+        $this->alternativeAircraftId2 = (isset($data['alternativeAircraftId2'])) ? $data['alternativeAircraftId2'] : null;
+        $this->alternativeAircraftName2 = (isset($data['alternativeAircraftName2'])) ? $data['alternativeAircraftName2'] : null;
+        $this->alternativeAircraftTypeName2 = (isset($data['alternativeAircraftTypeName2'])) ? $data['alternativeAircraftTypeName2'] : null;
         $this->status = (isset($data['status'])) ? $data['status'] : null;
     }
 
@@ -151,10 +163,19 @@ class FlightHeaderFilter implements InputFilterAwareInterface
             )));
 
             $inputFilter->add($factory->createInput(array(
-                'name' => 'aircraft',
+                'name' => 'aircraftId',
                 'required' => true,
             )));
 
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'alternativeAircraftId1',
+                'required' => false,
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'alternativeAircraftId2',
+                'required' => false,
+            )));
             $this->inputFilter = $inputFilter;
         }
 

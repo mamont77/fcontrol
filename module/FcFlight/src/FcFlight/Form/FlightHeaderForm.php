@@ -44,7 +44,7 @@ class FlightHeaderForm extends BaseForm
 
         $this->setLibrary('kontragents', $options['libraries']['kontragent'], 'id', 'name');
         $this->setLibrary('airOperators', $options['libraries']['air_operator'], 'id', 'short_name'); //don't rename
-        $this->setLibrary('aircrafts', $options['libraries']['aircraft'], 'reg_number', array('aircraft_type_name', 'reg_number'));
+        $this->setLibrary('aircrafts', $options['libraries']['aircraft'], 'id', array('aircraft_type_name', 'reg_number'));
 
         $this->setName($this->_formName);
         $this->setAttribute('method', 'post');
@@ -113,16 +113,48 @@ class FlightHeaderForm extends BaseForm
         ));
 
         $this->add(array(
-            'name' => 'aircraft',
+            'name' => 'aircraftId',
             'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
-                'data-placeholder' => 'Aircraft Type',
+                'data-placeholder' => 'Aircraft',
                 'class' => 'chosen input-medium',
-                'id' => 'aircraft',
+                'id' => 'aircraftId',
                 'required' => true,
             ),
             'options' => array(
-                'label' => 'Aircraft Type',
+                'label' => 'Aircraft',
+                'empty_option' => '',
+                'value_options' => $this->aircrafts,
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'alternativeAircraftId1',
+            'type' => 'Zend\Form\Element\Select',
+            'attributes' => array(
+                'data-placeholder' => 'Alternative Aircraft 1',
+                'class' => 'chosen input-medium',
+                'id' => 'alternativeAircraftId1',
+                'required' => false,
+            ),
+            'options' => array(
+                'label' => 'Alternative Aircraft 1',
+                'empty_option' => '',
+                'value_options' => $this->aircrafts,
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'alternativeAircraftId2',
+            'type' => 'Zend\Form\Element\Select',
+            'attributes' => array(
+                'data-placeholder' => 'Alternative Aircraft 2',
+                'class' => 'chosen input-medium',
+                'id' => 'alternativeAircraftId2',
+                'required' => false,
+            ),
+            'options' => array(
+                'label' => 'Alternative Aircraft 2',
                 'empty_option' => '',
                 'value_options' => $this->aircrafts,
             ),

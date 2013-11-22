@@ -22,6 +22,22 @@ class FlightHeaderModel extends AbstractTableGateway
     public $table = 'flightBaseHeaderForm';
 
     /**
+     * @var array
+     */
+    protected $_tableFields = array(
+        'id',
+        'parentId',
+        'refNumberOrder',
+        'dateOrder',
+        'kontragent',
+        'airOperator',
+        'aircraftId',
+        'alternativeAircraftId1',
+        'alternativeAircraftId2',
+        'status'
+    );
+
+    /**
      * @param \Zend\Db\Adapter\Adapter $adapter
      */
     public function __construct(Adapter $adapter)
@@ -41,7 +57,7 @@ class FlightHeaderModel extends AbstractTableGateway
         if (null === $select)
             $select = new Select();
         $select->from($this->table);
-        $select->columns(array('id', 'parentId', 'refNumberOrder', 'dateOrder', 'kontragent', 'airOperator', 'aircraft', 'status'));
+        $select->columns($this->_tableFields);
 
         $select->join(array('library_kontragent' => 'library_kontragent'),
             'library_kontragent.id = flightBaseHeaderForm.kontragent',
@@ -52,7 +68,7 @@ class FlightHeaderModel extends AbstractTableGateway
             array('airOperatorShortName' => 'short_name'), 'left');
 
         $select->join(array('library_aircraft' => 'library_aircraft'),
-            'library_aircraft.reg_number = flightBaseHeaderForm.aircraft',
+            'library_aircraft.reg_number = flightBaseHeaderForm.aircraftId',
             array('aircraftType' => 'aircraft_type'), 'left');
 
         $select->join(array('library_aircraft_type' => 'library_aircraft_type'),
@@ -78,7 +94,7 @@ class FlightHeaderModel extends AbstractTableGateway
         $id = (int)$id;
         $select = new Select();
         $select->from($this->table);
-        $select->columns(array('id', 'parentId', 'refNumberOrder', 'dateOrder', 'kontragent', 'airOperator', 'aircraft', 'status'));
+        $select->columns($this->_tableFields);
 
         $select->join(array('library_kontragent' => 'library_kontragent'),
             'library_kontragent.id = flightBaseHeaderForm.kontragent',
@@ -89,7 +105,7 @@ class FlightHeaderModel extends AbstractTableGateway
             array('airOperatorShortName' => 'short_name'), 'left');
 
         $select->join(array('library_aircraft' => 'library_aircraft'),
-            'library_aircraft.reg_number = flightBaseHeaderForm.aircraft',
+            'library_aircraft.reg_number = flightBaseHeaderForm.aircraftId',
             array('aircraftType' => 'aircraft_type'), 'left');
 
         $select->join(array('library_aircraft_type' => 'library_aircraft_type'),
@@ -100,6 +116,7 @@ class FlightHeaderModel extends AbstractTableGateway
 
         $resultSet = $this->selectWith($select);
         $row = $resultSet->current();
+
         if (!$row) {
             throw new \Exception("Could not find row $id");
         }
@@ -129,7 +146,9 @@ class FlightHeaderModel extends AbstractTableGateway
             'dateOrder' => $dateOrder,
             'kontragent' => $object->kontragent,
             'airOperator' => $object->airOperator,
-            'aircraft' => $object->aircraft,
+            'aircraftId' => $object->aircraftId,
+            'alternativeAircraftId1' => $object->alternativeAircraftId1,
+            'alternativeAircraftId2' => $object->alternativeAircraftId2,
             'status' => $object->status,
         );
 
@@ -156,7 +175,9 @@ class FlightHeaderModel extends AbstractTableGateway
             'dateOrder' => $dateOrder,
             'kontragent' => $object->kontragent,
             'airOperator' => $object->airOperator,
-            'aircraft' => $object->aircraft,
+            'aircraftId' => $object->aircraftId,
+            'alternativeAircraftId1' => $object->alternativeAircraftId1,
+            'alternativeAircraftId2' => $object->alternativeAircraftId2,
             'status' => $object->status,
         );
         $id = (int)$object->id;
@@ -190,21 +211,27 @@ class FlightHeaderModel extends AbstractTableGateway
         $refNumberOrder = (string)$refNumberOrder;
 
         $select = $this->getSql()->select();
-        $select->columns(array('id', 'parentId', 'refNumberOrder', 'dateOrder', 'kontragent', 'airOperator', 'aircraft', 'status'));
+        $select->columns($this->_tableFields);
+
         $select->join(array('library_kontragent' => 'library_kontragent'),
             'library_kontragent.id = flightBaseHeaderForm.kontragent',
             array('kontragentShortName' => 'short_name'), 'left');
+
         $select->join(array('library_air_operator' => 'library_air_operator'),
             'library_air_operator.id = flightBaseHeaderForm.airOperator',
             array('airOperatorShortName' => 'short_name'), 'left');
+
         $select->join(array('library_aircraft' => 'library_aircraft'),
-            'library_aircraft.reg_number = flightBaseHeaderForm.aircraft',
-            array('aircraftType' => 'aircraft_type'), 'left');
+            'library_aircraft.id = flightBaseHeaderForm.aircraftId',
+            array('aircraftTypeId' => 'aircraft_type', 'aircraftName' => 'reg_number'), 'left');
+
         $select->join(array('library_aircraft_type' => 'library_aircraft_type'),
             'library_aircraft_type.id = library_aircraft.aircraft_type',
             array('aircraftTypeName' => 'name'), 'left');
+
         $select->where(array('refNumberOrder' => $refNumberOrder));
         $row = $this->selectWith($select)->current();
+
         if (!$row) {
             throw new \Exception("Could not find row $refNumberOrder");
         }

@@ -617,7 +617,9 @@ class FlightController extends AbstractActionController
             'Ref Number' => $data->refNumberOrder,
             'Customer' => $data->kontragentShortName,
             'Air Operator' => $data->airOperatorShortName,
-            'Aircraft' => $data->aircraft . ' (' . $data->aircraftTypeName . ')',
+            'Aircraft' => $data->aircraftName . ' (' . $data->aircraftTypeName . ')',
+            'Alternative Aircraft 1' => $data->alternativeAircraftName1 . ' (' . $data->alternativeAircraftTypeName1 . ')',
+            'Alternative Aircraft 2' => $data->alternativeAircraftName2 . ' (' . $data->alternativeAircraftTypeName2 . ')',
             'Status' => ($data->status == 1) ? 'In process' : 'Done'
         );
     }
@@ -1001,7 +1003,7 @@ class FlightController extends AbstractActionController
     public function geTypeOfPermissions()
     {
         return array(
-            'OFL' => 'OFL',
+            'O/L' => 'O/L',
             'LND' => 'LND',
             'DG' => 'DG',
             'DIP' => 'DIP',
