@@ -39,7 +39,7 @@
                         <?= $this->escapeHtml($row['builtAirportName']) ?>
                     </a>
                 </td>
-                <td><?= $this->escapeHtml($row['date']) ?></td>
+                <td><?= date('d-m-Y', $row['date']) ?></td>
                 <td><?= $this->escapeHtml($row['kontragentShortName']) ?></td>
                 <td><?= $this->escapeHtml($row['quantityLtr']) ?></td>
                 <td><?= $this->escapeHtml($row['quantityOtherUnits']) ?></td>
