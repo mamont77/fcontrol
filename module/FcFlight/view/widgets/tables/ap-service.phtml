@@ -3,6 +3,7 @@
         class="table table-bordered table-hover table-condensed <? if ($this->fixedHeader): ?> table-fixed-header<? endif ?>">
         <thead class="header">
         <tr>
+            <th></th>
             <th>
                 Airport
             </th>
@@ -21,6 +22,7 @@
         <tbody>
         <?php foreach ($this->apServices as $row) : ?>
             <tr class="<? if ($row['id'] == $this->currentId): ?><?= 'info' ?><? endif ?>">
+                <td class="status"><? if ($row['status']): ?><i class="icon-ok"></i><? endif ?></td>
                 <td>
                     <a rel="tooltip" href="#" data-toggle="tooltip" data-placement="top"
                        title="" data-original-title="<?= $this->escapeHtml($row['airportName']) ?>">
