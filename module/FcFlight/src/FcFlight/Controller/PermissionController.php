@@ -226,6 +226,7 @@ class PermissionController extends FlightController
                 . $data->airportArrivalICAO . ' (' . $data->airportArrivalIATA . ')',
             'Country' => $data->countryName,
             'Type of Permission' => $data->typeOfPermission,
+            'Time of request' => $data->requestTime,
             'Permission' => $data->permission,
             'Comment' => $data->comment,
         );

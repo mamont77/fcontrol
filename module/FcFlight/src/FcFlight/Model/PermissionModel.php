@@ -32,6 +32,7 @@ class PermissionModel extends AbstractTableGateway
         'legId',
         'countryId',
         'typeOfPermission',
+        'requestTime',
         'permission',
         'comment',
     );
@@ -104,6 +105,7 @@ class PermissionModel extends AbstractTableGateway
             'legId' => (int)$object->legId,
             'countryId' => (int)$object->countryId,
             'typeOfPermission' => (string)$object->typeOfPermission,
+            'requestTime' => (string)$object->requestTime,
             'permission' => (string)$object->permission,
             'comment' => (string)$object->comment,
         );
@@ -127,6 +129,7 @@ class PermissionModel extends AbstractTableGateway
             'legId' => (int)$object->legId,
             'countryId' => (int)$object->countryId,
             'typeOfPermission' => (string)$object->typeOfPermission,
+            'requestTime' => (string)$object->requestTime,
             'permission' => (string)$object->permission,
             'comment' => (string)$object->comment,
         );
@@ -205,6 +208,7 @@ class PermissionModel extends AbstractTableGateway
                 'countryName' => $row->countryName,
                 'countryCode' => $row->countryCode,
                 'typeOfPermission' => $row->typeOfPermission,
+                'requestTime' => $row->requestTime,
                 'permission' => $row->permission,
                 'comment' => $row->comment,
             );

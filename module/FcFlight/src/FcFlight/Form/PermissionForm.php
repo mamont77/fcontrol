@@ -136,6 +136,17 @@ class PermissionForm extends BaseForm
         ));
 
         $this->add(array(
+            'name' => 'requestTime',
+            'type' => 'Zend\Form\Element\Text',
+            'attributes' => array(
+                'class' => 'input-medium',
+                'required' => false,
+                'placeholder' => 'Time of request',
+                'maxlength' => '40',
+            ),
+        ));
+
+        $this->add(array(
             'name' => 'permission',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(

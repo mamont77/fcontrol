@@ -39,6 +39,7 @@ class PermissionFilter implements InputFilterAwareInterface
     public $legId;
     public $countryId;
     public $typeOfPermission;
+    public $requestTime;
     public $permission;
     public $comment;
 
@@ -90,6 +91,7 @@ class PermissionFilter implements InputFilterAwareInterface
         $this->legId = (isset($data['legId'])) ? $data['legId'] : null;
         $this->countryId = (isset($data['countryId'])) ? $data['countryId'] : null;
         $this->typeOfPermission = (isset($data['typeOfPermission'])) ? $data['typeOfPermission'] : null;
+        $this->requestTime = (isset($data['requestTime'])) ? $data['requestTime'] : null;
         $this->permission = (isset($data['permission'])) ? $data['permission'] : null;
         $this->comment = (isset($data['comment'])) ? $data['comment'] : null;
 
@@ -177,6 +179,21 @@ class PermissionFilter implements InputFilterAwareInterface
                         'options' => array(
                             'encoding' => 'UTF-8',
                             'max' => 3,
+                        ),
+                    ),
+                ),
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'requestTime',
+                'required' => false,
+                'filters' => $this->defaultFilters,
+                'validators' => array(
+                    array(
+                        'name' => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'max' => 40,
                         ),
                     ),
                 ),

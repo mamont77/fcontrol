@@ -57,6 +57,7 @@ $this->partial('widgets/components/flight.phtml',
             <th>LEG</th>
             <th>Country</th>
             <th>Type of permission</th>
+            <th>Time of request</th>
             <th>Agent</th>
             <th>Permission</th>
             <th>Comment</th>
@@ -83,6 +84,13 @@ $this->partial('widgets/components/flight.phtml',
                 <?php
                 $field = $form->get('typeOfPermission');
                 echo $this->formSelect($field);
+                echo $this->formElementErrors($field);
+                ?>
+            </td>
+            <td>
+                <?php
+                $field = $form->get('requestTime');
+                echo $this->formInput($field);
                 echo $this->formElementErrors($field);
                 ?>
             </td>
