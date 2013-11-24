@@ -1,13 +1,4 @@
-<ul class="breadcrumb">
-    <li><a href="/">Home</a> <span class="divider">/</span></li>
-    <li class="active">Active Flights</li>
-</ul>
-
 <?php
-/**
- * @var $this FcFlight\Controller\FlightController
- */
-
 $title = 'Active Flights (In Process)';
 $this->headTitle($title);
 $url_order = 'ASC';
@@ -16,6 +7,10 @@ if ($order) {
 }
 ?>
 
+<ul class="breadcrumb">
+    <li><a href="/">Home</a> <span class="divider">/</span></li>
+    <li class="active">Active Flights</li>
+</ul>
 
 <div class="row">
     <div class="span2 leftPanes">

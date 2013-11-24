@@ -47,9 +47,15 @@ class FlightController extends AbstractActionController
         'kontragentShortName',
         'airOperator',
         'airOperatorShortName',
-        'aircraft',
-        'aircraftType',
+        'aircraftId',
+        'aircraftName',
         'aircraftTypeName',
+        'alternativeAircraftId1',
+        'alternativeAircraftName1',
+        'alternativeAircraftTypeName1',
+        'alternativeAircraftId2',
+        'alternativeAircraftName2',
+        'alternativeAircraftTypeName2',
         'status',
         'refuelStatus',
         'permitStatus',
@@ -165,6 +171,8 @@ class FlightController extends AbstractActionController
             $result = $this->getFlightHeaderModel()->fetchAll($select->order($orderBy . ' ' . $orderAs));
         }
         $result->current();
+
+
         $data = array();
         foreach ($result as $key => $row) {
             if (!$row->id) {

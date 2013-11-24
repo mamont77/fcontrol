@@ -55,9 +55,23 @@
             <td><?php echo $this->escapeHtml($row['kontragentShortName']); ?></td>
             <td><?php echo $this->escapeHtml($row['airOperatorShortName']); ?></td>
             <td>
-                <?php echo $this->escapeHtml($row['aircraftTypeName']); ?>
-                <br/>
-                <small><?php echo $this->escapeHtml($row['aircraft']); ?></small>
+                <?php
+                $aircraft = $this->escapeHtml($row['aircraftTypeName'])
+                    . ' (' . $this->escapeHtml($row['aircraftName']) . ')';
+                if ($row['alternativeAircraftTypeName1']
+                    && $row['alternativeAircraftName1']) {
+                    $aircraft .= '<br /><small>'
+                        . $this->escapeHtml($row['alternativeAircraftTypeName1'])
+                        . ' (' . $this->escapeHtml($row['alternativeAircraftName1']) . ')</small>';
+                }
+                if ($row['alternativeAircraftTypeName2']
+                    && $row['alternativeAircraftName2']) {
+                    $aircraft .= '<br /><small>'
+                        . $this->escapeHtml($row['alternativeAircraftTypeName2'])
+                        . ' (' . $this->escapeHtml($row['alternativeAircraftName2']) . ')</small>';
+                }
+                ?>
+                <?= $aircraft ?>
             </td>
             <td>
                 <?php

@@ -29,8 +29,24 @@
                     </tr>
                     <tr>
                         <th>Aircraft</th>
-                        <td><?= $this->escapeHtml($this->header->aircraftTypeName) ?>
-                            (<?= $this->escapeHtml($this->header->aircraft) ?>)
+                        <td>
+                            <?php
+                            $aircraft = $this->escapeHtml($this->header->aircraftTypeName)
+                            . ' (' . $this->escapeHtml($this->header->aircraftName) . ')';
+                            if ($this->header->alternativeAircraftTypeName1
+                                && $this->header->alternativeAircraftName1) {
+                                $aircraft .= '<br /><small>'
+                                    . $this->escapeHtml($this->header->alternativeAircraftTypeName1)
+                                    . ' (' . $this->escapeHtml($this->header->alternativeAircraftName1) . ')</small>';
+                            }
+                            if ($this->header->alternativeAircraftTypeName2
+                                && $this->header->alternativeAircraftName2) {
+                                $aircraft .= '<br /><small>'
+                                    . $this->escapeHtml($this->header->alternativeAircraftTypeName2)
+                                    . ' (' . $this->escapeHtml($this->header->alternativeAircraftName2) . ')</small>';
+                            }
+                            ?>
+                            <?= $aircraft ?>
                         </td>
                     </tr>
                 </table>
