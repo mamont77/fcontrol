@@ -150,7 +150,7 @@ class PermissionForm extends BaseForm
             'name' => 'permission',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'class' => 'input-medium',
+                'class' => 'input-small',
                 'required' => false,
                 'placeholder' => 'Permission',
                 'maxlength' => '40',
@@ -161,10 +161,24 @@ class PermissionForm extends BaseForm
             'name' => 'comment',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'class' => 'input-medium',
+                'class' => 'input-small',
                 'required' => false,
                 'placeholder' => 'Comment',
                 'maxlength' => '30',
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'status',
+            'type' => 'Zend\Form\Element\Checkbox',
+            'options' => array(
+                'label' => 'Status',
+                'checked_value' => '1',
+                'unchecked_value' => '0',
+                'description' => 'In process OR Done.',
+            ),
+            'attributes' => array(
+                'value' => false,
             ),
         ));
 

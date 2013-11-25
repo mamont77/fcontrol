@@ -32,7 +32,7 @@
             </tr>
             <? foreach ($legData['permission'] as $permissionId => $permissionData): ?>
                 <tr class="<? if ($permissionId == $this->currentId): ?><?= 'info' ?><? endif ?>">
-                    <td class="status"><? if ($row['status']): ?><i class="icon-ok"></i><? endif ?></td>
+                    <td class="status"><? if ($permissionData['status']): ?><i class="icon-ok"></i><? endif ?></td>
                     <td><?= $this->escapeHtml($permissionData['agentName']) ?></td>
                     <td><?= $this->escapeHtml($permissionData['countryName']) ?></td>
                     <td><?= $this->escapeHtml($permissionData['typeOfPermission']) ?></td>

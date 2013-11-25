@@ -73,7 +73,7 @@ class ApServiceForm extends BaseForm
             'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
                 'id' => 'agentId',
-                'class' => 'chosen input-xlarge',
+                'class' => 'chosen input-large',
                 'data-placeholder' => 'Airport',
                 'required' => true,
             ),
@@ -162,6 +162,20 @@ class ApServiceForm extends BaseForm
                 'placeholder' => 'Price USD',
                 'maxlength' => '32',
                 'readonly' => true,
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'status',
+            'type' => 'Zend\Form\Element\Checkbox',
+            'options' => array(
+                'label' => 'Status',
+                'checked_value' => '1',
+                'unchecked_value' => '0',
+                'description' => 'In process OR Done.',
+            ),
+            'attributes' => array(
+                'value' => false,
             ),
         ));
 

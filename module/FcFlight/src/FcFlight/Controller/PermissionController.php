@@ -229,6 +229,7 @@ class PermissionController extends FlightController
             'Time of request' => $data->requestTime,
             'Permission' => $data->permission,
             'Comment' => $data->comment,
+            'Status' => ($data->status == 1) ? 'In process' : 'Done'
         );
     }
 }

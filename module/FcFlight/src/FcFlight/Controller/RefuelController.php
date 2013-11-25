@@ -270,6 +270,7 @@ class RefuelController extends FlightController
             'Price USD' => $data->priceUsd,
             'Total USD' => $data->totalPriceUsd,
             'Date' => $data->date,
+            'Status' => ($data->status == 1) ? 'In process' : 'Done'
         );
     }
 }

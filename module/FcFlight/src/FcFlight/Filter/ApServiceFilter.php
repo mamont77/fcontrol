@@ -43,6 +43,7 @@ class ApServiceFilter implements InputFilterAwareInterface
     public $currency;
     public $exchangeRate;
     public $priceUSD;
+    public $status;
 
     //Virtual fields
     public $icao;
@@ -93,6 +94,7 @@ class ApServiceFilter implements InputFilterAwareInterface
         $this->currency = (isset($data['currency'])) ? $data['currency'] : null;
         $this->exchangeRate = (isset($data['exchangeRate'])) ? $data['exchangeRate'] : null;
         $this->priceUSD = (isset($data['priceUSD'])) ? $data['priceUSD'] : null;
+        $this->status = (isset($data['status'])) ? $data['status'] : null;
 
         //Virtual fields
         $this->icao = (isset($data['icao'])) ? $data['icao'] : null;

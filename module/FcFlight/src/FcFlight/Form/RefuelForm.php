@@ -80,7 +80,7 @@ class RefuelForm extends BaseForm
             'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
                 'id' => 'airportId',
-                'class' => 'chosen input-xlarge',
+                'class' => 'chosen input-large',
                 'data-placeholder' => 'Airport',
                 'required' => true,
             ),
@@ -181,6 +181,20 @@ class RefuelForm extends BaseForm
             ),
             'options' => array(
                 'description' => 'DD-MM-YYYY',
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'status',
+            'type' => 'Zend\Form\Element\Checkbox',
+            'options' => array(
+                'label' => 'Status',
+                'checked_value' => '1',
+                'unchecked_value' => '0',
+                'description' => 'In process OR Done.',
+            ),
+            'attributes' => array(
+                'value' => false,
             ),
         ));
 

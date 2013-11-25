@@ -66,6 +66,7 @@ $this->partial('widgets/components/flight.phtml',
             <th>Unit</th>
             <th>Price USD</th>
             <th>Total USD</th>
+            <th>Status</th>
             <th></th>
         </tr>
         </thead>
@@ -128,6 +129,13 @@ $this->partial('widgets/components/flight.phtml',
                 echo $this->formInput($field);
                 echo $this->formElementErrors($field);
                 ?>
+            </td>
+            <td>
+                <?php
+                $field = $form->get('status');
+                echo $this->formCheckbox($field);
+                ?>
+                <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
             </td>
             <td>
                 <?php

@@ -44,7 +44,7 @@ class RefuelFilter implements InputFilterAwareInterface
     public $priceUsd;
     public $totalPriceUsd;
     public $date;
-
+    public $status;
 
     //Fields only for view
     public $icao;
@@ -97,6 +97,7 @@ class RefuelFilter implements InputFilterAwareInterface
         $this->priceUsd = (isset($data['priceUsd'])) ? $data['priceUsd'] : null;
         $this->totalPriceUsd = (isset($data['totalPriceUsd'])) ? $data['totalPriceUsd'] : null;
         $this->date = (isset($data['date'])) ? $data['date'] : null;
+        $this->status = (isset($data['status'])) ? $data['status'] : null;
 
         //Fields only for view
         $this->icao = (isset($data['icao'])) ? $data['icao'] : null;

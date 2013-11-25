@@ -35,6 +35,7 @@ class ApServiceModel extends AbstractTableGateway
         'currency',
         'exchangeRate',
         'priceUSD',
+        'status',
     );
 
     /**
@@ -108,6 +109,7 @@ class ApServiceModel extends AbstractTableGateway
             'currency' => (string)$object->currency,
             'exchangeRate' => (string)$object->exchangeRate,
             'priceUSD' => (string)$object->priceUSD,
+            'status' => (int)$object->status,
         );
 
         $this->insert($data);
@@ -137,6 +139,7 @@ class ApServiceModel extends AbstractTableGateway
             'currency' => (string)$object->currency,
             'exchangeRate' => (string)$object->exchangeRate,
             'priceUSD' => (string)$object->priceUSD,
+            'status' => (int)$object->status,
         );
 
         $id = (int)$object->id;
@@ -199,6 +202,7 @@ class ApServiceModel extends AbstractTableGateway
             $data[$row->id]['currency'] = $row->currency;
             $data[$row->id]['exchangeRate'] = $row->exchangeRate;
             $data[$row->id]['priceUSD'] = $row->priceUSD;
+            $data[$row->id]['status'] = $row->status;
 
             //Virtual fields
             $data[$row->id]['icao'] = $row->icao;

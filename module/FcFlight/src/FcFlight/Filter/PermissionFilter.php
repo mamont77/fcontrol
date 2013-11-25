@@ -42,6 +42,7 @@ class PermissionFilter implements InputFilterAwareInterface
     public $requestTime;
     public $permission;
     public $comment;
+    public $status;
 
     //Fields only for view
     public $agentName;
@@ -94,6 +95,7 @@ class PermissionFilter implements InputFilterAwareInterface
         $this->requestTime = (isset($data['requestTime'])) ? $data['requestTime'] : null;
         $this->permission = (isset($data['permission'])) ? $data['permission'] : null;
         $this->comment = (isset($data['comment'])) ? $data['comment'] : null;
+        $this->status = (isset($data['status'])) ? $data['status'] : null;
 
         //Fields only for view
         $this->agentName = (isset($data['agentName'])) ? $data['agentName'] : null;

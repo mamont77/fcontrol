@@ -9,7 +9,7 @@ return array(
     'modules' => array(
         'Application',
         //'ZFTool',
-        'ZendDeveloperTools',
+        //'ZendDeveloperTools',
         'ZfcBase',
         'ZfcAdmin',
         'ZfcUser',

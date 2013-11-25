@@ -35,6 +35,7 @@ class PermissionModel extends AbstractTableGateway
         'requestTime',
         'permission',
         'comment',
+        'status',
     );
 
     /**
@@ -108,6 +109,7 @@ class PermissionModel extends AbstractTableGateway
             'requestTime' => (string)$object->requestTime,
             'permission' => (string)$object->permission,
             'comment' => (string)$object->comment,
+            'status' => (int)$object->status,
         );
 
         $this->insert($data);
@@ -132,6 +134,7 @@ class PermissionModel extends AbstractTableGateway
             'requestTime' => (string)$object->requestTime,
             'permission' => (string)$object->permission,
             'comment' => (string)$object->comment,
+            'status' => (int)$object->status,
         );
 
         $id = (int)$object->id;
@@ -211,6 +214,7 @@ class PermissionModel extends AbstractTableGateway
                 'requestTime' => $row->requestTime,
                 'permission' => $row->permission,
                 'comment' => $row->comment,
+                'status' => $row->status,
             );
         }
 
