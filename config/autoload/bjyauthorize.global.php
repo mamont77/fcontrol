@@ -127,6 +127,7 @@ return array(
                 array('controller' => 'FcFlight\Controller\Permission', 'roles' => array('manager')),
                 array('controller' => 'FcFlight\Controller\Refuel', 'roles' => array('manager')),
                 array('controller' => 'FcFlight\Controller\ApService', 'roles' => array('manager')),
+                array('controller' => 'FcFlightManagement\Controller\Refuel', 'roles' => array('manager')),
                 array('controller' => 'FcLogEvents\Controller\Index', 'roles' => array('guest', 'manager')),
                 array('controller' => 'FcLogEvents\Controller\Search', 'roles' => array('manager')),
             ),
@@ -149,6 +150,10 @@ return array(
                 array('route' => 'flightsSearch', 'roles' => array('manager')),
                 array('route' => 'flight', 'roles' => array('manager')),
                 array('route' => 'browse', 'roles' => array('manager')),
+
+                array('route' => 'management', 'roles' => array('manager')),
+                array('route' => 'management/refuel', 'roles' => array('manager')),
+
 
                 array('route' => 'leg', 'roles' => array('manager')),
                 array('route' => 'permission', 'roles' => array('manager')),

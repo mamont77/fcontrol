@@ -9,7 +9,7 @@ return array(
     'modules' => array(
         'Application',
         //'ZFTool',
-        //'ZendDeveloperTools',
+        'ZendDeveloperTools',
         'ZfcBase',
         'ZfcAdmin',
         'ZfcUser',
@@ -19,6 +19,7 @@ return array(
         'FcLibraries',
         'FcLibrariesSearch',
         'FcFlight',
+        'FcFlightManagement',
         'FcLogEvents',
         'DluTwBootstrap',
         'SuperMessenger',

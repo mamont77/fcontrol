@@ -9,10 +9,10 @@ use Zend\Form\Element;
 use \Zend\Db\ResultSet\ResultSet;
 
 /**
- * Class RefuelForm
- * @package FcFlight\Form
+ * Class RefuelStep1Form
+ * @package FcFlightManagement\Form
  */
-class RefuelForm extends Form
+class RefuelStep1Form extends Form
 {
     /**
      * @var string
@@ -33,13 +33,6 @@ class RefuelForm extends Form
 
         $this->setName($this->_formName);
         $this->setAttribute('method', 'post');
-
-        $this->add(array(
-            'name' => 'id',
-            'attributes' => array(
-                'type' => 'hidden',
-            ),
-        ));
 
         $this->add(new Element\Csrf('csrf'));
 

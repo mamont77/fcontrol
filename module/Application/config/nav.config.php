@@ -18,11 +18,11 @@ return array(
             ),
             array(
                 'label' => 'Management',
-                'route' => 'home',
+                'route' => 'management',
                 'pages' => array(
                     array(
                         'label' => 'Refuel',
-                        'route' => 'flightsActive',
+                        'route' => 'management/refuel',
                     ),
                 ),
             ),

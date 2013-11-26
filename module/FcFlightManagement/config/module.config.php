@@ -2,8 +2,7 @@
 return array(
     'controllers' => array(
         'invokables' => array(
-            'FcFlightManagement\Controller\FlightManagement' => 'FcFlight\Controller\FlightManagementController',
-            'FcFlightManagement\Controller\RefuelManagement' => 'FcFlight\Controller\RefuelManagementController',
+            'FcFlightManagement\Controller\Refuel' => 'FcFlightManagement\Controller\RefuelController',
         ),
     ),
 
@@ -14,6 +13,24 @@ return array(
 
     'router' => array(
         'routes' => array(
+            'management' => array(
+                'type' => 'literal',
+                'options' => array(
+                    'route'    => '/management',
+                ),
+                'child_routes' => array(
+                    'refuel' => array(
+                        'type' => 'literal',
+                        'options' => array(
+                            'route' => '/refuel/step1',
+                            'defaults' => array(
+                                'controller' => 'FcFlightManagement\Controller\Refuel',
+                                'action' => 'findStep1',
+                            ),
+                        ),
+                    ),
+                ),
+            ),
         ),
     ),
 
