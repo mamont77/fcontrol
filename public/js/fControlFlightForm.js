@@ -388,4 +388,18 @@
         }
     };
 
+    /**
+     *
+     * @type {{attach: Function}}
+     */
+    fControl.behaviors.managementRefuelStep1 = {
+        attach: function (context, settings) {
+            var $form = $('form#managementRefuelStep1');
+
+            if ($form.length == 0) return;
+
+            $($form).find('#dateOrderFrom, #dateOrderTo').mask('99-99-9999');
+        }
+    };
+
 })(jQuery);

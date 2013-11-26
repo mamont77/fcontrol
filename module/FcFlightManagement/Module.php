@@ -7,6 +7,7 @@ namespace FcFlightManagement;
 use Zend\ModuleManager\ModuleManager;
 use Zend\Mvc\MvcEvent;
 use FcFlight\Model\FlightHeaderModel;
+use FcFlightManagement\Filter\RefuelStep1Filter;
 
 /**
  * Class Module
@@ -42,8 +43,7 @@ class Module
     public function getValidatorConfig()
     {
         return array(
-            'invokables' => array(
-            ),
+            'invokables' => array(),
         );
     }
 
@@ -102,6 +102,10 @@ class Module
                 'FcFlight\Model\FlightHeaderModel' => function ($sm) {
                         $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                         return new FlightHeaderModel($dbAdapter);
+                    },
+                'FcFlightManagement\Filter\RefuelStep1Filter' => function ($sm) {
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new RefuelStep1Filter($dbAdapter);
                     },
             ),
         );

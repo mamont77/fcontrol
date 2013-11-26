@@ -101,6 +101,96 @@ class RefuelStep1Filter implements InputFilterAwareInterface
             $inputFilter = new InputFilter();
             $factory = new InputFactory();
 
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'dateOrderFrom',
+                'required' => false,
+                'filters' => $this->defaultFilters,
+                'validators' => array(
+                    array(
+                        'name' => 'Date',
+                        'options' => array(
+                            'format' => 'd-m-Y',
+                            'messages' => array(
+                                'dateFalseFormat' => 'Invalid date format, must be dd-mm-YYYY',
+                                'dateInvalidDate' => 'Invalid date, must be dd-mm-YYYY'
+                            ),
+                        ),
+                    ),
+                ),
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'dateOrderTo',
+                'required' => false,
+                'filters' => $this->defaultFilters,
+                'validators' => array(
+                    array(
+                        'name' => 'Date',
+                        'options' => array(
+                            'format' => 'd-m-Y',
+                            'messages' => array(
+                                'dateFalseFormat' => 'Invalid date format, must be dd-mm-YYYY',
+                                'dateInvalidDate' => 'Invalid date, must be dd-mm-YYYY'
+                            ),
+                        ),
+                    ),
+                    array(
+                        'name' => 'Callback',
+                        'options' => array(
+                            'messages' => array(
+                                \Zend\Validator\Callback::INVALID_VALUE => 'The "date to" is less than the "date from"',
+                            ),
+                            'callback' => function ($value, $context) {
+                                    $dateOrderFrom = \DateTime::createFromFormat('d-m-Y', $context['dateOrderFrom']);
+                                    $dateOrderTo = \DateTime::createFromFormat('d-m-Y', $value);
+                                    return $dateOrderTo >= $dateOrderFrom;
+                                },
+                        ),
+                    ),
+                ),
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'aircraftId',
+                'required' => true,
+                'filters' => array(
+                    array('name' => 'Int'),
+                ),
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'agentId',
+                'required' => true,
+                'filters' => array(
+                    array('name' => 'Int'),
+                ),
+            )));
+
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'airportId',
+                'required' => true,
+                'filters' => array(
+                    array('name' => 'Int'),
+                ),
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'customerId',
+                'required' => true,
+                'filters' => array(
+                    array('name' => 'Int'),
+                ),
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'airOperatorId',
+                'required' => true,
+                'filters' => array(
+                    array('name' => 'Int'),
+                ),
+            )));
+
             $this->inputFilter = $inputFilter;
         }
 

@@ -39,7 +39,7 @@ class FlightController extends AbstractActionController
     /**
      * @var array
      */
-    protected $mapFields = array(
+    protected $_mapFields = array(
         'id',
         'refNumberOrder',
         'dateOrder',
@@ -179,7 +179,7 @@ class FlightController extends AbstractActionController
                 continue;
             }
 
-            foreach ($this->mapFields as $field) {
+            foreach ($this->_mapFields as $field) {
                 if (isset($row->$field)) {
                     $data[$key][$field] = $row->$field;
                 }
@@ -248,7 +248,7 @@ class FlightController extends AbstractActionController
 
         $data = array();
         foreach ($result as $key => $row) {
-            foreach ($this->mapFields as $field) {
+            foreach ($this->_mapFields as $field) {
                 if (isset($row->$field)) {
                     $data[$key][$field] = $row->$field;
                 }

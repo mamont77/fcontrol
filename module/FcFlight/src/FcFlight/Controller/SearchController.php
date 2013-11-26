@@ -47,7 +47,7 @@ class SearchController extends FlightController
                     } else {
                         $data = array();
                         foreach ($result as $key => $row) {
-                            foreach ($this->mapFields as $field) {
+                            foreach ($this->_mapFields as $field) {
                                 if (isset($row->$field)) {
                                     $data[$key][$field] = $row->$field;
                                 }

@@ -4,6 +4,7 @@ $this->headTitle($title);
 ?>
 <ul class="breadcrumb">
     <li><a href="/">Home</a> <span class="divider">/</span></li>
+    <li>Management</li>
 </ul>
 
 <h1><?= $title ?></h1>
@@ -64,6 +65,34 @@ echo $this->formHidden($form->get('csrf')) . PHP_EOL;
         <td>
             <?php
             $field = $form->get('aircraftId');
+            echo $this->formSelect($field);
+            ?>
+            <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
+        </td>
+        <td>
+            <?php
+            $field = $form->get('agentId');
+            echo $this->formSelect($field);
+            ?>
+            <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
+        </td>
+        <td>
+            <?php
+            $field = $form->get('airportId');
+            echo $this->formSelect($field);
+            ?>
+            <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
+        </td>
+        <td>
+            <?php
+            $field = $form->get('customerId');
+            echo $this->formSelect($field);
+            ?>
+            <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
+        </td>
+        <td>
+            <?php
+            $field = $form->get('airOperatorId');
             echo $this->formSelect($field);
             ?>
             <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
