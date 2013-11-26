@@ -33,16 +33,17 @@ class RefuelController extends FlightController
     public function findStep1Action()
     {
 
-        $form = new RefuelStep1Form('flightHeader',
+        $form = new RefuelStep1Form('managementRefuelStep1',
             array(
                 'libraries' => array(
-                    'kontragent' => $this->getKontragents(),
-                    'air_operator' => $this->getAirOperators(),
-                    'aircraft' => $this->getAircrafts(),
+                    'aircrafts' => $this->getAircrafts(),
+                    'agents' => $this->getKontragents(),
+                    'airports' => $this->getAirports(),
+                    'customers' => $this->getKontragents(),
+                    'airOperators' => $this->getAirOperators(),
                 )
             )
         );
-
 
         return array(
             'form' => $form

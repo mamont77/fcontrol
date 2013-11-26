@@ -31,11 +31,43 @@ echo $this->formHidden($form->get('csrf')) . PHP_EOL;
 <table class="table ">
     <thead>
     <tr>
+        <th>Date From</th>
+        <th>Date To</th>
+        <th>Aircraft</th>
+        <th>Agent</th>
+        <th>Airport</th>
+        <th>Customer</th>
+        <th>Air Operator</th>
         <th colspan=1"></th>
     </tr>
     </thead>
     <tbody>
     <tr>
+        <td>
+            <?php
+            $field = $form->get('dateOrderFrom');
+            echo $field->getOption('label');
+            echo $this->formInput($field);
+            echo '<p class="help-block" id="help-dateOrder">' . $field->getOption('description') . '</p>';
+            ?>
+            <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
+        </td>
+        <td>
+            <?php
+            $field = $form->get('dateOrderTo');
+            echo $field->getOption('label');
+            echo $this->formInput($field);
+            echo '<p class="help-block" id="help-dateOrder">' . $field->getOption('description') . '</p>';
+            ?>
+            <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
+        </td>
+        <td>
+            <?php
+            $field = $form->get('aircraftId');
+            echo $this->formSelect($field);
+            ?>
+            <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
+        </td>
         <td>
             <?php
             $field = $form->get('submitBtn');
