@@ -18,7 +18,7 @@ if ($order) {
 
 <div class="row">
     <div class="span2 leftPanes">
-        <?php echo $this->partial('widgets/search/default.phtml', array('form' => $searchForm)); ?>
+        <?php echo $this->partial('fc-flight/_widgets/search/default.phtml', array('form' => $searchForm)); ?>
     </div>
     <div class="span10 rightPanes">
         <?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
@@ -35,7 +35,7 @@ if ($order) {
             </div>
         </div>
 
-        <?= $this->partial('widgets/tables/header.phtml', array(
+        <?= $this->partial('fc-flight/_widgets/tables/header.phtml', array(
             'data' => $data,
             'url_order' => $url_order,
             'order_by' => $order_by,

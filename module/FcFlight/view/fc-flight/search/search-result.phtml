@@ -20,7 +20,7 @@ if ($order) {
 
 <div class="row">
     <div class="span2 leftPanes">
-        <?php echo $this->partial('widgets/search/default.phtml', array('form' => $searchForm)); ?>
+        <?php echo $this->partial('fc-flight/_widgets/search/default.phtml', array('form' => $searchForm)); ?>
     </div>
     <div class="span10 rightPanes">
         <?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
@@ -34,7 +34,7 @@ if ($order) {
             <? if (is_array($data) && count($data) > 0): ?>
                 <legend>Search Result</legend>
                 <div id="searchResult">
-                    <?php echo $this->partial('widgets/tables/header/lite.phtml', array(
+                    <?php echo $this->partial('fc-flight/_widgets/tables/header/lite.phtml', array(
                         'data' => $data,
                         'route' => $route,
                     )); ?>

@@ -12,7 +12,7 @@ $this->headTitle($title);
 </ul>
 
 <?=
-$this->partial('widgets/components/flight.phtml',
+$this->partial('fc-flight/_widgets/components/flight.phtml',
     array(
         'header' => $this->header,
         'legs' => $this->legs,
@@ -34,7 +34,7 @@ $this->partial('widgets/components/flight.phtml',
 
 <div id="refuel">
     <?=
-    $this->partial('widgets/tables/refuel.phtml', array(
+    $this->partial('fc-flight/_widgets/tables/refuel.phtml', array(
         'currentId' => $this->id,
         'refuels' => $this->refuels,
         'status' => $this->header->status,

@@ -22,7 +22,7 @@ $this->headTitle($title);
 <?php echo $this->flashMessenger()->render('error', array('alert', 'alert-error')); ?>
 
 <?=
-$this->partial('widgets/components/flight.phtml',
+$this->partial('fc-flight/_widgets/components/flight.phtml',
     array(
         'header' => $this->header,
         'legs' => $this->legs,
@@ -32,7 +32,7 @@ $this->partial('widgets/components/flight.phtml',
 
 <? if (count($this->refuels) > 0): ?>
     <legend>Refuels</legend>
-    <?= $this->partial('widgets/tables/refuel.phtml',
+    <?= $this->partial('fc-flight/_widgets/tables/refuel.phtml',
         array(
             'refuels' => $this->refuels,
             'refuelsTotal' => $this->refuelsTotal,
@@ -42,7 +42,7 @@ $this->partial('widgets/components/flight.phtml',
 
 <? if (count($this->permissions) > 0): ?>
     <legend>Permission</legend>
-    <?= $this->partial('widgets/tables/permission.phtml',
+    <?= $this->partial('fc-flight/_widgets/tables/permission.phtml',
         array(
             'permissions' => $this->permissions,
             'status' => $this->header->status,
@@ -52,7 +52,7 @@ $this->partial('widgets/components/flight.phtml',
 <? if (count($this->apServices) > 0): ?>
     <legend>AP Services</legend>
     <?=
-    $this->partial('widgets/tables/ap-service.phtml',
+    $this->partial('fc-flight/_widgets/tables/ap-service.phtml',
         array(
             'apServices' => $this->apServices,
             'apServicesTotal' => $this->apServicesTotal,
