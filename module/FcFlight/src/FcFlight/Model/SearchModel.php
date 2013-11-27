@@ -54,20 +54,49 @@ class SearchModel extends AbstractTableGateway
         $select = new Select();
         $select->from($this->table);
 
-        $select->columns(array('id', 'refNumberOrder', 'dateOrder', 'kontragent', 'airOperator', 'aircraft', 'status'));
+        $select->columns(array(
+            'id',
+            'refNumberOrder',
+            'dateOrder',
+            'kontragent',
+            'airOperator',
+            'aircraftId',
+            'alternativeAircraftId1',
+            'alternativeAircraftId2',
+            'status',
+        ));
 
-        $select->join(array('library_kontragent' => 'library_kontragent'),
-            'library_kontragent.id = flightBaseHeaderForm.kontragent',
+        $select->join(array('libraryKontragent' => 'library_kontragent'),
+            'libraryKontragent.id = flightBaseHeaderForm.kontragent',
             array('kontragentShortName' => 'short_name'), 'left');
-        $select->join(array('library_air_operator' => 'library_air_operator'),
-            'library_air_operator.id = flightBaseHeaderForm.airOperator',
+
+        $select->join(array('libraryAirOperator' => 'library_air_operator'),
+            'libraryAirOperator.id = flightBaseHeaderForm.airOperator',
             array('airOperatorShortName' => 'short_name'), 'left');
-        $select->join(array('library_aircraft' => 'library_aircraft'),
-            'library_aircraft.reg_number = flightBaseHeaderForm.aircraft',
-            array('aircraftType' => 'aircraft_type'), 'left');
-        $select->join(array('library_aircraft_type' => 'library_aircraft_type'),
-            'library_aircraft_type.id = library_aircraft.aircraft_type',
+
+        $select->join(array('libraryAircraft' => 'library_aircraft'),
+            'libraryAircraft.id = flightBaseHeaderForm.aircraftId',
+            array('aircraftTypeId' => 'aircraft_type', 'aircraftName' => 'reg_number'), 'left');
+
+        $select->join(array('libraryAircraftType' => 'library_aircraft_type'),
+            'libraryAircraftType.id = libraryAircraft.aircraft_type',
             array('aircraftTypeName' => 'name'), 'left');
+
+        $select->join(array('libraryAlternativeAircraft1' => 'library_aircraft'),
+            'libraryAlternativeAircraft1.id = flightBaseHeaderForm.alternativeAircraftId1',
+            array('alternativeAircraftTypeId1' => 'aircraft_type', 'alternativeAircraftName1' => 'reg_number'), 'left');
+
+        $select->join(array('libraryAlternativeTypeAircraft1' => 'library_aircraft_type'),
+            'libraryAlternativeTypeAircraft1.id = libraryAlternativeAircraft1.aircraft_type',
+            array('alternativeAircraftTypeName1' => 'name'), 'left');
+
+        $select->join(array('libraryAlternativeAircraft2' => 'library_aircraft'),
+            'libraryAlternativeAircraft2.id = flightBaseHeaderForm.alternativeAircraftId2',
+            array('alternativeAircraftTypeId2' => 'aircraft_type', 'alternativeAircraftName2' => 'reg_number'), 'left');
+
+        $select->join(array('libraryAlternativeTypeAircraft2' => 'library_aircraft_type'),
+            'libraryAlternativeTypeAircraft2.id = libraryAlternativeAircraft2.aircraft_type',
+            array('alternativeAircraftTypeName2' => 'name'), 'left');
 
         if ($object->dateOrderFrom != '' && $object->dateOrderTo != '') {
             $select->where->between('flightBaseHeaderForm.dateOrder', $object->dateOrderFrom, $object->dateOrderTo);
@@ -88,27 +117,35 @@ class SearchModel extends AbstractTableGateway
         if ($object->customer != '') {
             $select->where
                 ->NEST
-                ->like('library_kontragent.name', $object->customer . '%')
+                ->like('libraryKontragent.name', $object->customer . '%')
                 ->OR
-                ->like('library_kontragent.short_name', $object->customer . '%')
+                ->like('libraryKontragent.short_name', $object->customer . '%')
                 ->UNNEST;
         }
 
         if ($object->airOperator != '') {
             $select->where
                 ->NEST
-                ->like('library_air_operator.name', $object->airOperator . '%')
+                ->like('libraryAirOperator.name', $object->airOperator . '%')
                 ->OR
-                ->like('library_air_operator.short_name', $object->airOperator . '%')
+                ->like('libraryAirOperator.short_name', $object->airOperator . '%')
                 ->UNNEST;
         }
 
         if ($object->aircraft != '') {
             $select->where
                 ->NEST
-                ->like('library_aircraft_type.name', $object->aircraft . '%')
+                ->like('libraryAircraftType.name', $object->aircraft . '%')
                 ->OR
-                ->like('library_aircraft.reg_number', $object->aircraft . '%')
+                ->like('libraryAircraft.reg_number', $object->aircraft . '%')
+                ->OR
+                ->like('libraryAlternativeTypeAircraft1.name', $object->aircraft . '%')
+                ->OR
+                ->like('libraryAlternativeAircraft1.reg_number', $object->aircraft . '%')
+                ->OR
+                ->like('libraryAlternativeTypeAircraft2.name', $object->aircraft . '%')
+                ->OR
+                ->like('libraryAlternativeAircraft2.reg_number', $object->aircraft . '%')
                 ->UNNEST;
         }
 
