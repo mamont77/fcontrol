@@ -62,7 +62,7 @@ h1 {
     color: #b94a48;
 }
 
-.labelDone, .statusCNFMD {
+.labelDone, .statusCNFMD, .statusDone {
     font-weight: bold;
     color: #468847;
 }

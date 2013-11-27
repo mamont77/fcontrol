@@ -188,6 +188,17 @@ class FlightController extends AbstractActionController
                 $hasRefuel = $this->getRefuelModel()->getByHeaderId($data[$key]['id']);
                 if (!empty($hasRefuel)) {
                     $data[$key]['refuelStatus'] = 'YES';
+
+                    $refuelIsDone = true;
+                    foreach ($hasRefuel as $row) {
+                        if ($row['status'] == 0) {
+                            $refuelIsDone = false;
+                            continue;
+                        }
+                    }
+                    if ($refuelIsDone) {
+                        $data[$key]['refuelStatus'] = 'DONE';
+                    }
                 } else {
                     $data[$key]['refuelStatus'] = 'NO';
                 }
@@ -198,13 +209,17 @@ class FlightController extends AbstractActionController
             try {
                 $hasPermission = $this->getPermissionModel()->getByHeaderId($data[$key]['id']);
                 if (!empty($hasPermission)) {
-                    $data[$key]['permitStatus'] = 'CNFMD';
+                    $data[$key]['permitStatus'] = 'YES';
 
+                    $permissionIsDone = true;
                     foreach ($hasPermission as $row) {
-                        if ($row['check'] != 'RECEIVED') {
-                            $data[$key]['permitStatus'] = 'YES';
+                        if ($row['status'] == 0) {
+                            $permissionIsDone = false;
                             continue;
                         }
+                    }
+                    if ($permissionIsDone) {
+                        $data[$key]['permitStatus'] = 'DONE';
                     }
                 } else {
                     $data[$key]['permitStatus'] = 'NO';
