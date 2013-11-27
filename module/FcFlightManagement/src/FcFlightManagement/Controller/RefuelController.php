@@ -11,7 +11,7 @@ use FcFlight\Controller\FlightController;
 use FcFlight\Model\FlightHeaderModel;
 use FcFlight\Model\LegModel;
 use FcFlight\Model\PermissionModel;
-use FcFlight\Model\RefuelModel;
+use FcFlightManagement\Model\RefuelModel;
 use FcFlight\Model\ApServiceModel;
 
 /**
@@ -75,8 +75,9 @@ class RefuelController extends FlightController
             $searchForm->setData($request->getPost());
             if ($searchForm->isValid() && !$postIsEmpty) {
                 $data = $searchForm->getData();
-                $filter->exchangeArray($data);
-//                    $result = $this->getSearchModel()->findSearchResult($filter);
+//                $filter->exchangeArray($data);
+                $result = $this->getRefuelModel()->findByParams($data);
+
 //                    if (count($result) == 0) {
 //                        $data = 'Result not found!';
 //                    } else {
@@ -98,7 +99,6 @@ class RefuelController extends FlightController
 //                                // do nothing
 //                            }
 //
-//                            // TODO: Fix me after Permission feature.
 //                            $data[$key]['permitStatus'] = 'NO';
 //                        }
             }
@@ -107,5 +107,20 @@ class RefuelController extends FlightController
         return array(
             'form' => $searchForm
         );
+    }
+
+    /**
+     * Get Refuel model
+     *
+     * @return RefuelModel
+     */
+    public function getRefuelModel()
+    {
+        if (!$this->refuelModel) {
+            $sm = $this->getServiceLocator();
+            $this->refuelModel = $sm->get('FcFlightManagement\Model\RefuelModel');
+        }
+
+        return $this->refuelModel;
     }
 }

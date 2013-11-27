@@ -69,10 +69,6 @@ class RefuelStep1Form extends BaseForm
         $this->setLibrary('_customers', $options['libraries']['customers'], 'id', 'name');
         $this->setLibrary('_airOperators', $options['libraries']['airOperators'], 'id', 'name');
 
-
-        $this->add(new Element\Csrf('csrf'));
-
-
         $this->add(array(
             'name' => 'dateOrderFrom',
             'type' => 'Zend\Form\Element\Text',
@@ -177,6 +173,8 @@ class RefuelStep1Form extends BaseForm
                 'value_options' => $this->_airOperators,
             ),
         ));
+
+        $this->add(new Element\Csrf('csrf'));
 
         //Submit button
         $this->add(array(

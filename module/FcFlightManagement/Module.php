@@ -8,6 +8,7 @@ use Zend\ModuleManager\ModuleManager;
 use Zend\Mvc\MvcEvent;
 use FcFlight\Model\FlightHeaderModel;
 use FcFlightManagement\Filter\RefuelStep1Filter;
+use FcFlightManagement\Model\RefuelModel;
 
 /**
  * Class Module
@@ -106,6 +107,10 @@ class Module
                 'FcFlightManagement\Filter\RefuelStep1Filter' => function ($sm) {
                         $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                         return new RefuelStep1Filter($dbAdapter);
+                    },
+                'FcFlightManagement\Model\RefuelModel' => function ($sm) {
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new RefuelModel($dbAdapter);
                     },
             ),
         );

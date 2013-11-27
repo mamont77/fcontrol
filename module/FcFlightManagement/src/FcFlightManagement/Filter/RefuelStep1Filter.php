@@ -34,6 +34,13 @@ class RefuelStep1Filter implements InputFilterAwareInterface
 
     //Fields for form and view
     public $id;
+    public $dateOrderFrom;
+    public $dateOrderTo;
+    public $aircraftId;
+    public $agentId;
+    public $airportId;
+    public $customerId;
+    public $airOperatorId;
 
     //Fields only for view
 
@@ -70,6 +77,13 @@ class RefuelStep1Filter implements InputFilterAwareInterface
     {
         //Fields for form and view
         $this->id = (isset($data['id'])) ? $data['id'] : null;
+        $this->dateOrderFrom = (isset($data['dateOrderFrom'])) ? $data['dateOrderFrom'] : null;
+        $this->dateOrderTo = (isset($data['dateOrderTo'])) ? $data['dateOrderTo'] : null;
+        $this->aircraftId = (isset($data['aircraftId'])) ? $data['aircraftId'] : null;
+        $this->agentId = (isset($data['agentId'])) ? $data['agentId'] : null;
+        $this->airportId = (isset($data['airportId'])) ? $data['airportId'] : null;
+        $this->customerId = (isset($data['customerId'])) ? $data['customerId'] : null;
+        $this->airOperatorId = (isset($data['airOperatorId'])) ? $data['airOperatorId'] : null;
     }
 
     /**

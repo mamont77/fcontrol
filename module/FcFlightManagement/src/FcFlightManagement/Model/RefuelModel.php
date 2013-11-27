@@ -8,7 +8,7 @@ use Zend\Db\TableGateway\AbstractTableGateway;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\Select;
-use FcFlight\Filter\RefuelFilter;
+use FcFlightManagement\Filter\RefuelStep1Filter;
 
 /**
  * Class RefuelModel
@@ -16,17 +16,35 @@ use FcFlight\Filter\RefuelFilter;
  */
 class RefuelModel extends AbstractTableGateway
 {
-
     /**
      * @var string
      */
-
     public $table = '';
+
+    /**
+     * @param $table
+     */
+    public function setTable($table)
+    {
+        $this->table = $table;
+    }
 
     /**
      * @var array
      */
     protected $_tableFields = array(
+        'refuelId' => 'id',
+        'refuelHeaderId' => 'headerId',
+        'refuelAgentId' => 'agentId',
+        'refuelLegId' => 'legId',
+        'refuelAirportId' => 'airportId',
+        'refuelQuantityLtr' => 'quantityLtr',
+        'refuelQuantityOtherUnits' => 'quantityOtherUnits',
+        'refuelUnitId' => 'unitId',
+        'refuelPriceUsd' => 'priceUsd',
+        'refuelTotalPriceUsd' => 'totalPriceUsd',
+        'refuelDate' => 'date',
+        'refuelStatus' => 'status',
     );
 
     /**
@@ -36,39 +54,208 @@ class RefuelModel extends AbstractTableGateway
     {
         $this->adapter = $adapter;
         $this->resultSetPrototype = new ResultSet();
-        $this->resultSetPrototype->setArrayObjectPrototype(new RefuelFilter($this->adapter));
         $this->initialize();
     }
 
     /**
-     * @param $id
-     * @return array|\ArrayObject|null
-     * @throws \Exception
+     * @param $data
+     * @return null|\Zend\Db\ResultSet\ResultSetInterface
      */
-    public function get($id)
+    public function findByParams($data)
     {
-        $id = (int)$id;
+        $this->setTable('flightRefuelForm');
+
+        if ($data->dateOrderFrom != '') {
+            $data->dateOrderFrom = \DateTime::createFromFormat('d-m-Y', $data->dateOrderFrom)->getTimestamp();
+        }
+        if ($data->dateOrderTo != '') {
+            $data->dateOrderTo = \DateTime::createFromFormat('d-m-Y', $data->dateOrderTo)->getTimestamp();
+        }
+
         $select = new Select();
         $select->from($this->table);
 
         $select->columns($this->_tableFields);
 
-        $select->where(array($this->table . '.id' => $id));
+        $select->join(
+            array('flight' => 'flightBaseHeaderForm'),
+            'flightRefuelForm.headerId = flight.id',
+            array(
+                'flightParentId' => 'parentId',
+                'flightRefNumberOrder' => 'refNumberOrder',
+                'flightDateOrder' => 'dateOrder',
+                'flightAgentId' => 'kontragent',
+                'flightAirOperator' => 'airOperator',
+                'flightAircraftId' => 'aircraftId',
+                'flightAlternativeAircraftId1' => 'alternativeAircraftId1',
+                'flightAlternativeAircraftId2' => 'alternativeAircraftId2',
+                'flightStatus' => 'status',
+            ),
+            'left');
+
+        $select->join(
+            array('refuelAgent' => 'library_kontragent'),
+            'refuelAgent.id = flightRefuelForm.agentId',
+            array(
+                'refuelAgentName' => 'name',
+                'refuelAgentShortName' => 'short_name',
+            ),
+            'left');
+
+        $select->join(
+            array('refuelAirport' => 'library_airport'),
+            'refuelAirport.id = flightRefuelForm.airportId',
+            array(
+                'refuelAirportName' => 'name',
+                'refuelAirportShortName' => 'short_name',
+                'refuelAirportICAO' => 'code_icao',
+                'refuelAirportIATA' => 'code_iata',
+            ),
+            'left');
+
+        $select->join(
+            array('refuelUnit' => 'library_unit'),
+            'refuelUnit.id = flightRefuelForm.unitId',
+            array(
+                'refuelUnitName' => 'name',
+            ),
+            'left');
+
+        $select->join(
+            array('flightAgent' => 'library_kontragent'),
+            'flightAgent.id = flight.kontragent',
+            array(
+                'flightAgentName' => 'name',
+                'flightAgentShortName' => 'short_name',
+            ),
+            'left');
+
+        $select->join(
+            array('flightAirOperator' => 'library_air_operator'),
+            'flightAirOperator.id = flight.airOperator',
+            array(
+                'flightAirOperatorName' => 'name',
+                'flightAirOperatorShortName' => 'short_name',
+                'flightAirOperatorICAO' => 'code_icao',
+                'flightAirOperatorIATA' => 'code_iata',
+            ),
+            'left');
+
+        $select->join(
+            array('flightAircraft' => 'library_aircraft'),
+            'flightAircraft.id = flight.aircraftId',
+            array(
+                'flightAircraftTypeId' => 'aircraft_type',
+                'flightAircraftName' => 'reg_number',
+            ),
+            'left');
+
+        $select->join(
+            array('flightAircraftType' => 'library_aircraft_type'),
+            'flightAircraftType.id = flightAircraft.aircraft_type',
+            array(
+                'flightAircraftTypeName' => 'name',
+            ),
+            'left');
+
+        $select->join(
+            array('flightAlternativeAircraft1' => 'library_aircraft'),
+            'flightAlternativeAircraft1.id = flight.alternativeAircraftId1',
+            array(
+                'flightAlternativeAircraftTypeId1' => 'aircraft_type',
+                'flightAlternativeAircraftName1' => 'reg_number',
+            ),
+            'left');
+
+        $select->join(
+            array('flightAlternativeTypeAircraft1' => 'library_aircraft_type'),
+            'flightAlternativeTypeAircraft1.id = flightAlternativeAircraft1.aircraft_type',
+            array(
+                'flightAlternativeAircraftTypeName1' => 'name',
+            ),
+            'left');
+
+        $select->join(
+            array('flightAlternativeAircraft2' => 'library_aircraft'),
+            'flightAlternativeAircraft2.id = flight.alternativeAircraftId2',
+            array(
+                'flightAlternativeAircraftTypeId2' => 'aircraft_type',
+                'flightAlternativeAircraftName2' => 'reg_number',
+            ),
+            'left');
+
+        $select->join(
+            array('flightAlternativeTypeAircraft2' => 'library_aircraft_type'),
+            'flightAlternativeTypeAircraft2.id = flightAlternativeAircraft2.aircraft_type',
+            array(
+                'flightAlternativeAircraftTypeName2' => 'name',
+            ),
+            'left');
+
+
+//        if ($object->dateOrderFrom != '' && $object->dateOrderTo != '') {
+//            $select->where->between('flightBaseHeaderForm.dateOrder', $object->dateOrderFrom, $object->dateOrderTo);
+//        } else {
+//            if ($object->dateOrderFrom != '') {
+//                $select->where->greaterThanOrEqualTo('flightBaseHeaderForm.dateOrder', $object->dateOrderFrom);
+//            }
+//
+//            if ($object->dateOrderTo != '') {
+//                $select->where->lessThanOrEqualTo('flightBaseHeaderForm.dateOrder', $object->dateOrderTo);
+//            }
+//        }
+//
+//        if ($object->status != '2') {
+//            $select->where->equalTo('flightBaseHeaderForm.status', (int)$object->status);
+//        }
+//
+//        if ($object->customer != '') {
+//            $select->where
+//                ->NEST
+//                ->like('libraryKontragent.name', $object->customer . '%')
+//                ->OR
+//                ->like('libraryKontragent.short_name', $object->customer . '%')
+//                ->UNNEST;
+//        }
+//
+//        if ($object->airOperator != '') {
+//            $select->where
+//                ->NEST
+//                ->like('libraryAirOperator.name', $object->airOperator . '%')
+//                ->OR
+//                ->like('libraryAirOperator.short_name', $object->airOperator . '%')
+//                ->UNNEST;
+//        }
+//
+//        if ($object->aircraft != '') {
+//            $select->where
+//                ->NEST
+//                ->like('libraryAircraftType.name', $object->aircraft . '%')
+//                ->OR
+//                ->like('libraryAircraft.reg_number', $object->aircraft . '%')
+//                ->OR
+//                ->like('libraryAlternativeTypeAircraft1.name', $object->aircraft . '%')
+//                ->OR
+//                ->like('libraryAlternativeAircraft1.reg_number', $object->aircraft . '%')
+//                ->OR
+//                ->like('libraryAlternativeTypeAircraft2.name', $object->aircraft . '%')
+//                ->OR
+//                ->like('libraryAlternativeAircraft2.reg_number', $object->aircraft . '%')
+//                ->UNNEST;
+//        }
+
+        $select->order('date ' . Select::ORDER_DESCENDING);
+//        \Zend\Debug\Debug::dump($select->getSqlString());
 
         $resultSet = $this->selectWith($select);
-        $row = $resultSet->current();
-        if (!$row) {
-            throw new \Exception("Could not find row $id");
+        $resultSet->buffer();
+//        \Zend\Debug\Debug::dump($data);
+
+        foreach ($resultSet as $row) {
+            \Zend\Debug\Debug::dump($row);
+
         }
 
-        return $row;
-    }
-
-    /**
-     * @param $id
-     */
-    public function remove($id)
-    {
-        $this->delete(array('id' => $id));
+        return $resultSet;
     }
 }
