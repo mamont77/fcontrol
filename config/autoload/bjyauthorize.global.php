@@ -152,7 +152,7 @@ return array(
                 array('route' => 'browse', 'roles' => array('manager')),
 
                 array('route' => 'management', 'roles' => array('manager')),
-                array('route' => 'management/refuel', 'roles' => array('manager')),
+                array('route' => 'management/refuel/step1', 'roles' => array('manager')),
 
 
                 array('route' => 'leg', 'roles' => array('manager')),

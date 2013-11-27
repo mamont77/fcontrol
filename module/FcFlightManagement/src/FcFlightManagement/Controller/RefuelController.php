@@ -36,7 +36,7 @@ class RefuelController extends FlightController
     /**
      * @return ViewModel
      */
-    public function findStep1Action()
+    public function step1Action()
     {
         $searchForm = new RefuelStep1Form('managementRefuelStep1',
             array(
@@ -66,15 +66,14 @@ class RefuelController extends FlightController
 
             if ($postIsEmpty) {
                 $this->flashMessenger()->addErrorMessage('Result not found. Enter one or more fields.');
-                return $this->redirect()->toRoute('management/refuel', array(
-                    'action' => 'step1'
-                ));
+                return $this->redirect()->toRoute('management/refuel/step1');
             }
 
             $filter = $this->getServiceLocator()->get('FcFlightManagement\Filter\RefuelStep1Filter');
             $searchForm->setInputFilter($filter->getInputFilter());
+
             $searchForm->setData($request->getPost());
-            if ($searchForm->isValid()) {
+            if ($searchForm->isValid() && !$postIsEmpty) {
                 $data = $searchForm->getData();
                 $filter->exchangeArray($data);
 //                    $result = $this->getSearchModel()->findSearchResult($filter);

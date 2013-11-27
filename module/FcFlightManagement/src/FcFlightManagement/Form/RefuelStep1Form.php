@@ -58,7 +58,9 @@ class RefuelStep1Form extends BaseForm
         parent::__construct($this->_formName);
 
         $this->setName($this->_formName);
-        $this->setAttribute('method', 'post');
+        $this->setAttributes(array(
+            'method' => 'post',
+        ));
 
         $this->setLibrary('_aircrafts', $options['libraries']['aircrafts'],
             'id', array('aircraft_type_name', 'reg_number'));

@@ -22,7 +22,7 @@ return array(
                 'pages' => array(
                     array(
                         'label' => 'Refuel',
-                        'route' => 'management/refuel',
+                        'route' => 'management/refuel/step1',
                     ),
                 ),
             ),
