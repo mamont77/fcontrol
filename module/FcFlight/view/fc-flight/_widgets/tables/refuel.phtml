@@ -1,0 +1,80 @@
+<div id="refuel">
+    <table
+        class="table table-bordered table-hover table-condensed <? if ($this->fixedHeader): ?> table-fixed-header<? endif ?>">
+        <thead class="header">
+        <tr>
+            <th></th>
+            <th>
+                Airport
+            </th>
+            <th>
+                Date
+            </th>
+            <th>
+                Agent
+            </th>
+            <th>
+                Quantity LTR
+            </th>
+            <th>
+                Quantity in Selected Units
+            </th>
+            <th>
+                Unit
+            </th>
+            <th>
+                Price USD
+            </th>
+            <th>
+                Total USD
+            </th>
+            <th class="actions">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($this->refuels as $row) : ?>
+            <tr class="<? if ($row['id'] == $this->currentId): ?><?= 'info' ?><? endif ?>">
+                <td class="status"><? if ($row['status']): ?><i class="icon-ok"></i><? endif ?></td>
+                <td>
+                    <a rel="tooltip" href="#" data-toggle="tooltip" data-placement="top"
+                       title="" data-original-title="<?= $this->escapeHtml($row['airportName']) ?>">
+                        <?= $this->escapeHtml($row['builtAirportName']) ?>
+                    </a>
+                </td>
+                <td><?= date('d-m-Y', $row['date']) ?></td>
+                <td><?= $this->escapeHtml($row['kontragentShortName']) ?></td>
+                <td><?= $this->escapeHtml($row['quantityLtr']) ?></td>
+                <td><?= $this->escapeHtml($row['quantityOtherUnits']) ?></td>
+                <td><?= $this->escapeHtml($row['unitName']) ?></td>
+                <td><?= $this->escapeHtml($row['priceUsd']) ?></td>
+                <td><?= $this->escapeHtml($row['totalPriceUsd']) ?></td>
+                <td class="actions">
+                    <a title="Edit" href="<?= $this->url('refuel',
+                        array('action' => 'edit', 'id' => $row['id'])) ?>"
+                       class="<? if (!$this->status): ?>disabled<? endif ?>"><i class="icon-edit"></i></a>
+                    <a title="Remove" href="<?= $this->url('refuel',
+                           array('action' => 'delete', 'id' => $row['id'])) ?>"
+                       class="<? if (!$this->status): ?>disabled<? endif ?>"><i class="icon-remove"></i></a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+
+    <div class="row-fluid">
+        <div class="span6">
+            <a class="btn disabled" href="#">Make INVOICE</a>
+        </div>
+        <div class="span6">
+            <table style="width: 200px; float: right" class="table table-bordered .pull-right">
+                <tr>
+                    <td>
+                        Subtotal
+                    </td>
+                    <td>USD</td>
+                    <td><?= number_format($this->refuelsTotal, 4, '.', ' '); ?></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

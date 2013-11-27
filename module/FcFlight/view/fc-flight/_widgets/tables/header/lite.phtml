@@ -1,0 +1,91 @@
+<table class="table table-bordered table-hover table-condensed <? if ($this->fixedHeader): ?> table-fixed-header<? endif ?>">
+    <thead class="header">
+    <tr>
+        <th>
+            Ref Number
+        </th>
+        <th>
+            Date Order
+        </th>
+        <th>
+            Customer
+        </th>
+        <th>
+            Air Operator
+        </th>
+        <th>
+            Aircraft
+        </th>
+        <th>Refuel</th>
+        <th>Permit</th>
+        <th class="actions"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($data as $row) : ?>
+        <tr class="<?= ($row['status']) ? 'warning' : 'success'; ?>">
+            <td>
+                <a href="<?php
+                echo $this->url('browse',
+                    array('refNumberOrder' => urlencode($row['refNumberOrder'])));?>">
+                    <strong><?php echo $this->escapeHtml($row['refNumberOrder']); ?></strong>
+                </a>
+            </td>
+            <td><strong><?php echo date('d-m-Y', $row['dateOrder']); ?></strong></td>
+            <td><?php echo $this->escapeHtml($row['kontragentShortName']); ?></td>
+            <td><?php echo $this->escapeHtml($row['airOperatorShortName']); ?></td>
+            <td>
+                <?php echo $this->escapeHtml($row['aircraftTypeName']); ?>
+                <br/>
+                <small><?php echo $this->escapeHtml($row['aircraft']); ?></small>
+            </td>
+            <td>
+                <?php
+                $class = '';
+                switch ($row['refuelStatus']) {
+                    case 'YES':
+                        $class = 'statusYes';
+                        break;
+                    case 'NO':
+                        $class = 'statusNo';
+                        break;
+                    case 'CNFMD':
+                        $class = 'statusCNFMD';
+                        break;
+                    default:
+                        $class = '';
+                        break;
+                }
+                ?>
+                <span class="<?= $class; ?>"><?= $row['refuelStatus']; ?></span>
+            </td>
+            <td>
+                <?php
+                $class = '';
+                switch ($row['permitStatus']) {
+                    case 'YES':
+                        $class = 'statusYes';
+                        break;
+                    case 'NO':
+                        $class = 'statusNo';
+                        break;
+                    case 'CNFMD':
+                        $class = 'statusCNFMD';
+                        break;
+                    default:
+                        $class = '';
+                        break;
+                }
+                ?>
+                <span class="<?= $class; ?>"><?= $row['permitStatus']; ?></span>
+            </td>
+            <td class="actions">
+                <a title="Edit" href="<?php echo $this->url('flight',
+                    array('action' => 'edit-header', 'id' => $row['id']));?>"><i class="icon-edit"></i></a>
+                <a title="Remove" href="<?php echo $this->url('flight',
+                    array('action' => 'delete-header', 'id' => $row['id']));?>"><i class="icon-remove"></i></a>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>

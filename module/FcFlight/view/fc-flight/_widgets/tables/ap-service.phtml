@@ -1,0 +1,68 @@
+<div id="apService">
+    <table
+        class="table table-bordered table-hover table-condensed <? if ($this->fixedHeader): ?> table-fixed-header<? endif ?>">
+        <thead class="header">
+        <tr>
+            <th></th>
+            <th>
+                Airport
+            </th>
+            <th>
+                Type of AP service
+            </th>
+            <th>
+                Agent
+            </th>
+            <th>
+                Price USD
+            </th>
+            <th class="actions">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($this->apServices as $row) : ?>
+            <tr class="<? if ($row['id'] == $this->currentId): ?><?= 'info' ?><? endif ?>">
+                <td class="status"><? if ($row['status']): ?><i class="icon-ok"></i><? endif ?></td>
+                <td>
+                    <a rel="tooltip" href="#" data-toggle="tooltip" data-placement="top"
+                       title="" data-original-title="<?= $this->escapeHtml($row['airportName']) ?>">
+                        <?= $this->escapeHtml($row['builtAirportName']) ?>
+                    </a>
+                </td>
+                <td><?= $this->escapeHtml($row['typeOfApServiceName']) ?></td>
+                <td><?= $this->escapeHtml($row['kontragentShortName']) ?></td>
+                <td><?= $this->escapeHtml($row['priceUSD']) ?></td>
+                <td class="actions">
+                    <a title="Edit" href="<?=
+                    $this->url('apService',
+                        array('action' => 'edit', 'id' => $row['id'])) ?>" class="<?= ($status) ? '' : 'disabled' ?>"><i
+                            class="icon-edit"></i></a>
+                    <a title="Remove" href="<?=
+                    $this->url('apService',
+                        array('action' => 'delete', 'id' => $row['id'])) ?>" class="<?= ($status) ? '' : 'disabled' ?>"><i
+                            class="icon-remove"></i></a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+
+    <div class="row-fluid">
+        <div class="span6">
+            <a class="btn disabled" href="#">Make INVOICE</a>
+        </div>
+        <div class="span6">
+            <table style="width: 200px; float: right" class="table table-bordered .pull-right">
+                <tbody>
+                <tr>
+                    <td>
+                        Subtotal
+                    </td>
+                    <td>USD</td>
+                    <td><?= number_format($this->apServicesTotal, 4, '.', ' '); ?></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
