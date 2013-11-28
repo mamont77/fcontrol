@@ -4,12 +4,11 @@
         <thead>
         <tr>
             <th></th>
-            <th>Refuel ID</th>
             <th>ORD</th>
-            <th>Data of refuel</th>
             <th>Customer</th>
             <th>Air Operator</th>
             <th>Aircraft</th>
+            <th>Data of refuel</th>
             <th>Airport Dep</th>
             <th>Fuel supplier</th>
             <th>Quantity est</th>
@@ -19,35 +18,16 @@
         </tr>
         </thead>
         <tbody>
-        <!--        <tr class="error">-->
-        <!--            <td></td>-->
-        <!--            <td>индификатор RF нужен для работы БД</td>-->
-        <!--            <td>номер ORD из базы полетов</td>-->
-        <!--            <td>дата заправки из ORD</td>-->
-        <!--            <td>Customer library</td>-->
-        <!--            <td>Customer library</td>-->
-        <!--            <td>Aircraft library</td>-->
-        <!--            <td>аэропорт вылета взять из ORD</td>-->
-        <!--            <td>Поставщик топлива из Agent library</td>-->
-        <!--            <td>Предполагаемое колличество топлива</td>-->
-        <!--            <td>выпадающий из библиотеки</td>-->
-        <!--            <td>цена топлива</td>-->
-        <!--            <td>price_est * quantity_est</td>-->
-        <!--        </tr>-->
         <? foreach ($this->data as $row): ?>
-            <!--        <tr><td colspan="13">-->
-            <!--                --><? //= \Zend\Debug\Debug::dump($row); ?>
-            <!--        </td></tr>-->
             <tr>
                 <td>
                     <input type="checkbox" name="selected" value="<?= $row->refuelId ?>">
                 </td>
-                <td><?= $row->refuelId ?></td>
                 <td><?= $row->flightRefNumberOrder ?></td>
-                <td><?= date('d-m-Y', $row->refuelDate) ?></td>
                 <td><?= $row->flightAgentShortName ?></td>
                 <td><?= $row->flightAirOperatorShortName ?></td>
                 <td><?= $row->flightAircraftTypeName . ' (' . $row->flightAircraftName . ')' ?></td>
+                <td><?= date('d-m-Y', $row->refuelDate) ?></td>
                 <td><?= $row->refuelAirportICAO . ' (' . $row->refuelAirportIATA . ')' ?></td>
                 <td><?= $row->refuelAgentShortName ?></td>
                 <td><?= $row->refuelQuantityOtherUnits ?></td>
