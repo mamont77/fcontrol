@@ -38,6 +38,7 @@ class RefuelController extends FlightController
      */
     public function step1Action()
     {
+        $result = array();
         $searchForm = new RefuelStep1Form('managementRefuelStep1',
             array(
                 'libraries' => array(
@@ -105,7 +106,8 @@ class RefuelController extends FlightController
         }
 
         return array(
-            'form' => $searchForm
+            'form' => $searchForm,
+            'result' => $result,
         );
     }
 

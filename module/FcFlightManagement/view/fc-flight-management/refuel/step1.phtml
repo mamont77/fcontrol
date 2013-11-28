@@ -110,3 +110,37 @@ echo $this->formHidden($form->get('csrf')) . PHP_EOL;
     </tbody>
 </table>
 <?= $this->form()->closeTag() ?>
+
+<? if($this->result): ?>
+    <?=
+    $this->partial('fc-flight-management/_widgets/tables/refuel.phtml',
+        array(
+            'data' => $this->result,
+            'fixedHeader' => true,
+        ))
+    ?>
+<? endif; ?>
+
+<!--<div class="row" style="border: 1px solid #000;">-->
+<!--    <div class="span9" style="border: 1px solid #ccc;">-->
+<!--test-->
+<!--        <div class="row" style="border: 1px solid #00f;">-->
+<!--            <div class="span5" style="border: 1px solid #0f0;">-->
+<!--                --><?// if($this->result): ?>
+<!--                    --><?//=
+//                    $this->partial('fc-flight-management/_widgets/tables/refuel.phtml',
+//                        array(
+//                            'data' => $this->result,
+//                            'fixedHeader' => true,
+//                        ))
+//                    ?>
+<!--                --><?// endif; ?>
+<!--            </div>-->
+<!--            <div class="span4" style="border: 1px solid #f00;">-->
+<!--                //todo-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+

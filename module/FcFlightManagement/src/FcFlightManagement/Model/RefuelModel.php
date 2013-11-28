@@ -58,18 +58,18 @@ class RefuelModel extends AbstractTableGateway
     }
 
     /**
-     * @param $data
+     * @param array $data
      * @return null|\Zend\Db\ResultSet\ResultSetInterface
      */
-    public function findByParams($data)
+    public function findByParams($data = array())
     {
         $this->setTable('flightRefuelForm');
 
-        if ($data->dateOrderFrom != '') {
-            $data->dateOrderFrom = \DateTime::createFromFormat('d-m-Y', $data->dateOrderFrom)->getTimestamp();
+        if ($data['dateOrderFrom'] != '') {
+            $data['dateOrderFrom'] = \DateTime::createFromFormat('d-m-Y', $data['dateOrderFrom'])->getTimestamp();
         }
-        if ($data->dateOrderTo != '') {
-            $data->dateOrderTo = \DateTime::createFromFormat('d-m-Y', $data->dateOrderTo)->getTimestamp();
+        if ($data['dateOrderTo'] != '') {
+            $data['dateOrderTo'] = \DateTime::createFromFormat('d-m-Y', $data['dateOrderTo'])->getTimestamp();
         }
 
         $select = new Select();
@@ -192,69 +192,54 @@ class RefuelModel extends AbstractTableGateway
             ),
             'left');
 
+        if ($data['dateOrderFrom'] != '' && $data['dateOrderTo'] != '') {
+            $select->where->between('flight.dateOrder', $data['dateOrderFrom'], $data['dateOrderTo']);
+        } else {
+            if ($data['dateOrderFrom'] != '') {
+                $select->where->greaterThanOrEqualTo('flight.dateOrder', $data['dateOrderFrom']);
+            }
 
-//        if ($object->dateOrderFrom != '' && $object->dateOrderTo != '') {
-//            $select->where->between('flightBaseHeaderForm.dateOrder', $object->dateOrderFrom, $object->dateOrderTo);
-//        } else {
-//            if ($object->dateOrderFrom != '') {
-//                $select->where->greaterThanOrEqualTo('flightBaseHeaderForm.dateOrder', $object->dateOrderFrom);
-//            }
-//
-//            if ($object->dateOrderTo != '') {
-//                $select->where->lessThanOrEqualTo('flightBaseHeaderForm.dateOrder', $object->dateOrderTo);
-//            }
-//        }
-//
-//        if ($object->status != '2') {
-//            $select->where->equalTo('flightBaseHeaderForm.status', (int)$object->status);
-//        }
-//
-//        if ($object->customer != '') {
-//            $select->where
-//                ->NEST
-//                ->like('libraryKontragent.name', $object->customer . '%')
-//                ->OR
-//                ->like('libraryKontragent.short_name', $object->customer . '%')
-//                ->UNNEST;
-//        }
-//
-//        if ($object->airOperator != '') {
-//            $select->where
-//                ->NEST
-//                ->like('libraryAirOperator.name', $object->airOperator . '%')
-//                ->OR
-//                ->like('libraryAirOperator.short_name', $object->airOperator . '%')
-//                ->UNNEST;
-//        }
-//
-//        if ($object->aircraft != '') {
-//            $select->where
-//                ->NEST
-//                ->like('libraryAircraftType.name', $object->aircraft . '%')
-//                ->OR
-//                ->like('libraryAircraft.reg_number', $object->aircraft . '%')
-//                ->OR
-//                ->like('libraryAlternativeTypeAircraft1.name', $object->aircraft . '%')
-//                ->OR
-//                ->like('libraryAlternativeAircraft1.reg_number', $object->aircraft . '%')
-//                ->OR
-//                ->like('libraryAlternativeTypeAircraft2.name', $object->aircraft . '%')
-//                ->OR
-//                ->like('libraryAlternativeAircraft2.reg_number', $object->aircraft . '%')
-//                ->UNNEST;
-//        }
+            if ($data['dateOrderTo'] != '') {
+                $select->where->lessThanOrEqualTo('flight.dateOrder', $data['dateOrderTo']);
+            }
+        }
+
+        if ($data['aircraftId'] != '') {
+            $select->where
+                ->NEST
+                ->equalTo('flight.aircraftId', $data['aircraftId'])
+                ->OR
+                ->equalTo('flight.alternativeAircraftId1', $data['aircraftId'])
+                ->OR
+                ->equalTo('flight.alternativeAircraftId2', $data['aircraftId'])
+                ->UNNEST;
+        }
+
+        if ($data['agentId'] != '') {
+            $select->where->equalTo('flightRefuelForm.agentId', $data['agentId']);
+        }
+
+        if ($data['airportId'] != '') {
+            $select->where->equalTo('flightRefuelForm.airportId', $data['airportId']);
+        }
+
+        if ($data['customerId'] != '') {
+            $select->where->equalTo('flight.kontragent', $data['customerId']);
+        }
+
+        if ($data['airOperatorId'] != '') {
+            $select->where->equalTo('flight.airOperator', $data['airOperatorId']);
+        }
 
         $select->order('date ' . Select::ORDER_DESCENDING);
 //        \Zend\Debug\Debug::dump($select->getSqlString());
-
         $resultSet = $this->selectWith($select);
         $resultSet->buffer();
-//        \Zend\Debug\Debug::dump($data);
 
-        foreach ($resultSet as $row) {
-            \Zend\Debug\Debug::dump($row);
-
-        }
+//        foreach ($resultSet as $row) {
+//            \Zend\Debug\Debug::dump($row);
+//
+//        }
 
         return $resultSet;
     }

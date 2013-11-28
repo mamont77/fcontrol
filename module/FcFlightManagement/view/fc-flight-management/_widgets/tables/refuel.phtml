@@ -1,0 +1,56 @@
+<table>
+    <thead>
+    <tr>
+        <th>id_RF</th>
+        <th>ORD</th>
+        <th>Data of refuel</th>
+        <th>Customer</th>
+        <th>Air Operator</th>
+        <th>Aircraft</th>
+        <th>Airport Dep</th>
+        <th>Fuel_supplier</th>
+        <th>Quantity_est</th>
+        <th>Unit</th>
+        <th>Price_est</th>
+        <th>Currency</th>
+        <th>Total_est</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>индификатор RF нужен для работы БД</td>
+        <td>номер ORD из базы полетов</td>
+        <td>дата заправки из ORD</td>
+        <td>Customer library</td>
+        <td>Customer library</td>
+        <td>Aircraft library</td>
+        <td>аэропорт вылета взять из ORD</td>
+        <td>Поставщик топлива из Agent library</td>
+        <td>Предполагаемое колличество топлива</td>
+        <td>выпадающий из библиотеки</td>
+        <td>цена топлива</td>
+        <td>валюта из библиотеки</td>
+        <td>price_est * quantity_est</td>
+    </tr>
+    <? foreach ($this->data as $row): ?>
+        <tr><td colspan="13">
+                <?= \Zend\Debug\Debug::dump($row); ?>
+        </td></tr>
+        <tr>
+            <td></td>
+            <td><?= $row->flightRefNumberOrder ?></td>
+            <td><?= date('d-m-Y', $row->flightDateOrder) ?></td>
+            <td><?= $row->flightRefNumberOrder ?></td>
+            <td><?= $row->flightRefNumberOrder ?></td>
+            <td><?= $row->flightRefNumberOrder ?></td>
+            <td><?= $row->flightRefNumberOrder ?></td>
+            <td><?= $row->flightRefNumberOrder ?></td>
+            <td><?= $row->flightRefNumberOrder ?></td>
+            <td><?= $row->flightRefNumberOrder ?></td>
+            <td><?= $row->flightRefNumberOrder ?></td>
+            <td><?= $row->flightRefNumberOrder ?></td>
+            <td><?= $row->flightRefNumberOrder ?></td>
+        </tr>
+    <? endforeach; ?>
+    </tbody>
+</table>
