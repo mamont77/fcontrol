@@ -1,56 +1,66 @@
-<table>
-    <thead>
-    <tr>
-        <th>id_RF</th>
-        <th>ORD</th>
-        <th>Data of refuel</th>
-        <th>Customer</th>
-        <th>Air Operator</th>
-        <th>Aircraft</th>
-        <th>Airport Dep</th>
-        <th>Fuel_supplier</th>
-        <th>Quantity_est</th>
-        <th>Unit</th>
-        <th>Price_est</th>
-        <th>Currency</th>
-        <th>Total_est</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td>индификатор RF нужен для работы БД</td>
-        <td>номер ORD из базы полетов</td>
-        <td>дата заправки из ORD</td>
-        <td>Customer library</td>
-        <td>Customer library</td>
-        <td>Aircraft library</td>
-        <td>аэропорт вылета взять из ORD</td>
-        <td>Поставщик топлива из Agent library</td>
-        <td>Предполагаемое колличество топлива</td>
-        <td>выпадающий из библиотеки</td>
-        <td>цена топлива</td>
-        <td>валюта из библиотеки</td>
-        <td>price_est * quantity_est</td>
-    </tr>
-    <? foreach ($this->data as $row): ?>
-        <tr><td colspan="13">
-                <?= \Zend\Debug\Debug::dump($row); ?>
-        </td></tr>
+<form id="managementRefuelStep2">
+    <table
+        class="table table-bordered table-hover table-condensed <? if ($this->fixedHeader): ?> table-fixed-header<? endif ?>">
+        <thead>
         <tr>
-            <td></td>
-            <td><?= $row->flightRefNumberOrder ?></td>
-            <td><?= date('d-m-Y', $row->flightDateOrder) ?></td>
-            <td><?= $row->flightRefNumberOrder ?></td>
-            <td><?= $row->flightRefNumberOrder ?></td>
-            <td><?= $row->flightRefNumberOrder ?></td>
-            <td><?= $row->flightRefNumberOrder ?></td>
-            <td><?= $row->flightRefNumberOrder ?></td>
-            <td><?= $row->flightRefNumberOrder ?></td>
-            <td><?= $row->flightRefNumberOrder ?></td>
-            <td><?= $row->flightRefNumberOrder ?></td>
-            <td><?= $row->flightRefNumberOrder ?></td>
-            <td><?= $row->flightRefNumberOrder ?></td>
+            <th></th>
+            <th>Refuel ID</th>
+            <th>ORD</th>
+            <th>Data of refuel</th>
+            <th>Customer</th>
+            <th>Air Operator</th>
+            <th>Aircraft</th>
+            <th>Airport Dep</th>
+            <th>Fuel supplier</th>
+            <th>Quantity est</th>
+            <th>Unit</th>
+            <th>Price est</th>
+            <th>Total est</th>
         </tr>
-    <? endforeach; ?>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        <!--        <tr class="error">-->
+        <!--            <td></td>-->
+        <!--            <td>индификатор RF нужен для работы БД</td>-->
+        <!--            <td>номер ORD из базы полетов</td>-->
+        <!--            <td>дата заправки из ORD</td>-->
+        <!--            <td>Customer library</td>-->
+        <!--            <td>Customer library</td>-->
+        <!--            <td>Aircraft library</td>-->
+        <!--            <td>аэропорт вылета взять из ORD</td>-->
+        <!--            <td>Поставщик топлива из Agent library</td>-->
+        <!--            <td>Предполагаемое колличество топлива</td>-->
+        <!--            <td>выпадающий из библиотеки</td>-->
+        <!--            <td>цена топлива</td>-->
+        <!--            <td>price_est * quantity_est</td>-->
+        <!--        </tr>-->
+        <? foreach ($this->data as $row): ?>
+            <!--        <tr><td colspan="13">-->
+            <!--                --><? //= \Zend\Debug\Debug::dump($row); ?>
+            <!--        </td></tr>-->
+            <tr>
+                <td>
+                    <input type="checkbox" name="selected" value="<?= $row->refuelId ?>">
+                </td>
+                <td><?= $row->refuelId ?></td>
+                <td><?= $row->flightRefNumberOrder ?></td>
+                <td><?= date('d-m-Y', $row->refuelDate) ?></td>
+                <td><?= $row->flightAgentShortName ?></td>
+                <td><?= $row->flightAirOperatorShortName ?></td>
+                <td><?= $row->flightAircraftTypeName . ' (' . $row->flightAircraftName . ')' ?></td>
+                <td><?= $row->refuelAirportICAO . ' (' . $row->refuelAirportIATA . ')' ?></td>
+                <td><?= $row->refuelAgentShortName ?></td>
+                <td><?= $row->refuelQuantityOtherUnits ?></td>
+                <td><?= $row->refuelUnitName ?></td>
+                <td><?= $row->refuelPriceUsd ?></td>
+                <td><?= number_format($row->refuelQuantityOtherUnits * $row->refuelPriceUsd, 4, '.', ' ') ?></td>
+            </tr>
+        <? endforeach; ?>
+        <tr>
+            <td colspan="13">
+                <input name="submitBtn" type="submit" class="btn btn-primary pull-right" value="Apply">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>

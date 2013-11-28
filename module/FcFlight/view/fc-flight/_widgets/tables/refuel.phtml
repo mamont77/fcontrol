@@ -1,6 +1,5 @@
 <div id="refuel">
-    <table
-        class="table table-bordered table-hover table-condensed <? if ($this->fixedHeader): ?> table-fixed-header<? endif ?>">
+    <table class="table table-bordered table-hover table-condensed <? if ($this->fixedHeader): ?> table-fixed-header<? endif ?>">
         <thead class="header">
         <tr>
             <th></th>
@@ -66,13 +65,13 @@
             <a class="btn disabled" href="#">Make INVOICE</a>
         </div>
         <div class="span6">
-            <table style="width: 200px; float: right" class="table table-bordered .pull-right">
+            <table style="width: 200px; float: right" class="table table-bordered pull-right">
                 <tr>
                     <td>
                         Subtotal
                     </td>
                     <td>USD</td>
-                    <td><?= number_format($this->refuelsTotal, 4, '.', ' '); ?></td>
+                    <td><?= number_format($this->refuelsTotal, 4, '.', ' ') ?></td>
                 </tr>
             </table>
         </div>
