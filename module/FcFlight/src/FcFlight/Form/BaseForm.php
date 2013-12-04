@@ -23,6 +23,8 @@ class BaseForm extends Form
      */
     protected function setLibrary($libraryName, $data, $baseFieldKey = 'id', $fieldName = '', $type = 'object')
     {
+        if (!$data) return $this;
+
         if (!$this->{$libraryName}) {
             if ($type == 'array') {
                 foreach ($data as $row) {

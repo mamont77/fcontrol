@@ -195,7 +195,7 @@ class ApServiceForm extends BaseForm
         ));
     }
 
-    protected function getCurrencyExchangeRate()
+    public  function getCurrencyExchangeRate()
     {
         return array(
             'AED' => 'AED', //United Arab Emirates Dirham

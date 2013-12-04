@@ -121,7 +121,7 @@ class RefuelStep1Form extends BaseForm
                 'id' => 'agentId',
                 'class' => 'chosen input-medium',
                 'data-placeholder' => 'Agent',
-                'required' => false,
+                'required' => true,
             ),
             'options' => array(
                 'empty_option' => '',

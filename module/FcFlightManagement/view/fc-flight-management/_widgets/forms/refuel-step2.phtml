@@ -1,0 +1,181 @@
+<?php
+// Проверяем, одинаков ли fuel supplier
+//todo
+//$fuelSupplierOld = '';
+foreach ($this->data as $row) {
+    $fuelSupplier = $row->refuelAgentShortName;
+}
+//
+?>
+<form name="managementRefuelStep3" id="managementRefuelStep3" method="post" action="/management/refuel/step3">
+    <table class="table-bordered table-condensed">
+        <thead>
+        <tr>
+            <th>Number of invoice</th>
+            <th>Date</th>
+            <th>Currency</th>
+            <th>Exchange Rate</th>
+            <th>Fuel supplier</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><input type="text" name="invoiceNumber" class="input-small" placeholder="Number of invoice"
+                       maxlength="40" value=""></td>
+            <td><input type="text" name="invoiceDate" class="input-small date" placeholder="Date"
+                       maxlength="40" value=""></td>
+            <td>
+                <select name="invoiceCurrency" class="chosen input-small" data-placeholder="Currency"
+                        required="required">
+                    <option value=""></option>
+                    <? foreach ($this->currencies as $key => $value): ?>
+                        <option value="<?= $key ?>"><?= $value ?></option>
+                    <? endforeach; ?>
+                </select>
+            </td>
+            <td>
+                <input type="text" name="InvoiceExchangeRate" class="input-small" placeholder="Exchange Rate"
+                       maxlength="40" value="">
+            </td>
+            <td>
+                <?= $fuelSupplier ?>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <hr/>
+    <table
+        class="table table-bordered table-hover table-condensed <? if ($this->fixedHeader): ?> table-fixed-header<? endif ?>">
+        <thead>
+        <tr>
+            <th>ORD</th>
+            <th>Customer</th>
+            <th>Air Operator</th>
+            <th>Aircraft</th>
+            <th>Date</th>
+            <th>Airport Dep</th>
+            <th>Quantity, LTR</th>
+            <th>Quantity in Unit</th>
+            <th>Unit</th>
+            <th>Price</th>
+            <th>TAX</th>
+            <th>MOT</th>
+            <th>VAT</th>
+            <th>Total price</th>
+            <th>Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        <? foreach ($this->data as $row): ?>
+<!--            --><?// \Zend\Debug\Debug::dump($row) ?>
+            <tr id="preInvoiceRefuelId_<?= $row->refuelId ?>" class="info">
+                <td class="noWrap"><?= $row->flightRefNumberOrder ?></td>
+                <td><?= $row->flightAgentShortName ?></td>
+                <td><?= $row->flightAirOperatorShortName ?></td>
+                <td><?= $row->flightAircraftTypeName . ' (' . $row->flightAircraftName . ')' ?></td>
+                <td><?= date('d-m-Y', $row->refuelDate) ?></td>
+                <td><?= $row->refuelAirportICAO . ' (' . $row->refuelAirportIATA . ')' ?></td>
+                <td><?= $row->refuelQuantityLtr ?></td>
+                <td><?= $row->refuelQuantityOtherUnits ?></td>
+                <td><?= $row->refuelUnitName ?></td>
+                <td><?= $row->refuelPriceUsd ?></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr id="invoiceRefuelId_<?= $row->refuelId ?>">
+                <td>
+                    <input type="hidden" name="refuelId[<?= $row->refuelId ?>]" value="<?= $row->refuelId ?>">
+                    <input type="hidden" name="flightRefNumberOrder[<?= $row->refuelId ?>]"
+                           value="<?= $row->flightRefNumberOrder ?>">
+                    <?= $row->flightRefNumberOrder ?>
+                </td>
+                <td>
+                    <input type="hidden" name="flightAgentId[<?= $row->refuelId ?>]" value="<?= $row->flightAgentId ?>">
+                    <?= $row->flightAgentShortName ?>
+                </td>
+                <td>
+                    <input type="hidden" name="flightAirOperator[<?= $row->refuelId ?>]"
+                           value="<?= $row->flightAirOperator ?>">
+                    <?= $row->flightAirOperatorShortName ?>
+                </td>
+                <td>
+                    <input type="hidden" name="flightAircraftId[<?= $row->refuelId ?>]"
+                           value="<?= $row->flightAircraftId ?>">
+                    <?= $row->flightAircraftTypeName . ' (' . $row->flightAircraftName . ')' ?>
+                </td>
+                <td>
+                    <input type="text" name="refuelDate[<?= $row->refuelId ?>]" class="input-small date"
+                           placeholder="Date of refuel"
+                           maxlength="40" value="<?= date('d-m-Y', $row->refuelDate) ?>">
+                </td>
+                <td>
+                    <input type="hidden" name="refuelAirportId[<?= $row->refuelId ?>]"
+                           value="<?= $row->refuelAirportId ?>">
+                    <?= $row->refuelAirportICAO . ' (' . $row->refuelAirportIATA . ')' ?>
+                </td>
+                <td>
+                    <input type="text" name="refuelQuantityLtr[<?= $row->refuelId ?>]" class="input-small"
+                           placeholder="QTY LTR"
+                           maxlength="40" value="<?= $row->refuelQuantityLtr ?>">
+                </td>
+                <td>
+                    <input type="text" name="refuelQuantityOtherUnits[<?= $row->refuelId ?>]" class="input-small"
+                           placeholder="Quantity est"
+                           maxlength="40" value="<?= $row->refuelQuantityOtherUnits ?>">
+                </td>
+                <td>
+                    <select name="refuelUnitName[<?= $row->refuelId ?>]" class="chosen input-small"
+                            data-placeholder="Unit"
+                            required="required">
+                        <option value=""></option>
+                        <? foreach ($this->units as $key => $value): ?>
+                            <? if ($row->refuelUnitName == $value): ?>
+                                <option value="<?= $key ?>" selected="selected"><?= $value ?></option>
+                            <? else: ?>
+                                <option value="<?= $key ?>"><?= $value ?></option>
+                            <? endif; ?>
+                        <? endforeach; ?>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" name="refuelPriceUsd[<?= $row->refuelId ?>]" class="input-small"
+                           placeholder="Price est"
+                           maxlength="40" value="<?= $row->refuelPriceUsd ?>">
+                </td>
+                <td>
+                    <input type="text" name="refuelTax[<?= $row->refuelId ?>]" class="input-small" placeholder="TAX"
+                           maxlength="40" value="">
+                </td>
+                <td>
+                    <input type="text" name="refuelMot[<?= $row->refuelId ?>]" class="input-small" placeholder="MOT"
+                           maxlength="40" value="">
+                </td>
+                <td>
+                    <input type="text" name="refuelVat[<?= $row->refuelId ?>]" class="input-small" placeholder="VAT"
+                           maxlength="40" value="">
+                </td>
+                <td>
+                    <input type="text" name="refuelPriceTotalUsd[<?= $row->refuelId ?>]" class="input-small"
+                           placeholder="Total price"
+                           maxlength="40"
+                           value="">
+                </td>
+                <td>
+                    <input type="text" name="refuelPriceTotalUsd[<?= $row->refuelId ?>]" class="input-small"
+                           placeholder="Total price"
+                           maxlength="40"
+                           value="">
+                </td>
+            </tr>
+        <? endforeach; ?>
+        <tr>
+            <td colspan="15">
+                <input name="submitBtn" type="submit" class="btn btn-primary pull-right" value="Save">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>

@@ -153,6 +153,7 @@ return array(
 
                 array('route' => 'management', 'roles' => array('manager')),
                 array('route' => 'management/refuel/step1', 'roles' => array('manager')),
+                array('route' => 'management/refuel/step2', 'roles' => array('manager')),
 
 
                 array('route' => 'leg', 'roles' => array('manager')),

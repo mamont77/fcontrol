@@ -399,6 +399,36 @@
             if ($form.length == 0) return;
 
             $($form).find('#dateOrderFrom, #dateOrderTo').mask('99-99-9999');
+
+//            var $form2 = $('form#managementRefuelStep2'),
+//                $rows = $form2.find('tr'),
+//                $rowsCheckbox = $form2.find('tr .refuelsSelected'),
+//                fuelSupplierIsIdentical = false;
+//
+//            if ($form2.length == 0) return;
+//
+//            console.log($rowsCheckbox);
+//
+//            $rowsCheckbox.change(function () {
+//                var value = $(this).val();
+//
+//                console.log(value);
+//
+//            });
+        }
+    };
+
+    /**
+     *
+     * @type {{attach: Function}}
+     */
+    fControl.behaviors.managementRefuelStep3 = {
+        attach: function (context, settings) {
+            var $form = $('form#managementRefuelStep3');
+
+            if ($form.length == 0) return;
+
+            $($form).find('.date').mask('99-99-9999');
         }
     };
 

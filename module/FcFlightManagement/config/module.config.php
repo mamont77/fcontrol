@@ -44,6 +44,16 @@ return array(
                                     )
                                 ),
                             ),
+                            'step2' => array(
+                                'type' => 'literal',
+                                'options' => array(
+                                    'route' => '/step2',
+                                    'defaults' => array(
+                                        'controller' => 'FcFlightManagement\Controller\Refuel',
+                                        'action' => 'step2'
+                                    )
+                                ),
+                            ),
                         )
                     ),
                 )

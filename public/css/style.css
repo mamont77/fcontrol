@@ -169,3 +169,7 @@ h1 {
 #permission .repo-mail {
     font-size: 14px;
 }
+
+.noWrap {
+    white-space: nowrap;
+}

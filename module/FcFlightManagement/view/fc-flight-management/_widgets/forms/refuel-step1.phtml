@@ -1,4 +1,4 @@
-<form id="managementRefuelStep2">
+<form name="managementRefuelStep2" id="managementRefuelStep2" method="post" action="/management/refuel/step2">
     <table
         class="table table-bordered table-hover table-condensed <? if ($this->fixedHeader): ?> table-fixed-header<? endif ?>">
         <thead>
@@ -19,9 +19,9 @@
         </thead>
         <tbody>
         <? foreach ($this->data as $row): ?>
-            <tr>
+            <tr data-refuelRow="<?= $row->refuelId ?>">
                 <td>
-                    <input type="checkbox" name="selected" value="<?= $row->refuelId ?>">
+                    <input type="checkbox" class="refuelsSelected" name="refuelsSelected[]" data-refuelId="<?= $row->refuelId ?>" value="<?= $row->refuelId ?>">
                 </td>
                 <td><?= $row->flightRefNumberOrder ?></td>
                 <td><?= $row->flightAgentShortName ?></td>
@@ -29,7 +29,7 @@
                 <td><?= $row->flightAircraftTypeName . ' (' . $row->flightAircraftName . ')' ?></td>
                 <td><?= date('d-m-Y', $row->refuelDate) ?></td>
                 <td><?= $row->refuelAirportICAO . ' (' . $row->refuelAirportIATA . ')' ?></td>
-                <td><?= $row->refuelAgentShortName ?></td>
+                <td data-refuelAgentShortName="<?= $row->refuelAgentShortName ?>"><?= $row->refuelAgentShortName ?></td>
                 <td><?= $row->refuelQuantityOtherUnits ?></td>
                 <td><?= $row->refuelUnitName ?></td>
                 <td><?= $row->refuelPriceUsd ?></td>

@@ -166,7 +166,7 @@ class RefuelStep1Filter implements InputFilterAwareInterface
 
             $inputFilter->add($factory->createInput(array(
                 'name' => 'aircraftId',
-                'required' => true,
+                'required' => false,
                 'filters' => array(
                     array('name' => 'Int'),
                 ),
@@ -183,7 +183,7 @@ class RefuelStep1Filter implements InputFilterAwareInterface
 
             $inputFilter->add($factory->createInput(array(
                 'name' => 'airportId',
-                'required' => true,
+                'required' => false,
                 'filters' => array(
                     array('name' => 'Int'),
                 ),
@@ -191,7 +191,7 @@ class RefuelStep1Filter implements InputFilterAwareInterface
 
             $inputFilter->add($factory->createInput(array(
                 'name' => 'customerId',
-                'required' => true,
+                'required' => false,
                 'filters' => array(
                     array('name' => 'Int'),
                 ),
@@ -199,7 +199,7 @@ class RefuelStep1Filter implements InputFilterAwareInterface
 
             $inputFilter->add($factory->createInput(array(
                 'name' => 'airOperatorId',
-                'required' => true,
+                'required' => false,
                 'filters' => array(
                     array('name' => 'Int'),
                 ),

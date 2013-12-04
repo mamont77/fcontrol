@@ -231,15 +231,14 @@ class RefuelModel extends AbstractTableGateway
             $select->where->equalTo('flight.airOperator', $data['airOperatorId']);
         }
 
-        $select->order('date ' . Select::ORDER_DESCENDING);
-//        \Zend\Debug\Debug::dump($select->getSqlString());
+        if (!empty($data['refuelsSelected'])) {
+            $select->where->in('flightRefuelForm.id', $data['refuelsSelected']);
+        }
+
+        $select->order('flightRefuelForm.id ' . Select::ORDER_DESCENDING);
+//        \Zend\Debug\Debug::dump($select->getSqlString()); exit;
         $resultSet = $this->selectWith($select);
         $resultSet->buffer();
-
-//        foreach ($resultSet as $row) {
-//            \Zend\Debug\Debug::dump($row);
-//
-//        }
 
         return $resultSet;
     }

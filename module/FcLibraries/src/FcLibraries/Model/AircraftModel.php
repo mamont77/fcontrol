@@ -51,13 +51,12 @@ class AircraftModel extends BaseModel
     }
 
     /**
-     * @param $id
+     * @param $id string|int
      * @return array|\ArrayObject|null
      * @throws \Exception
      */
     public function get($id)
     {
-        $id = (int)$id;
         $select = new Select();
         $select->from($this->table);
         $select->columns(array('id', 'aircraft_type', 'reg_number'));
@@ -66,7 +65,11 @@ class AircraftModel extends BaseModel
             't.id = library_aircraft.aircraft_type',
             array('aircraft_type_name' => 'name'), 'left');
 
-        $select->where(array($this->table . '.id' => $id));
+        if (is_int($id)) {
+            $select->where(array($this->table . '.id' => $id));
+        } else {
+            $select->where(array($this->table . '.reg_number' => $id));
+        }
 
         $resultSet = $this->selectWith($select);
         $row = $resultSet->current();

@@ -13,6 +13,7 @@ use FcFlight\Model\LegModel;
 use FcFlight\Model\PermissionModel;
 use FcFlightManagement\Model\RefuelModel;
 use FcFlight\Model\ApServiceModel;
+use FcFlight\Form\ApServiceForm;
 
 /**
  * Class RefuelController
@@ -76,37 +77,49 @@ class RefuelController extends FlightController
             $searchForm->setData($request->getPost());
             if ($searchForm->isValid() && !$postIsEmpty) {
                 $data = $searchForm->getData();
-//                $filter->exchangeArray($data);
                 $result = $this->getRefuelModel()->findByParams($data);
 
-//                    if (count($result) == 0) {
-//                        $data = 'Result not found!';
-//                    } else {
-//                        $data = array();
-//                        foreach ($result as $key => $row) {
-//                            foreach ($this->_mapFields as $field) {
-//                                if (isset($row->$field)) {
-//                                    $data[$key][$field] = $row->$field;
-//                                }
-//                            }
-//                            try {
-//                                $hasRefuel = $this->getRefuelModel()->getByHeaderId($data[$key]['id']);
-//                                if (!empty($hasRefuel)) {
-//                                    $data[$key]['refuelStatus'] = 'YES';
-//                                } else {
-//                                    $data[$key]['refuelStatus'] = 'NO';
-//                                }
-//                            } catch (Exception $e) {
-//                                // do nothing
-//                            }
-//
-//                            $data[$key]['permitStatus'] = 'NO';
-//                        }
             }
         }
 
         return array(
             'form' => $searchForm,
+            'result' => $result,
+        );
+    }
+
+    /**
+     * @return ViewModel
+     */
+    public function step2Action()
+    {
+        $result = array();
+
+        $units = array();
+        $unitsObj = $this->getUnits();
+        foreach ($unitsObj as $unit) {
+            $units[$unit->id] = $unit->name;
+        }
+
+        $currencies = new ApServiceForm(null, array());
+        $currencies = $currencies->getCurrencyExchangeRate();
+
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+
+            $data = $request->getPost();
+
+            if (empty($data['refuelsSelected'])) {
+                $this->flashMessenger()->addErrorMessage('Result not found. Enter one or more fields.');
+                return $this->redirect()->toRoute('management/refuel/step1');
+            }
+
+            $result = $this->getRefuelModel()->findByParams($data);
+        }
+
+        return array(
+            'currencies' => $currencies,
+            'units' => $units,
             'result' => $result,
         );
     }
