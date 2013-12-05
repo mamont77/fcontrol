@@ -141,9 +141,8 @@ foreach ($this->data as $row) {
                            maxlength="40" value="<?= $row->refuelQuantityOtherUnits ?>">
                 </td>
                 <td>
-                    <select class="refuelUnitName"
-                            name="data[<?= $row->refuelId ?>][refuelUnitName]"
-                            class="chosen input-small"
+                    <select name="data[<?= $row->refuelId ?>][refuelUnitName]"
+                            class="refuelUnitName chosen input-small"
                             data-placeholder="Unit"
                             required="required">
                         <option value=""></option>

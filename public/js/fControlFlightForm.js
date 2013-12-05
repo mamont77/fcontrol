@@ -433,22 +433,35 @@
             $('.refuelQuantityLtr, .refuelQuantityOtherUnits, .refuelUnitName, .refuelPriceUsd, ' +
                 '.refuelTax, .refuelMot, .refuelVat, .refuelDeliver, .refuelPriceTotalUsd, ' +
                 '.refuelPriceTotal').bind("keyup change", function () {
-                var value = $(this).val(),
-                    $row = $(this).parent().parent(),
-                    $refuelQuantityLtr = $row.find('.refuelQuantityLtr'),
-                    $refuelQuantityOtherUnits = $row.find('.refuelQuantityOtherUnits'),
-                    $refuelUnitName = $row.find('.refuelUnitName'),
-                    $refuelPriceUsd = $row.find('.refuelPriceUsd'),
-                    $refuelTax = $row.find('.refuelTax'),
-                    $refuelMot = $row.find('.refuelMot'),
-                    $refuelVat = $row.find('.refuelVat'),
-                    $refuelDeliver = $row.find('.refuelDeliver'),
-                    $refuelPriceTotalUsd = $row.find('.refuelPriceTotalUsd'),
-                    $refuelPriceTotal = $row.find('.refuelPriceTotal');
+                    var $this = $(this),
+                        $row = $(this).parent().parent(),
+                        $refuelQuantityLtr = $row.find('.refuelQuantityLtr'),
+                        $refuelQuantityOtherUnits = $row.find('.refuelQuantityOtherUnits'),
+                        $refuelUnit = $row.find('.refuelUnitName'),
+                        refuelUnitName = $row.find('.refuelUnitName').find(':selected').text(),
+                        $refuelPriceUsd = $row.find('.refuelPriceUsd'),
+                        $refuelTax = $row.find('.refuelTax'),
+                        $refuelMot = $row.find('.refuelMot'),
+                        $refuelVat = $row.find('.refuelVat'),
+                        $refuelDeliver = $row.find('.refuelDeliver'),
+                        $refuelPriceTotalUsd = $row.find('.refuelPriceTotalUsd'),
+                        $refuelPriceTotal = $row.find('.refuelPriceTotal');
 
-                    console.log($refuelQuantityLtr.val());
-                    console.log($refuelQuantityOtherUnits.val());
-            });
+                    // пересчитываем литры в юниты и юниты в литры
+                    if(($this.hasClass('refuelQuantityLtr') || $this.hasClass('refuelUnitName')) && $refuelUnit.val() != '') {
+                        $refuelQuantityOtherUnits.val(convertRefuelQuantityLtr2OtherUnits($refuelQuantityLtr.val(), refuelUnitName));
+
+                    }
+                    if(($this.hasClass('refuelQuantityOtherUnits') || $this.hasClass('refuelUnitName')) && $refuelUnit.val() != '') {
+                        $refuelQuantityLtr.val(convertRefuelQuantityOtherUnits2Ltr($refuelQuantityOtherUnits.val(), refuelUnitName));
+
+                    }
+
+
+
+                    console.log($this.hasClass('refuelQuantityLtr'));
+                    console.log(refuelUnitName);
+                });
         }
     };
 
