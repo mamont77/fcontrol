@@ -438,29 +438,36 @@
                         $refuelQuantityLtr = $row.find('.refuelQuantityLtr'),
                         $refuelQuantityOtherUnits = $row.find('.refuelQuantityOtherUnits'),
                         $refuelUnit = $row.find('.refuelUnitName'),
-                        refuelUnitName = $row.find('.refuelUnitName').find(':selected').text(),
                         $refuelPriceUsd = $row.find('.refuelPriceUsd'),
                         $refuelTax = $row.find('.refuelTax'),
                         $refuelMot = $row.find('.refuelMot'),
                         $refuelVat = $row.find('.refuelVat'),
                         $refuelDeliver = $row.find('.refuelDeliver'),
                         $refuelPriceTotalUsd = $row.find('.refuelPriceTotalUsd'),
-                        $refuelPriceTotal = $row.find('.refuelPriceTotal');
+                        $refuelPriceTotal = $row.find('.refuelPriceTotal'),
+                        refuelQuantityLtrVal = $refuelQuantityLtr.val(),
+                        refuelQuantityOtherUnitsVal = $refuelQuantityOtherUnits.val(),
+                        refuelUnitVal = $refuelUnit.val(),
+                        refuelUnitNameText = $row.find('.refuelUnitName').find(':selected').text(),
+                        refuelPriceUsdVal = $refuelPriceUsd.val(),
+                        refuelTaxVal = $refuelTax.val(),
+                        refuelMotVal = $refuelMot.val(),
+                        refuelVatVal = $refuelVat.val(),
+                        refuelDeliverVal = $refuelDeliver.val(),
+                        refuelPriceTotalUsdVal = $refuelPriceTotalUsd.val(),
+                        refuelPriceTotalVal = $refuelPriceTotal.val();
 
                     // пересчитываем литры в юниты и юниты в литры
-                    if(($this.hasClass('refuelQuantityLtr') || $this.hasClass('refuelUnitName')) && $refuelUnit.val() != '') {
-                        $refuelQuantityOtherUnits.val(convertRefuelQuantityLtr2OtherUnits($refuelQuantityLtr.val(), refuelUnitName));
-
+                    if (($this.hasClass('refuelQuantityLtr') || $this.hasClass('refuelUnitName')) && refuelUnitNameText != '') {
+                        $refuelQuantityOtherUnits.val(convertRefuelQuantityLtr2OtherUnits(refuelQuantityLtrVal, refuelUnitNameText));
                     }
-                    if(($this.hasClass('refuelQuantityOtherUnits') || $this.hasClass('refuelUnitName')) && $refuelUnit.val() != '') {
-                        $refuelQuantityLtr.val(convertRefuelQuantityOtherUnits2Ltr($refuelQuantityOtherUnits.val(), refuelUnitName));
-
+                    if (($this.hasClass('refuelQuantityOtherUnits') || $this.hasClass('refuelUnitName')) && refuelUnitNameText != '') {
+                        $refuelQuantityLtr.val(convertRefuelQuantityOtherUnits2Ltr(refuelQuantityOtherUnitsVal, refuelUnitNameText));
                     }
-
 
 
                     console.log($this.hasClass('refuelQuantityLtr'));
-                    console.log(refuelUnitName);
+                    console.log(refuelUnitNameText);
                 });
         }
     };
