@@ -429,6 +429,8 @@
             if ($form.length == 0) return;
 
             $($form).find('.date').mask('99-99-9999');
+
+//            var
         }
     };
 

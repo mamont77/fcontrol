@@ -125,6 +125,30 @@ class RefuelController extends FlightController
     }
 
     /**
+     * @return ViewModel
+     */
+    public function step3Action()
+    {
+
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+
+            $data = $request->getPost();
+
+            \Zend\Debug\Debug::dump($data);
+            exit;
+
+
+        }
+
+        return array(
+//            'currencies' => $currencies,
+//            'units' => $units,
+//            'result' => $result,
+        );
+    }
+
+    /**
      * Get Refuel model
      *
      * @return RefuelModel
