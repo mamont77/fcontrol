@@ -70,6 +70,7 @@ foreach ($this->data as $row) {
             <th>Deliver</th>
             <th>Total price</th>
             <th>Total</th>
+            <th>Exchange Total</th>
         </tr>
         </thead>
         <tbody>
@@ -91,7 +92,8 @@ foreach ($this->data as $row) {
                 <td></td>
                 <td></td>
                 <td></td>
-                <td><?= $row->refuelTotalPriceUsd ?></td>
+                <td><?= number_format($row->refuelTotalPriceUsd / 100, 2, '.', ' ') ?></td>
+                <td></td>
             </tr>
             <tr id="invoiceRefuelId_<?= $row->refuelId ?>">
                 <td>
@@ -128,15 +130,14 @@ foreach ($this->data as $row) {
                     <?= $row->refuelAirportICAO . ' (' . $row->refuelAirportIATA . ')' ?>
                 </td>
                 <td>
-                    <input type="text" class="refuelQuantityLtr"
+                    <input type="text" class="refuelQuantityLtr input-mini"
                            name="data[<?= $row->refuelId ?>][refuelQuantityLtr]"
-                           class="input-small"
                            placeholder="QTY LTR"
                            maxlength="40" value="<?= $row->refuelQuantityLtr ?>">
                 </td>
                 <td>
-                    <input type="text" class="refuelQuantityOtherUnits"
-                           name="data[<?= $row->refuelId ?>][refuelQuantityOtherUnits]" class="input-small"
+                    <input type="text" class="refuelQuantityOtherUnits input-mini"
+                           name="data[<?= $row->refuelId ?>][refuelQuantityOtherUnits]"
                            placeholder="Quantity est"
                            maxlength="40" value="<?= $row->refuelQuantityOtherUnits ?>">
                 </td>
@@ -156,53 +157,74 @@ foreach ($this->data as $row) {
                     </select>
                 </td>
                 <td>
-                    <input type="text" class="refuelPriceUsd"
+                    <input type="text" class="refuelPriceUsd input-mini"
                            name="data[<?= $row->refuelId ?>][refuelPriceUsd]"
-                           class="input-small"
                            placeholder="Price est"
                            maxlength="40" value="<?= $row->refuelPriceUsd ?>">
                 </td>
                 <td>
-                    <input type="text" class="refuelTax" name="data[<?= $row->refuelId ?>][refuelTax]"
-                           class="input-small"
+                    <input type="text" class="refuelTax input-mini" name="data[<?= $row->refuelId ?>][refuelTax]"
                            placeholder="TAX"
                            maxlength="40" value="">
                 </td>
                 <td>
-                    <input type="text" class="refuelMot" name="data[<?= $row->refuelId ?>][refuelMot]"
-                           class="input-small"
+                    <input type="text" class="refuelMot input-mini" name="data[<?= $row->refuelId ?>][refuelMot]"
                            placeholder="MOT"
                            maxlength="40" value="">
                 </td>
                 <td>
-                    <input type="text" class="refuelVat" name="data[<?= $row->refuelId ?>][refuelVat]"
-                           class="input-small" placeholder="VAT"
+                    <input type="text" class="refuelVat input-mini" name="data[<?= $row->refuelId ?>][refuelVat]"
+                           placeholder="VAT"
                            maxlength="40" value="">
                 </td>
                 <td>
-                    <input type="text" class="refuelDeliver" name="data[<?= $row->refuelId ?>][refuelDeliver]"
-                           class="input-small" placeholder="Deliver"
+                    <input type="text" class="refuelDeliver input-mini" name="data[<?= $row->refuelId ?>][refuelDeliver]"
+                           placeholder="Deliver"
                            maxlength="40" value="">
                 </td>
                 <td>
-                    <input type="text" class="refuelPriceTotalUsd"
+                    <input type="text" class="refuelPriceTotalUsd input-mini"
                            name="data[<?= $row->refuelId ?>][refuelPriceTotalUsd]"
-                           class="input-small"
                            placeholder="Total price"
                            maxlength="40"
                            value="">
                 </td>
                 <td>
-                    <input type="text" class="refuelPriceTotal" name="data[<?= $row->refuelId ?>][refuelPriceTotal]"
-                           class="input-small"
+                    <input type="text" class="refuelPriceTotal input-mini" name="data[<?= $row->refuelId ?>][refuelPriceTotal]"
                            placeholder="Total"
+                           maxlength="40"
+                           value="">
+                </td>
+                <td>
+                    <input type="text" class="refuelExchangePriceTotal input-mini" name="data[<?= $row->refuelId ?>][refuelExchangePriceTotal]"
+                           placeholder="Exchange Total"
                            maxlength="40"
                            value="">
                 </td>
             </tr>
         <? endforeach; ?>
         <tr>
-            <td colspan="16">
+            <td colspan="17">
+                <div class="row-fluid">
+                    <div class="span6">
+                        <a class="btn disabled" href="#">Make INVOICE</a>
+                    </div>
+                    <div class="span6">
+                        <table style="width: 200px; float: right" class="table table-bordered pull-right">
+                            <tbody><tr>
+                                <td>
+                                    Subtotal
+                                </td>
+                                <td><span class="refuelPriceSubTotal"></span></td>
+                                <td><span class="refuelCurrency"></span> <span class="refuelExchangePriceSubTotal"></span></td>
+                            </tr>
+                            </tbody></table>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="17">
                 <input name="submitBtn" type="submit" class="btn btn-primary pull-right" value="Save">
             </td>
         </tr>

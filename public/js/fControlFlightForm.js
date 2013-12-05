@@ -431,9 +431,14 @@
             $($form).find('.date').mask('99-99-9999');
 
             $('.refuelQuantityLtr, .refuelQuantityOtherUnits, .refuelUnitName, .refuelPriceUsd, ' +
-                '.refuelTax, .refuelMot, .refuelVat, .refuelDeliver, .refuelPriceTotalUsd, ' +
-                '.refuelPriceTotal').bind("keyup change", function () {
+                '.refuelTax, .refuelMot, .refuelVat, .refuelDeliver').bind("keyup change", function () {
                     var $this = $(this),
+                        $invoiceCurrency = $form.find('#invoiceCurrency'),
+                        $invoiceExchangeRate = $form.find('#InvoiceExchangeRate'),
+                        invoiceCurrencyVal = $invoiceCurrency.val(),
+                        invoiceCurrencyText = $invoiceCurrency.find(':selected').text() || '',
+                        invoiceExchangeRateVal = parseFloat($invoiceExchangeRate.val()) || 0,
+
                         $row = $(this).parent().parent(),
                         $refuelQuantityLtr = $row.find('.refuelQuantityLtr'),
                         $refuelQuantityOtherUnits = $row.find('.refuelQuantityOtherUnits'),
@@ -445,29 +450,60 @@
                         $refuelDeliver = $row.find('.refuelDeliver'),
                         $refuelPriceTotalUsd = $row.find('.refuelPriceTotalUsd'),
                         $refuelPriceTotal = $row.find('.refuelPriceTotal'),
-                        refuelQuantityLtrVal = $refuelQuantityLtr.val(),
-                        refuelQuantityOtherUnitsVal = $refuelQuantityOtherUnits.val(),
-                        refuelUnitVal = $refuelUnit.val(),
-                        refuelUnitNameText = $row.find('.refuelUnitName').find(':selected').text(),
-                        refuelPriceUsdVal = $refuelPriceUsd.val(),
-                        refuelTaxVal = $refuelTax.val(),
-                        refuelMotVal = $refuelMot.val(),
-                        refuelVatVal = $refuelVat.val(),
-                        refuelDeliverVal = $refuelDeliver.val(),
-                        refuelPriceTotalUsdVal = $refuelPriceTotalUsd.val(),
-                        refuelPriceTotalVal = $refuelPriceTotal.val();
+                        $refuelExchangePriceTotal = $row.find('.refuelExchangePriceTotal'),
+                        refuelQuantityLtrVal = parseFloat($refuelQuantityLtr.val()) || 0,
+                        refuelQuantityOtherUnitsVal = parseFloat($refuelQuantityOtherUnits.val()) || 0,
+                        refuelUnitVal = parseFloat($refuelUnit.val()) || 0,
+                        refuelUnitNameText = $refuelUnit.find(':selected').text() || '',
+                        refuelPriceUsdVal = parseFloat($refuelPriceUsd.val()) || 0,
+                        refuelTaxVal = parseFloat($refuelTax.val()) || 0,
+                        refuelMotVal = parseFloat($refuelMot.val()) || 0,
+                        refuelVatVal = parseFloat($refuelVat.val()) || 0,
+                        refuelDeliverVal = parseFloat($refuelDeliver.val()) || 0,
+                        refuelPriceTotalUsdVal = parseFloat($refuelPriceTotalUsd.val()) || 0,
+                        refuelPriceTotalVal = parseFloat($refuelPriceTotal.val()) || 0,
+                        refuelExchangePriceTotal = parseFloat($refuelExchangePriceTotal.val()) || 0,
+
+                        $refuelPriceSubTotal = $form.find('.refuelPriceSubTotal'),
+                        $refuelCurrencyForSubTotal = $form.find('.refuelCurrency'),
+                        $refuelExchangePriceSubTotal = $form.find('.refuelExchangePriceSubTotal'),
+                        refuelPriceSubTotalVal = 0,
+                        refuelCurrencyName = '',
+                        refuelExchangePriceSubTotalVal = 0;
 
                     // пересчитываем литры в юниты и юниты в литры
                     if (($this.hasClass('refuelQuantityLtr') || $this.hasClass('refuelUnitName')) && refuelUnitNameText != '') {
                         $refuelQuantityOtherUnits.val(convertRefuelQuantityLtr2OtherUnits(refuelQuantityLtrVal, refuelUnitNameText));
                     }
-                    if (($this.hasClass('refuelQuantityOtherUnits') || $this.hasClass('refuelUnitName')) && refuelUnitNameText != '') {
+                    if ($this.hasClass('refuelQuantityOtherUnits') && refuelUnitNameText != '') {
                         $refuelQuantityLtr.val(convertRefuelQuantityOtherUnits2Ltr(refuelQuantityOtherUnitsVal, refuelUnitNameText));
                     }
 
+                    // считаем тоталы
+                    refuelPriceTotalUsdVal = ((refuelPriceUsdVal + refuelTaxVal + refuelMotVal) * ((refuelVatVal + 100 ) / 100)).toFixed(4);
+                    $refuelPriceTotalUsd.val(refuelPriceTotalUsdVal);
 
-                    console.log($this.hasClass('refuelQuantityLtr'));
-                    console.log(refuelUnitNameText);
+                    refuelPriceTotalVal = (((refuelQuantityOtherUnitsVal * refuelPriceTotalUsdVal) / 100) + refuelDeliverVal).toFixed(2);
+                    $refuelPriceTotal.val(refuelPriceTotalVal);
+
+                    refuelExchangePriceTotal = (refuelPriceTotalVal * invoiceExchangeRateVal).toFixed(2);
+                    $refuelExchangePriceTotal.val(refuelExchangePriceTotal);
+
+                    // отрисоваем сумму под таблицей
+                    $form.find('.refuelPriceTotal').each(function() {
+                        if (!isNaN($(this).val())) {
+                            refuelPriceSubTotalVal += parseFloat($(this).val()).toFixed(2);
+                        }
+                    });
+                    $refuelPriceSubTotal.text(refuelPriceSubTotalVal);
+
+                    $form.find('.refuelExchangePriceTotal').each(function() {
+                        if (!isNaN($(this).val())) {
+                            refuelExchangePriceSubTotalVal += parseFloat($(this).val()).toFixed(2);
+                        }
+                    });
+                    $refuelCurrencyForSubTotal.text(invoiceCurrencyText);
+                    $refuelExchangePriceSubTotal.text(refuelExchangePriceSubTotalVal);
                 });
         }
     };
