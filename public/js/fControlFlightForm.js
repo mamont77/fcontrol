@@ -430,7 +430,13 @@
 
             $($form).find('.date').mask('99-99-9999');
 
-//            var
+            $('.refuelQuantityLtr, .refuelQuantityOtherUnits, .refuelUnitName, .refuelPriceUsd, ' +
+                '.refuelTax, .refuelMot, .refuelVat, .refuelDeliver, .refuelPriceTotalUsd, ' +
+                '.refuelPriceTotal').bind("keyup change", function () {
+                var value = $(this).val();
+
+                console.log(value);
+            });
         }
     };
 
