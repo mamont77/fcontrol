@@ -433,9 +433,21 @@
             $('.refuelQuantityLtr, .refuelQuantityOtherUnits, .refuelUnitName, .refuelPriceUsd, ' +
                 '.refuelTax, .refuelMot, .refuelVat, .refuelDeliver, .refuelPriceTotalUsd, ' +
                 '.refuelPriceTotal').bind("keyup change", function () {
-                var value = $(this).val();
+                var value = $(this).val(),
+                    $row = $(this).parent().parent(),
+                    $refuelQuantityLtr = $row.find('.refuelQuantityLtr'),
+                    $refuelQuantityOtherUnits = $row.find('.refuelQuantityOtherUnits'),
+                    $refuelUnitName = $row.find('.refuelUnitName'),
+                    $refuelPriceUsd = $row.find('.refuelPriceUsd'),
+                    $refuelTax = $row.find('.refuelTax'),
+                    $refuelMot = $row.find('.refuelMot'),
+                    $refuelVat = $row.find('.refuelVat'),
+                    $refuelDeliver = $row.find('.refuelDeliver'),
+                    $refuelPriceTotalUsd = $row.find('.refuelPriceTotalUsd'),
+                    $refuelPriceTotal = $row.find('.refuelPriceTotal');
 
-                console.log(value);
+                    console.log($refuelQuantityLtr.val());
+                    console.log($refuelQuantityOtherUnits.val());
             });
         }
     };
