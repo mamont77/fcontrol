@@ -55,12 +55,13 @@ foreach ($this->data as $row) {
             <th>Date</th>
             <th>Airport Dep</th>
             <th>Quantity, LTR</th>
-            <th>Quantity in Unit</th>
+            <th>Quantity, Unit</th>
             <th>Unit</th>
             <th>Price</th>
             <th>TAX</th>
             <th>MOT</th>
-            <th>VAT</th>
+            <th>VAT, %</th>
+            <th>Deliver</th>
             <th>Total price</th>
             <th>Total</th>
         </tr>
@@ -79,6 +80,7 @@ foreach ($this->data as $row) {
                 <td><?= $row->refuelQuantityOtherUnits ?></td>
                 <td><?= $row->refuelUnitName ?></td>
                 <td><?= $row->refuelPriceUsd ?></td>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -155,6 +157,10 @@ foreach ($this->data as $row) {
                 </td>
                 <td>
                     <input type="text" name="refuelVat[<?= $row->refuelId ?>]" class="input-small" placeholder="VAT"
+                           maxlength="40" value="">
+                </td>
+                <td>
+                    <input type="text" name="refuelDeliver[<?= $row->refuelId ?>]" class="input-small" placeholder="Deliver"
                            maxlength="40" value="">
                 </td>
                 <td>
