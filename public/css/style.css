@@ -75,6 +75,10 @@ h1 {
     padding: 2px 3px;
 }
 
+.table th.text-right, .table td.text-right {
+    text-align: right;
+}
+
 /* typeahead styles */
 /* ----------- */
 

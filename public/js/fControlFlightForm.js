@@ -64,7 +64,7 @@
             result = quantity * priceUsd;
         }
 
-        return result.toFixed(4);
+        return result.toFixed(2);
     }
 
     /**
@@ -475,15 +475,15 @@
                     if (($this.hasClass('refuelQuantityLtr') || $this.hasClass('refuelUnitName')) && refuelUnitNameText != '') {
                         $refuelQuantityOtherUnits.val(convertRefuelQuantityLtr2OtherUnits(refuelQuantityLtrVal, refuelUnitNameText));
                     }
-                    if ($this.hasClass('refuelQuantityOtherUnits') && refuelUnitNameText != '') {
-                        $refuelQuantityLtr.val(convertRefuelQuantityOtherUnits2Ltr(refuelQuantityOtherUnitsVal, refuelUnitNameText));
-                    }
+//                    if ($this.hasClass('refuelQuantityOtherUnits') && refuelUnitNameText != '') {
+//                        $refuelQuantityLtr.val(convertRefuelQuantityOtherUnits2Ltr(refuelQuantityOtherUnitsVal, refuelUnitNameText));
+//                    }
 
                     // считаем тоталы
                     refuelPriceTotalUsdVal = ((refuelPriceUsdVal + refuelTaxVal + refuelMotVal) * ((refuelVatVal + 100 ) / 100)).toFixed(4);
                     $refuelPriceTotalUsd.val(refuelPriceTotalUsdVal);
 
-                    refuelPriceTotalVal = (((refuelQuantityOtherUnitsVal * refuelPriceTotalUsdVal) / 100) + refuelDeliverVal).toFixed(2);
+                    refuelPriceTotalVal = (((refuelQuantityOtherUnitsVal * refuelPriceTotalUsdVal)) + refuelDeliverVal).toFixed(2);
                     $refuelPriceTotal.val(refuelPriceTotalVal);
 
                     refuelExchangePriceTotal = (refuelPriceTotalVal * invoiceExchangeRateVal).toFixed(2);

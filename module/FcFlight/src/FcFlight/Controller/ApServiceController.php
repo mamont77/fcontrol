@@ -247,7 +247,7 @@ class ApServiceController extends FlightController
             'Price' => $data->price,
             'Currency' => $data->currency,
             'Exchange Rate' => $data->exchangeRate,
-            'Price USD' => $data->priceUSD,
+            'Price, USD' => $data->priceUSD,
             'Status' => ($data->status == 1) ? 'In process' : 'Done'
         );
     }

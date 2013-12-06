@@ -14,7 +14,7 @@
                 Agent
             </th>
             <th>
-                Price USD
+                Price, USD
             </th>
             <th class="actions">Actions</th>
         </tr>
@@ -31,7 +31,7 @@
                 </td>
                 <td><?= $this->escapeHtml($row['typeOfApServiceName']) ?></td>
                 <td><?= $this->escapeHtml($row['kontragentShortName']) ?></td>
-                <td><?= $this->escapeHtml($row['priceUSD']) ?></td>
+                <td class="text-right"><?= $this->escapeHtml($row['priceUSD']) ?></td>
                 <td class="actions">
                     <a title="Edit" href="<?=
                     $this->url('apService',
@@ -59,7 +59,7 @@
                         Subtotal
                     </td>
                     <td>USD</td>
-                    <td><?= number_format($this->apServicesTotal, 4, '.', ' '); ?></td>
+                    <td><?= number_format($this->apServicesTotal, 4, '.', ''); ?></td>
                 </tr>
                 </tbody>
             </table>

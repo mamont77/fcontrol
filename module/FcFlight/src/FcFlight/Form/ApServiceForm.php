@@ -159,7 +159,7 @@ class ApServiceForm extends BaseForm
                 'id' => 'priceUSD',
                 'class' => 'input-small',
                 'required' => false,
-                'placeholder' => 'Price USD',
+                'placeholder' => 'Price, USD',
                 'maxlength' => '32',
                 'readonly' => true,
             ),

@@ -152,7 +152,7 @@ class RefuelForm extends BaseForm
                 'class' => 'input-small',
                 'required' => true,
                 'maxlength' => '10',
-                'placeholder' => 'Price USD',
+                'placeholder' => 'Price, USD',
             ),
         ));
 
@@ -164,7 +164,7 @@ class RefuelForm extends BaseForm
                 'class' => 'input-small',
                 'required' => true,
                 'maxlength' => '10',
-                'placeholder' => 'Total USD',
+                'placeholder' => 'Total, USD',
                 'readonly' => true,
             ),
         ));

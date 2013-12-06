@@ -265,10 +265,10 @@ class RefuelController extends FlightController
             'LEG' => $data->airportDepartureICAO . ' (' . $data->airportDepartureIATA . ')'
                 . ' ⇒ '
                 . $data->airportArrivalICAO . ' (' . $data->airportArrivalIATA . ')',
-            'Quantity LTR' => $data->quantityLtr,
+            'Quantity, LTR' => $data->quantityLtr,
             'Unit' => $data->unitName,
-            'Price USD' => $data->priceUsd,
-            'Total USD' => $data->totalPriceUsd,
+            'Price, USD' => $data->priceUsd,
+            'Total, USD' => $data->totalPriceUsd,
             'Date' => $data->date,
             'Status' => ($data->status == 1) ? 'In process' : 'Done'
         );

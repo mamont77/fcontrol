@@ -32,8 +32,8 @@
                 <td data-refuelAgentShortName="<?= $row->refuelAgentShortName ?>"><?= $row->refuelAgentShortName ?></td>
                 <td><?= $row->refuelQuantityOtherUnits ?></td>
                 <td><?= $row->refuelUnitName ?></td>
-                <td><?= $row->refuelPriceUsd ?></td>
-                <td><?= number_format($row->refuelQuantityOtherUnits * $row->refuelPriceUsd, 4, '.', ' ') ?></td>
+                <td class="text-right"><?= $row->refuelPriceUsd ?></td>
+                <td class="text-right"><?= number_format($row->refuelQuantityOtherUnits * $row->refuelPriceUsd, 4, '.', '') ?></td>
             </tr>
         <? endforeach; ?>
         <tr>

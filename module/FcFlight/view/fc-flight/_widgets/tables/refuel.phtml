@@ -13,7 +13,7 @@
                 Agent
             </th>
             <th>
-                Quantity LTR
+                Quantity, LTR
             </th>
             <th>
                 Quantity in Selected Units
@@ -22,10 +22,10 @@
                 Unit
             </th>
             <th>
-                Price USD
+                Price, USD
             </th>
             <th>
-                Total USD
+                Total, USD
             </th>
             <th class="actions">Actions</th>
         </tr>
@@ -45,8 +45,8 @@
                 <td><?= $this->escapeHtml($row['quantityLtr']) ?></td>
                 <td><?= $this->escapeHtml($row['quantityOtherUnits']) ?></td>
                 <td><?= $this->escapeHtml($row['unitName']) ?></td>
-                <td><?= $this->escapeHtml($row['priceUsd']) ?></td>
-                <td><?= $this->escapeHtml($row['totalPriceUsd']) ?></td>
+                <td class="text-right"><?= $this->escapeHtml($row['priceUsd']) ?></td>
+                <td class="text-right"><?= $this->escapeHtml($row['totalPriceUsd']) ?></td>
                 <td class="actions">
                     <a title="Edit" href="<?= $this->url('refuel',
                         array('action' => 'edit', 'id' => $row['id'])) ?>"
@@ -71,7 +71,7 @@
                         Subtotal
                     </td>
                     <td>USD</td>
-                    <td><?= number_format($this->refuelsTotal, 4, '.', ' ') ?></td>
+                    <td><?= number_format($this->refuelsTotal, 4, '.', '') ?></td>
                 </tr>
             </table>
         </div>

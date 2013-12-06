@@ -15,6 +15,7 @@ foreach ($this->data as $row) {
             <th>Date</th>
             <th>Currency</th>
             <th>Exchange Rate</th>
+            <th>Rate Apply</th>
             <th>Fuel supplier</th>
         </tr>
         </thead>
@@ -48,6 +49,9 @@ foreach ($this->data as $row) {
                        placeholder="Exchange Rate" maxlength="40" value="1"/>
             </td>
             <td>
+                <input name="rateApply" type="submit" class="btn btn-primary" value="Apply">
+            </td>
+            <td>
                 <?= $fuelSupplier ?>
             </td>
         </tr>
@@ -67,13 +71,13 @@ foreach ($this->data as $row) {
             <th>Quantity, LTR</th>
             <th>Quantity, Unit</th>
             <th>Unit</th>
-            <th>Price</th>
+            <th>Price, <span class="refuelCurrency">USD</span></th>
             <th>TAX</th>
             <th>MOT</th>
             <th>VAT, %</th>
             <th>Deliver</th>
-            <th>Total price</th>
-            <th>Total</th>
+            <th>Total price, <span class="refuelCurrency">USD</span></th>
+            <th>Total, <span class="refuelCurrency">USD</span></th>
             <th>Exchange Total, USD</th>
         </tr>
         </thead>
@@ -90,13 +94,13 @@ foreach ($this->data as $row) {
                 <td><?= $row->refuelQuantityLtr ?></td>
                 <td><?= $row->refuelQuantityOtherUnits ?></td>
                 <td><?= $row->refuelUnitName ?></td>
-                <td><?= number_format($row->refuelPriceUsd, 4, '.', ' ') ?></td>
+                <td class="text-right"><?= number_format($row->refuelPriceUsd, 4, '.', '') ?></td>
                 <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
-                <td><?= number_format($row->refuelTotalPriceUsd / 100, 2, '.', ' ') ?></td>
+                <td class="text-right"><?= number_format($row->refuelTotalPriceUsd / 100, 2, '.', '') ?></td>
                 <td></td>
             </tr>
             <tr id="invoiceRefuelId_<?= $row->refuelId ?>">
@@ -161,10 +165,10 @@ foreach ($this->data as $row) {
                     </select>
                 </td>
                 <td>
-                    <input type="text" class="refuelPriceUsd input-mini"
+                    <input type="text" class="refuelPriceUsd input-mini text-right"
                            name="data[<?= $row->refuelId ?>][refuelPriceUsd]"
                            placeholder="Price est"
-                           maxlength="40" value="<?= number_format($row->refuelPriceUsd, 4, '.', ' ') ?>">
+                           maxlength="40" value="<?= number_format($row->refuelPriceUsd, 4, '.', '') ?>">
                 </td>
                 <td>
                     <input type="text" class="refuelTax input-mini" name="data[<?= $row->refuelId ?>][refuelTax]"
@@ -187,20 +191,20 @@ foreach ($this->data as $row) {
                            maxlength="40" value="">
                 </td>
                 <td>
-                    <input type="text" class="refuelPriceTotalUsd input-mini"
+                    <input type="text" class="refuelPriceTotalUsd input-mini text-right"
                            name="data[<?= $row->refuelId ?>][refuelPriceTotalUsd]"
                            placeholder="Total price"
                            maxlength="40"
                            value="">
                 </td>
                 <td>
-                    <input type="text" class="refuelPriceTotal input-mini" name="data[<?= $row->refuelId ?>][refuelPriceTotal]"
+                    <input type="text" class="refuelPriceTotal input-mini text-right" name="data[<?= $row->refuelId ?>][refuelPriceTotal]"
                            placeholder="Total"
                            maxlength="40"
                            value="">
                 </td>
                 <td>
-                    <input type="text" class="refuelExchangePriceTotal input-mini" name="data[<?= $row->refuelId ?>][refuelExchangePriceTotal]"
+                    <input type="text" class="refuelExchangePriceTotal input-mini text-right" name="data[<?= $row->refuelId ?>][refuelExchangePriceTotal]"
                            placeholder="Exchange Total"
                            maxlength="40"
                            value="">
@@ -211,16 +215,15 @@ foreach ($this->data as $row) {
             <td colspan="17">
                 <div class="row-fluid">
                     <div class="span6">
-                        <a class="btn disabled" href="#">Make INVOICE</a>
                     </div>
                     <div class="span6">
-                        <table style="width: 200px; float: right" class="table table-bordered pull-right">
+                        <table style="width: 300px; float: right" class="table table-bordered pull-right">
                             <tbody><tr>
                                 <td>
                                     Subtotal
                                 </td>
-                                <td><span class="refuelPriceSubTotal"></span></td>
-                                <td><span class="refuelCurrency"></span> <span class="refuelExchangePriceSubTotal"></span></td>
+                                <td><span class="refuelCurrency"></span> <span class="refuelPriceSubTotal"></span></td>
+                                <td>USD <span class="refuelExchangePriceSubTotalUsd"></span></td>
                             </tr>
                             </tbody></table>
                     </div>

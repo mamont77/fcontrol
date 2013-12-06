@@ -161,6 +161,7 @@ class RefuelModel extends AbstractTableGateway
         $airport = explode('-', (string)$object->airportId);
         $object->legId = $airport[0];
         $object->airportId = $airport[1];
+        $object->priceUsd = number_format($object->priceUsd, 6, '.', '');
 
         $data = array(
             'headerId' => (int)$object->headerId,
@@ -196,6 +197,7 @@ class RefuelModel extends AbstractTableGateway
         $airport = explode('-', (string)$object->airportId);
         $object->legId = $airport[0];
         $object->airportId = $airport[1];
+        $object->priceUsd = number_format($object->priceUsd, 6, '.', '');
 
         $data = array(
             'headerId' => (int)$object->headerId,
