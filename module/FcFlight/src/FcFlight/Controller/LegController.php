@@ -34,8 +34,8 @@ class LegController extends FlightController
             ));
         }
 
-        $refNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($headerId);
-        $headerStatus = $this->redirectForDoneStatus($refNumberOrder);
+        $header = $this->getFlightHeaderModel()->get($headerId);
+        $this->redirectForDoneStatus($header->refNumberOrder);
         $legs = $this->getLegModel()->getByHeaderId($headerId);
         $lastLeg = end($legs);
         if ($lastLeg) {
@@ -99,9 +99,7 @@ class LegController extends FlightController
             }
         }
         return array('form' => $form,
-            'headerId' => $headerId,
-            'headerStatus' => $headerStatus,
-            'refNumberOrder' => $refNumberOrder,
+            'header' => $header,
             'legs' => $legs,
         );
     }
@@ -118,9 +116,10 @@ class LegController extends FlightController
             ));
         }
 
-        $refNumberOrder = $this->getLegModel()->getHeaderRefNumberOrderByLegId($id);
-        $headerStatus = $this->redirectForDoneStatus($refNumberOrder);
         $data = $this->getLegModel()->get($id);
+        $header = $this->getFlightHeaderModel()->get($data->headerId);
+        $this->redirectForDoneStatus($header->refNumberOrder);
+
         $legs = $this->getLegModel()->getByHeaderId($data->headerId);
 
         $lastLeg = array_slice($legs, -2, 1);
@@ -195,15 +194,14 @@ class LegController extends FlightController
                 return $this->redirect()->toRoute('browse',
                     array(
                         'action' => 'show',
-                        'refNumberOrder' => $refNumberOrder,
+                        'refNumberOrder' => $header->refNumberOrder,
                     ));
             }
         }
 
         return array('form' => $form,
             'id' => $data->id,
-            'headerStatus' => $headerStatus,
-            'refNumberOrder' => $refNumberOrder,
+            'header' => $header,
             'legs' => $legs,
         );
     }

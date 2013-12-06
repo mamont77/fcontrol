@@ -38,6 +38,7 @@
         </th>
         <th>Refuel</th>
         <th>Permit</th>
+        <th>AP Service</th>
         <th class="actions"></th>
     </tr>
     </thead>
@@ -112,6 +113,26 @@
                 }
                 ?>
                 <span class="<?= $class; ?>"><?= $row['permitStatus']; ?></span>
+            </td>
+            <td>
+                <?php
+                $class = '';
+                switch ($row['apServiceStatus']) {
+                    case 'YES':
+                        $class = 'statusYes';
+                        break;
+                    case 'NO':
+                        $class = 'statusNo';
+                        break;
+                    case 'CNFMD':
+                        $class = 'statusCNFMD';
+                        break;
+                    default:
+                        $class = 'statusDone';
+                        break;
+                }
+                ?>
+                <span class="<?= $class; ?>"><?= $row['apServiceStatus']; ?></span>
             </td>
             <td class="actions">
                 <a title="Edit" href="<?php echo $this->url('flight',

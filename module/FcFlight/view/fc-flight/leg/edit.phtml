@@ -1,15 +1,26 @@
-<ul class="breadcrumb">
-    <li><a href="/">Home</a> <span class="divider">/</span></li>
-    <li>
-        <a href="<?= $this->url('browse', array('action' => 'show', 'refNumberOrder' => $this->refNumberOrder)); ?>"><?= $this->refNumberOrder ?></a>
-        <span class="divider">/</span>
-    </li>
-    <li class="active">LEG form</li>
-</ul>
 <?php
 $title = 'Edit LEG';
 $this->headTitle($title);
 ?>
+    <ul class="breadcrumb">
+    <li><a href="/">Home</a> <span class="divider">/</span></li>
+    <li>
+        <a href="<?= $this->url('browse', array('action' => 'show', 'refNumberOrder' => $this->header->refNumberOrder)); ?>"><?= $this->header->refNumberOrder ?></a>
+        <span class="divider">/</span>
+    </li>
+    <li class="active">LEG form</li>
+</ul>
+
+<?=
+$this->partial('fc-flight/_widgets/components/flight.phtml',
+    array(
+        'header' => $this->header,
+        'legs' => $this->legs,
+        'currentId' => $this->id,
+    )
+)
+?>
+
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 
 <?php
@@ -76,16 +87,6 @@ $form->setAttribute('action', $this->url('leg', array('action' => 'edit', 'id' =
 $form->prepare();
 ?>
 
-<?=
-$this->partial('fc-flight/_widgets/tables/leg.phtml',
-    array(
-        'currentId' => $this->id,
-        'legs' => $legs,
-        'status' => $headerStatus,
-        'fixedHeader' => true,
-    ))
-?>
-
 <?php if ($form->getMessages()): ?>
     <div class="alert alert-error">
         <button class="close" data-dismiss="alert" type="button">×</button>
@@ -137,7 +138,6 @@ echo $this->formRowTwb($form->get('dateOfFlight'), $formType, $displayOptions['e
 
 <?php
 
-//echo $this->formRowTwb($form->get('csrf'));
 $actions = array(
     $form->get('submitBtn'),
 );

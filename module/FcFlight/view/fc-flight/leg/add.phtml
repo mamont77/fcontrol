@@ -1,16 +1,26 @@
-<ul class="breadcrumb">
-    <li><a href="/">Home</a> <span class="divider">/</span></li>
-    <li>
-        <a href="<?= $this->url('browse', array('action' => 'show', 'refNumberOrder' => $this->refNumberOrder)); ?>"><?= $this->refNumberOrder ?></a>
-        <span class="divider">/</span>
-    </li>
-    <li class="active">LEG form</li>
-</ul>
 <?php
 $title = 'Add LEG';
 $this->headTitle($title);
 ?>
-<h1><?php echo $this->escapeHtml($title); ?></h1>
+    <ul class="breadcrumb">
+        <li><a href="/">Home</a> <span class="divider">/</span></li>
+        <li>
+            <a href="<?= $this->url('browse', array('action' => 'show', 'refNumberOrder' => $this->header->refNumberOrder)); ?>"><?= $this->header->refNumberOrder ?></a>
+            <span class="divider">/</span>
+        </li>
+        <li class="active">LEG form</li>
+    </ul>
+
+<?=
+$this->partial('fc-flight/_widgets/components/flight.phtml',
+    array(
+        'header' => $this->header,
+        'legs' => $this->legs,
+    )
+)
+?>
+
+    <h1><?php echo $this->escapeHtml($title); ?></h1>
 
 <?php
 $displayOptions = array(
@@ -72,17 +82,8 @@ $displayOptions = array(
 );
 //$formType = 'inline';
 $form = $this->form;
-$form->setAttribute('action', $this->url('leg', array('action' => 'add', 'id' => $this->headerId)));
+$form->setAttribute('action', $this->url('leg', array('action' => 'add', 'id' => $this->header->id)));
 $form->prepare();
-?>
-
-<?=
-$this->partial('fc-flight/_widgets/tables/leg.phtml',
-    array(
-        'legs' => $legs,
-        'status' => $headerStatus,
-        'fixedHeader' => true,
-    ))
 ?>
 
 <?php if ($form->getMessages()): ?>
@@ -105,34 +106,34 @@ echo $this->formRowTwb($form->get('dateOfFlight'), $formType, $displayOptions['e
 
 ?>
 
-<div class="row-fluid">
-    <div class="span4">
-        <?php
-        echo $this->formFieldsetTwb()->openTag($flightNumber, $formType, $displayOptions['fieldsets']['flightNumber'], true, true, true);
-        echo $this->formRowTwb($flightNumber->get('flightNumberAirportId'), $formType, $displayOptions['fieldsets']['flightNumber']['elements']['flightNumberAirportId']);
-        echo $this->formRowTwb($flightNumber->get('flightNumberText'), $formType, $displayOptions['fieldsets']['flightNumber']['elements']['flightNumberText']);
-        echo $this->formFieldsetTwb()->closeTag();
-        ?>
+    <div class="row-fluid">
+        <div class="span4">
+            <?php
+            echo $this->formFieldsetTwb()->openTag($flightNumber, $formType, $displayOptions['fieldsets']['flightNumber'], true, true, true);
+            echo $this->formRowTwb($flightNumber->get('flightNumberAirportId'), $formType, $displayOptions['fieldsets']['flightNumber']['elements']['flightNumberAirportId']);
+            echo $this->formRowTwb($flightNumber->get('flightNumberText'), $formType, $displayOptions['fieldsets']['flightNumber']['elements']['flightNumberText']);
+            echo $this->formFieldsetTwb()->closeTag();
+            ?>
+        </div>
+        <div class="span4">
+            <?php
+            echo $this->formFieldsetTwb()->openTag($apDep, $formType, $displayOptions['fieldsets']['apDep']);
+            echo $this->formRowTwb($apDep->get('apDepCountries'), $formType, $displayOptions['fieldsets']['apDep']['elements']['apDepCountries']);
+            echo $this->formRowTwb($apDep->get('apDepAirports'), $formType, $displayOptions['fieldsets']['apDep']['elements']['apDepAirports']);
+            echo $this->formRowTwb($apDep->get('apDepTime'), $formType, $displayOptions['fieldsets']['apDep']['elements']['apDepTime']);
+            echo $this->formFieldsetTwb()->closeTag();
+            ?>
+        </div>
+        <div class="span4">
+            <?php
+            echo $this->formFieldsetTwb()->openTag($apArr, $formType, $displayOptions['fieldsets']['apArr']);
+            echo $this->formRowTwb($apArr->get('apArrCountries'), $formType, $displayOptions['fieldsets']['apArr']['elements']['apArrCountries']);
+            echo $this->formRowTwb($apArr->get('apArrAirports'), $formType, $displayOptions['fieldsets']['apArr']['elements']['apArrAirports']);
+            echo $this->formRowTwb($apArr->get('apArrTime'), $formType, $displayOptions['fieldsets']['apArr']['elements']['apArrTime']);
+            echo $this->formFieldsetTwb()->closeTag();
+            ?>
+        </div>
     </div>
-    <div class="span4">
-        <?php
-        echo $this->formFieldsetTwb()->openTag($apDep, $formType, $displayOptions['fieldsets']['apDep']);
-        echo $this->formRowTwb($apDep->get('apDepCountries'), $formType, $displayOptions['fieldsets']['apDep']['elements']['apDepCountries']);
-        echo $this->formRowTwb($apDep->get('apDepAirports'), $formType, $displayOptions['fieldsets']['apDep']['elements']['apDepAirports']);
-        echo $this->formRowTwb($apDep->get('apDepTime'), $formType, $displayOptions['fieldsets']['apDep']['elements']['apDepTime']);
-        echo $this->formFieldsetTwb()->closeTag();
-        ?>
-    </div>
-    <div class="span4">
-        <?php
-        echo $this->formFieldsetTwb()->openTag($apArr, $formType, $displayOptions['fieldsets']['apArr']);
-        echo $this->formRowTwb($apArr->get('apArrCountries'), $formType, $displayOptions['fieldsets']['apArr']['elements']['apArrCountries']);
-        echo $this->formRowTwb($apArr->get('apArrAirports'), $formType, $displayOptions['fieldsets']['apArr']['elements']['apArrAirports']);
-        echo $this->formRowTwb($apArr->get('apArrTime'), $formType, $displayOptions['fieldsets']['apArr']['elements']['apArrTime']);
-        echo $this->formFieldsetTwb()->closeTag();
-        ?>
-    </div>
-</div>
 
 <?php
 
@@ -141,9 +142,9 @@ $actions = array(
     $form->get('submitBtn'),
 );
 ?>
-<div class="form-actions">
-    <?= $this->formActionsTwb($actions, $formType); ?>
-</div>
+    <div class="form-actions">
+        <?= $this->formActionsTwb($actions, $formType); ?>
+    </div>
 
 <?php
 echo $this->formRowTwb($form->get('headerId'));

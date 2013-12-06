@@ -1,3 +1,7 @@
+<?php
+$legsCount = count($this->legs);
+?>
+
 <div id="header">
     <table id="flightBrowse">
         <tr>
@@ -106,22 +110,22 @@
             <a class="btn <?= ($this->header->status) ? '' : 'disabled' ?>"
                href="<?= $this->url('leg', array('action' => 'add', 'id' => $this->header->id)) ?>">
                 <i class="icon-plane"></i> LEG</a>
-            <a class="btn <?= ($this->header->status) ? '' : 'disabled' ?>"
+            <a class="btn <?= ($this->header->status && $legsCount > 0) ? '' : 'disabled' ?>"
                href="<?= $this->url('refuel', array('action' => 'add', 'id' => $this->header->id)) ?>">
                 <i class="icon-plane"></i> Refuel</a>
-            <a class="btn <?= ($this->header->status) ? '' : 'disabled' ?>"
+            <a class="btn <?= ($this->header->status && $legsCount > 0) ? '' : 'disabled' ?>"
                href="<?= $this->url('permission', array('action' => 'add', 'id' => $this->header->id)) ?>">
                 <i class="icon-plane"></i> Permission</a>
-            <a class="btn <?= ($this->header->status) ? '' : 'disabled' ?>"
+            <a class="btn <?= ($this->header->status && $legsCount > 0) ? '' : 'disabled' ?>"
                href="<?= $this->url('apService', array('action' => 'add', 'id' => $this->header->id)) ?>">
                 <i class="icon-plane"></i> AP Service</a>
         </div>
     </div>
 
-<? if (count($this->legs) > 0): ?>
+<? if ($legsCount > 0): ?>
     <legend>LEGs</legend>
     <?= $this->partial('fc-flight/_widgets/tables/leg.phtml',
-        array('legs' => $this->legs, 'status' => $this->header->status))
+        array('legs' => $this->legs, 'header' => $this->header, 'currentId' => $this->currentId))
     ?>
 <? endif; ?>
 </div>

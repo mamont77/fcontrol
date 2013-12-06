@@ -46,12 +46,12 @@
         </thead>
         <tbody>
         <?php
-        $lastLeg = end($legs);
+        $lastLeg = end($this->legs);
         $lastLeg = $lastLeg['id'];
         ?>
 
-        <?php foreach ($legs as $row) : ?>
-            <tr data-legId="<?= $row['id'] ?>" class="<? if ($row['id'] == $currentId): ?><?= 'info' ?><? endif ?>">
+        <?php foreach ($this->legs as $row) : ?>
+            <tr data-legId="<?= $row['id'] ?>" class="<? if ($row['id'] == $this->currentId): ?><?= 'info' ?><? endif ?>">
                 <td class="date"><strong><?= $this->escapeHtml($row['dateOfFlight']) ?></strong></td>
                 <td><?= $this->escapeHtml($row['flightNumberIcao']) ?></td>
                 <td><?= $this->escapeHtml($row['flightNumberIata']) ?></td>
@@ -66,10 +66,10 @@
                     <? if ($row['id'] == $lastLeg): ?>
                         <a title="Edit" href="<?= $this->url('leg',
                             array('action' => 'edit', 'id' => $row['id'])) ?>"
-                           class="<?= ($status) ? '' : 'disabled' ?>"><i class="icon-edit"></i></a>
+                           class="<?= ($this->header->status) ? '' : 'disabled' ?>"><i class="icon-edit"></i></a>
                         <a title="Remove" href="<?= $this->url('leg',
                             array('action' => 'delete', 'id' => $row['id'])) ?>"
-                           class="<?= ($status) ? '' : 'disabled' ?>"><i class="icon-remove"></i></a>
+                           class="<?= ($this->header->status) ? '' : 'disabled' ?>"><i class="icon-remove"></i></a>
                     <? endif ?>
                 </td>
             </tr>
