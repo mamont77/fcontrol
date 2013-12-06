@@ -436,14 +436,14 @@
                 invoiceExchangeRateVal = parseFloat($invoiceExchangeRate.val()) || 1;
 
             // Блокирум поля при инициилизации
-            $($form).find('#invoiceData input').each(function () {
-                $(this).prop('disabled', true);
+            $($form).find('#invoiceData input, #invoiceData select').each(function () {
+                $(this).prop('disabled', true).trigger('chosen:updated');
             });
 
             //Если Currency == USD, то значение поля Exchange Rate == 1
             $invoiceCurrency.change(function () {
                 var value = $(this).val();
-                if(value == 'USD') {
+                if (value == 'USD') {
                     $invoiceExchangeRate.val(1);
                 }
                 $('.refuelCurrency').text(value);
@@ -453,11 +453,15 @@
             $('#rateApply').click(function () {
                 invoiceCurrencyText = $invoiceCurrency.find(':selected').text();
                 invoiceExchangeRateVal = parseFloat($invoiceExchangeRate.val());
-                $($form).find('#invoiceCurrency, #InvoiceExchangeRate, #rateApply').each(function () {
-                    $(this).prop('readonly', true);
+                $($form).find('#invoiceCurrency, #InvoiceExchangeRate').each(function () {
+                    $(this).prop('readonly', true).trigger('chosen:updated');
                 });
-                $($form).find('#invoiceData input').each(function () {
-                    $(this).prop('disabled', false);
+                $('#rateApply').prop('disabled', true);
+                $invoiceCurrency.parent().html('<input type="hidden" name="invoiceCurrency" value="' + invoiceCurrencyText + '"/>'
+                    + invoiceCurrencyText);
+
+                $($form).find('#invoiceData input, #invoiceData select').each(function () {
+                    $(this).prop('disabled', false).trigger('chosen:updated');
                 });
                 return false;
             });
