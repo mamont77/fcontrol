@@ -430,15 +430,42 @@
 
             $($form).find('.date').mask('99-99-9999');
 
+            var $invoiceCurrency = $form.find('#invoiceCurrency'),
+                $invoiceExchangeRate = $form.find('#InvoiceExchangeRate'),
+                invoiceCurrencyText = $invoiceCurrency.find(':selected').text() || 'USD',
+                invoiceExchangeRateVal = parseFloat($invoiceExchangeRate.val()) || 1;
+
+            // Блокирум поля при инициилизации
+            $($form).find('#invoiceData input').each(function () {
+                $(this).prop('disabled', true);
+            });
+
+            //Если Currency == USD, то значение поля Exchange Rate == 1
+            $invoiceCurrency.change(function () {
+                var value = $(this).val();
+                if(value == 'USD') {
+                    $invoiceExchangeRate.val(1);
+                }
+                $('.refuelCurrency').text(value);
+            });
+
+            // После Apply курса валют - разблокируем поля
+            $('#rateApply').click(function () {
+                invoiceCurrencyText = $invoiceCurrency.find(':selected').text();
+                invoiceExchangeRateVal = parseFloat($invoiceExchangeRate.val());
+                $($form).find('#invoiceCurrency, #InvoiceExchangeRate, #rateApply').each(function () {
+                    $(this).prop('readonly', true);
+                });
+                $($form).find('#invoiceData input').each(function () {
+                    $(this).prop('disabled', false);
+                });
+                return false;
+            });
+
+
             $('.refuelQuantityLtr, .refuelQuantityOtherUnits, .refuelUnitName, .refuelPriceUsd, ' +
                 '.refuelTax, .refuelMot, .refuelVat, .refuelDeliver').bind("keyup change", function () {
                     var $this = $(this),
-                        $invoiceCurrency = $form.find('#invoiceCurrency'),
-                        $invoiceExchangeRate = $form.find('#InvoiceExchangeRate'),
-                        invoiceCurrencyVal = $invoiceCurrency.val(),
-                        invoiceCurrencyText = $invoiceCurrency.find(':selected').text() || '',
-                        invoiceExchangeRateVal = parseFloat($invoiceExchangeRate.val()) || 0,
-
                         $row = $(this).parent().parent(),
                         $refuelQuantityLtr = $row.find('.refuelQuantityLtr'),
                         $refuelQuantityOtherUnits = $row.find('.refuelQuantityOtherUnits'),
@@ -466,7 +493,7 @@
 
                         $refuelPriceSubTotal = $form.find('.refuelPriceSubTotal'),
                         $refuelCurrencyForSubTotal = $form.find('.refuelCurrency'),
-                        $refuelExchangePriceSubTotal = $form.find('.refuelExchangePriceSubTotal'),
+                        $refuelExchangePriceSubTotalUsd = $form.find('.refuelExchangePriceSubTotalUsd'),
                         refuelPriceSubTotalVal = 0,
                         refuelCurrencyName = '',
                         refuelExchangePriceSubTotalVal = 0;
@@ -490,20 +517,22 @@
                     $refuelExchangePriceTotal.val(refuelExchangePriceTotal);
 
                     // отрисоваем сумму под таблицей
-                    $form.find('.refuelPriceTotal').each(function() {
-                        if (!isNaN($(this).val())) {
-                            refuelPriceSubTotalVal += parseFloat($(this).val()).toFixed(2);
+                    $form.find('.refuelPriceTotal').each(function () {
+                        var val = $(this).val();
+                        if (!isNaN(val) && val != '') {
+                            refuelPriceSubTotalVal = parseFloat(refuelPriceSubTotalVal) + parseFloat(val);
                         }
                     });
-                    $refuelPriceSubTotal.text(refuelPriceSubTotalVal);
+                    $refuelPriceSubTotal.text(refuelPriceSubTotalVal.toFixed(2));
 
-                    $form.find('.refuelExchangePriceTotal').each(function() {
-                        if (!isNaN($(this).val())) {
-                            refuelExchangePriceSubTotalVal += parseFloat($(this).val()).toFixed(2);
+                    $form.find('.refuelExchangePriceTotal').each(function () {
+                        var val = $(this).val();
+                        console.log(val);
+                        if (!isNaN(val) && val != '') {
+                            refuelExchangePriceSubTotalVal = parseFloat(refuelExchangePriceSubTotalVal) + parseFloat(val);
                         }
                     });
-                    $refuelCurrencyForSubTotal.text(invoiceCurrencyText);
-                    $refuelExchangePriceSubTotal.text(refuelExchangePriceSubTotalVal);
+                    $refuelExchangePriceSubTotalUsd.text(refuelExchangePriceSubTotalVal.toFixed(2));
                 });
         }
     };
