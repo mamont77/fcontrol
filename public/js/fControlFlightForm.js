@@ -506,7 +506,8 @@
 
                     // пересчитываем литры в юниты и юниты в литры
                     if (($this.hasClass('refuelQuantityLtr') || $this.hasClass('refuelUnitId')) && refuelUnitIdText != '') {
-                        $refuelQuantityOtherUnits.val(convertRefuelQuantityLtr2OtherUnits(refuelQuantityLtrVal, refuelUnitIdText));
+                        $refuelQuantityOtherUnits.val(convertRefuelQuantityLtr2OtherUnits(refuelQuantityLtrVal,
+                            refuelUnitIdText));
                     }
 
                     // считаем тоталы
@@ -531,7 +532,8 @@
                     $form.find('.refuelExchangeToUsdPriceTotal').each(function () {
                         var val = $(this).val();
                         if (!isNaN(val) && val != '') {
-                            refuelExchangeToUsdPriceSubTotalVal = parseFloat(refuelExchangeToUsdPriceSubTotalVal) + parseFloat(val);
+                            refuelExchangeToUsdPriceSubTotalVal = parseFloat(refuelExchangeToUsdPriceSubTotalVal)
+                                + parseFloat(val);
                         }
                     });
                     $refuelExchangeToUsdPriceSubTotal.text(refuelExchangeToUsdPriceSubTotalVal.toFixed(2));
@@ -559,7 +561,7 @@
                 '.refuelTax, .refuelMot, .refuelVat, .refuelDeliver').bind("keyup change", function () {
                     var $this = $(this),
                         $row = $(this).parent().parent(),
-                    //fields values
+                        //fields values
                         $refuelQuantityLtr = $row.find('.refuelQuantityLtr'),
                         refuelQuantityLtrVal = parseFloat($refuelQuantityLtr.val()) || 0,
                         $refuelQuantityOtherUnits = $row.find('.refuelQuantityOtherUnits'),
@@ -583,7 +585,7 @@
                         refuelPriceTotalVal = parseFloat($refuelPriceTotal.val()) || 0,
                         $refuelExchangeToUsdPriceTotal = $row.find('.refuelExchangeToUsdPriceTotal'),
                         refuelExchangeToUsdPriceTotalVal = parseFloat($refuelExchangeToUsdPriceTotal.val()) || 0,
-                    //subTotals
+                        //subTotals
                         $refuelPriceSubTotal = $form.find('.refuelPriceSubTotal'),
                         refuelPriceSubTotalVal = 0,
                         $refuelCurrencyForSubTotal = $form.find('.refuelCurrency'),

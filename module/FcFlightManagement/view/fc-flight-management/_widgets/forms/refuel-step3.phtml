@@ -133,7 +133,7 @@
                 </select>
             </td>
             <td>
-                <input type="text" class="refuelPrice input-mini text-right"
+                <input type="text" class="refuelItemPrice input-mini text-right"
                        name="data[<?= $row['refuelId'] ?>][refuelItemPrice]"
                        placeholder="Price est"
                        maxlength="40" required="required"
@@ -201,7 +201,7 @@
                                 Subtotal
                             </td>
                             <td><span class="refuelCurrency"><?= $this->data['invoiceCurrency'] ?></span> <span class="refuelPriceSubTotal"><?= number_format($refuelPriceSubTotal, 2, '.', '') ?></span></td>
-                            <td>USD <span class="refuelExchangePriceSubTotalUsd"><?= number_format($refuelExchangeToUsdPriceSubTotal, 2, '.', '') ?></span></td>
+                            <td>USD <span class="refuelExchangeToUsdPriceSubTotal"><?= number_format($refuelExchangeToUsdPriceSubTotal, 2, '.', '') ?></span></td>
                         </tr>
                         </tbody>
                     </table>
