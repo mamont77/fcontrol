@@ -129,23 +129,30 @@ class RefuelController extends FlightController
      */
     public function step3Action()
     {
-
-        $request = $this->getRequest();
-        if ($request->isPost()) {
-
-            $data = $request->getPost();
-
-            \Zend\Debug\Debug::dump($data);
-            exit;
-
-
+        $units = array();
+        $unitsObj = $this->getUnits();
+        foreach ($unitsObj as $unit) {
+            $units[$unit->id] = $unit->name;
         }
 
-        return array(
-//            'currencies' => $currencies,
-//            'units' => $units,
-//            'result' => $result,
-        );
+        $currencies = new ApServiceForm(null, array());
+        $currencies = $currencies->getCurrencyExchangeRate();
+
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+
+            $result = $request->getPost();
+
+            \Zend\Debug\Debug::dump($result);
+            return array(
+                'currencies' => $currencies,
+                'units' => $units,
+                'result' => $result,
+            );
+        }
+
+        return $this->redirect()->toRoute('management/refuel/step1');
     }
 
     /**

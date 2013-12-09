@@ -431,7 +431,7 @@
             $($form).find('.date').mask('99-99-9999');
 
             var $invoiceCurrency = $form.find('#invoiceCurrency'),
-                $invoiceExchangeRate = $form.find('#InvoiceExchangeRate'),
+                $invoiceExchangeRate = $form.find('#invoiceExchangeRate'),
                 invoiceCurrencyText = $invoiceCurrency.find(':selected').text() || 'USD',
                 invoiceExchangeRateVal = parseFloat($invoiceExchangeRate.val()) || 1;
 
@@ -453,7 +453,7 @@
             $('#rateApply').click(function () {
                 invoiceCurrencyText = $invoiceCurrency.find(':selected').text();
                 invoiceExchangeRateVal = parseFloat($invoiceExchangeRate.val());
-                $($form).find('#invoiceCurrency, #InvoiceExchangeRate').each(function () {
+                $($form).find('#invoiceCurrency, #invoiceExchangeRate').each(function () {
                     $(this).prop('readonly', true).trigger('chosen:updated');
                 });
                 $('#rateApply').prop('disabled', true);
