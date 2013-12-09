@@ -34,33 +34,47 @@ return array(
                         ),
                         'may_terminate' => true,
                         'child_routes' => array(
-                            'step1' => array(
+                            'incoming-invoice-step1' => array(
                                 'type' => 'literal',
                                 'options' => array(
-                                    'route' => '/step1',
+                                    'route' => '/incoming-invoice-step1',
                                     'defaults' => array(
                                         'controller' => 'FcFlightManagement\Controller\Refuel',
-                                        'action' => 'step1'
+                                        'action' => 'incomingInvoiceStep1'
                                     )
                                 ),
                             ),
-                            'step2' => array(
+                            'incoming-invoice-step2' => array(
                                 'type' => 'literal',
                                 'options' => array(
-                                    'route' => '/step2',
+                                    'route' => '/incoming-invoice-step2',
                                     'defaults' => array(
                                         'controller' => 'FcFlightManagement\Controller\Refuel',
-                                        'action' => 'step2'
+                                        'action' => 'incomingInvoiceStep2'
                                     )
                                 ),
                             ),
-                            'step3' => array(
+                            'incoming-invoice-step3' => array(
                                 'type' => 'literal',
                                 'options' => array(
-                                    'route' => '/step3',
+                                    'route' => '/incoming-invoice-step3',
                                     'defaults' => array(
                                         'controller' => 'FcFlightManagement\Controller\Refuel',
-                                        'action' => 'step3'
+                                        'action' => 'incomingInvoiceStep3'
+                                    )
+                                ),
+                            ),
+                            'incoming-invoice' => array(
+                                'type' => 'segment',
+                                'options' => array(
+                                    'route' => '[/:action][/:id]',
+                                    'constraints' => array(
+                                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                        'id' => '[0-9]+',
+                                    ),
+                                    'defaults' => array(
+                                        'controller' => 'FcFlightManagement\Controller\Refuel',
+                                        'action' => 'add'
                                     )
                                 ),
                             ),

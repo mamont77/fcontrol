@@ -37,7 +37,7 @@ class RefuelController extends FlightController
     /**
      * @return ViewModel
      */
-    public function step1Action()
+    public function incomingInvoiceStep1Action()
     {
         $result = array();
         $searchForm = new RefuelStep1Form('managementRefuelStep1',
@@ -68,7 +68,7 @@ class RefuelController extends FlightController
 
             if ($postIsEmpty) {
                 $this->flashMessenger()->addErrorMessage('Result not found. Enter one or more fields.');
-                return $this->redirect()->toRoute('management/refuel/step1');
+                return $this->redirect()->toRoute('management/refuel/incoming-invoice-step1');
             }
 
             $filter = $this->getServiceLocator()->get('FcFlightManagement\Filter\RefuelStep1Filter');
@@ -91,7 +91,7 @@ class RefuelController extends FlightController
     /**
      * @return ViewModel
      */
-    public function step2Action()
+    public function incomingInvoiceStep2Action()
     {
         $result = array();
 
@@ -111,7 +111,7 @@ class RefuelController extends FlightController
 
             if (empty($data['refuelsSelected'])) {
                 $this->flashMessenger()->addErrorMessage('Result not found. Enter one or more fields.');
-                return $this->redirect()->toRoute('management/refuel/step1');
+                return $this->redirect()->toRoute('management/refuel/incoming-invoice-step1');
             }
 
             $result = $this->getRefuelModel()->findByParams($data);
@@ -127,7 +127,7 @@ class RefuelController extends FlightController
     /**
      * @return ViewModel
      */
-    public function step3Action()
+    public function incomingInvoiceStep3Action()
     {
         $units = array();
         $unitsObj = $this->getUnits();
@@ -152,7 +152,38 @@ class RefuelController extends FlightController
             );
         }
 
-        return $this->redirect()->toRoute('management/refuel/step1');
+        return $this->redirect()->toRoute('management/refuel/incoming-invoice-step1');
+    }
+
+    /**
+     * @return ViewModel
+     */
+    public function incomingInvoiceAddAction()
+    {
+        $units = array();
+        $unitsObj = $this->getUnits();
+        foreach ($unitsObj as $unit) {
+            $units[$unit->id] = $unit->name;
+        }
+
+        $currencies = new ApServiceForm(null, array());
+        $currencies = $currencies->getCurrencyExchangeRate();
+
+        $request = $this->getRequest();
+
+        if ($request->isPost()) {
+
+            $result = $request->getPost();
+
+//            \Zend\Debug\Debug::dump($result);
+            return array(
+                'currencies' => $currencies,
+                'units' => $units,
+                'result' => $result,
+            );
+        }
+
+        return $this->redirect()->toRoute('management/refuel/incoming-invoice-step1');
     }
 
     /**

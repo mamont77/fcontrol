@@ -24,7 +24,7 @@ $this->headTitle($title);
 
 <?php
 $form = $this->form;
-$form->setAttribute('action', $this->url('management/refuel/step1'));
+$form->setAttribute('action', $this->url('management/refuel/incoming-invoice-step1'));
 
 $form->prepare();
 // Get the form label plugin
@@ -114,7 +114,7 @@ echo $this->formHidden($form->get('csrf')) . PHP_EOL;
 
 <? if($this->result): ?>
     <?=
-    $this->partial('fc-flight-management/_widgets/forms/refuel-step1.phtml',
+    $this->partial('fc-flight-management/_widgets/forms/refuel-incoming-invoice-step1.phtml',
         array(
             'data' => $this->result,
             'fixedHeader' => true,

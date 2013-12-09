@@ -152,9 +152,10 @@ return array(
                 array('route' => 'browse', 'roles' => array('manager')),
 
                 array('route' => 'management', 'roles' => array('manager')),
-                array('route' => 'management/refuel/step1', 'roles' => array('manager')),
-                array('route' => 'management/refuel/step2', 'roles' => array('manager')),
-                array('route' => 'management/refuel/step3', 'roles' => array('manager')),
+                array('route' => 'management/refuel/incoming-invoice-step1', 'roles' => array('manager')),
+                array('route' => 'management/refuel/incoming-invoice-step2', 'roles' => array('manager')),
+                array('route' => 'management/refuel/incoming-invoice-step3', 'roles' => array('manager')),
+                array('route' => 'management/refuel/incoming-invoice', 'roles' => array('manager')),
 
 
                 array('route' => 'leg', 'roles' => array('manager')),
