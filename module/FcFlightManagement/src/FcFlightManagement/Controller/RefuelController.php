@@ -144,7 +144,7 @@ class RefuelController extends FlightController
 
             $result = $request->getPost();
 
-            \Zend\Debug\Debug::dump($result);
+//            \Zend\Debug\Debug::dump($result);
             return array(
                 'currencies' => $currencies,
                 'units' => $units,

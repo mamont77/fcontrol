@@ -430,6 +430,7 @@
 
             $($form).find('.date').mask('99-99-9999');
 
+            // invoice (header) values
             var $invoiceCurrency = $form.find('#invoiceCurrency'),
                 $invoiceExchangeRate = $form.find('#invoiceExchangeRate'),
                 invoiceCurrencyText = $invoiceCurrency.find(':selected').text() || 'USD',
@@ -467,58 +468,56 @@
             });
 
 
-            $('.refuelQuantityLtr, .refuelQuantityOtherUnits, .refuelUnitName, .refuelPriceUsd, ' +
+            $('.refuelQuantityLtr, .refuelQuantityOtherUnits, .refuelUnitId, .refuelPrice, ' +
                 '.refuelTax, .refuelMot, .refuelVat, .refuelDeliver').bind("keyup change", function () {
                     var $this = $(this),
                         $row = $(this).parent().parent(),
+                        //fields values
                         $refuelQuantityLtr = $row.find('.refuelQuantityLtr'),
-                        $refuelQuantityOtherUnits = $row.find('.refuelQuantityOtherUnits'),
-                        $refuelUnit = $row.find('.refuelUnitName'),
-                        $refuelPriceUsd = $row.find('.refuelPriceUsd'),
-                        $refuelTax = $row.find('.refuelTax'),
-                        $refuelMot = $row.find('.refuelMot'),
-                        $refuelVat = $row.find('.refuelVat'),
-                        $refuelDeliver = $row.find('.refuelDeliver'),
-                        $refuelPriceTotalUsd = $row.find('.refuelPriceTotalUsd'),
-                        $refuelPriceTotal = $row.find('.refuelPriceTotal'),
-                        $refuelExchangePriceTotal = $row.find('.refuelExchangePriceTotal'),
                         refuelQuantityLtrVal = parseFloat($refuelQuantityLtr.val()) || 0,
+                        $refuelQuantityOtherUnits = $row.find('.refuelQuantityOtherUnits'),
                         refuelQuantityOtherUnitsVal = parseFloat($refuelQuantityOtherUnits.val()) || 0,
-                        refuelUnitVal = parseFloat($refuelUnit.val()) || 0,
-                        refuelUnitNameText = $refuelUnit.find(':selected').text() || '',
-                        refuelPriceUsdVal = parseFloat($refuelPriceUsd.val()) || 0,
+                        $refuelUnitId = $row.find('.refuelUnitId'),
+                        refuelUnitIdVal = parseFloat($refuelUnitId.val()) || 0,
+                        refuelUnitIdText = $refuelUnitId.find(':selected').text() || '',
+                        $refuelItemPrice = $row.find('.refuelItemPrice'),
+                        refuelItemPriceVal = parseFloat($refuelItemPrice.val()) || 0,
+                        $refuelTax = $row.find('.refuelTax'),
                         refuelTaxVal = parseFloat($refuelTax.val()) || 0,
+                        $refuelMot = $row.find('.refuelMot'),
                         refuelMotVal = parseFloat($refuelMot.val()) || 0,
+                        $refuelVat = $row.find('.refuelVat'),
                         refuelVatVal = parseFloat($refuelVat.val()) || 0,
+                        $refuelDeliver = $row.find('.refuelDeliver'),
                         refuelDeliverVal = parseFloat($refuelDeliver.val()) || 0,
-                        refuelPriceTotalUsdVal = parseFloat($refuelPriceTotalUsd.val()) || 0,
+                        $refuelPrice = $row.find('.refuelPrice'),
+                        refuelPriceVal = parseFloat($refuelPrice.val()) || 0,
+                        $refuelPriceTotal = $row.find('.refuelPriceTotal'),
                         refuelPriceTotalVal = parseFloat($refuelPriceTotal.val()) || 0,
-                        refuelExchangePriceTotal = parseFloat($refuelExchangePriceTotal.val()) || 0,
-
+                        $refuelExchangeToUsdPriceTotal = $row.find('.refuelExchangeToUsdPriceTotal'),
+                        refuelExchangeToUsdPriceTotalVal = parseFloat($refuelExchangeToUsdPriceTotal.val()) || 0,
+                        //subTotals
                         $refuelPriceSubTotal = $form.find('.refuelPriceSubTotal'),
-                        $refuelCurrencyForSubTotal = $form.find('.refuelCurrency'),
-                        $refuelExchangePriceSubTotalUsd = $form.find('.refuelExchangePriceSubTotalUsd'),
                         refuelPriceSubTotalVal = 0,
+                        $refuelCurrencyForSubTotal = $form.find('.refuelCurrency'),
                         refuelCurrencyName = '',
-                        refuelExchangePriceSubTotalVal = 0;
+                        $refuelExchangeToUsdPriceSubTotal = $form.find('.refuelExchangeToUsdPriceSubTotal'),
+                        refuelExchangeToUsdPriceSubTotalVal = 0;
 
                     // пересчитываем литры в юниты и юниты в литры
-                    if (($this.hasClass('refuelQuantityLtr') || $this.hasClass('refuelUnitName')) && refuelUnitNameText != '') {
-                        $refuelQuantityOtherUnits.val(convertRefuelQuantityLtr2OtherUnits(refuelQuantityLtrVal, refuelUnitNameText));
+                    if (($this.hasClass('refuelQuantityLtr') || $this.hasClass('refuelUnitId')) && refuelUnitIdText != '') {
+                        $refuelQuantityOtherUnits.val(convertRefuelQuantityLtr2OtherUnits(refuelQuantityLtrVal, refuelUnitIdText));
                     }
-//                    if ($this.hasClass('refuelQuantityOtherUnits') && refuelUnitNameText != '') {
-//                        $refuelQuantityLtr.val(convertRefuelQuantityOtherUnits2Ltr(refuelQuantityOtherUnitsVal, refuelUnitNameText));
-//                    }
 
                     // считаем тоталы
-                    refuelPriceTotalUsdVal = ((refuelPriceUsdVal + refuelTaxVal + refuelMotVal) * ((refuelVatVal + 100 ) / 100)).toFixed(4);
-                    $refuelPriceTotalUsd.val(refuelPriceTotalUsdVal);
+                    refuelPriceVal = ((refuelItemPriceVal + refuelTaxVal + refuelMotVal) * ((refuelVatVal + 100 ) / 100)).toFixed(4);
+                    $refuelPrice.val(refuelPriceVal);
 
-                    refuelPriceTotalVal = (((refuelQuantityOtherUnitsVal * refuelPriceTotalUsdVal)) + refuelDeliverVal).toFixed(2);
+                    refuelPriceTotalVal = (((refuelQuantityOtherUnitsVal * refuelPriceVal)) + refuelDeliverVal).toFixed(2);
                     $refuelPriceTotal.val(refuelPriceTotalVal);
 
-                    refuelExchangePriceTotal = (refuelPriceTotalVal * invoiceExchangeRateVal).toFixed(2);
-                    $refuelExchangePriceTotal.val(refuelExchangePriceTotal);
+                    refuelExchangeToUsdPriceTotalVal = (refuelPriceTotalVal * invoiceExchangeRateVal).toFixed(2);
+                    $refuelExchangeToUsdPriceTotal.val(refuelExchangeToUsdPriceTotalVal);
 
                     // отрисоваем сумму под таблицей
                     $form.find('.refuelPriceTotal').each(function () {
@@ -529,16 +528,101 @@
                     });
                     $refuelPriceSubTotal.text(refuelPriceSubTotalVal.toFixed(2));
 
-                    $form.find('.refuelExchangePriceTotal').each(function () {
+                    $form.find('.refuelExchangeToUsdPriceTotal').each(function () {
                         var val = $(this).val();
-                        console.log(val);
                         if (!isNaN(val) && val != '') {
-                            refuelExchangePriceSubTotalVal = parseFloat(refuelExchangePriceSubTotalVal) + parseFloat(val);
+                            refuelExchangeToUsdPriceSubTotalVal = parseFloat(refuelExchangeToUsdPriceSubTotalVal) + parseFloat(val);
                         }
                     });
-                    $refuelExchangePriceSubTotalUsd.text(refuelExchangePriceSubTotalVal.toFixed(2));
+                    $refuelExchangeToUsdPriceSubTotal.text(refuelExchangeToUsdPriceSubTotalVal.toFixed(2));
                 });
         }
     };
 
+    /**
+     *
+     * @type {{attach: Function}}
+     */
+    fControl.behaviors.managementRefuelStep4 = {
+        attach: function (context, settings) {
+            var $form = $('form#managementRefuelStep4');
+
+            if ($form.length == 0) return;
+
+            $($form).find('.date').mask('99-99-9999');
+
+            // invoice (header) values
+            var $invoiceExchangeRate = $form.find('#invoiceExchangeRate'),
+                invoiceExchangeRateVal = parseFloat($invoiceExchangeRate.val()) || 1;
+
+            $('.refuelQuantityLtr, .refuelQuantityOtherUnits, .refuelUnitId, .refuelPrice, ' +
+                '.refuelTax, .refuelMot, .refuelVat, .refuelDeliver').bind("keyup change", function () {
+                    var $this = $(this),
+                        $row = $(this).parent().parent(),
+                    //fields values
+                        $refuelQuantityLtr = $row.find('.refuelQuantityLtr'),
+                        refuelQuantityLtrVal = parseFloat($refuelQuantityLtr.val()) || 0,
+                        $refuelQuantityOtherUnits = $row.find('.refuelQuantityOtherUnits'),
+                        refuelQuantityOtherUnitsVal = parseFloat($refuelQuantityOtherUnits.val()) || 0,
+                        $refuelUnitId = $row.find('.refuelUnitId'),
+                        refuelUnitIdVal = parseFloat($refuelUnitId.val()) || 0,
+                        refuelUnitIdText = $refuelUnitId.find(':selected').text() || '',
+                        $refuelItemPrice = $row.find('.refuelItemPrice'),
+                        refuelItemPriceVal = parseFloat($refuelItemPrice.val()) || 0,
+                        $refuelTax = $row.find('.refuelTax'),
+                        refuelTaxVal = parseFloat($refuelTax.val()) || 0,
+                        $refuelMot = $row.find('.refuelMot'),
+                        refuelMotVal = parseFloat($refuelMot.val()) || 0,
+                        $refuelVat = $row.find('.refuelVat'),
+                        refuelVatVal = parseFloat($refuelVat.val()) || 0,
+                        $refuelDeliver = $row.find('.refuelDeliver'),
+                        refuelDeliverVal = parseFloat($refuelDeliver.val()) || 0,
+                        $refuelPrice = $row.find('.refuelPrice'),
+                        refuelPriceVal = parseFloat($refuelPrice.val()) || 0,
+                        $refuelPriceTotal = $row.find('.refuelPriceTotal'),
+                        refuelPriceTotalVal = parseFloat($refuelPriceTotal.val()) || 0,
+                        $refuelExchangeToUsdPriceTotal = $row.find('.refuelExchangeToUsdPriceTotal'),
+                        refuelExchangeToUsdPriceTotalVal = parseFloat($refuelExchangeToUsdPriceTotal.val()) || 0,
+                    //subTotals
+                        $refuelPriceSubTotal = $form.find('.refuelPriceSubTotal'),
+                        refuelPriceSubTotalVal = 0,
+                        $refuelCurrencyForSubTotal = $form.find('.refuelCurrency'),
+                        refuelCurrencyName = '',
+                        $refuelExchangeToUsdPriceSubTotal = $form.find('.refuelExchangeToUsdPriceSubTotal'),
+                        refuelExchangeToUsdPriceSubTotalVal = 0;
+
+                    // пересчитываем литры в юниты и юниты в литры
+                    if (($this.hasClass('refuelQuantityLtr') || $this.hasClass('refuelUnitId')) && refuelUnitIdText != '') {
+                        $refuelQuantityOtherUnits.val(convertRefuelQuantityLtr2OtherUnits(refuelQuantityLtrVal, refuelUnitIdText));
+                    }
+
+                    // считаем тоталы
+                    refuelPriceVal = ((refuelItemPriceVal + refuelTaxVal + refuelMotVal) * ((refuelVatVal + 100 ) / 100)).toFixed(4);
+                    $refuelPrice.val(refuelPriceVal);
+
+                    refuelPriceTotalVal = (((refuelQuantityOtherUnitsVal * refuelPriceVal)) + refuelDeliverVal).toFixed(2);
+                    $refuelPriceTotal.val(refuelPriceTotalVal);
+
+                    refuelExchangeToUsdPriceTotalVal = (refuelPriceTotalVal * invoiceExchangeRateVal).toFixed(2);
+                    $refuelExchangeToUsdPriceTotal.val(refuelExchangeToUsdPriceTotalVal);
+
+                    // отрисоваем сумму под таблицей
+                    $form.find('.refuelPriceTotal').each(function () {
+                        var val = $(this).val();
+                        if (!isNaN(val) && val != '') {
+                            refuelPriceSubTotalVal = parseFloat(refuelPriceSubTotalVal) + parseFloat(val);
+                        }
+                    });
+                    $refuelPriceSubTotal.text(refuelPriceSubTotalVal.toFixed(2));
+
+                    $form.find('.refuelExchangeToUsdPriceTotal').each(function () {
+                        var val = $(this).val();
+                        if (!isNaN(val) && val != '') {
+                            refuelExchangeToUsdPriceSubTotalVal = parseFloat(refuelExchangeToUsdPriceSubTotalVal) + parseFloat(val);
+                        }
+                    });
+                    $refuelExchangeToUsdPriceSubTotal.text(refuelExchangeToUsdPriceSubTotalVal.toFixed(2));
+                });
+        }
+    };
 })(jQuery);
