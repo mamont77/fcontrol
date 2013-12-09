@@ -37,6 +37,7 @@ $this->partial('fc-flight/_widgets/components/flight.phtml',
     $this->partial('fc-flight/_widgets/tables/refuel.phtml', array(
         'currentId' => $this->id,
         'refuels' => $this->refuels,
+        'refuelsTotal' => $this->refuelsTotal,
         'status' => $this->header->status,
         'fixedHeader' => true,
     )) ?>
