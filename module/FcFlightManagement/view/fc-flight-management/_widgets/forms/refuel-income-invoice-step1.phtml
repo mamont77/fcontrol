@@ -20,7 +20,8 @@
         </thead>
         <tbody>
         <? foreach ($this->data as $row): ?>
-            <tr data-refuelRow="<?= $row->refuelId ?>">
+<!--            --><?// \Zend\Debug\Debug::dump($row) ?>
+            <tr data-refuelRow="<?= $row->refuelId ?>" class="<? if($row->incomeInvoiceId): ?>success<? endif ?>">
                 <td>
                     <input type="checkbox" class="refuelsSelected" name="refuelsSelected[]"
                            data-refuelId="<?= $row->refuelId ?>" value="<?= $row->refuelId ?>">
@@ -29,13 +30,13 @@
                 <td><?= $row->flightAgentShortName ?></td>
                 <td><?= $row->flightAirOperatorShortName ?></td>
                 <td><?= $row->flightAircraftTypeName . ' (' . $row->flightAircraftName . ')' ?></td>
-                <td><?= date('d-m-Y', $row->refuelDate) ?></td>
+                <td><?= date('d-m-Y', $row->incomeInvoiceRefuelDate) ?></td>
                 <td><?= $row->refuelAirportICAO . ' (' . $row->refuelAirportIATA . ')' ?></td>
                 <td class="refuelAgentShortName"><?= $row->refuelAgentShortName ?></td>
-                <td><?= $row->refuelQuantityOtherUnits ?></td>
-                <td><?= $row->refuelUnitName ?></td>
-                <td class="text-right"><?= $row->refuelPriceUsd ?></td>
-                <td class="text-right"><?= number_format($row->refuelQuantityOtherUnits * $row->refuelPriceUsd, 4, '.', '') ?></td>
+                <td><?= $row->incomeInvoiceRefuelQuantityOtherUnits ?></td>
+                <td><?= $row->incomeInvoiceRefuelUnitName ?></td>
+                <td class="text-right"><?= $row->incomeInvoiceRefuelPriceTotal ?></td>
+                <td class="text-right"><?= $row->incomeInvoiceRefuelExchangeToUsdPriceTotal ?></td>
             </tr>
         <? endforeach; ?>
         <tr>

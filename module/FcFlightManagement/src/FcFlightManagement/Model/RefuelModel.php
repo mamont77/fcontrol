@@ -114,14 +114,6 @@ class RefuelModel extends AbstractTableGateway
             'left');
 
         $select->join(
-            array('refuelUnit' => 'library_unit'),
-            'refuelUnit.id = flightRefuelForm.unitId',
-            array(
-                'refuelUnitName' => 'name',
-            ),
-            'left');
-
-        $select->join(
             array('flightAgent' => 'library_kontragent'),
             'flightAgent.id = flight.kontragent',
             array(
@@ -189,6 +181,40 @@ class RefuelModel extends AbstractTableGateway
             'flightAlternativeTypeAircraft2.id = flightAlternativeAircraft2.aircraft_type',
             array(
                 'flightAlternativeAircraftTypeName2' => 'name',
+            ),
+            'left');
+
+        $select->join(
+            array('incomeInvoiceRefuelData' => 'incomeInvoiceRefuelData'),
+            'flightRefuelForm.id = incomeInvoiceRefuelData.preInvoiceRefuelId',
+            array(
+                'incomeInvoiceRefuelId' => 'refuelId',
+                'incomeInvoiceId' => 'invoiceId',
+                'incomeInvoiceParentRefuelId' => 'preInvoiceRefuelId',
+                'incomeInvoiceFlightAgentId' => 'flightAgentId',
+                'incomeInvoiceFlightAirOperatorId' => 'flightAirOperatorId',
+                'incomeInvoiceFlightAircraftId' => 'flightAircraftId',
+                'incomeInvoiceRefuelAirportId' => 'refuelAirportId',
+                'incomeInvoiceRefuelDate' => 'refuelDate',
+                'incomeInvoiceRefuelQuantityLtr' => 'refuelQuantityLtr',
+                'incomeInvoiceRefuelQuantityOtherUnits' => 'refuelQuantityOtherUnits',
+                'incomeInvoiceRefuelUnitId' => 'refuelUnitId',
+                'incomeInvoiceRefuelItemPrice' => 'refuelItemPrice',
+                'incomeInvoiceRefuelTax' => 'refuelTax',
+                'incomeInvoiceRefuelMot' => 'refuelMot',
+                'incomeInvoiceRefuelVat' => 'refuelVat',
+                'incomeInvoiceRefuelDeliver' => 'refuelDeliver',
+                'incomeInvoiceRefuelPrice' => 'refuelPrice',
+                'incomeInvoiceRefuelPriceTotal' => 'refuelPriceTotal',
+                'incomeInvoiceRefuelExchangeToUsdPriceTotal' => 'refuelExchangeToUsdPriceTotal',
+            ),
+            'left');
+
+        $select->join(
+            array('incomeInvoiceRefuelUnit' => 'library_unit'),
+            'incomeInvoiceRefuelUnit.id = incomeInvoiceRefuelData.refuelUnitId',
+            array(
+                'incomeInvoiceRefuelUnitName' => 'name',
             ),
             'left');
 
