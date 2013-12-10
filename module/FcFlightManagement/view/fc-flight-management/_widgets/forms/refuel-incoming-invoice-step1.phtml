@@ -29,7 +29,7 @@
                 <td><?= $row->flightAircraftTypeName . ' (' . $row->flightAircraftName . ')' ?></td>
                 <td><?= date('d-m-Y', $row->refuelDate) ?></td>
                 <td><?= $row->refuelAirportICAO . ' (' . $row->refuelAirportIATA . ')' ?></td>
-                <td data-refuelAgentShortName="<?= $row->refuelAgentShortName ?>"><?= $row->refuelAgentShortName ?></td>
+                <td class="refuelAgentShortName"><?= $row->refuelAgentShortName ?></td>
                 <td><?= $row->refuelQuantityOtherUnits ?></td>
                 <td><?= $row->refuelUnitName ?></td>
                 <td class="text-right"><?= $row->refuelPriceUsd ?></td>

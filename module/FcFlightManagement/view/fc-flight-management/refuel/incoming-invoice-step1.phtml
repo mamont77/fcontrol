@@ -9,7 +9,7 @@ $this->headTitle($title);
 </ul>
 
 <h1><?= $title ?></h1>
-
+<?// \Zend\Debug\Debug::dump($form->getMessages())?>
 <?php if ($form->getMessages()): ?>
     <div class="alert alert-error">
         <button class="close" data-dismiss="alert" type="button">×</button>
@@ -30,7 +30,7 @@ $form->prepare();
 // Get the form label plugin
 $formLabel = $this->plugin('formLabel');
 echo $this->form()->openTag($form) . PHP_EOL;
-echo $this->formHidden($form->get('csrf')) . PHP_EOL;
+//echo $this->formHidden($form->get('csrf')) . PHP_EOL;
 ?>
 
 <table class="table ">
