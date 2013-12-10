@@ -213,19 +213,21 @@ class LegModel extends AbstractTableGateway
      */
     public function add(LegFilter $object)
     {
-        $dateOfFlight = \DateTime::createFromFormat('d-m-Y', $object->dateOfFlight);
-        $apDepTime = \DateTime::createFromFormat('d-m-Y H:i', $object->dateOfFlight . ' ' . $object->apDepTime);
-        $apArrTime = \DateTime::createFromFormat('d-m-Y H:i', $object->dateOfFlight . ' ' . $object->apArrTime);
+        $dateOfFlight = \DateTime::createFromFormat('d-m-Y', $object->dateOfFlight)->setTime(0, 0)->getTimestamp();
+        $apDepTime = \DateTime::createFromFormat('d-m-Y H:i', $object->dateOfFlight . ' ' . $object->apDepTime)
+            ->setTime(0, 0)->getTimestamp();
+        $apArrTime = \DateTime::createFromFormat('d-m-Y H:i', $object->dateOfFlight . ' ' . $object->apArrTime)
+            ->setTime(0, 0)->getTimestamp();
 
         $data = array(
             'headerId' => (int)$object->headerId,
-            'dateOfFlight' => (string)$dateOfFlight->getTimestamp(),
+            'dateOfFlight' => (string)$dateOfFlight,
             'flightNumberAirportId' => (int)$object->flightNumberAirportId,
             'flightNumberText' => (string)$object->flightNumberText,
             'apDepAirportId' => (int)$object->apDepAirportId,
-            'apDepTime' => (string)$apDepTime->getTimestamp(),
+            'apDepTime' => (string)$apDepTime,
             'apArrAirportId' => (int)$object->apArrAirportId,
-            'apArrTime' => (string)$apArrTime->getTimestamp(),
+            'apArrTime' => (string)$apArrTime,
         );
         $hash = $object->dateOfFlight . ': Dep ' . $object->apDepTime . ', Arr ' . $object->apArrTime;
 
@@ -244,19 +246,21 @@ class LegModel extends AbstractTableGateway
      */
     public function save(LegFilter $object)
     {
-        $dateOfFlight = \DateTime::createFromFormat('d-m-Y', $object->dateOfFlight);
-        $apDepTime = \DateTime::createFromFormat('d-m-Y H:i', $object->dateOfFlight . ' ' . $object->apDepTime);
-        $apArrTime = \DateTime::createFromFormat('d-m-Y H:i', $object->dateOfFlight . ' ' . $object->apArrTime);
+        $dateOfFlight = \DateTime::createFromFormat('d-m-Y', $object->dateOfFlight)->setTime(0, 0)->getTimestamp();
+        $apDepTime = \DateTime::createFromFormat('d-m-Y H:i', $object->dateOfFlight . ' ' . $object->apDepTime)
+            ->setTime(0, 0)->getTimestamp();
+        $apArrTime = \DateTime::createFromFormat('d-m-Y H:i', $object->dateOfFlight . ' ' . $object->apArrTime)
+            ->setTime(0, 0)->getTimestamp();
 
         $data = array(
             'headerId' => (int)$object->headerId,
-            'dateOfFlight' => (string)$dateOfFlight->getTimestamp(),
+            'dateOfFlight' => (string)$dateOfFlight,
             'flightNumberAirportId' => (int)$object->flightNumberAirportId,
             'flightNumberText' => (string)$object->flightNumberText,
             'apDepAirportId' => (int)$object->apDepAirportId,
-            'apDepTime' => (string)$apDepTime->getTimestamp(),
+            'apDepTime' => (string)$apDepTime,
             'apArrAirportId' => (int)$object->apArrAirportId,
-            'apArrTime' => (string)$apArrTime->getTimestamp(),
+            'apArrTime' => (string)$apArrTime,
         );
         $hash = $object->dateOfFlight . ': Dep ' . $object->apDepTime . ', Arr ' . $object->apArrTime;
 

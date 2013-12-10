@@ -157,7 +157,7 @@ class RefuelModel extends AbstractTableGateway
      */
     public function add(RefuelFilter $object)
     {
-        $date = \DateTime::createFromFormat('d-m-Y', $object->date);
+        $date = \DateTime::createFromFormat('d-m-Y', $object->date)->setTime(0, 0)->getTimestamp();
         $airport = explode('-', (string)$object->airportId);
         $object->legId = $airport[0];
         $object->airportId = $airport[1];
@@ -173,7 +173,7 @@ class RefuelModel extends AbstractTableGateway
             'unitId' => (int)$object->unitId,
             'priceUsd' => (string)$object->priceUsd,
             'totalPriceUsd' => (string)$object->totalPriceUsd,
-            'date' => (string)$date->getTimestamp(),
+            'date' => (string)$date,
             'status' => (int)$object->status,
         );
         $hash = $object->date;
@@ -193,7 +193,7 @@ class RefuelModel extends AbstractTableGateway
      */
     public function save(RefuelFilter $object)
     {
-        $date = \DateTime::createFromFormat('d-m-Y', $object->date);
+        $date = \DateTime::createFromFormat('d-m-Y', $object->date)->setTime(0, 0)->getTimestamp();
         $airport = explode('-', (string)$object->airportId);
         $object->legId = $airport[0];
         $object->airportId = $airport[1];
@@ -209,7 +209,7 @@ class RefuelModel extends AbstractTableGateway
             'unitId' => (int)$object->unitId,
             'priceUsd' => (string)$object->priceUsd,
             'totalPriceUsd' => (string)$object->totalPriceUsd,
-            'date' => (string)$date->getTimestamp(),
+            'date' => (string)$date,
             'status' => (int)$object->status,
         );
         $hash = $object->date;

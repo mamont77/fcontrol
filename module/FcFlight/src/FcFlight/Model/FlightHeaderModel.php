@@ -165,12 +165,11 @@ class FlightHeaderModel extends AbstractTableGateway
     public function add(FlightHeaderFilter $object)
     {
         $dateOrder = \DateTime::createFromFormat('d-m-Y', $object->dateOrder);
-        $dateOrder = $dateOrder->getTimestamp();
+        $dateOrder = $dateOrder->setTime(0, 0)->getTimestamp();
 
         if (empty($object->id)) {
             $object->id = null;
         }
-
 
         $data = array(
             'parentId' => $object->id,
@@ -200,8 +199,9 @@ class FlightHeaderModel extends AbstractTableGateway
      */
     public function save(FlightHeaderFilter $object)
     {
-        $dateOrder = strtotime($object->dateOrder);
-
+        $dateOrder = \DateTime::createFromFormat('d-m-Y', $object->dateOrder);
+        $dateOrder = $dateOrder->setTime(0, 0)->getTimestamp();
+        
         $data = array(
             'refNumberOrder' => $object->refNumberOrder,
             'dateOrder' => $dateOrder,
