@@ -114,6 +114,14 @@ class RefuelModel extends AbstractTableGateway
             'left');
 
         $select->join(
+            array('refuelUnit' => 'library_unit'),
+            'refuelUnit.id = flightRefuelForm.unitId',
+            array(
+                'refuelUnitName' => 'name',
+            ),
+            'left');
+
+        $select->join(
             array('flightAgent' => 'library_kontragent'),
             'flightAgent.id = flight.kontragent',
             array(
