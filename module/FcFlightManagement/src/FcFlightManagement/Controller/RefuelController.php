@@ -14,6 +14,8 @@ use FcFlight\Model\PermissionModel;
 use FcFlightManagement\Model\RefuelModel;
 use FcFlight\Model\ApServiceModel;
 use FcFlight\Form\ApServiceForm;
+use FcFlightManagement\Model\IncomeInvoiceRefuelMainModel;
+use FcFlightManagement\Model\IncomeInvoiceRefuelDataModel;
 
 /**
  * Class RefuelController
@@ -35,9 +37,25 @@ class RefuelController extends FlightController
     );
 
     /**
+     * @var \FcFlightManagement\Model\RefuelModel
+     */
+    protected $refuelModel;
+
+    /**
+     * @var \FcFlightManagement\Model\IncomeInvoiceRefuelMainModel
+     */
+    protected $incomeInvoiceRefuelMainModel;
+
+    /**
+     * @var \FcFlightManagement\Model\IncomeInvoiceRefuelDataModel
+     */
+    protected $incomeInvoiceRefuelDataModel;
+
+
+    /**
      * @return ViewModel
      */
-    public function incomingInvoiceStep1Action()
+    public function incomeInvoiceStep1Action()
     {
         $result = array();
         $searchForm = new RefuelStep1Form('managementRefuelStep1',
@@ -55,7 +73,6 @@ class RefuelController extends FlightController
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-
             $data = $request->getPost();
 
             $postIsEmpty = true;
@@ -68,7 +85,7 @@ class RefuelController extends FlightController
 
             if ($postIsEmpty) {
                 $this->flashMessenger()->addErrorMessage('Result not found. Enter one or more fields.');
-                return $this->redirect()->toRoute('management/refuel/incoming-invoice-step1');
+                return $this->redirect()->toRoute('management/refuel/income-invoice-step1');
             }
 
             $filter = $this->getServiceLocator()->get('FcFlightManagement\Filter\RefuelStep1Filter');
@@ -91,10 +108,9 @@ class RefuelController extends FlightController
     /**
      * @return ViewModel
      */
-    public function incomingInvoiceStep2Action()
+    public function incomeInvoiceStep2Action()
     {
         $result = array();
-
         $units = array();
         $unitsObj = $this->getUnits();
         foreach ($unitsObj as $unit) {
@@ -106,12 +122,11 @@ class RefuelController extends FlightController
 
         $request = $this->getRequest();
         if ($request->isPost()) {
-
             $data = $request->getPost();
 
             if (empty($data['refuelsSelected'])) {
                 $this->flashMessenger()->addErrorMessage('Result not found. Enter one or more fields.');
-                return $this->redirect()->toRoute('management/refuel/incoming-invoice-step1');
+                return $this->redirect()->toRoute('management/refuel/income-invoice-step1');
             }
 
             $result = $this->getRefuelModel()->findByParams($data);
@@ -127,7 +142,7 @@ class RefuelController extends FlightController
     /**
      * @return ViewModel
      */
-    public function incomingInvoiceStep3Action()
+    public function incomeInvoiceStep3Action()
     {
         $units = array();
         $unitsObj = $this->getUnits();
@@ -141,10 +156,8 @@ class RefuelController extends FlightController
         $request = $this->getRequest();
 
         if ($request->isPost()) {
-
             $result = $request->getPost();
 
-//            \Zend\Debug\Debug::dump($result);
             return array(
                 'currencies' => $currencies,
                 'units' => $units,
@@ -152,38 +165,60 @@ class RefuelController extends FlightController
             );
         }
 
-        return $this->redirect()->toRoute('management/refuel/incoming-invoice-step1');
+        return $this->redirect()->toRoute('management/refuel/income-invoice-step1');
+    }
+
+    /**
+     * @return mixed
+     */
+    public function incomeInvoiceAddAction()
+    {
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $data = $request->getPost();
+//            \Zend\Debug\Debug::dump($data);
+            $invoiceId = $this->getIncomeInvoiceRefuelMainModel()->add($data);
+
+            foreach ($data['data'] as $row) {
+                $row['invoiceId'] = $invoiceId;
+                $row['preInvoiceRefuelId'] = $row['refuelId'];
+                $this->getIncomeInvoiceRefuelDataModel()->add($row);
+            }
+
+            $message = "Refuel income invoice was successfully added.";
+            $this->flashMessenger()->addSuccessMessage($message);
+
+            return $this->redirect()->toRoute('management/refuel/income-invoice-show',
+                array(
+                    'id' => $invoiceId,
+                ));
+        }
+
+        return $this->redirect()->toRoute('management/refuel/income-invoice-step1');
     }
 
     /**
      * @return ViewModel
      */
-    public function incomingInvoiceAddAction()
+    public function incomeInvoiceShowAction()
     {
-        $units = array();
-        $unitsObj = $this->getUnits();
-        foreach ($unitsObj as $unit) {
-            $units[$unit->id] = $unit->name;
+        $invoiceId = (string)$this->params()->fromRoute('id', '');
+
+        if (empty($invoiceId)) {
+            return $this->redirect()->toRoute('management/refuel/income-invoice-step1');
         }
 
-        $currencies = new ApServiceForm(null, array());
-        $currencies = $currencies->getCurrencyExchangeRate();
+        $header = $this->getIncomeInvoiceRefuelMainModel()->get($invoiceId);
+        $data = $this->getIncomeInvoiceRefuelDataModel()->getByInvoiceId($invoiceId);
 
-        $request = $this->getRequest();
-
-        if ($request->isPost()) {
-
-            $result = $request->getPost();
-
-//            \Zend\Debug\Debug::dump($result);
-            return array(
-                'currencies' => $currencies,
-                'units' => $units,
-                'result' => $result,
-            );
+        foreach ($data as $key => $row) {
+            $header->data[$row->refuelId] = $row;
         }
 
-        return $this->redirect()->toRoute('management/refuel/incoming-invoice-step1');
+        return new ViewModel(array(
+            'header' => $header,
+        ));
+
     }
 
     /**
@@ -199,5 +234,25 @@ class RefuelController extends FlightController
         }
 
         return $this->refuelModel;
+    }
+
+    public function getIncomeInvoiceRefuelMainModel()
+    {
+        if (!$this->incomeInvoiceRefuelMainModel) {
+            $sm = $this->getServiceLocator();
+            $this->incomeInvoiceRefuelMainModel = $sm->get('FcFlightManagement\Model\IncomeInvoiceRefuelMainModel');
+        }
+
+        return $this->incomeInvoiceRefuelMainModel;
+    }
+
+    public function getIncomeInvoiceRefuelDataModel()
+    {
+        if (!$this->incomeInvoiceRefuelDataModel) {
+            $sm = $this->getServiceLocator();
+            $this->incomeInvoiceRefuelDataModel = $sm->get('FcFlightManagement\Model\IncomeInvoiceRefuelDataModel');
+        }
+
+        return $this->incomeInvoiceRefuelDataModel;
     }
 }

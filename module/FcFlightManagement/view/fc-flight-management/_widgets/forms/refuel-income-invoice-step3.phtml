@@ -1,4 +1,5 @@
-<form name="managementRefuelStep4" id="managementRefuelStep4" method="post" action="/management/refuel/incoming-invoice-add">
+<form name="managementRefuelStep4" id="managementRefuelStep4" method="post"
+      action="/management/refuel/income-invoice-add">
 <table id="invoiceHeader" class="table-bordered table-condensed">
     <thead>
     <tr>
@@ -64,18 +65,22 @@
     </thead>
     <tbody>
     <? foreach ($this->data['data'] as $row): ?>
-                <? // \Zend\Debug\Debug::dump($row) ?>
+        <? // \Zend\Debug\Debug::dump($row) ?>
         <tr id="invoiceRefuelId_<?= $row['refuelId'] ?>">
             <td>
                 <input type="hidden" name="data[<?= $row['refuelId'] ?>][refuelId]" value="<?= $row['refuelId'] ?>"/>
-                <input type="text" name="data[<?= $row['refuelId'] ?>][flightRefNumberOrder]" class="input-small readonly"
-                       maxlength="40" required="required" readonly="readonly" value="<?= $row['flightRefNumberOrder'] ?>">
+                <input type="text" name="data[<?= $row['refuelId'] ?>][flightRefNumberOrder]"
+                       class="input-small readonly"
+                       maxlength="40" required="required" readonly="readonly"
+                       value="<?= $row['flightRefNumberOrder'] ?>">
             </td>
             <td>
                 <input type="hidden" name="data[<?= $row['refuelId'] ?>][flightAgentId]"
                        value="<?= $row['flightAgentId'] ?>">
-                <input type="text" name="data[<?= $row['refuelId'] ?>][flightAgentShortName]" class="input-small readonly"
-                       maxlength="40" required="required" readonly="readonly" value="<?= $row['flightAgentShortName'] ?>">
+                <input type="text" name="data[<?= $row['refuelId'] ?>][flightAgentShortName]"
+                       class="input-small readonly"
+                       maxlength="40" required="required" readonly="readonly"
+                       value="<?= $row['flightAgentShortName'] ?>">
             </td>
             <td>
                 <input type="hidden" name="data[<?= $row['refuelId'] ?>][flightAirOperatorId]"
@@ -200,8 +205,12 @@
                             <td>
                                 Subtotal
                             </td>
-                            <td><span class="refuelCurrency"><?= $this->data['invoiceCurrency'] ?></span> <span class="refuelPriceSubTotal"><?= number_format($refuelPriceSubTotal, 2, '.', '') ?></span></td>
-                            <td>USD <span class="refuelExchangeToUsdPriceSubTotal"><?= number_format($refuelExchangeToUsdPriceSubTotal, 2, '.', '') ?></span></td>
+                            <td><span class="refuelCurrency"><?= $this->data['invoiceCurrency'] ?></span> <span
+                                    class="refuelPriceSubTotal"><?= number_format($refuelPriceSubTotal, 2, '.', '') ?></span>
+                            </td>
+                            <td>USD <span
+                                    class="refuelExchangeToUsdPriceSubTotal"><?= number_format($refuelExchangeToUsdPriceSubTotal, 2, '.', '') ?></span>
+                            </td>
                         </tr>
                         </tbody>
                     </table>

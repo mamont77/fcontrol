@@ -1,0 +1,114 @@
+<table id="invoiceData"
+       class="table table-bordered table-hover table-condensed <? if ($this->fixedHeader): ?> table-fixed-header<? endif ?>">
+    <thead>
+    <tr>
+        <th>ORD</th>
+        <th>Customer</th>
+        <th>Air Operator</th>
+        <th>Aircraft</th>
+        <th>Airport Dep</th>
+        <th>Date</th>
+        <th>Quantity, LTR</th>
+        <th>Quantity, Unit</th>
+        <th>Unit</th>
+        <th>Price, <span class="refuelCurrency"><?= $this->header->invoiceCurrency ?></span></th>
+        <th>TAX</th>
+        <th>MOT</th>
+        <th>VAT, %</th>
+        <th>Deliver</th>
+        <th>Total price, <span class="refuelCurrency"><?= $this->header->invoiceCurrency ?></span></th>
+        <th>Total, <span class="refuelCurrency"><?= $this->header->invoiceCurrency ?></span></th>
+        <th>Exchange Total, USD</th>
+    </tr>
+    </thead>
+    <tbody>
+    <? foreach ($this->header->data as $row): ?>
+        <!--        --><? // \Zend\Debug\Debug::dump($row) ?>
+        <tr id="incomeInvoiceRefuelId_<?= $row->refuelId ?>">
+            <td class="noWrap">
+                <?= $row->preInvoiceHeaderRefNumberOrder ?>
+            </td>
+            <td>
+                <?= $row->preInvoiceHeaderAgentShortName ?>
+            </td>
+            <td>
+                <?= $row->preInvoiceHeaderOperatorShortName ?>
+            </td>
+            <td class="noWrap">
+                <?= $row->preInvoiceHeaderAircraftTypeName ?><br/>
+                <small>( <?= $row->preInvoiceHeaderAircraftName ?> )</small>
+            </td>
+            <td class="noWrap">
+                <?= $row->preInvoiceRefuelAirportICAO ?> (<?= $row->preInvoiceRefuelAirportIATA ?>)
+            </td>
+            <td>
+                <?= date('d-m-Y', $row->refuelDate) ?>
+            </td>
+            <td>
+                <?= $row->refuelQuantityLtr ?>
+            </td>
+            <td>
+                <?= $row->refuelQuantityOtherUnits ?>
+            </td>
+            <td>
+                <?= $row->preInvoiceHeaderUnitName ?>
+            </td>
+            <td class="text-right">
+                <?= $row->refuelItemPrice ?>
+            </td>
+            <td>
+                <?= $row->refuelTax ?>
+            </td>
+            <td>
+                <?= $row->refuelMot ?>
+            </td>
+            <td>
+                <?= $row->refuelVat ?>
+            </td>
+            <td>
+                <?= $row->refuelDeliver ?>
+            </td>
+            <td class="text-right">
+                <?= $row->refuelPrice ?>
+            </td>
+            <td class="text-right">
+                <?php
+                $refuelPriceSubTotal += $row->refuelPriceTotal;
+                ?>
+                <?= $row->refuelPriceTotal ?>
+            </td>
+            <td class="text-right">
+                <?php
+                $refuelExchangeToUsdPriceSubTotal += $row->refuelExchangeToUsdPriceTotal;
+                ?>
+                <?= $row->refuelExchangeToUsdPriceTotal ?>
+            </td>
+        </tr>
+    <? endforeach; ?>
+    <tr>
+        <td colspan="17">
+            <div class="row-fluid">
+                <div class="span6">
+                </div>
+                <div class="span6">
+                    <table style="width: 300px; float: right" class="table table-bordered pull-right">
+                        <tbody>
+                        <tr>
+                            <td>
+                                Subtotal
+                            </td>
+                            <td><span class="refuelCurrency"><?= $this->header->invoiceCurrency ?></span> <span
+                                    class="refuelPriceSubTotal"><?= number_format($refuelPriceSubTotal, 2, '.', '') ?></span>
+                            </td>
+                            <td>USD <span
+                                    class="refuelExchangeToUsdPriceSubTotal"><?= number_format($refuelExchangeToUsdPriceSubTotal, 2, '.', '') ?></span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>

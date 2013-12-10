@@ -9,6 +9,8 @@ use Zend\Mvc\MvcEvent;
 use FcFlight\Model\FlightHeaderModel;
 use FcFlightManagement\Filter\RefuelStep1Filter;
 use FcFlightManagement\Model\RefuelModel;
+use FcFlightManagement\Model\IncomeInvoiceRefuelMainModel;
+use FcFlightManagement\Model\IncomeInvoiceRefuelDataModel;
 
 /**
  * Class Module
@@ -111,6 +113,14 @@ class Module
                 'FcFlightManagement\Model\RefuelModel' => function ($sm) {
                         $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                         return new RefuelModel($dbAdapter);
+                    },
+                'FcFlightManagement\Model\IncomeInvoiceRefuelMainModel' => function ($sm) {
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new IncomeInvoiceRefuelMainModel($dbAdapter);
+                    },
+                'FcFlightManagement\Model\IncomeInvoiceRefuelDataModel' => function ($sm) {
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new IncomeInvoiceRefuelDataModel($dbAdapter);
                     },
             ),
         );

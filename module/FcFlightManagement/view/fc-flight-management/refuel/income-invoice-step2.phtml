@@ -1,18 +1,18 @@
 <?php
-$title = 'Check income fuel invoice';
+$title = 'Create income fuel invoice';
 $this->headTitle($title);
 ?>
 <ul class="breadcrumb">
     <li><a href="/">Home</a> <span class="divider">/</span></li>
     <li>Management <span class="divider">/</span></li>
-    <li>Refuel</li>
+    <li>Refuel income invoice</li>
 </ul>
 
 <h1><?= $title ?></h1>
 
-<? if($this->result): ?>
+<? if ($this->result): ?>
     <?=
-    $this->partial('fc-flight-management/_widgets/forms/refuel-incoming-invoice-step3.phtml',
+    $this->partial('fc-flight-management/_widgets/forms/refuel-income-invoice-step2.phtml',
         array(
             'data' => $this->result,
             'units' => $this->units,

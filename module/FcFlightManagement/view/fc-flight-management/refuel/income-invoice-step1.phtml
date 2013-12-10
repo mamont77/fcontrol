@@ -5,11 +5,11 @@ $this->headTitle($title);
 <ul class="breadcrumb">
     <li><a href="/">Home</a> <span class="divider">/</span></li>
     <li>Management <span class="divider">/</span></li>
-    <li>Refuel</li>
+    <li>Refuel income invoice</li>
 </ul>
 
 <h1><?= $title ?></h1>
-<?// \Zend\Debug\Debug::dump($form->getMessages())?>
+<? // \Zend\Debug\Debug::dump($form->getMessages())?>
 <?php if ($form->getMessages()): ?>
     <div class="alert alert-error">
         <button class="close" data-dismiss="alert" type="button">×</button>
@@ -24,7 +24,7 @@ $this->headTitle($title);
 
 <?php
 $form = $this->form;
-$form->setAttribute('action', $this->url('management/refuel/incoming-invoice-step1'));
+$form->setAttribute('action', $this->url('management/refuel/income-invoice-step1'));
 
 $form->prepare();
 // Get the form label plugin
@@ -112,9 +112,9 @@ echo $this->form()->openTag($form) . PHP_EOL;
 </table>
 <?= $this->form()->closeTag() ?>
 
-<? if($this->result): ?>
+<? if ($this->result): ?>
     <?=
-    $this->partial('fc-flight-management/_widgets/forms/refuel-incoming-invoice-step1.phtml',
+    $this->partial('fc-flight-management/_widgets/forms/refuel-income-invoice-step1.phtml',
         array(
             'data' => $this->result,
             'fixedHeader' => true,

@@ -21,8 +21,8 @@ return array(
                 'route' => 'management',
                 'pages' => array(
                     array(
-                        'label' => 'Refuel',
-                        'route' => 'management/refuel/incoming-invoice-step1',
+                        'label' => 'Refuel income invoice',
+                        'route' => 'management/refuel/income-invoice-step1',
                     ),
                 ),
             ),

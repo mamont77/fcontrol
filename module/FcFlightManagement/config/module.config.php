@@ -34,47 +34,56 @@ return array(
                         ),
                         'may_terminate' => true,
                         'child_routes' => array(
-                            'incoming-invoice-step1' => array(
+                            'income-invoice-step1' => array(
                                 'type' => 'literal',
                                 'options' => array(
-                                    'route' => '/incoming-invoice-step1',
+                                    'route' => '/income-invoice-step1',
                                     'defaults' => array(
                                         'controller' => 'FcFlightManagement\Controller\Refuel',
-                                        'action' => 'incomingInvoiceStep1'
+                                        'action' => 'incomeInvoiceStep1'
                                     )
                                 ),
                             ),
-                            'incoming-invoice-step2' => array(
+                            'income-invoice-step2' => array(
                                 'type' => 'literal',
                                 'options' => array(
-                                    'route' => '/incoming-invoice-step2',
+                                    'route' => '/income-invoice-step2',
                                     'defaults' => array(
                                         'controller' => 'FcFlightManagement\Controller\Refuel',
-                                        'action' => 'incomingInvoiceStep2'
+                                        'action' => 'incomeInvoiceStep2'
                                     )
                                 ),
                             ),
-                            'incoming-invoice-step3' => array(
+                            'income-invoice-step3' => array(
                                 'type' => 'literal',
                                 'options' => array(
-                                    'route' => '/incoming-invoice-step3',
+                                    'route' => '/income-invoice-step3',
                                     'defaults' => array(
                                         'controller' => 'FcFlightManagement\Controller\Refuel',
-                                        'action' => 'incomingInvoiceStep3'
+                                        'action' => 'incomeInvoiceStep3'
                                     )
                                 ),
                             ),
-                            'incoming-invoice' => array(
+                            'income-invoice-add' => array(
+                                'type' => 'literal',
+                                'options' => array(
+                                    'route' => '/income-invoice-add',
+                                    'defaults' => array(
+                                        'controller' => 'FcFlightManagement\Controller\Refuel',
+                                        'action' => 'incomeInvoiceAdd'
+                                    )
+                                ),
+                            ),
+                            'income-invoice-show' => array(
                                 'type' => 'segment',
                                 'options' => array(
-                                    'route' => '[/:action][/:id]',
+                                    'route' => '/income-invoice-show[/:id]',
                                     'constraints' => array(
-                                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                         'id' => '[0-9]+',
                                     ),
                                     'defaults' => array(
                                         'controller' => 'FcFlightManagement\Controller\Refuel',
-                                        'action' => 'add'
+                                        'action' => 'incomeInvoiceShow'
                                     )
                                 ),
                             ),
