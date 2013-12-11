@@ -11,10 +11,10 @@ use Zend\InputFilter\InputFilterInterface;
 use Zend\Db\Adapter\Adapter;
 
 /**
- * Class RefuelStep1Filter
+ * Class RefuelIncomeInvoiceStep1Filter
  * @package FcFlightManagement\Filter
  */
-class RefuelStep1Filter implements InputFilterAwareInterface
+class RefuelIncomeInvoiceStep1Filter implements InputFilterAwareInterface
 {
 
     /**

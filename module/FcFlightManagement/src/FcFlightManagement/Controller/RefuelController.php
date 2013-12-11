@@ -4,7 +4,7 @@
  */
 namespace FcFlightManagement\Controller;
 
-use FcFlightManagement\Form\RefuelStep1Form;
+use FcFlightManagement\Form\RefuelIncomeInvoiceStep1Form;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use FcFlight\Controller\FlightController;
@@ -14,8 +14,8 @@ use FcFlight\Model\PermissionModel;
 use FcFlightManagement\Model\RefuelModel;
 use FcFlight\Model\ApServiceModel;
 use FcFlight\Form\ApServiceForm;
-use FcFlightManagement\Model\IncomeInvoiceRefuelMainModel;
-use FcFlightManagement\Model\IncomeInvoiceRefuelDataModel;
+use FcFlightManagement\Model\RefuelIncomeInvoiceMainModel;
+use FcFlightManagement\Model\RefuelIncomeInvoiceDataModel;
 
 /**
  * Class RefuelController
@@ -42,12 +42,12 @@ class RefuelController extends FlightController
     protected $refuelModel;
 
     /**
-     * @var \FcFlightManagement\Model\IncomeInvoiceRefuelMainModel
+     * @var \FcFlightManagement\Model\RefuelIncomeInvoiceMainModel
      */
     protected $incomeInvoiceRefuelMainModel;
 
     /**
-     * @var \FcFlightManagement\Model\IncomeInvoiceRefuelDataModel
+     * @var \FcFlightManagement\Model\RefuelIncomeInvoiceDataModel
      */
     protected $incomeInvoiceRefuelDataModel;
 
@@ -58,7 +58,7 @@ class RefuelController extends FlightController
     public function incomeInvoiceStep1Action()
     {
         $result = array();
-        $searchForm = new RefuelStep1Form('managementRefuelStep1',
+        $searchForm = new RefuelIncomeInvoiceStep1Form('refuelIncomeInvoiceStep1',
             array(
                 'libraries' => array(
                     'aircrafts' => $this->getAircrafts(),
@@ -88,7 +88,7 @@ class RefuelController extends FlightController
                 return $this->redirect()->toRoute('management/refuel/income-invoice-step1');
             }
 
-            $filter = $this->getServiceLocator()->get('FcFlightManagement\Filter\RefuelStep1Filter');
+            $filter = $this->getServiceLocator()->get('FcFlightManagement\Filter\RefuelIncomeInvoiceStep1Filter');
             $searchForm->setInputFilter($filter->getInputFilter());
 
             $searchForm->setData($request->getPost());

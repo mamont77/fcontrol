@@ -7,10 +7,10 @@ namespace FcFlightManagement;
 use Zend\ModuleManager\ModuleManager;
 use Zend\Mvc\MvcEvent;
 use FcFlight\Model\FlightHeaderModel;
-use FcFlightManagement\Filter\RefuelStep1Filter;
+use FcFlightManagement\Filter\RefuelIncomeInvoiceStep1Filter;
 use FcFlightManagement\Model\RefuelModel;
-use FcFlightManagement\Model\IncomeInvoiceRefuelMainModel;
-use FcFlightManagement\Model\IncomeInvoiceRefuelDataModel;
+use FcFlightManagement\Model\RefuelIncomeInvoiceMainModel;
+use FcFlightManagement\Model\RefuelIncomeInvoiceDataModel;
 
 /**
  * Class Module
@@ -106,9 +106,9 @@ class Module
                         $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                         return new FlightHeaderModel($dbAdapter);
                     },
-                'FcFlightManagement\Filter\RefuelStep1Filter' => function ($sm) {
+                'FcFlightManagement\Filter\RefuelIncomeInvoiceStep1Filter' => function ($sm) {
                         $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                        return new RefuelStep1Filter($dbAdapter);
+                        return new RefuelIncomeInvoiceStep1Filter($dbAdapter);
                     },
                 'FcFlightManagement\Model\RefuelModel' => function ($sm) {
                         $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
@@ -116,11 +116,11 @@ class Module
                     },
                 'FcFlightManagement\Model\IncomeInvoiceRefuelMainModel' => function ($sm) {
                         $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                        return new IncomeInvoiceRefuelMainModel($dbAdapter);
+                        return new RefuelIncomeInvoiceMainModel($dbAdapter);
                     },
                 'FcFlightManagement\Model\IncomeInvoiceRefuelDataModel' => function ($sm) {
                         $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                        return new IncomeInvoiceRefuelDataModel($dbAdapter);
+                        return new RefuelIncomeInvoiceDataModel($dbAdapter);
                     },
             ),
         );

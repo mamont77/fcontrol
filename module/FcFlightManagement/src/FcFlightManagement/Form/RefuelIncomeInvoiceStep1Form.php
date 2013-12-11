@@ -10,10 +10,10 @@ use FcFlight\Form\BaseForm;
 use \Zend\Db\ResultSet\ResultSet;
 
 /**
- * Class RefuelStep1Form
+ * Class RefuelIncomeInvoiceStep1Form
  * @package FcFlightManagement\Form
  */
-class RefuelStep1Form extends BaseForm
+class RefuelIncomeInvoiceStep1Form extends BaseForm
 {
     /**
      * @var string

@@ -24,6 +24,10 @@ return array(
                         'label' => 'Refuel income invoice',
                         'route' => 'management/refuel/income-invoice-step1',
                     ),
+                    array(
+                        'label' => 'Refuel outcome invoice',
+                        'route' => 'management/refuel/outcome-invoice-step1',
+                    ),
                 ),
             ),
             array(

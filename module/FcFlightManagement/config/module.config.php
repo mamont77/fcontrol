@@ -87,6 +87,16 @@ return array(
                                     )
                                 ),
                             ),
+                            'outcome-invoice-step1' => array(
+                                'type' => 'literal',
+                                'options' => array(
+                                    'route' => '/outcome-invoice-step1',
+                                    'defaults' => array(
+                                        'controller' => 'FcFlightManagement\Controller\Refuel',
+                                        'action' => 'outcomeInvoiceStep1'
+                                    )
+                                ),
+                            ),
                         )
                     ),
                 )

@@ -8,7 +8,7 @@ use Zend\Db\TableGateway\AbstractTableGateway;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\Select;
-use FcFlightManagement\Filter\RefuelStep1Filter;
+use FcFlightManagement\Filter\RefuelIncomeInvoiceStep1Filter;
 
 /**
  * Class RefuelModel

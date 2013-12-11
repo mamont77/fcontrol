@@ -392,15 +392,15 @@
      *
      * @type {{attach: Function}}
      */
-    fControl.behaviors.managementRefuelStep1 = {
+    fControl.behaviors.refuelIncomeInvoiceStep1 = {
         attach: function (context, settings) {
-            var $form = $('form#managementRefuelStep1');
+            var $form = $('form#refuelIncomeInvoiceStep1');
 
             if ($form.length == 0) return;
 
             $($form).find('#dateOrderFrom, #dateOrderTo').mask('99-99-9999');
 
-            var $form2 = $('form#managementRefuelStep2'),
+            var $form2 = $('form#refuelIncomeInvoiceStep2'),
                 $rowsCheckbox = $form2.find('.refuelsSelected');
 
             if ($form2.length == 0) return;
@@ -437,9 +437,9 @@
      *
      * @type {{attach: Function}}
      */
-    fControl.behaviors.managementRefuelStep3 = {
+    fControl.behaviors.refuelIncomeInvoiceStep3 = {
         attach: function (context, settings) {
-            var $form = $('form#managementRefuelStep3');
+            var $form = $('form#refuelIncomeInvoiceStep3');
 
             if ($form.length == 0) return;
 
@@ -560,9 +560,9 @@
      *
      * @type {{attach: Function}}
      */
-    fControl.behaviors.managementRefuelStep4 = {
+    fControl.behaviors.refuelIncomeInvoiceStep4 = {
         attach: function (context, settings) {
-            var $form = $('form#managementRefuelStep4');
+            var $form = $('form#refuelIncomeInvoiceStep4');
 
             if ($form.length == 0) return;
 

@@ -10,10 +10,10 @@ use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\Select;
 
 /**
- * Class IncomeInvoiceRefuelDataModel
+ * Class RefuelIncomeInvoiceDataModel
  * @package FcFlightManagement\Model
  */
-class IncomeInvoiceRefuelDataModel extends IncomeInvoiceRefuelMainModel
+class RefuelIncomeInvoiceDataModel extends RefuelIncomeInvoiceMainModel
 {
     /**
      * @var string

@@ -157,7 +157,11 @@ return array(
                 array('route' => 'management/refuel/income-invoice-step3', 'roles' => array('manager')),
                 array('route' => 'management/refuel/income-invoice-add', 'roles' => array('manager')),
                 array('route' => 'management/refuel/income-invoice-show', 'roles' => array('manager')),
-
+                array('route' => 'management/refuel/outcome-invoice-step1', 'roles' => array('manager')),
+                array('route' => 'management/refuel/outcome-invoice-step2', 'roles' => array('manager')),
+                array('route' => 'management/refuel/outcome-invoice-step3', 'roles' => array('manager')),
+                array('route' => 'management/refuel/outcome-invoice-add', 'roles' => array('manager')),
+                array('route' => 'management/refuel/outcome-invoice-show', 'roles' => array('manager')),
 
                 array('route' => 'leg', 'roles' => array('manager')),
                 array('route' => 'permission', 'roles' => array('manager')),
