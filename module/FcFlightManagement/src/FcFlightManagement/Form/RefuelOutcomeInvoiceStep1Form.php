@@ -174,6 +174,25 @@ class RefuelOutcomeInvoiceStep1Form extends BaseForm
             ),
         ));
 
+        $this->add(array(
+            'name' => 'typeOfInvoice',
+            'type' => 'Zend\Form\Element\Select',
+            'attributes' => array(
+                'id' => 'typeOfInvoice',
+                'class' => 'chosen input-medium',
+                'data-placeholder' => 'Type of Invoice',
+                'required' => false,
+            ),
+            'options' => array(
+                'empty_option' => '',
+                'value_options' => array(
+                    'income' => 'Income',
+                    'outcome' => 'Outcome',
+                    'both' => 'Income + Outcome',
+                ),
+            ),
+        ));
+
 //        $this->add(new Element\Csrf('csrf'));
 
         //Submit button

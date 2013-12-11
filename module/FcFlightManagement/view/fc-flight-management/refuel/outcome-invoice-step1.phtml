@@ -5,7 +5,7 @@ $this->headTitle($title);
 <ul class="breadcrumb">
     <li><a href="/">Home</a> <span class="divider">/</span></li>
     <li>Management <span class="divider">/</span></li>
-    <li>Refuel income invoice</li>
+    <li>Refuel outcome invoice</li>
 </ul>
 
 <h1><?= $title ?></h1>
@@ -24,7 +24,7 @@ $this->headTitle($title);
 
 <?php
 $form = $this->form;
-$form->setAttribute('action', $this->url('management/refuel/income-invoice-step1'));
+$form->setAttribute('action', $this->url('management/refuel/outcome-invoice-step1'));
 
 $form->prepare();
 // Get the form label plugin
@@ -43,6 +43,7 @@ echo $this->form()->openTag($form) . PHP_EOL;
         <th>Airport</th>
         <th>Customer</th>
         <th>Air Operator</th>
+        <th>Type of invoice</th>
         <th colspan=1"></th>
     </tr>
     </thead>
@@ -97,6 +98,13 @@ echo $this->form()->openTag($form) . PHP_EOL;
         <td>
             <?php
             $field = $form->get('airOperatorId');
+            echo $this->formSelect($field);
+            ?>
+            <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
+        </td>
+        <td>
+            <?php
+            $field = $form->get('typeOfInvoice');
             echo $this->formSelect($field);
             ?>
             <ul class="errors"><?= $this->formElementErrors($field) ?></ul>

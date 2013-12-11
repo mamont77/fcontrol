@@ -11,7 +11,7 @@ use Zend\Db\Sql\Select;
 use FcFlight\Filter\RefuelFilter;
 
 /**
- * Class RefuelModel
+ * Class RefuelIncomeInvoiceSearchModel
  * @package FcFlight\Model
  */
 class RefuelModel extends AbstractTableGateway

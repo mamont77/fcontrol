@@ -7,8 +7,8 @@ namespace FcFlightManagement;
 use Zend\ModuleManager\ModuleManager;
 use Zend\Mvc\MvcEvent;
 use FcFlight\Model\FlightHeaderModel;
+use FcFlightManagement\Model\RefuelIncomeInvoiceSearchModel;
 use FcFlightManagement\Filter\RefuelIncomeInvoiceStep1Filter;
-use FcFlightManagement\Model\RefuelModel;
 use FcFlightManagement\Model\RefuelIncomeInvoiceMainModel;
 use FcFlightManagement\Model\RefuelIncomeInvoiceDataModel;
 
@@ -106,19 +106,19 @@ class Module
                         $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                         return new FlightHeaderModel($dbAdapter);
                     },
+                'FcFlightManagement\Model\RefuelIncomeInvoiceSearchModel' => function ($sm) {
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new RefuelIncomeInvoiceSearchModel($dbAdapter);
+                    },
                 'FcFlightManagement\Filter\RefuelIncomeInvoiceStep1Filter' => function ($sm) {
                         $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                         return new RefuelIncomeInvoiceStep1Filter($dbAdapter);
                     },
-                'FcFlightManagement\Model\RefuelModel' => function ($sm) {
-                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                        return new RefuelModel($dbAdapter);
-                    },
-                'FcFlightManagement\Model\IncomeInvoiceRefuelMainModel' => function ($sm) {
+                'FcFlightManagement\Model\RefuelIncomeInvoiceMainModel' => function ($sm) {
                         $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                         return new RefuelIncomeInvoiceMainModel($dbAdapter);
                     },
-                'FcFlightManagement\Model\IncomeInvoiceRefuelDataModel' => function ($sm) {
+                'FcFlightManagement\Model\RefuelIncomeInvoiceDataModel' => function ($sm) {
                         $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                         return new RefuelIncomeInvoiceDataModel($dbAdapter);
                     },

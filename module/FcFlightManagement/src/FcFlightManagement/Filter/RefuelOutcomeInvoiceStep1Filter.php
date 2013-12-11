@@ -41,6 +41,7 @@ class RefuelOutcomeInvoiceStep1Filter implements InputFilterAwareInterface
     public $airportId;
     public $customerId;
     public $airOperatorId;
+    public $typeOfInvoice;
 
     //Fields only for view
 
@@ -84,6 +85,7 @@ class RefuelOutcomeInvoiceStep1Filter implements InputFilterAwareInterface
         $this->airportId = (isset($data['airportId'])) ? $data['airportId'] : null;
         $this->customerId = (isset($data['customerId'])) ? $data['customerId'] : null;
         $this->airOperatorId = (isset($data['airOperatorId'])) ? $data['airOperatorId'] : null;
+        $this->typeOfInvoice = (isset($data['typeOfInvoice'])) ? $data['typeOfInvoice'] : null;
     }
 
     /**
@@ -202,6 +204,14 @@ class RefuelOutcomeInvoiceStep1Filter implements InputFilterAwareInterface
                 'required' => false,
                 'filters' => array(
                     array('name' => 'Int'),
+                ),
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'typeOfInvoice',
+                'required' => false,
+                'filters' => array(
+                    array('name' => 'StringTrim'),
                 ),
             )));
 

@@ -11,10 +11,10 @@ use Zend\Db\Sql\Select;
 use FcFlightManagement\Filter\RefuelIncomeInvoiceStep1Filter;
 
 /**
- * Class RefuelModel
+ * Class RefuelIncomeInvoiceSearchModel
  * @package FcFlight\Model
  */
-class RefuelModel extends AbstractTableGateway
+class RefuelIncomeInvoiceSearchModel extends AbstractTableGateway
 {
     /**
      * @var string
