@@ -1,0 +1,49 @@
+<form name="refuelIncomeInvoiceStep2" id="refuelIncomeInvoiceStep2" method="post"
+      action="/management/refuel/income-invoice-step2">
+    <table
+        class="table table-bordered table-hover table-condensed <? if ($this->fixedHeader): ?> table-fixed-header<? endif ?>">
+        <thead>
+        <tr>
+            <th></th>
+            <th>ORD</th>
+            <th>Customer</th>
+            <th>Air Operator</th>
+            <th>Aircraft</th>
+            <th>Date</th>
+            <th>Airport Dep</th>
+            <th>Fuel supplier</th>
+            <th>Quantity</th>
+            <th>Unit</th>
+            <th>Price</th>
+            <th>Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        <? foreach ($this->data as $row): ?>
+<!--            --><?// \Zend\Debug\Debug::dump($row) ?>
+            <tr data-refuelRow="<?= $row->refuelId ?>" class="<? if($row->incomeInvoiceId): ?>success<? endif ?>">
+                <td>
+                    <input type="checkbox" class="refuelsSelected" name="refuelsSelected[]"
+                           data-refuelId="<?= $row->refuelId ?>" value="<?= $row->refuelId ?>">
+                </td>
+                <td><?= $row->flightRefNumberOrder ?></td>
+                <td><?= $row->flightAgentShortName ?></td>
+                <td><?= $row->flightAirOperatorShortName ?></td>
+                <td><?= $row->flightAircraftTypeName . ' (' . $row->flightAircraftName . ')' ?></td>
+                <td><?= date('d-m-Y', $row->incomeInvoiceRefuelDate) ?></td>
+                <td><?= $row->refuelAirportICAO . ' (' . $row->refuelAirportIATA . ')' ?></td>
+                <td class="refuelAgentShortName"><?= $row->refuelAgentShortName ?></td>
+                <td><?= $row->incomeInvoiceRefuelQuantityOtherUnits ?></td>
+                <td><?= $row->incomeInvoiceRefuelUnitName ?></td>
+                <td class="text-right"><?= $row->incomeInvoiceRefuelPriceTotal ?></td>
+                <td class="text-right"><?= $row->incomeInvoiceRefuelExchangeToUsdPriceTotal ?></td>
+            </tr>
+        <? endforeach; ?>
+        <tr>
+            <td colspan="13">
+                <input name="submitBtn" type="submit" class="btn btn-primary pull-right" value="Apply">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
