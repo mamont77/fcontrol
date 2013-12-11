@@ -48,6 +48,11 @@ class RefuelController extends FlightController
     protected $refuelIncomeInvoiceDataModel;
 
     /**
+     * @var \FcFlightManagement\Model\RefuelOutcomeInvoiceSearchModel
+     */
+    protected $refuelOutcomeInvoiceSearchModel;
+
+    /**
      * @var \FcFlightManagement\Model\RefuelOutcomeInvoiceMainModel
      */
     protected $refuelOutcomeInvoiceMainModel;
@@ -217,7 +222,7 @@ class RefuelController extends FlightController
         $header = $this->getRefuelIncomeInvoiceMainModel()->get($invoiceId);
         $data = $this->getRefuelIncomeInvoiceDataModel()->getByInvoiceId($invoiceId);
 
-        foreach ($data as $key => $row) {
+        foreach ($data as $row) {
             $header->data[$row->refuelId] = $row;
         }
 
@@ -269,7 +274,7 @@ class RefuelController extends FlightController
             $searchForm->setData($request->getPost());
             if ($searchForm->isValid() && !$postIsEmpty) {
                 $data = $searchForm->getData();
-                $result = $this->getRefuelIncomeInvoiceSearchModel()->findByParams($data);
+                $result = $this->getRefuelOutcomeInvoiceSearchModel()->findByParams($data);
 
             }
         }
@@ -397,7 +402,7 @@ class RefuelController extends FlightController
     }
 
     /**
-     * Get Refuel model
+     * Get RefuelIncomeInvoiceSearchModel
      *
      * @return RefuelIncomeInvoiceSearchModel
      */
@@ -435,6 +440,22 @@ class RefuelController extends FlightController
         }
 
         return $this->refuelIncomeInvoiceDataModel;
+    }
+
+    /**
+     * Get RefuelOutcomeInvoiceSearchModel
+     *
+     * @return RefuelOutcomeInvoiceSearchModel
+     */
+    public function getRefuelOutcomeInvoiceSearchModel()
+    {
+        if (!$this->refuelOutcomeInvoiceSearchModel) {
+            $sm = $this->getServiceLocator();
+            $this->refuelOutcomeInvoiceSearchModel =
+                $sm->get('FcFlightManagement\Model\RefuelOutcomeInvoiceSearchModel');
+        }
+
+        return $this->refuelOutcomeInvoiceSearchModel;
     }
 
     /**

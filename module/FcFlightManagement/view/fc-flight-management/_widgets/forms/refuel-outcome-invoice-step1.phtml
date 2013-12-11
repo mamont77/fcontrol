@@ -1,5 +1,5 @@
-<form name="refuelIncomeInvoiceStep2" id="refuelIncomeInvoiceStep2" method="post"
-      action="/management/refuel/income-invoice-step2">
+<form name="refuelOutcomeInvoiceStep2" id="refuelOutcomeInvoiceStep2" method="post"
+      action="/management/refuel/outcome-invoice-step2">
     <table
         class="table table-bordered table-hover table-condensed <? if ($this->fixedHeader): ?> table-fixed-header<? endif ?>">
         <thead>
@@ -20,7 +20,7 @@
         </thead>
         <tbody>
         <? foreach ($this->data as $row): ?>
-<!--            --><?// \Zend\Debug\Debug::dump($row) ?>
+            <? \Zend\Debug\Debug::dump($row) ?>
             <tr data-refuelRow="<?= $row->refuelId ?>" class="<? if($row->incomeInvoiceId): ?>success<? endif ?>">
                 <td>
                     <input type="checkbox" class="refuelsSelected" name="refuelsSelected[]"

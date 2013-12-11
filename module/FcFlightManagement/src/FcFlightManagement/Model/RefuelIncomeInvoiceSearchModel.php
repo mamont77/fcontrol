@@ -8,18 +8,17 @@ use Zend\Db\TableGateway\AbstractTableGateway;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\Select;
-use FcFlightManagement\Filter\RefuelIncomeInvoiceStep1Filter;
 
 /**
  * Class RefuelIncomeInvoiceSearchModel
- * @package FcFlight\Model
+ * @package FcFlightManagement\Model
  */
 class RefuelIncomeInvoiceSearchModel extends AbstractTableGateway
 {
     /**
      * @var string
      */
-    public $table = '';
+    public $table = 'invoiceIncomeRefuelData';
 
     /**
      * @param $table
@@ -66,10 +65,12 @@ class RefuelIncomeInvoiceSearchModel extends AbstractTableGateway
         $this->setTable('flightRefuelForm');
 
         if ($data['dateOrderFrom'] != '') {
-            $data['dateOrderFrom'] = \DateTime::createFromFormat('d-m-Y', $data['dateOrderFrom'])->getTimestamp();
+            $data['dateOrderFrom'] = \DateTime::createFromFormat('d-m-Y', $data['dateOrderFrom'])
+                ->setTime(0, 0)->getTimestamp();
         }
         if ($data['dateOrderTo'] != '') {
-            $data['dateOrderTo'] = \DateTime::createFromFormat('d-m-Y', $data['dateOrderTo'])->getTimestamp();
+            $data['dateOrderTo'] = \DateTime::createFromFormat('d-m-Y', $data['dateOrderTo'])
+                ->setTime(0, 0)->getTimestamp();
         }
 
         $select = new Select();
@@ -193,8 +194,8 @@ class RefuelIncomeInvoiceSearchModel extends AbstractTableGateway
             'left');
 
         $select->join(
-            array('incomeInvoiceRefuelData' => 'incomeInvoiceRefuelData'),
-            'flightRefuelForm.id = incomeInvoiceRefuelData.preInvoiceRefuelId',
+            array('invoiceIncomeRefuelData' => 'invoiceIncomeRefuelData'),
+            'flightRefuelForm.id = invoiceIncomeRefuelData.preInvoiceRefuelId',
             array(
                 'incomeInvoiceRefuelId' => 'refuelId',
                 'incomeInvoiceId' => 'invoiceId',
@@ -220,7 +221,7 @@ class RefuelIncomeInvoiceSearchModel extends AbstractTableGateway
 
         $select->join(
             array('incomeInvoiceRefuelUnit' => 'library_unit'),
-            'incomeInvoiceRefuelUnit.id = incomeInvoiceRefuelData.refuelUnitId',
+            'incomeInvoiceRefuelUnit.id = invoiceIncomeRefuelData.refuelUnitId',
             array(
                 'incomeInvoiceRefuelUnitName' => 'name',
             ),

@@ -34,8 +34,8 @@ class RefuelOutcomeInvoiceStep1Filter implements InputFilterAwareInterface
 
     //Fields for form and view
     public $id;
-    public $dateOrderFrom;
-    public $dateOrderTo;
+    public $dateFrom;
+    public $dateTo;
     public $aircraftId;
     public $agentId;
     public $airportId;
@@ -78,8 +78,8 @@ class RefuelOutcomeInvoiceStep1Filter implements InputFilterAwareInterface
     {
         //Fields for form and view
         $this->id = (isset($data['id'])) ? $data['id'] : null;
-        $this->dateOrderFrom = (isset($data['dateOrderFrom'])) ? $data['dateOrderFrom'] : null;
-        $this->dateOrderTo = (isset($data['dateOrderTo'])) ? $data['dateOrderTo'] : null;
+        $this->dateFrom = (isset($data['dateFrom'])) ? $data['dateFrom'] : null;
+        $this->dateTo = (isset($data['dateTo'])) ? $data['dateTo'] : null;
         $this->aircraftId = (isset($data['aircraftId'])) ? $data['aircraftId'] : null;
         $this->agentId = (isset($data['agentId'])) ? $data['agentId'] : null;
         $this->airportId = (isset($data['airportId'])) ? $data['airportId'] : null;
@@ -118,7 +118,7 @@ class RefuelOutcomeInvoiceStep1Filter implements InputFilterAwareInterface
             $factory = new InputFactory();
 
             $inputFilter->add($factory->createInput(array(
-                'name' => 'dateOrderFrom',
+                'name' => 'dateFrom',
                 'required' => false,
                 'filters' => $this->defaultFilters,
                 'validators' => array(
@@ -136,7 +136,7 @@ class RefuelOutcomeInvoiceStep1Filter implements InputFilterAwareInterface
             )));
 
             $inputFilter->add($factory->createInput(array(
-                'name' => 'dateOrderTo',
+                'name' => 'dateTo',
                 'required' => false,
                 'filters' => $this->defaultFilters,
                 'validators' => array(

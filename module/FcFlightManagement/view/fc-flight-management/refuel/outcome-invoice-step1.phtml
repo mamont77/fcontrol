@@ -51,19 +51,19 @@ echo $this->form()->openTag($form) . PHP_EOL;
     <tr>
         <td>
             <?php
-            $field = $form->get('dateOrderFrom');
+            $field = $form->get('dateFrom');
             echo $field->getOption('label');
             echo $this->formInput($field);
-            echo '<p class="help-block" id="help-dateOrder">' . $field->getOption('description') . '</p>';
+            echo '<p class="help-block" id="help-date">' . $field->getOption('description') . '</p>';
             ?>
             <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
         </td>
         <td>
             <?php
-            $field = $form->get('dateOrderTo');
+            $field = $form->get('dateTo');
             echo $field->getOption('label');
             echo $this->formInput($field);
-            echo '<p class="help-block" id="help-dateOrder">' . $field->getOption('description') . '</p>';
+            echo '<p class="help-block" id="help-date">' . $field->getOption('description') . '</p>';
             ?>
             <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
         </td>
@@ -122,7 +122,7 @@ echo $this->form()->openTag($form) . PHP_EOL;
 
 <? if ($this->result): ?>
     <?=
-    $this->partial('fc-flight-management/_widgets/forms/refuel-income-invoice-step1.phtml',
+    $this->partial('fc-flight-management/_widgets/forms/refuel-outcome-invoice-step1.phtml',
         array(
             'data' => $this->result,
             'fixedHeader' => true,

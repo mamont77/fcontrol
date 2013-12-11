@@ -18,7 +18,7 @@ class RefuelIncomeInvoiceMainModel extends AbstractTableGateway
     /**
      * @var string
      */
-    public $table = 'incomeInvoiceRefuelMain';
+    public $table = 'invoiceIncomeRefuelMain';
 
     /**
      * @var array
@@ -74,7 +74,7 @@ class RefuelIncomeInvoiceMainModel extends AbstractTableGateway
         $select->columns($this->_tableFields);
 
         $select->join(array('libraryKontragent' => 'library_kontragent'),
-            'libraryKontragent.id = incomeInvoiceRefuelMain.invoiceRefuelSupplierId',
+            'libraryKontragent.id = ' . $this->table . '.invoiceRefuelSupplierId',
             array('invoiceRefuelSupplierName' => 'short_name'), 'left');
 
         $select->where(array($this->table . '.invoiceId' => $id));

@@ -18,7 +18,7 @@ class RefuelIncomeInvoiceDataModel extends RefuelIncomeInvoiceMainModel
     /**
      * @var string
      */
-    public $table = 'incomeInvoiceRefuelData';
+    public $table = 'invoiceIncomeRefuelData';
 
     /**
      * @var array
@@ -100,7 +100,7 @@ class RefuelIncomeInvoiceDataModel extends RefuelIncomeInvoiceMainModel
         $select->columns($this->_tableFields);
 
         $select->join(array('preInvoiceRefuel' => 'flightRefuelForm'),
-            'preInvoiceRefuel.id = incomeInvoiceRefuelData.preInvoiceRefuelId',
+            'preInvoiceRefuel.id = ' . $this->table . '.preInvoiceRefuelId',
             array(
                 'preInvoiceRefuelId' => 'id',
                 'preInvoiceHeaderId' => 'headerId',
@@ -131,7 +131,7 @@ class RefuelIncomeInvoiceDataModel extends RefuelIncomeInvoiceMainModel
 
         $select->join(
             array('preInvoiceHeaderAgent' => 'library_kontragent'),
-            'preInvoiceHeaderAgent.id = incomeInvoiceRefuelData.flightAgentId',
+            'preInvoiceHeaderAgent.id = ' . $this->table . '.flightAgentId',
             array(
                 'preInvoiceHeaderAgentName' => 'name',
                 'preInvoiceHeaderAgentShortName' => 'short_name',
@@ -140,7 +140,7 @@ class RefuelIncomeInvoiceDataModel extends RefuelIncomeInvoiceMainModel
 
         $select->join(
             array('preInvoiceHeaderAirOperator' => 'library_air_operator'),
-            'preInvoiceHeaderAirOperator.id = incomeInvoiceRefuelData.flightAirOperatorId',
+            'preInvoiceHeaderAirOperator.id = ' . $this->table . '.flightAirOperatorId',
             array(
                 'preInvoiceHeaderAirOperatorName' => 'name',
                 'preInvoiceHeaderOperatorShortName' => 'short_name',
@@ -151,7 +151,7 @@ class RefuelIncomeInvoiceDataModel extends RefuelIncomeInvoiceMainModel
 
         $select->join(
             array('preInvoiceHeaderAircraft' => 'library_aircraft'),
-            'preInvoiceHeaderAircraft.id = incomeInvoiceRefuelData.flightAircraftId',
+            'preInvoiceHeaderAircraft.id = ' . $this->table . '.flightAircraftId',
             array(
                 'preInvoiceHeaderAircraftTypeId' => 'aircraft_type',
                 'preInvoiceHeaderAircraftName' => 'reg_number',
@@ -168,7 +168,7 @@ class RefuelIncomeInvoiceDataModel extends RefuelIncomeInvoiceMainModel
 
         $select->join(
             array('preInvoiceRefuelAirport' => 'library_airport'),
-            'preInvoiceRefuelAirport.id = incomeInvoiceRefuelData.refuelAirportId',
+            'preInvoiceRefuelAirport.id = ' . $this->table . '.refuelAirportId',
             array(
                 'preInvoiceRefuelAirportName' => 'name',
                 'preInvoiceRefuelAirportShortName' => 'short_name',
@@ -179,7 +179,7 @@ class RefuelIncomeInvoiceDataModel extends RefuelIncomeInvoiceMainModel
 
         $select->join(
             array('preInvoiceHeaderUnit' => 'library_unit'),
-            'preInvoiceHeaderUnit.id = incomeInvoiceRefuelData.refuelUnitId',
+            'preInvoiceHeaderUnit.id = ' . $this->table . '.refuelUnitId',
             array(
                 'preInvoiceHeaderUnitName' => 'name',
             ),

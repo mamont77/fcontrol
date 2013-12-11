@@ -70,10 +70,10 @@ class RefuelOutcomeInvoiceStep1Form extends BaseForm
         $this->setLibrary('_airOperators', $options['libraries']['airOperators'], 'id', 'name');
 
         $this->add(array(
-            'name' => 'dateOrderFrom',
+            'name' => 'dateFrom',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'id' => 'dateOrderFrom',
+                'id' => 'dateFrom',
                 'class' => 'input-small',
                 'required' => false,
                 'maxlength' => '10',
@@ -85,10 +85,10 @@ class RefuelOutcomeInvoiceStep1Form extends BaseForm
         ));
 
         $this->add(array(
-            'name' => 'dateOrderTo',
+            'name' => 'dateTo',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'id' => 'dateOrderTo',
+                'id' => 'dateTo',
                 'class' => 'input-small',
                 'required' => false,
                 'maxlength' => '10',
@@ -184,10 +184,10 @@ class RefuelOutcomeInvoiceStep1Form extends BaseForm
                 'required' => false,
             ),
             'options' => array(
-                'empty_option' => '',
+//                'empty_option' => '',
                 'value_options' => array(
                     'income' => 'Income',
-                    'outcome' => 'Outcome',
+//                    'outcome' => 'Outcome',
                     'both' => 'Income + Outcome',
                 ),
             ),
