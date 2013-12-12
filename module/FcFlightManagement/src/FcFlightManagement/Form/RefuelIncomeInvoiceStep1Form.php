@@ -134,7 +134,7 @@ class RefuelIncomeInvoiceStep1Form extends BaseForm
             'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
                 'id' => 'airportId',
-                'class' => 'chosen input-medium',
+                'class' => 'chosen input-small',
                 'data-placeholder' => 'Airport',
                 'required' => false,
             ),

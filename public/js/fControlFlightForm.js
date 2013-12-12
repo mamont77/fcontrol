@@ -658,33 +658,33 @@
             var $form2 = $('form#refuelOutcomeInvoiceStep2'),
                 $rowsCheckbox = $form2.find('.refuelsSelected');
 
-//            if ($form2.length == 0) return;
+            if ($form2.length == 0) return;
 
-//            // блокируем кнопку Apply до тех пор, пока не будут выбраны один или несколько одинаковых Fuel supplier
-//            $form2.find('.btn').prop('disabled', true);
-//            $rowsCheckbox.change(function () {
-//                var selectedAgents = [];
-//
-//                $rowsCheckbox.each(function () {
-//                    var $this = $(this);
-//                    if ($this.prop('checked')){
-//                        selectedAgents.push($this.parent().parent().find('.refuelAgentShortName').text());
-//                    }
-//                });
-//
-//                selectedAgents.sort();
-//                var i = selectedAgents.length, result = [];
-//                while(i--){
-//                    if(result.join('').search(selectedAgents[i]) == '-1') {
-//                        result.push(selectedAgents[i]);
-//                    }
-//                }
-//                if(result.length == 1) {
-//                    $form2.find('.btn').prop('disabled', false);
-//                } else {
-//                    $form2.find('.btn').prop('disabled', true);
-//                }
-//            });
+            // блокируем кнопку Apply до тех пор, пока не будут выбраны один или несколько одинаковых Customer
+            $form2.find('.btn').prop('disabled', true);
+            $rowsCheckbox.change(function () {
+                var selectedCustomers = [];
+
+                $rowsCheckbox.each(function () {
+                    var $this = $(this);
+                    if ($this.prop('checked')){
+                        selectedCustomers.push($this.parent().parent().find('.incomeInvoiceCustomer').text());
+                    }
+                });
+
+                selectedCustomers.sort();
+                var i = selectedCustomers.length, result = [];
+                while(i--){
+                    if(result.join('').search(selectedCustomers[i]) == '-1') {
+                        result.push(selectedCustomers[i]);
+                    }
+                }
+                if(result.length == 1) {
+                    $form2.find('.btn').prop('disabled', false);
+                } else {
+                    $form2.find('.btn').prop('disabled', true);
+                }
+            });
         }
     };
 })(jQuery);

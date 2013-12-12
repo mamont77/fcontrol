@@ -20,13 +20,20 @@
         </thead>
         <tbody>
         <? foreach ($this->data as $row): ?>
-<!--            --><?// \Zend\Debug\Debug::dump($row) ?>
-            <tr data-refuelRow="<?= $row->refuelId ?>" class="<? if($row->incomeInvoiceId): ?>success<? endif ?>">
+            <!--            --><? // \Zend\Debug\Debug::dump($row) ?>
+            <tr data-refuelRow="<?= $row->refuelId ?>" class="<? if ($row->incomeInvoiceId): ?>success<? endif ?>">
                 <td>
                     <input type="checkbox" class="refuelsSelected" name="refuelsSelected[]"
                            data-refuelId="<?= $row->refuelId ?>" value="<?= $row->refuelId ?>">
                 </td>
-                <td><?= $row->flightRefNumberOrder ?></td>
+                <td>
+                    <a href="<?=
+                    $this->url('browse',
+                        array('refNumberOrder' => $row->flightRefNumberOrder));?>"
+                       target="_blank">
+                        <?= $row->flightRefNumberOrder ?>
+                    </a>
+                </td>
                 <td><?= $row->flightAgentShortName ?></td>
                 <td><?= $row->flightAirOperatorShortName ?></td>
                 <td><?= $row->flightAircraftTypeName . ' (' . $row->flightAircraftName . ')' ?></td>

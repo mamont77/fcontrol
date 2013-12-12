@@ -152,71 +152,71 @@ class RefuelOutcomeInvoiceSearchModel extends AbstractTableGateway
             ),
             'left');
 
-//
-//        $select->join(
-//            array('refuelAgent' => 'library_kontragent'),
-//            'refuelAgent.id = flightRefuelForm.agentId',
-//            array(
-//                'refuelAgentName' => 'name',
-//                'refuelAgentShortName' => 'short_name',
-//            ),
-//            'left');
-//
-//        $select->join(
-//            array('refuelAirport' => 'library_airport'),
-//            'refuelAirport.id = flightRefuelForm.airportId',
-//            array(
-//                'refuelAirportName' => 'name',
-//                'refuelAirportShortName' => 'short_name',
-//                'refuelAirportICAO' => 'code_icao',
-//                'refuelAirportIATA' => 'code_iata',
-//            ),
-//            'left');
-//
-//        $select->join(
-//            array('refuelUnit' => 'library_unit'),
-//            'refuelUnit.id = flightRefuelForm.unitId',
-//            array(
-//                'refuelUnitName' => 'name',
-//            ),
-//            'left');
-//
-//        $select->join(
-//            array('flightAgent' => 'library_kontragent'),
-//            'flightAgent.id = flight.kontragent',
-//            array(
-//                'flightAgentName' => 'name',
-//                'flightAgentShortName' => 'short_name',
-//            ),
-//            'left');
-//
-//        $select->join(
-//            array('flightAirOperator' => 'library_air_operator'),
-//            'flightAirOperator.id = flight.airOperator',
-//            array(
-//                'flightAirOperatorName' => 'name',
-//                'flightAirOperatorShortName' => 'short_name',
-//                'flightAirOperatorICAO' => 'code_icao',
-//                'flightAirOperatorIATA' => 'code_iata',
-//            ),
-//            'left');
-//
-//        $select->join(
-//            array('flightAircraft' => 'library_aircraft'),
-//            'flightAircraft.id = flight.aircraftId',
-//            array(
-//                'flightAircraftTypeId' => 'aircraft_type',
-//                'flightAircraftName' => 'reg_number',
-//            ),
-//            'left');
-//
-//        $select->join(
-//            array('flightAircraftType' => 'library_aircraft_type'),
-//            'flightAircraftType.id = flightAircraft.aircraft_type',
-//            array(
-//                'flightAircraftTypeName' => 'name',
-//            ),
-//            'left');
+        $select->join(
+            array('incomeInvoiceAgent' => 'library_kontragent'),
+            $this->table . '.flightAgentId = incomeInvoiceAgent.id',
+            array(
+                'incomeInvoiceAgentName' => 'name',
+                'incomeInvoiceAgentShortName' => 'short_name',
+            ),
+            'left');
+
+        $select->join(
+            array('incomeInvoiceAirOperator' => 'library_air_operator'),
+            $this->table . '.flightAirOperatorId = incomeInvoiceAirOperator.id',
+            array(
+                'incomeInvoiceAirOperatorName' => 'name',
+                'incomeInvoiceAirOperatorShortName' => 'short_name',
+                'incomeInvoiceAirOperatorICAO' => 'code_icao',
+                'incomeInvoiceAirOperatorIATA' => 'code_iata',
+            ),
+            'left');
+
+        $select->join(
+            array('incomeInvoiceAircraft' => 'library_aircraft'),
+            $this->table . '.flightAircraftId = incomeInvoiceAircraft.id',
+            array(
+                'incomeInvoiceAircraftTypeId' => 'aircraft_type',
+                'incomeInvoiceAircraftName' => 'reg_number',
+            ),
+            'left');
+
+        $select->join(
+            array('incomeInvoiceAircraftType' => 'library_aircraft_type'),
+            'incomeInvoiceAircraft.aircraft_type = incomeInvoiceAircraftType.id',
+            array(
+                'incomeInvoiceAircraftTypeName' => 'name',
+            ),
+            'left');
+
+        $select->join(
+            array('incomeInvoiceAirportDep' => 'library_airport'),
+            $this->table . '.refuelAirportId = incomeInvoiceAirportDep.id',
+            array(
+                'incomeInvoiceAirportDepName' => 'name',
+                'incomeInvoiceAirportDepShortName' => 'short_name',
+                'incomeInvoiceAirportDepICAO' => 'code_icao',
+                'incomeInvoiceAirportDepIATA' => 'code_iata',
+            ),
+            'left');
+
+        $select->join(
+            array('incomeInvoiceSupplier' => 'library_kontragent'),
+            'invoiceIncomeRefuelMain.invoiceRefuelSupplierId = incomeInvoiceSupplier.id',
+            array(
+                'incomeInvoiceSupplierName' => 'name',
+                'incomeInvoiceSupplierShortName' => 'short_name',
+            ),
+            'left');
+
+        $select->join(
+            array('incomeInvoiceUnit' => 'library_unit'),
+            $this->table . '.refuelUnitId = incomeInvoiceUnit.id',
+            array(
+                'incomeInvoiceUnitName' => 'name',
+            ),
+            'left');
+
 //
 //        $select->join(
 //            array('flightAlternativeAircraft1' => 'library_aircraft'),

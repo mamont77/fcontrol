@@ -134,7 +134,7 @@ class RefuelOutcomeInvoiceStep1Form extends BaseForm
             'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
                 'id' => 'airportId',
-                'class' => 'chosen input-medium',
+                'class' => 'chosen input-small',
                 'data-placeholder' => 'Airport',
                 'required' => false,
             ),
@@ -179,7 +179,7 @@ class RefuelOutcomeInvoiceStep1Form extends BaseForm
             'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
                 'id' => 'typeOfInvoice',
-                'class' => 'chosen input-medium',
+                'class' => 'chosen input-small',
                 'data-placeholder' => 'Type of Invoice',
                 'required' => false,
             ),
