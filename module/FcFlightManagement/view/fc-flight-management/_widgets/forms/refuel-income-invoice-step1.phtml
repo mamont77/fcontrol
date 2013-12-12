@@ -47,16 +47,52 @@
                         &mdash;
                     <? endif; ?>
                 </td>
-                <td><?= $row->flightAgentShortName ?></td>
-                <td><?= $row->flightAirOperatorShortName ?></td>
-                <td><?= $row->flightAircraftTypeName . ' (' . $row->flightAircraftName . ')' ?></td>
-                <td><?= date('d-m-Y', $row->incomeInvoiceRefuelDate) ?></td>
-                <td><?= $row->refuelAirportICAO . ' (' . $row->refuelAirportIATA . ')' ?></td>
-                <td class="refuelAgentShortName"><?= $row->refuelAgentShortName ?></td>
-                <td><?= $row->incomeInvoiceRefuelQuantityOtherUnits ?></td>
-                <td><?= $row->incomeInvoiceRefuelUnitName ?></td>
-                <td class="text-right"><?= $row->incomeInvoiceRefuelPriceTotal ?></td>
-                <td class="text-right"><?= $row->incomeInvoiceRefuelExchangeToUsdPriceTotal ?></td>
+                <td>
+                    <?= $row->flightAgentShortName ?>
+                </td>
+                <td>
+                    <?= $row->flightAirOperatorShortName ?>
+                </td>
+                <td>
+                    <?= $row->flightAircraftTypeName . ' (' . $row->flightAircraftName . ')' ?>
+                </td>
+                <td>
+                    <?= date('d-m-Y', $row->incomeInvoiceRefuelDate) ?>
+                </td>
+                <td>
+                    <?= $row->refuelAirportICAO . ' (' . $row->refuelAirportIATA . ')' ?>
+                </td>
+                <td class="refuelAgentShortName">
+                    <?= $row->refuelAgentShortName ?>
+                </td>
+                <td>
+                    <? if ($row->incomeInvoiceRefuelQuantityOtherUnits): ?>
+                        <?= $row->incomeInvoiceRefuelQuantityOtherUnits ?>
+                    <? else: ?>
+                        &mdash;
+                    <? endif; ?>
+                </td>
+                <td>
+                    <? if ($row->incomeInvoiceRefuelUnitName): ?>
+                        <?= $row->incomeInvoiceRefuelUnitName ?>
+                    <? else: ?>
+                        &mdash;
+                    <? endif; ?>
+                </td>
+                <td class="text-right">
+                    <? if ($row->incomeInvoiceRefuelPriceTotal): ?>
+                        <?= $row->incomeInvoiceRefuelPriceTotal ?>
+                    <? else: ?>
+                        &mdash;
+                    <? endif; ?>
+                </td>
+                <td class="text-right">
+                    <? if ($row->incomeInvoiceRefuelExchangeToUsdPriceTotal): ?>
+                        <?= $row->incomeInvoiceRefuelExchangeToUsdPriceTotal ?>
+                    <? else: ?>
+                        &mdash;
+                    <? endif; ?>
+                </td>
             </tr>
         <? endforeach; ?>
         <tr>
