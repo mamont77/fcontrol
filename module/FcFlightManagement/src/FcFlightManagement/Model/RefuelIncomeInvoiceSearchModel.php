@@ -220,6 +220,17 @@ class RefuelIncomeInvoiceSearchModel extends AbstractTableGateway
             'left');
 
         $select->join(
+            array('invoiceIncomeRefuelMain' => 'invoiceIncomeRefuelMain'),
+            'invoiceIncomeRefuelData.invoiceId = invoiceIncomeRefuelMain.invoiceId',
+            array(
+                'incomeInvoiceMainId' => 'invoiceId',
+                'incomeInvoiceNumber' => 'invoiceNumber',
+                'incomeInvoiceRefuelSupplierId' => 'invoiceRefuelSupplierId',
+                'incomeInvoiceStatus' => 'invoiceStatus',
+            ),
+            'left');
+
+        $select->join(
             array('incomeInvoiceRefuelUnit' => 'library_unit'),
             'incomeInvoiceRefuelUnit.id = invoiceIncomeRefuelData.refuelUnitId',
             array(

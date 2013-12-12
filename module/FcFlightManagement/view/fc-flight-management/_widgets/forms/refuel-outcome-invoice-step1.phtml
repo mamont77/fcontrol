@@ -5,7 +5,8 @@
         <thead>
         <tr>
             <th></th>
-            <th>ORD</th>
+            <th>ORD #</th>
+            <th>Invoice #</th>
             <th>Customer</th>
             <th>Air Operator</th>
             <th>Aircraft</th>
@@ -43,11 +44,33 @@
                         <?= $row->preInvoiceFlightRefNumberOrder ?>
                     </a>
                 </td>
-                <td rowspan="2" class="incomeInvoiceCustomer"><?= $row->incomeInvoiceAgentShortName ?></td>
-                <td rowspan="2"><?= $row->incomeInvoiceAirOperatorShortName ?></td>
-                <td rowspan="2" class="noWrap"><?= $row->incomeInvoiceAircraftTypeName . '<br /><small>(' . $row->incomeInvoiceAircraftName . ')</small>' ?></td>
-                <td rowspan="2"><?= $row->incomeInvoiceAirportDepICAO . ' (' . $row->incomeInvoiceAirportDepIATA . ')' ?></td>
-                <td rowspan="2" class="incomeInvoiceSupplierShortName"><?= $row->incomeInvoiceSupplierShortName ?></td>
+                <td>
+                    <? if ($row->outcomeInvoiceMainId): ?>
+                        <a href="<?=
+                        $this->url('management/refuel/outcome-invoice-show',
+                            array('id' => $row->outcomeInvoiceMainId));?>"
+                           target="_blank">
+                            <?= $row->outcomeInvoiceMainNumber ?>
+                        </a>
+                    <? else: ?>
+                        &mdash;
+                    <? endif; ?>
+                </td>
+                <td rowspan="2" class="incomeInvoiceCustomer">
+                    <?= $row->incomeInvoiceAgentShortName ?>
+                </td>
+                <td rowspan="2">
+                    <?= $row->incomeInvoiceAirOperatorShortName ?>
+                </td>
+                <td rowspan="2" class="noWrap">
+                    <?= $row->incomeInvoiceAircraftTypeName . '<br /><small>(' . $row->incomeInvoiceAircraftName . ')</small>' ?>
+                </td>
+                <td rowspan="2">
+                    <?= $row->incomeInvoiceAirportDepICAO . ' (' . $row->incomeInvoiceAirportDepIATA . ')' ?>
+                </td>
+                <td rowspan="2" class="incomeInvoiceSupplierShortName">
+                    <?= $row->incomeInvoiceSupplierShortName ?>
+                </td>
                 <td>
                     <? if ($row->outcomeInvoiceDate): ?>
                         <?= date('d-m-Y', $row->outcomeInvoiceDate) ?>
@@ -135,6 +158,18 @@
             </tr>
             <tr data-incomeInvoiceRefuelRow="<?= $row->incomeInvoiceRefuelId ?>" class="info">
                 <td>
+                    <? if ($row->incomeInvoiceMainId): ?>
+                        <a href="<?=
+                        $this->url('management/refuel/income-invoice-show',
+                            array('id' => $row->incomeInvoiceMainId));?>"
+                           target="_blank">
+                            <?= $row->incomeInvoiceMainNumber ?>
+                        </a>
+                    <? else: ?>
+                        &mdash;
+                    <? endif; ?>
+                </td>
+                <td>
                     <?= date('d-m-Y', $row->incomeInvoiceDate) ?>
                 </td>
                 <td>
@@ -173,7 +208,7 @@
             </tr>
         <? endforeach; ?>
         <tr>
-            <td colspan="19">
+            <td colspan="20">
                 <input name="submitBtn" type="submit" class="btn btn-primary pull-right" value="Apply">
             </td>
         </tr>

@@ -5,7 +5,8 @@
         <thead>
         <tr>
             <th></th>
-            <th>ORD</th>
+            <th>ORD #</th>
+            <th>Invoice #</th>
             <th>Customer</th>
             <th>Air Operator</th>
             <th>Aircraft</th>
@@ -20,7 +21,7 @@
         </thead>
         <tbody>
         <? foreach ($this->data as $row): ?>
-            <!--            --><? // \Zend\Debug\Debug::dump($row) ?>
+<!--            --><?// \Zend\Debug\Debug::dump($row) ?>
             <tr data-refuelRow="<?= $row->refuelId ?>" class="<? if ($row->incomeInvoiceId): ?>success<? endif ?>">
                 <td>
                     <input type="checkbox" class="refuelsSelected" name="refuelsSelected[]"
@@ -33,6 +34,18 @@
                        target="_blank">
                         <?= $row->flightRefNumberOrder ?>
                     </a>
+                </td>
+                <td>
+                    <? if ($row->incomeInvoiceMainId): ?>
+                        <a href="<?=
+                        $this->url('management/refuel/income-invoice-show',
+                            array('id' => $row->incomeInvoiceMainId));?>"
+                           target="_blank">
+                            <?= $row->incomeInvoiceNumber ?>
+                        </a>
+                    <? else: ?>
+                        &mdash;
+                    <? endif; ?>
                 </td>
                 <td><?= $row->flightAgentShortName ?></td>
                 <td><?= $row->flightAirOperatorShortName ?></td>
