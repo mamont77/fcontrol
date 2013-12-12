@@ -97,6 +97,49 @@ return array(
                                     )
                                 ),
                             ),
+                            'outcome-invoice-step2' => array(
+                                'type' => 'literal',
+                                'options' => array(
+                                    'route' => '/outcome-invoice-step2',
+                                    'defaults' => array(
+                                        'controller' => 'FcFlightManagement\Controller\Refuel',
+                                        'action' => 'outcomeInvoiceStep2'
+                                    )
+                                ),
+                            ),
+                            'outcome-invoice-step3' => array(
+                                'type' => 'literal',
+                                'options' => array(
+                                    'route' => '/outcome-invoice-step3',
+                                    'defaults' => array(
+                                        'controller' => 'FcFlightManagement\Controller\Refuel',
+                                        'action' => 'outcomeInvoiceStep3'
+                                    )
+                                ),
+                            ),
+                            'outcome-invoice-add' => array(
+                                'type' => 'literal',
+                                'options' => array(
+                                    'route' => '/outcome-invoice-add',
+                                    'defaults' => array(
+                                        'controller' => 'FcFlightManagement\Controller\Refuel',
+                                        'action' => 'outcomeInvoiceAdd'
+                                    )
+                                ),
+                            ),
+                            'outcome-invoice-show' => array(
+                                'type' => 'segment',
+                                'options' => array(
+                                    'route' => '/outcome-invoice-show[/:id]',
+                                    'constraints' => array(
+                                        'id' => '[0-9]+',
+                                    ),
+                                    'defaults' => array(
+                                        'controller' => 'FcFlightManagement\Controller\Refuel',
+                                        'action' => 'outcomeInvoiceShow'
+                                    )
+                                ),
+                            ),
                         )
                     ),
                 )

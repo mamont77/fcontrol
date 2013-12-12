@@ -10,6 +10,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use FcFlight\Controller\FlightController;
 use FcFlightManagement\Model\RefuelIncomeInvoiceSearchModel;
+use FcFlightManagement\Model\RefuelOutcomeInvoiceSearchModel;
 use FcFlight\Form\ApServiceForm;
 
 /**
@@ -290,7 +291,12 @@ class RefuelController extends FlightController
      */
     public function outcomeInvoiceStep2Action()
     {
-        $result = array();
+        $request = $this->getRequest();
+        if (!$request->isPost()) {
+            $this->flashMessenger()->addErrorMessage('Result not found. Enter one or more fields.');
+            return $this->redirect()->toRoute('management/refuel/outcome-invoice-step1');
+        }
+
         $units = array();
         $unitsObj = $this->getUnits();
         foreach ($unitsObj as $unit) {
@@ -300,19 +306,25 @@ class RefuelController extends FlightController
         $currencies = new ApServiceForm(null, array());
         $currencies = $currencies->getCurrencyExchangeRate();
 
-        $request = $this->getRequest();
-        if ($request->isPost()) {
-            $data = $request->getPost();
+        $data = $request->getPost();
 
-            if (empty($data['refuelsSelected'])) {
-                $this->flashMessenger()->addErrorMessage('Result not found. Enter one or more fields.');
-                return $this->redirect()->toRoute('management/refuel/income-invoice-step1');
-            }
-
-            $result = $this->getRefuelIncomeInvoiceSearchModel()->findByParams($data);
+        if (empty($data['refuelsSelected'])) {
+            $this->flashMessenger()->addErrorMessage('Result not found. Enter one or more fields.');
+            return $this->redirect()->toRoute('management/refuel/outcome-invoice-step1');
         }
 
+        $result = $this->getRefuelOutcomeInvoiceSearchModel()->findByParams($data);
+
+        $customerId = null;
+        foreach ($result as $row) {
+            $customerId = $row->incomeInvoiceAgentId;
+            break;
+
+        }
+        $newInvoiceNumber = $this->getRefuelOutcomeInvoiceMainModel()->generateNewInvoiceNumber($customerId);
+
         return array(
+            'newInvoiceNumber' => $newInvoiceNumber,
             'currencies' => $currencies,
             'units' => $units,
             'result' => $result,
@@ -468,7 +480,7 @@ class RefuelController extends FlightController
             $this->refuelOutcomeInvoiceMainModel = $sm->get('FcFlightManagement\Model\RefuelOutcomeInvoiceMainModel');
         }
 
-        return $this->refuelIncomeInvoiceMainModel;
+        return $this->refuelOutcomeInvoiceMainModel;
     }
 
     /**
