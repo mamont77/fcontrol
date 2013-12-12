@@ -18,7 +18,7 @@ class RefuelOutcomeInvoiceMainModel extends AbstractTableGateway
     /**
      * @var string
      */
-    public $table = 'invoiceIncomeRefuelMain';
+    public $table = 'invoiceOutcomeRefuelMain';
 
     /**
      * @var array
@@ -66,6 +66,11 @@ class RefuelOutcomeInvoiceMainModel extends AbstractTableGateway
         return $this->getLastInsertValue();
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     * @throws \Exception
+     */
     public function get($id)
     {
         $id = (int)$id;
@@ -89,5 +94,24 @@ class RefuelOutcomeInvoiceMainModel extends AbstractTableGateway
         $row->invoiceDate = date('d-m-Y', $row->invoiceDate);
 
         return $row;
+    }
+
+    /**
+     * @param $customerId
+     * @return string
+     */
+    public function generateNewInvoiceNumber($customerId)
+    {
+        $customerId = (int)$customerId;
+        $select = $this->getSql()->select();
+        $select->order(array('invoiceId ' . $select::ORDER_DESCENDING));
+        $select->limit(1);
+        $row = $this->selectWith($select)->current();
+        $lastInvoiceId = (int)$row->invoiceId + 1;
+        if (!$row) {
+            $lastInvoiceId = 1;
+        }
+
+        return sprintf('%04d', $customerId) . '-' . sprintf('%08d', $lastInvoiceId);
     }
 }
