@@ -1,18 +1,18 @@
 <?php
-$title = 'Check income fuel invoice';
+$title = 'Check refuel outcome invoice';
 $this->headTitle($title);
 ?>
 <ul class="breadcrumb">
     <li><a href="/">Home</a> <span class="divider">/</span></li>
     <li>Management <span class="divider">/</span></li>
-    <li>Refuel income invoice</li>
+    <li>Refuel outcome invoice</li>
 </ul>
 
 <h1><?= $title ?></h1>
 
 <? if ($this->result): ?>
     <?=
-    $this->partial('fc-flight-management/_widgets/forms/refuel-income-invoice-step3.phtml',
+    $this->partial('fc-flight-management/_widgets/forms/refuel-outcome-invoice-step3.phtml',
         array(
             'data' => $this->result,
             'units' => $this->units,

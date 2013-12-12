@@ -14,3 +14,8 @@
 11.12
 11:45
 #86: Update thirdParty code. #85: Refuel - Outcome Invoice - подготовка. #85: Refuel - Outcome Invoice - проектирование БД. #85: Refuel - Outcome Invoice - форма выборки. #85: Refuel - Outcome Invoice - логика выборки.
+17:55
+
+12.12
+8:00
+#85: Мелкие правки в заголовках и названиях.

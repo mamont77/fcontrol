@@ -21,11 +21,11 @@ return array(
                 'route' => 'management',
                 'pages' => array(
                     array(
-                        'label' => 'Refuel income invoice',
+                        'label' => 'Refuel income',
                         'route' => 'management/refuel/income-invoice-step1',
                     ),
                     array(
-                        'label' => 'Refuel outcome invoice',
+                        'label' => 'Refuel outcome',
                         'route' => 'management/refuel/outcome-invoice-step1',
                     ),
                 ),
