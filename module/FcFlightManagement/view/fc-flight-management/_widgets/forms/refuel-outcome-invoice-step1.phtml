@@ -94,7 +94,7 @@
                 </td>
                 <td class="text-right">
                     <? if ($row->outcomeInvoiceItemPrice): ?>
-                        <?= $row->outcomeInvoiceItemPrice ?> <small>, <?= $row->outcomeInvoiceMainCurrency ?> </small>
+                        <?= $row->outcomeInvoiceItemPrice ?><small>, <?= $row->outcomeInvoiceMainCurrency ?> </small>
                     <? else: ?>
                         &mdash;
                     <? endif; ?>
@@ -129,14 +129,14 @@
                 </td>
                 <td class="text-right">
                     <? if ($row->outcomeInvoicePrice): ?>
-                        <?= $row->outcomeInvoicePrice ?> <small>, <?= $row->outcomeInvoiceMainCurrency ?> </small>
+                        <?= $row->outcomeInvoicePrice ?><small>, <?= $row->outcomeInvoiceMainCurrency ?> </small>
                     <? else: ?>
                         &mdash;
                     <? endif; ?>
                 </td>
                 <td class="text-right">
                     <? if ($row->outcomeInvoicePriceTotal): ?>
-                        <?= $row->outcomeInvoicePriceTotal ?> <small>, <?= $row->outcomeInvoiceMainCurrency ?> </small>
+                        <?= $row->outcomeInvoicePriceTotal ?><small>, <?= $row->outcomeInvoiceMainCurrency ?> </small>
                     <? else: ?>
                         &mdash;
                     <? endif; ?>
@@ -179,7 +179,7 @@
                     <?= $row->incomeInvoiceUnitName ?>
                 </td>
                 <td class="text-right">
-                    <?= $row->incomeInvoiceItemPrice ?> <small>, <?= $row->incomeInvoiceMainCurrency ?> </small>
+                    <?= $row->incomeInvoiceItemPrice ?><small>, <?= $row->incomeInvoiceMainCurrency ?> </small>
                 </td>
                 <td>
                     <?= $row->incomeInvoiceTax ?>
@@ -194,10 +194,10 @@
                     <?= $row->incomeInvoiceDeliver ?>
                 </td>
                 <td class="text-right">
-                    <?= $row->incomeInvoicePrice ?> <small>, <?= $row->incomeInvoiceMainCurrency ?> </small>
+                    <?= $row->incomeInvoicePrice ?><small>, <?= $row->incomeInvoiceMainCurrency ?> </small>
                 </td>
                 <td class="text-right">
-                    <?= $row->incomeInvoicePriceTotal ?> <small>, <?= $row->incomeInvoiceMainCurrency ?> </small>
+                    <?= $row->incomeInvoicePriceTotal ?><small>, <?= $row->incomeInvoiceMainCurrency ?> </small>
                 </td>
                 <td>
                     <?= $row->incomeInvoiceMainExchangeRate ?>
