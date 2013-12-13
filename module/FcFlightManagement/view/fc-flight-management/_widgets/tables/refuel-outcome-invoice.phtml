@@ -1,8 +1,10 @@
+<table id="invoiceData"
        class="table table-bordered table-hover table-condensed <? if ($this->fixedHeader): ?> table-fixed-header<? endif ?>">
     <thead>
     <tr>
-        <th>ORD</th>
-        <th>Customer</th>
+        <th>ORD #</th>
+        <th>Invoice #</th>
+        <th>Fuel supplier</th>
         <th>Air Operator</th>
         <th>Aircraft</th>
         <th>Airport Dep</th>
@@ -22,70 +24,83 @@
     </thead>
     <tbody>
     <? foreach ($this->header->data as $row): ?>
-        <!--        --><? // \Zend\Debug\Debug::dump($row) ?>
+<!--        --><?// \Zend\Debug\Debug::dump($row) ?>
         <tr id="incomeInvoiceRefuelId_<?= $row->refuelId ?>">
             <td class="noWrap">
-                <?= $row->preInvoiceHeaderRefNumberOrder ?>
+                <a href="<?=
+                $this->url('browse',
+                    array('refNumberOrder' => $row->preInvoiceHeaderRefNumberOrder));?>"
+                   target="_blank">
+                    <?= $row->preInvoiceHeaderRefNumberOrder ?>
+                </a>
             </td>
             <td>
-                <?= $row->preInvoiceHeaderAgentShortName ?>
+                <a href="<?=
+                $this->url('management/refuel/income-invoice-show',
+                    array('id' => $row->preInvoiceInvoiceId));?>"
+                   target="_blank">
+                    <?= $row->invoiceIncomeNumber ?>
+                </a>
             </td>
             <td>
-                <?= $row->preInvoiceHeaderOperatorShortName ?>
+                <?= $row->supplierShortName ?>
+            </td>
+            <td>
+                <?= $row->airOperatorShortName ?>
             </td>
             <td class="noWrap">
-                <?= $row->preInvoiceHeaderAircraftTypeName ?><br/>
-                <small>( <?= $row->preInvoiceHeaderAircraftName ?> )</small>
+                <?= $row->aircraftTypeName ?><br/>
+                <small>( <?= $row->aircraftName ?> )</small>
             </td>
             <td class="noWrap">
-                <?= $row->preInvoiceRefuelAirportICAO ?> (<?= $row->preInvoiceRefuelAirportIATA ?>)
+                <?= $row->airportDepICAO ?> (<?= $row->airportDepIATA ?>)
             </td>
             <td>
-                <?= date('d-m-Y', $row->refuelDate) ?>
+                <?= date('d-m-Y', $row->date) ?>
             </td>
             <td>
-                <?= $row->refuelQuantityLtr ?>
+                <?= $row->quantityLtr ?>
             </td>
             <td>
-                <?= $row->refuelQuantityOtherUnits ?>
+                <?= $row->quantityOtherUnits ?>
             </td>
             <td>
-                <?= $row->preInvoiceHeaderUnitName ?>
+                <?= $row->unitName ?>
             </td>
             <td class="text-right">
-                <?= $row->refuelItemPrice ?>
+                <?= $row->itemPrice ?>
             </td>
             <td>
-                <?= $row->refuelTax ?>
+                <?= $row->tax ?>
             </td>
             <td>
-                <?= $row->refuelMot ?>
+                <?= $row->mot ?>
             </td>
             <td>
-                <?= $row->refuelVat ?>
+                <?= $row->vat ?>
             </td>
             <td>
-                <?= $row->refuelDeliver ?>
+                <?= $row->deliver ?>
             </td>
             <td class="text-right">
-                <?= $row->refuelPrice ?>
+                <?= $row->price ?>
             </td>
             <td class="text-right">
                 <?php
-                $refuelPriceSubTotal += $row->refuelPriceTotal;
+                $priceSubTotal += $row->priceTotal;
                 ?>
-                <?= $row->refuelPriceTotal ?>
+                <?= $row->priceTotal ?>
             </td>
             <td class="text-right">
                 <?php
-                $refuelExchangeToUsdPriceSubTotal += $row->refuelExchangeToUsdPriceTotal;
+                $priceSubTotalExchangedToUsd += $row->priceTotalExchangedToUsd;
                 ?>
-                <?= $row->refuelExchangeToUsdPriceTotal ?>
+                <?= $row->priceTotalExchangedToUsd ?>
             </td>
         </tr>
     <? endforeach; ?>
     <tr>
-        <td colspan="17">
+        <td colspan="18">
             <div class="row-fluid">
                 <div class="span6">
                 </div>
@@ -97,10 +112,10 @@
                                 Subtotal
                             </td>
                             <td><span class="refuelCurrency"><?= $this->header->invoiceCurrency ?></span> <span
-                                    class="refuelPriceSubTotal"><?= number_format($refuelPriceSubTotal, 2, '.', '') ?></span>
+                                    class="refuelPriceSubTotal"><?= number_format($priceSubTotal, 2, '.', '') ?></span>
                             </td>
                             <td>USD <span
-                                    class="refuelExchangeToUsdPriceSubTotal"><?= number_format($refuelExchangeToUsdPriceSubTotal, 2, '.', '') ?></span>
+                                    class="refuelExchangeToUsdPriceSubTotal"><?= number_format($priceSubTotalExchangedToUsd, 2, '.', '') ?></span>
                             </td>
                         </tr>
                         </tbody>

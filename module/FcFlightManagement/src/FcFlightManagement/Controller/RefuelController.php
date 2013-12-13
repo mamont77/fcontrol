@@ -20,6 +20,8 @@ use FcFlight\Form\ApServiceForm;
 class RefuelController extends FlightController
 {
     /**
+     * Fields for search
+     *
      * @var array
      */
     protected $_mapFields = array(
@@ -369,24 +371,23 @@ class RefuelController extends FlightController
         if ($request->isPost()) {
             $data = $request->getPost();
 //            \Zend\Debug\Debug::dump($data);
-            $invoiceId = $this->getRefuelIncomeInvoiceMainModel()->add($data);
+            $invoiceId = $this->getRefuelOutcomeInvoiceMainModel()->add($data);
 
             foreach ($data['data'] as $row) {
                 $row['invoiceId'] = $invoiceId;
-                $row['preInvoiceRefuelId'] = $row['refuelId'];
-                $this->getRefuelIncomeInvoiceDataModel()->add($row);
+                $this->getRefuelOutcomeInvoiceDataModel()->add($row);
             }
 
-            $message = "Refuel income invoice was successfully added.";
+            $message = "Refuel outcome invoice was successfully added.";
             $this->flashMessenger()->addSuccessMessage($message);
 
-            return $this->redirect()->toRoute('management/refuel/income-invoice-show',
+            return $this->redirect()->toRoute('management/refuel/outcome-invoice-show',
                 array(
                     'id' => $invoiceId,
                 ));
         }
 
-        return $this->redirect()->toRoute('management/refuel/income-invoice-step1');
+        return $this->redirect()->toRoute('management/refuel/outcome-invoice-step1');
     }
 
     /**
@@ -397,13 +398,13 @@ class RefuelController extends FlightController
         $invoiceId = (string)$this->params()->fromRoute('id', '');
 
         if (empty($invoiceId)) {
-            return $this->redirect()->toRoute('management/refuel/income-invoice-step1');
+            return $this->redirect()->toRoute('management/refuel/outcome-invoice-step1');
         }
 
-        $header = $this->getRefuelIncomeInvoiceMainModel()->get($invoiceId);
-        $data = $this->getRefuelIncomeInvoiceDataModel()->getByInvoiceId($invoiceId);
+        $header = $this->getRefuelOutcomeInvoiceMainModel()->get($invoiceId);
+        $data = $this->getRefuelOutcomeInvoiceDataModel()->getByInvoiceId($invoiceId);
 
-        foreach ($data as $key => $row) {
+        foreach ($data as $row) {
             $header->data[$row->refuelId] = $row;
         }
 
@@ -416,7 +417,7 @@ class RefuelController extends FlightController
     /**
      * Get RefuelIncomeInvoiceSearchModel
      *
-     * @return RefuelIncomeInvoiceSearchModel
+     * @return array|RefuelIncomeInvoiceSearchModel|object
      */
     public function getRefuelIncomeInvoiceSearchModel()
     {
@@ -455,9 +456,7 @@ class RefuelController extends FlightController
     }
 
     /**
-     * Get RefuelOutcomeInvoiceSearchModel
-     *
-     * @return RefuelOutcomeInvoiceSearchModel
+     * @return array|RefuelOutcomeInvoiceSearchModel|object
      */
     public function getRefuelOutcomeInvoiceSearchModel()
     {
@@ -484,7 +483,7 @@ class RefuelController extends FlightController
     }
 
     /**
-     * @return array|\FcFlightManagement\Model\RefuelIncomeInvoiceDataModel|object
+     * @return array|\FcFlightManagement\Model\RefuelOutcomeInvoiceDataModel|object
      */
     public function getRefuelOutcomeInvoiceDataModel()
     {
@@ -493,6 +492,6 @@ class RefuelController extends FlightController
             $this->refuelOutcomeInvoiceDataModel = $sm->get('FcFlightManagement\Model\RefuelOutcomeInvoiceDataModel');
         }
 
-        return $this->refuelIncomeInvoiceDataModel;
+        return $this->refuelOutcomeInvoiceDataModel;
     }
 }

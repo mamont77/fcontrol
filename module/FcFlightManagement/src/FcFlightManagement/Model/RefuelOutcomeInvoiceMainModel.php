@@ -29,7 +29,7 @@ class RefuelOutcomeInvoiceMainModel extends AbstractTableGateway
         'invoiceDate' => 'invoiceDate',
         'invoiceCurrency' => 'invoiceCurrency',
         'invoiceExchangeRate' => 'invoiceExchangeRate',
-        'invoiceRefuelSupplierId' => 'invoiceRefuelSupplierId',
+        'invoiceCustomerId' => 'invoiceCustomerId',
         'invoiceStatus' => 'invoiceStatus',
     );
 
@@ -57,7 +57,7 @@ class RefuelOutcomeInvoiceMainModel extends AbstractTableGateway
             'invoiceDate' => (int)$data['invoiceDate'],
             'invoiceCurrency' => (string)$data['invoiceCurrency'],
             'invoiceExchangeRate' => (string)$data['invoiceExchangeRate'],
-            'invoiceRefuelSupplierId' => (int)$data['invoiceRefuelSupplierId'],
+            'invoiceCustomerId' => (int)$data['invoiceCustomerId'],
             'invoiceStatus' => 1,
         );
 
@@ -79,8 +79,8 @@ class RefuelOutcomeInvoiceMainModel extends AbstractTableGateway
         $select->columns($this->_tableFields);
 
         $select->join(array('libraryKontragent' => 'library_kontragent'),
-            'libraryKontragent.id = ' . $this->table . '.invoiceRefuelSupplierId',
-            array('invoiceRefuelSupplierName' => 'short_name'), 'left');
+            'libraryKontragent.id = ' . $this->table . '.invoiceCustomerId',
+            array('invoiceCustomerName' => 'short_name'), 'left');
 
         $select->where(array($this->table . '.invoiceId' => $id));
 

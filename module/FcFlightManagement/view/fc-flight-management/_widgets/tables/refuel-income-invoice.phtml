@@ -2,7 +2,7 @@
        class="table table-bordered table-hover table-condensed <? if ($this->fixedHeader): ?> table-fixed-header<? endif ?>">
     <thead>
     <tr>
-        <th>ORD</th>
+        <th>ORD #</th>
         <th>Customer</th>
         <th>Air Operator</th>
         <th>Aircraft</th>
@@ -26,7 +26,12 @@
         <!--        --><? // \Zend\Debug\Debug::dump($row) ?>
         <tr id="incomeInvoiceRefuelId_<?= $row->refuelId ?>">
             <td class="noWrap">
-                <?= $row->preInvoiceHeaderRefNumberOrder ?>
+                <a href="<?=
+                $this->url('browse',
+                    array('refNumberOrder' => $row->preInvoiceHeaderRefNumberOrder));?>"
+                   target="_blank">
+                    <?= $row->preInvoiceHeaderRefNumberOrder ?>
+                </a>
             </td>
             <td>
                 <?= $row->preInvoiceHeaderAgentShortName ?>

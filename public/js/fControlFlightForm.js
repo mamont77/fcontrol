@@ -805,4 +805,87 @@
             });
         }
     };
+
+    /**
+     *
+     * @type {{attach: Function}}
+     */
+    fControl.behaviors.refuelOutcomeInvoiceStep4 = {
+        attach: function (context, settings) {
+            var $form = $('form#refuelOutcomeInvoiceStep4');
+
+            if ($form.length == 0) return;
+
+            $($form).find('.date').mask('99-99-9999');
+
+            // invoice (header) values
+            var $invoiceExchangeRate = $form.find('#invoiceExchangeRate'),
+                invoiceExchangeRateVal = parseFloat($invoiceExchangeRate.val()) || 1;
+
+            $('.quantityLtr, .quantityOtherUnits, .unitId, .itemPrice, .tax, .mot, .vat, .deliver').bind("keyup change", function () {
+                var $this = $(this),
+                    $row = $(this).parent().parent(),
+                //fields values
+                    $quantityLtr = $row.find('.quantityLtr'),
+                    quantityLtrVal = parseFloat($quantityLtr.val()) || 0,
+                    $quantityOtherUnits = $row.find('.quantityOtherUnits'),
+                    quantityOtherUnitsVal = parseFloat($quantityOtherUnits.val()) || 0,
+                    $unitId = $row.find('.unitId'),
+                    unitIdText = $unitId.find(':selected').text() || '',
+                    $itemPrice = $row.find('.itemPrice'),
+                    itemPriceVal = parseFloat($itemPrice.val()) || 0,
+                    $tax = $row.find('.tax'),
+                    taxVal = parseFloat($tax.val()) || 0,
+                    $mot = $row.find('.mot'),
+                    motVal = parseFloat($mot.val()) || 0,
+                    $vat = $row.find('.vat'),
+                    vatVal = parseFloat($vat.val()) || 0,
+                    $deliver = $row.find('.deliver'),
+                    deliverVal = parseFloat($deliver.val()) || 0,
+                    $price = $row.find('.price'),
+                    priceVal = 0,
+                    $priceTotal = $row.find('.priceTotal'),
+                    priceTotalVal = 0,
+                    $priceTotalExchangedToUsd = $row.find('.priceTotalExchangedToUsd'),
+                    priceTotalExchangedToUsdVal = 0,
+                //subTotals
+                    $priceSubTotal = $form.find('.priceSubTotal'),
+                    priceSubTotalVal = 0,
+                    $exchangeToUsdPriceSubTotal = $form.find('.exchangeToUsdPriceSubTotal'),
+                    exchangeToUsdPriceSubTotalVal = 0;
+
+                // пересчитываем литры в юниты и юниты в литры
+                if (($this.hasClass('quantityLtr') || $this.hasClass('unitId')) && unitIdText != '') {
+                    $quantityOtherUnits.val(convertRefuelQuantityLtr2OtherUnits(quantityLtrVal, unitIdText));
+                }
+
+                // считаем тоталы
+                priceVal = ((itemPriceVal + taxVal + motVal) * ((vatVal + 100 ) / 100)).toFixed(4);
+                $price.val(priceVal);
+
+                priceTotalVal = (((quantityOtherUnitsVal * priceVal)) + deliverVal).toFixed(2);
+                $priceTotal.val(priceTotalVal);
+
+                priceTotalExchangedToUsdVal = (priceTotalVal * invoiceExchangeRateVal).toFixed(2);
+                $priceTotalExchangedToUsd.val(priceTotalExchangedToUsdVal);
+
+                // отрисоваем сумму под таблицей
+                $form.find('.priceTotal').each(function () {
+                    var val = $(this).val();
+                    if (!isNaN(val) && val != '') {
+                        priceSubTotalVal = parseFloat(priceSubTotalVal) + parseFloat(val);
+                    }
+                });
+                $priceSubTotal.text(priceSubTotalVal.toFixed(2));
+
+                $form.find('.priceTotalExchangedToUsd').each(function () {
+                    var val = $(this).val();
+                    if (!isNaN(val) && val != '') {
+                        exchangeToUsdPriceSubTotalVal = parseFloat(exchangeToUsdPriceSubTotalVal) + parseFloat(val);
+                    }
+                });
+                $exchangeToUsdPriceSubTotal.text(exchangeToUsdPriceSubTotalVal.toFixed(2));
+            });
+        }
+    };
 })(jQuery);

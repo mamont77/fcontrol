@@ -18,7 +18,7 @@ class RefuelOutcomeInvoiceDataModel extends RefuelOutcomeInvoiceMainModel
     /**
      * @var string
      */
-    public $table = 'invoiceIncomeRefuelData';
+    public $table = 'invoiceOutcomeRefuelData';
 
     /**
      * @var array
@@ -26,23 +26,23 @@ class RefuelOutcomeInvoiceDataModel extends RefuelOutcomeInvoiceMainModel
     protected $_tableFields = array(
         'refuelId' => 'refuelId',
         'invoiceId' => 'invoiceId',
-        'preInvoiceRefuelId' => 'preInvoiceRefuelId',
-        'flightAgentId' => 'flightAgentId',
-        'flightAirOperatorId' => 'flightAirOperatorId',
-        'flightAircraftId' => 'flightAircraftId',
-        'refuelAirportId' => 'refuelAirportId',
-        'refuelDate' => 'refuelDate',
-        'refuelQuantityLtr' => 'refuelQuantityLtr',
-        'refuelQuantityOtherUnits' => 'refuelQuantityOtherUnits',
-        'refuelUnitId' => 'refuelUnitId',
-        'refuelItemPrice' => 'refuelItemPrice',
-        'refuelTax' => 'refuelTax',
-        'refuelMot' => 'refuelMot',
-        'refuelVat' => 'refuelVat',
-        'refuelDeliver' => 'refuelDeliver',
-        'refuelPrice' => 'refuelPrice',
-        'refuelPriceTotal' => 'refuelPriceTotal',
-        'refuelExchangeToUsdPriceTotal' => 'refuelExchangeToUsdPriceTotal',
+        'incomeInvoiceRefuelId' => 'incomeInvoiceRefuelId',
+        'supplierId' => 'supplierId',
+        'airOperatorId' => 'airOperatorId',
+        'aircraftId' => 'aircraftId',
+        'airportDepId' => 'airportDepId',
+        'date' => 'date',
+        'quantityLtr' => 'quantityLtr',
+        'quantityOtherUnits' => 'quantityOtherUnits',
+        'unitId' => 'unitId',
+        'itemPrice' => 'itemPrice',
+        'tax' => 'tax',
+        'mot' => 'mot',
+        'vat' => 'vat',
+        'deliver' => 'deliver',
+        'price' => 'price',
+        'priceTotal' => 'priceTotal',
+        'priceTotalExchangedToUsd' => 'priceTotalExchangedToUsd',
     );
 
     /**
@@ -62,28 +62,28 @@ class RefuelOutcomeInvoiceDataModel extends RefuelOutcomeInvoiceMainModel
     public function add($data)
     {
 //        \Zend\Debug\Debug::dump($data);
-        $refuelDate = \DateTime::createFromFormat('d-m-Y', $data['refuelDate']);
-        $data['refuelDate'] = $refuelDate->setTime(0, 0, 0)->getTimestamp();
+        $date = \DateTime::createFromFormat('d-m-Y', $data['date']);
+        $data['date'] = $date->setTime(0, 0, 0)->getTimestamp();
 
         $data = array(
             'invoiceId' => (int)$data['invoiceId'],
-            'preInvoiceRefuelId' => (int)$data['preInvoiceRefuelId'],
-            'flightAgentId' => (int)$data['flightAgentId'],
-            'flightAirOperatorId' => (int)$data['flightAirOperatorId'],
-            'flightAircraftId' => (int)$data['flightAircraftId'],
-            'refuelAirportId' => (int)$data['refuelAirportId'],
-            'refuelDate' => (int)$data['refuelDate'],
-            'refuelQuantityLtr' => (string)$data['refuelQuantityLtr'],
-            'refuelQuantityOtherUnits' => (string)$data['refuelQuantityOtherUnits'],
-            'refuelUnitId' => (int)$data['refuelUnitId'],
-            'refuelItemPrice' => (string)$data['refuelItemPrice'],
-            'refuelTax' => (string)$data['refuelTax'],
-            'refuelMot' => (string)$data['refuelMot'],
-            'refuelVat' => (string)$data['refuelVat'],
-            'refuelDeliver' => (string)$data['refuelDeliver'],
-            'refuelPrice' => (string)$data['refuelPrice'],
-            'refuelPriceTotal' => (string)$data['refuelPriceTotal'],
-            'refuelExchangeToUsdPriceTotal' => (string)$data['refuelExchangeToUsdPriceTotal'],
+            'incomeInvoiceRefuelId' => (int)$data['incomeInvoiceRefuelId'],
+            'supplierId' => (int)$data['supplierId'],
+            'airOperatorId' => (int)$data['airOperatorId'],
+            'aircraftId' => (int)$data['aircraftId'],
+            'airportDepId' => (int)$data['airportDepId'],
+            'date' => (int)$data['date'],
+            'quantityLtr' => (string)$data['quantityLtr'],
+            'quantityOtherUnits' => (string)$data['quantityOtherUnits'],
+            'unitId' => (int)$data['unitId'],
+            'itemPrice' => (string)$data['itemPrice'],
+            'tax' => (string)$data['tax'],
+            'mot' => (string)$data['mot'],
+            'vat' => (string)$data['vat'],
+            'deliver' => (string)$data['deliver'],
+            'price' => (string)$data['price'],
+            'priceTotal' => (string)$data['priceTotal'],
+            'priceTotalExchangedToUsd' => (string)$data['priceTotalExchangedToUsd'],
         );
 
         $this->insert($data);
@@ -99,20 +99,25 @@ class RefuelOutcomeInvoiceDataModel extends RefuelOutcomeInvoiceMainModel
 
         $select->columns($this->_tableFields);
 
-        $select->join(array('preInvoiceRefuel' => 'flightRefuelForm'),
-            'preInvoiceRefuel.id = ' . $this->table . '.preInvoiceRefuelId',
+        $select->join(array('invoiceIncomeRefuelData' => 'invoiceIncomeRefuelData'),
+            'invoiceIncomeRefuelData.preInvoiceRefuelId = ' . $this->table . '.incomeInvoiceRefuelId',
             array(
-                'preInvoiceRefuelId' => 'id',
+                'preInvoiceInvoiceId' => 'invoiceId',
+                'preInvoiceRefuelId' => 'preInvoiceRefuelId',
+            ), 'left');
+
+
+        $select->join(array('invoiceIncomeRefuelMain' => 'invoiceIncomeRefuelMain'),
+            'invoiceIncomeRefuelMain.invoiceId = invoiceIncomeRefuelData.invoiceId',
+            array(
+                'invoiceIncomeNumber' => 'invoiceNumber',
+                'invoiceIncomeStatus' => 'invoiceStatus',
+            ), 'left');
+
+        $select->join(array('preInvoiceRefuel' => 'flightRefuelForm'),
+            'preInvoiceRefuel.id = ' . 'invoiceIncomeRefuelData.preInvoiceRefuelId',
+            array(
                 'preInvoiceHeaderId' => 'headerId',
-                'preInvoiceAgentId' => 'agentId',
-                'preInvoiceLegId' => 'legId',
-                'preInvoiceAirportId' => 'airportId',
-                'preInvoiceQuantityLtr' => 'quantityLtr',
-                'preInvoiceQuantityOtherUnits' => 'quantityOtherUnits',
-                'preInvoiceUnitId' => 'unitId',
-                'preInvoicePriceUsd' => 'priceUsd',
-                'preInvoiceTotalPriceUsd' => 'totalPriceUsd',
-                'preInvoiceDate' => 'date',
                 'preInvoiceStatus' => 'status',
             ), 'left');
 
@@ -130,63 +135,63 @@ class RefuelOutcomeInvoiceDataModel extends RefuelOutcomeInvoiceMainModel
             ), 'left');
 
         $select->join(
-            array('preInvoiceHeaderAgent' => 'library_kontragent'),
-            'preInvoiceHeaderAgent.id = ' . $this->table . '.flightAgentId',
+            array('supplier' => 'library_kontragent'),
+            'supplier.id = ' . $this->table . '.supplierId',
             array(
-                'preInvoiceHeaderAgentName' => 'name',
-                'preInvoiceHeaderAgentShortName' => 'short_name',
+                'supplierName' => 'name',
+                'supplierShortName' => 'short_name',
             ),
             'left');
 
         $select->join(
-            array('preInvoiceHeaderAirOperator' => 'library_air_operator'),
-            'preInvoiceHeaderAirOperator.id = ' . $this->table . '.flightAirOperatorId',
+            array('airOperator' => 'library_air_operator'),
+            'airOperator.id = ' . $this->table . '.airOperatorId',
             array(
-                'preInvoiceHeaderAirOperatorName' => 'name',
-                'preInvoiceHeaderOperatorShortName' => 'short_name',
-                'preInvoiceHeaderAirOperatorICAO' => 'code_icao',
-                'preInvoiceHeaderAirOperatorIATA' => 'code_iata',
+                'airOperatorName' => 'name',
+                'airOperatorShortName' => 'short_name',
+                'airOperatorICAO' => 'code_icao',
+                'airOperatorIATA' => 'code_iata',
             ),
             'left');
 
         $select->join(
-            array('preInvoiceHeaderAircraft' => 'library_aircraft'),
-            'preInvoiceHeaderAircraft.id = ' . $this->table . '.flightAircraftId',
+            array('aircraft' => 'library_aircraft'),
+            'aircraft.id = ' . $this->table . '.aircraftId',
             array(
-                'preInvoiceHeaderAircraftTypeId' => 'aircraft_type',
-                'preInvoiceHeaderAircraftName' => 'reg_number',
+                'aircraftTypeId' => 'aircraft_type',
+                'aircraftName' => 'reg_number',
             ),
             'left');
 
         $select->join(
-            array('preInvoiceHeaderAircraftType' => 'library_aircraft_type'),
-            'preInvoiceHeaderAircraftType.id = preInvoiceHeaderAircraft.aircraft_type',
+            array('aircraftType' => 'library_aircraft_type'),
+            'aircraftType.id = aircraft.aircraft_type',
             array(
-                'preInvoiceHeaderAircraftTypeName' => 'name',
+                'aircraftTypeName' => 'name',
             ),
             'left');
 
         $select->join(
-            array('preInvoiceRefuelAirport' => 'library_airport'),
-            'preInvoiceRefuelAirport.id = ' . $this->table . '.refuelAirportId',
+            array('airportDep' => 'library_airport'),
+            'airportDep.id = ' . $this->table . '.airportDepId',
             array(
-                'preInvoiceRefuelAirportName' => 'name',
-                'preInvoiceRefuelAirportShortName' => 'short_name',
-                'preInvoiceRefuelAirportICAO' => 'code_icao',
-                'preInvoiceRefuelAirportIATA' => 'code_iata',
+                'airportDepName' => 'name',
+                'airportDepShortName' => 'short_name',
+                'airportDepICAO' => 'code_icao',
+                'airportDepIATA' => 'code_iata',
             ),
             'left');
 
         $select->join(
-            array('preInvoiceHeaderUnit' => 'library_unit'),
-            'preInvoiceHeaderUnit.id = ' . $this->table . '.refuelUnitId',
+            array('unit' => 'library_unit'),
+            'unit.id = ' . $this->table . '.unitId',
             array(
-                'preInvoiceHeaderUnitName' => 'name',
+                'unitName' => 'name',
             ),
             'left');
 
-        $select->where(array('invoiceId' => $id));
-        $select->order(array('refuelId ' . $select::ORDER_ASCENDING));
+        $select->where(array($this->table . '.invoiceId' => $id));
+        $select->order(array($this->table . '.refuelId ' . $select::ORDER_ASCENDING));
 //        \Zend\Debug\Debug::dump($select->getSqlString());
 
         $resultSet = $this->selectWith($select);

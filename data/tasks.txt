@@ -27,4 +27,4 @@
 
 13.12
 9:30
-#85: Refuel - Create refuel outcome invoice.
+#85: Refuel - Create refuel outcome invoice. #85: Refuel - Check refuel outcome invoice. #85: Refuel - Save and show outcome invoice.
