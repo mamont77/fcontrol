@@ -8,8 +8,8 @@ foreach ($this->data as $row) {
 }
 //
 ?>
-<form name="refuelIncomeInvoiceStep3" id="refuelIncomeInvoiceStep3" method="post"
-      action="/management/refuel/income-invoice-step3">
+<form name="refuelOutcomeInvoiceStep3" id="refuelOutcomeInvoiceStep3" method="post"
+      action="/management/refuel/outcome-invoice-step3">
 <table id="invoiceHeader" class="table-bordered table-condensed">
     <thead>
     <tr>
@@ -156,12 +156,13 @@ foreach ($this->data as $row) {
                     <? endforeach; ?>
                 </select>
             </td>
-            <td>
+            <td class="noWrap">
                 <input type="text" class="itemPrice input-mini text-right"
                        name="data[<?= $row->incomeInvoiceRefuelId ?>][itemPrice]"
                        placeholder="Price est"
                        maxlength="40" required="required"
                        value="<?= number_format($row->incomeInvoiceItemPrice, 4, '.', '') ?>">
+                <small>, <span class="refuelCurrency">USD</span></small>
             </td>
             <td>
                 <input type="text" class="tax input-mini" name="data[<?= $row->incomeInvoiceRefuelId ?>][tax]"
@@ -183,19 +184,21 @@ foreach ($this->data as $row) {
                        placeholder="Deliver"
                        maxlength="40" required="required" value="">
             </td>
-            <td>
+            <td class="noWrap">
                 <input type="text" class="price input-mini text-right"
                        name="data[<?= $row->incomeInvoiceRefuelId ?>][price]"
                        placeholder="Total price"
                        maxlength="40" required="required"
                        value="">
+                <small>, <span class="refuelCurrency">USD</span></small>
             </td>
-            <td>
+            <td class="noWrap">
                 <input type="text" class="priceTotal input-mini text-right"
                        name="data[<?= $row->incomeInvoiceRefuelId ?>][priceTotal]"
                        placeholder="Total"
                        maxlength="40" required="required"
                        value="">
+                <small>, <span class="refuelCurrency">USD</span></small>
             </td>
             <td class="text-right">
                 &mdash;
@@ -256,8 +259,8 @@ foreach ($this->data as $row) {
                             <td>
                                 Subtotal
                             </td>
-                            <td><span class="refuelCurrency">USD</span> <span class="refuelPriceSubTotal"></span></td>
-                            <td>USD <span class="refuelExchangeToUsdPriceSubTotal"></span></td>
+                            <td><span class="refuelCurrency">USD</span> <span class="priceSubTotal"></span></td>
+                            <td>USD <span class="exchangeToUsdPriceSubTotal"></span></td>
                         </tr>
                         </tbody>
                     </table>
