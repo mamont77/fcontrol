@@ -89,7 +89,7 @@ foreach ($this->data as $row) {
     <tbody>
     <? foreach ($this->data as $row): ?>
 <!--        --><?// \Zend\Debug\Debug::dump($row) ?>
-        <tr id="outcomeInvoiceRefuelId<?= $row->incomeInvoiceRefuelId ?>">
+        <tr id="outcomeInvoiceRefuelId_<?= $row->incomeInvoiceRefuelId ?>">
             <td class="noWrap" rowspan="2">
                 <input type="hidden" name="data[<?= $row->incomeInvoiceRefuelId ?>][incomeInvoiceRefuelId]" value="<?= $row->incomeInvoiceRefuelId ?>"/>
                 <input type="text" name="data[<?= $row->incomeInvoiceRefuelId ?>][preInvoiceFlightRefNumberOrder]" class="input-small readonly"
