@@ -47,6 +47,7 @@
         <th>ORD</th>
         <th>Fuel supplier</th>
         <th>Air Operator</th>
+        <th>Flight #</th>
         <th>Aircraft</th>
         <th>Airport Dep</th>
         <th>Date</th>
@@ -90,6 +91,12 @@
                        class="input-small readonly"
                        maxlength="40" required="required" readonly="readonly"
                        value="<?= $row['incomeInvoiceAirOperatorShortName'] ?>">
+            </td>
+            <td>
+                <input type="text" name="data[<?= $row['incomeInvoiceRefuelId'] ?>][airOperatorNumber]"
+                       class="input-small"
+                       maxlength="40" required="required"
+                       value="<?= $row['airOperatorNumber'] ?>">
             </td>
             <td>
                 <input type="hidden" name="data[<?= $row['incomeInvoiceRefuelId'] ?>][aircraftId]"
@@ -200,7 +207,7 @@
         </tr>
     <? endforeach; ?>
     <tr>
-        <td colspan="17">
+        <td colspan="18">
             <div class="row-fluid">
                 <div class="span6">
                 </div>

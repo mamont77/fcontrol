@@ -9,6 +9,7 @@
             <th>Invoice #</th>
             <th>Customer</th>
             <th>Air Operator</th>
+            <th>Flight #</th>
             <th>Aircraft</th>
             <th>Airport Dep</th>
             <th>Fuel supplier</th>
@@ -59,6 +60,9 @@
                 </td>
                 <td>
                     <?= $row->flightAirOperatorShortName ?>
+                </td>
+                <td>
+                    <?= $row->flightAirOperatorNumber ?>
                 </td>
                 <td>
                     <?= $row->flightAircraftTypeName . ' (' . $row->flightAircraftName . ')' ?>
@@ -156,7 +160,7 @@
             </tr>
         <? endforeach; ?>
         <tr>
-            <td colspan="20">
+            <td colspan="21">
                 <input name="submitBtn" type="submit" class="btn btn-primary pull-right" value="Apply">
             </td>
         </tr>

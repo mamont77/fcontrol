@@ -6,6 +6,7 @@
         <th>Invoice #</th>
         <th>Fuel supplier</th>
         <th>Air Operator</th>
+        <th>Flight #</th>
         <th>Aircraft</th>
         <th>Airport Dep</th>
         <th>Date</th>
@@ -47,6 +48,9 @@
             </td>
             <td>
                 <?= $row->airOperatorShortName ?>
+            </td>
+            <td>
+                <?= $row->airOperatorNumber ?>
             </td>
             <td class="noWrap">
                 <?= $row->aircraftTypeName ?><br/>
@@ -100,7 +104,7 @@
         </tr>
     <? endforeach; ?>
     <tr>
-        <td colspan="18">
+        <td colspan="19">
             <div class="row-fluid">
                 <div class="span6">
                 </div>

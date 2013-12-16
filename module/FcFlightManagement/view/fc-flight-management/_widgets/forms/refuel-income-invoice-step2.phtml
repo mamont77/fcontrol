@@ -69,6 +69,7 @@ foreach ($this->data as $row) {
         <th>ORD</th>
         <th>Customer</th>
         <th>Air Operator</th>
+        <th>Flight #</th>
         <th>Aircraft</th>
         <th>Airport Dep</th>
         <th>Date</th>
@@ -107,6 +108,12 @@ foreach ($this->data as $row) {
                        class="input-small readonly"
                        maxlength="40" required="required" readonly="readonly"
                        value="<?= $row->flightAirOperatorShortName ?>">
+            </td>
+            <td rowspan="2">
+                <input type="text" name="data[<?= $row->refuelId ?>][flightAirOperatorNumber]"
+                       class="input-small readonly"
+                       maxlength="40" required="required"
+                       value="<?= $row->flightAirOperatorNumber ?>">
             </td>
             <td rowspan="2">
                 <input type="hidden" name="data[<?= $row->refuelId ?>][flightAircraftId]"
@@ -220,7 +227,7 @@ foreach ($this->data as $row) {
         </tr>
     <? endforeach; ?>
     <tr>
-        <td colspan="17">
+        <td colspan="18">
             <div class="row-fluid">
                 <div class="span6">
                 </div>
@@ -241,7 +248,7 @@ foreach ($this->data as $row) {
         </td>
     </tr>
     <tr>
-        <td colspan="17">
+        <td colspan="18">
             <input name="submitBtn" type="submit" class="btn btn-primary pull-right" value="Save">
         </td>
     </tr>

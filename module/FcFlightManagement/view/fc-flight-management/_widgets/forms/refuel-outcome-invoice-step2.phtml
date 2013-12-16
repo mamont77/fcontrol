@@ -69,6 +69,7 @@ foreach ($this->data as $row) {
         <th>ORD</th>
         <th>Fuel supplier</th>
         <th>Air Operator</th>
+        <th>Flight #</th>
         <th>Aircraft</th>
         <th>Airport Dep</th>
         <th>Date</th>
@@ -108,6 +109,12 @@ foreach ($this->data as $row) {
                        class="input-small readonly"
                        maxlength="40" required="required" readonly="readonly"
                        value="<?= $row->incomeInvoiceAirOperatorShortName ?>">
+            </td>
+            <td rowspan="2">
+                <input type="text" name="data[<?= $row->incomeInvoiceRefuelId ?>][airOperatorNumber]"
+                       class="input-small"
+                       maxlength="40" required="required"
+                       value="<?= $row->incomeInvoiceAirOperatorNumber ?>">
             </td>
             <td rowspan="2">
                 <input type="hidden" name="data[<?= $row->incomeInvoiceRefuelId ?>][aircraftId]"

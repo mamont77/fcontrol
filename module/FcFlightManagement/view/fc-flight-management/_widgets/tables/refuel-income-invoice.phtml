@@ -5,6 +5,7 @@
         <th>ORD #</th>
         <th>Customer</th>
         <th>Air Operator</th>
+        <th>Flight #</th>
         <th>Aircraft</th>
         <th>Airport Dep</th>
         <th>Date</th>
@@ -23,7 +24,7 @@
     </thead>
     <tbody>
     <? foreach ($this->header->data as $row): ?>
-        <!--        --><? // \Zend\Debug\Debug::dump($row) ?>
+<!--        --><?// \Zend\Debug\Debug::dump($row) ?>
         <tr id="incomeInvoiceRefuelId_<?= $row->refuelId ?>">
             <td class="noWrap">
                 <a href="<?=
@@ -38,6 +39,9 @@
             </td>
             <td>
                 <?= $row->preInvoiceHeaderOperatorShortName ?>
+            </td>
+            <td>
+                <?= $row->flightAirOperatorNumber ?>
             </td>
             <td class="noWrap">
                 <?= $row->preInvoiceHeaderAircraftTypeName ?><br/>
@@ -91,7 +95,7 @@
         </tr>
     <? endforeach; ?>
     <tr>
-        <td colspan="17">
+        <td colspan="18">
             <div class="row-fluid">
                 <div class="span6">
                 </div>

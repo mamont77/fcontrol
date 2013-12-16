@@ -29,6 +29,7 @@ class RefuelOutcomeInvoiceSearchModel extends AbstractTableGateway
         'incomeInvoicePreInvoiceRefuelId' => 'preInvoiceRefuelId', // необходим что бы получить ORD, status
         'incomeInvoiceAgentId' => 'flightAgentId',
         'incomeInvoiceAirOperatorId' => 'flightAirOperatorId',
+        'incomeInvoiceAirOperatorNumber' => 'flightAirOperatorNumber',
         'incomeInvoiceAircraftId' => 'flightAircraftId',
         'incomeInvoiceAirportId' => 'refuelAirportId',
         'incomeInvoiceDate' => 'refuelDate',
@@ -54,6 +55,7 @@ class RefuelOutcomeInvoiceSearchModel extends AbstractTableGateway
         'outcomeInvoicePreInvoiceRefuelId' => 'incomeInvoiceRefuelId',
         'outcomeInvoiceSupplierId' => 'supplierId',
         'outcomeInvoiceAirOperatorId' => 'airOperatorId',
+        'outcomeInvoiceAirOperatorNumber' => 'airOperatorNumber',
         'outcomeInvoiceAircraftId' => 'aircraftId',
         'outcomeInvoiceAirportId' => 'airportDepId',
         'outcomeInvoiceDate' => 'date',
