@@ -10,13 +10,20 @@
             <th>Customer</th>
             <th>Air Operator</th>
             <th>Aircraft</th>
-            <th>Date</th>
             <th>Airport Dep</th>
             <th>Fuel supplier</th>
+            <th>Date</th>
             <th>Quantity</th>
             <th>Unit</th>
             <th>Price</th>
+            <th>TAX</th>
+            <th>MOT</th>
+            <th>VAT, %</th>
+            <th>Deliver</th>
+            <th>Total Price</th>
             <th>Total</th>
+            <th>Exchange Rate</th>
+            <th>Exchange Total, USD</th>
         </tr>
         </thead>
         <tbody>
@@ -57,17 +64,17 @@
                     <?= $row->flightAircraftTypeName . ' (' . $row->flightAircraftName . ')' ?>
                 </td>
                 <td>
+                    <?= $row->refuelAirportICAO . ' (' . $row->refuelAirportIATA . ')' ?>
+                </td>
+                <td class="refuelAgentShortName">
+                    <?= $row->refuelAgentShortName ?>
+                </td>
+                <td>
                     <? if ($row->incomeInvoiceRefuelDate): ?>
                         <?= date('d-m-Y', $row->incomeInvoiceRefuelDate) ?>
                     <? else: ?>
                         <?= date('d-m-Y', $row->refuelDate) ?>
                     <? endif; ?>
-                </td>
-                <td>
-                    <?= $row->refuelAirportICAO . ' (' . $row->refuelAirportIATA . ')' ?>
-                </td>
-                <td class="refuelAgentShortName">
-                    <?= $row->refuelAgentShortName ?>
                 </td>
                 <td>
                     <? if ($row->incomeInvoiceRefuelQuantityOtherUnits): ?>
@@ -84,8 +91,57 @@
                     <? endif; ?>
                 </td>
                 <td class="text-right">
+                    <? if ($row->incomeInvoiceRefuelItemPrice): ?>
+                        <?= $row->incomeInvoiceRefuelItemPrice ?><small>, <?= $row->incomeInvoiceCurrency ?> </small>
+                    <? else: ?>
+                        &mdash;
+                    <? endif; ?>
+                </td>
+                <td>
+                    <? if ($row->incomeInvoiceRefuelTax): ?>
+                        <?= $row->incomeInvoiceRefuelTax ?>
+                    <? else: ?>
+                        &mdash;
+                    <? endif; ?>
+                </td>
+                <td>
+                    <? if ($row->incomeInvoiceRefuelMot): ?>
+                        <?= $row->incomeInvoiceRefuelMot ?>
+                    <? else: ?>
+                        &mdash;
+                    <? endif; ?>
+                </td>
+                <td>
+                    <? if ($row->incomeInvoiceRefuelVat): ?>
+                        <?= $row->incomeInvoiceRefuelVat ?>
+                    <? else: ?>
+                        &mdash;
+                    <? endif; ?>
+                </td>
+                <td>
+                    <? if ($row->incomeInvoiceRefuelDeliver): ?>
+                        <?= $row->incomeInvoiceRefuelDeliver ?>
+                    <? else: ?>
+                        &mdash;
+                    <? endif; ?>
+                </td>
+                <td>
+                    <? if ($row->incomeInvoiceRefuelPrice): ?>
+                        <?= $row->incomeInvoiceRefuelPrice ?><small>, <?= $row->incomeInvoiceCurrency ?> </small>
+                    <? else: ?>
+                        &mdash;
+                    <? endif; ?>
+                </td>
+                <td>
                     <? if ($row->incomeInvoiceRefuelPriceTotal): ?>
-                        <?= $row->incomeInvoiceRefuelPriceTotal ?>
+                        <?= $row->incomeInvoiceRefuelPriceTotal ?><small>, <?= $row->incomeInvoiceCurrency ?> </small>
+                    <? else: ?>
+                        &mdash;
+                    <? endif; ?>
+                </td>
+                <td>
+                    <? if ($row->incomeInvoiceExchangeRate): ?>
+                        <?= $row->incomeInvoiceExchangeRate ?>
                     <? else: ?>
                         &mdash;
                     <? endif; ?>
@@ -100,7 +156,7 @@
             </tr>
         <? endforeach; ?>
         <tr>
-            <td colspan="13">
+            <td colspan="20">
                 <input name="submitBtn" type="submit" class="btn btn-primary pull-right" value="Apply">
             </td>
         </tr>

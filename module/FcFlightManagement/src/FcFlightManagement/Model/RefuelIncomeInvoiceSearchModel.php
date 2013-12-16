@@ -225,6 +225,9 @@ class RefuelIncomeInvoiceSearchModel extends AbstractTableGateway
             array(
                 'incomeInvoiceMainId' => 'invoiceId',
                 'incomeInvoiceNumber' => 'invoiceNumber',
+                'incomeInvoiceDate' => 'invoiceDate',
+                'incomeInvoiceCurrency' => 'invoiceCurrency',
+                'incomeInvoiceExchangeRate' => 'invoiceExchangeRate',
                 'incomeInvoiceRefuelSupplierId' => 'invoiceRefuelSupplierId',
                 'incomeInvoiceStatus' => 'invoiceStatus',
             ),
