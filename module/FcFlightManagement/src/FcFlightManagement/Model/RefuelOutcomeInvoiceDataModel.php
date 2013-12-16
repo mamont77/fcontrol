@@ -100,7 +100,7 @@ class RefuelOutcomeInvoiceDataModel extends RefuelOutcomeInvoiceMainModel
         $select->columns($this->_tableFields);
 
         $select->join(array('invoiceIncomeRefuelData' => 'invoiceIncomeRefuelData'),
-            'invoiceIncomeRefuelData.preInvoiceRefuelId = ' . $this->table . '.incomeInvoiceRefuelId',
+            'invoiceIncomeRefuelData.refuelId = ' . $this->table . '.incomeInvoiceRefuelId',
             array(
                 'preInvoiceInvoiceId' => 'invoiceId',
                 'preInvoiceRefuelId' => 'preInvoiceRefuelId',

@@ -217,74 +217,13 @@ class RefuelOutcomeInvoiceSearchModel extends AbstractTableGateway
             ),
             'left');
 
-//
-//        $select->join(
-//            array('flightAlternativeAircraft1' => 'library_aircraft'),
-//            'flightAlternativeAircraft1.id = flight.alternativeAircraftId1',
-//            array(
-//                'flightAlternativeAircraftTypeId1' => 'aircraft_type',
-//                'flightAlternativeAircraftName1' => 'reg_number',
-//            ),
-//            'left');
-//
-//        $select->join(
-//            array('flightAlternativeTypeAircraft1' => 'library_aircraft_type'),
-//            'flightAlternativeTypeAircraft1.id = flightAlternativeAircraft1.aircraft_type',
-//            array(
-//                'flightAlternativeAircraftTypeName1' => 'name',
-//            ),
-//            'left');
-//
-//        $select->join(
-//            array('flightAlternativeAircraft2' => 'library_aircraft'),
-//            'flightAlternativeAircraft2.id = flight.alternativeAircraftId2',
-//            array(
-//                'flightAlternativeAircraftTypeId2' => 'aircraft_type',
-//                'flightAlternativeAircraftName2' => 'reg_number',
-//            ),
-//            'left');
-//
-//        $select->join(
-//            array('flightAlternativeTypeAircraft2' => 'library_aircraft_type'),
-//            'flightAlternativeTypeAircraft2.id = flightAlternativeAircraft2.aircraft_type',
-//            array(
-//                'flightAlternativeAircraftTypeName2' => 'name',
-//            ),
-//            'left');
-//
-//        $select->join(
-//            array('invoiceIncomeRefuelData' => 'invoiceIncomeRefuelData'),
-//            'flightRefuelForm.id = invoiceIncomeRefuelData.preInvoiceRefuelId',
-//            array(
-//                'incomeInvoiceRefuelId' => 'refuelId',
-//                'incomeInvoiceId' => 'invoiceId',
-//                'incomeInvoiceParentRefuelId' => 'preInvoiceRefuelId',
-//                'incomeInvoiceFlightAgentId' => 'flightAgentId',
-//                'incomeInvoiceFlightAirOperatorId' => 'flightAirOperatorId',
-//                'incomeInvoiceFlightAircraftId' => 'flightAircraftId',
-//                'incomeInvoiceRefuelAirportId' => 'refuelAirportId',
-//                'incomeInvoiceRefuelDate' => 'refuelDate',
-//                'incomeInvoiceRefuelQuantityLtr' => 'refuelQuantityLtr',
-//                'incomeInvoiceRefuelQuantityOtherUnits' => 'refuelQuantityOtherUnits',
-//                'incomeInvoiceRefuelUnitId' => 'refuelUnitId',
-//                'incomeInvoiceRefuelItemPrice' => 'refuelItemPrice',
-//                'incomeInvoiceRefuelTax' => 'refuelTax',
-//                'incomeInvoiceRefuelMot' => 'refuelMot',
-//                'incomeInvoiceRefuelVat' => 'refuelVat',
-//                'incomeInvoiceRefuelDeliver' => 'refuelDeliver',
-//                'incomeInvoiceRefuelPrice' => 'refuelPrice',
-//                'incomeInvoiceRefuelPriceTotal' => 'refuelPriceTotal',
-//                'incomeInvoiceRefuelExchangeToUsdPriceTotal' => 'refuelExchangeToUsdPriceTotal',
-//            ),
-//            'left');
-//
-//        $select->join(
-//            array('incomeInvoiceRefuelUnit' => 'library_unit'),
-//            'incomeInvoiceRefuelUnit.id = invoiceIncomeRefuelData.refuelUnitId',
-//            array(
-//                'incomeInvoiceRefuelUnitName' => 'name',
-//            ),
-//            'left');
+        $select->join(
+            array('outcomeInvoiceUnit' => 'library_unit'),
+            'invoiceOutcomeRefuelData.unitId = outcomeInvoiceUnit.id',
+            array(
+                'outcomeInvoiceUnitName' => 'name',
+            ),
+            'left');
 
         if ($data['dateFrom'] != '' && $data['dateTo'] != '') {
             $select->where->between($this->table . '.refuelDate', $data['dateFrom'], $data['dateTo']);

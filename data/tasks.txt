@@ -28,3 +28,7 @@
 13.12
 9:30
 #85: Refuel - Create refuel outcome invoice. #85: Refuel - Check refuel outcome invoice. #85: Refuel - Save and show outcome invoice.
+
+16.12
+10:10
+#85: Поиск ошибок. #85: Search refuels outcome (step 1) - выводить данные с готово инвойса, если есть таковой.
