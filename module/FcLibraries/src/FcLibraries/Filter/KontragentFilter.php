@@ -32,6 +32,7 @@ class KontragentFilter extends BaseFilter
     public $fax;
     public $mail;
     public $sita;
+    public $termOfPayment;
 
     /**
      * @param $data
@@ -48,6 +49,7 @@ class KontragentFilter extends BaseFilter
         $this->fax = (isset($data['fax'])) ? $data['fax'] : null;
         $this->mail = (isset($data['mail'])) ? $data['mail'] : null;
         $this->sita = (isset($data['sita'])) ? $data['sita'] : null;
+        $this->termOfPayment = (isset($data['termOfPayment'])) ? $data['termOfPayment'] : null;
     }
 
     /**
@@ -207,6 +209,22 @@ class KontragentFilter extends BaseFilter
                             'encoding' => 'UTF-8',
                             'min' => 1,
                             'max' => 10,
+                        ),
+                    ),
+                ),
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'termOfPayment',
+                'required' => false,
+                'filters' => $this->defaultFilters,
+                'validators' => array(
+                    array(
+                        'name' => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min' => 1,
+                            'max' => 2,
                         ),
                     ),
                 ),

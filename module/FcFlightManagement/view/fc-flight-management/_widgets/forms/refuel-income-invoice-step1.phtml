@@ -57,7 +57,11 @@
                     <?= $row->flightAircraftTypeName . ' (' . $row->flightAircraftName . ')' ?>
                 </td>
                 <td>
-                    <?= date('d-m-Y', $row->incomeInvoiceRefuelDate) ?>
+                    <? if ($row->incomeInvoiceRefuelDate): ?>
+                        <?= date('d-m-Y', $row->incomeInvoiceRefuelDate) ?>
+                    <? else: ?>
+                        <?= date('d-m-Y', $row->refuelDate) ?>
+                    <? endif; ?>
                 </td>
                 <td>
                     <?= $row->refuelAirportICAO . ' (' . $row->refuelAirportIATA . ')' ?>

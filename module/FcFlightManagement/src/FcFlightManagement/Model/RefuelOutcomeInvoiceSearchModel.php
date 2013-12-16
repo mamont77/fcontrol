@@ -242,7 +242,7 @@ class RefuelOutcomeInvoiceSearchModel extends AbstractTableGateway
         }
 
         if ($data['agentId'] != '') {
-            $select->where->equalTo($this->table . '.flightAgentId', $data['agentId']);
+            $select->where->equalTo('invoiceIncomeRefuelMain.invoiceRefuelSupplierId', $data['agentId']);
         }
 
         if ($data['airportId'] != '') {
@@ -250,7 +250,7 @@ class RefuelOutcomeInvoiceSearchModel extends AbstractTableGateway
         }
 
         if ($data['customerId'] != '') {
-            $select->where->equalTo('invoiceIncomeRefuelMain.invoiceRefuelSupplierId', $data['customerId']);
+            $select->where->equalTo($this->table . '.flightAgentId', $data['customerId']);
         }
 
         if ($data['airOperatorId'] != '') {

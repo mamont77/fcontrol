@@ -74,7 +74,8 @@
      * @returns {string}
      */
     function convertRefuelQuantityLtr2OtherUnits(quantityLtr, unit) {
-        var result = 0;
+        var result = 0,
+            round = 2;
         quantityLtr = parseFloat(quantityLtr);
 
         if (!isNaN(quantityLtr) && unit != '') {
@@ -96,12 +97,13 @@
 
                 case 'USG':
                     result = quantityLtr / 3.7854;
+                    round = 3;
 
                     break;
             }
         }
 
-        return result.toFixed(2);
+        return result.toFixed(round);
     }
 
     /**
@@ -111,7 +113,8 @@
      * @returns {string}
      */
     function convertRefuelQuantityOtherUnits2Ltr(quantityOtherUnits, unit) {
-        var result = 0;
+        var result = 0,
+            round = 2;
         quantityOtherUnits = parseFloat(quantityOtherUnits);
 
         if (!isNaN(quantityOtherUnits) && unit != '') {
@@ -133,12 +136,13 @@
 
                 case 'USG':
                     result = quantityOtherUnits * 3.7854;
+                    round = 3;
 
                     break;
             }
         }
 
-        return result.toFixed(2);
+        return result.toFixed(round);
     }
 
     /**

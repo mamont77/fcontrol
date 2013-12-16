@@ -63,6 +63,7 @@ class KontragentModel extends BaseModel
             'fax' => $object->fax,
             'mail' => $object->mail,
             'sita' => $object->sita,
+            'termOfPayment' => (int)$object->termOfPayment,
         );
         $this->insert($data);
 
@@ -85,6 +86,7 @@ class KontragentModel extends BaseModel
             'fax' => $object->fax,
             'mail' => $object->mail,
             'sita' => $object->sita,
+            'termOfPayment' => (int)$object->termOfPayment,
         );
         $id = (int)$object->id;
         if ($this->get($id)) {

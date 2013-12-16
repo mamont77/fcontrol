@@ -97,9 +97,9 @@ foreach ($this->data as $row) {
             </td>
             <td rowspan="2">
                 <input type="hidden" name="data[<?= $row->incomeInvoiceRefuelId ?>][supplierId]"
-                       value="<?= $row->incomeInvoiceAgentId ?>">
-                <input type="text" name="data[<?= $row->incomeInvoiceRefuelId ?>][incomeInvoiceAgentShortName]" class="input-small readonly"
-                       maxlength="40" required="required" readonly="readonly" value="<?= $row->incomeInvoiceAgentShortName ?>">
+                       value="<?= $row->incomeInvoiceMainRefuelSupplierId ?>">
+                <input type="text" name="data[<?= $row->incomeInvoiceRefuelId ?>][incomeInvoiceSupplierShortName]" class="input-small readonly"
+                       maxlength="40" required="required" readonly="readonly" value="<?= $row->incomeInvoiceSupplierShortName ?>">
             </td>
             <td rowspan="2">
                 <input type="hidden" name="data[<?= $row->incomeInvoiceRefuelId ?>][airOperatorId]"
@@ -129,17 +129,17 @@ foreach ($this->data as $row) {
                        placeholder="Date of refuel"
                        maxlength="40" required="required" value="<?= date('d-m-Y', $row->incomeInvoiceDate) ?>">
             </td>
-            <td rowspan="2">
+            <td>
                 <input type="text" class="quantityLtr input-mini readonly"
                        name="data[<?= $row->incomeInvoiceRefuelId ?>][quantityLtr]"
                        placeholder="QTY LTR"
-                       maxlength="40" required="required" value="">
+                       maxlength="40" required="required" value="<?= $row->incomeInvoiceQuantityLtr ?>">
             </td>
             <td>
                 <input type="text" class="quantityOtherUnits input-mini"
                        name="data[<?= $row->incomeInvoiceRefuelId ?>][quantityOtherUnits]"
                        placeholder="Quantity est"
-                       maxlength="40" required="required" value="">
+                       maxlength="40" required="required" value="<?= $row->incomeInvoiceQuantityOtherUnits ?>">
             </td>
             <td>
                 <select name="data[<?= $row->incomeInvoiceRefuelId ?>][unitId]"
@@ -212,6 +212,9 @@ foreach ($this->data as $row) {
             </td>
         </tr>
         <tr id="incomeInvoiceRefuelId_<?= $row->incomeInvoiceRefuelId ?>" class="info">
+            <td>
+                <?= $row->incomeInvoiceQuantityLtr ?>
+            </td>
             <td>
                 <?= $row->incomeInvoiceQuantityOtherUnits ?>
             </td>

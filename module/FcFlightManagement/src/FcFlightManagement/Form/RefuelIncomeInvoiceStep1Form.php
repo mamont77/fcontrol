@@ -120,7 +120,7 @@ class RefuelIncomeInvoiceStep1Form extends BaseForm
             'attributes' => array(
                 'id' => 'agentId',
                 'class' => 'chosen input-medium',
-                'data-placeholder' => 'Agent',
+                'data-placeholder' => 'Fuel supplier',
                 'required' => false,
             ),
             'options' => array(

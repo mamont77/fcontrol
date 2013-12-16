@@ -87,7 +87,7 @@ foreach ($this->data as $row) {
     </thead>
     <tbody>
     <? foreach ($this->data as $row): ?>
-        <!--        --><? // \Zend\Debug\Debug::dump($row) ?>
+<!--        --><?// \Zend\Debug\Debug::dump($row) ?>
         <tr id="invoiceRefuelId_<?= $row->refuelId ?>">
             <td class="noWrap" rowspan="2">
                 <input type="hidden" name="data[<?= $row->refuelId ?>][refuelId]" value="<?= $row->refuelId ?>"/>
@@ -132,13 +132,13 @@ foreach ($this->data as $row) {
                 <input type="text" class="refuelQuantityLtr input-mini"
                        name="data[<?= $row->refuelId ?>][refuelQuantityLtr]"
                        placeholder="QTY LTR"
-                       maxlength="40" required="required" value="">
+                       maxlength="40" required="required" value="<?= $row->refuelQuantityLtr ?>">
             </td>
             <td>
                 <input type="text" class="refuelQuantityOtherUnits input-mini"
                        name="data[<?= $row->refuelId ?>][refuelQuantityOtherUnits]"
                        placeholder="Quantity est"
-                       maxlength="40" required="required" value="">
+                       maxlength="40" required="required" value="<?= $row->refuelQuantityOtherUnits ?>">
             </td>
             <td>
                 <select name="data[<?= $row->refuelId ?>][refuelUnitId]"

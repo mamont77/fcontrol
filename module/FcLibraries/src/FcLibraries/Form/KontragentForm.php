@@ -138,6 +138,20 @@ class KontragentForm extends Form
             ),
         ));
 
+        $this->add(array(
+            'name' => 'termOfPayment',
+            'type' => 'Zend\Form\Element\Text',
+            'attributes' => array(
+                'required' => false,
+                'maxlength' => '2',
+                'value' => 5,
+            ),
+            'options' => array(
+                'label' => 'Term of payment',
+                'description' => 'Number of days allowed for payment of the invoice.',
+            ),
+        ));
+
         $this->add(new Element\Csrf('csrf'));
 
         //Submit button

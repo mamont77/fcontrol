@@ -203,6 +203,7 @@ class KontragentController extends IndexController
             'Fax' => $data->fax,
             'E-mail' => $data->mail,
             'SITA' => $data->sita,
+            'Term of payment' => $data->termOfPayment,
         );
     }
 }
