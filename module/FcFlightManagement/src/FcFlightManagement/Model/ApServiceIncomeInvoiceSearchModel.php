@@ -107,14 +107,14 @@ class ApServiceIncomeInvoiceSearchModel extends BaseModel
             'left');
 
         if ($data['dateFrom'] != '' && $data['dateTo'] != '') {
-            $select->where->between('flight.dateOrder', $data['dateFrom'], $data['dateTo']);
+            $select->where->between('leg.apArrTime', $data['dateFrom'], $data['dateTo']);
         } else {
             if ($data['dateFrom'] != '') {
-                $select->where->greaterThanOrEqualTo('flight.dateOrder', $data['dateFrom']);
+                $select->where->greaterThanOrEqualTo('leg.apArrTime', $data['dateFrom']);
             }
 
             if ($data['dateTo'] != '') {
-                $select->where->lessThanOrEqualTo('flight.dateOrder', $data['dateTo']);
+                $select->where->lessThanOrEqualTo('leg.apArrTime', $data['dateTo']);
             }
         }
 
