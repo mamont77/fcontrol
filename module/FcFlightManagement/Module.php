@@ -15,6 +15,14 @@ use FcFlightManagement\Model\RefuelOutcomeInvoiceSearchModel;
 use FcFlightManagement\Filter\RefuelOutcomeInvoiceStep1Filter;
 use FcFlightManagement\Model\RefuelOutcomeInvoiceMainModel;
 use FcFlightManagement\Model\RefuelOutcomeInvoiceDataModel;
+use FcFlightManagement\Model\ApServiceIncomeInvoiceSearchModel;
+use FcFlightManagement\Filter\ApServiceIncomeInvoiceStep1Filter;
+use FcFlightManagement\Model\ApServiceIncomeInvoiceMainModel;
+use FcFlightManagement\Model\ApServiceIncomeInvoiceDataModel;
+use FcFlightManagement\Model\ApServiceOutcomeInvoiceSearchModel;
+use FcFlightManagement\Filter\ApServiceOutcomeInvoiceStep1Filter;
+use FcFlightManagement\Model\ApServiceOutcomeInvoiceMainModel;
+use FcFlightManagement\Model\ApServiceOutcomeInvoiceDataModel;
 
 /**
  * Class Module
@@ -141,6 +149,39 @@ class Module
                 'FcFlightManagement\Model\RefuelOutcomeInvoiceDataModel' => function ($sm) {
                         $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                         return new RefuelOutcomeInvoiceDataModel($dbAdapter);
+                    },
+
+                'FcFlightManagement\Model\ApServiceIncomeInvoiceSearchModel' => function ($sm) {
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new ApServiceIncomeInvoiceSearchModel($dbAdapter);
+                    },
+                'FcFlightManagement\Filter\ApServiceIncomeInvoiceStep1Filter' => function ($sm) {
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new ApServiceIncomeInvoiceStep1Filter($dbAdapter);
+                    },
+                'FcFlightManagement\Model\ApServiceIncomeInvoiceMainModel' => function ($sm) {
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new ApServiceIncomeInvoiceMainModel($dbAdapter);
+                    },
+                'FcFlightManagement\Model\ApServiceIncomeInvoiceDataModel' => function ($sm) {
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new ApServiceIncomeInvoiceDataModel($dbAdapter);
+                    },
+                'FcFlightManagement\Model\ApServiceOutcomeInvoiceSearchModel' => function ($sm) {
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new ApServiceOutcomeInvoiceSearchModel($dbAdapter);
+                    },
+                'FcFlightManagement\Filter\ApServiceOutcomeInvoiceStep1Filter' => function ($sm) {
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new ApServiceOutcomeInvoiceStep1Filter($dbAdapter);
+                    },
+                'FcFlightManagement\ModelApServiceOutcomeInvoiceMainModel' => function ($sm) {
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new ApServiceOutcomeInvoiceMainModel($dbAdapter);
+                    },
+                'FcFlightManagement\Model\ApServiceOutcomeInvoiceDataModel' => function ($sm) {
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new ApServiceOutcomeInvoiceDataModel($dbAdapter);
                     },
             ),
         );

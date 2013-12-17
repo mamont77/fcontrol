@@ -28,6 +28,14 @@ return array(
                         'label' => 'Refuel outcome',
                         'route' => 'management/refuel/outcome-invoice-step1',
                     ),
+                    array(
+                        'label' => 'AP Service income',
+                        'route' => 'management/ap-service/income-invoice-step1',
+                    ),
+                    array(
+                        'label' => 'AP Service outcome',
+                        'route' => 'management/ap-service/outcome-invoice-step1',
+                    ),
                 ),
             ),
             array(

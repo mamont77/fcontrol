@@ -128,6 +128,7 @@ return array(
                 array('controller' => 'FcFlight\Controller\Refuel', 'roles' => array('manager')),
                 array('controller' => 'FcFlight\Controller\ApService', 'roles' => array('manager')),
                 array('controller' => 'FcFlightManagement\Controller\Refuel', 'roles' => array('manager')),
+                array('controller' => 'FcFlightManagement\Controller\ApService', 'roles' => array('manager')),
                 array('controller' => 'FcLogEvents\Controller\Index', 'roles' => array('guest', 'manager')),
                 array('controller' => 'FcLogEvents\Controller\Search', 'roles' => array('manager')),
             ),
@@ -152,6 +153,7 @@ return array(
                 array('route' => 'browse', 'roles' => array('manager')),
 
                 array('route' => 'management', 'roles' => array('manager')),
+
                 array('route' => 'management/refuel/income-invoice-step1', 'roles' => array('manager')),
                 array('route' => 'management/refuel/income-invoice-step2', 'roles' => array('manager')),
                 array('route' => 'management/refuel/income-invoice-step3', 'roles' => array('manager')),
@@ -162,6 +164,17 @@ return array(
                 array('route' => 'management/refuel/outcome-invoice-step3', 'roles' => array('manager')),
                 array('route' => 'management/refuel/outcome-invoice-add', 'roles' => array('manager')),
                 array('route' => 'management/refuel/outcome-invoice-show', 'roles' => array('manager')),
+
+                array('route' => 'management/ap-service/income-invoice-step1', 'roles' => array('manager')),
+                array('route' => 'management/ap-service/income-invoice-step2', 'roles' => array('manager')),
+                array('route' => 'management/ap-service/income-invoice-step3', 'roles' => array('manager')),
+                array('route' => 'management/ap-service/income-invoice-add', 'roles' => array('manager')),
+                array('route' => 'management/ap-service/income-invoice-show', 'roles' => array('manager')),
+                array('route' => 'management/ap-service/outcome-invoice-step1', 'roles' => array('manager')),
+                array('route' => 'management/ap-service/outcome-invoice-step2', 'roles' => array('manager')),
+                array('route' => 'management/ap-service/outcome-invoice-step3', 'roles' => array('manager')),
+                array('route' => 'management/ap-service/outcome-invoice-add', 'roles' => array('manager')),
+                array('route' => 'management/ap-service/outcome-invoice-show', 'roles' => array('manager')),
 
                 array('route' => 'leg', 'roles' => array('manager')),
                 array('route' => 'permission', 'roles' => array('manager')),

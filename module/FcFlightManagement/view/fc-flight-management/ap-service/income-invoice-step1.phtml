@@ -1,0 +1,123 @@
+<?php
+$title = 'Search AP Service income (step 1)';
+$this->headTitle($title);
+?>
+<ul class="breadcrumb">
+    <li><a href="/">Home</a> <span class="divider">/</span></li>
+    <li>Management <span class="divider">/</span></li>
+    <li>AP Service income invoice</li>
+</ul>
+
+<h1><?= $title ?></h1>
+<? // \Zend\Debug\Debug::dump($form->getMessages())?>
+<?php if ($form->getMessages()): ?>
+    <div class="alert alert-error">
+        <button class="close" data-dismiss="alert" type="button">×</button>
+        <strong>Invalid input!</strong>
+        Form fields are not filled in correctly.
+    </div>
+<?php else: ?>
+    <?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
+    <?php echo $this->flashMessenger()->render('info', array('alert', 'alert-info')); ?>
+    <?php echo $this->flashMessenger()->render('error', array('alert', 'alert-error')); ?>
+<?php endif; ?>
+
+<?php
+$form = $this->form;
+$form->setAttribute('action', $this->url('management/ap-service/income-invoice-step1'));
+
+$form->prepare();
+// Get the form label plugin
+$formLabel = $this->plugin('formLabel');
+echo $this->form()->openTag($form) . PHP_EOL;
+//echo $this->formHidden($form->get('csrf')) . PHP_EOL;
+?>
+
+<table class="table ">
+    <thead>
+    <tr>
+        <th>Date From</th>
+        <th>Date To</th>
+        <th>Aircraft</th>
+        <th>Agent</th>
+        <th>Airport</th>
+        <th>Customer</th>
+        <th>Air Operator</th>
+        <th colspan=1"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>
+            <?php
+            $field = $form->get('dateFrom');
+            echo $field->getOption('label');
+            echo $this->formInput($field);
+            echo '<p class="help-block" id="help-dateOrder">' . $field->getOption('description') . '</p>';
+            ?>
+            <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
+        </td>
+        <td>
+            <?php
+            $field = $form->get('dateTo');
+            echo $field->getOption('label');
+            echo $this->formInput($field);
+            echo '<p class="help-block" id="help-dateOrder">' . $field->getOption('description') . '</p>';
+            ?>
+            <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
+        </td>
+        <td>
+            <?php
+            $field = $form->get('aircraftId');
+            echo $this->formSelect($field);
+            ?>
+            <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
+        </td>
+        <td>
+            <?php
+            $field = $form->get('agentId');
+            echo $this->formSelect($field);
+            ?>
+            <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
+        </td>
+        <td>
+            <?php
+            $field = $form->get('airportId');
+            echo $this->formSelect($field);
+            ?>
+            <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
+        </td>
+        <td>
+            <?php
+            $field = $form->get('customerId');
+            echo $this->formSelect($field);
+            ?>
+            <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
+        </td>
+        <td>
+            <?php
+            $field = $form->get('airOperatorId');
+            echo $this->formSelect($field);
+            ?>
+            <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
+        </td>
+        <td>
+            <?php
+            $field = $form->get('submitBtn');
+            echo $this->formElement($field);
+            ?>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<?= $this->form()->closeTag() ?>
+
+<? if ($this->result): ?>
+    <?=
+    $this->partial('fc-flight-management/_widgets/forms/ap-service-income-invoice-step1.phtml',
+        array(
+            'data' => $this->result,
+            'fixedHeader' => true,
+        ))
+    ?>
+<? endif; ?>

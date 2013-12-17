@@ -1,1 +1,30 @@
-SELECT invoiceIncomeRefuelData.refuelId AS incomeInvoiceRefuelId, invoiceIncomeRefuelData.invoiceId AS incomeInvoiceInvoiceId, invoiceIncomeRefuelData.preInvoiceRefuelId AS incomeInvoicePreInvoiceRefuelId, invoiceIncomeRefuelData.flightAgentId AS incomeInvoiceAgentId, invoiceIncomeRefuelData.flightAirOperatorId AS incomeInvoiceAirOperatorId, invoiceIncomeRefuelData.flightAircraftId AS incomeInvoiceAircraftId, invoiceIncomeRefuelData.refuelAirportId AS incomeInvoiceAirportId, invoiceIncomeRefuelData.refuelDate AS incomeInvoiceDate, invoiceIncomeRefuelData.refuelQuantityLtr AS incomeInvoiceQuantityLtr, invoiceIncomeRefuelData.refuelQuantityOtherUnits AS incomeInvoiceQuantityOtherUnits, invoiceIncomeRefuelData.refuelUnitId AS incomeInvoiceUnitId, invoiceIncomeRefuelData.refuelItemPrice AS incomeInvoiceItemPrice, invoiceIncomeRefuelData.refuelTax AS incomeInvoiceTax, invoiceIncomeRefuelData.refuelMot AS incomeInvoiceMot, invoiceIncomeRefuelData.refuelVat AS incomeInvoiceVat, invoiceIncomeRefuelData.refuelDeliver AS incomeInvoiceDeliver, invoiceIncomeRefuelData.refuelPrice AS incomeInvoicePrice, invoiceIncomeRefuelData.refuelPriceTotal AS incomeInvoicePriceTotal, invoiceIncomeRefuelData.refuelExchangeToUsdPriceTotal AS incomeInvoicePriceTotalExchangedToUsd, invoiceIncomeRefuelMain.invoiceId AS incomeInvoiceMainId, invoiceIncomeRefuelMain.invoiceNumber AS incomeInvoiceMainNumber, invoiceIncomeRefuelMain.invoiceDate AS incomeInvoiceMainDate, invoiceIncomeRefuelMain.invoiceCurrency AS incomeInvoiceMainCurrency, invoiceIncomeRefuelMain.invoiceExchangeRate AS incomeInvoiceMainExchangeRate, invoiceIncomeRefuelMain.invoiceRefuelSupplierId AS incomeInvoiceMainRefuelSupplierId, invoiceIncomeRefuelMain.invoiceStatus AS incomeInvoiceMainStatus, invoiceOutcomeRefuelData.refuelId AS outcomeInvoiceRefuelId, invoiceOutcomeRefuelData.invoiceId AS outcomeInvoiceInvoiceId, invoiceOutcomeRefuelData.incomeInvoiceRefuelId AS outcomeInvoicePreInvoiceRefuelId, invoiceOutcomeRefuelData.supplierId AS outcomeInvoiceSupplierId, invoiceOutcomeRefuelData.airOperatorId AS outcomeInvoiceAirOperatorId, invoiceOutcomeRefuelData.aircraftId AS outcomeInvoiceAircraftId, invoiceOutcomeRefuelData.airportDepId AS outcomeInvoiceAirportId, invoiceOutcomeRefuelData.date AS outcomeInvoiceDate, invoiceOutcomeRefuelData.quantityLtr AS outcomeInvoiceQuantityLtr, invoiceOutcomeRefuelData.quantityOtherUnits AS outcomeInvoiceQuantityOtherUnits, invoiceOutcomeRefuelData.unitId AS outcomeInvoiceUnitId, invoiceOutcomeRefuelData.itemPrice AS outcomeInvoiceItemPrice, invoiceOutcomeRefuelData.tax AS outcomeInvoiceTax, invoiceOutcomeRefuelData.mot AS outcomeInvoiceMot, invoiceOutcomeRefuelData.vat AS outcomeInvoiceVat, invoiceOutcomeRefuelData.deliver AS outcomeInvoiceDeliver, invoiceOutcomeRefuelData.price AS outcomeInvoicePrice, invoiceOutcomeRefuelData.priceTotal AS outcomeInvoicePriceTotal, invoiceOutcomeRefuelData.priceTotalExchangedToUsd AS outcomeInvoicePriceTotalExchangedToUsd, invoiceOutcomeRefuelMain.invoiceId AS outcomeInvoiceMainId, invoiceOutcomeRefuelMain.invoiceNumber AS outcomeInvoiceMainNumber, invoiceOutcomeRefuelMain.invoiceDate AS outcomeInvoiceMainDate, invoiceOutcomeRefuelMain.invoiceCurrency AS outcomeInvoiceMainCurrency, invoiceOutcomeRefuelMain.invoiceExchangeRate AS outcomeInvoiceMainExchangeRate, invoiceOutcomeRefuelMain.invoiceCustomerId AS outcomeInvoiceMainRefuelSupplierId, invoiceOutcomeRefuelMain.invoiceStatus AS outcomeInvoiceMainStatus FROM invoiceIncomeRefuelData LEFT JOIN invoiceIncomeRefuelMain AS invoiceIncomeRefuelMain ON invoiceIncomeRefuelData.invoiceId = invoiceIncomeRefuelMain.invoiceId LEFT JOIN invoiceOutcomeRefuelData AS invoiceOutcomeRefuelData ON invoiceIncomeRefuelData.refuelId = invoiceOutcomeRefuelData.incomeInvoiceRefuelId LEFT JOIN invoiceOutcomeRefuelMain AS invoiceOutcomeRefuelMain ON invoiceOutcomeRefuelData.invoiceId = invoiceOutcomeRefuelMain.invoiceId WHERE invoiceOutcomeRefuelData.refuelId IS NULL ORDER BY invoiceIncomeRefuelData.refuelId DESC
+CREATE TABLE IF NOT EXISTS `invoiceOutcomeApServiceMain` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `incomeInvoiceId` int(10) NOT NULL,
+  `number` varchar(40) NOT NULL,
+  `date` int(10) NOT NULL,
+  `currency` varchar(3) NOT NULL,
+  `exchangeRate` varchar(10) NOT NULL,
+  `dateArr` int(10) NOT NULL,
+  `dateDep` int(10) NOT NULL,
+  `typeOfService` int(10) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `incomeInvoiceId` (`incomeInvoiceId`),
+  KEY `date` (`date`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `invoiceOutcomeApServiceData` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `invoiceId` int(10) DEFAULT NULL,
+  `typeOfService` int(10) NOT NULL,
+  `itemPrice` varchar(40) NOT NULL DEFAULT '',
+  `quantityLtr` varchar(40) NOT NULL DEFAULT '',
+  `unitId` int(10) NOT NULL,
+  `priceTotal` varchar(40) NOT NULL DEFAULT '',
+  `priceTotalExchangedToUsd` varchar(40) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `invoiceId` (`invoiceId`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+

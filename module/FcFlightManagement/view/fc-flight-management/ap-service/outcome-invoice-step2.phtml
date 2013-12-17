@@ -1,0 +1,24 @@
+<?php
+$title = 'Create AP Service outcome invoice';
+$this->headTitle($title);
+?>
+<ul class="breadcrumb">
+    <li><a href="/">Home</a> <span class="divider">/</span></li>
+    <li>Management <span class="divider">/</span></li>
+    <li>AP Service outcome invoice</li>
+</ul>
+
+<h1><?= $title ?></h1>
+
+<? if ($this->result): ?>
+    <?=
+    $this->partial('fc-flight-management/_widgets/forms/ap-service-outcome-invoice-step2.phtml',
+        array(
+            'newInvoiceNumber' => $this->newInvoiceNumber,
+            'data' => $this->result,
+            'units' => $this->units,
+            'currencies' => $this->currencies,
+            'fixedHeader' => true,
+        ))
+    ?>
+<? endif; ?>
