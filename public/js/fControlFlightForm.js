@@ -416,19 +416,19 @@
 
                 $rowsCheckbox.each(function () {
                     var $this = $(this);
-                    if ($this.prop('checked')){
+                    if ($this.prop('checked')) {
                         selectedAgents.push($this.parent().parent().find('.refuelAgentShortName').text());
                     }
                 });
 
                 selectedAgents.sort();
                 var i = selectedAgents.length, result = [];
-                while(i--){
-                    if(result.join('').search(selectedAgents[i]) == '-1') {
+                while (i--) {
+                    if (result.join('').search(selectedAgents[i]) == '-1') {
                         result.push(selectedAgents[i]);
                     }
                 }
-                if(result.length == 1) {
+                if (result.length == 1) {
                     $form2.find('.btn').prop('disabled', false);
                 } else {
                     $form2.find('.btn').prop('disabled', true);
@@ -491,7 +491,7 @@
                 '.refuelTax, .refuelMot, .refuelVat, .refuelDeliver').bind("keyup change", function () {
                     var $this = $(this),
                         $row = $(this).parent().parent(),
-                        //fields values
+                    //fields values
                         $refuelQuantityLtr = $row.find('.refuelQuantityLtr'),
                         refuelQuantityLtrVal = parseFloat($refuelQuantityLtr.val()) || 0,
                         $refuelQuantityOtherUnits = $row.find('.refuelQuantityOtherUnits'),
@@ -515,7 +515,7 @@
                         refuelPriceTotalVal = parseFloat($refuelPriceTotal.val()) || 0,
                         $refuelExchangeToUsdPriceTotal = $row.find('.refuelExchangeToUsdPriceTotal'),
                         refuelExchangeToUsdPriceTotalVal = parseFloat($refuelExchangeToUsdPriceTotal.val()) || 0,
-                        //subTotals
+                    //subTotals
                         $refuelPriceSubTotal = $form.find('.refuelPriceSubTotal'),
                         refuelPriceSubTotalVal = 0,
                         $refuelCurrencyForSubTotal = $form.find('.refuelCurrency'),
@@ -580,7 +580,7 @@
                 '.refuelTax, .refuelMot, .refuelVat, .refuelDeliver').bind("keyup change", function () {
                     var $this = $(this),
                         $row = $(this).parent().parent(),
-                        //fields values
+                    //fields values
                         $refuelQuantityLtr = $row.find('.refuelQuantityLtr'),
                         refuelQuantityLtrVal = parseFloat($refuelQuantityLtr.val()) || 0,
                         $refuelQuantityOtherUnits = $row.find('.refuelQuantityOtherUnits'),
@@ -604,7 +604,7 @@
                         refuelPriceTotalVal = parseFloat($refuelPriceTotal.val()) || 0,
                         $refuelExchangeToUsdPriceTotal = $row.find('.refuelExchangeToUsdPriceTotal'),
                         refuelExchangeToUsdPriceTotalVal = parseFloat($refuelExchangeToUsdPriceTotal.val()) || 0,
-                        //subTotals
+                    //subTotals
                         $refuelPriceSubTotal = $form.find('.refuelPriceSubTotal'),
                         refuelPriceSubTotalVal = 0,
                         $refuelCurrencyForSubTotal = $form.find('.refuelCurrency'),
@@ -671,19 +671,19 @@
 
                 $rowsCheckbox.each(function () {
                     var $this = $(this);
-                    if ($this.prop('checked')){
+                    if ($this.prop('checked')) {
                         selectedCustomers.push($this.parent().parent().find('.incomeInvoiceCustomer').text());
                     }
                 });
 
                 selectedCustomers.sort();
                 var i = selectedCustomers.length, result = [];
-                while(i--){
-                    if(result.join('').search(selectedCustomers[i]) == '-1') {
+                while (i--) {
+                    if (result.join('').search(selectedCustomers[i]) == '-1') {
                         result.push(selectedCustomers[i]);
                     }
                 }
-                if(result.length == 1) {
+                if (result.length == 1) {
                     $form2.find('.btn').prop('disabled', false);
                 } else {
                     $form2.find('.btn').prop('disabled', true);
@@ -917,16 +917,127 @@
 
                 $rowsCheckbox.each(function () {
                     var $this = $(this);
-                    if ($this.prop('checked')){
+                    if ($this.prop('checked')) {
                         selectedRows.push($this.val());
                     }
                 });
 
-                if(selectedRows.length == 1) {
+                if (selectedRows.length == 1) {
                     $form2.find('.btn').prop('disabled', false);
                 } else {
                     $form2.find('.btn').prop('disabled', true);
                 }
+            });
+        }
+    };
+
+    /**
+     *
+     * @type {{attach: Function}}
+     */
+    fControl.behaviors.apServiceIncomeInvoiceStep3 = {
+        attach: function (context, settings) {
+            var $form = $('form#apServiceIncomeInvoiceStep3');
+
+            if ($form.length == 0) return;
+
+            $($form).find('.date').mask('99-99-9999');
+
+            // invoice (header) values
+            var $invoiceCurrency = $form.find('#currency'),
+                $invoiceExchangeRate = $form.find('#exchangeRate'),
+                invoiceCurrencyText = $invoiceCurrency.find(':selected').text() || 'USD',
+                invoiceExchangeRateVal = parseFloat($invoiceExchangeRate.val()) || 1,
+                typeOfServiceIdOptionsHtml = $form.find('.typeOfServiceId').html();
+
+            // Добавляем строки.
+            $('.addRow').click(function () {
+                var $hiddenRows = $('#invoiceData').find('.dataRow.hidden');
+                if ($hiddenRows.length) {
+                    $hiddenRows.first().removeClass('hidden').find('.chosen-container').css({'width': '210px'}).trigger('chosen:updated');
+                } else {
+                    $(this).prop('disabled', true)
+                }
+            });
+
+            // Блокирум поля при инициилизации
+            $($form).find('#invoiceData input, #invoiceData select').each(function () {
+                $(this).prop('disabled', true).trigger('chosen:updated');
+            });
+
+            //Если Currency == USD, то значение поля Exchange Rate == 1
+            $invoiceCurrency.change(function () {
+                var value = $(this).val();
+                if (value == 'USD') {
+                    $invoiceExchangeRate.val(1);
+                }
+                $('.currency').text(value);
+            });
+
+            // После Apply курса валют - разблокируем поля
+            $('#rateApply').click(function () {
+                invoiceCurrencyText = $invoiceCurrency.find(':selected').text();
+                invoiceExchangeRateVal = parseFloat($invoiceExchangeRate.val());
+                $($form).find('#currency, #exchangeRate').each(function () {
+                    $(this).prop('readonly', true).trigger('chosen:updated');
+                });
+                $('#rateApply').prop('disabled', true);
+                $invoiceCurrency.parent().html('<input type="hidden" name="currency" value="' + invoiceCurrencyText + '"/>'
+                    + invoiceCurrencyText);
+
+                $($form).find('#invoiceData input, #invoiceData select').each(function () {
+                    $(this).prop('disabled', false).trigger('chosen:updated');
+                });
+                return false;
+            });
+
+            $('.itemPrice, .quantity').bind("keyup change", function () {
+                var $this = $(this),
+                    $row = $(this).parent().parent(),
+                //fields values
+                    $itemPrice = $row.find('.itemPrice'),
+                    itemPriceVal = $itemPrice.val() || 0,
+                    $quantity = $row.find('.quantity'),
+                    quantityVal = $quantity.val() || 0,
+                    $priceTotal = $row.find('.priceTotal'),
+                    priceTotalVal = $priceTotal.val() || 0,
+                    $priceTotalExchangedToUsd = $row.find('.priceTotalExchangedToUsd'),
+                    priceTotalExchangedToUsdVal = $priceTotalExchangedToUsd.val() || 0,
+                //subTotals
+                    $priceSubTotal = $form.find('.priceSubTotal'),
+                    priceSubTotalVal = 0,
+                    $priceSubTotalExchangedToUsd = $form.find('.priceSubTotalExchangedToUsd'),
+                    priceSubTotalExchangedToUsdVal = 0;
+
+                // считаем тоталы
+                priceTotalVal = (itemPriceVal * quantityVal).toFixed(4);
+                $priceTotal.val(priceTotalVal);
+
+                priceTotalExchangedToUsdVal = (priceTotalVal * invoiceExchangeRateVal).toFixed(2);
+                $priceTotalExchangedToUsd.val(priceTotalExchangedToUsdVal);
+
+                // отрисоваем сумму под таблицей
+                $form.find('.priceTotal').each(function () {
+                    var val = $(this).val();
+                    if (!isNaN(val) && val != '') {
+                        priceSubTotalVal = parseFloat(priceSubTotalVal) + parseFloat(val);
+                    }
+                });
+                $priceSubTotal.text(priceSubTotalVal.toFixed(4));
+
+                $form.find('.priceTotalExchangedToUsd').each(function () {
+                    var val = $(this).val();
+                    if (!isNaN(val) && val != '') {
+                        priceSubTotalExchangedToUsdVal = parseFloat(priceSubTotalExchangedToUsdVal)
+                            + parseFloat(val);
+                    }
+                });
+                $priceSubTotalExchangedToUsd.text(priceSubTotalExchangedToUsdVal.toFixed(2));
+            });
+
+            // По клику на сабмит прибиваем все скрытык строки
+            $('.btn-primary').click(function () {
+                $('#invoiceData').find('.dataRow.hidden').remove();
             });
         }
     };

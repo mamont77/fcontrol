@@ -184,7 +184,7 @@ class RefuelIncomeInvoiceStep1Form extends BaseForm
             ),
             'attributes' => array(
                 'type' => 'submit',
-                'class' => 'btn btn-primary',
+                'class' => 'btn btn-info',
                 'value' => 'Apply',
             ),
         ));

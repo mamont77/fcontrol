@@ -49,7 +49,7 @@
                    placeholder="Exchange Rate" maxlength="40" required="required" value="1"/>
         </td>
         <td rowspan="2">
-            <input id="rateApply" name="rateApply" type="submit" class="btn btn-primary" value="Apply">
+            <input id="rateApply" name="rateApply" type="submit" class="btn btn-info" value="Apply">
         </td>
         <td rowspan="2">
             <input type="text" class="input-small" name="agentName" maxlength="40" required="required"
@@ -69,7 +69,7 @@
                 <? endforeach; ?>
             </select>
         </td>
-     </tr>
+    </tr>
     <tr class="info">
         <td>
             <?= $this->data->preInvoiceCurrency ?>
@@ -84,14 +84,14 @@
     </tbody>
     <thead>
     <tr>
-    <th>Customer</th>
-    <th>Air Operator</th>
-    <th>Flight #</th>
-    <th>Aircraft</th>
-    <th>Airport Arr</th>
-    <th>Airport Dep</th>
-    <th>Date Arr</th>
-    <th>Date Dep</th>
+        <th>Customer</th>
+        <th>Air Operator</th>
+        <th>Flight #</th>
+        <th>Aircraft</th>
+        <th>Airport Arr</th>
+        <th>Airport Dep</th>
+        <th>Date Arr</th>
+        <th>Date Dep</th>
     </tr>
     </thead>
     <tbody>
@@ -125,10 +125,12 @@
         </td>
         <td>
             <input type="text" class="input-small date" name="dateArr" maxlength="40" required="required"
+                   placeholder="Date"
                    value="<?= date('d-m-Y', $this->data->legArrTime) ?>">
         </td>
         <td>
             <input type="text" class="input-small date" name="dateDep" maxlength="40" required="required"
+                   placeholder="Date"
                    value="<?= date('d-m-Y', $this->data->legDepToNextAirportTime) ?>">
         </td>
     </tr>
@@ -156,30 +158,27 @@
     </tr>
     </thead>
     <tbody>
-<!--    --><?// \Zend\Debug\Debug::dump($this->data); ?>
+    <!--    --><? // \Zend\Debug\Debug::dump($this->data); ?>
     <tr class="info">
         <td>
-
         </td>
         <td>
             <?= $this->data->preInvoicePrice ?>
         </td>
         <td>
-
         </td>
         <td>
-
         </td>
         <td>
-
         </td>
         <td>
             <?= $this->data->preInvoicePriceTotalExchangedToUsd ?>
         </td>
     </tr>
-    <tr class="dataRow" data-rowid="">
+    <? for ($i = 1; $i <= 15; $i++): ?>
+    <tr class="dataRow <? if ($i > 1): ?><?= 'hidden' ?><? endif; ?>" data-rowid="<?= $i ?>">
         <td>
-            <select name="data[][typeOfServiceId]" class="chosen input-large typeOfServiceId"
+            <select name="data[<?= $i ?>][typeOfServiceId]" class="chosen input-large typeOfServiceId"
                     data-placeholder="Type of Service"
                     required="required">
                 <option value=""></option>
@@ -189,15 +188,15 @@
             </select>
         </td>
         <td>
-            <input type="text" class="input-small" name="data[][itemPrice]" maxlength="40" required="required"
+            <input type="text" class="input-small itemPrice" name="data[<?= $i ?>][itemPrice]" maxlength="40" required="required"
                    value="">
         </td>
         <td>
-            <input type="text" class="input-small" name="data[][quantity]" maxlength="40" required="required"
+            <input type="text" class="input-small quantity" name="data[<?= $i ?>][quantity]" maxlength="40" required="required"
                    value="">
         </td>
         <td>
-            <select name="data[][unitId]" class="chosen input-large unitId"
+            <select name="data[<?= $i ?>][unitId]" class="chosen input-large unitId"
                     data-placeholder="Unit"
                     required="required">
                 <option value=""></option>
@@ -207,17 +206,25 @@
             </select>
         </td>
         <td>
-            <input type="text" class="input-small" name="data[][priceTotal]" maxlength="40" required="required"
+            <input type="text" class="input-small priceTotal" name="data[<?= $i ?>][priceTotal]" maxlength="40"
+                   required="required"
                    value="">
         </td>
         <td>
-            <input type="text" class="input-small" name="data[][priceTotalExchangedToUsd]" maxlength="40"
+            <input type="text" class="input-small priceTotalExchangedToUsd" name="data[<?= $i ?>][priceTotalExchangedToUsd]"
+                   maxlength="40"
                    required="required"
                    value="">
         </td>
     </tr>
+    <? endfor; ?>
     <tr>
-        <td colspan="18">
+        <td colspan="6">
+            <input name="addRow" type="submit" class="btn btn-info addRow" value="Add row">
+        </td>
+    </tr>
+    <tr>
+        <td colspan="6">
             <div class="row-fluid">
                 <div class="span6">
                 </div>
@@ -228,8 +235,8 @@
                             <td>
                                 Subtotal
                             </td>
-                            <td><span class="refuelCurrency">USD</span> <span class="refuelPriceSubTotal"></span></td>
-                            <td>USD <span class="refuelExchangeToUsdPriceSubTotal"></span></td>
+                            <td><span class="currency">USD</span> <span class="priceSubTotal"></span></td>
+                            <td>USD <span class="priceSubTotalExchangedToUsd"></span></td>
                         </tr>
                         </tbody>
                     </table>

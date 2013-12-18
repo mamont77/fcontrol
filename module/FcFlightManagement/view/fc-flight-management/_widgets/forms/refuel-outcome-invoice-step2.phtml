@@ -51,7 +51,7 @@ foreach ($this->data as $row) {
                    placeholder="Exchange Rate" maxlength="40" required="required" value="1"/>
         </td>
         <td>
-            <input id="rateApply" name="rateApply" type="submit" class="btn btn-primary" value="Apply">
+            <input id="rateApply" name="rateApply" type="submit" class="btn btn-info" value="Apply">
         </td>
         <td>
             <input type="hidden" name="invoiceCustomerId" value="<?= $refuelCustomerId ?>">
@@ -258,7 +258,7 @@ foreach ($this->data as $row) {
         </tr>
     <? endforeach; ?>
     <tr>
-        <td colspan="18">
+        <td colspan="19">
             <div class="row-fluid">
                 <div class="span6">
                 </div>
@@ -279,7 +279,7 @@ foreach ($this->data as $row) {
         </td>
     </tr>
     <tr>
-        <td colspan="18">
+        <td colspan="19">
             <input name="submitBtn" type="submit" class="btn btn-primary pull-right" value="Save">
         </td>
     </tr>

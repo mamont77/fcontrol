@@ -192,6 +192,7 @@ class ApServiceController extends FlightController
 
         if ($request->isPost()) {
             $result = $request->getPost();
+            \Zend\Debug\Debug::dump($result);
 
             return array(
                 'currencies' => $currencies,
@@ -371,6 +372,7 @@ class ApServiceController extends FlightController
         $request = $this->getRequest();
 
         if ($request->isPost()) {
+            \Zend\Debug\Debug::dump($request->getPost());
             $result = $request->getPost();
 
             return array(
