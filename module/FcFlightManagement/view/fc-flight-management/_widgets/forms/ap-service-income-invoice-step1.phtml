@@ -1,3 +1,4 @@
+<?// \Zend\Debug\Debug::dump($this->advancedDataWithIncomeInvoice) ?>
 <form name="apServiceIncomeInvoiceStep2" id="apServiceIncomeInvoiceStep2" method="post"
       action="/management/ap-service/income-invoice-step2">
     <table
@@ -15,9 +16,9 @@
             <th>Date Dep</th>
             <th>Agent</th>
             <th>Type of service</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Unit</th>
+            <!--            <th>Price</th>-->
+            <!--            <th>Quantity</th>-->
+            <!--            <th>Unit</th>-->
             <th>Total</th>
             <th>Exchange Rate</th>
             <th>Exchange Total, USD</th>
@@ -25,7 +26,7 @@
         </thead>
         <tbody>
         <? foreach ($this->data as $row): ?>
-<!--            --><?// \Zend\Debug\Debug::dump($row) ?>
+            <!--            --><? // \Zend\Debug\Debug::dump($row) ?>
             <tr data-row="<?= $row->preInvoiceId ?>" class="<? if ($row->incomeInvoiceMainId): ?>success<? endif ?>">
                 <td>
                     <input type="checkbox" class="rowsSelected" name="rowsSelected[]"
@@ -64,10 +65,18 @@
                     <?= $row->preInvoiceAirportICAO . ' (' . $row->preInvoiceAirportIATA . ')' ?>
                 </td>
                 <td>
-                    <?= date('d-m-Y', $row->legArrTime) ?>
+                    <? if ($row->incomeInvoiceMainDateArr): ?>
+                        <?= date('d-m-Y', $row->incomeInvoiceMainDateArr) ?>
+                    <? else: ?>
+                        <?= date('d-m-Y', $row->legArrTime) ?>
+                    <? endif; ?>
                 </td>
                 <td>
-                    <?= date('d-m-Y', $row->legDepTime) ?>//todo
+                    <? if ($row->incomeInvoiceMainDateDep): ?>
+                        <?= date('d-m-Y', $row->incomeInvoiceMainDateDep) ?>
+                    <? else: ?>
+                        <?= date('d-m-Y', $this->advancedDataWithOutIncomeInvoice[$row->preInvoiceHeaderId]['legDepToNextAirportTime']) ?>
+                    <? endif; ?>
                 </td>
                 <td>
                     <?= $row->preInvoiceAgentShortName ?>
@@ -75,30 +84,31 @@
                 <td>
                     <?= $row->preInvoiceTypeOfServiceName ?>
                 </td>
+                <!--                <td class="text-right">-->
+                <!--                    --><? // if ($row->incomeInvoiceDataItemPrice): ?>
+                <!--                        --><?//= $row->incomeInvoiceDataItemPrice ?><!--<small>, -->
+                <?//= $row->incomeInvoiceMainCurrency ?><!-- </small>-->
+                <!--                    --><? // else: ?>
+                <!--                        &mdash;-->
+                <!--                    --><? // endif; ?>
+                <!--                </td>-->
+                <!--                <td>-->
+                <!--                    --><? // if ($row->incomeInvoiceDataQuantity): ?>
+                <!--                        --><? //= $row->incomeInvoiceDataQuantity ?>
+                <!--                    --><? // else: ?>
+                <!--                        &mdash;-->
+                <!--                    --><? // endif; ?>
+                <!--                </td>-->
+                <!--                <td>-->
+                <!--                    --><? // if ($row->incomeInvoiceDataUnitId): ?>
+                <!--                        --><? //= $row->incomeInvoiceDataUnitId ?>
+                <!--                    --><? // else: ?>
+                <!--                        &mdash;-->
+                <!--                    --><? // endif; ?>
+                <!--                </td>-->
                 <td class="text-right">
-                    <? if ($row->incomeInvoiceDataItemPrice): ?>
-                        <?= $row->incomeInvoiceDataItemPrice ?><small>, <?= $row->incomeInvoiceMainCurrency ?> </small>
-                    <? else: ?>
-                        &mdash;
-                    <? endif; ?>
-                </td>
-                <td>
-                    <? if ($row->incomeInvoiceDataQuantity): ?>
-                        <?= $row->incomeInvoiceDataQuantity ?>
-                    <? else: ?>
-                        &mdash;
-                    <? endif; ?>
-                </td>
-                <td>
-                    <? if ($row->incomeInvoiceDataUnitId): ?>
-                        <?= $row->incomeInvoiceDataUnitId ?>
-                    <? else: ?>
-                        &mdash;
-                    <? endif; ?>
-                </td>
-                <td>
-                    <? if ($row->incomeInvoiceDataPriceTotal): ?>
-                        <?= $row->incomeInvoiceDataPriceTotal ?><small>, <?= $row->incomeInvoiceMainCurrency ?> </small>
+                    <? if ($this->advancedDataWithIncomeInvoice[$row->preInvoiceHeaderId]['incomeInvoiceDataPriceTotal']): ?>
+                        <?= number_format($this->advancedDataWithIncomeInvoice[$row->preInvoiceHeaderId]['incomeInvoiceDataPriceTotal'], 2, '.', '') ?><small>, <?= $row->incomeInvoiceMainCurrency ?> </small>
                     <? else: ?>
                         &mdash;
                     <? endif; ?>
@@ -111,8 +121,8 @@
                     <? endif; ?>
                 </td>
                 <td class="text-right">
-                    <? if ($row->incomeInvoiceDataPriceTotalExchangedToUsd): ?>
-                        <?= $row->incomeInvoiceDataPriceTotalExchangedToUsd ?>
+                    <? if ($this->advancedDataWithIncomeInvoice[$row->preInvoiceHeaderId]['incomeInvoiceDataPriceTotalExchangedToUsd']): ?>
+                        <?= number_format($this->advancedDataWithIncomeInvoice[$row->preInvoiceHeaderId]['incomeInvoiceDataPriceTotalExchangedToUsd'], 2, '.', '') ?>
                     <? else: ?>
                         &mdash;
                     <? endif; ?>
@@ -120,7 +130,7 @@
             </tr>
         <? endforeach; ?>
         <tr>
-            <td colspan="17">
+            <td colspan="14">
                 <input name="submitBtn" type="submit" class="btn btn-primary pull-right" value="Apply">
             </td>
         </tr>

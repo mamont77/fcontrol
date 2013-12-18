@@ -117,6 +117,8 @@ echo $this->form()->openTag($form) . PHP_EOL;
     $this->partial('fc-flight-management/_widgets/forms/ap-service-income-invoice-step1.phtml',
         array(
             'data' => $this->result,
+            'advancedDataWithIncomeInvoice' => $this->advancedDataWithIncomeInvoice,
+            'advancedDataWithOutIncomeInvoice' => $this->advancedDataWithOutIncomeInvoice,
             'fixedHeader' => true,
         ))
     ?>

@@ -110,12 +110,55 @@ class ApServiceController extends FlightController
                 $data = $searchForm->getData();
                 $result = $this->getApServiceIncomeInvoiceSearchModel()->findByParams($data);
 
+                $advancedDataWithIncomeInvoice = array();
+                foreach ($result as $apServiceMain) {
+                    if ($apServiceMain->incomeInvoiceMainId) {
+//                        \Zend\Debug\Debug::dump($apServiceMain);
+                        $data = $this->getApServiceIncomeInvoiceDataModel()->getByInvoiceId($apServiceMain->incomeInvoiceMainId);
+                        foreach($data as $apServiceData) {
+//                            \Zend\Debug\Debug::dump($apServiceData);
+                            $advancedDataWithIncomeInvoice[$apServiceMain->preInvoiceHeaderId]['incomeInvoiceDataPriceTotal']
+                                += $apServiceData->incomeInvoiceDataPriceTotal;
+                            $advancedDataWithIncomeInvoice[$apServiceMain->preInvoiceHeaderId]['incomeInvoiceDataPriceTotalExchangedToUsd']
+                                += $apServiceData->incomeInvoiceDataPriceTotalExchangedToUsd;
+                        }
+                    }
+                }
+
+                $advancedDataWithOutIncomeInvoice = array();
+                foreach ($result as $apServiceMain) {
+//                    \Zend\Debug\Debug::dump($apServiceMain);
+                    if (!$apServiceMain->incomeInvoiceMainId) {
+                        $legs = $this->getLegModel()->getByHeaderId($apServiceMain->preInvoiceHeaderId);
+
+                        $currentLegId = $result->legId;
+                        $nextLegs = array();
+                        foreach ($legs as $leg) {
+                            if ($leg['id'] > $currentLegId) {
+                                $nextLegs = $leg;
+                                break;
+                            }
+
+                        }
+                        if (count($nextLegs)) {
+                            $advancedDataWithOutIncomeInvoice[$apServiceMain->preInvoiceHeaderId]['legDepToNextAirportTime']
+                                = (string)\DateTime::createFromFormat('d-m-Y', $nextLegs['dateOfFlight'])->setTime(0, 0)->getTimestamp();
+                            $advancedDataWithOutIncomeInvoice[$apServiceMain->preInvoiceHeaderId]['legDepToNextAirportICAO']
+                                = $nextLegs['apDepIcao'];
+                            $advancedDataWithOutIncomeInvoice[$apServiceMain->preInvoiceHeaderId]['legDepToNextAirportIATA']
+                                = $nextLegs['apDepIata'];
+                        }
+
+                    }
+                }
             }
         }
 
         return array(
             'form' => $searchForm,
             'result' => $result,
+            'advancedDataWithIncomeInvoice' => $advancedDataWithIncomeInvoice,
+            'advancedDataWithOutIncomeInvoice' => $advancedDataWithOutIncomeInvoice,
         );
     }
 
