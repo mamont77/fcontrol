@@ -1,39 +1,37 @@
-<?php
-// Проверяем, одинаков ли fuel supplier
-//todo
-//$fuelSupplierOld = '';
-foreach ($this->data as $row) {
-    $refuelSupplierId = $row->refuelAgentId;
-    $refuelSupplierName = $row->refuelAgentShortName;
-}
-//
-?>
-<form name="refuelIncomeInvoiceStep3" id="refuelIncomeInvoiceStep3" method="post"
-      action="/management/refuel/income-invoice-step3">
-<table id="invoiceHeader" class="table-bordered table-condensed">
+<form name="apServiceIncomeInvoiceStep3" id="apServiceIncomeInvoiceStep3" method="post"
+      action="/management/ap-service/income-invoice-step3">
+<table id="invoiceMain" class="table table-bordered table-hover table-condensed">
     <thead>
     <tr>
+        <th>ORD #</th>
         <th>Invoice #</th>
         <th>Date</th>
         <th>Currency</th>
         <th>Exchange Rate</th>
         <th>Rate Apply</th>
-        <th>Fuel supplier</th>
+        <th>Agent</th>
+        <th>Type of service</th>
     </tr>
     </thead>
     <tbody>
     <tr>
-        <td>
-            <input type="text" id="invoiceNumber" name="invoiceNumber" class="input-small"
+        <td rowspan="2">
+            <input type="hidden" name="preInvoiceId" value="<?= $this->data->preInvoiceId ?>"/>
+            <input type="text" id="flightRefNumberOrder" name="flightRefNumberOrder" class="input-small"
+                   placeholder="ORD #" readonly="readonly"
+                   maxlength="40" required="required" value="<?= $this->data->flightRefNumberOrder ?>"/>
+        </td>
+        <td rowspan="2">
+            <input type="text" id="number" name="number" class="input-small"
                    placeholder="Invoice #"
                    maxlength="40" required="required" value=""/>
         </td>
-        <td>
-            <input type="text" id="invoiceDate" name="invoiceDate" class="input-small date" placeholder="Date"
-                   maxlength="40" required="required" value=""/>
+        <td rowspan="2">
+            <input type="text" id="date" name="date" class="input-small date" placeholder="Date"
+                   maxlength="40" required="required" value="<?= date('d-m-Y', time()) ?>"/>
         </td>
         <td>
-            <select id="invoiceCurrency" name="invoiceCurrency" class="chosen input-small"
+            <select id="currency" name="currency" class="chosen input-small"
                     data-placeholder="Currency"
                     required="required">
                 <option value=""></option>
@@ -47,16 +45,99 @@ foreach ($this->data as $row) {
             </select>
         </td>
         <td>
-            <input type="text" id="invoiceExchangeRate" name="invoiceExchangeRate" class="input-small"
+            <input type="text" id="exchangeRate" name="exchangeRate" class="input-small"
                    placeholder="Exchange Rate" maxlength="40" required="required" value="1"/>
         </td>
-        <td>
+        <td rowspan="2">
             <input id="rateApply" name="rateApply" type="submit" class="btn btn-primary" value="Apply">
         </td>
+        <td rowspan="2">
+            <input type="text" class="input-small" name="agentName" maxlength="40" required="required"
+                   readonly="readonly" value="<?= $this->data->preInvoiceAgentShortName ?>">
+        </td>
         <td>
-            <input type="hidden" name="invoiceRefuelSupplierId" value="<?= $refuelSupplierId ?>">
-            <input type="text" class="input-small" name="invoiceRefuelSupplierName" maxlength="40" required="required"
-                   readonly="readonly" value="<?= $refuelSupplierName ?>">
+            <select id="typeOfServiceId" name="typeOfServiceId" class="chosen input-small"
+                    data-placeholder="Type of Service"
+                    required="required">
+                <option value=""></option>
+                <? foreach ($this->typeOfServices as $key => $value): ?>
+                    <? if ($this->data->preInvoiceTypeOfApServiceId == $key): ?>
+                        <option value="<?= $key ?>" selected="selected"><?= $value ?></option>
+                    <? else: ?>
+                        <option value="<?= $key ?>"><?= $value ?></option>
+                    <? endif; ?>
+                <? endforeach; ?>
+            </select>
+        </td>
+     </tr>
+    <tr class="info">
+        <td>
+            <?= $this->data->preInvoiceCurrency ?>
+        </td>
+        <td>
+            <?= $this->data->preInvoiceExchangeRate ?>
+        </td>
+        <td>
+            <?= $this->data->preInvoiceTypeOfServiceName ?>
+        </td>
+    </tr>
+    </tbody>
+    <thead>
+    <tr>
+    <th>Customer</th>
+    <th>Air Operator</th>
+    <th>Flight #</th>
+    <th>Aircraft</th>
+    <th>Airport Arr</th>
+    <th>Airport Dep</th>
+    <th>Date Arr</th>
+    <th>Date Dep</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td rowspan="2">
+            <input type="text" class="input-small" name="customerName" maxlength="40" required="required"
+                   readonly="readonly" value="<?= $this->data->flightCustomerShortName ?>">
+        </td>
+        <td rowspan="2">
+            <input type="text" class="input-small" name="airOperatorName" maxlength="40" required="required"
+                   readonly="readonly" value="<?= $this->data->flightAirOperatorShortName ?>">
+        </td>
+        <td rowspan="2">
+            <input type="text" class="input-small" name="flightNumber" maxlength="40" required="required"
+                   readonly="readonly" value="<?= $this->data->legFlightNumberText ?>">
+        </td>
+        <td rowspan="2">
+            <input type="text" class="input-small" name="aircraftName" maxlength="40" required="required"
+                   readonly="readonly"
+                   value="<?= $this->data->flightAircraftTypeName . ' (' . $this->data->flightAircraftName . ')' ?>">
+        </td>
+        <td rowspan="2">
+            <input type="text" class="input-small" name="airportArr" maxlength="40" required="required"
+                   readonly="readonly"
+                   value="<?= $this->data->legDepToNextAirportICAO . ' (' . $this->data->legDepToNextAirportIATA . ')' ?>">
+        </td>
+        <td rowspan="2">
+            <input type="text" class="input-small" name="airportDep" maxlength="40" required="required"
+                   readonly="readonly"
+                   value="<?= $this->data->preInvoiceAirportICAO . ' (' . $this->data->preInvoiceAirportIATA . ')' ?>">
+        </td>
+        <td>
+            <input type="text" class="input-small date" name="dateArr" maxlength="40" required="required"
+                   value="<?= date('d-m-Y', $this->data->legArrTime) ?>">
+        </td>
+        <td>
+            <input type="text" class="input-small date" name="dateDep" maxlength="40" required="required"
+                   value="<?= date('d-m-Y', $this->data->legDepToNextAirportTime) ?>">
+        </td>
+    </tr>
+    <tr class="info">
+        <td>
+            <?= date('d-m-Y', $this->data->legArrTime) ?>
+        </td>
+        <td>
+            <?= date('d-m-Y', $this->data->legDepToNextAirportTime) ?>
         </td>
     </tr>
     </tbody>
@@ -66,166 +147,75 @@ foreach ($this->data as $row) {
        class="table table-bordered table-hover table-condensed <? if ($this->fixedHeader): ?> table-fixed-header<? endif ?>">
     <thead>
     <tr>
-        <th>ORD</th>
-        <th>Customer</th>
-        <th>Air Operator</th>
-        <th>Flight #</th>
-        <th>Aircraft</th>
-        <th>Airport Dep</th>
-        <th>Date</th>
-        <th>Quantity, LTR</th>
-        <th>Quantity, Unit</th>
+        <th>Description</th>
+        <th>Price, <span class="currency">USD</span></th>
+        <th>Quantity</th>
         <th>Unit</th>
-        <th>Price, <span class="refuelCurrency">USD</span></th>
-        <th>TAX</th>
-        <th>MOT</th>
-        <th>VAT, %</th>
-        <th>Deliver</th>
-        <th>Total price, <span class="refuelCurrency">USD</span></th>
-        <th>Total, <span class="refuelCurrency">USD</span></th>
+        <th>Total, <span class="currency">USD</span></th>
         <th>Exchange Total, USD</th>
     </tr>
     </thead>
     <tbody>
-    <? foreach ($this->data as $row): ?>
-<!--        --><?// \Zend\Debug\Debug::dump($row) ?>
-        <tr id="invoiceRefuelId_<?= $row->refuelId ?>">
-            <td class="noWrap" rowspan="2">
-                <input type="hidden" name="data[<?= $row->refuelId ?>][refuelId]" value="<?= $row->refuelId ?>"/>
-                <input type="text" name="data[<?= $row->refuelId ?>][flightRefNumberOrder]" class="input-small readonly"
-                       maxlength="40" required="required" readonly="readonly" value="<?= $row->flightRefNumberOrder ?>">
-            </td>
-            <td rowspan="2">
-                <input type="hidden" name="data[<?= $row->refuelId ?>][flightAgentId]"
-                       value="<?= $row->flightAgentId ?>">
-                <input type="text" name="data[<?= $row->refuelId ?>][flightAgentShortName]" class="input-small readonly"
-                       maxlength="40" required="required" readonly="readonly" value="<?= $row->flightAgentShortName ?>">
-            </td>
-            <td rowspan="2">
-                <input type="hidden" name="data[<?= $row->refuelId ?>][flightAirOperatorId]"
-                       value="<?= $row->flightAirOperator ?>">
-                <input type="text" name="data[<?= $row->refuelId ?>][flightAirOperatorShortName]"
-                       class="input-small readonly"
-                       maxlength="40" required="required" readonly="readonly"
-                       value="<?= $row->flightAirOperatorShortName ?>">
-            </td>
-            <td rowspan="2">
-                <input type="text" name="data[<?= $row->refuelId ?>][flightAirOperatorNumber]"
-                       class="input-small readonly"
-                       maxlength="40" required="required"
-                       value="<?= $row->flightAirOperatorNumber ?>">
-            </td>
-            <td rowspan="2">
-                <input type="hidden" name="data[<?= $row->refuelId ?>][flightAircraftId]"
-                       value="<?= $row->flightAircraftId ?>">
-                <input type="text" name="data[<?= $row->refuelId ?>][flightAircraftName]" class="input-small readonly"
-                       maxlength="40" required="required" readonly="readonly"
-                       value="<?= $row->flightAircraftTypeName . ' (' . $row->flightAircraftName . ')' ?>">
-            </td>
-            <td rowspan="2">
-                <input type="hidden" name="data[<?= $row->refuelId ?>][refuelAirportId]"
-                       value="<?= $row->refuelAirportId ?>">
-                <input type="text" name="data[<?= $row->refuelId ?>][refuelAirportName]" class="input-small readonly"
-                       maxlength="40" required="required" readonly="readonly"
-                       value="<?= $row->refuelAirportICAO . ' (' . $row->refuelAirportIATA . ')' ?>">
-            </td>
-            <td>
-                <input type="text" name="data[<?= $row->refuelId ?>][refuelDate]"
-                       class="input-small date"
-                       placeholder="Date of refuel"
-                       maxlength="40" required="required" value="<?= date('d-m-Y', $row->refuelDate) ?>">
-            </td>
-            <td>
-                <input type="text" class="refuelQuantityLtr input-mini"
-                       name="data[<?= $row->refuelId ?>][refuelQuantityLtr]"
-                       placeholder="QTY LTR"
-                       maxlength="40" required="required" value="<?= $row->refuelQuantityLtr ?>">
-            </td>
-            <td>
-                <input type="text" class="refuelQuantityOtherUnits input-mini"
-                       name="data[<?= $row->refuelId ?>][refuelQuantityOtherUnits]"
-                       placeholder="Quantity est"
-                       maxlength="40" required="required" value="<?= $row->refuelQuantityOtherUnits ?>">
-            </td>
-            <td>
-                <select name="data[<?= $row->refuelId ?>][refuelUnitId]"
-                        class="refuelUnitId chosen input-small"
-                        data-placeholder="Unit"
-                        required="required">
-                    <option value=""></option>
-                    <? foreach ($this->units as $key => $value): ?>
-                        <? if ($row->refuelUnitName == $value): ?>
-                            <option value="<?= $key ?>" selected="selected"><?= $value ?></option>
-                        <? else: ?>
-                            <option value="<?= $key ?>"><?= $value ?></option>
-                        <? endif; ?>
-                    <? endforeach; ?>
-                </select>
-            </td>
-            <td>
-                <input type="text" class="refuelItemPrice input-mini text-right"
-                       name="data[<?= $row->refuelId ?>][refuelItemPrice]"
-                       placeholder="Price est"
-                       maxlength="40" required="required"
-                       value="<?= number_format($row->refuelPriceUsd, 4, '.', '') ?>">
-            </td>
-            <td>
-                <input type="text" class="refuelTax input-mini" name="data[<?= $row->refuelId ?>][refuelTax]"
-                       placeholder="TAX"
-                       maxlength="40" required="required" value="">
-            </td>
-            <td>
-                <input type="text" class="refuelMot input-mini" name="data[<?= $row->refuelId ?>][refuelMot]"
-                       placeholder="MOT"
-                       maxlength="40" required="required" value="">
-            </td>
-            <td>
-                <input type="text" class="refuelVat input-mini" name="data[<?= $row->refuelId ?>][refuelVat]"
-                       placeholder="VAT"
-                       maxlength="40" required="required" value="">
-            </td>
-            <td>
-                <input type="text" class="refuelDeliver input-mini" name="data[<?= $row->refuelId ?>][refuelDeliver]"
-                       placeholder="Deliver"
-                       maxlength="40" required="required" value="">
-            </td>
-            <td>
-                <input type="text" class="refuelPrice input-mini text-right"
-                       name="data[<?= $row->refuelId ?>][refuelPrice]"
-                       placeholder="Total price"
-                       maxlength="40" required="required"
-                       value="">
-            </td>
-            <td>
-                <input type="text" class="refuelPriceTotal input-mini text-right"
-                       name="data[<?= $row->refuelId ?>][refuelPriceTotal]"
-                       placeholder="Total"
-                       maxlength="40" required="required"
-                       value="">
-            </td>
-            <td>
-                <input type="text" class="refuelExchangeToUsdPriceTotal input-mini text-right"
-                       name="data[<?= $row->refuelId ?>][refuelExchangeToUsdPriceTotal]"
-                       placeholder="Exchange Total"
-                       maxlength="40" required="required"
-                       value="">
-            </td>
-        </tr>
-        <tr id="preInvoiceRefuelId_<?= $row->refuelId ?>" class="info">
-            <td><?= date('d-m-Y', $row->refuelDate) ?></td>
-            <td><?= $row->refuelQuantityLtr ?></td>
-            <td><?= $row->refuelQuantityOtherUnits ?></td>
-            <td><?= $row->refuelUnitName ?></td>
-            <td class="text-right"><?= number_format($row->refuelPriceUsd, 4, '.', '') ?></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td class="text-right"><?= number_format($row->refuelTotalPriceUsd / 100, 2, '.', '') ?></td>
-            <td></td>
-        </tr>
-    <? endforeach; ?>
+<!--    --><?// \Zend\Debug\Debug::dump($this->data); ?>
+    <tr class="info">
+        <td>
+
+        </td>
+        <td>
+            <?= $this->data->preInvoicePrice ?>
+        </td>
+        <td>
+
+        </td>
+        <td>
+
+        </td>
+        <td>
+
+        </td>
+        <td>
+            <?= $this->data->preInvoicePriceTotalExchangedToUsd ?>
+        </td>
+    </tr>
+    <tr class="dataRow" data-rowid="">
+        <td>
+            <select name="data[][typeOfServiceId]" class="chosen input-large typeOfServiceId"
+                    data-placeholder="Type of Service"
+                    required="required">
+                <option value=""></option>
+                <? foreach ($this->typeOfServices as $key => $value): ?>
+                    <option value="<?= $key ?>"><?= $value ?></option>
+                <? endforeach; ?>
+            </select>
+        </td>
+        <td>
+            <input type="text" class="input-small" name="data[][itemPrice]" maxlength="40" required="required"
+                   value="">
+        </td>
+        <td>
+            <input type="text" class="input-small" name="data[][quantity]" maxlength="40" required="required"
+                   value="">
+        </td>
+        <td>
+            <select name="data[][unitId]" class="chosen input-large unitId"
+                    data-placeholder="Unit"
+                    required="required">
+                <option value=""></option>
+                <? foreach ($this->units as $key => $value): ?>
+                    <option value="<?= $key ?>"><?= $value ?></option>
+                <? endforeach; ?>
+            </select>
+        </td>
+        <td>
+            <input type="text" class="input-small" name="data[][priceTotal]" maxlength="40" required="required"
+                   value="">
+        </td>
+        <td>
+            <input type="text" class="input-small" name="data[][priceTotalExchangedToUsd]" maxlength="40"
+                   required="required"
+                   value="">
+        </td>
+    </tr>
     <tr>
         <td colspan="18">
             <div class="row-fluid">

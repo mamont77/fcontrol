@@ -125,12 +125,12 @@ class ApServiceController extends FlightController
     public function incomeInvoiceStep2Action()
     {
         $result = array();
-        $units = array();
-        $unitsObj = $this->getUnits();
-        foreach ($unitsObj as $unit) {
-            $units[$unit->id] = $unit->name;
+        $units = $this->getApServiceUnits();
+        $typeOfServices = array();
+        $typeOfServicesObj = $this->getTypeOfApServices();
+        foreach ($typeOfServicesObj as $typeOfService) {
+            $typeOfServices[$typeOfService->id] = $typeOfService->name;
         }
-
         $currencies = new ApServiceForm(null, array());
         $currencies = $currencies->getCurrencyExchangeRate();
 
@@ -143,12 +143,33 @@ class ApServiceController extends FlightController
                 return $this->redirect()->toRoute('management/ap-service/income-invoice-step1');
             }
 
-            $result = $this->getApServiceIncomeInvoiceSearchModel()->findByParams($data);
+            $result = $this->getApServiceIncomeInvoiceSearchModel()->findByParams($data)->current();
+            $result->legDepToNextAirportTime = '';
+            $result->legDepToNextAirportICAO = '';
+            $result->legDepToNextAirportIATA = '';
+            $legs = $this->getLegModel()->getByHeaderId($result->preInvoiceHeaderId);
+
+            $currentLegId = $result->legId;
+            $nextLegs = array();
+            foreach ($legs as $leg) {
+                if ($leg['id'] > $currentLegId) {
+                    $nextLegs = $leg;
+                    break;
+                }
+
+            }
+            if (count($nextLegs)) {
+                $result->legDepToNextAirportTime = (string)\DateTime::createFromFormat('d-m-Y',
+                    $nextLegs['dateOfFlight'])->setTime(0, 0)->getTimestamp();
+                $result->legDepToNextAirportICAO = $nextLegs['apDepIcao'];
+                $result->legDepToNextAirportIATA = $nextLegs['apDepIata'];
+            }
         }
 
         return array(
             'currencies' => $currencies,
             'units' => $units,
+            'typeOfServices' => $typeOfServices,
             'result' => $result,
         );
     }
@@ -423,7 +444,8 @@ class ApServiceController extends FlightController
     {
         if (!$this->apServiceIncomeInvoiceSearchModel) {
             $sm = $this->getServiceLocator();
-            $this->apServiceIncomeInvoiceSearchModel = $sm->get('FcFlightManagement\Model\ApServiceIncomeInvoiceSearchModel');
+            $this->apServiceIncomeInvoiceSearchModel
+                = $sm->get('FcFlightManagement\Model\ApServiceIncomeInvoiceSearchModel');
         }
 
         return $this->apServiceIncomeInvoiceSearchModel;
@@ -436,7 +458,8 @@ class ApServiceController extends FlightController
     {
         if (!$this->apServiceIncomeInvoiceMainModel) {
             $sm = $this->getServiceLocator();
-            $this->apServiceIncomeInvoiceMainModel = $sm->get('FcFlightManagement\Model\ApServiceIncomeInvoiceMainModel');
+            $this->apServiceIncomeInvoiceMainModel
+                = $sm->get('FcFlightManagement\Model\ApServiceIncomeInvoiceMainModel');
         }
 
         return $this->apServiceIncomeInvoiceMainModel;
@@ -449,7 +472,8 @@ class ApServiceController extends FlightController
     {
         if (!$this->apServiceIncomeInvoiceDataModel) {
             $sm = $this->getServiceLocator();
-            $this->apServiceIncomeInvoiceDataModel = $sm->get('FcFlightManagement\Model\ApServiceIncomeInvoiceDataModel');
+            $this->apServiceIncomeInvoiceDataModel
+                = $sm->get('FcFlightManagement\Model\ApServiceIncomeInvoiceDataModel');
         }
 
         return $this->apServiceIncomeInvoiceDataModel;
@@ -476,7 +500,8 @@ class ApServiceController extends FlightController
     {
         if (!$this->apServiceOutcomeInvoiceMainModel) {
             $sm = $this->getServiceLocator();
-            $this->apServiceOutcomeInvoiceMainModel = $sm->get('FcFlightManagement\Model\ApServiceOutcomeInvoiceMainModel');
+            $this->apServiceOutcomeInvoiceMainModel
+                = $sm->get('FcFlightManagement\Model\ApServiceOutcomeInvoiceMainModel');
         }
 
         return $this->apServiceOutcomeInvoiceMainModel;
@@ -489,9 +514,24 @@ class ApServiceController extends FlightController
     {
         if (!$this->apServiceOutcomeInvoiceDataModel) {
             $sm = $this->getServiceLocator();
-            $this->apServiceOutcomeInvoiceDataModel = $sm->get('FcFlightManagement\Model\ApServiceOutcomeInvoiceDataModel');
+            $this->apServiceOutcomeInvoiceDataModel
+                = $sm->get('FcFlightManagement\Model\ApServiceOutcomeInvoiceDataModel');
         }
 
         return $this->apServiceOutcomeInvoiceDataModel;
+    }
+
+    /**
+     * @return array
+     */
+    public function getApServiceUnits()
+    {
+        return array(
+            'Length' => 'Length',
+            'Weight' => 'Weight',
+            'Time' => 'Time',
+            'Quantity' => 'Quantity',
+            'Other' => 'Other',
+        );
     }
 }

@@ -79,6 +79,23 @@ class ApServiceIncomeInvoiceSearchModel extends BaseModel
             'left');
 
         $select->join(
+            array('flightAircraft' => 'library_aircraft'),
+            'flight.aircraftId = flightAircraft.id',
+            array(
+                'flightAircraftTypeId' => 'aircraft_type',
+                'flightAircraftName' => 'reg_number',
+            ),
+            'left');
+
+        $select->join(
+            array('flightAircraftType' => 'library_aircraft_type'),
+            'flightAircraft.aircraft_type = flightAircraftType.id',
+            array(
+                'flightAircraftTypeName' => 'name',
+            ),
+            'left');
+
+        $select->join(
             array('preInvoiceAirport' => 'library_airport'),
             $this->table . '.airportId = preInvoiceAirport.id',
             array(

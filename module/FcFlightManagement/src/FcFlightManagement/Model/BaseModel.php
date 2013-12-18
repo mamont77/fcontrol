@@ -112,7 +112,7 @@ class BaseModel extends AbstractTableGateway
         'incomeInvoiceMainExchangeRate' => 'exchangeRate',
         'incomeInvoiceMainDateArr' => 'dateArr',
         'incomeInvoiceMainDateDep' => 'dateDep',
-        'incomeInvoiceMainTypeOfService' => 'typeOfService',
+        'incomeInvoiceMainTypeOfServiceId' => 'typeOfServiceId',
         'incomeInvoiceMainStatus' => 'status',
     );
 
@@ -122,9 +122,9 @@ class BaseModel extends AbstractTableGateway
     public $incomeInvoiceDataTableFieldsMap = array(
         'incomeInvoiceDataId' => 'id',
         'incomeInvoiceDataInvoiceId' => 'invoiceId',
-        'incomeInvoiceDataTypeOfService' => 'typeOfService',
+        'incomeInvoiceDataTypeOfServiceId' => 'typeOfServiceId',
         'incomeInvoiceDataItemPrice' => 'itemPrice',
-        'incomeInvoiceDataQuantityLtr' => 'quantityLtr',
+        'incomeInvoiceDataQuantity' => 'quantity',
         'incomeInvoiceDataUnitId' => 'unitId',
         'incomeInvoiceDataPriceTotal' => 'priceTotal',
         'incomeInvoiceDataPriceTotalExchangedToUsd' => 'priceTotalExchangedToUsd',
@@ -142,7 +142,7 @@ class BaseModel extends AbstractTableGateway
         'outcomeInvoiceMainExchangeRate' => 'exchangeRate',
         'outcomeInvoiceMainDateArr' => 'dateArr',
         'outcomeInvoiceMainDateDep' => 'dateDep',
-        'outcomeInvoiceMainTypeOfService' => 'typeOfService',
+        'outcomeInvoiceMainTypeOfServiceId' => 'typeOfServiceId',
         'outcomeInvoiceMainStatus' => 'status',
     );
 
@@ -152,9 +152,9 @@ class BaseModel extends AbstractTableGateway
     public $outcomeInvoiceDataTableFieldsMap = array(
         'outcomeInvoiceDataId' => 'id',
         'outcomeInvoiceDataInvoiceId' => 'invoiceId',
-        'outcomeInvoiceDataTypeOfService' => 'typeOfService',
+        'outcomeInvoiceDataTypeOfService' => 'typeOfServiceId',
         'outcomeInvoiceDataItemPrice' => 'itemPrice',
-        'outcomeInvoiceDataQuantityLtr' => 'quantityLtr',
+        'outcomeInvoiceDataQuantity' => 'quantity',
         'outcomeInvoiceDataUnitId' => 'unitId',
         'outcomeInvoiceDataPriceTotal' => 'priceTotal',
         'outcomeInvoiceDataPriceTotalExchangedToUsd' => 'priceTotalExchangedToUsd',
