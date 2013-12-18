@@ -37,3 +37,7 @@
 17.12
 8:00
 #91: Management AP Service - Общая структура файлов и начало работы над Income Invoice. #91: AP Service структура DB.
+
+18.12
+8:00
+#91: Search AP Service income (step 1) - калькуляторы.

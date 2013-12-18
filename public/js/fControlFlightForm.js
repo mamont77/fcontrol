@@ -892,4 +892,42 @@
             });
         }
     };
+
+    /**
+     *
+     * @type {{attach: Function}}
+     */
+    fControl.behaviors.apServiceIncomeInvoiceStep1 = {
+        attach: function (context, settings) {
+            var $form = $('form#apServiceIncomeInvoiceStep1');
+
+            if ($form.length == 0) return;
+
+            $($form).find('#dateFrom, #dateTo').mask('99-99-9999');
+
+            var $form2 = $('form#apServiceIncomeInvoiceStep2'),
+                $rowsCheckbox = $form2.find('.rowsSelected');
+
+            if ($form2.length == 0) return;
+
+            // блокируем кнопку Apply до тех пор, пока не будет выбран только один чекбокс
+            $form2.find('.btn').prop('disabled', true);
+            $rowsCheckbox.change(function () {
+                var selectedRows = [];
+
+                $rowsCheckbox.each(function () {
+                    var $this = $(this);
+                    if ($this.prop('checked')){
+                        selectedRows.push($this.val());
+                    }
+                });
+
+                if(selectedRows.length == 1) {
+                    $form2.find('.btn').prop('disabled', false);
+                } else {
+                    $form2.find('.btn').prop('disabled', true);
+                }
+            });
+        }
+    };
 })(jQuery);
