@@ -4,6 +4,7 @@
  */
 namespace FcFlightManagement\Model;
 
+use FcFlight\Form\BaseForm;
 use Zend\Db\TableGateway\AbstractTableGateway;
 use Zend\Db\Adapter\Adapter;
 use Zend\Db\ResultSet\ResultSet;
@@ -13,25 +14,12 @@ use Zend\Db\Sql\Select;
  * Class ApServiceIncomeInvoiceMainModel
  * @package FcFlightManagement\Model
  */
-class ApServiceIncomeInvoiceMainModel extends AbstractTableGateway
+class ApServiceIncomeInvoiceMainModel extends BaseModel
 {
     /**
      * @var string
      */
-    public $table = 'invoiceIncomeRefuelMain';
-
-    /**
-     * @var array
-     */
-    protected $_tableFields = array(
-        'invoiceId' => 'invoiceId',
-        'invoiceNumber' => 'invoiceNumber',
-        'invoiceDate' => 'invoiceDate',
-        'invoiceCurrency' => 'invoiceCurrency',
-        'invoiceExchangeRate' => 'invoiceExchangeRate',
-        'invoiceRefuelSupplierId' => 'invoiceRefuelSupplierId',
-        'invoiceStatus' => 'invoiceStatus',
-    );
+    public $table = 'invoiceIncomeApServiceMain';
 
     /**
      * @param \Zend\Db\Adapter\Adapter $adapter
@@ -49,19 +37,21 @@ class ApServiceIncomeInvoiceMainModel extends AbstractTableGateway
      */
     public function add($data)
     {
-        $invoiceDate = \DateTime::createFromFormat('d-m-Y', $data['invoiceDate']);
-        $data['invoiceDate'] = $invoiceDate->setTime(0, 0, 0)->getTimestamp();
+        $data['date'] = \DateTime::createFromFormat('d-m-Y', $data['date'])->setTime(0, 0, 0)->getTimestamp();
+        $data['dateArr'] = \DateTime::createFromFormat('d-m-Y', $data['dateArr'])->setTime(0, 0, 0)->getTimestamp();
+        $data['dateDep'] = \DateTime::createFromFormat('d-m-Y', $data['dateDep'])->setTime(0, 0, 0)->getTimestamp();
 
-        $data = array(
-            'invoiceNumber' => (string)$data['invoiceNumber'],
-            'invoiceDate' => (int)$data['invoiceDate'],
-            'invoiceCurrency' => (string)$data['invoiceCurrency'],
-            'invoiceExchangeRate' => (string)$data['invoiceExchangeRate'],
-            'invoiceRefuelSupplierId' => (int)$data['invoiceRefuelSupplierId'],
-            'invoiceStatus' => 1,
-        );
+        $fields = array_flip($this->incomeInvoiceMainTableFieldsMap);
 
-        $this->insert($data);
+        foreach ($fields as $key => &$field) {
+            if (isset($data[$key])) {
+                $field = $data[$key];
+            } else {
+                unset($fields[$key]);
+            }
+        }
+
+        $this->insert($fields);
 
         return $this->getLastInsertValue();
     }
@@ -71,13 +61,92 @@ class ApServiceIncomeInvoiceMainModel extends AbstractTableGateway
         $id = (int)$id;
         $select = new Select();
         $select->from($this->table);
-        $select->columns($this->_tableFields);
+        $select->columns($this->incomeInvoiceMainTableFieldsMap);
 
-        $select->join(array('libraryKontragent' => 'library_kontragent'),
-            'libraryKontragent.id = ' . $this->table . '.invoiceRefuelSupplierId',
-            array('invoiceRefuelSupplierName' => 'short_name'), 'left');
+        $select->join(
+            array('preInvoice' => 'flightApServiceForm'),
+            $this->table . '.preInvoiceId = preInvoice.id',
+            $this->preInvoiceTableFieldsMap,
+            'left');
 
-        $select->where(array($this->table . '.invoiceId' => $id));
+        $select->join(
+            array('flight' => $this->flightTableName),
+            'preInvoice.headerId = flight.id',
+            $this->flightTableFieldsMap,
+            'left');
+
+        $select->join(
+            array('leg' => $this->legTableName),
+            'preInvoice.legId = leg.id',
+            $this->legTableFieldsMap,
+            'left');
+
+        $select->join(
+            array('preInvoiceAgent' => 'library_kontragent'),
+            'preInvoice.agentId = preInvoiceAgent.id',
+            array(
+                'preInvoiceAgentName' => 'name',
+                'preInvoiceAgentShortName' => 'short_name',
+            ),
+            'left');
+
+        $select->join(
+            array('incomeInvoiceMainTypeOfService' => 'library_type_of_ap_service'),
+            $this->table . '.typeOfServiceId = incomeInvoiceMainTypeOfService.id',
+            array(
+                'incomeInvoiceMainTypeOfServiceName' => 'name',
+            ),
+            'left');
+
+        $select->join(
+            array('flightCustomer' => 'library_kontragent'),
+            'flight.kontragent = flightCustomer.id',
+            array(
+                'flightCustomerName' => 'name',
+                'flightCustomerShortName' => 'short_name',
+            ),
+            'left');
+
+        $select->join(
+            array('flightAirOperator' => 'library_air_operator'),
+            'flight.airOperator = flightAirOperator.id',
+            array(
+                'flightAirOperatorName' => 'name',
+                'flightAirOperatorShortName' => 'short_name',
+                'flightAirOperatorICAO' => 'code_icao',
+                'flightAirOperatorIATA' => 'code_iata',
+            ),
+            'left');
+
+        $select->join(
+            array('flightAircraft' => 'library_aircraft'),
+            'flight.aircraftId = flightAircraft.id',
+            array(
+                'flightAircraftTypeId' => 'aircraft_type',
+                'flightAircraftName' => 'reg_number',
+            ),
+            'left');
+
+        $select->join(
+            array('flightAircraftType' => 'library_aircraft_type'),
+            'flightAircraft.aircraft_type = flightAircraftType.id',
+            array(
+                'flightAircraftTypeName' => 'name',
+            ),
+            'left');
+
+        $select->join(
+            array('legAirportArr' => 'library_airport'),
+            'leg.apArrAirportId = legAirportArr.id',
+            array(
+                'legAirportArrName' => 'name',
+                'legAirportArrShortName' => 'short_name',
+                'legAirportArrICAO' => 'code_icao',
+                'legAirportArrIATA' => 'code_iata',
+            ),
+            'left');
+
+        $select->where(array($this->table . '.id' => $id));
 
         $resultSet = $this->selectWith($select);
         $row = $resultSet->current();
@@ -86,7 +155,7 @@ class ApServiceIncomeInvoiceMainModel extends AbstractTableGateway
             throw new \Exception("Could not find row $id");
         }
 
-        $row->invoiceDate = date('d-m-Y', $row->invoiceDate);
+//        $row->invoiceDate = date('d-m-Y', $row->invoiceDate);
 
         return $row;
     }

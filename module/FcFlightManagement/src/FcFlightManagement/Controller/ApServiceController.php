@@ -213,12 +213,10 @@ class ApServiceController extends FlightController
         $request = $this->getRequest();
         if ($request->isPost()) {
             $data = $request->getPost();
-            \Zend\Debug\Debug::dump($data);
             $invoiceId = $this->getApServiceIncomeInvoiceMainModel()->add($data);
 
             foreach ($data['data'] as $row) {
                 $row['invoiceId'] = $invoiceId;
-                $row['preInvoiceApServiceId'] = $row['apServiceId'];
                 $this->getApServiceIncomeInvoiceDataModel()->add($row);
             }
 
@@ -246,10 +244,30 @@ class ApServiceController extends FlightController
         }
 
         $header = $this->getApServiceIncomeInvoiceMainModel()->get($invoiceId);
+        $header->legDepToNextAirportTime = '';
+        $header->legDepToNextAirportICAO = '';
+        $header->legDepToNextAirportIATA = '';
+        $legs = $this->getLegModel()->getByHeaderId($header->preInvoiceHeaderId);
+        $currentLegId = $header->legId;
+        $nextLegs = array();
+        foreach ($legs as $leg) {
+            if ($leg['id'] > $currentLegId) {
+                $nextLegs = $leg;
+                break;
+            }
+
+        }
+        if (count($nextLegs)) {
+            $header->legDepToNextAirportTime = (string)\DateTime::createFromFormat('d-m-Y',
+                $nextLegs['dateOfFlight'])->setTime(0, 0)->getTimestamp();
+            $header->legDepToNextAirportICAO = $nextLegs['apDepIcao'];
+            $header->legDepToNextAirportIATA = $nextLegs['apDepIata'];
+        }
+
         $data = $this->getApServiceIncomeInvoiceDataModel()->getByInvoiceId($invoiceId);
 
         foreach ($data as $row) {
-            $header->data[$row->apServiceId] = $row;
+            $header->data[$row->incomeInvoiceDataId] = $row;
         }
 
         return new ViewModel(array(
