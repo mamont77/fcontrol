@@ -179,10 +179,11 @@ class ApServiceController extends FlightController
      */
     public function incomeInvoiceStep3Action()
     {
-        $units = array();
-        $unitsObj = $this->getUnits();
-        foreach ($unitsObj as $unit) {
-            $units[$unit->id] = $unit->name;
+        $units = $this->getApServiceUnits();
+        $typeOfServices = array();
+        $typeOfServicesObj = $this->getTypeOfApServices();
+        foreach ($typeOfServicesObj as $typeOfService) {
+            $typeOfServices[$typeOfService->id] = $typeOfService->name;
         }
 
         $currencies = new ApServiceForm(null, array());
@@ -192,11 +193,11 @@ class ApServiceController extends FlightController
 
         if ($request->isPost()) {
             $result = $request->getPost();
-            \Zend\Debug\Debug::dump($result);
 
             return array(
                 'currencies' => $currencies,
                 'units' => $units,
+                'typeOfServices' => $typeOfServices,
                 'result' => $result,
             );
         }
@@ -212,7 +213,7 @@ class ApServiceController extends FlightController
         $request = $this->getRequest();
         if ($request->isPost()) {
             $data = $request->getPost();
-//            \Zend\Debug\Debug::dump($data);
+            \Zend\Debug\Debug::dump($data);
             $invoiceId = $this->getApServiceIncomeInvoiceMainModel()->add($data);
 
             foreach ($data['data'] as $row) {
