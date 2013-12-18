@@ -947,8 +947,7 @@
             var $invoiceCurrency = $form.find('#currency'),
                 $invoiceExchangeRate = $form.find('#exchangeRate'),
                 invoiceCurrencyText = $invoiceCurrency.find(':selected').text() || 'USD',
-                invoiceExchangeRateVal = parseFloat($invoiceExchangeRate.val()) || 1,
-                typeOfServiceIdOptionsHtml = $form.find('.typeOfServiceId').html();
+                invoiceExchangeRateVal = parseFloat($invoiceExchangeRate.val()) || 1;
 
             // Добавляем строки.
             $('.addRow').click(function () {
@@ -990,6 +989,74 @@
                 });
                 return false;
             });
+
+            $('.itemPrice, .quantity').bind("keyup change", function () {
+                var $this = $(this),
+                    $row = $(this).parent().parent(),
+                //fields values
+                    $itemPrice = $row.find('.itemPrice'),
+                    itemPriceVal = $itemPrice.val() || 0,
+                    $quantity = $row.find('.quantity'),
+                    quantityVal = $quantity.val() || 0,
+                    $priceTotal = $row.find('.priceTotal'),
+                    priceTotalVal = $priceTotal.val() || 0,
+                    $priceTotalExchangedToUsd = $row.find('.priceTotalExchangedToUsd'),
+                    priceTotalExchangedToUsdVal = $priceTotalExchangedToUsd.val() || 0,
+                //subTotals
+                    $priceSubTotal = $form.find('.priceSubTotal'),
+                    priceSubTotalVal = 0,
+                    $priceSubTotalExchangedToUsd = $form.find('.priceSubTotalExchangedToUsd'),
+                    priceSubTotalExchangedToUsdVal = 0;
+
+                // считаем тоталы
+                priceTotalVal = (itemPriceVal * quantityVal).toFixed(4);
+                $priceTotal.val(priceTotalVal);
+
+                priceTotalExchangedToUsdVal = (priceTotalVal * invoiceExchangeRateVal).toFixed(2);
+                $priceTotalExchangedToUsd.val(priceTotalExchangedToUsdVal);
+
+                // отрисоваем сумму под таблицей
+                $form.find('.priceTotal').each(function () {
+                    var val = $(this).val();
+                    if (!isNaN(val) && val != '') {
+                        priceSubTotalVal = parseFloat(priceSubTotalVal) + parseFloat(val);
+                    }
+                });
+                $priceSubTotal.text(priceSubTotalVal.toFixed(4));
+
+                $form.find('.priceTotalExchangedToUsd').each(function () {
+                    var val = $(this).val();
+                    if (!isNaN(val) && val != '') {
+                        priceSubTotalExchangedToUsdVal = parseFloat(priceSubTotalExchangedToUsdVal)
+                            + parseFloat(val);
+                    }
+                });
+                $priceSubTotalExchangedToUsd.text(priceSubTotalExchangedToUsdVal.toFixed(2));
+            });
+
+            // По клику на сабмит прибиваем все скрытык строки
+            $('.btn-primary').click(function () {
+                $('#invoiceData').find('.dataRow.hidden').remove();
+            });
+        }
+    };
+
+    /**
+     *
+     * @type {{attach: Function}}
+     */
+    fControl.behaviors.apServiceIncomeInvoiceStep4 = {
+        attach: function (context, settings) {
+            var $form = $('form#apServiceIncomeInvoiceStep4');
+
+            if ($form.length == 0) return;
+
+            $($form).find('.date').mask('99-99-9999');
+
+            // invoice (header) values
+            var $invoiceCurrency = $form.find('#currency'),
+                $invoiceExchangeRate = $form.find('#exchangeRate'),
+                invoiceExchangeRateVal = parseFloat($invoiceExchangeRate.val()) || 1;
 
             $('.itemPrice, .quantity').bind("keyup change", function () {
                 var $this = $(this),
