@@ -75,7 +75,7 @@
                     <? if ($row->incomeInvoiceMainDateDep): ?>
                         <?= date('d-m-Y', $row->incomeInvoiceMainDateDep) ?>
                     <? else: ?>
-                        <?= date('d-m-Y', $this->advancedDataWithOutIncomeInvoice[$row->preInvoiceHeaderId]['legDepToNextAirportTime']) ?>
+                        <?= date('d-m-Y', $this->advancedDataWithOutIncomeInvoice[$row->legId]['legDepToNextAirportTime']) ?>
                     <? endif; ?>
                 </td>
                 <td>

@@ -132,7 +132,7 @@ class ApServiceController extends FlightController
                     if (!$apServiceMain->incomeInvoiceMainId) {
                         $legs = $this->getLegModel()->getByHeaderId($apServiceMain->preInvoiceHeaderId);
 
-                        $currentLegId = $result->legId;
+                        $currentLegId = $apServiceMain->legId;
                         $nextLegs = array();
                         foreach ($legs as $leg) {
                             if ($leg['id'] > $currentLegId) {
@@ -142,16 +142,18 @@ class ApServiceController extends FlightController
 
                         }
                         if (count($nextLegs)) {
-                            $advancedDataWithOutIncomeInvoice[$apServiceMain->preInvoiceHeaderId]['legDepToNextAirportTime']
+                            $advancedDataWithOutIncomeInvoice[$apServiceMain->legId]['legDepToNextAirportTime']
                                 = (string)\DateTime::createFromFormat('d-m-Y', $nextLegs['dateOfFlight'])->setTime(0, 0)->getTimestamp();
-                            $advancedDataWithOutIncomeInvoice[$apServiceMain->preInvoiceHeaderId]['legDepToNextAirportICAO']
+                            $advancedDataWithOutIncomeInvoice[$apServiceMain->legId]['legDepToNextAirportICAO']
                                 = $nextLegs['apDepIcao'];
-                            $advancedDataWithOutIncomeInvoice[$apServiceMain->preInvoiceHeaderId]['legDepToNextAirportIATA']
+                            $advancedDataWithOutIncomeInvoice[$apServiceMain->legId]['legDepToNextAirportIATA']
                                 = $nextLegs['apDepIata'];
                         }
 
                     }
                 }
+//                \Zend\Debug\Debug::dump($advancedDataWithOutIncomeInvoice);
+
             }
         }
 

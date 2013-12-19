@@ -215,9 +215,9 @@ class LegModel extends AbstractTableGateway
     {
         $dateOfFlight = \DateTime::createFromFormat('d-m-Y', $object->dateOfFlight)->setTime(0, 0)->getTimestamp();
         $apDepTime = \DateTime::createFromFormat('d-m-Y H:i', $object->dateOfFlight . ' ' . $object->apDepTime)
-            ->setTime(0, 0)->getTimestamp();
+            ->getTimestamp();
         $apArrTime = \DateTime::createFromFormat('d-m-Y H:i', $object->dateOfFlight . ' ' . $object->apArrTime)
-            ->setTime(0, 0)->getTimestamp();
+            ->getTimestamp();
 
         $data = array(
             'headerId' => (int)$object->headerId,
