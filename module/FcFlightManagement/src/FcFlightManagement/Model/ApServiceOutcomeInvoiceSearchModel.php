@@ -168,6 +168,10 @@ class ApServiceOutcomeInvoiceSearchModel extends BaseModel
             $select->where->equalTo('flight.airOperator', $data['airOperatorId']);
         }
 
+        if ($data['typeOfInvoice'] == 'both') {
+            $select->where->isNotNull('outcomeInvoice.id');
+        }
+
         if (!empty($data['rowsSelected'])) {
             $select->where->in($this->table . '.id', $data['rowsSelected']);
         }
