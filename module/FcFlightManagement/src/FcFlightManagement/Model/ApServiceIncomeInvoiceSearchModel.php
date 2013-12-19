@@ -123,6 +123,14 @@ class ApServiceIncomeInvoiceSearchModel extends BaseModel
             ),
             'left');
 
+        $select->join(
+            array('incomeInvoiceTypeOfService' => 'library_type_of_ap_service'),
+            'incomeInvoiceMain.typeOfServiceId = incomeInvoiceTypeOfService.id',
+            array(
+                'incomeInvoiceTypeOfServiceName' => 'name',
+            ),
+            'left');
+
         if ($data['dateFrom'] != '' && $data['dateTo'] != '') {
             $select->where->between('leg.apArrTime', $data['dateFrom'], $data['dateTo']);
         } else {

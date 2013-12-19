@@ -954,6 +954,7 @@
                 var $hiddenRows = $('#invoiceData').find('.dataRow.hidden');
                 if ($hiddenRows.length) {
                     $hiddenRows.first().removeClass('hidden').find('.chosen-container').css({'width': '210px'}).trigger('chosen:updated');
+                    return false;
                 } else {
                     $(this).prop('disabled', true)
                 }
@@ -1034,7 +1035,7 @@
                 $priceSubTotalExchangedToUsd.text(priceSubTotalExchangedToUsdVal.toFixed(2));
             });
 
-            // По клику на сабмит прибиваем все скрытык строки
+            // По клику на сабмит прибиваем все скрытые строки
             $('.btn-primary').click(function () {
                 $('#invoiceData').find('.dataRow.hidden').remove();
             });
@@ -1100,11 +1101,6 @@
                     }
                 });
                 $priceSubTotalExchangedToUsd.text(priceSubTotalExchangedToUsdVal.toFixed(2));
-            });
-
-            // По клику на сабмит прибиваем все скрытык строки
-            $('.btn-primary').click(function () {
-                $('#invoiceData').find('.dataRow.hidden').remove();
             });
         }
     };

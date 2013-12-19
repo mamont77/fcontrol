@@ -1,4 +1,4 @@
-<?// \Zend\Debug\Debug::dump($this->advancedDataWithIncomeInvoice) ?>
+<? // \Zend\Debug\Debug::dump($this->advancedDataWithIncomeInvoice) ?>
 <form name="apServiceIncomeInvoiceStep2" id="apServiceIncomeInvoiceStep2" method="post"
       action="/management/ap-service/income-invoice-step2">
     <table
@@ -11,6 +11,7 @@
             <th>Customer</th>
             <th>Air Operator</th>
             <th>Flight #</th>
+            <th>Aircraft</th>
             <th>Airport</th>
             <th>Date Arr</th>
             <th>Date Dep</th>
@@ -26,7 +27,7 @@
         </thead>
         <tbody>
         <? foreach ($this->data as $row): ?>
-            <!--            --><? // \Zend\Debug\Debug::dump($row) ?>
+<!--            --><?// \Zend\Debug\Debug::dump($row) ?>
             <tr data-row="<?= $row->preInvoiceId ?>" class="<? if ($row->incomeInvoiceMainId): ?>success<? endif ?>">
                 <td>
                     <input type="checkbox" class="rowsSelected" name="rowsSelected[]"
@@ -62,6 +63,9 @@
                     <?= $row->legFlightNumberText ?>
                 </td>
                 <td>
+                    <?= $row->flightAircraftTypeName ?> (<?= $row->flightAircraftName ?>)
+                </td>
+                <td>
                     <?= $row->preInvoiceAirportICAO . ' (' . $row->preInvoiceAirportIATA . ')' ?>
                 </td>
                 <td>
@@ -82,7 +86,11 @@
                     <?= $row->preInvoiceAgentShortName ?>
                 </td>
                 <td>
-                    <?= $row->preInvoiceTypeOfServiceName ?>
+                    <? if ($row->incomeInvoiceTypeOfServiceName): ?>
+                        <?= $row->incomeInvoiceTypeOfServiceName ?>
+                    <? else: ?>
+                        <?= $row->preInvoiceTypeOfServiceName ?>
+                    <? endif; ?>
                 </td>
                 <!--                <td class="text-right">-->
                 <!--                    --><? // if ($row->incomeInvoiceDataItemPrice): ?>
@@ -108,7 +116,8 @@
                 <!--                </td>-->
                 <td class="text-right">
                     <? if ($this->advancedDataWithIncomeInvoice[$row->incomeInvoiceMainId]['incomeInvoiceDataPriceTotal']): ?>
-                        <?= number_format($this->advancedDataWithIncomeInvoice[$row->incomeInvoiceMainId]['incomeInvoiceDataPriceTotal'], 2, '.', '') ?><small>, <?= $row->incomeInvoiceMainCurrency ?> </small>
+                        <?= number_format($this->advancedDataWithIncomeInvoice[$row->incomeInvoiceMainId]['incomeInvoiceDataPriceTotal'], 2, '.', '') ?>
+                        <small>, <?= $row->incomeInvoiceMainCurrency ?> </small>
                     <? else: ?>
                         &mdash;
                     <? endif; ?>

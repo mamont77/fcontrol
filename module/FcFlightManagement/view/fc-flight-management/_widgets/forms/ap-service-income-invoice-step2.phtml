@@ -149,6 +149,7 @@
        class="table table-bordered table-hover table-condensed <? if ($this->fixedHeader): ?> table-fixed-header<? endif ?>">
     <thead>
     <tr>
+        <th></th>
         <th>Description</th>
         <th>Price, <span class="currency">USD</span></th>
         <th>Quantity</th>
@@ -160,6 +161,9 @@
     <tbody>
     <!--    --><? // \Zend\Debug\Debug::dump($this->data); ?>
     <tr class="info">
+        <td>
+
+        </td>
         <td>
         </td>
         <td>
@@ -177,6 +181,7 @@
     </tr>
     <? for ($i = 1; $i <= 15; $i++): ?>
     <tr class="dataRow <? if ($i > 1): ?><?= 'hidden' ?><? endif; ?>" data-rowid="<?= $i ?>">
+        <td><a href="#"><i class="icon-remove"></i></a></td>
         <td>
             <select name="data[<?= $i ?>][typeOfServiceId]" class="chosen input-large typeOfServiceId"
                     data-placeholder="Type of Service"
