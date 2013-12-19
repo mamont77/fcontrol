@@ -180,56 +180,63 @@
         </td>
     </tr>
     <? for ($i = 1; $i <= 15; $i++): ?>
-    <tr class="dataRow <? if ($i > 1): ?><?= 'hidden' ?><? endif; ?>" data-rowid="<?= $i ?>">
-        <td><a href="#"><i class="icon-remove"></i></a></td>
-        <td>
-            <select name="data[<?= $i ?>][typeOfServiceId]" class="chosen input-large typeOfServiceId"
-                    data-placeholder="Type of Service"
-                    required="required">
-                <option value=""></option>
-                <? foreach ($this->typeOfServices as $key => $value): ?>
-                    <option value="<?= $key ?>"><?= $value ?></option>
-                <? endforeach; ?>
-            </select>
-        </td>
-        <td>
-            <input type="text" class="input-small itemPrice" name="data[<?= $i ?>][itemPrice]" maxlength="40" required="required"
-                   value="">
-        </td>
-        <td>
-            <input type="text" class="input-small quantity" name="data[<?= $i ?>][quantity]" maxlength="40" required="required"
-                   value="">
-        </td>
-        <td>
-            <select name="data[<?= $i ?>][unitId]" class="chosen input-large unitId"
-                    data-placeholder="Unit"
-                    required="required">
-                <option value=""></option>
-                <? foreach ($this->units as $key => $value): ?>
-                    <option value="<?= $key ?>"><?= $value ?></option>
-                <? endforeach; ?>
-            </select>
-        </td>
-        <td>
-            <input type="text" class="input-small priceTotal" name="data[<?= $i ?>][priceTotal]" maxlength="40"
-                   required="required"
-                   value="">
-        </td>
-        <td>
-            <input type="text" class="input-small priceTotalExchangedToUsd" name="data[<?= $i ?>][priceTotalExchangedToUsd]"
-                   maxlength="40"
-                   required="required"
-                   value="">
-        </td>
-    </tr>
+        <tr class="dataRow <? if ($i > 1): ?><?= 'hidden' ?><? endif; ?>" data-rowid="<?= $i ?>">
+            <td>
+                <? if ($i > 1): ?>
+                    <a href="#" class="removeRow"><i class="icon-remove"></i></a>
+                <? endif; ?>
+            </td>
+            <td>
+                <select name="data[<?= $i ?>][typeOfServiceId]" class="chosen input-large typeOfServiceId"
+                        data-placeholder="Type of Service"
+                        required="required">
+                    <option value=""></option>
+                    <? foreach ($this->typeOfServices as $key => $value): ?>
+                        <option value="<?= $key ?>"><?= $value ?></option>
+                    <? endforeach; ?>
+                </select>
+            </td>
+            <td>
+                <input type="text" class="input-small itemPrice" name="data[<?= $i ?>][itemPrice]" maxlength="40"
+                       required="required"
+                       value="">
+            </td>
+            <td>
+                <input type="text" class="input-small quantity" name="data[<?= $i ?>][quantity]" maxlength="40"
+                       required="required"
+                       value="">
+            </td>
+            <td>
+                <select name="data[<?= $i ?>][unitId]" class="chosen input-large unitId"
+                        data-placeholder="Unit"
+                        required="required">
+                    <option value=""></option>
+                    <? foreach ($this->units as $key => $value): ?>
+                        <option value="<?= $key ?>"><?= $value ?></option>
+                    <? endforeach; ?>
+                </select>
+            </td>
+            <td>
+                <input type="text" class="input-small priceTotal" name="data[<?= $i ?>][priceTotal]" maxlength="40"
+                       required="required"
+                       value="">
+            </td>
+            <td>
+                <input type="text" class="input-small priceTotalExchangedToUsd"
+                       name="data[<?= $i ?>][priceTotalExchangedToUsd]"
+                       maxlength="40"
+                       required="required"
+                       value="">
+            </td>
+        </tr>
     <? endfor; ?>
     <tr>
-        <td colspan="6">
+        <td colspan="7">
             <input name="addRow" type="submit" class="btn btn-info addRow" value="Add row">
         </td>
     </tr>
     <tr>
-        <td colspan="6">
+        <td colspan="7">
             <div class="row-fluid">
                 <div class="span6">
                 </div>

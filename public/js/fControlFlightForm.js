@@ -960,6 +960,12 @@
                 }
             });
 
+            // Удаляем строки
+            $('.removeRow').click(function () {
+                $(this).parent().parent().remove();
+                return false;
+            });
+
             // Блокирум поля при инициилизации
             $($form).find('#invoiceData input, #invoiceData select').each(function () {
                 $(this).prop('disabled', true).trigger('chosen:updated');
