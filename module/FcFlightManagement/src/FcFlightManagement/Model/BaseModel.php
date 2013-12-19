@@ -45,12 +45,12 @@ class BaseModel extends AbstractTableGateway
     /**
      * @var string
      */
-    public $outcomeInvoiceMainTableName = 'invoiceIncomeApServiceMain';
+    public $outcomeInvoiceMainTableName = 'invoiceOutcomeApServiceMain';
 
     /**
      * @var string
      */
-    public $outcomeInvoiceDataTableName = 'invoiceIncomeApServiceData';
+    public $outcomeInvoiceDataTableName = 'invoiceOutcomeApServiceData';
 
     /**
      * @var array
@@ -112,6 +112,7 @@ class BaseModel extends AbstractTableGateway
         'incomeInvoiceMainExchangeRate' => 'exchangeRate',
         'incomeInvoiceMainDateArr' => 'dateArr',
         'incomeInvoiceMainDateDep' => 'dateDep',
+        'incomeInvoiceFlightNumber' => 'flightNumber',
         'incomeInvoiceMainTypeOfServiceId' => 'typeOfServiceId',
         'incomeInvoiceMainStatus' => 'status',
     );
@@ -135,13 +136,14 @@ class BaseModel extends AbstractTableGateway
      */
     public $outcomeInvoiceMainTableFieldsMap = array(
         'outcomeInvoiceMainId' => 'id',
-        'outcomeInvoiceMainPreInvoiceId' => 'preInvoiceId',
+        'outcomeInvoiceMainIncomeInvoiceId' => 'incomeInvoiceId',
         'outcomeInvoiceMainNumber' => 'number',
         'outcomeInvoiceMainDate' => 'date',
         'outcomeInvoiceMainCurrency' => 'currency',
         'outcomeInvoiceMainExchangeRate' => 'exchangeRate',
         'outcomeInvoiceMainDateArr' => 'dateArr',
         'outcomeInvoiceMainDateDep' => 'dateDep',
+        'incomeInvoiceFlightNumber' => 'flightNumber',
         'outcomeInvoiceMainTypeOfServiceId' => 'typeOfServiceId',
         'outcomeInvoiceMainStatus' => 'status',
     );

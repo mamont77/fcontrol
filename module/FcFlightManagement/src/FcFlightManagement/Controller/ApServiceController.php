@@ -72,6 +72,9 @@ class ApServiceController extends FlightController
     public function incomeInvoiceStep1Action()
     {
         $result = array();
+        $advancedDataWithIncomeInvoice = array();
+        $advancedDataWithOutIncomeInvoice = array();
+
         $searchForm = new ApServiceIncomeInvoiceStep1Form('apServiceIncomeInvoiceStep1',
             array(
                 'libraries' => array(
@@ -110,13 +113,11 @@ class ApServiceController extends FlightController
                 $data = $searchForm->getData();
                 $result = $this->getApServiceIncomeInvoiceSearchModel()->findByParams($data);
 
-                $advancedDataWithIncomeInvoice = array();
                 foreach ($result as $apServiceMain) {
                     if ($apServiceMain->incomeInvoiceMainId) {
-//                        \Zend\Debug\Debug::dump($apServiceMain);
-                        $data = $this->getApServiceIncomeInvoiceDataModel()->getByInvoiceId($apServiceMain->incomeInvoiceMainId);
+                        $data = $this->getApServiceIncomeInvoiceDataModel()
+                            ->getByInvoiceId($apServiceMain->incomeInvoiceMainId);
                         foreach ($data as $apServiceData) {
-//                            \Zend\Debug\Debug::dump($apServiceData);
                             $advancedDataWithIncomeInvoice[$apServiceMain->incomeInvoiceMainId]['incomeInvoiceDataPriceTotal']
                                 += $apServiceData->incomeInvoiceDataPriceTotal;
                             $advancedDataWithIncomeInvoice[$apServiceMain->incomeInvoiceMainId]['incomeInvoiceDataPriceTotalExchangedToUsd']
@@ -124,11 +125,8 @@ class ApServiceController extends FlightController
                         }
                     }
                 }
-//                \Zend\Debug\Debug::dump($advancedDataWithIncomeInvoice);
 
-                $advancedDataWithOutIncomeInvoice = array();
                 foreach ($result as $apServiceMain) {
-//                    \Zend\Debug\Debug::dump($apServiceMain);
                     if (!$apServiceMain->incomeInvoiceMainId) {
                         $legs = $this->getLegModel()->getByHeaderId($apServiceMain->preInvoiceHeaderId);
 
@@ -143,7 +141,8 @@ class ApServiceController extends FlightController
                         }
                         if (count($nextLegs)) {
                             $advancedDataWithOutIncomeInvoice[$apServiceMain->legId]['legDepToNextAirportTime']
-                                = (string)\DateTime::createFromFormat('d-m-Y', $nextLegs['dateOfFlight'])->setTime(0, 0)->getTimestamp();
+                                = (string)\DateTime::createFromFormat('d-m-Y', $nextLegs['dateOfFlight'])
+                                ->setTime(0, 0)->getTimestamp();
                             $advancedDataWithOutIncomeInvoice[$apServiceMain->legId]['legDepToNextAirportICAO']
                                 = $nextLegs['apDepIcao'];
                             $advancedDataWithOutIncomeInvoice[$apServiceMain->legId]['legDepToNextAirportIATA']
@@ -152,8 +151,6 @@ class ApServiceController extends FlightController
 
                     }
                 }
-//                \Zend\Debug\Debug::dump($advancedDataWithOutIncomeInvoice);
-
             }
         }
 
@@ -328,6 +325,8 @@ class ApServiceController extends FlightController
     public function outcomeInvoiceStep1Action()
     {
         $result = array();
+        $incomeInvoiceData = array();
+
         $searchForm = new ApServiceOutcomeInvoiceStep1Form('apServiceOutcomeInvoiceStep1',
             array(
                 'libraries' => array(
@@ -366,12 +365,22 @@ class ApServiceController extends FlightController
                 $data = $searchForm->getData();
                 $result = $this->getApServiceOutcomeInvoiceSearchModel()->findByParams($data);
 
+                foreach ($result as $row) {
+                    $data = $this->getApServiceIncomeInvoiceDataModel()->getByInvoiceId($row->incomeInvoiceMainId);
+                    foreach ($data as $item) {
+                        $incomeInvoiceData[$row->incomeInvoiceMainId]['incomeInvoiceDataPriceTotal']
+                            += $item->incomeInvoiceDataPriceTotal;
+                        $incomeInvoiceData[$row->incomeInvoiceMainId]['incomeInvoiceDataPriceTotalExchangedToUsd']
+                            += $item->incomeInvoiceDataPriceTotalExchangedToUsd;
+                    }
+                }
             }
         }
 
         return array(
             'form' => $searchForm,
             'result' => $result,
+            'incomeInvoiceData' => $incomeInvoiceData,
         );
     }
 

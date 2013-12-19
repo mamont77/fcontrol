@@ -17,9 +17,6 @@
             <th>Date Dep</th>
             <th>Agent</th>
             <th>Type of service</th>
-            <!--            <th>Price</th>-->
-            <!--            <th>Quantity</th>-->
-            <!--            <th>Unit</th>-->
             <th>Total</th>
             <th>Exchange Rate</th>
             <th>Exchange Total, USD</th>
@@ -60,7 +57,11 @@
                     <?= $row->flightAirOperatorShortName ?>
                 </td>
                 <td>
-                    <?= $row->legFlightNumberText ?>
+                    <? if ($row->incomeInvoiceFlightNumber): ?>
+                        <?= $row->incomeInvoiceFlightNumber ?>
+                    <? else: ?>
+                        <?= $row->legFlightNumberText ?>
+                    <? endif; ?>
                 </td>
                 <td>
                     <?= $row->flightAircraftTypeName ?> (<?= $row->flightAircraftName ?>)
@@ -92,28 +93,6 @@
                         <?= $row->preInvoiceTypeOfServiceName ?>
                     <? endif; ?>
                 </td>
-                <!--                <td class="text-right">-->
-                <!--                    --><? // if ($row->incomeInvoiceDataItemPrice): ?>
-                <!--                        --><?//= $row->incomeInvoiceDataItemPrice ?><!--<small>, -->
-                <?//= $row->incomeInvoiceMainCurrency ?><!-- </small>-->
-                <!--                    --><? // else: ?>
-                <!--                        &mdash;-->
-                <!--                    --><? // endif; ?>
-                <!--                </td>-->
-                <!--                <td>-->
-                <!--                    --><? // if ($row->incomeInvoiceDataQuantity): ?>
-                <!--                        --><? //= $row->incomeInvoiceDataQuantity ?>
-                <!--                    --><? // else: ?>
-                <!--                        &mdash;-->
-                <!--                    --><? // endif; ?>
-                <!--                </td>-->
-                <!--                <td>-->
-                <!--                    --><? // if ($row->incomeInvoiceDataUnitId): ?>
-                <!--                        --><? //= $row->incomeInvoiceDataUnitId ?>
-                <!--                    --><? // else: ?>
-                <!--                        &mdash;-->
-                <!--                    --><? // endif; ?>
-                <!--                </td>-->
                 <td class="text-right">
                     <? if ($this->advancedDataWithIncomeInvoice[$row->incomeInvoiceMainId]['incomeInvoiceDataPriceTotal']): ?>
                         <?= number_format($this->advancedDataWithIncomeInvoice[$row->incomeInvoiceMainId]['incomeInvoiceDataPriceTotal'], 2, '.', '') ?>
