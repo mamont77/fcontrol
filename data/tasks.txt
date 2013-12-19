@@ -2,3 +2,7 @@
 8:00
 #91: Search AP Service income (step 1) - калькуляторы. #91: Create AP Service income invoice. #91: Create AP Service - калькуляторы. #91: Check AP Service income invoice. #91: Check AP Service - калькуляторы. #91: AP Service сохранение в БД и отображение. #91: Search AP Service income (step 1) - подставляем значения из входящего инвойса.
 18:00
+
+19.12
+11:00
+#91: Поиск и исправление ошибок.

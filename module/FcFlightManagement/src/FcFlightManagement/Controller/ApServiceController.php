@@ -115,15 +115,16 @@ class ApServiceController extends FlightController
                     if ($apServiceMain->incomeInvoiceMainId) {
 //                        \Zend\Debug\Debug::dump($apServiceMain);
                         $data = $this->getApServiceIncomeInvoiceDataModel()->getByInvoiceId($apServiceMain->incomeInvoiceMainId);
-                        foreach($data as $apServiceData) {
+                        foreach ($data as $apServiceData) {
 //                            \Zend\Debug\Debug::dump($apServiceData);
-                            $advancedDataWithIncomeInvoice[$apServiceMain->preInvoiceHeaderId]['incomeInvoiceDataPriceTotal']
+                            $advancedDataWithIncomeInvoice[$apServiceMain->incomeInvoiceMainId]['incomeInvoiceDataPriceTotal']
                                 += $apServiceData->incomeInvoiceDataPriceTotal;
-                            $advancedDataWithIncomeInvoice[$apServiceMain->preInvoiceHeaderId]['incomeInvoiceDataPriceTotalExchangedToUsd']
+                            $advancedDataWithIncomeInvoice[$apServiceMain->incomeInvoiceMainId]['incomeInvoiceDataPriceTotalExchangedToUsd']
                                 += $apServiceData->incomeInvoiceDataPriceTotalExchangedToUsd;
                         }
                     }
                 }
+//                \Zend\Debug\Debug::dump($advancedDataWithIncomeInvoice);
 
                 $advancedDataWithOutIncomeInvoice = array();
                 foreach ($result as $apServiceMain) {

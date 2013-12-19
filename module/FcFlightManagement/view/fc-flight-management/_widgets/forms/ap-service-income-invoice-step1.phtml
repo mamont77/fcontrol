@@ -107,8 +107,8 @@
                 <!--                    --><? // endif; ?>
                 <!--                </td>-->
                 <td class="text-right">
-                    <? if ($this->advancedDataWithIncomeInvoice[$row->preInvoiceHeaderId]['incomeInvoiceDataPriceTotal']): ?>
-                        <?= number_format($this->advancedDataWithIncomeInvoice[$row->preInvoiceHeaderId]['incomeInvoiceDataPriceTotal'], 2, '.', '') ?><small>, <?= $row->incomeInvoiceMainCurrency ?> </small>
+                    <? if ($this->advancedDataWithIncomeInvoice[$row->incomeInvoiceMainId]['incomeInvoiceDataPriceTotal']): ?>
+                        <?= number_format($this->advancedDataWithIncomeInvoice[$row->incomeInvoiceMainId]['incomeInvoiceDataPriceTotal'], 2, '.', '') ?><small>, <?= $row->incomeInvoiceMainCurrency ?> </small>
                     <? else: ?>
                         &mdash;
                     <? endif; ?>
@@ -121,8 +121,8 @@
                     <? endif; ?>
                 </td>
                 <td class="text-right">
-                    <? if ($this->advancedDataWithIncomeInvoice[$row->preInvoiceHeaderId]['incomeInvoiceDataPriceTotalExchangedToUsd']): ?>
-                        <?= number_format($this->advancedDataWithIncomeInvoice[$row->preInvoiceHeaderId]['incomeInvoiceDataPriceTotalExchangedToUsd'], 2, '.', '') ?>
+                    <? if ($this->advancedDataWithIncomeInvoice[$row->incomeInvoiceMainId]['incomeInvoiceDataPriceTotalExchangedToUsd']): ?>
+                        <?= number_format($this->advancedDataWithIncomeInvoice[$row->incomeInvoiceMainId]['incomeInvoiceDataPriceTotalExchangedToUsd'], 2, '.', '') ?>
                     <? else: ?>
                         &mdash;
                     <? endif; ?>
