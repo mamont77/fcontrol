@@ -954,10 +954,10 @@
                 var $hiddenRows = $('#invoiceData').find('.dataRow.hidden');
                 if ($hiddenRows.length) {
                     $hiddenRows.first().removeClass('hidden').find('.chosen-container').css({'width': '210px'}).trigger('chosen:updated');
-                    return false;
                 } else {
                     $(this).prop('disabled', true)
                 }
+                return false;
             });
 
             // Удаляем строки
