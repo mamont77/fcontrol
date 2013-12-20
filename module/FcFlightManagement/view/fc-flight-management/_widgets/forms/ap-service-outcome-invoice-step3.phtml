@@ -314,11 +314,11 @@
                         </td>
                         <td>
                             <span class="currency"><?= $this->data->currency ?></span>
-                            <span class="priceSubTotal"><?= number_format($priceSubTotal
+                            <span class="subPriceSubTotal"><?= number_format($priceSubTotal
                                     + $this->data->disbursementTotal, 4, '.', '') ?></span>
                         </td>
                         <td>
-                            USD <span class="priceSubTotalExchangedToUsd"><?= number_format($priceSubTotalExchangedToUsd
+                            USD <span class="subPriceSubTotalExchangedToUsd"><?= number_format($priceSubTotalExchangedToUsd
                                     + $this->data->disbursementTotalExchangedToUsd, 2, '.', '') ?></span>
                         </td>
                     </tr>
