@@ -13,4 +13,4 @@
 
 20.13
 10:00
-#92: Search AP Service outcome (step 1) - калькуляторы. #92: Create AP Service outcome invoice.
+#92: Search AP Service outcome (step 1) - калькуляторы. #92: Create AP Service outcome invoice. #92: Create AP Service outcome invoice - калькуляторы.

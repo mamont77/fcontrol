@@ -186,7 +186,7 @@
                 <?php
                 $incomeInvoiceDataPriceSubTotal += $item->incomeInvoiceDataPriceTotal;
                 ?>
-                <?= number_format($item->incomeInvoiceDataPriceTotal, 2, '.', '') ?>
+                <?= number_format($item->incomeInvoiceDataPriceTotal, 4, '.', '') ?>
             </td>
             <td>
                 <?php
@@ -210,7 +210,7 @@
                             </td>
                             <td>
                                 <?= $this->data->incomeInvoiceMainCurrency ?>
-                                <?= number_format($incomeInvoiceDataPriceSubTotal, 2, '.', '') ?>
+                                <?= number_format($incomeInvoiceDataPriceSubTotal, 4, '.', '') ?>
                             </td>
                             <td>
                                 USD
