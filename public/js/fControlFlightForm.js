@@ -1178,6 +1178,15 @@
                 }
                 return false;
             });
+            $('.addSubRow').click(function () {
+                var $hiddenSubRows = $('#invoiceData').find('.subDataRow.hidden');
+                if ($hiddenSubRows.length) {
+                    $hiddenSubRows.first().removeClass('hidden').find('.chosen-container').css({'width': '210px'}).trigger('chosen:updated');
+                } else {
+                    $(this).prop('disabled', true)
+                }
+                return false;
+            });
 
             // Удаляем строки
             $('.removeRow').click(function () {
@@ -1216,7 +1225,7 @@
                 return false;
             });
 
-            $('.itemPrice, .quantity').bind("keyup change", function () {
+            $('.itemPrice, .quantity, .disbursement').bind("keyup change", function () {
                 var $this = $(this),
                     $row = $(this).parent().parent(),
                 //fields values
@@ -1228,21 +1237,33 @@
                     priceTotalVal = $priceTotal.val() || 0,
                     $priceTotalExchangedToUsd = $row.find('.priceTotalExchangedToUsd'),
                     priceTotalExchangedToUsdVal = $priceTotalExchangedToUsd.val() || 0,
+                //disbursementTotals
+                    $disbursement = $form.find('.disbursement'),
+                    disbursementVal = $disbursement.val() || 0,
+                    $disbursementTotal = $form.find('.disbursementTotal'),
+                    disbursementTotalVal = $disbursementTotal.val() || 0,
+                    $disbursementTotalExchangedToUsd = $form.find('.disbursementTotalExchangedToUsd'),
+                    disbursementTotalExchangedToUsdVal = $disbursementTotalExchangedToUsd.val() || 0,
                 //subTotals
                     $priceSubTotal = $form.find('.priceSubTotal'),
                     priceSubTotalVal = 0,
                     $priceSubTotalExchangedToUsd = $form.find('.priceSubTotalExchangedToUsd'),
-                    priceSubTotalExchangedToUsdVal = 0;
+                    priceSubTotalExchangedToUsdVal = 0,
+                // окончательные subSubTotals
+                    $subPriceSubTotal = $form.find('.subPriceSubTotal'),
+                    subPriceSubTotalVal = $subPriceSubTotal.val() || 0,
+                    $subPriceSubTotalExchangedToUsd = $form.find('.subPriceSubTotalExchangedToUsd'),
+                    subPriceSubTotalExchangedToUsdVal = $subPriceSubTotalExchangedToUsd.val() || 0;
 
                 // считаем тоталы
-                priceTotalVal = (itemPriceVal * quantityVal).toFixed(4);
+                priceTotalVal = (parseFloat(itemPriceVal) * parseFloat(quantityVal)).toFixed(4);
                 $priceTotal.val(priceTotalVal);
 
-                priceTotalExchangedToUsdVal = (priceTotalVal * invoiceExchangeRateVal).toFixed(2);
+                priceTotalExchangedToUsdVal = (parseFloat(priceTotalVal) * parseFloat(invoiceExchangeRateVal)).toFixed(2);
                 $priceTotalExchangedToUsd.val(priceTotalExchangedToUsdVal);
 
-                // отрисоваем сумму под таблицей
-                $form.find('.priceTotal').each(function () {
+                // считаем сумму под таблицей
+                $form.find('.dataRow .priceTotal').each(function () {
                     var val = $(this).val();
                     if (!isNaN(val) && val != '') {
                         priceSubTotalVal = parseFloat(priceSubTotalVal) + parseFloat(val);
@@ -1250,7 +1271,7 @@
                 });
                 $priceSubTotal.text(priceSubTotalVal.toFixed(4));
 
-                $form.find('.priceTotalExchangedToUsd').each(function () {
+                $form.find('.dataRow .priceTotalExchangedToUsd').each(function () {
                     var val = $(this).val();
                     if (!isNaN(val) && val != '') {
                         priceSubTotalExchangedToUsdVal = parseFloat(priceSubTotalExchangedToUsdVal)
@@ -1258,11 +1279,35 @@
                     }
                 });
                 $priceSubTotalExchangedToUsd.text(priceSubTotalExchangedToUsdVal.toFixed(2));
+
+                // считаем disbursement total
+                disbursementTotalVal = (parseFloat(priceSubTotalVal) * parseFloat(disbursementVal) / 100);
+                $disbursementTotal.val(disbursementTotalVal.toFixed(4));
+                disbursementTotalExchangedToUsdVal = (parseFloat(priceSubTotalExchangedToUsdVal) * parseFloat(disbursementVal) / 100);
+                $disbursementTotalExchangedToUsd.val(disbursementTotalExchangedToUsdVal.toFixed(2));
+
+                // считаем окончательные тоталы (subTotals & disbursement total)
+                $form.find('.subDataRow .priceTotal').each(function () {
+                    var val = $(this).val();
+                    if (!isNaN(val) && val != '') {
+                        subPriceSubTotalVal = parseFloat(subPriceSubTotalVal) + parseFloat(val);
+                    }
+                });
+                $subPriceSubTotal.text((subPriceSubTotalVal + disbursementTotalVal + priceSubTotalVal).toFixed(4));
+
+                $form.find('.subDataRow .priceTotalExchangedToUsd').each(function () {
+                    var val = $(this).val();
+                    if (!isNaN(val) && val != '') {
+                        subPriceSubTotalExchangedToUsdVal = parseFloat(subPriceSubTotalExchangedToUsdVal) + parseFloat(val);
+                    }
+                });
+                $subPriceSubTotalExchangedToUsd.text((subPriceSubTotalExchangedToUsdVal
+                    + disbursementTotalExchangedToUsdVal + priceSubTotalExchangedToUsdVal).toFixed(2));
             });
 
             // По клику на сабмит прибиваем все скрытые строки
             $('.btn-primary').click(function () {
-                $('#invoiceData').find('.dataRow.hidden').remove();
+                $('#invoiceData').find('.dataRow.hidden, .subDataRow.hidden').remove();
             });
         }
     };

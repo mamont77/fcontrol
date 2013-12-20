@@ -1,5 +1,5 @@
 <? // \Zend\Debug\Debug::dump($this->typeOfServices) ?>
-<?// \Zend\Debug\Debug::dump($this->data) ?>
+<? // \Zend\Debug\Debug::dump($this->data) ?>
 <form name="apServiceOutcomeInvoiceStep3" id="apServiceOutcomeInvoiceStep3" method="post"
       action="/management/ap-service/outcome-invoice-step3">
 <table id="invoiceMain" class="table table-bordered table-hover table-condensed">
@@ -150,187 +150,299 @@
 <hr/>
 <table id="invoiceData"
        class="table table-bordered table-hover table-condensed <? if ($this->fixedHeader): ?> table-fixed-header<? endif ?>">
-    <thead>
-    <tr>
-        <th colspan="7" class="text-center">Income invoice data</th>
-    </tr>
-    <tr>
-        <th></th>
-        <th>Description</th>
-        <th>Price, <?= $this->data->incomeInvoiceMainCurrency ?></th>
-        <th>Quantity</th>
-        <th>Unit</th>
-        <th>Total, <?= $this->data->incomeInvoiceMainCurrency ?></th>
-        <th>Exchange Total, USD</th>
-    </tr>
-    </thead>
-    <tbody>
-    <? foreach ($this->incomeInvoiceData as $item): ?>
-        <!--        --><? // \Zend\Debug\Debug::dump($item); ?>
-        <tr class="info">
-            <td>
-            </td>
-            <td>
-                <?= $item->incomeInvoiceDataTypeOfServiceName ?>
-            </td>
-            <td>
-                <?= $item->incomeInvoiceDataItemPrice ?>
-            </td>
-            <td>
-                <?= $item->incomeInvoiceDataQuantity ?>
-            </td>
-            <td>
-                <?= $item->incomeInvoiceDataUnitId ?>
-            </td>
-            <td>
-                <?php
-                $incomeInvoiceDataPriceSubTotal += $item->incomeInvoiceDataPriceTotal;
-                ?>
-                <?= number_format($item->incomeInvoiceDataPriceTotal, 4, '.', '') ?>
-            </td>
-            <td>
-                <?php
-                $incomeInvoiceDataSubPriceTotalExchangedToUsd += $item->incomeInvoiceDataPriceTotalExchangedToUsd;
-                ?>
-                <?= number_format($item->incomeInvoiceDataPriceTotalExchangedToUsd, 2, '.', '') ?>
-            </td>
-        </tr>
-    <? endforeach; ?>
+<thead>
+<tr>
+    <th colspan="7" class="text-center">Income invoice data</th>
+</tr>
+<tr>
+    <th></th>
+    <th>Description</th>
+    <th>Price, <?= $this->data->incomeInvoiceMainCurrency ?></th>
+    <th>Quantity</th>
+    <th>Unit</th>
+    <th>Total, <?= $this->data->incomeInvoiceMainCurrency ?></th>
+    <th>Exchange Total, USD</th>
+</tr>
+</thead>
+<tbody>
+<? foreach ($this->incomeInvoiceData as $item): ?>
+    <!--        --><? // \Zend\Debug\Debug::dump($item); ?>
     <tr class="info">
-        <td colspan="7">
-            <div class="row-fluid">
-                <div class="span6">
-                </div>
-                <div class="span6">
-                    <table style="width: 300px; float: right" class="table table-bordered pull-right">
-                        <tbody>
-                        <tr>
-                            <td>
-                                Subtotal
-                            </td>
-                            <td>
-                                <?= $this->data->incomeInvoiceMainCurrency ?>
-                                <?= number_format($incomeInvoiceDataPriceSubTotal, 4, '.', '') ?>
-                            </td>
-                            <td>
-                                USD
-                                <?= number_format($incomeInvoiceDataSubPriceTotalExchangedToUsd, 2, '.', '') ?>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+        <td>
+        </td>
+        <td>
+            <?= $item->incomeInvoiceDataTypeOfServiceName ?>
+        </td>
+        <td>
+            <?= $item->incomeInvoiceDataItemPrice ?>
+        </td>
+        <td>
+            <?= $item->incomeInvoiceDataQuantity ?>
+        </td>
+        <td>
+            <?= $item->incomeInvoiceDataUnitId ?>
+        </td>
+        <td>
+            <?php
+            $incomeInvoiceDataPriceSubTotal += $item->incomeInvoiceDataPriceTotal;
+            ?>
+            <?= number_format($item->incomeInvoiceDataPriceTotal, 4, '.', '') ?>
+        </td>
+        <td>
+            <?php
+            $incomeInvoiceDataSubPriceTotalExchangedToUsd += $item->incomeInvoiceDataPriceTotalExchangedToUsd;
+            ?>
+            <?= number_format($item->incomeInvoiceDataPriceTotalExchangedToUsd, 2, '.', '') ?>
         </td>
     </tr>
-    </tbody>
-    <thead>
-    <tr>
-        <th colspan="7" class="text-center">Outcome invoice data</th>
-    </tr>
-    <tr>
-        <th></th>
-        <th>Description</th>
-        <th>
-            Price, <span class="currency"><?= $this->data->incomeInvoiceMainCurrency ?></span>
-        </th>
-        <th>Quantity</th>
-        <th>Unit</th>
-        <th>
-            Total, <span class="currency"><?= $this->data->incomeInvoiceMainCurrency ?></span>
-        </th>
-        <th>Exchange Total, USD</th>
-    </tr>
-    </thead>
-    <tbody>
+<? endforeach; ?>
+<tr class="info">
+    <td colspan="7">
+        <div class="row-fluid">
+            <div class="span6">
+            </div>
+            <div class="span6">
+                <table style="width: 300px; float: right" class="table table-bordered pull-right">
+                    <tbody>
+                    <tr>
+                        <td>
+                            Subtotal
+                        </td>
+                        <td>
+                            <?= $this->data->incomeInvoiceMainCurrency ?>
+                            <?= number_format($incomeInvoiceDataPriceSubTotal, 4, '.', '') ?>
+                        </td>
+                        <td>
+                            USD
+                            <?= number_format($incomeInvoiceDataSubPriceTotalExchangedToUsd, 2, '.', '') ?>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </td>
+</tr>
+</tbody>
+<thead>
+<tr>
+    <th colspan="7" class="text-center">Outcome invoice data</th>
+</tr>
+<tr>
+    <th></th>
+    <th>Description</th>
+    <th>
+        Price, <span class="currency"><?= $this->data->incomeInvoiceMainCurrency ?></span>
+    </th>
+    <th>Quantity</th>
+    <th>Unit</th>
+    <th>
+        Total, <span class="currency"><?= $this->data->incomeInvoiceMainCurrency ?></span>
+    </th>
+    <th>Exchange Total, USD</th>
+</tr>
+</thead>
+<tbody>
 
-    <? for ($i = 1; $i <= 15; $i++): ?>
-        <tr class="dataRow <? if ($i > 1): ?><?= 'hidden' ?><? endif; ?>" data-rowid="<?= $i ?>">
-            <td>
-                <? if ($i > 1): ?>
-                    <a href="#" class="removeRow"><i class="icon-remove"></i></a>
-                <? endif; ?>
-            </td>
-            <td>
-                <select name="data[<?= $i ?>][typeOfServiceId]" class="chosen input-large typeOfServiceId"
-                        data-placeholder="Type of Service"
-                        required="required">
-                    <option value=""></option>
-                    <? foreach ($this->typeOfServices as $key => $value): ?>
-                        <option value="<?= $key ?>"><?= $value ?></option>
-                    <? endforeach; ?>
-                </select>
-            </td>
-            <td>
-                <input type="text" class="input-small itemPrice" name="data[<?= $i ?>][itemPrice]" maxlength="40"
-                       required="required"
-                       value="">
-            </td>
-            <td>
-                <input type="text" class="input-small quantity" name="data[<?= $i ?>][quantity]" maxlength="40"
-                       required="required"
-                       value="">
-            </td>
-            <td>
-                <select name="data[<?= $i ?>][unitId]" class="chosen input-large unitId"
-                        data-placeholder="Unit"
-                        required="required">
-                    <option value=""></option>
-                    <? foreach ($this->units as $key => $value): ?>
-                        <option value="<?= $key ?>"><?= $value ?></option>
-                    <? endforeach; ?>
-                </select>
-            </td>
-            <td>
-                <input type="text" class="input-small priceTotal" name="data[<?= $i ?>][priceTotal]" maxlength="40"
-                       required="required"
-                       value="">
-            </td>
-            <td>
-                <input type="text" class="input-small priceTotalExchangedToUsd"
-                       name="data[<?= $i ?>][priceTotalExchangedToUsd]"
-                       maxlength="40"
-                       required="required"
-                       value="">
-            </td>
-        </tr>
-    <? endfor; ?>
-    <tr>
-        <td colspan="7">
-            <input name="addRow" type="submit" class="btn btn-info addRow" value="Add row">
+<? for ($i = 1; $i <= 15; $i++): ?>
+    <tr class="dataRow <? if ($i > 1): ?><?= 'hidden' ?><? endif; ?>" data-rowid="<?= $i ?>">
+        <td>
+            <? if ($i > 1): ?>
+                <a href="#" class="removeRow"><i class="icon-remove"></i></a>
+            <? endif; ?>
+        </td>
+        <td>
+            <select name="data[<?= $i ?>][typeOfServiceId]" class="chosen input-large typeOfServiceId"
+                    data-placeholder="Type of Service"
+                    required="required">
+                <option value=""></option>
+                <? foreach ($this->typeOfServices as $key => $value): ?>
+                    <option value="<?= $key ?>"><?= $value ?></option>
+                <? endforeach; ?>
+            </select>
+        </td>
+        <td>
+            <input type="text" class="input-small itemPrice" name="data[<?= $i ?>][itemPrice]" maxlength="40"
+                   required="required"
+                   value="">
+        </td>
+        <td>
+            <input type="text" class="input-small quantity" name="data[<?= $i ?>][quantity]" maxlength="40"
+                   required="required"
+                   value="">
+        </td>
+        <td>
+            <select name="data[<?= $i ?>][unitId]" class="chosen input-large unitId"
+                    data-placeholder="Unit"
+                    required="required">
+                <option value=""></option>
+                <? foreach ($this->units as $key => $value): ?>
+                    <option value="<?= $key ?>"><?= $value ?></option>
+                <? endforeach; ?>
+            </select>
+        </td>
+        <td>
+            <input type="text" class="input-small priceTotal" name="data[<?= $i ?>][priceTotal]" maxlength="40"
+                   required="required"
+                   value="">
+        </td>
+        <td>
+            <input type="text" class="input-small priceTotalExchangedToUsd"
+                   name="data[<?= $i ?>][priceTotalExchangedToUsd]"
+                   maxlength="40"
+                   required="required"
+                   value="">
         </td>
     </tr>
-    <tr>
-        <td colspan="7">
-            <div class="row-fluid">
-                <div class="span6">
-                </div>
-                <div class="span6">
-                    <table style="width: 300px; float: right" class="table table-bordered pull-right">
-                        <tbody>
-                        <tr>
-                            <td>
-                                Subtotal
-                            </td>
-                            <td>
-                                <span class="currency"><?= $this->data->incomeInvoiceMainCurrency ?></span>
-                                <span class="priceSubTotal"></span>
-                            </td>
-                            <td>
-                                USD <span class="priceSubTotalExchangedToUsd"></span>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+<? endfor; ?>
+<tr>
+    <td colspan="7">
+        <input name="addRow" type="submit" class="btn btn-info addRow" value="Add row">
+    </td>
+</tr>
+<tr>
+    <td colspan="7">
+        <div class="row-fluid">
+            <div class="span6">
             </div>
+            <div class="span6">
+                <table style="width: 300px; float: right" class="table table-bordered pull-right">
+                    <tbody>
+                    <tr>
+                        <td>
+                            Subtotal
+                        </td>
+                        <td>
+                            <span class="currency"><?= $this->data->incomeInvoiceMainCurrency ?></span>
+                            <span class="priceSubTotal"></span>
+                        </td>
+                        <td>
+                            USD <span class="priceSubTotalExchangedToUsd"></span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>
+    </td>
+    <td>
+    </td>
+    <td>
+        <strong>Disbursement</strong><br/>
+        <input type="text" class="input-small disbursement" name="subData[<?= $i ?>][disbursement]" maxlength="40"
+               required="required"
+               value=""> %
+    </td>
+    <td>
+    </td>
+    <td>
+    </td>
+    <td>
+        <input type="text" class="input-small disbursementTotal" name="subData[<?= $i ?>][disbursementTotal]" maxlength="40"
+               required="required"
+               value="">
+    </td>
+    <td>
+        <input type="text" class="input-small disbursementTotalExchangedToUsd"
+               name="subData[<?= $i ?>][disbursementTotalExchangedToUsd]"
+               maxlength="40"
+               required="required"
+               value="">
+    </td>
+</tr>
+<? for ($i = 1; $i <= 15; $i++): ?>
+    <tr class="subDataRow <? if ($i > 1): ?><?= 'hidden' ?><? endif; ?>" data-subrowid="<?= $i ?>">
+        <td>
+            <? if ($i > 1): ?>
+                <a href="#" class="removeRow"><i class="icon-remove"></i></a>
+            <? endif; ?>
+        </td>
+        <td>
+            <select name="subData[<?= $i ?>][typeOfServiceId]" class="chosen input-large typeOfServiceId"
+                    data-placeholder="Type of Service"
+                    required="required">
+                <option value=""></option>
+                <? foreach ($this->typeOfServices as $key => $value): ?>
+                    <option value="<?= $key ?>"><?= $value ?></option>
+                <? endforeach; ?>
+            </select>
+        </td>
+        <td>
+            <input type="text" class="input-small itemPrice" name="subData[<?= $i ?>][itemPrice]" maxlength="40"
+                   required="required"
+                   value="">
+        </td>
+        <td>
+            <input type="text" class="input-small quantity" name="subData[<?= $i ?>][quantity]" maxlength="40"
+                   required="required"
+                   value="">
+        </td>
+        <td>
+            <select name="subData[<?= $i ?>][unitId]" class="chosen input-large unitId"
+                    data-placeholder="Unit"
+                    required="required">
+                <option value=""></option>
+                <? foreach ($this->units as $key => $value): ?>
+                    <option value="<?= $key ?>"><?= $value ?></option>
+                <? endforeach; ?>
+            </select>
+        </td>
+        <td>
+            <input type="text" class="input-small priceTotal" name="subData[<?= $i ?>][priceTotal]" maxlength="40"
+                   required="required"
+                   value="">
+        </td>
+        <td>
+            <input type="text" class="input-small priceTotalExchangedToUsd"
+                   name="subData[<?= $i ?>][priceTotalExchangedToUsd]"
+                   maxlength="40"
+                   required="required"
+                   value="">
         </td>
     </tr>
-    <tr>
-        <td colspan="18">
-            <input name="submitBtn" type="submit" class="btn btn-primary pull-right" value="Save">
-        </td>
-    </tr>
-    </tbody>
+<? endfor; ?>
+<tr>
+    <td colspan="7">
+        <input name="addSubRow" type="submit" class="btn btn-info addSubRow" value="Add row">
+    </td>
+</tr>
+<tr>
+    <td colspan="7">
+        <div class="row-fluid">
+            <div class="span6">
+            </div>
+            <div class="span6">
+                <table style="width: 300px; float: right" class="table table-bordered pull-right">
+                    <tbody>
+                    <tr>
+                        <td>
+                            Subtotal
+                        </td>
+                        <td>
+                            <span class="currency"><?= $this->data->incomeInvoiceMainCurrency ?></span>
+                            <span class="subPriceSubTotal"></span>
+                        </td>
+                        <td>
+                            USD <span class="subPriceSubTotalExchangedToUsd"></span>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </td>
+</tr>
+
+
+<tr>
+    <td colspan="18">
+        <input name="submitBtn" type="submit" class="btn btn-primary pull-right" value="Save">
+    </td>
+</tr>
+</tbody>
 </table>
 </form>
