@@ -1,6 +1,6 @@
 <?// \Zend\Debug\Debug::dump($this->incomeInvoiceData) ?>
-<form name="refuelOutcomeInvoiceStep2" id="refuelOutcomeInvoiceStep2" method="post"
-      action="/management/refuel/outcome-invoice-step2">
+<form name="apServiceOutcomeInvoiceStep2" id="apServiceOutcomeInvoiceStep2" method="post"
+      action="/management/ap-service/outcome-invoice-step2">
     <table
         class="table table-bordered table-hover table-condensed <? if ($this->fixedHeader): ?> table-fixed-header<? endif ?>">
         <thead>
@@ -29,7 +29,7 @@
                 class="<? if ($row->outcomeInvoiceMainId): ?>success<? endif ?>">
                 <td rowspan="2">
                     <input type="checkbox" class="rowsSelected" name="rowsSelected[]"
-                           value="<?= $row->outcomeInvoiceMainId ?>">
+                           value="<?= $row->incomeInvoiceMainId ?>">
                 </td>
                 <td rowspan="2" class="noWrap">
                     <a href="<?=

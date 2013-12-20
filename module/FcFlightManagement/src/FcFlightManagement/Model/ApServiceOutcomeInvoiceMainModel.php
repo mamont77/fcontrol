@@ -18,7 +18,7 @@ class ApServiceOutcomeInvoiceMainModel extends AbstractTableGateway
     /**
      * @var string
      */
-    public $table = 'invoiceOutcomeRefuelMain';
+    public $table = 'invoiceOutcomeApServiceMain';
 
     /**
      * @var array
@@ -104,7 +104,7 @@ class ApServiceOutcomeInvoiceMainModel extends AbstractTableGateway
     {
         $customerId = (int)$customerId;
         $select = $this->getSql()->select();
-        $select->order(array('invoiceId ' . $select::ORDER_DESCENDING));
+        $select->order(array('id ' . $select::ORDER_DESCENDING));
         $select->limit(1);
         $row = $this->selectWith($select)->current();
         $lastInvoiceId = (int)$row->invoiceId + 1;

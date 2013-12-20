@@ -1123,7 +1123,7 @@
 
             $($form).find('#dateFrom, #dateTo').mask('99-99-9999');
 
-            var $form2 = $('form#refuelOutcomeInvoiceStep2'),
+            var $form2 = $('form#apServiceOutcomeInvoiceStep2'),
                 $rowsCheckbox = $form2.find('.rowsSelected');
 
             if ($form2.length == 0) return;

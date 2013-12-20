@@ -167,6 +167,8 @@ class ApServiceController extends FlightController
      */
     public function incomeInvoiceStep2Action()
     {
+        $request = $this->getRequest();
+
         $result = array();
         $units = $this->getApServiceUnits();
         $typeOfServices = array();
@@ -177,7 +179,6 @@ class ApServiceController extends FlightController
         $currencies = new ApServiceForm(null, array());
         $currencies = $currencies->getCurrencyExchangeRate();
 
-        $request = $this->getRequest();
         if ($request->isPost()) {
             $data = $request->getPost();
 
@@ -395,37 +396,53 @@ class ApServiceController extends FlightController
             return $this->redirect()->toRoute('management/ap-service/outcome-invoice-step1');
         }
 
-        $units = array();
-        $unitsObj = $this->getUnits();
-        foreach ($unitsObj as $unit) {
-            $units[$unit->id] = $unit->name;
+        $units = $this->getApServiceUnits();
+        $typeOfServices = array();
+        $typeOfServicesObj = $this->getTypeOfApServices();
+        foreach ($typeOfServicesObj as $typeOfService) {
+            $typeOfServices[$typeOfService->id] = $typeOfService->name;
         }
-
         $currencies = new ApServiceForm(null, array());
         $currencies = $currencies->getCurrencyExchangeRate();
 
         $data = $request->getPost();
 
-        if (empty($data['apServicesSelected'])) {
+        if (empty($data['rowsSelected'])) {
             $this->flashMessenger()->addErrorMessage('Result not found. Enter one or more fields.');
             return $this->redirect()->toRoute('management/ap-service/outcome-invoice-step1');
         }
 
-        $result = $this->getApServiceOutcomeInvoiceSearchModel()->findByParams($data);
+        $result = $this->getApServiceOutcomeInvoiceSearchModel()->findByParams($data)->current();
+        $newInvoiceNumber = $this->getApServiceOutcomeInvoiceMainModel()->generateNewInvoiceNumber($result->flightAgentId);
 
-        $customerId = null;
-        foreach ($result as $row) {
-            $customerId = $row->incomeInvoiceAgentId;
-            break;
+        $result->legDepToNextAirportTime = '';
+        $result->legDepToNextAirportICAO = '';
+        $result->legDepToNextAirportIATA = '';
+        $legs = $this->getLegModel()->getByHeaderId($result->preInvoiceHeaderId);
+        $currentLegId = $result->legId;
+        $nextLegs = array();
+        foreach ($legs as $leg) {
+            if ($leg['id'] > $currentLegId) {
+                $nextLegs = $leg;
+                break;
+            }
 
         }
-        $newInvoiceNumber = $this->getApServiceOutcomeInvoiceMainModel()->generateNewInvoiceNumber($customerId);
+        if (count($nextLegs)) {
+            $result->legDepToNextAirportTime = (string)\DateTime::createFromFormat('d-m-Y',
+                $nextLegs['dateOfFlight'])->setTime(0, 0)->getTimestamp();
+            $result->legDepToNextAirportICAO = $nextLegs['apDepIcao'];
+            $result->legDepToNextAirportIATA = $nextLegs['apDepIata'];
+        }
+        $incomeInvoiceData = $this->getApServiceIncomeInvoiceDataModel()->getByInvoiceId($result->incomeInvoiceMainId);
 
         return array(
             'newInvoiceNumber' => $newInvoiceNumber,
             'currencies' => $currencies,
+            'typeOfServices' => $typeOfServices,
             'units' => $units,
             'result' => $result,
+            'incomeInvoiceData' => $incomeInvoiceData,
         );
     }
 
@@ -434,6 +451,12 @@ class ApServiceController extends FlightController
      */
     public function outcomeInvoiceStep3Action()
     {
+        $request = $this->getRequest();
+        if (!$request->isPost()) {
+            $this->flashMessenger()->addErrorMessage('Result not found. Enter one or more fields.');
+            return $this->redirect()->toRoute('management/ap-service/outcome-invoice-step1');
+        }
+
         $units = array();
         $unitsObj = $this->getUnits();
         foreach ($unitsObj as $unit) {
@@ -443,20 +466,15 @@ class ApServiceController extends FlightController
         $currencies = new ApServiceForm(null, array());
         $currencies = $currencies->getCurrencyExchangeRate();
 
-        $request = $this->getRequest();
+        \Zend\Debug\Debug::dump($request->getPost());
+        $result = $request->getPost();
 
-        if ($request->isPost()) {
-            \Zend\Debug\Debug::dump($request->getPost());
-            $result = $request->getPost();
+        return array(
+            'currencies' => $currencies,
+            'units' => $units,
+            'result' => $result,
+        );
 
-            return array(
-                'currencies' => $currencies,
-                'units' => $units,
-                'result' => $result,
-            );
-        }
-
-        return $this->redirect()->toRoute('management/ap-service/income-invoice-step1');
     }
 
     /**
