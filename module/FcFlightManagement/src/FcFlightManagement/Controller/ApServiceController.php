@@ -457,20 +457,21 @@ class ApServiceController extends FlightController
             return $this->redirect()->toRoute('management/ap-service/outcome-invoice-step1');
         }
 
-        $units = array();
-        $unitsObj = $this->getUnits();
-        foreach ($unitsObj as $unit) {
-            $units[$unit->id] = $unit->name;
+        $units = $this->getApServiceUnits();
+        $typeOfServices = array();
+        $typeOfServicesObj = $this->getTypeOfApServices();
+        foreach ($typeOfServicesObj as $typeOfService) {
+            $typeOfServices[$typeOfService->id] = $typeOfService->name;
         }
-
         $currencies = new ApServiceForm(null, array());
         $currencies = $currencies->getCurrencyExchangeRate();
 
-        \Zend\Debug\Debug::dump($request->getPost());
+//        \Zend\Debug\Debug::dump($request->getPost());
         $result = $request->getPost();
 
         return array(
             'currencies' => $currencies,
+            'typeOfServices' => $typeOfServices,
             'units' => $units,
             'result' => $result,
         );

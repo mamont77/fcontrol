@@ -82,6 +82,7 @@
         </td>
         <td>
             <input type="text" class="input-small" name="flightNumber" maxlength="40" required="required"
+                   readonly="readonly"
                    value="<?= $this->data->flightNumber ?>">
         </td>
         <td>
@@ -128,14 +129,8 @@
     </tr>
     </thead>
     <tbody>
-    <?php
-    $i = 0;
-    ?>
-    <? foreach ($this->data->data as $row): ?>
-        <?php
-        $i++;
-        ?>
-<!--        --><?// \Zend\Debug\Debug::dump($row) ?>
+    <? foreach ($this->data->data as $i => $row): ?>
+        <!--        --><? // \Zend\Debug\Debug::dump($row) ?>
         <tr class="dataRow">
             <td>
                 <select name="data[<?= $i ?>][typeOfServiceId]" class="chosen input-large typeOfServiceId"
