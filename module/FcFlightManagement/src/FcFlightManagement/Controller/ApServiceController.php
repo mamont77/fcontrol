@@ -466,7 +466,6 @@ class ApServiceController extends FlightController
         $currencies = new ApServiceForm(null, array());
         $currencies = $currencies->getCurrencyExchangeRate();
 
-//        \Zend\Debug\Debug::dump($request->getPost());
         $result = $request->getPost();
 
         return array(
@@ -486,12 +485,15 @@ class ApServiceController extends FlightController
         $request = $this->getRequest();
         if ($request->isPost()) {
             $data = $request->getPost();
-//            \Zend\Debug\Debug::dump($data);
-            $invoiceId = $this->getApServiceOutcomeInvoiceMainModel()->add($data);
 
+            $invoiceId = $this->getApServiceOutcomeInvoiceMainModel()->add($data);
             foreach ($data['data'] as $row) {
                 $row['invoiceId'] = $invoiceId;
-                $this->getApServiceOutcomeInvoiceDataModel()->add($row);
+                $this->getApServiceOutcomeInvoiceDataModel()->add($row, false);
+            }
+            foreach ($data['subData'] as $row) {
+                $row['invoiceId'] = $invoiceId;
+                $this->getApServiceOutcomeInvoiceDataModel()->add($row, true);
             }
 
             $message = "AP Service outcome invoice was successfully added.";

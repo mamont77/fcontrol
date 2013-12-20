@@ -13,25 +13,12 @@ use Zend\Db\Sql\Select;
  * Class ApServiceOutcomeInvoiceMainModel
  * @package FcFlightManagement\Model
  */
-class ApServiceOutcomeInvoiceMainModel extends AbstractTableGateway
+class ApServiceOutcomeInvoiceMainModel extends BaseModel
 {
     /**
      * @var string
      */
     public $table = 'invoiceOutcomeApServiceMain';
-
-    /**
-     * @var array
-     */
-    protected $_tableFields = array(
-        'invoiceId' => 'invoiceId',
-        'invoiceNumber' => 'invoiceNumber',
-        'invoiceDate' => 'invoiceDate',
-        'invoiceCurrency' => 'invoiceCurrency',
-        'invoiceExchangeRate' => 'invoiceExchangeRate',
-        'invoiceCustomerId' => 'invoiceCustomerId',
-        'invoiceStatus' => 'invoiceStatus',
-    );
 
     /**
      * @param \Zend\Db\Adapter\Adapter $adapter
@@ -49,19 +36,19 @@ class ApServiceOutcomeInvoiceMainModel extends AbstractTableGateway
      */
     public function add($data)
     {
-        $invoiceDate = \DateTime::createFromFormat('d-m-Y', $data['invoiceDate']);
-        $data['invoiceDate'] = $invoiceDate->setTime(0, 0, 0)->getTimestamp();
+        $data['date'] = \DateTime::createFromFormat('d-m-Y', $data['date'])->setTime(0, 0, 0)->getTimestamp();
 
-        $data = array(
-            'invoiceNumber' => (string)$data['invoiceNumber'],
-            'invoiceDate' => (int)$data['invoiceDate'],
-            'invoiceCurrency' => (string)$data['invoiceCurrency'],
-            'invoiceExchangeRate' => (string)$data['invoiceExchangeRate'],
-            'invoiceCustomerId' => (int)$data['invoiceCustomerId'],
-            'invoiceStatus' => 1,
-        );
+        $fields = array_flip($this->apServiceOutcomeInvoiceMainTableFieldsMap);
 
-        $this->insert($data);
+        foreach ($fields as $key => &$field) {
+            if (isset($data[$key])) {
+                $field = $data[$key];
+            } else {
+                unset($fields[$key]);
+            }
+        }
+
+        $this->insert($fields);
 
         return $this->getLastInsertValue();
     }
@@ -76,7 +63,7 @@ class ApServiceOutcomeInvoiceMainModel extends AbstractTableGateway
         $id = (int)$id;
         $select = new Select();
         $select->from($this->table);
-        $select->columns($this->_tableFields);
+        $select->columns($this->apServiceOutcomeInvoiceMainTableFieldsMap);
 
         $select->join(array('libraryKontragent' => 'library_kontragent'),
             'libraryKontragent.id = ' . $this->table . '.invoiceCustomerId',

@@ -13,38 +13,12 @@ use Zend\Db\Sql\Select;
  * Class ApServiceOutcomeInvoiceDataModel
  * @package FcFlightManagement\Model
  */
-class ApServiceOutcomeInvoiceDataModel extends RefuelOutcomeInvoiceMainModel
+class ApServiceOutcomeInvoiceDataModel extends BaseModel
 {
     /**
      * @var string
      */
-    public $table = 'invoiceOutcomeRefuelData';
-
-    /**
-     * @var array
-     */
-    protected $_tableFields = array(
-        'refuelId' => 'refuelId',
-        'invoiceId' => 'invoiceId',
-        'incomeInvoiceRefuelId' => 'incomeInvoiceRefuelId',
-        'supplierId' => 'supplierId',
-        'airOperatorId' => 'airOperatorId',
-        'airOperatorNumber' => 'airOperatorNumber',
-        'aircraftId' => 'aircraftId',
-        'airportDepId' => 'airportDepId',
-        'date' => 'date',
-        'quantityLtr' => 'quantityLtr',
-        'quantityOtherUnits' => 'quantityOtherUnits',
-        'unitId' => 'unitId',
-        'itemPrice' => 'itemPrice',
-        'tax' => 'tax',
-        'mot' => 'mot',
-        'vat' => 'vat',
-        'deliver' => 'deliver',
-        'price' => 'price',
-        'priceTotal' => 'priceTotal',
-        'priceTotalExchangedToUsd' => 'priceTotalExchangedToUsd',
-    );
+    public $table = 'invoiceOutcomeApServiceData';
 
     /**
      * @param \Zend\Db\Adapter\Adapter $adapter
@@ -58,37 +32,25 @@ class ApServiceOutcomeInvoiceDataModel extends RefuelOutcomeInvoiceMainModel
 
     /**
      * @param $data
+     * @param bool $isAdditionalInfo
      * @return int
      */
-    public function add($data)
+    public function add($data, $isAdditionalInfo = false)
     {
-//        \Zend\Debug\Debug::dump($data);
-        $date = \DateTime::createFromFormat('d-m-Y', $data['date']);
-        $data['date'] = $date->setTime(0, 0, 0)->getTimestamp();
+        $data['isAdditionalInfo'] = ($isAdditionalInfo) ? 1 : 0;
+        $fields = array_flip($this->apServiceOutcomeInvoiceDataTableFieldsMap);
 
-        $data = array(
-            'invoiceId' => (int)$data['invoiceId'],
-            'incomeInvoiceRefuelId' => (int)$data['incomeInvoiceRefuelId'],
-            'supplierId' => (int)$data['supplierId'],
-            'airOperatorId' => (int)$data['airOperatorId'],
-            'airOperatorNumber' => (string)$data['airOperatorNumber'],
-            'aircraftId' => (int)$data['aircraftId'],
-            'airportDepId' => (int)$data['airportDepId'],
-            'date' => (int)$data['date'],
-            'quantityLtr' => (string)$data['quantityLtr'],
-            'quantityOtherUnits' => (string)$data['quantityOtherUnits'],
-            'unitId' => (int)$data['unitId'],
-            'itemPrice' => (string)$data['itemPrice'],
-            'tax' => (string)$data['tax'],
-            'mot' => (string)$data['mot'],
-            'vat' => (string)$data['vat'],
-            'deliver' => (string)$data['deliver'],
-            'price' => (string)$data['price'],
-            'priceTotal' => (string)$data['priceTotal'],
-            'priceTotalExchangedToUsd' => (string)$data['priceTotalExchangedToUsd'],
-        );
+        foreach ($fields as $key => &$field) {
+            if (isset($data[$key])) {
+                $field = $data[$key];
+            } else {
+                unset($fields[$key]);
+            }
+        }
 
-        $this->insert($data);
+//        \Zend\Debug\Debug::dump($fields);exit;
+
+        $this->insert($fields);
 
         return $this->getLastInsertValue();
     }

@@ -145,6 +145,9 @@ class BaseModel extends AbstractTableGateway
         'outcomeInvoiceMainDateDep' => 'dateDep',
         'incomeInvoiceFlightNumber' => 'flightNumber',
         'outcomeInvoiceMainTypeOfServiceId' => 'typeOfServiceId',
+        'disbursement' => 'disbursement',
+        'disbursementTotal' => 'disbursementTotal',
+        'disbursementTotalExchangedToUsd' => 'disbursementTotalExchangedToUsd',
         'outcomeInvoiceMainStatus' => 'status',
     );
 
@@ -160,6 +163,7 @@ class BaseModel extends AbstractTableGateway
         'outcomeInvoiceDataUnitId' => 'unitId',
         'outcomeInvoiceDataPriceTotal' => 'priceTotal',
         'outcomeInvoiceDataPriceTotalExchangedToUsd' => 'priceTotalExchangedToUsd',
+        'outcomeInvoiceDataIsAdditionalInfo' => 'isAdditionalInfo',
     );
 
     /**

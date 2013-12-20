@@ -284,7 +284,7 @@
             <?php
             $priceSubTotal += $row['priceTotal'];
             ?>
-            <input type="text" class="input-small priceTotal" name="data[<?= $i ?>][priceTotal]" maxlength="40"
+            <input type="text" class="input-small priceTotal" name="subData[<?= $i ?>][priceTotal]" maxlength="40"
                    required="required"
                    value="<?= $row['priceTotal'] ?>">
         </td>
@@ -293,7 +293,7 @@
             $priceSubTotalExchangedToUsd += $row['priceTotalExchangedToUsd'];
             ?>
             <input type="text" class="input-small priceTotalExchangedToUsd"
-                   name="data[<?= $i ?>][priceTotalExchangedToUsd]"
+                   name="subData[<?= $i ?>][priceTotalExchangedToUsd]"
                    maxlength="40"
                    required="required"
                    value="<?= $row['priceTotalExchangedToUsd'] ?>">
