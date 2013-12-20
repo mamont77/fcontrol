@@ -41,7 +41,7 @@ class ApServiceIncomeInvoiceMainModel extends BaseModel
         $data['dateArr'] = \DateTime::createFromFormat('d-m-Y', $data['dateArr'])->setTime(0, 0, 0)->getTimestamp();
         $data['dateDep'] = \DateTime::createFromFormat('d-m-Y', $data['dateDep'])->setTime(0, 0, 0)->getTimestamp();
 
-        $fields = array_flip($this->incomeInvoiceMainTableFieldsMap);
+        $fields = array_flip($this->apServiceIncomeInvoiceMainTableFieldsMap);
 
         foreach ($fields as $key => &$field) {
             if (isset($data[$key])) {
@@ -61,12 +61,12 @@ class ApServiceIncomeInvoiceMainModel extends BaseModel
         $id = (int)$id;
         $select = new Select();
         $select->from($this->table);
-        $select->columns($this->incomeInvoiceMainTableFieldsMap);
+        $select->columns($this->apServiceIncomeInvoiceMainTableFieldsMap);
 
         $select->join(
             array('preInvoice' => 'flightApServiceForm'),
             $this->table . '.preInvoiceId = preInvoice.id',
-            $this->preInvoiceTableFieldsMap,
+            $this->apServicePreInvoiceTableFieldsMap,
             'left');
 
         $select->join(

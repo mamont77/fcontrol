@@ -38,12 +38,12 @@ class ApServiceOutcomeInvoiceSearchModel extends BaseModel
 
         $select = new Select();
         $select->from($this->table);
-        $select->columns($this->incomeInvoiceMainTableFieldsMap);
+        $select->columns($this->apServiceIncomeInvoiceMainTableFieldsMap);
 
         $select->join(
             array('preInvoice' => 'flightApServiceForm'),
             $this->table . '.preInvoiceId = preInvoice.id',
-            $this->preInvoiceTableFieldsMap,
+            $this->apServicePreInvoiceTableFieldsMap,
             'left');
 
         $select->join(
@@ -61,7 +61,7 @@ class ApServiceOutcomeInvoiceSearchModel extends BaseModel
         $select->join(
             array('outcomeInvoice' => $this->outcomeInvoiceMainTableName),
             $this->table . '.id = outcomeInvoice.incomeInvoiceId',
-            $this->outcomeInvoiceMainTableFieldsMap,
+            $this->apServiceOutcomeInvoiceMainTableFieldsMap,
             'left');
 
         $select->join(

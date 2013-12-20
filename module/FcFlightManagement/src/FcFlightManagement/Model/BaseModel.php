@@ -86,7 +86,7 @@ class BaseModel extends AbstractTableGateway
     /**
      * @var array
      */
-    public $preInvoiceTableFieldsMap = array(
+    public $apServicePreInvoiceTableFieldsMap = array(
         'preInvoiceId' => 'id',
         'preInvoiceHeaderId' => 'headerId',
         'preInvoiceLegId' => 'legId',
@@ -103,7 +103,7 @@ class BaseModel extends AbstractTableGateway
     /**
      * @var array
      */
-    public $incomeInvoiceMainTableFieldsMap = array(
+    public $apServiceIncomeInvoiceMainTableFieldsMap = array(
         'incomeInvoiceMainId' => 'id',
         'incomeInvoiceMainPreInvoiceId' => 'preInvoiceId',
         'incomeInvoiceMainNumber' => 'number',
@@ -120,7 +120,7 @@ class BaseModel extends AbstractTableGateway
     /**
      * @var array
      */
-    public $incomeInvoiceDataTableFieldsMap = array(
+    public $apServiceIncomeInvoiceDataTableFieldsMap = array(
         'incomeInvoiceDataId' => 'id',
         'incomeInvoiceDataInvoiceId' => 'invoiceId',
         'incomeInvoiceDataTypeOfServiceId' => 'typeOfServiceId',
@@ -134,7 +134,7 @@ class BaseModel extends AbstractTableGateway
     /**
      * @var array
      */
-    public $outcomeInvoiceMainTableFieldsMap = array(
+    public $apServiceOutcomeInvoiceMainTableFieldsMap = array(
         'outcomeInvoiceMainId' => 'id',
         'outcomeInvoiceMainIncomeInvoiceId' => 'incomeInvoiceId',
         'outcomeInvoiceMainNumber' => 'number',
@@ -151,7 +151,7 @@ class BaseModel extends AbstractTableGateway
     /**
      * @var array
      */
-    public $outcomeInvoiceDataTableFieldsMap = array(
+    public $apServiceOutcomeInvoiceDataTableFieldsMap = array(
         'outcomeInvoiceDataId' => 'id',
         'outcomeInvoiceDataInvoiceId' => 'invoiceId',
         'outcomeInvoiceDataTypeOfService' => 'typeOfServiceId',

@@ -36,7 +36,7 @@ class ApServiceIncomeInvoiceDataModel extends ApServiceIncomeInvoiceMainModel
      */
     public function add($data)
     {
-        $fields = array_flip($this->incomeInvoiceDataTableFieldsMap);
+        $fields = array_flip($this->apServiceIncomeInvoiceDataTableFieldsMap);
 
         foreach ($fields as $key => &$field) {
             if (isset($data[$key])) {
@@ -57,7 +57,7 @@ class ApServiceIncomeInvoiceDataModel extends ApServiceIncomeInvoiceMainModel
         $select = new Select();
         $select->from($this->table);
 
-        $select->columns($this->incomeInvoiceDataTableFieldsMap);
+        $select->columns($this->apServiceIncomeInvoiceDataTableFieldsMap);
 
         $select->join(
             array('incomeInvoiceDataTypeOfService' => 'library_type_of_ap_service'),
