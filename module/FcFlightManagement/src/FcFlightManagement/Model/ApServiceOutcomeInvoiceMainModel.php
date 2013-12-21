@@ -79,17 +79,75 @@ class ApServiceOutcomeInvoiceMainModel extends BaseModel
             'left'
         );
 
-        $select->join(array('preIncomeInvoiceMain' => $this->apServicePreInvoiceMainTableName),
-            'incomeInvoiceMain.preInvoiceId = preIncomeInvoiceMain.id',
+        $select->join(array('preInvoice' => $this->apServicePreInvoiceMainTableName),
+            'incomeInvoiceMain.preInvoiceId = preInvoice.id',
             $this->apServicePreInvoiceTableFieldsMap,
             'left'
         );
 
         $select->join(array('flight' => $this->flightTableName),
-            'preIncomeInvoiceMain.headerId = flight.id',
+            'preInvoice.headerId = flight.id',
             $this->flightTableFieldsMap,
             'left'
         );
+
+        $select->join(
+            array('preInvoiceAgent' => 'library_kontragent'),
+            'preInvoice.agentId = preInvoiceAgent.id',
+            array(
+                'preInvoiceAgentName' => 'name',
+                'preInvoiceAgentShortName' => 'short_name',
+            ),
+            'left');
+
+        $select->join(
+            array('flightCustomer' => 'library_kontragent'),
+            'flight.kontragent = flightCustomer.id',
+            array(
+                'flightCustomerName' => 'name',
+                'flightCustomerShortName' => 'short_name',
+            ),
+            'left');
+
+        $select->join(
+            array('flightAirOperator' => 'library_air_operator'),
+            'flight.airOperator = flightAirOperator.id',
+            array(
+                'flightAirOperatorName' => 'name',
+                'flightAirOperatorShortName' => 'short_name',
+                'flightAirOperatorICAO' => 'code_icao',
+                'flightAirOperatorIATA' => 'code_iata',
+            ),
+            'left');
+
+        $select->join(
+            array('flightAircraft' => 'library_aircraft'),
+            'flight.aircraftId = flightAircraft.id',
+            array(
+                'flightAircraftTypeId' => 'aircraft_type',
+                'flightAircraftName' => 'reg_number',
+            ),
+            'left');
+
+        $select->join(
+            array('flightAircraftType' => 'library_aircraft_type'),
+            'flightAircraft.aircraft_type = flightAircraftType.id',
+            array(
+                'flightAircraftTypeName' => 'name',
+            ),
+            'left');
+
+        $select->join(
+            array('preInvoiceAirport' => 'library_airport'),
+            'preInvoice.airportId = preInvoiceAirport.id',
+            array(
+                'preInvoiceAirportName' => 'name',
+                'preInvoiceAirportShortName' => 'short_name',
+                'preInvoiceAirportICAO' => 'code_icao',
+                'preInvoiceAirportIATA' => 'code_iata',
+            ),
+            'left');
+
 
         $select->where(array($this->table . '.id' => $id));
 

@@ -50,10 +50,10 @@ $this->headTitle($title);
                 <?= $this->header->outcomeInvoiceMainExchangeRate ?>
             </td>
             <td rowspan="2">
-                <?= $this->header->outcomeInvoiceMainNumber ?>
+                <?= $this->header->preInvoiceAgentShortName ?>
             </td>
             <td colspan="2">
-                <?= $this->header->outcomeInvoiceMainNumber ?>
+                <?= $this->header->outcomeInvoiceMainTypeOfServiceName ?>
             </td>
         </tr>
         </tbody>
@@ -72,22 +72,22 @@ $this->headTitle($title);
         <tbody>
         <tr>
             <td rowspan="2">
-                <?= $this->header->outcomeInvoiceMainNumber ?>
+                <?= $this->header->flightCustomerShortName ?>
             </td>
             <td rowspan="2">
-                <?= $this->header->outcomeInvoiceMainNumber ?>
+                <?= $this->header->flightAirOperatorShortName ?>
             </td>
             <td rowspan="2">
                 <?= $this->header->outcomeInvoiceFlightNumber ?>
             </td>
             <td rowspan="2">
-                <?= $this->header->outcomeInvoiceMainNumber ?>
+                <?= $this->header->flightAircraftTypeName ?> (<?= $this->header->flightAircraftName ?>)
             </td>
             <td rowspan="2">
-                <?= $this->header->outcomeInvoiceMainNumber ?>
+                <?= $this->header->preInvoiceAirportICAO ?> (<?= $this->header->preInvoiceAirportIATA ?>)
             </td>
             <td rowspan="2">
-                <?= $this->header->outcomeInvoiceMainNumber ?>
+                <?= $this->header->preInvoiceAirportICAO ?> (<?= $this->header->preInvoiceAirportIATA ?>)
             </td>
             <td>
                 <?= $this->header->outcomeInvoiceMainDateArr ?>
