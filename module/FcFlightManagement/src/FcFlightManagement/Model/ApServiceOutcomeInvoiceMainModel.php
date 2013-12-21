@@ -67,11 +67,31 @@ class ApServiceOutcomeInvoiceMainModel extends BaseModel
         $select->from($this->table);
         $select->columns($this->apServiceOutcomeInvoiceMainTableFieldsMap);
 
-        $select->join(array('libraryKontragent' => 'library_kontragent'),
-            'libraryKontragent.id = ' . $this->table . '.invoiceCustomerId',
-            array('invoiceCustomerName' => 'short_name'), 'left');
+        $select->join(array('outcomeInvoiceMainTypeOfService' => 'library_type_of_ap_service'),
+            $this->table . '.typeOfServiceId = outcomeInvoiceMainTypeOfService.id',
+            array('outcomeInvoiceMainTypeOfServiceName' => 'name'),
+            'left'
+        );
 
-        $select->where(array($this->table . '.invoiceId' => $id));
+        $select->join(array('incomeInvoiceMain' => $this->apServiceIncomeInvoiceMainTableName),
+            $this->table . '.incomeInvoiceId = incomeInvoiceMain.id',
+            $this->apServiceIncomeInvoiceMainTableFieldsMap,
+            'left'
+        );
+
+        $select->join(array('preIncomeInvoiceMain' => $this->apServicePreInvoiceMainTableName),
+            'incomeInvoiceMain.preInvoiceId = preIncomeInvoiceMain.id',
+            $this->apServicePreInvoiceTableFieldsMap,
+            'left'
+        );
+
+        $select->join(array('flight' => $this->flightTableName),
+            'preIncomeInvoiceMain.headerId = flight.id',
+            $this->flightTableFieldsMap,
+            'left'
+        );
+
+        $select->where(array($this->table . '.id' => $id));
 
         $resultSet = $this->selectWith($select);
         $row = $resultSet->current();
@@ -80,7 +100,9 @@ class ApServiceOutcomeInvoiceMainModel extends BaseModel
             throw new \Exception("Could not find row $id");
         }
 
-        $row->invoiceDate = date('d-m-Y', $row->invoiceDate);
+        $row->outcomeInvoiceMainDate = date('d-m-Y', $row->outcomeInvoiceMainDate);
+        $row->outcomeInvoiceMainDateArr = date('d-m-Y', $row->outcomeInvoiceMainDateArr);
+        $row->outcomeInvoiceMainDateDep = date('d-m-Y', $row->outcomeInvoiceMainDateDep);
 
         return $row;
     }

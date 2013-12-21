@@ -59,7 +59,7 @@ class ApServiceOutcomeInvoiceSearchModel extends BaseModel
             'left');
 
         $select->join(
-            array('outcomeInvoice' => $this->outcomeInvoiceMainTableName),
+            array('outcomeInvoice' => $this->apServiceOutcomeInvoiceMainTableName),
             $this->table . '.id = outcomeInvoice.incomeInvoiceId',
             $this->apServiceOutcomeInvoiceMainTableFieldsMap,
             'left');

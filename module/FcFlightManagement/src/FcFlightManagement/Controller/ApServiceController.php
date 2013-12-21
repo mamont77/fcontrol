@@ -520,6 +520,7 @@ class ApServiceController extends FlightController
         }
 
         $header = $this->getApServiceOutcomeInvoiceMainModel()->get($invoiceId);
+        \Zend\Debug\Debug::dump($header);
         $data = $this->getApServiceOutcomeInvoiceDataModel()->getByInvoiceId($invoiceId);
 
         foreach ($data as $row) {

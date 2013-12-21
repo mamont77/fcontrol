@@ -35,22 +35,27 @@ class BaseModel extends AbstractTableGateway
     /**
      * @var string
      */
-    public $incomeInvoiceMainTableName = 'invoiceIncomeApServiceMain';
+    public $apServicePreInvoiceMainTableName = 'flightApServiceForm';
 
     /**
      * @var string
      */
-    public $incomeInvoiceDataTableName = 'invoiceIncomeApServiceData';
+    public $apServiceIncomeInvoiceMainTableName = 'invoiceIncomeApServiceMain';
 
     /**
      * @var string
      */
-    public $outcomeInvoiceMainTableName = 'invoiceOutcomeApServiceMain';
+    public $apServiceIncomeInvoiceDataTableName = 'invoiceIncomeApServiceData';
 
     /**
      * @var string
      */
-    public $outcomeInvoiceDataTableName = 'invoiceOutcomeApServiceData';
+    public $apServiceOutcomeInvoiceMainTableName = 'invoiceOutcomeApServiceMain';
+
+    /**
+     * @var string
+     */
+    public $apServiceOutcomeInvoiceDataTableName = 'invoiceOutcomeApServiceData';
 
     /**
      * @var array

@@ -17,4 +17,4 @@
 
 21.12
 10:45
-#92: Search AP Service outcome (step 1) - данные с исходящего инвойса.
+#92: Search AP Service outcome (step 1) - данные с исходящего инвойса. #92: Show AP Service outcome invoice.
