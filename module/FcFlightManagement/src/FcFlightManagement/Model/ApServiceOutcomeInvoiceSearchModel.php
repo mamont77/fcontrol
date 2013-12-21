@@ -129,6 +129,14 @@ class ApServiceOutcomeInvoiceSearchModel extends BaseModel
             ),
             'left');
 
+        $select->join(
+            array('outcomeInvoiceMainTypeOfService' => 'library_type_of_ap_service'),
+            'outcomeInvoice.typeOfServiceId = outcomeInvoiceMainTypeOfService.id',
+            array(
+                'outcomeInvoiceMainTypeOfServiceName' => 'name',
+            ),
+            'left');
+
         if ($data['dateFrom'] != '' && $data['dateTo'] != '') {
             $select->where->between($this->table . '.dateArr', $data['dateFrom'], $data['dateTo']);
         } else {

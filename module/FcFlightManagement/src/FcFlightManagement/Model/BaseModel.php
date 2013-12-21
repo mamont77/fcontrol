@@ -143,7 +143,7 @@ class BaseModel extends AbstractTableGateway
         'outcomeInvoiceMainExchangeRate' => 'exchangeRate',
         'outcomeInvoiceMainDateArr' => 'dateArr',
         'outcomeInvoiceMainDateDep' => 'dateDep',
-        'incomeInvoiceFlightNumber' => 'flightNumber',
+        'outcomeInvoiceFlightNumber' => 'flightNumber',
         'outcomeInvoiceMainTypeOfServiceId' => 'typeOfServiceId',
         'disbursement' => 'disbursement',
         'disbursementTotal' => 'disbursementTotal',

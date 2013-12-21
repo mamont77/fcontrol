@@ -24,7 +24,7 @@
         </thead>
         <tbody>
         <? foreach ($this->data as $row): ?>
-<!--            --><?// \Zend\Debug\Debug::dump($row) ?>
+            <? \Zend\Debug\Debug::dump($row) ?>
             <tr data-row="<?= $row->incomeInvoiceMainId ?>"
                 class="<? if ($row->outcomeInvoiceMainId): ?>success<? endif ?>">
                 <td rowspan="2">
@@ -58,8 +58,8 @@
                     <?= $row->flightAirOperatorShortName ?>
                 </td>
                 <td>
-                    <? if ($row->outcomeInvoiceAirOperatorNumber): ?>
-                        <?= $row->outcomeInvoiceAirOperatorNumber ?>
+                    <? if ($row->outcomeInvoiceFlightNumber): ?>
+                        <?= $row->outcomeInvoiceFlightNumber ?>
                     <? else: ?>
                         &mdash;
                     <? endif; ?>

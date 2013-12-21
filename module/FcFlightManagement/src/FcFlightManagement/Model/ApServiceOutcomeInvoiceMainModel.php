@@ -37,6 +37,8 @@ class ApServiceOutcomeInvoiceMainModel extends BaseModel
     public function add($data)
     {
         $data['date'] = \DateTime::createFromFormat('d-m-Y', $data['date'])->setTime(0, 0, 0)->getTimestamp();
+        $data['dateArr'] = \DateTime::createFromFormat('d-m-Y', $data['dateArr'])->setTime(0, 0, 0)->getTimestamp();
+        $data['dateDep'] = \DateTime::createFromFormat('d-m-Y', $data['dateDep'])->setTime(0, 0, 0)->getTimestamp();
 
         $fields = array_flip($this->apServiceOutcomeInvoiceMainTableFieldsMap);
 
