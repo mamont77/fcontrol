@@ -37,3 +37,6 @@
 [submodule "public/lib/table-fixed-header"]
 	path = public/lib/table-fixed-header
 	url = https://github.com/oma/table-fixed-header.git
+[submodule "vendor/DOMPDFModule"]
+	path = vendor/DOMPDFModule
+	url = https://github.com/raykolbe/DOMPDFModule.git
