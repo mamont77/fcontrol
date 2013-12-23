@@ -97,8 +97,7 @@
                 </td>
                 <td class="text-right">
                     <? if ($this->outcomeInvoiceData[$row->outcomeInvoiceMainId]['outcomeInvoiceDataPriceTotal']): ?>
-                        <?= number_format($this->outcomeInvoiceData[$row->outcomeInvoiceMainId]['outcomeInvoiceDataPriceTotal'], 4, '.', '') ?>
-                        <small>, <?= $row->outcomeInvoiceMainCurrency ?> </small>
+                        <?= number_format($this->outcomeInvoiceData[$row->outcomeInvoiceMainId]['outcomeInvoiceDataPriceTotal'], 4, '.', '') ?><small>, <?= $row->outcomeInvoiceMainCurrency ?> </small>
                     <? else: ?>
                         &mdash;
                     <? endif; ?>
@@ -144,8 +143,7 @@
                     <?= $row->incomeInvoiceMainTypeOfServiceName ?>
                 </td>
                 <td class="text-right">
-                    <?= number_format($this->incomeInvoiceData[$row->incomeInvoiceMainId]['incomeInvoiceDataPriceTotal'], 4, '.', '') ?>
-                    <small>, <?= $row->incomeInvoiceMainCurrency ?> </small>
+                    <?= number_format($this->incomeInvoiceData[$row->incomeInvoiceMainId]['incomeInvoiceDataPriceTotal'], 4, '.', '') ?><small>, <?= $row->incomeInvoiceMainCurrency ?> </small>
                 </td>
                 <td>
                     <?= $row->incomeInvoiceMainExchangeRate ?>

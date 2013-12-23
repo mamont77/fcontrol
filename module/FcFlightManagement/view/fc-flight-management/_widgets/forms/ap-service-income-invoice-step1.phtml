@@ -95,8 +95,7 @@
                 </td>
                 <td class="text-right">
                     <? if ($this->advancedDataWithIncomeInvoice[$row->incomeInvoiceMainId]['incomeInvoiceDataPriceTotal']): ?>
-                        <?= number_format($this->advancedDataWithIncomeInvoice[$row->incomeInvoiceMainId]['incomeInvoiceDataPriceTotal'], 2, '.', '') ?>
-                        <small>, <?= $row->incomeInvoiceMainCurrency ?> </small>
+                        <?= number_format($this->advancedDataWithIncomeInvoice[$row->incomeInvoiceMainId]['incomeInvoiceDataPriceTotal'], 2, '.', '') ?><small>, <?= $row->incomeInvoiceMainCurrency ?> </small>
                     <? else: ?>
                         &mdash;
                     <? endif; ?>
