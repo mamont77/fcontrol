@@ -260,6 +260,19 @@ return array(
                                     )
                                 ),
                             ),
+                            'outcome-invoice-print' => array(
+                                'type' => 'segment',
+                                'options' => array(
+                                    'route' => '/outcome-invoice-print[/:id]',
+                                    'constraints' => array(
+                                        'id' => '[0-9]+',
+                                    ),
+                                    'defaults' => array(
+                                        'controller' => 'FcFlightManagement\Controller\ApService',
+                                        'action' => 'outcomeInvoicePrint'
+                                    )
+                                ),
+                            ),
                         )
                     ),
                 )

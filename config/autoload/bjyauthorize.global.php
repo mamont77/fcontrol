@@ -175,6 +175,7 @@ return array(
                 array('route' => 'management/ap-service/outcome-invoice-step3', 'roles' => array('manager')),
                 array('route' => 'management/ap-service/outcome-invoice-add', 'roles' => array('manager')),
                 array('route' => 'management/ap-service/outcome-invoice-show', 'roles' => array('manager')),
+                array('route' => 'management/ap-service/outcome-invoice-print', 'roles' => array('manager')),
 
                 array('route' => 'leg', 'roles' => array('manager')),
                 array('route' => 'permission', 'roles' => array('manager')),
