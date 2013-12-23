@@ -25,5 +25,6 @@
 #92: Show AP Service outcome invoice. #92: Search AP Service outcome (step 1) - данные с исходящего инвойса.
 10:55
 #95: Внедрить возможность печатать счета в PDF.
+https://github.com/raykolbe/DOMPDFModule
 11:30
 
