@@ -24,7 +24,6 @@ return array(
         'DluTwBootstrap',
         'SuperMessenger',
         'DBLog',
-//        'MvlabsSnappy',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

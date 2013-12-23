@@ -37,3 +37,12 @@
 [submodule "public/lib/table-fixed-header"]
 	path = public/lib/table-fixed-header
 	url = https://github.com/oma/table-fixed-header.git
+[submodule "vendor/DOMPDFModule"]
+	path = vendor/DOMPDFModule
+	url = https://github.com/mamont77/DOMPDFModule.git
+[submodule "vendor/dompdf"]
+	path = vendor/dompdf
+	url = https://github.com/mamont77/dompdf.git
+[submodule "vendor/php-font-lib"]
+	path = vendor/php-font-lib
+	url = https://github.com/PhenX/php-font-lib.git
