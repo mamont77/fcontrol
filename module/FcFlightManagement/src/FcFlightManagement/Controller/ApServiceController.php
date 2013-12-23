@@ -12,6 +12,7 @@ use FcFlightManagement\Form\ApServiceIncomeInvoiceStep1Form;
 use FcFlightManagement\Form\ApServiceOutcomeInvoiceStep1Form;
 use FcFlightManagement\Model\ApServiceIncomeInvoiceSearchModel;
 use FcFlightManagement\Model\ApServiceOutcomeInvoiceSearchModel;
+use DOMPDFModule\View\Model\PdfModel;
 
 /**
  * Class ApServiceController
@@ -587,7 +588,10 @@ class ApServiceController extends FlightController
 
     public function outcomeInvoicePrintAction()
     {
-        return $pdf;
+        $pdf = new PdfModel();
+
+//        require_once __DIR__ . '../../../../../vendor/dompdf/dompdf_config.inc.php';
+//        return $pdf;
     }
 
     /**
