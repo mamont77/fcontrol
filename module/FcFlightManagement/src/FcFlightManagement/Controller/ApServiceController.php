@@ -327,6 +327,7 @@ class ApServiceController extends FlightController
     {
         $result = array();
         $incomeInvoiceData = array();
+        $outcomeInvoiceData = array();
 
         $searchForm = new ApServiceOutcomeInvoiceStep1Form('apServiceOutcomeInvoiceStep1',
             array(
@@ -367,6 +368,7 @@ class ApServiceController extends FlightController
                 $result = $this->getApServiceOutcomeInvoiceSearchModel()->findByParams($data);
 
                 foreach ($result as $row) {
+                    // Get info from income invoices
                     $data = $this->getApServiceIncomeInvoiceDataModel()->getByInvoiceId($row->incomeInvoiceMainId);
                     foreach ($data as $item) {
                         $incomeInvoiceData[$row->incomeInvoiceMainId]['incomeInvoiceDataPriceTotal']
@@ -374,6 +376,33 @@ class ApServiceController extends FlightController
                         $incomeInvoiceData[$row->incomeInvoiceMainId]['incomeInvoiceDataPriceTotalExchangedToUsd']
                             += $item->incomeInvoiceDataPriceTotalExchangedToUsd;
                     }
+
+                    // Get info from outcome invoices
+                    if ($row->outcomeInvoiceMainId) {
+                        $data = $this->getApServiceOutcomeInvoiceDataModel()
+                            ->getByInvoiceId($row->outcomeInvoiceMainId, false);
+                        foreach ($data as $item) {
+                            $outcomeInvoiceData[$row->outcomeInvoiceMainId]['outcomeInvoiceDataPriceTotal']
+                                += $item->outcomeInvoiceDataPriceTotal;
+                            $outcomeInvoiceData[$row->outcomeInvoiceMainId]['outcomeInvoiceDataPriceTotalExchangedToUsd']
+                                += $item->outcomeInvoiceDataPriceTotalExchangedToUsd;
+                        }
+
+                        $data = $this->getApServiceOutcomeInvoiceDataModel()
+                            ->getByInvoiceId($row->outcomeInvoiceMainId, true);
+                        foreach ($data as $item) {
+                            $outcomeInvoiceData[$row->outcomeInvoiceMainId]['outcomeInvoiceDataPriceTotal']
+                                += $item->outcomeInvoiceDataPriceTotal;
+                            $outcomeInvoiceData[$row->outcomeInvoiceMainId]['outcomeInvoiceDataPriceTotalExchangedToUsd']
+                                += $item->outcomeInvoiceDataPriceTotalExchangedToUsd;
+                        }
+
+                        $outcomeInvoiceData[$row->outcomeInvoiceMainId]['outcomeInvoiceDataPriceTotal']
+                            += $row->disbursementTotal;
+                        $outcomeInvoiceData[$row->outcomeInvoiceMainId]['outcomeInvoiceDataPriceTotalExchangedToUsd']
+                            += $row->disbursementTotalExchangedToUsd;
+                    }
+
                 }
             }
         }
@@ -382,6 +411,7 @@ class ApServiceController extends FlightController
             'form' => $searchForm,
             'result' => $result,
             'incomeInvoiceData' => $incomeInvoiceData,
+            'outcomeInvoiceData' => $outcomeInvoiceData,
         );
     }
 

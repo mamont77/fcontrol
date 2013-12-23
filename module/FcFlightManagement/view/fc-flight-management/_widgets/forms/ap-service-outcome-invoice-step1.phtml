@@ -1,4 +1,5 @@
 <?// \Zend\Debug\Debug::dump($this->incomeInvoiceData) ?>
+<?// \Zend\Debug\Debug::dump($this->outcomeInvoiceData) ?>
 <form name="apServiceOutcomeInvoiceStep2" id="apServiceOutcomeInvoiceStep2" method="post"
       action="/management/ap-service/outcome-invoice-step2">
     <table
@@ -24,7 +25,7 @@
         </thead>
         <tbody>
         <? foreach ($this->data as $row): ?>
-            <? \Zend\Debug\Debug::dump($row) ?>
+<!--            --><?// \Zend\Debug\Debug::dump($row) ?>
             <tr data-row="<?= $row->incomeInvoiceMainId ?>"
                 class="<? if ($row->outcomeInvoiceMainId): ?>success<? endif ?>">
                 <td rowspan="2">
@@ -95,11 +96,11 @@
                     <? endif; ?>
                 </td>
                 <td class="text-right">
-                    <? if ($row->outcomeInvoicePriceTotal): ?>
-                        <?= $row->outcomeInvoicePriceTotal ?><small>, <?= $row->outcomeInvoiceMainCurrency ?> </small>
-                        // todo
+                    <? if ($this->outcomeInvoiceData[$row->outcomeInvoiceMainId]['outcomeInvoiceDataPriceTotal']): ?>
+                        <?= number_format($this->outcomeInvoiceData[$row->outcomeInvoiceMainId]['outcomeInvoiceDataPriceTotal'], 4, '.', '') ?>
+                        <small>, <?= $row->outcomeInvoiceMainCurrency ?> </small>
                     <? else: ?>
-                        &mdash; // todo
+                        &mdash;
                     <? endif; ?>
                 </td>
                 <td>
@@ -110,11 +111,10 @@
                     <? endif; ?>
                 </td>
                 <td class="text-right">
-                    <? if ($row->outcomeInvoicePriceTotalExchangedToUsd): ?>
-                        <?= $row->outcomeInvoicePriceTotalExchangedToUsd ?>
-                        // todo
+                    <? if ($this->outcomeInvoiceData[$row->outcomeInvoiceMainId]['outcomeInvoiceDataPriceTotalExchangedToUsd']): ?>
+                        <?= number_format($this->outcomeInvoiceData[$row->outcomeInvoiceMainId]['outcomeInvoiceDataPriceTotalExchangedToUsd'], 2, '.', '') ?>
                     <? else: ?>
-                        &mdash; // todo
+                        &mdash;
                     <? endif; ?>
                 </td>
             </tr>
@@ -144,7 +144,7 @@
                     <?= $row->incomeInvoiceMainTypeOfServiceName ?>
                 </td>
                 <td class="text-right">
-                    <?= number_format($this->incomeInvoiceData[$row->incomeInvoiceMainId]['incomeInvoiceDataPriceTotal'], 2, '.', '') ?>
+                    <?= number_format($this->incomeInvoiceData[$row->incomeInvoiceMainId]['incomeInvoiceDataPriceTotal'], 4, '.', '') ?>
                     <small>, <?= $row->incomeInvoiceMainCurrency ?> </small>
                 </td>
                 <td>
