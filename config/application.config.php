@@ -24,7 +24,7 @@ return array(
         'DluTwBootstrap',
         'SuperMessenger',
         'DBLog',
-        'DOMPDFModule',
+        //'DOMPDFModule',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

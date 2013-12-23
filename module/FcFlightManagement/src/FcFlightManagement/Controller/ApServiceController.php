@@ -588,10 +588,18 @@ class ApServiceController extends FlightController
 
     public function outcomeInvoicePrintAction()
     {
-        $pdf = new PdfModel();
+        require_once (__DIR__ . '/../../../../../vendor/dompdf/dompdf_config.inc.php');
 
-//        require_once __DIR__ . '../../../../../vendor/dompdf/dompdf_config.inc.php';
-//        return $pdf;
+        $html =
+            '<html><body>'.
+            '<p>Put your html here, or<b> generate</b> it with your favourite '.
+            'templating system.</p>'.
+            '<table></table>'.
+            '</body></html>';
+        $pdf = new \DOMPDF();
+        $pdf->load_html($html);
+        $pdf->render();
+        $pdf->stream("sample.pdf");
     }
 
     /**

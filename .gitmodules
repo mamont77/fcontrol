@@ -43,3 +43,6 @@
 [submodule "vendor/dompdf"]
 	path = vendor/dompdf
 	url = https://github.com/mamont77/dompdf.git
+[submodule "vendor/php-font-lib"]
+	path = vendor/php-font-lib
+	url = https://github.com/PhenX/php-font-lib.git
