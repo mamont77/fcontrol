@@ -69,110 +69,21 @@ class ApServiceOutcomeInvoiceDataModel extends BaseModel
 
         $select->columns($this->apServiceOutcomeInvoiceDataTableFieldsMap);
 
-//        $select->join(array('invoiceIncomeRefuelData' => 'invoiceIncomeRefuelData'),
-//            'invoiceIncomeRefuelData.refuelId = ' . $this->table . '.incomeInvoiceRefuelId',
-//            array(
-//                'preInvoiceInvoiceId' => 'invoiceId',
-//                'preInvoiceRefuelId' => 'preInvoiceRefuelId',
-//            ), 'left');
-//
-//
-//        $select->join(array('invoiceIncomeRefuelMain' => 'invoiceIncomeRefuelMain'),
-//            'invoiceIncomeRefuelMain.invoiceId = invoiceIncomeRefuelData.invoiceId',
-//            array(
-//                'invoiceIncomeNumber' => 'invoiceNumber',
-//                'invoiceIncomeStatus' => 'invoiceStatus',
-//            ), 'left');
-//
-//        $select->join(array('preInvoiceRefuel' => 'flightRefuelForm'),
-//            'preInvoiceRefuel.id = ' . 'invoiceIncomeRefuelData.preInvoiceRefuelId',
-//            array(
-//                'preInvoiceHeaderId' => 'headerId',
-//                'preInvoiceStatus' => 'status',
-//            ), 'left');
-//
-//        $select->join(array('preInvoiceHeader' => 'flightBaseHeaderForm'),
-//            'preInvoiceHeader.id = preInvoiceRefuel.headerId',
-//            array(
-//                'preInvoiceHeaderRefNumberOrder' => 'refNumberOrder',
-//                'preInvoiceHeaderDateOrder' => 'dateOrder',
-//                'preInvoiceHeaderAgentId' => 'kontragent',
-//                'preInvoiceHeaderAirOperatorId' => 'airOperator',
-//                'preInvoiceHeaderAircraftId' => 'aircraftId',
-//                'preInvoiceHeaderAlternativeAircraftId1' => 'alternativeAircraftId1',
-//                'preInvoiceHeaderAlternativeAircraftId2' => 'alternativeAircraftId2',
-//                'preInvoiceHeaderStatus' => 'status',
-//            ), 'left');
-//
-//        $select->join(
-//            array('supplier' => 'library_kontragent'),
-//            'supplier.id = ' . $this->table . '.supplierId',
-//            array(
-//                'supplierName' => 'name',
-//                'supplierShortName' => 'short_name',
-//            ),
-//            'left');
-//
-//        $select->join(
-//            array('airOperator' => 'library_air_operator'),
-//            'airOperator.id = ' . $this->table . '.airOperatorId',
-//            array(
-//                'airOperatorName' => 'name',
-//                'airOperatorShortName' => 'short_name',
-//                'airOperatorICAO' => 'code_icao',
-//                'airOperatorIATA' => 'code_iata',
-//            ),
-//            'left');
-//
-//        $select->join(
-//            array('aircraft' => 'library_aircraft'),
-//            'aircraft.id = ' . $this->table . '.aircraftId',
-//            array(
-//                'aircraftTypeId' => 'aircraft_type',
-//                'aircraftName' => 'reg_number',
-//            ),
-//            'left');
-//
-//        $select->join(
-//            array('aircraftType' => 'library_aircraft_type'),
-//            'aircraftType.id = aircraft.aircraft_type',
-//            array(
-//                'aircraftTypeName' => 'name',
-//            ),
-//            'left');
-//
-//        $select->join(
-//            array('airportDep' => 'library_airport'),
-//            'airportDep.id = ' . $this->table . '.airportDepId',
-//            array(
-//                'airportDepName' => 'name',
-//                'airportDepShortName' => 'short_name',
-//                'airportDepICAO' => 'code_icao',
-//                'airportDepIATA' => 'code_iata',
-//            ),
-//            'left');
-//
-//        $select->join(
-//            array('unit' => 'library_unit'),
-//            'unit.id = ' . $this->table . '.unitId',
-//            array(
-//                'unitName' => 'name',
-//            ),
-//            'left');
+        $select->join(array('outcomeInvoiceDataTypeOfService' => 'library_type_of_ap_service'),
+            $this->table . '.typeOfServiceId = outcomeInvoiceDataTypeOfService.id',
+            array('outcomeInvoiceDataTypeOfServiceName' => 'name'),
+            'left'
+        );
 
-        $select->where(array($this->table . '.invoiceId' => $id));
+        $select->where(array(
+            $this->table . '.invoiceId' => $id,
+            $this->table . '.isAdditionalInfo' => $isAdditionalInfo,
+        ));
         $select->order(array($this->table . '.id ' . $select::ORDER_ASCENDING));
 //        \Zend\Debug\Debug::dump($select->getSqlString());
 
         $resultSet = $this->selectWith($select);
         $resultSet->buffer();
-
-//        \Zend\Debug\Debug::dump($resultSet);
-//
-//        foreach ($resultSet as $row) {
-//            \Zend\Debug\Debug::dump($row);
-//
-//        }
 
         return $resultSet;
     }

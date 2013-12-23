@@ -521,8 +521,6 @@ class ApServiceController extends FlightController
         }
 
         $header = $this->getApServiceOutcomeInvoiceMainModel()->get($invoiceId);
-        \Zend\Debug\Debug::dump($header);
-
         $header->legDepToNextAirportTime = '';
         $header->legDepToNextAirportICAO = '';
         $header->legDepToNextAirportIATA = '';
@@ -542,18 +540,19 @@ class ApServiceController extends FlightController
             $header->legDepToNextAirportICAO = $nextLegs['apDepIcao'];
             $header->legDepToNextAirportIATA = $nextLegs['apDepIata'];
         }
-        //todo
 
-        $data = $this->getApServiceOutcomeInvoiceDataModel()->getByInvoiceId($invoiceId);
-
+        $data = $this->getApServiceOutcomeInvoiceDataModel()->getByInvoiceId($invoiceId, false);
         foreach ($data as $row) {
-            $header->data[$row->apServiceId] = $row;
+            $header->data[$row->outcomeInvoiceDataId] = $row;
+        }
+        $subData = $this->getApServiceOutcomeInvoiceDataModel()->getByInvoiceId($invoiceId, true);
+        foreach ($subData as $row) {
+            $header->subData[$row->outcomeInvoiceDataId] = $row;
         }
 
         return new ViewModel(array(
             'header' => $header,
         ));
-
     }
 
     /**
