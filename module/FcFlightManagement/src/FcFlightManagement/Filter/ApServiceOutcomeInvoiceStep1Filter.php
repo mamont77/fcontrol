@@ -157,9 +157,9 @@ class ApServiceOutcomeInvoiceStep1Filter implements InputFilterAwareInterface
                                 \Zend\Validator\Callback::INVALID_VALUE => 'The "date to" is less than the "date from"',
                             ),
                             'callback' => function ($value, $context) {
-                                    $dateOrderFrom = \DateTime::createFromFormat('d-m-Y', $context['dateOrderFrom']);
-                                    $dateOrderTo = \DateTime::createFromFormat('d-m-Y', $value);
-                                    return $dateOrderTo >= $dateOrderFrom;
+                                    $dateFrom = \DateTime::createFromFormat('d-m-Y', $context['dateFrom']);
+                                    $dateTo = \DateTime::createFromFormat('d-m-Y', $value);
+                                    return $dateTo >= $dateFrom;
                                 },
                         ),
                     ),

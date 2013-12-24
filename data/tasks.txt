@@ -28,3 +28,6 @@
 https://github.com/raykolbe/DOMPDFModule
 18:10
 
+24.12
+10:20
+#96: Management Permissions - Income Invoice - структура файлов и фильтр.

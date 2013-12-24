@@ -58,6 +58,31 @@ class BaseModel extends AbstractTableGateway
     public $apServiceOutcomeInvoiceDataTableName = 'invoiceOutcomeApServiceData';
 
     /**
+     * @var string
+     */
+    public $permissionPreInvoiceMainTableName = 'flightPermissionForm';
+
+    /**
+     * @var string
+     */
+    public $permissionIncomeInvoiceMainTableName = 'invoiceIncomePermissionMain';
+
+    /**
+     * @var string
+     */
+    public $permissionIncomeInvoiceDataTableName = 'invoiceIncomePermissionData';
+
+    /**
+     * @var string
+     */
+    public $permissionOutcomeInvoiceMainTableName = 'invoiceOutcomePermissionMain';
+
+    /**
+     * @var string
+     */
+    public $permissionOutcomeInvoiceDataTableName = 'invoiceOutcomePermissionData';
+
+    /**
      * @var array
      */
     public $flightTableFieldsMap = array(
@@ -160,6 +185,89 @@ class BaseModel extends AbstractTableGateway
      * @var array
      */
     public $apServiceOutcomeInvoiceDataTableFieldsMap = array(
+        'outcomeInvoiceDataId' => 'id',
+        'outcomeInvoiceDataInvoiceId' => 'invoiceId',
+        'outcomeInvoiceDataTypeOfService' => 'typeOfServiceId',
+        'outcomeInvoiceDataItemPrice' => 'itemPrice',
+        'outcomeInvoiceDataQuantity' => 'quantity',
+        'outcomeInvoiceDataUnitId' => 'unitId',
+        'outcomeInvoiceDataPriceTotal' => 'priceTotal',
+        'outcomeInvoiceDataPriceTotalExchangedToUsd' => 'priceTotalExchangedToUsd',
+        'outcomeInvoiceDataIsAdditionalInfo' => 'isAdditionalInfo',
+    );
+
+    /**
+     * @var array
+     */
+    public $permissionPreInvoiceTableFieldsMap = array(
+        'preInvoiceId' => 'id',
+        'preInvoiceHeaderId' => 'headerId',
+        'preInvoiceLegId' => 'legId',
+        'preInvoiceAirportId' => 'airportId',
+        'preInvoiceTypeOfApServiceId' => 'typeOfApServiceId',
+        'preInvoiceAgentId' => 'agentId',
+        'preInvoicePrice' => 'price',
+        'preInvoiceCurrency' => 'currency',
+        'preInvoiceExchangeRate' => 'exchangeRate',
+        'preInvoicePriceTotalExchangedToUsd' => 'priceUSD',
+        'preInvoiceStatus' => 'status',
+    );
+
+    /**
+     * @var array
+     */
+    public $permissionIncomeInvoiceMainTableFieldsMap = array(
+        'incomeInvoiceMainId' => 'id',
+        'incomeInvoiceMainPreInvoiceId' => 'preInvoiceId',
+        'incomeInvoiceMainNumber' => 'number',
+        'incomeInvoiceMainDate' => 'date',
+        'incomeInvoiceMainCurrency' => 'currency',
+        'incomeInvoiceMainExchangeRate' => 'exchangeRate',
+        'incomeInvoiceMainDateArr' => 'dateArr',
+        'incomeInvoiceMainDateDep' => 'dateDep',
+        'incomeInvoiceFlightNumber' => 'flightNumber',
+        'incomeInvoiceMainTypeOfServiceId' => 'typeOfServiceId',
+        'incomeInvoiceMainStatus' => 'status',
+    );
+
+    /**
+     * @var array
+     */
+    public $permissionIncomeInvoiceDataTableFieldsMap = array(
+        'incomeInvoiceDataId' => 'id',
+        'incomeInvoiceDataInvoiceId' => 'invoiceId',
+        'incomeInvoiceDataTypeOfServiceId' => 'typeOfServiceId',
+        'incomeInvoiceDataItemPrice' => 'itemPrice',
+        'incomeInvoiceDataQuantity' => 'quantity',
+        'incomeInvoiceDataUnitId' => 'unitId',
+        'incomeInvoiceDataPriceTotal' => 'priceTotal',
+        'incomeInvoiceDataPriceTotalExchangedToUsd' => 'priceTotalExchangedToUsd',
+    );
+
+    /**
+     * @var array
+     */
+    public $permissionOutcomeInvoiceMainTableFieldsMap = array(
+        'outcomeInvoiceMainId' => 'id',
+        'outcomeInvoiceMainIncomeInvoiceId' => 'incomeInvoiceId',
+        'outcomeInvoiceMainNumber' => 'number',
+        'outcomeInvoiceMainDate' => 'date',
+        'outcomeInvoiceMainCurrency' => 'currency',
+        'outcomeInvoiceMainExchangeRate' => 'exchangeRate',
+        'outcomeInvoiceMainDateArr' => 'dateArr',
+        'outcomeInvoiceMainDateDep' => 'dateDep',
+        'outcomeInvoiceFlightNumber' => 'flightNumber',
+        'outcomeInvoiceMainTypeOfServiceId' => 'typeOfServiceId',
+        'disbursement' => 'disbursement',
+        'disbursementTotal' => 'disbursementTotal',
+        'disbursementTotalExchangedToUsd' => 'disbursementTotalExchangedToUsd',
+        'outcomeInvoiceMainStatus' => 'status',
+    );
+
+    /**
+     * @var array
+     */
+    public $permissionOutcomeInvoiceDataTableFieldsMap = array(
         'outcomeInvoiceDataId' => 'id',
         'outcomeInvoiceDataInvoiceId' => 'invoiceId',
         'outcomeInvoiceDataTypeOfService' => 'typeOfServiceId',

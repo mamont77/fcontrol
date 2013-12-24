@@ -36,6 +36,14 @@ return array(
                         'label' => 'AP Service outcome',
                         'route' => 'management/ap-service/outcome-invoice-step1',
                     ),
+                    array(
+                        'label' => 'Permission income',
+                        'route' => 'management/permission/income-invoice-step1',
+                    ),
+                    array(
+                        'label' => 'Permission outcome',
+                        'route' => 'management/permission/outcome-invoice-step1',
+                    ),
                 ),
             ),
             array(
