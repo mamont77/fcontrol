@@ -1411,4 +1411,49 @@
             });
         }
     };
+
+    /**
+     *
+     * @type {{attach: Function}}
+     */
+    fControl.behaviors.permissionIncomeInvoiceStep1 = {
+        attach: function (context, settings) {
+            var $form = $('form#permissionIncomeInvoiceStep1');
+
+            if ($form.length == 0) return;
+
+            $($form).find('#dateFrom, #dateTo').mask('99-99-9999');
+
+            var $form2 = $('form#permissionIncomeInvoiceStep2'),
+                $rowsCheckbox = $form2.find('.rowsSelected');
+
+            if ($form2.length == 0) return;
+
+            // блокируем кнопку Apply до тех пор, пока не будут выбраны один или несколько одинаковых Agent
+            $form2.find('.btn').prop('disabled', true);
+            $rowsCheckbox.change(function () {
+                var selectedAgents = [];
+
+                $rowsCheckbox.each(function () {
+                    var $this = $(this);
+                    if ($this.prop('checked')) {
+                        selectedAgents.push($this.parent().parent().find('.preInvoiceAgentShortName').text());
+                    }
+                });
+
+                selectedAgents.sort();
+                var i = selectedAgents.length, result = [];
+                while (i--) {
+                    if (result.join('').search(selectedAgents[i]) == '-1') {
+                        result.push(selectedAgents[i]);
+                    }
+                }
+                if (result.length == 1) {
+                    $form2.find('.btn').prop('disabled', false);
+                } else {
+                    $form2.find('.btn').prop('disabled', true);
+                }
+            });
+        }
+    };
 })(jQuery);

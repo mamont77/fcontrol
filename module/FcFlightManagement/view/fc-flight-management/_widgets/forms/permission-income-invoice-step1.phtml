@@ -71,27 +71,23 @@
                     <?= $row->flightAircraftTypeName ?> (<?= $row->flightAircraftName ?>)
                 </td>
                 <td>
-                    <?= $row->preInvoiceAirportICAO . ' (' . $row->preInvoiceAirportIATA . ')' ?>
-                </td>
-                <td>
-                    <? if ($row->incomeInvoiceMainDateArr): ?>
-                        <?= date('d-m-Y', $row->incomeInvoiceMainDateArr) ?>
-                    <? else: ?>
-                        <?= date('d-m-Y', $row->legArrTime) ?>
-                    <? endif; ?>
+                    <?= $row->preInvoiceAirportDepICAO . ' (' . $row->preInvoiceAirportDepICAO . ')' ?>
                 </td>
                 <td>
                     <? if ($row->incomeInvoiceMainDateDep): ?>
                         <?= date('d-m-Y', $row->incomeInvoiceMainDateDep) ?>
                     <? else: ?>
-                        <?= date('d-m-Y', $this->advancedDataWithOutIncomeInvoice[$row->legId]['legDepToNextAirportTime']) ?>
+                        <?= date('d-m-Y', $row->legDepTime) ?>
                     <? endif; ?>
+                </td>
+                <td>
+                    <?= $row->preInvoiceAirportArrICAO . ' (' . $row->preInvoiceAirportArrICAO . ')' ?>
                 </td>
                 <td>
                     <? if ($row->incomeInvoiceMainArrDate): ?>
                         <?= date('d-m-Y', $row->incomeInvoiceMainArrDate) ?>
                     <? else: ?>
-                        <?= date('d-m-Y', $row->legDepDate) ?>
+                        <?= date('d-m-Y', $row->legArrTime) ?>
                     <? endif; ?>
                 </td>
                 <td>
@@ -111,7 +107,7 @@
                     <? if ($row->incomeInvoiceNumberOfPermission): ?>
                         <?= $row->incomeInvoiceNumberOfPermission ?>
                     <? else: ?>
-                        <?= $row->preInvoiceNumberOfPermission ?>
+                        <?= $row->preInvoiceRequestTime ?>
                     <? endif; ?>
                 </td>
                 <td class="text-right">

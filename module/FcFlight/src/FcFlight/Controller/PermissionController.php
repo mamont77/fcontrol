@@ -45,7 +45,7 @@ class PermissionController extends FlightController
                     'agents' => $this->getKontragents(),
                     'legs' => $this->getLegModel()->getListByHeaderId($headerId),
                     'countries' => $this->getCountries(),
-                    'typeOfPermissions' => $this->geTypeOfPermissions(),
+                    'typeOfPermissions' => $this->getTypeOfPermissions(),
                 ),
             )
         );
@@ -118,7 +118,7 @@ class PermissionController extends FlightController
                     'agents' => $this->getKontragents(),
                     'legs' => $this->getLegModel()->getListByHeaderId($header->id),
                     'countries' => $this->getCountries(),
-                    'typeOfPermissions' => $this->geTypeOfPermissions(),
+                    'typeOfPermissions' => $this->getTypeOfPermissions(),
                 ),
             )
         );

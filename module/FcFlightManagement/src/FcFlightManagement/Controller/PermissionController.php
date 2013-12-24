@@ -175,10 +175,10 @@ class PermissionController extends FlightController
 
         $result = array();
         $units = $this->getPermissionUnits();
-        $typeOfServices = array();
-        $typeOfServicesObj = $this->getTypeOfPermissions();
-        foreach ($typeOfServicesObj as $typeOfService) {
-            $typeOfServices[$typeOfService->id] = $typeOfService->name;
+        $typeOfPermission = array();
+        $typeOfPermissionObj = $this->getTypeOfPermissions();
+        foreach ($typeOfPermissionObj as $type) {
+            $typeOfPermission[$type->id] = $type->name;
         }
         $currencies = new ApServiceForm(null, array());
         $currencies = $currencies->getCurrencyExchangeRate();
