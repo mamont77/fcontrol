@@ -3,8 +3,8 @@
 //todo
 //$fuelSupplierOld = '';
 foreach ($this->data as $row) {
-    $permissionSupplierId = $row->permissionAgentId;
-    $permissionSupplierName = $row->permissionAgentShortName;
+    $permissionAgentId = $row->permissionAgentId;
+    $permissionAgentName = $row->permissionAgentShortName;
 }
 //
 ?>
@@ -13,12 +13,13 @@ foreach ($this->data as $row) {
 <table id="invoiceHeader" class="table-bordered table-condensed">
     <thead>
     <tr>
+        <th>ORD #</th>
         <th>Invoice #</th>
         <th>Date</th>
         <th>Currency</th>
         <th>Exchange Rate</th>
         <th>Rate Apply</th>
-        <th>Fuel supplier</th>
+        <th>Agent</th>
     </tr>
     </thead>
     <tbody>
