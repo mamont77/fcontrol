@@ -1,0 +1,26 @@
+<?php
+$title = 'Create Permission outcome invoice';
+$this->headTitle($title);
+?>
+<ul class="breadcrumb">
+    <li><a href="/">Home</a> <span class="divider">/</span></li>
+    <li>Management <span class="divider">/</span></li>
+    <li>Permission outcome invoice</li>
+</ul>
+
+<h1><?= $title ?></h1>
+
+<? if ($this->result): ?>
+    <?=
+    $this->partial('fc-flight-management/_widgets/forms/permission-outcome-invoice-step2.phtml',
+        array(
+            'newInvoiceNumber' => $this->newInvoiceNumber,
+            'data' => $this->result,
+            'incomeInvoiceData' => $this->incomeInvoiceData,
+            'units' => $this->units,
+            'typeOfServices' => $this->typeOfServices,
+            'currencies' => $this->currencies,
+            'fixedHeader' => true,
+        ))
+    ?>
+<? endif; ?>

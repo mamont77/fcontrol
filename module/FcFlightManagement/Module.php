@@ -23,6 +23,14 @@ use FcFlightManagement\Model\ApServiceOutcomeInvoiceSearchModel;
 use FcFlightManagement\Filter\ApServiceOutcomeInvoiceStep1Filter;
 use FcFlightManagement\Model\ApServiceOutcomeInvoiceMainModel;
 use FcFlightManagement\Model\ApServiceOutcomeInvoiceDataModel;
+use FcFlightManagement\Model\PermissionIncomeInvoiceSearchModel;
+use FcFlightManagement\Filter\PermissionIncomeInvoiceStep1Filter;
+use FcFlightManagement\Model\PermissionIncomeInvoiceMainModel;
+use FcFlightManagement\Model\PermissionIncomeInvoiceDataModel;
+use FcFlightManagement\Model\PermissionOutcomeInvoiceSearchModel;
+use FcFlightManagement\Filter\PermissionOutcomeInvoiceStep1Filter;
+use FcFlightManagement\Model\PermissionOutcomeInvoiceMainModel;
+use FcFlightManagement\Model\PermissionOutcomeInvoiceDataModel;
 
 /**
  * Class Module
@@ -175,13 +183,46 @@ class Module
                         $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                         return new ApServiceOutcomeInvoiceStep1Filter($dbAdapter);
                     },
-                'FcFlightManagement\ModelApServiceOutcomeInvoiceMainModel' => function ($sm) {
+                'FcFlightManagement\Model\ApServiceOutcomeInvoiceMainModel' => function ($sm) {
                         $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                         return new ApServiceOutcomeInvoiceMainModel($dbAdapter);
                     },
                 'FcFlightManagement\Model\ApServiceOutcomeInvoiceDataModel' => function ($sm) {
                         $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                         return new ApServiceOutcomeInvoiceDataModel($dbAdapter);
+                    },
+
+                'FcFlightManagement\Model\PermissionIncomeInvoiceSearchModel' => function ($sm) {
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new PermissionIncomeInvoiceSearchModel($dbAdapter);
+                    },
+                'FcFlightManagement\Filter\PermissionIncomeInvoiceStep1Filter' => function ($sm) {
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new PermissionIncomeInvoiceStep1Filter($dbAdapter);
+                    },
+                'FcFlightManagement\Model\PermissionIncomeInvoiceMainModel' => function ($sm) {
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new PermissionIncomeInvoiceMainModel($dbAdapter);
+                    },
+                'FcFlightManagement\Model\PermissionIncomeInvoiceDataModel' => function ($sm) {
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new PermissionIncomeInvoiceDataModel($dbAdapter);
+                    },
+                'FcFlightManagement\Model\PermissionOutcomeInvoiceSearchModel' => function ($sm) {
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new PermissionOutcomeInvoiceSearchModel($dbAdapter);
+                    },
+                'FcFlightManagement\Filter\PermissionOutcomeInvoiceStep1Filter' => function ($sm) {
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new PermissionOutcomeInvoiceStep1Filter($dbAdapter);
+                    },
+                'FcFlightManagement\Model\PermissionOutcomeInvoiceMainModel' => function ($sm) {
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new PermissionOutcomeInvoiceMainModel($dbAdapter);
+                    },
+                'FcFlightManagement\Model\PermissionOutcomeInvoiceDataModel' => function ($sm) {
+                        $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                        return new PermissionOutcomeInvoiceDataModel($dbAdapter);
                     },
             ),
         );

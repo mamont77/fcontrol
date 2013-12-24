@@ -1,0 +1,69 @@
+<?// \Zend\Debug\Debug::dump($this->header); ?>
+<table id="invoiceData"
+       class="table table-bordered table-hover table-condensed <? if ($this->fixedHeader): ?> table-fixed-header<? endif ?>">
+    <thead>
+    <tr>
+        <th>Description</th>
+        <th>Price, <span class="currency"><?= $this->header->incomeInvoiceMainCurrency ?></span></th>
+        <th>Quantity</th>
+        <th>Unit</th>
+        <th>Total, <span class="currency"><?= $this->header->incomeInvoiceMainCurrency ?></span></th>
+        <th>Exchange Total, USD</th>
+    </tr>
+    </thead>
+    <tbody>
+    <? foreach ($this->header->data as $row): ?>
+<!--        --><?// \Zend\Debug\Debug::dump($row); ?>
+        <tr class="dataRow">
+            <td>
+                <?= $row->incomeInvoiceDataTypeOfServiceName ?>
+            </td>
+            <td>
+                <?= $row->incomeInvoiceDataItemPrice ?>
+            </td>
+            <td>
+                <?= $row->incomeInvoiceDataQuantity ?>
+            </td>
+            <td>
+                <?= $row->incomeInvoiceDataUnitId ?>
+            </td>
+            <td>
+                <?php
+                $priceTotal += $row->incomeInvoiceDataPriceTotal;
+                ?>
+                <?= $row->incomeInvoiceDataPriceTotal ?>
+            </td>
+            <td>
+                <?php
+                $priceTotalExchangedToUsd += $row->incomeInvoiceDataPriceTotalExchangedToUsd;
+                ?>
+                <?= $row->incomeInvoiceDataPriceTotalExchangedToUsd ?>
+            </td>
+        </tr>
+    <? endforeach; ?>
+    <tr>
+        <td colspan="6">
+            <div class="row-fluid">
+                <div class="span6">
+                </div>
+                <div class="span6">
+                    <table style="width: 300px; float: right" class="table table-bordered pull-right">
+                        <tbody>
+                        <tr>
+                            <td>
+                                Subtotal
+                            </td>
+                            <td><span class="currency"><?= $this->header->incomeInvoiceMainCurrency ?></span> <span
+                                    class="priceSubTotal"><?= number_format($priceTotal, 2, '.', '') ?></span></td>
+                            <td>USD <span
+                                    class="priceSubTotalExchangedToUsd"><?= number_format($priceTotalExchangedToUsd, 2, '.', '') ?></span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>

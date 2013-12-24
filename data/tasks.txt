@@ -26,5 +26,8 @@
 10:55
 #95: Внедрить возможность печатать счета в PDF.
 https://github.com/raykolbe/DOMPDFModule
-11:30
+18:10
 
+24.12
+10:20
+#96: Management Permissions - Income Invoice - структура файлов и фильтр.

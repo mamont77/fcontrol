@@ -1,0 +1,235 @@
+<form name="permissionIncomeInvoiceStep4" id="permissionIncomeInvoiceStep4" method="post"
+      action="/management/permission/income-invoice-add">
+<table id="invoiceHeader" class="table-bordered table-condensed">
+    <thead>
+    <tr>
+        <th>Invoice #</th>
+        <th>Date</th>
+        <th>Currency</th>
+        <th>Exchange Rate</th>
+        <th>Fuel supplier</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>
+            <input type="text" id="invoiceNumber" name="invoiceNumber" class="input-small"
+                   placeholder="Invoice #"
+                   maxlength="40" required="required" readonly="readonly" value="<?= $this->data['invoiceNumber'] ?>"/>
+        </td>
+        <td>
+            <input type="text" id="invoiceDate" name="invoiceDate" class="input-small date" placeholder="Date"
+                   maxlength="40" required="required" readonly="readonly" value="<?= $this->data['invoiceDate'] ?>"/>
+        </td>
+        <td>
+            <input type="text" id="invoiceCurrency" name="invoiceCurrency" class="input-small"
+                   placeholder="Currency" maxlength="40" required="required" readonly="readonly"
+                   value="<?= $this->data['invoiceCurrency'] ?>"/>
+        </td>
+        <td>
+            <input type="text" id="invoiceExchangeRate" name="invoiceExchangeRate" class="input-small"
+                   placeholder="Exchange Rate" maxlength="40" required="required" readonly="readonly"
+                   value="<?= $this->data['invoiceExchangeRate'] ?>"/>
+        </td>
+        <td>
+            <input type="hidden" name="invoiceRefuelSupplierId" value="<?= $this->data['invoiceRefuelSupplierId'] ?>">
+            <input type="text" class="input-small" name="invoiceRefuelSupplierName" maxlength="40" required="required"
+                   readonly="readonly" value="<?= $this->data['invoiceRefuelSupplierName'] ?>">
+        </td>
+    </tr>
+    </tbody>
+</table>
+<hr/>
+<table id="invoiceData"
+       class="table table-bordered table-hover table-condensed <? if ($this->fixedHeader): ?> table-fixed-header<? endif ?>">
+    <thead>
+    <tr>
+        <th>ORD</th>
+        <th>Customer</th>
+        <th>Air Operator</th>
+        <th>Flight #</th>
+        <th>Aircraft</th>
+        <th>Airport Dep</th>
+        <th>Date</th>
+        <th>Quantity, LTR</th>
+        <th>Quantity, Unit</th>
+        <th>Unit</th>
+        <th>Price, <span class="permissionCurrency"><?= $this->data['invoiceCurrency'] ?></span></th>
+        <th>TAX</th>
+        <th>MOT</th>
+        <th>VAT, %</th>
+        <th>Deliver</th>
+        <th>Total price, <span class="permissionCurrency"><?= $this->data['invoiceCurrency'] ?></span></th>
+        <th>Total, <span class="permissionCurrency"><?= $this->data['invoiceCurrency'] ?></span></th>
+        <th>Exchange Total, USD</th>
+    </tr>
+    </thead>
+    <tbody>
+    <? foreach ($this->data['data'] as $row): ?>
+        <? // \Zend\Debug\Debug::dump($row) ?>
+        <tr id="invoiceRefuelId_<?= $row['permissionId'] ?>">
+            <td>
+                <input type="hidden" name="data[<?= $row['permissionId'] ?>][permissionId]" value="<?= $row['permissionId'] ?>"/>
+                <input type="text" name="data[<?= $row['permissionId'] ?>][flightRefNumberOrder]"
+                       class="input-small readonly"
+                       maxlength="40" required="required" readonly="readonly"
+                       value="<?= $row['flightRefNumberOrder'] ?>">
+            </td>
+            <td>
+                <input type="hidden" name="data[<?= $row['permissionId'] ?>][flightAgentId]"
+                       value="<?= $row['flightAgentId'] ?>">
+                <input type="text" name="data[<?= $row['permissionId'] ?>][flightAgentShortName]"
+                       class="input-small readonly"
+                       maxlength="40" required="required" readonly="readonly"
+                       value="<?= $row['flightAgentShortName'] ?>">
+            </td>
+            <td>
+                <input type="hidden" name="data[<?= $row['permissionId'] ?>][flightAirOperatorId]"
+                       value="<?= $row['flightAirOperatorId'] ?>">
+                <input type="text" name="data[<?= $row['permissionId'] ?>][flightAirOperatorShortName]"
+                       class="input-small readonly"
+                       maxlength="40" required="required" readonly="readonly"
+                       value="<?= $row['flightAirOperatorShortName'] ?>">
+            </td>
+            <td>
+                <input type="text" name="data[<?= $row['permissionId'] ?>][flightAirOperatorNumber]"
+                       class="input-small"
+                       maxlength="40" required="required"
+                       value="<?= $row['flightAirOperatorNumber'] ?>">
+            </td>
+            <td>
+                <input type="hidden" name="data[<?= $row['permissionId'] ?>][flightAircraftId]"
+                       value="<?= $row['flightAircraftId'] ?>">
+                <input type="text" name="data[<?= $row['permissionId'] ?>][flightAircraftName]" class="input-small readonly"
+                       maxlength="40" required="required" readonly="readonly"
+                       value="<?= $row['flightAircraftName'] ?>">
+            </td>
+            <td>
+                <input type="hidden" name="data[<?= $row['permissionId'] ?>][permissionAirportId]"
+                       value="<?= $row['permissionAirportId'] ?>">
+                <input type="text" name="data[<?= $row['permissionId'] ?>][permissionAirportName]" class="input-small readonly"
+                       maxlength="40" required="required" readonly="readonly"
+                       value="<?= $row['permissionAirportName'] ?>">
+            </td>
+            <td>
+                <input type="text" name="data[<?= $row['permissionId'] ?>][permissionDate]"
+                       class="input-small date"
+                       placeholder="Date of permission"
+                       maxlength="40" required="required" value="<?= $row['permissionDate'] ?>">
+            </td>
+            <td>
+                <input type="text" class="permissionQuantityLtr input-mini"
+                       name="data[<?= $row['permissionId'] ?>][permissionQuantityLtr]"
+                       placeholder="QTY LTR"
+                       maxlength="40" required="required" value="<?= $row['permissionQuantityLtr'] ?>">
+            </td>
+            <td>
+                <input type="text" class="permissionQuantityOtherUnits input-mini"
+                       name="data[<?= $row['permissionId'] ?>][permissionQuantityOtherUnits]"
+                       placeholder="Quantity est"
+                       maxlength="40" required="required" value="<?= $row['permissionQuantityOtherUnits'] ?>">
+            </td>
+            <td>
+                <select name="data[<?= $row['permissionId'] ?>][permissionUnitId]"
+                        class="permissionUnitId chosen input-small"
+                        data-placeholder="Unit"
+                        required="required">
+                    <option value=""></option>
+                    <? foreach ($this->units as $key => $value): ?>
+                        <? if ($row['permissionUnitId'] == $key): ?>
+                            <option value="<?= $key ?>" selected="selected"><?= $value ?></option>
+                        <? else: ?>
+                            <option value="<?= $key ?>"><?= $value ?></option>
+                        <? endif; ?>
+                    <? endforeach; ?>
+                </select>
+            </td>
+            <td>
+                <input type="text" class="permissionItemPrice input-mini text-right"
+                       name="data[<?= $row['permissionId'] ?>][permissionItemPrice]"
+                       placeholder="Price est"
+                       maxlength="40" required="required"
+                       value="<?= number_format($row['permissionItemPrice'], 4, '.', '') ?>">
+            </td>
+            <td>
+                <input type="text" class="permissionTax input-mini" name="data[<?= $row['permissionId'] ?>][permissionTax]"
+                       placeholder="TAX"
+                       maxlength="40" required="required" value="<?= $row['permissionTax'] ?>">
+            </td>
+            <td>
+                <input type="text" class="permissionMot input-mini" name="data[<?= $row['permissionId'] ?>][permissionMot]"
+                       placeholder="MOT"
+                       maxlength="40" required="required" value="<?= $row['permissionMot'] ?>">
+            </td>
+            <td>
+                <input type="text" class="permissionVat input-mini" name="data[<?= $row['permissionId'] ?>][permissionVat]"
+                       placeholder="VAT"
+                       maxlength="40" required="required" value="<?= $row['permissionVat'] ?>">
+            </td>
+            <td>
+                <input type="text" class="permissionDeliver input-mini" name="data[<?= $row['permissionId'] ?>][permissionDeliver]"
+                       placeholder="Deliver"
+                       maxlength="40" required="required" value="<?= $row['permissionDeliver'] ?>">
+            </td>
+            <td>
+                <input type="text" class="permissionPrice input-mini text-right"
+                       name="data[<?= $row['permissionId'] ?>][permissionPrice]"
+                       placeholder="Total price"
+                       maxlength="40" required="required"
+                       value="<?= $row['permissionPrice'] ?>">
+            </td>
+            <td>
+                <?php
+                $permissionPriceSubTotal += $row['permissionPriceTotal'];
+                ?>
+                <input type="text" class="permissionPriceTotal input-mini text-right"
+                       name="data[<?= $row['permissionId'] ?>][permissionPriceTotal]"
+                       placeholder="Total"
+                       maxlength="40" required="required"
+                       value="<?= $row['permissionPriceTotal'] ?>">
+            </td>
+            <td>
+                <?php
+                $permissionExchangeToUsdPriceSubTotal += $row['permissionExchangeToUsdPriceTotal'];
+                ?>
+                <input type="text" class="permissionExchangeToUsdPriceTotal input-mini text-right"
+                       name="data[<?= $row['permissionId'] ?>][permissionExchangeToUsdPriceTotal]"
+                       placeholder="Exchange Total"
+                       maxlength="40" required="required"
+                       value="<?= $row['permissionExchangeToUsdPriceTotal'] ?>">
+            </td>
+        </tr>
+    <? endforeach; ?>
+    <tr>
+        <td colspan="18">
+            <div class="row-fluid">
+                <div class="span6">
+                </div>
+                <div class="span6">
+                    <table style="width: 300px; float: right" class="table table-bordered pull-right">
+                        <tbody>
+                        <tr>
+                            <td>
+                                Subtotal
+                            </td>
+                            <td><span class="permissionCurrency"><?= $this->data['invoiceCurrency'] ?></span> <span
+                                    class="permissionPriceSubTotal"><?= number_format($permissionPriceSubTotal, 2, '.', '') ?></span>
+                            </td>
+                            <td>USD <span
+                                    class="permissionExchangeToUsdPriceSubTotal"><?= number_format($permissionExchangeToUsdPriceSubTotal, 2, '.', '') ?></span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="18">
+            <input name="submitBtn" type="submit" class="btn btn-primary pull-right" value="Save">
+        </td>
+    </tr>
+    </tbody>
+</table>
+</form>

@@ -9,7 +9,7 @@ return array(
     'modules' => array(
         'Application',
         //'ZFTool',
-        'ZendDeveloperTools',
+        //'ZendDeveloperTools',
         'ZfcBase',
         'ZfcAdmin',
         'ZfcUser',
@@ -24,6 +24,7 @@ return array(
         'DluTwBootstrap',
         'SuperMessenger',
         'DBLog',
+        'DOMPDFModule',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

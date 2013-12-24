@@ -12,6 +12,7 @@ use FcFlightManagement\Form\ApServiceIncomeInvoiceStep1Form;
 use FcFlightManagement\Form\ApServiceOutcomeInvoiceStep1Form;
 use FcFlightManagement\Model\ApServiceIncomeInvoiceSearchModel;
 use FcFlightManagement\Model\ApServiceOutcomeInvoiceSearchModel;
+use DOMPDFModule\View\Model\PdfModel;
 
 /**
  * Class ApServiceController
@@ -587,6 +588,17 @@ class ApServiceController extends FlightController
 
     public function outcomeInvoicePrintAction()
     {
+        $pdf = new PdfModel();
+//        $pdf = new ViewModel();
+        $pdf->setOption('filename', 'monthly-report2'); // Triggers PDF download, automatically appends ".pdf"
+        $pdf->setOption('paperSize', 'a4'); // Defaults to "8x11"
+        $pdf->setOption('paperOrientation', 'portrait'); // Defaults to "portrait"
+
+        // To set view variables
+        $pdf->setVariables(array(
+            'message' => 'Hello <b>Word</b>!!!'
+        ));
+
         return $pdf;
     }
 

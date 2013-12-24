@@ -1,0 +1,24 @@
+<?php
+$title = 'Create Permission income invoice';
+$this->headTitle($title);
+?>
+<ul class="breadcrumb">
+    <li><a href="/">Home</a> <span class="divider">/</span></li>
+    <li>Management <span class="divider">/</span></li>
+    <li>Permission income invoice</li>
+</ul>
+
+<h1><?= $title ?></h1>
+
+<? if ($this->result): ?>
+    <?=
+    $this->partial('fc-flight-management/_widgets/forms/permission-income-invoice-step2.phtml',
+        array(
+            'data' => $this->result,
+            'units' => $this->units,
+            'typeOfServices' => $this->typeOfServices,
+            'currencies' => $this->currencies,
+            'fixedHeader' => true,
+        ))
+    ?>
+<? endif; ?>

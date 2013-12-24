@@ -1,0 +1,108 @@
+<?php
+$title = 'Show Permission outcome invoice';
+$this->headTitle($title);
+?>
+    <ul class="breadcrumb">
+        <li><a href="/">Home</a> <span class="divider">/</span></li>
+        <li>Management <span class="divider">/</span></li>
+        <li>Permission outcome invoice<span class="divider">/</span></li>
+        <li><?= $this->header->outcomeInvoiceMainNumber ?></li>
+    </ul>
+
+    <h1><?= $title ?></h1>
+
+<?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
+<?php echo $this->flashMessenger()->render('info', array('alert', 'alert-info')); ?>
+<?php echo $this->flashMessenger()->render('error', array('alert', 'alert-error')); ?>
+
+    <table id="invoiceMain" class="table table-bordered table-hover table-condensed">
+        <thead>
+        <tr>
+            <th>ORD #</th>
+            <th>Invoice #</th>
+            <th>Date</th>
+            <th>Currency</th>
+            <th>Exchange Rate</th>
+            <th>Agent</th>
+            <th colspan="2">Type of service</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td rowspan="2">
+                <a href="<?=
+                $this->url('browse',
+                    array('refNumberOrder' => $this->header->flightRefNumberOrder));?>"
+                   target="_blank">
+                    <?= $this->header->flightRefNumberOrder ?>
+                </a>
+            </td>
+            <td rowspan="2">
+                <?= $this->header->outcomeInvoiceMainNumber ?>
+            </td>
+            <td rowspan="2">
+                <?= $this->header->outcomeInvoiceMainDate ?>
+            </td>
+            <td>
+                <?= $this->header->outcomeInvoiceMainCurrency ?>
+            </td>
+            <td>
+                <?= $this->header->outcomeInvoiceMainExchangeRate ?>
+            </td>
+            <td rowspan="2">
+                <?= $this->header->preInvoiceAgentShortName ?>
+            </td>
+            <td colspan="2">
+                <?= $this->header->outcomeInvoiceMainTypeOfServiceName ?>
+            </td>
+        </tr>
+        </tbody>
+        <thead>
+        <tr>
+            <th>Customer</th>
+            <th>Air Operator</th>
+            <th>Flight #</th>
+            <th>Aircraft</th>
+            <th>Airport Arr</th>
+            <th>Airport Dep</th>
+            <th>Date Arr</th>
+            <th>Date Dep</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td rowspan="2">
+                <?= $this->header->flightCustomerShortName ?>
+            </td>
+            <td rowspan="2">
+                <?= $this->header->flightAirOperatorShortName ?>
+            </td>
+            <td rowspan="2">
+                <?= $this->header->outcomeInvoiceFlightNumber ?>
+            </td>
+            <td rowspan="2">
+                <?= $this->header->flightAircraftTypeName ?> (<?= $this->header->flightAircraftName ?>)
+            </td>
+            <td rowspan="2">
+                <?= $this->header->preInvoiceAirportICAO ?> (<?= $this->header->preInvoiceAirportIATA ?>)
+            </td>
+            <td rowspan="2">
+                <?= $this->header->legDepToNextAirportICAO ?> (<?= $this->header->legDepToNextAirportIATA ?>)
+            </td>
+            <td>
+                <?= $this->header->outcomeInvoiceMainDateArr ?>
+            </td>
+            <td>
+                <?= $this->header->outcomeInvoiceMainDateDep ?>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <br/>
+<?=
+$this->partial('fc-flight-management/_widgets/tables/permission-outcome-invoice.phtml',
+    array(
+        'header' => $this->header,
+    )
+)
+?>
