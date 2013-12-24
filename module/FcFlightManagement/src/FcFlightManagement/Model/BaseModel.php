@@ -202,14 +202,13 @@ class BaseModel extends AbstractTableGateway
     public $permissionPreInvoiceTableFieldsMap = array(
         'preInvoiceId' => 'id',
         'preInvoiceHeaderId' => 'headerId',
-        'preInvoiceLegId' => 'legId',
-        'preInvoiceAirportId' => 'airportId',
-        'preInvoiceTypeOfApServiceId' => 'typeOfApServiceId',
         'preInvoiceAgentId' => 'agentId',
-        'preInvoicePrice' => 'price',
-        'preInvoiceCurrency' => 'currency',
-        'preInvoiceExchangeRate' => 'exchangeRate',
-        'preInvoicePriceTotalExchangedToUsd' => 'priceUSD',
+        'preInvoiceLegId' => 'legId',
+        'preInvoiceCountryId' => 'countryId',
+        'preInvoiceTypeOfPermission' => 'typeOfPermission',
+        'preInvoiceRequestTime' => 'requestTime',
+        'preInvoicePermission' => 'permission',
+        'preInvoiceComment' => 'comment',
         'preInvoiceStatus' => 'status',
     );
 

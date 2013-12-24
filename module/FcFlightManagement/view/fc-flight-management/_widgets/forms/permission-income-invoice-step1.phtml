@@ -12,28 +12,27 @@
             <th>Flight #</th>
             <th>Aircraft</th>
             <th>Airport Dep</th>
-            <th>Fuel supplier</th>
-            <th>Date</th>
+            <th>Date Dep</th>
+            <th>Airport Arr</th>
+            <th>Date Arr</th>
+            <th>Country</th>
+            <th>Agent</th>
+            <th>Type of permission</th>
+            <th>Number of permission</th>
+            <th>Price</th>
             <th>Quantity</th>
             <th>Unit</th>
-            <th>Price</th>
-            <th>TAX</th>
-            <th>MOT</th>
-            <th>VAT, %</th>
-            <th>Deliver</th>
-            <th>Total Price</th>
             <th>Total</th>
-            <th>Exchange Rate</th>
             <th>Exchange Total, USD</th>
         </tr>
         </thead>
         <tbody>
         <? foreach ($this->data as $row): ?>
-<!--            --><?// \Zend\Debug\Debug::dump($row) ?>
-            <tr data-permissionRow="<?= $row->permissionId ?>" class="<? if ($row->incomeInvoiceId): ?>success<? endif ?>">
+            <? \Zend\Debug\Debug::dump($row) ?>
+            <tr data-dataRow="<?= $row->preInvoiceId ?>" class="<? if ($row->incomeInvoiceMainId): ?>success<? endif ?>">
                 <td>
-                    <input type="checkbox" class="permissionsSelected" name="permissionsSelected[]"
-                           data-permissionId="<?= $row->permissionId ?>" value="<?= $row->permissionId ?>">
+                    <input type="checkbox" class="rowsSelected" name="rowsSelected[]"
+                           data-permissionId="<?= $row->preInvoiceId ?>" value="<?= $row->preInvoiceId ?>">
                 </td>
                 <td>
                     <a href="<?=
@@ -43,116 +42,109 @@
                         <?= $row->flightRefNumberOrder ?>
                     </a>
                 </td>
-                <td>
+                <td class="noWrap">
                     <? if ($row->incomeInvoiceMainId): ?>
                         <a href="<?=
-                        $this->url('management/permission/income-invoice-show',
+                        $this->url('management/ap-service/income-invoice-show',
                             array('id' => $row->incomeInvoiceMainId));?>"
                            target="_blank">
-                            <?= $row->incomeInvoiceNumber ?>
+                            <?= $row->incomeInvoiceMainNumber ?>
                         </a>
                     <? else: ?>
                         &mdash;
                     <? endif; ?>
                 </td>
                 <td>
-                    <?= $row->flightAgentShortName ?>
+                    <?= $row->flightCustomerShortName ?>
                 </td>
                 <td>
                     <?= $row->flightAirOperatorShortName ?>
                 </td>
                 <td>
-                    <?= $row->flightAirOperatorNumber ?>
-                </td>
-                <td>
-                    <?= $row->flightAircraftTypeName . ' (' . $row->flightAircraftName . ')' ?>
-                </td>
-                <td>
-                    <?= $row->permissionAirportICAO . ' (' . $row->permissionAirportIATA . ')' ?>
-                </td>
-                <td class="permissionAgentShortName">
-                    <?= $row->permissionAgentShortName ?>
-                </td>
-                <td>
-                    <? if ($row->incomeInvoiceRefuelDate): ?>
-                        <?= date('d-m-Y', $row->incomeInvoiceRefuelDate) ?>
+                    <? if ($row->incomeInvoiceFlightNumber): ?>
+                        <?= $row->incomeInvoiceFlightNumber ?>
                     <? else: ?>
-                        <?= date('d-m-Y', $row->permissionDate) ?>
+                        <?= $row->legFlightNumberText ?>
+                    <? endif; ?>
+                </td>
+                <td class="noWrap">
+                    <?= $row->flightAircraftTypeName ?> (<?= $row->flightAircraftName ?>)
+                </td>
+                <td>
+                    <?= $row->preInvoiceAirportICAO . ' (' . $row->preInvoiceAirportIATA . ')' ?>
+                </td>
+                <td>
+                    <? if ($row->incomeInvoiceMainDateArr): ?>
+                        <?= date('d-m-Y', $row->incomeInvoiceMainDateArr) ?>
+                    <? else: ?>
+                        <?= date('d-m-Y', $row->legArrTime) ?>
                     <? endif; ?>
                 </td>
                 <td>
-                    <? if ($row->incomeInvoiceRefuelQuantityOtherUnits): ?>
-                        <?= $row->incomeInvoiceRefuelQuantityOtherUnits ?>
+                    <? if ($row->incomeInvoiceMainDateDep): ?>
+                        <?= date('d-m-Y', $row->incomeInvoiceMainDateDep) ?>
+                    <? else: ?>
+                        <?= date('d-m-Y', $this->advancedDataWithOutIncomeInvoice[$row->legId]['legDepToNextAirportTime']) ?>
+                    <? endif; ?>
+                </td>
+                <td>
+                    <? if ($row->incomeInvoiceMainArrDate): ?>
+                        <?= date('d-m-Y', $row->incomeInvoiceMainArrDate) ?>
+                    <? else: ?>
+                        <?= date('d-m-Y', $row->legDepDate) ?>
+                    <? endif; ?>
+                </td>
+                <td>
+                    <?= $row->preInvoiceCountryName ?>
+                </td>
+                <td class="preInvoiceAgentShortName">
+                    <?= $row->preInvoiceAgentShortName ?>
+                </td>
+                <td>
+                    <? if ($row->incomeInvoiceTypeOfPermission): ?>
+                        <?= $row->incomeInvoiceTypeOfPermission ?>
+                    <? else: ?>
+                        <?= $row->preInvoiceTypeOfPermission ?>
+                    <? endif; ?>
+                </td>
+                <td>
+                    <? if ($row->incomeInvoiceNumberOfPermission): ?>
+                        <?= $row->incomeInvoiceNumberOfPermission ?>
+                    <? else: ?>
+                        <?= $row->preInvoiceNumberOfPermission ?>
+                    <? endif; ?>
+                </td>
+                <td class="text-right">
+                    <? if ($row->incomeInvoiceItemPrice): ?>
+                        <?= $row->incomeInvoiceItemPrice ?><small>, <?= $row->incomeInvoiceCurrency ?> </small>
                     <? else: ?>
                         &mdash;
                     <? endif; ?>
                 </td>
                 <td>
-                    <? if ($row->incomeInvoiceRefuelUnitName): ?>
-                        <?= $row->incomeInvoiceRefuelUnitName ?>
+                    <? if ($row->incomeInvoiceQuantityOtherUnits): ?>
+                        <?= $row->incomeInvoiceQuantityOtherUnits ?>
+                    <? else: ?>
+                        &mdash;
+                    <? endif; ?>
+                </td>
+                <td>
+                    <? if ($row->incomeInvoiceUnitName): ?>
+                        <?= $row->incomeInvoiceUnitName ?>
+                    <? else: ?>
+                        &mdash;
+                    <? endif; ?>
+                </td>
+                <td>
+                    <? if ($row->incomeInvoicePriceTotal): ?>
+                        <?= $row->incomeInvoicePriceTotal ?><small>, <?= $row->incomeInvoiceCurrency ?> </small>
                     <? else: ?>
                         &mdash;
                     <? endif; ?>
                 </td>
                 <td class="text-right">
-                    <? if ($row->incomeInvoiceRefuelItemPrice): ?>
-                        <?= $row->incomeInvoiceRefuelItemPrice ?><small>, <?= $row->incomeInvoiceCurrency ?> </small>
-                    <? else: ?>
-                        &mdash;
-                    <? endif; ?>
-                </td>
-                <td>
-                    <? if ($row->incomeInvoiceRefuelTax): ?>
-                        <?= $row->incomeInvoiceRefuelTax ?>
-                    <? else: ?>
-                        &mdash;
-                    <? endif; ?>
-                </td>
-                <td>
-                    <? if ($row->incomeInvoiceRefuelMot): ?>
-                        <?= $row->incomeInvoiceRefuelMot ?>
-                    <? else: ?>
-                        &mdash;
-                    <? endif; ?>
-                </td>
-                <td>
-                    <? if ($row->incomeInvoiceRefuelVat): ?>
-                        <?= $row->incomeInvoiceRefuelVat ?>
-                    <? else: ?>
-                        &mdash;
-                    <? endif; ?>
-                </td>
-                <td>
-                    <? if ($row->incomeInvoiceRefuelDeliver): ?>
-                        <?= $row->incomeInvoiceRefuelDeliver ?>
-                    <? else: ?>
-                        &mdash;
-                    <? endif; ?>
-                </td>
-                <td>
-                    <? if ($row->incomeInvoiceRefuelPrice): ?>
-                        <?= $row->incomeInvoiceRefuelPrice ?><small>, <?= $row->incomeInvoiceCurrency ?> </small>
-                    <? else: ?>
-                        &mdash;
-                    <? endif; ?>
-                </td>
-                <td>
-                    <? if ($row->incomeInvoiceRefuelPriceTotal): ?>
-                        <?= $row->incomeInvoiceRefuelPriceTotal ?><small>, <?= $row->incomeInvoiceCurrency ?> </small>
-                    <? else: ?>
-                        &mdash;
-                    <? endif; ?>
-                </td>
-                <td>
-                    <? if ($row->incomeInvoiceExchangeRate): ?>
-                        <?= $row->incomeInvoiceExchangeRate ?>
-                    <? else: ?>
-                        &mdash;
-                    <? endif; ?>
-                </td>
-                <td class="text-right">
-                    <? if ($row->incomeInvoiceRefuelExchangeToUsdPriceTotal): ?>
-                        <?= $row->incomeInvoiceRefuelExchangeToUsdPriceTotal ?>
+                    <? if ($row->incomeInvoiceExchangeToUsdPriceTotal): ?>
+                        <?= $row->incomeInvoiceExchangeToUsdPriceTotal ?>
                     <? else: ?>
                         &mdash;
                     <? endif; ?>
@@ -160,7 +152,7 @@
             </tr>
         <? endforeach; ?>
         <tr>
-            <td colspan="21">
+            <td colspan="20">
                 <input name="submitBtn" type="submit" class="btn btn-primary pull-right" value="Apply">
             </td>
         </tr>
