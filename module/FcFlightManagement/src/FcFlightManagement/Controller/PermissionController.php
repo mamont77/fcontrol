@@ -338,6 +338,7 @@ class PermissionController extends FlightController
                 'libraries' => array(
                     'aircrafts' => $this->getAircrafts(),
                     'agents' => $this->getKontragents(),
+                    'countries' => $this->getCountries(),
                     'airports' => $this->getAirports(),
                     'customers' => $this->getKontragents(),
                     'airOperators' => $this->getAirOperators(),

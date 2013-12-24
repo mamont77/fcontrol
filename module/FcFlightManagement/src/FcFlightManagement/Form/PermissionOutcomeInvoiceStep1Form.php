@@ -33,6 +33,11 @@ class PermissionOutcomeInvoiceStep1Form extends BaseForm
     /**
      * @var array
      */
+    protected $_countries = array();
+
+    /**
+     * @var array
+     */
     protected $_airports = array();
 
     /**
@@ -65,6 +70,7 @@ class PermissionOutcomeInvoiceStep1Form extends BaseForm
         $this->setLibrary('_aircrafts', $options['libraries']['aircrafts'],
             'id', array('aircraft_type_name', 'reg_number'));
         $this->setLibrary('_agents', $options['libraries']['agents'], 'id', 'name');
+        $this->setLibrary('_countries', $options['libraries']['countries'], 'id', 'name');
         $this->setLibrary('_airports', $options['libraries']['airports'], 'id', array('code_icao', 'code_iata'));
         $this->setLibrary('_customers', $options['libraries']['customers'], 'id', 'name');
         $this->setLibrary('_airOperators', $options['libraries']['airOperators'], 'id', 'name');
@@ -130,12 +136,42 @@ class PermissionOutcomeInvoiceStep1Form extends BaseForm
         ));
 
         $this->add(array(
-            'name' => 'airportId',
+            'name' => 'countryId',
             'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
-                'id' => 'airportId',
+                'id' => 'countryId',
+                'class' => 'chosen input-medium',
+                'data-placeholder' => 'Country',
+                'required' => false,
+            ),
+            'options' => array(
+                'empty_option' => '',
+                'value_options' => $this->_countries,
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'airportDepId',
+            'type' => 'Zend\Form\Element\Select',
+            'attributes' => array(
+                'id' => 'airportDepId',
                 'class' => 'chosen input-small',
-                'data-placeholder' => 'Airport',
+                'data-placeholder' => 'Airport Dep',
+                'required' => false,
+            ),
+            'options' => array(
+                'empty_option' => '',
+                'value_options' => $this->_airports,
+            ),
+        ));
+
+        $this->add(array(
+            'name' => 'airportArrId',
+            'type' => 'Zend\Form\Element\Select',
+            'attributes' => array(
+                'id' => 'airportArrId',
+                'class' => 'chosen input-small',
+                'data-placeholder' => 'Airport Arr',
                 'required' => false,
             ),
             'options' => array(

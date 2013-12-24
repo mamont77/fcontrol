@@ -40,7 +40,9 @@ echo $this->form()->openTag($form) . PHP_EOL;
         <th>Date To</th>
         <th>Aircraft</th>
         <th>Agent</th>
-        <th>Airport</th>
+        <th>Country</th>
+        <th>Airport Dep</th>
+        <th>Airport Arr</th>
         <th>Customer</th>
         <th>Air Operator</th>
         <th>Type of invoice</th>
@@ -83,7 +85,21 @@ echo $this->form()->openTag($form) . PHP_EOL;
         </td>
         <td>
             <?php
-            $field = $form->get('airportId');
+            $field = $form->get('countryId');
+            echo $this->formSelect($field);
+            ?>
+            <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
+        </td>
+        <td>
+            <?php
+            $field = $form->get('airportDepId');
+            echo $this->formSelect($field);
+            ?>
+            <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
+        </td>
+        <td>
+            <?php
+            $field = $form->get('airportArrId');
             echo $this->formSelect($field);
             ?>
             <ul class="errors"><?= $this->formElementErrors($field) ?></ul>

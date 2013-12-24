@@ -38,7 +38,9 @@ class PermissionOutcomeInvoiceStep1Filter implements InputFilterAwareInterface
     public $dateTo;
     public $aircraftId;
     public $agentId;
-    public $airportId;
+    public $countryId;
+    public $airportDepId;
+    public $airportArrId;
     public $customerId;
     public $airOperatorId;
     public $typeOfInvoice;
@@ -82,7 +84,9 @@ class PermissionOutcomeInvoiceStep1Filter implements InputFilterAwareInterface
         $this->dateTo = (isset($data['dateTo'])) ? $data['dateTo'] : null;
         $this->aircraftId = (isset($data['aircraftId'])) ? $data['aircraftId'] : null;
         $this->agentId = (isset($data['agentId'])) ? $data['agentId'] : null;
-        $this->airportId = (isset($data['airportId'])) ? $data['airportId'] : null;
+        $this->countryId = (isset($data['countryId'])) ? $data['countryId'] : null;
+        $this->airportDepId = (isset($data['airportDepId'])) ? $data['airportDepId'] : null;
+        $this->airportArrId = (isset($data['airportArrId'])) ? $data['airportArrId'] : null;
         $this->customerId = (isset($data['customerId'])) ? $data['customerId'] : null;
         $this->airOperatorId = (isset($data['airOperatorId'])) ? $data['airOperatorId'] : null;
         $this->typeOfInvoice = (isset($data['typeOfInvoice'])) ? $data['typeOfInvoice'] : null;
@@ -182,9 +186,24 @@ class PermissionOutcomeInvoiceStep1Filter implements InputFilterAwareInterface
                 ),
             )));
 
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'countryId',
+                'required' => false,
+                'filters' => array(
+                    array('name' => 'Int'),
+                ),
+            )));
 
             $inputFilter->add($factory->createInput(array(
-                'name' => 'airportId',
+                'name' => 'airportDepId',
+                'required' => false,
+                'filters' => array(
+                    array('name' => 'Int'),
+                ),
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'airportArrId',
                 'required' => false,
                 'filters' => array(
                     array('name' => 'Int'),
