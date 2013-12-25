@@ -217,15 +217,10 @@ class BaseModel extends AbstractTableGateway
      */
     public $permissionIncomeInvoiceMainTableFieldsMap = array(
         'incomeInvoiceMainId' => 'id',
-        'incomeInvoiceMainPreInvoiceId' => 'preInvoiceId',
         'incomeInvoiceMainNumber' => 'number',
         'incomeInvoiceMainDate' => 'date',
         'incomeInvoiceMainCurrency' => 'currency',
         'incomeInvoiceMainExchangeRate' => 'exchangeRate',
-        'incomeInvoiceMainDateArr' => 'dateArr',
-        'incomeInvoiceMainDateDep' => 'dateDep',
-        'incomeInvoiceFlightNumber' => 'flightNumber',
-        'incomeInvoiceMainTypeOfServiceId' => 'typeOfServiceId',
         'incomeInvoiceMainStatus' => 'status',
     );
 
@@ -235,8 +230,12 @@ class BaseModel extends AbstractTableGateway
     public $permissionIncomeInvoiceDataTableFieldsMap = array(
         'incomeInvoiceDataId' => 'id',
         'incomeInvoiceDataInvoiceId' => 'invoiceId',
-        'incomeInvoiceDataTypeOfServiceId' => 'typeOfServiceId',
-        'incomeInvoiceDataItemPrice' => 'itemPrice',
+        'incomeInvoiceDataPreInvoiceId' => 'preInvoiceId',
+        'incomeInvoiceDataFlightNumber' => 'flightNumber',
+        'incomeInvoiceDataAircraftId' => 'aircraftId',
+        'incomeInvoiceDataDateDep' => 'dateDep',
+        'incomeInvoiceDataDateArr' => 'dateArr',
+        'incomeInvoiceDataTypeOfPermission' => 'typeOfPermission',
         'incomeInvoiceDataQuantity' => 'quantity',
         'incomeInvoiceDataUnitId' => 'unitId',
         'incomeInvoiceDataPriceTotal' => 'priceTotal',
@@ -248,18 +247,10 @@ class BaseModel extends AbstractTableGateway
      */
     public $permissionOutcomeInvoiceMainTableFieldsMap = array(
         'outcomeInvoiceMainId' => 'id',
-        'outcomeInvoiceMainIncomeInvoiceId' => 'incomeInvoiceId',
         'outcomeInvoiceMainNumber' => 'number',
         'outcomeInvoiceMainDate' => 'date',
         'outcomeInvoiceMainCurrency' => 'currency',
         'outcomeInvoiceMainExchangeRate' => 'exchangeRate',
-        'outcomeInvoiceMainDateArr' => 'dateArr',
-        'outcomeInvoiceMainDateDep' => 'dateDep',
-        'outcomeInvoiceFlightNumber' => 'flightNumber',
-        'outcomeInvoiceMainTypeOfServiceId' => 'typeOfServiceId',
-        'disbursement' => 'disbursement',
-        'disbursementTotal' => 'disbursementTotal',
-        'disbursementTotalExchangedToUsd' => 'disbursementTotalExchangedToUsd',
         'outcomeInvoiceMainStatus' => 'status',
     );
 
@@ -268,14 +259,17 @@ class BaseModel extends AbstractTableGateway
      */
     public $permissionOutcomeInvoiceDataTableFieldsMap = array(
         'outcomeInvoiceDataId' => 'id',
-        'outcomeInvoiceDataInvoiceId' => 'invoiceId',
-        'outcomeInvoiceDataTypeOfService' => 'typeOfServiceId',
-        'outcomeInvoiceDataItemPrice' => 'itemPrice',
+        'incomeInvoiceDataInvoiceId' => 'invoiceId',
+        'outcomeInvoiceDataIncomeInvoiceId' => 'incomeInvoiceId',
+        'outcomeInvoiceDataFlightNumber' => 'flightNumber',
+        'outcomeInvoiceDataAircraftId' => 'aircraftId',
+        'outcomeInvoiceDataDateDep' => 'dateDep',
+        'outcomeInvoiceDataDateArr' => 'dateArr',
+        'outcomeInvoiceDataTypeOfPermission' => 'typeOfPermission',
         'outcomeInvoiceDataQuantity' => 'quantity',
         'outcomeInvoiceDataUnitId' => 'unitId',
         'outcomeInvoiceDataPriceTotal' => 'priceTotal',
         'outcomeInvoiceDataPriceTotalExchangedToUsd' => 'priceTotalExchangedToUsd',
-        'outcomeInvoiceDataIsAdditionalInfo' => 'isAdditionalInfo',
     );
 
     /**
