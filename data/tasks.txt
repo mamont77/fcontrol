@@ -31,3 +31,8 @@ https://github.com/raykolbe/DOMPDFModule
 24.12
 10:20
 #96: Management Permissions - Income Invoice - структура файлов и фильтр. #96: Search Permission income (step 1). #96: Create Permission income invoice.
+
+25.12
+13:00
+#96: Create Permission income invoice.
+14:50

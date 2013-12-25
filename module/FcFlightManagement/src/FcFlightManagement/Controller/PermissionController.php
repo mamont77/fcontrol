@@ -174,14 +174,19 @@ class PermissionController extends FlightController
         $request = $this->getRequest();
 
         $result = array();
-        $units = $this->getPermissionUnits();
-        $typeOfPermission = array();
-        $typeOfPermissionObj = $this->getTypeOfPermissions();
-        foreach ($typeOfPermissionObj as $type) {
-            $typeOfPermission[$type->id] = $type->name;
+        $units = array();
+        $unitsObj = $this->getUnits();
+        foreach ($unitsObj as $unit) {
+            $units[$unit->id] = $unit->name;
         }
         $currencies = new ApServiceForm(null, array());
         $currencies = $currencies->getCurrencyExchangeRate();
+        $aircrafts = array();
+        $aircraftsObj = $this->getAircrafts();
+        foreach ($aircraftsObj as $aircraft) {
+            $aircrafts[$aircraft->id] = $aircraft->aircraft_type_name . ' (' . $aircraft->reg_number . ')';
+        }
+        $typesOfPermission = $this->getTypeOfPermissions();
 
         if ($request->isPost()) {
             $data = $request->getPost();
@@ -191,33 +196,14 @@ class PermissionController extends FlightController
                 return $this->redirect()->toRoute('management/permission/income-invoice-step1');
             }
 
-            $result = $this->getPermissionIncomeInvoiceSearchModel()->findByParams($data)->current();
-            $result->legDepToNextAirportTime = '';
-            $result->legDepToNextAirportICAO = '';
-            $result->legDepToNextAirportIATA = '';
-            $legs = $this->getLegModel()->getByHeaderId($result->preInvoiceHeaderId);
-
-            $currentLegId = $result->legId;
-            $nextLegs = array();
-            foreach ($legs as $leg) {
-                if ($leg['id'] > $currentLegId) {
-                    $nextLegs = $leg;
-                    break;
-                }
-
-            }
-            if (count($nextLegs)) {
-                $result->legDepToNextAirportTime = (string)\DateTime::createFromFormat('d-m-Y',
-                    $nextLegs['dateOfFlight'])->setTime(0, 0)->getTimestamp();
-                $result->legDepToNextAirportICAO = $nextLegs['apDepIcao'];
-                $result->legDepToNextAirportIATA = $nextLegs['apDepIata'];
-            }
+            $result = $this->getPermissionIncomeInvoiceSearchModel()->findByParams($data);
         }
 
         return array(
             'currencies' => $currencies,
             'units' => $units,
-            'typeOfServices' => $typeOfServices,
+            'aircrafts' => $aircrafts,
+            'typesOfPermission' => $typesOfPermission,
             'result' => $result,
         );
     }
@@ -690,19 +676,5 @@ class PermissionController extends FlightController
         }
 
         return $this->permissionOutcomeInvoiceDataModel;
-    }
-
-    /**
-     * @return array
-     */
-    public function getPermissionUnits()
-    {
-        return array(
-            'Length' => 'Length',
-            'Weight' => 'Weight',
-            'Time' => 'Time',
-            'Quantity' => 'Quantity',
-            'Other' => 'Other',
-        );
     }
 }

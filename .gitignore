@@ -11,3 +11,5 @@ composer.lock
 /data/a_city.sql
 /data/cacharte_db.sql
 /data/logs
+/public/mamont/sxd/cfg.php
+/public/mamont/sxd/ses.php
