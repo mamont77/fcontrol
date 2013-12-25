@@ -58,14 +58,14 @@ class PermissionIncomeInvoiceDataModel extends PermissionIncomeInvoiceMainModel
         $select->from($this->table);
 
         $select->columns($this->permissionIncomeInvoiceDataTableFieldsMap);
-
-        $select->join(
-            array('incomeInvoiceDataTypeOfService' => 'library_type_of_ap_service'),
-            $this->table . '.typeOfServiceId = incomeInvoiceDataTypeOfService.id',
-            array(
-                'incomeInvoiceDataTypeOfServiceName' => 'name',
-            ),
-            'left');
+//
+//        $select->join(
+//            array('incomeInvoiceDataTypeOfService' => 'library_type_of_ap_service'),
+//            $this->table . '.typeOfServiceId = incomeInvoiceDataTypeOfService.id',
+//            array(
+//                'incomeInvoiceDataTypeOfServiceName' => 'name',
+//            ),
+//            'left');
 
         $select->where(array($this->table . '.invoiceId' => $id));
         $select->order(array($this->table . '.id ' . $select::ORDER_ASCENDING));

@@ -221,6 +221,7 @@ class BaseModel extends AbstractTableGateway
         'incomeInvoiceMainDate' => 'date',
         'incomeInvoiceMainCurrency' => 'currency',
         'incomeInvoiceMainExchangeRate' => 'exchangeRate',
+        'incomeInvoiceMainAgentId' => 'agentId',
         'incomeInvoiceMainStatus' => 'status',
     );
 
@@ -251,6 +252,7 @@ class BaseModel extends AbstractTableGateway
         'outcomeInvoiceMainDate' => 'date',
         'outcomeInvoiceMainCurrency' => 'currency',
         'outcomeInvoiceMainExchangeRate' => 'exchangeRate',
+        'outcomeInvoiceMainCustomerId' => 'customerId',
         'outcomeInvoiceMainStatus' => 'status',
     );
 

@@ -62,85 +62,11 @@ class PermissionIncomeInvoiceMainModel extends BaseModel
         $select->columns($this->permissionIncomeInvoiceMainTableFieldsMap);
 
         $select->join(
-            array('preInvoice' => 'flightPermissionForm'),
-            $this->table . '.preInvoiceId = preInvoice.id',
-            $this->permissionPreInvoiceTableFieldsMap,
-            'left');
-
-        $select->join(
-            array('flight' => $this->flightTableName),
-            'preInvoice.headerId = flight.id',
-            $this->flightTableFieldsMap,
-            'left');
-
-        $select->join(
-            array('leg' => $this->legTableName),
-            'preInvoice.legId = leg.id',
-            $this->legTableFieldsMap,
-            'left');
-
-        $select->join(
-            array('preInvoiceAgent' => 'library_kontragent'),
-            'preInvoice.agentId = preInvoiceAgent.id',
+            array('invoiceAgent' => 'library_kontragent'),
+            $this->table . '.agentId = invoiceAgent.id',
             array(
-                'preInvoiceAgentName' => 'name',
-                'preInvoiceAgentShortName' => 'short_name',
-            ),
-            'left');
-
-        $select->join(
-            array('incomeInvoiceMainTypeOfService' => 'library_type_of_ap_service'),
-            $this->table . '.typeOfServiceId = incomeInvoiceMainTypeOfService.id',
-            array(
-                'incomeInvoiceMainTypeOfServiceName' => 'name',
-            ),
-            'left');
-
-        $select->join(
-            array('flightCustomer' => 'library_kontragent'),
-            'flight.kontragent = flightCustomer.id',
-            array(
-                'flightCustomerName' => 'name',
-                'flightCustomerShortName' => 'short_name',
-            ),
-            'left');
-
-        $select->join(
-            array('flightAirOperator' => 'library_air_operator'),
-            'flight.airOperator = flightAirOperator.id',
-            array(
-                'flightAirOperatorName' => 'name',
-                'flightAirOperatorShortName' => 'short_name',
-                'flightAirOperatorICAO' => 'code_icao',
-                'flightAirOperatorIATA' => 'code_iata',
-            ),
-            'left');
-
-        $select->join(
-            array('flightAircraft' => 'library_aircraft'),
-            'flight.aircraftId = flightAircraft.id',
-            array(
-                'flightAircraftTypeId' => 'aircraft_type',
-                'flightAircraftName' => 'reg_number',
-            ),
-            'left');
-
-        $select->join(
-            array('flightAircraftType' => 'library_aircraft_type'),
-            'flightAircraft.aircraft_type = flightAircraftType.id',
-            array(
-                'flightAircraftTypeName' => 'name',
-            ),
-            'left');
-
-        $select->join(
-            array('legAirportArr' => 'library_airport'),
-            'leg.apArrAirportId = legAirportArr.id',
-            array(
-                'legAirportArrName' => 'name',
-                'legAirportArrShortName' => 'short_name',
-                'legAirportArrICAO' => 'code_icao',
-                'legAirportArrIATA' => 'code_iata',
+                'invoiceAgentName' => 'name',
+                'invoiceAgentShortName' => 'short_name',
             ),
             'left');
 

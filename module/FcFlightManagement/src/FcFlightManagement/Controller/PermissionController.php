@@ -117,44 +117,44 @@ class PermissionController extends FlightController
                 $data = $searchForm->getData();
                 $result = $this->getPermissionIncomeInvoiceSearchModel()->findByParams($data);
 
-                foreach ($result as $permissionMain) {
-                    if ($permissionMain->incomeInvoiceMainId) {
-                        $data = $this->getPermissionIncomeInvoiceDataModel()
-                            ->getByInvoiceId($permissionMain->incomeInvoiceMainId);
-                        foreach ($data as $permissionData) {
-                            $advancedDataWithIncomeInvoice[$permissionMain->incomeInvoiceMainId]['incomeInvoiceDataPriceTotal']
-                                += $permissionData->incomeInvoiceDataPriceTotal;
-                            $advancedDataWithIncomeInvoice[$permissionMain->incomeInvoiceMainId]['incomeInvoiceDataPriceTotalExchangedToUsd']
-                                += $permissionData->incomeInvoiceDataPriceTotalExchangedToUsd;
-                        }
-                    }
-                }
-
-                foreach ($result as $permissionMain) {
-                    if (!$permissionMain->incomeInvoiceMainId) {
-                        $legs = $this->getLegModel()->getByHeaderId($permissionMain->preInvoiceHeaderId);
-
-                        $currentLegId = $permissionMain->legId;
-                        $nextLegs = array();
-                        foreach ($legs as $leg) {
-                            if ($leg['id'] > $currentLegId) {
-                                $nextLegs = $leg;
-                                break;
-                            }
-
-                        }
-                        if (count($nextLegs)) {
-                            $advancedDataWithOutIncomeInvoice[$permissionMain->legId]['legDepToNextAirportTime']
-                                = (string)\DateTime::createFromFormat('d-m-Y', $nextLegs['dateOfFlight'])
-                                ->setTime(0, 0)->getTimestamp();
-                            $advancedDataWithOutIncomeInvoice[$permissionMain->legId]['legDepToNextAirportICAO']
-                                = $nextLegs['apDepIcao'];
-                            $advancedDataWithOutIncomeInvoice[$permissionMain->legId]['legDepToNextAirportIATA']
-                                = $nextLegs['apDepIata'];
-                        }
-
-                    }
-                }
+//                foreach ($result as $permissionMain) {
+//                    if ($permissionMain->incomeInvoiceMainId) {
+//                        $data = $this->getPermissionIncomeInvoiceDataModel()
+//                            ->getByInvoiceId($permissionMain->incomeInvoiceMainId);
+//                        foreach ($data as $permissionData) {
+//                            $advancedDataWithIncomeInvoice[$permissionMain->incomeInvoiceMainId]['incomeInvoiceDataPriceTotal']
+//                                += $permissionData->incomeInvoiceDataPriceTotal;
+//                            $advancedDataWithIncomeInvoice[$permissionMain->incomeInvoiceMainId]['incomeInvoiceDataPriceTotalExchangedToUsd']
+//                                += $permissionData->incomeInvoiceDataPriceTotalExchangedToUsd;
+//                        }
+//                    }
+//                }
+//
+//                foreach ($result as $permissionMain) {
+//                    if (!$permissionMain->incomeInvoiceMainId) {
+//                        $legs = $this->getLegModel()->getByHeaderId($permissionMain->preInvoiceHeaderId);
+//
+//                        $currentLegId = $permissionMain->legId;
+//                        $nextLegs = array();
+//                        foreach ($legs as $leg) {
+//                            if ($leg['id'] > $currentLegId) {
+//                                $nextLegs = $leg;
+//                                break;
+//                            }
+//
+//                        }
+//                        if (count($nextLegs)) {
+//                            $advancedDataWithOutIncomeInvoice[$permissionMain->legId]['legDepToNextAirportTime']
+//                                = (string)\DateTime::createFromFormat('d-m-Y', $nextLegs['dateOfFlight'])
+//                                ->setTime(0, 0)->getTimestamp();
+//                            $advancedDataWithOutIncomeInvoice[$permissionMain->legId]['legDepToNextAirportICAO']
+//                                = $nextLegs['apDepIcao'];
+//                            $advancedDataWithOutIncomeInvoice[$permissionMain->legId]['legDepToNextAirportIATA']
+//                                = $nextLegs['apDepIata'];
+//                        }
+//
+//                    }
+//                }
             }
         }
 
@@ -284,27 +284,9 @@ class PermissionController extends FlightController
         }
 
         $header = $this->getPermissionIncomeInvoiceMainModel()->get($invoiceId);
-        $header->legDepToNextAirportTime = '';
-        $header->legDepToNextAirportICAO = '';
-        $header->legDepToNextAirportIATA = '';
-        $legs = $this->getLegModel()->getByHeaderId($header->preInvoiceHeaderId);
-        $currentLegId = $header->legId;
-        $nextLegs = array();
-        foreach ($legs as $leg) {
-            if ($leg['id'] > $currentLegId) {
-                $nextLegs = $leg;
-                break;
-            }
-
-        }
-        if (count($nextLegs)) {
-            $header->legDepToNextAirportTime = (string)\DateTime::createFromFormat('d-m-Y',
-                $nextLegs['dateOfFlight'])->setTime(0, 0)->getTimestamp();
-            $header->legDepToNextAirportICAO = $nextLegs['apDepIcao'];
-            $header->legDepToNextAirportIATA = $nextLegs['apDepIata'];
-        }
 
         $data = $this->getPermissionIncomeInvoiceDataModel()->getByInvoiceId($invoiceId);
+//        \Zend\Debug\Debug::dump($data);
 
         foreach ($data as $row) {
             $header->data[$row->incomeInvoiceDataId] = $row;

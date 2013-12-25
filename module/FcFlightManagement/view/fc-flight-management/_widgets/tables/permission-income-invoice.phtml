@@ -1,9 +1,18 @@
-<?// \Zend\Debug\Debug::dump($this->header); ?>
 <table id="invoiceData"
        class="table table-bordered table-hover table-condensed <? if ($this->fixedHeader): ?> table-fixed-header<? endif ?>">
     <thead>
     <tr>
-        <th>Description</th>
+        <th>ORD</th>
+        <th>Customer</th>
+        <th>Air Operator</th>
+        <th>Flight #</th>
+        <th>Aircraft</th>
+        <th>Airport Dep</th>
+        <th>Date Dep</th>
+        <th>Airport Arr</th>
+        <th>Date Arr</th>
+        <th>Country</th>
+        <th>Permission number</th>
         <th>Price, <span class="currency"><?= $this->header->incomeInvoiceMainCurrency ?></span></th>
         <th>Quantity</th>
         <th>Unit</th>
@@ -13,36 +22,51 @@
     </thead>
     <tbody>
     <? foreach ($this->header->data as $row): ?>
-<!--        --><?// \Zend\Debug\Debug::dump($row); ?>
-        <tr class="dataRow">
-            <td>
-                <?= $row->incomeInvoiceDataTypeOfServiceName ?>
+<!--        --><?// \Zend\Debug\Debug::dump($row) ?>
+        <tr id="invoiceId_<?= $row['incomeInvoiceDataId'] ?>">
+            <td class="noWrap">
+                <?= $row['flightRefNumberOrder'] ?>
             </td>
             <td>
-                <?= $row->incomeInvoiceDataItemPrice ?>
             </td>
             <td>
-                <?= $row->incomeInvoiceDataQuantity ?>
             </td>
             <td>
-                <?= $row->incomeInvoiceDataUnitId ?>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
             </td>
             <td>
                 <?php
-                $priceTotal += $row->incomeInvoiceDataPriceTotal;
+                $priceTotal += $row['priceTotal'];
                 ?>
-                <?= $row->incomeInvoiceDataPriceTotal ?>
             </td>
             <td>
                 <?php
-                $priceTotalExchangedToUsd += $row->incomeInvoiceDataPriceTotalExchangedToUsd;
+                $priceTotalExchangedToUsd += $row['priceTotalExchangedToUsd'];
                 ?>
-                <?= $row->incomeInvoiceDataPriceTotalExchangedToUsd ?>
             </td>
         </tr>
     <? endforeach; ?>
     <tr>
-        <td colspan="6">
+        <td colspan="16">
             <div class="row-fluid">
                 <div class="span6">
                 </div>
@@ -53,10 +77,12 @@
                             <td>
                                 Subtotal
                             </td>
-                            <td><span class="currency"><?= $this->header->incomeInvoiceMainCurrency ?></span> <span
-                                    class="priceSubTotal"><?= number_format($priceTotal, 2, '.', '') ?></span></td>
-                            <td>USD <span
-                                    class="priceSubTotalExchangedToUsd"><?= number_format($priceTotalExchangedToUsd, 2, '.', '') ?></span>
+                            <td>
+                                <span class="currency"><?= $this->header->incomeInvoiceMainCurrency ?></span>
+                                <span class="priceSubTotal"><?= $priceTotal ?></span>
+                            </td>
+                            <td>
+                                USD <span class="priceSubTotalExchangedToUsd"><?= $priceTotalExchangedToUsd ?></span>
                             </td>
                         </tr>
                         </tbody>

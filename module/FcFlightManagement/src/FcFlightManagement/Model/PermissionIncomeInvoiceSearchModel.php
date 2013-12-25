@@ -53,8 +53,14 @@ class PermissionIncomeInvoiceSearchModel extends BaseModel
             'left');
 
         $select->join(
+            array('incomeInvoiceData' => $this->permissionIncomeInvoiceDataTableName),
+            $this->table . '.id = incomeInvoiceData.preInvoiceId',
+            $this->permissionIncomeInvoiceDataTableFieldsMap,
+            'left');
+
+        $select->join(
             array('incomeInvoiceMain' => $this->permissionIncomeInvoiceMainTableName),
-            $this->table . '.id = incomeInvoiceMain.preInvoiceId',
+            'incomeInvoiceData.invoiceId = incomeInvoiceMain.id',
             $this->permissionIncomeInvoiceMainTableFieldsMap,
             'left');
 
