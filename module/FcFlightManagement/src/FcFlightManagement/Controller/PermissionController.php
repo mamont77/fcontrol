@@ -213,17 +213,22 @@ class PermissionController extends FlightController
      */
     public function incomeInvoiceStep3Action()
     {
-        $units = $this->getPermissionUnits();
-        $typeOfServices = array();
-        $typeOfServicesObj = $this->getTypeOfPermissions();
-        foreach ($typeOfServicesObj as $typeOfService) {
-            $typeOfServices[$typeOfService->id] = $typeOfService->name;
-        }
+        $request = $this->getRequest();
 
+        $result = array();
+        $units = array();
+        $unitsObj = $this->getUnits();
+        foreach ($unitsObj as $unit) {
+            $units[$unit->id] = $unit->name;
+        }
         $currencies = new ApServiceForm(null, array());
         $currencies = $currencies->getCurrencyExchangeRate();
-
-        $request = $this->getRequest();
+        $aircrafts = array();
+        $aircraftsObj = $this->getAircrafts();
+        foreach ($aircraftsObj as $aircraft) {
+            $aircrafts[$aircraft->id] = $aircraft->aircraft_type_name . ' (' . $aircraft->reg_number . ')';
+        }
+        $typesOfPermission = $this->getTypeOfPermissions();
 
         if ($request->isPost()) {
             $result = $request->getPost();
@@ -231,7 +236,8 @@ class PermissionController extends FlightController
             return array(
                 'currencies' => $currencies,
                 'units' => $units,
-                'typeOfServices' => $typeOfServices,
+                'aircrafts' => $aircrafts,
+                'typesOfPermission' => $typesOfPermission,
                 'result' => $result,
             );
         }
