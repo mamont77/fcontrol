@@ -25,43 +25,63 @@
 <!--        --><?// \Zend\Debug\Debug::dump($row) ?>
         <tr id="invoiceId_<?= $row['incomeInvoiceDataId'] ?>">
             <td class="noWrap">
-                <?= $row['flightRefNumberOrder'] ?>
+                <a href="<?=
+                $this->url('browse',
+                    array('refNumberOrder' => $row['flightRefNumberOrder']));?>"
+                   target="_blank">
+                    <?= $row['flightRefNumberOrder'] ?>
+                </a>
             </td>
             <td>
+                <?= $row['flightCustomerShortName'] ?>
             </td>
             <td>
+                <?= $row['flightAirOperatorICAO'] ?> (<?= $row['flightAirOperatorIATA'] ?>)
             </td>
             <td>
+                <?= $row['incomeInvoiceDataFlightNumber'] ?>
             </td>
             <td>
+                <?= $row['flightAircraftTypeName'] ?> (<?= $row['flightAircraftName'] ?>)
             </td>
             <td>
+                <?= $row['legAirportDepICAO'] ?> (<?= $row['legAirportDepIATA'] ?>)
             </td>
             <td>
+                <?= date('d-m-Y', $row['incomeInvoiceDataDateDep']) ?>
             </td>
             <td>
+                <?= $row['legAirportArrICAO'] ?> (<?= $row['legAirportArrIATA'] ?>)
             </td>
             <td>
+                <?= date('d-m-Y', $row['incomeInvoiceDataDateArr']) ?>
             </td>
             <td>
+                <?= $row['preInvoiceCountryName'] ?>
             </td>
             <td>
+                <?= $row['incomeInvoiceDataTypeOfPermission'] ?>
             </td>
             <td>
+                <?= number_format($row['incomeInvoiceDataItemPrice'], 2, '.', '') ?>
             </td>
             <td>
+                <?= $row['incomeInvoiceDataQuantity'] ?>
             </td>
             <td>
+                <?= $row['incomeInvoiceDataUnitName'] ?>
             </td>
             <td>
                 <?php
-                $priceTotal += $row['priceTotal'];
+                $priceTotal += $row['incomeInvoiceDataPriceTotal'];
                 ?>
+                <?= number_format($row['incomeInvoiceDataPriceTotal'], 2, '.', '') ?>
             </td>
             <td>
                 <?php
-                $priceTotalExchangedToUsd += $row['priceTotalExchangedToUsd'];
+                $priceTotalExchangedToUsd += $row['incomeInvoiceDataPriceTotalExchangedToUsd'];
                 ?>
+                <?= number_format($row['incomeInvoiceDataPriceTotalExchangedToUsd'], 2, '.', '') ?>
             </td>
         </tr>
     <? endforeach; ?>
@@ -79,10 +99,14 @@
                             </td>
                             <td>
                                 <span class="currency"><?= $this->header->incomeInvoiceMainCurrency ?></span>
-                                <span class="priceSubTotal"><?= $priceTotal ?></span>
+                                <span class="priceSubTotal">
+                                    <?= number_format($priceTotal, 2, '.', '') ?>
+                                </span>
                             </td>
                             <td>
-                                USD <span class="priceSubTotalExchangedToUsd"><?= $priceTotalExchangedToUsd ?></span>
+                                USD <span class="priceSubTotalExchangedToUsd">
+                                    <?= number_format($priceTotalExchangedToUsd, 2, '.', '') ?>
+                                </span>
                             </td>
                         </tr>
                         </tbody>

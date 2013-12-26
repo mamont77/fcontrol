@@ -36,3 +36,7 @@ https://github.com/raykolbe/DOMPDFModule
 13:00
 #96: Create Permission income invoice. #96: Check Permission income invoice. #96: Save Permission income invoice. #96: Show Permission income invoice.
 18:05
+
+26.12
+9:25
+#96: Show Permission income invoice.

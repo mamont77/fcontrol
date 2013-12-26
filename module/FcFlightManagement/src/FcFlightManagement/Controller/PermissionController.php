@@ -284,9 +284,7 @@ class PermissionController extends FlightController
         }
 
         $header = $this->getPermissionIncomeInvoiceMainModel()->get($invoiceId);
-
         $data = $this->getPermissionIncomeInvoiceDataModel()->getByInvoiceId($invoiceId);
-//        \Zend\Debug\Debug::dump($data);
 
         foreach ($data as $row) {
             $header->data[$row->incomeInvoiceDataId] = $row;
