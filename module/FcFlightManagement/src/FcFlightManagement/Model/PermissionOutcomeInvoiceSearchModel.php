@@ -75,126 +75,107 @@ class PermissionOutcomeInvoiceSearchModel extends BaseModel
             'preInvoice.legId = leg.id',
             $this->legTableFieldsMap,
             'left');
-//
-//        $select->join(
-//            array('flightCustomer' => 'library_kontragent'),
-//            'flight.kontragent = flightCustomer.id',
-//            array(
-//                'flightCustomerName' => 'name',
-//                'flightCustomerShortName' => 'short_name',
-//            ),
-//            'left');
-//
-//        $select->join(
-//            array('flightAirOperator' => 'library_air_operator'),
-//            'flight.airOperator = flightAirOperator.id',
-//            array(
-//                'flightAirOperatorName' => 'name',
-//                'flightAirOperatorShortName' => 'short_name',
-//                'flightAirOperatorICAO' => 'code_icao',
-//                'flightAirOperatorIATA' => 'code_iata',
-//            ),
-//            'left');
-//
-//        $select->join(
-//            array('flightAircraft' => 'library_aircraft'),
-//            'flight.aircraftId = flightAircraft.id',
-//            array(
-//                'flightAircraftTypeId' => 'aircraft_type',
-//                'flightAircraftName' => 'reg_number',
-//            ),
-//            'left');
-//
-//        $select->join(
-//            array('flightAircraftType' => 'library_aircraft_type'),
-//            'flightAircraft.aircraft_type = flightAircraftType.id',
-//            array(
-//                'flightAircraftTypeName' => 'name',
-//            ),
-//            'left');
-//
-//        $select->join(
-//            array('preInvoiceAirport' => 'library_airport'),
-//            'preInvoice.airportId = preInvoiceAirport.id',
-//            array(
-//                'preInvoiceAirportName' => 'name',
-//                'preInvoiceAirportShortName' => 'short_name',
-//                'preInvoiceAirportICAO' => 'code_icao',
-//                'preInvoiceAirportIATA' => 'code_iata',
-//            ),
-//            'left');
-//
-//        $select->join(
-//            array('preInvoiceAgent' => 'library_kontragent'),
-//            'preInvoice.agentId = preInvoiceAgent.id',
-//            array(
-//                'preInvoiceAgentName' => 'name',
-//                'preInvoiceAgentShortName' => 'short_name',
-//            ),
-//            'left');
-//
-//        $select->join(
-//            array('incomeInvoiceMainTypeOfService' => 'library_type_of_ap_service'),
-//            $this->table . '.typeOfServiceId = incomeInvoiceMainTypeOfService.id',
-//            array(
-//                'incomeInvoiceMainTypeOfServiceName' => 'name',
-//            ),
-//            'left');
-//
-//        $select->join(
-//            array('outcomeInvoiceMainTypeOfService' => 'library_type_of_ap_service'),
-//            'outcomeInvoice.typeOfServiceId = outcomeInvoiceMainTypeOfService.id',
-//            array(
-//                'outcomeInvoiceMainTypeOfServiceName' => 'name',
-//            ),
-//            'left');
-//
-//        if ($data['dateFrom'] != '' && $data['dateTo'] != '') {
-//            $select->where->between($this->table . '.dateArr', $data['dateFrom'], $data['dateTo']);
-//        } else {
-//            if ($data['dateFrom'] != '') {
-//                $select->where->greaterThanOrEqualTo($this->table . '.dateArr', $data['dateFrom']);
-//            }
-//
-//            if ($data['dateTo'] != '') {
-//                $select->where->lessThanOrEqualTo($this->table . '.dateArr', $data['dateTo']);
-//            }
-//        }
-//
-//        if ($data['aircraftId'] != '') {
-//            $select->where
-//                ->NEST
-//                ->equalTo('flight.aircraftId', $data['aircraftId'])
-//                ->OR
-//                ->equalTo('flight.alternativeAircraftId1', $data['aircraftId'])
-//                ->OR
-//                ->equalTo('flight.alternativeAircraftId2', $data['aircraftId'])
-//                ->UNNEST;
-//        }
-//
-//        if ($data['agentId'] != '') {
-//            $select->where->equalTo('preInvoice.agentId', $data['agentId']);
-//        }
-//
-//        if ($data['airportId'] != '') {
-//            $select->where->equalTo('preInvoice.airportId', $data['airportId']);
-//        }
-//
-//        if ($data['customerId'] != '') {
-//            $select->where->equalTo('flight.kontragent', $data['customerId']);
-//        }
-//
-//        if ($data['airOperatorId'] != '') {
-//            $select->where->equalTo('flight.airOperator', $data['airOperatorId']);
-//        }
-//
-//        if ($data['typeOfInvoice'] == 'both') {
-//            $select->where->isNotNull('outcomeInvoice.id');
-//        }
-//
-//        if (!empty($data['rowsSelected'])) {
-//            $select->where->in($this->table . '.id', $data['rowsSelected']);
-//        }
+
+        $select->join(
+            array('incomeInvoiceDataAircraft' => 'library_aircraft'),
+            $this->table . '.aircraftId = incomeInvoiceDataAircraft.id',
+            array(
+                'incomeInvoiceDataAircraftTypeId' => 'aircraft_type',
+                'incomeInvoiceDataAircraftName' => 'reg_number',
+            ),
+            'left');
+
+        $select->join(
+            array('incomeInvoiceDataAircraftType' => 'library_aircraft_type'),
+            'incomeInvoiceDataAircraft.aircraft_type = incomeInvoiceDataAircraftType.id',
+            array(
+                'incomeInvoiceDataAircraftTypeName' => 'name',
+            ),
+            'left');
+
+        $select->join(
+            array('incomeInvoiceDataUnit' => 'library_unit'),
+            $this->table . '.unitId = incomeInvoiceDataUnit.id',
+            array(
+                'incomeInvoiceDataUnitName' => 'name',
+            ),
+            'left');
+
+        if ($data['dateFrom'] != '' && $data['dateTo'] != '') {
+            $select->where->between($this->table . '.dateArr', $data['dateFrom'], $data['dateTo']);
+        } else {
+            if ($data['dateFrom'] != '') {
+                $select->where->greaterThanOrEqualTo($this->table . '.dateArr', $data['dateFrom']);
+            }
+
+            if ($data['dateTo'] != '') {
+                $select->where->lessThanOrEqualTo($this->table . '.dateArr', $data['dateTo']);
+            }
+        }
+
+        if ($data['dateFrom'] != '' && $data['dateTo'] != '') {
+            $select->where
+                ->NEST
+                ->between($this->table . '.dateDep', $data['dateFrom'], $data['dateTo'])
+                ->OR
+                ->between($this->table . '.dateArr', $data['dateFrom'], $data['dateTo'])
+                ->UNNEST;
+        } else {
+            if ($data['dateFrom'] != '') {
+                $select->where
+                    ->NEST
+                    ->greaterThanOrEqualTo($this->table . '.dateDep', $data['dateFrom'])
+                    ->OR
+                    ->greaterThanOrEqualTo($this->table . '.dateArr', $data['dateFrom'])
+                    ->UNNEST;
+            }
+            if ($data['dateTo'] != '') {
+                $select->where
+                    ->NEST
+                    ->lessThanOrEqualTo($this->table . '.dateDep', $data['dateFrom'])
+                    ->OR
+                    ->lessThanOrEqualTo($this->table . '.dateArr', $data['dateFrom'])
+                    ->UNNEST;
+            }
+        }
+
+        if ($data['aircraftId'] != '') {
+            $select->where->equalTo($this->table . '.aircraftId', $data['aircraftId']);
+        }
+
+        if ($data['agentId'] != '') {
+            $select->where->equalTo('incomeInvoiceMain.agentId', $data['agentId']);
+        }
+
+        if ($data['countryId'] != '') {
+            $select->where->equalTo('preInvoice.countryId', $data['countryId']);
+        }
+
+        if ($data['airportDepId'] != '') {
+            $select->where->equalTo('leg.airportDepId', $data['airportDepId']);
+        }
+
+        if ($data['airportArrId'] != '') {
+            $select->where->equalTo('leg.airportArrId', $data['airportArrId']);
+        }
+
+        if ($data['customerId'] != '') {
+            $select->where->equalTo('flight.kontragent', $data['customerId']);
+        }
+
+        if ($data['airOperatorId'] != '') {
+            $select->where->equalTo('flight.airOperator', $data['airOperatorId']);
+        }
+
+        if (!empty($data['rowsSelected'])) {
+            $select->where->in($this->table . '.id', $data['rowsSelected']);
+        }
+
+        $select->where->isNotNull('flight.id');
+
+        if ($data['typeOfInvoice'] == 'both') {
+            $select->where->isNotNull('outcomeInvoiceMain.id');
+        }
 
         $select->order($this->table . '.id ' . Select::ORDER_DESCENDING);
 //        \Zend\Debug\Debug::dump($select->getSqlString()); exit;

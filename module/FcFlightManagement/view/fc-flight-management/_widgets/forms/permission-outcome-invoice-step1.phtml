@@ -29,7 +29,7 @@
         </thead>
         <tbody>
         <? foreach ($this->data as $row): ?>
-            <? \Zend\Debug\Debug::dump($row) ?>
+<!--            --><?// \Zend\Debug\Debug::dump($row) ?>
             <tr data-row="<?= $row->incomeInvoiceDataId ?>"
                 class="<? if ($row->outcomeInvoiceMainId): ?>success<? endif ?>">
                 <td rowspan="2">
@@ -115,7 +115,7 @@
                         &mdash;
                     <? endif; ?>
                 </td>
-             </tr>
+            </tr>
             <tr data-incomeInvoiceRefuelRow="<?= $row->incomeInvoiceRefuelId ?>" class="info">
                 <td>
                     <? if ($row->incomeInvoiceMainId): ?>
@@ -132,8 +132,10 @@
                 <td>
                     <?= $row->incomeInvoiceDataFlightNumber ?>
                 </td>
-                <td>Aircraft
-
+                <td>
+                    <?= $row->incomeInvoiceDataAircraftTypeName ?>
+                    <br/>
+                    <small>(<?= $row->incomeInvoiceDataAircraftName ?>)</small>
                 </td>
                 <td>
                     <?= date('d-m-Y', $row->incomeInvoiceDataDateDep) ?>
@@ -145,16 +147,18 @@
                     <?= $row->incomeInvoiceDataTypeOfPermission ?>
                 </td>
                 <td class="text-right">
-                    <?= $row->incomeInvoicePrice ?><small>, <?= $row->incomeInvoiceMainCurrency ?> </small>
+                    <?= $row->incomeInvoicePrice ?>
+                    <small>, <?= $row->incomeInvoiceMainCurrency ?> </small>
                 </td>
                 <td>
                     <?= $row->incomeInvoiceDataQuantity ?>
                 </td>
-                <td>Unit
-
+                <td>
+                    <?= $row->incomeInvoiceDataUnitName ?>
                 </td>
                 <td class="text-right">
-                    <?= $row->incomeInvoiceDataPriceTotal ?><small>, <?= $row->incomeInvoiceMainCurrency ?> </small>
+                    <?= $row->incomeInvoiceDataPriceTotal ?>
+                    <small>, <?= $row->incomeInvoiceMainCurrency ?> </small>
                 </td>
                 <td>
                     <?= $row->incomeInvoiceMainExchangeRate ?>
