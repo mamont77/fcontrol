@@ -29,7 +29,7 @@
         <tbody>
         <? foreach ($this->data as $row): ?>
 <!--            --><?// \Zend\Debug\Debug::dump($row) ?>
-            <tr data-dataRow="<?= $row->preInvoiceId ?>" class="<? if ($row->incomeInvoiceMainId): ?>success<? endif ?>">
+            <tr data-row="<?= $row->preInvoiceId ?>" class="<? if ($row->incomeInvoiceMainId): ?>success<? endif ?>">
                 <td>
                     <input type="checkbox" class="rowsSelected" name="rowsSelected[]"
                            data-rowId="<?= $row->preInvoiceId ?>" value="<?= $row->preInvoiceId ?>">

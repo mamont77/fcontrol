@@ -19,7 +19,7 @@ class PermissionOutcomeInvoiceSearchModel extends BaseModel
      *
      * @var string
      */
-    public $table = 'invoiceIncomePermissionMain';
+    public $table = 'invoiceIncomePermissionData';
 
     /**
      * @param array $data
@@ -38,31 +38,43 @@ class PermissionOutcomeInvoiceSearchModel extends BaseModel
 
         $select = new Select();
         $select->from($this->table);
-        $select->columns($this->permissionIncomeInvoiceMainTableFieldsMap);
+        $select->columns($this->permissionIncomeInvoiceDataTableFieldsMap);
 
-//        $select->join(
-//            array('preInvoice' => 'flightPermissionForm'),
-//            $this->table . '.preInvoiceId = preInvoice.id',
-//            $this->permissionPreInvoiceTableFieldsMap,
-//            'left');
-//
-//        $select->join(
-//            array('flight' => $this->flightTableName),
-//            'preInvoice.headerId = flight.id',
-//            $this->flightTableFieldsMap,
-//            'left');
-//
-//        $select->join(
-//            array('leg' => $this->legTableName),
-//            'preInvoice.legId = leg.id',
-//            $this->legTableFieldsMap,
-//            'left');
-//
-//        $select->join(
-//            array('outcomeInvoice' => $this->permissionOutcomeInvoiceMainTableName),
-//            $this->table . '.id = outcomeInvoice.incomeInvoiceId',
-//            $this->permissionOutcomeInvoiceMainTableFieldsMap,
-//            'left');
+        $select->join(
+            array('incomeInvoiceMain' => $this->permissionIncomeInvoiceMainTableName),
+            $this->table . '.invoiceId = incomeInvoiceMain.id',
+            $this->permissionIncomeInvoiceMainTableFieldsMap,
+            'left');
+
+        $select->join(
+            array('outcomeInvoiceData' => $this->permissionOutcomeInvoiceDataTableName),
+            $this->table . '.id = outcomeInvoiceData.incomeInvoiceId',
+            $this->permissionOutcomeInvoiceDataTableFieldsMap,
+            'left');
+
+        $select->join(
+            array('outcomeInvoiceMain' => $this->permissionOutcomeInvoiceMainTableName),
+            'outcomeInvoiceData.invoiceId = outcomeInvoiceMain.id',
+            $this->permissionOutcomeInvoiceMainTableFieldsMap,
+            'left');
+
+        $select->join(
+            array('preInvoice' => $this->permissionPreInvoiceMainTableName),
+            $this->table . '.preInvoiceId = preInvoice.id',
+            $this->permissionPreInvoiceTableFieldsMap,
+            'left');
+
+        $select->join(
+            array('flight' => $this->flightTableName),
+            'preInvoice.headerId = flight.id',
+            $this->flightTableFieldsMap,
+            'left');
+
+        $select->join(
+            array('leg' => $this->legTableName),
+            'preInvoice.legId = leg.id',
+            $this->legTableFieldsMap,
+            'left');
 //
 //        $select->join(
 //            array('flightCustomer' => 'library_kontragent'),
