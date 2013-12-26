@@ -140,6 +140,31 @@ class PermissionIncomeInvoiceSearchModel extends BaseModel
             ),
             'left');
 
+        $select->join(
+            array('incomeInvoiceDataAircraft' => 'library_aircraft'),
+            'incomeInvoiceData.aircraftId = incomeInvoiceDataAircraft.id',
+            array(
+                'incomeInvoiceDataAircraftTypeId' => 'aircraft_type',
+                'incomeInvoiceDataName' => 'reg_number',
+            ),
+            'left');
+
+        $select->join(
+            array('incomeInvoiceDataAircraftType' => 'library_aircraft_type'),
+            'incomeInvoiceDataAircraft.aircraft_type = incomeInvoiceDataAircraftType.id',
+            array(
+                'incomeInvoiceDataAircraftTypeName' => 'name',
+            ),
+            'left');
+
+        $select->join(
+            array('incomeInvoiceDataUnit' => 'library_unit'),
+            'incomeInvoiceData.unitId = incomeInvoiceDataUnit.id',
+            array(
+                'incomeInvoiceDataUnitName' => 'name',
+            ),
+            'left');
+
         if ($data['dateFrom'] != '' && $data['dateTo'] != '') {
             $select->where
                 ->NEST

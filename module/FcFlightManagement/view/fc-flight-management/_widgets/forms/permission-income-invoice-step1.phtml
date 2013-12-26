@@ -61,21 +61,25 @@
                     <?= $row->flightAirOperatorShortName ?>
                 </td>
                 <td>
-                    <? if ($row->incomeInvoiceFlightNumber): ?>
-                        <?= $row->incomeInvoiceFlightNumber ?>
+                    <? if ($row->incomeInvoiceDataFlightNumber): ?>
+                        <?= $row->incomeInvoiceDataFlightNumber ?>
                     <? else: ?>
                         <?= $row->legFlightNumberText ?>
                     <? endif; ?>
                 </td>
                 <td class="noWrap">
-                    <?= $row->flightAircraftTypeName ?> (<?= $row->flightAircraftName ?>)
+                    <? if ($row->incomeInvoiceDataName): ?>
+                        <?= $row->incomeInvoiceDataAircraftTypeName ?> (<?= $row->incomeInvoiceDataName ?>)
+                    <? else: ?>
+                        <?= $row->flightAircraftTypeName ?> (<?= $row->flightAircraftName ?>)
+                    <? endif; ?>
                 </td>
                 <td>
                     <?= $row->preInvoiceAirportDepICAO . ' (' . $row->preInvoiceAirportDepICAO . ')' ?>
                 </td>
                 <td>
-                    <? if ($row->incomeInvoiceMainDateDep): ?>
-                        <?= date('d-m-Y', $row->incomeInvoiceMainDateDep) ?>
+                    <? if ($row->incomeInvoiceDataDateDep): ?>
+                        <?= date('d-m-Y', $row->incomeInvoiceDataDateDep) ?>
                     <? else: ?>
                         <?= date('d-m-Y', $row->legDepTime) ?>
                     <? endif; ?>
@@ -84,8 +88,8 @@
                     <?= $row->preInvoiceAirportArrICAO . ' (' . $row->preInvoiceAirportArrICAO . ')' ?>
                 </td>
                 <td>
-                    <? if ($row->incomeInvoiceMainArrDate): ?>
-                        <?= date('d-m-Y', $row->incomeInvoiceMainArrDate) ?>
+                    <? if ($row->incomeInvoiceDataDateArr): ?>
+                        <?= date('d-m-Y', $row->incomeInvoiceDataDateArr) ?>
                     <? else: ?>
                         <?= date('d-m-Y', $row->legArrTime) ?>
                     <? endif; ?>
@@ -97,8 +101,8 @@
                     <?= $row->preInvoiceAgentShortName ?>
                 </td>
                 <td>
-                    <? if ($row->incomeInvoiceTypeOfPermission): ?>
-                        <?= $row->incomeInvoiceTypeOfPermission ?>
+                    <? if ($row->incomeInvoiceDataTypeOfPermission): ?>
+                        <?= $row->incomeInvoiceDataTypeOfPermission ?>
                     <? else: ?>
                         <?= $row->preInvoiceTypeOfPermission ?>
                     <? endif; ?>
@@ -111,36 +115,36 @@
                     <? endif; ?>
                 </td>
                 <td class="text-right">
-                    <? if ($row->incomeInvoiceItemPrice): ?>
-                        <?= $row->incomeInvoiceItemPrice ?><small>, <?= $row->incomeInvoiceCurrency ?> </small>
+                    <? if ($row->incomeInvoiceDataItemPrice): ?>
+                        <?= number_format($row->incomeInvoiceDataItemPrice, 2, '.', '') ?><small>, <?= $row->incomeInvoiceMainCurrency ?> </small>
                     <? else: ?>
                         &mdash;
                     <? endif; ?>
                 </td>
                 <td>
-                    <? if ($row->incomeInvoiceQuantityOtherUnits): ?>
-                        <?= $row->incomeInvoiceQuantityOtherUnits ?>
+                    <? if ($row->incomeInvoiceDataQuantity): ?>
+                        <?= $row->incomeInvoiceDataQuantity ?>
                     <? else: ?>
                         &mdash;
                     <? endif; ?>
                 </td>
                 <td>
-                    <? if ($row->incomeInvoiceUnitName): ?>
-                        <?= $row->incomeInvoiceUnitName ?>
+                    <? if ($row->incomeInvoiceDataUnitName): ?>
+                        <?= $row->incomeInvoiceDataUnitName ?>
                     <? else: ?>
                         &mdash;
                     <? endif; ?>
                 </td>
                 <td>
-                    <? if ($row->incomeInvoicePriceTotal): ?>
-                        <?= $row->incomeInvoicePriceTotal ?><small>, <?= $row->incomeInvoiceCurrency ?> </small>
+                    <? if ($row->incomeInvoiceDataPriceTotal): ?>
+                        <?= $row->incomeInvoiceDataPriceTotal ?><small>, <?= $row->incomeInvoiceMainCurrency ?> </small>
                     <? else: ?>
                         &mdash;
                     <? endif; ?>
                 </td>
                 <td class="text-right">
-                    <? if ($row->incomeInvoiceExchangeToUsdPriceTotal): ?>
-                        <?= $row->incomeInvoiceExchangeToUsdPriceTotal ?>
+                    <? if ($row->incomeInvoiceDataPriceTotalExchangedToUsd): ?>
+                        <?= $row->incomeInvoiceDataPriceTotalExchangedToUsd ?>
                     <? else: ?>
                         &mdash;
                     <? endif; ?>
