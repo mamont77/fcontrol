@@ -176,7 +176,7 @@ class PermissionOutcomeInvoiceMainModel extends BaseModel
         $select->order(array('id ' . $select::ORDER_DESCENDING));
         $select->limit(1);
         $row = $this->selectWith($select)->current();
-        $lastInvoiceId = (int)$row->invoiceId + 1;
+        $lastInvoiceId = (int)$row->id + 1;
         if (!$row) {
             $lastInvoiceId = 1;
         }

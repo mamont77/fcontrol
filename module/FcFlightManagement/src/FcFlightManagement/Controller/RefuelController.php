@@ -321,7 +321,6 @@ class RefuelController extends FlightController
         foreach ($result as $row) {
             $customerId = $row->incomeInvoiceAgentId;
             break;
-
         }
         $newInvoiceNumber = $this->getRefuelOutcomeInvoiceMainModel()->generateNewInvoiceNumber($customerId);
 

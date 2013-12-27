@@ -326,14 +326,19 @@ class PermissionController extends FlightController
             return $this->redirect()->toRoute('management/permission/outcome-invoice-step1');
         }
 
-        $units = $this->getPermissionUnits();
-        $typeOfServices = array();
-        $typeOfServicesObj = $this->getTypeOfPermissions();
-        foreach ($typeOfServicesObj as $typeOfService) {
-            $typeOfServices[$typeOfService->id] = $typeOfService->name;
+        $units = array();
+        $unitsObj = $this->getUnits();
+        foreach ($unitsObj as $unit) {
+            $units[$unit->id] = $unit->name;
         }
         $currencies = new ApServiceForm(null, array());
         $currencies = $currencies->getCurrencyExchangeRate();
+        $aircrafts = array();
+        $aircraftsObj = $this->getAircrafts();
+        foreach ($aircraftsObj as $aircraft) {
+            $aircrafts[$aircraft->id] = $aircraft->aircraft_type_name . ' (' . $aircraft->reg_number . ')';
+        }
+        $typesOfPermission = $this->getTypeOfPermissions();
 
         $data = $request->getPost();
 
@@ -342,18 +347,22 @@ class PermissionController extends FlightController
             return $this->redirect()->toRoute('management/permission/outcome-invoice-step1');
         }
 
-        $result = $this->getPermissionOutcomeInvoiceSearchModel()->findByParams($data)->current();
-        $newInvoiceNumber = $this->getPermissionOutcomeInvoiceMainModel()->generateNewInvoiceNumber($result->flightAgentId);
+        $result = $this->getPermissionOutcomeInvoiceSearchModel()->findByParams($data);
 
-        $incomeInvoiceData = $this->getPermissionIncomeInvoiceDataModel()->getByInvoiceId($result->incomeInvoiceMainId);
+        $customerId = null;
+        foreach ($result as $row) {
+            $customerId = $row->incomeInvoiceMainAgentId;
+            break;
+        }
+        $newInvoiceNumber = $this->getPermissionOutcomeInvoiceMainModel()->generateNewInvoiceNumber($customerId);
 
         return array(
             'newInvoiceNumber' => $newInvoiceNumber,
             'currencies' => $currencies,
-            'typeOfServices' => $typeOfServices,
+            'typesOfPermission' => $typesOfPermission,
+            'aircrafts' => $aircrafts,
             'units' => $units,
             'result' => $result,
-            'incomeInvoiceData' => $incomeInvoiceData,
         );
     }
 
