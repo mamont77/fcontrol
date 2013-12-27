@@ -12,6 +12,7 @@ use Zend\Json\Json as Json;
 
 /**
  * Class LegController
+ *
  * @package FcFlight\Controller
  */
 class LegController extends FlightController

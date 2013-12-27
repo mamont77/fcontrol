@@ -32,6 +32,7 @@ use FcFlight\Form\SearchForm;
 
 /**
  * Class FlightController
+ *
  * @package FcFlight\Controller
  */
 class FlightController extends AbstractActionController
@@ -190,8 +191,8 @@ class FlightController extends AbstractActionController
                     $data[$key]['refuelStatus'] = 'YES';
 
                     $refuelIsDone = true;
-                    foreach ($hasRefuel as $row) {
-                        if ($row['status'] == 0) {
+                    foreach ($hasRefuel as $refuel) {
+                        if ($refuel['status'] == 0) {
                             $refuelIsDone = false;
                             continue;
                         }
@@ -212,10 +213,12 @@ class FlightController extends AbstractActionController
                     $data[$key]['permitStatus'] = 'YES';
 
                     $permissionIsDone = true;
-                    foreach ($hasPermission as $row) {
-                        if ($row['status'] == 0) {
-                            $permissionIsDone = false;
-                            continue;
+                    foreach ($hasPermission as $permissions) {
+                        foreach ($permissions['permission'] as $permission) {
+                            if ($permission['status'] == 0) {
+                                $permissionIsDone = false;
+                                continue;
+                            }
                         }
                     }
                     if ($permissionIsDone) {
@@ -234,8 +237,8 @@ class FlightController extends AbstractActionController
                     $data[$key]['apServiceStatus'] = 'YES';
 
                     $apServiceIsDone = true;
-                    foreach ($hasApService as $row) {
-                        if ($row['status'] == 0) {
+                    foreach ($hasApService as $apService) {
+                        if ($apService['status'] == 0) {
                             $apServiceIsDone = false;
                             continue;
                         }
@@ -738,6 +741,8 @@ class FlightController extends AbstractActionController
     }
 
     /**
+     * Get AirOperator model
+     *
      * @return AirOperatorModel
      */
     public function getAirOperatorModel()
@@ -761,6 +766,8 @@ class FlightController extends AbstractActionController
     }
 
     /**
+     * Get Airport model
+     *
      * @return AirportModel
      */
     public function getAirportModel()
@@ -784,6 +791,8 @@ class FlightController extends AbstractActionController
     }
 
     /**
+     * Get BaseOfPermit model
+     *
      * @return BaseOfPermitModel
      */
     public function getBaseOfPermitModel()
@@ -807,6 +816,8 @@ class FlightController extends AbstractActionController
     }
 
     /**
+     * Get City model
+     *
      * @return CityModel
      */
     public function getCityModel()
@@ -1003,7 +1014,6 @@ class FlightController extends AbstractActionController
      * @param $headerId
      * @return array
      */
-
     public function getParentLeg($headerId)
     {
         return $this->getLegModel()->getByHeaderId($headerId);

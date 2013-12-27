@@ -10,6 +10,7 @@ use FcFlight\Form\RefuelForm;
 
 /**
  * Class RefuelController
+ *
  * @package FcFlight\Controller
  */
 class RefuelController extends FlightController

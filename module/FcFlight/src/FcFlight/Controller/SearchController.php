@@ -10,6 +10,7 @@ use FcFlight\Form\SearchForm;
 
 /**
  * Class SearchController
+ *
  * @package FcFlight\Controller
  */
 class SearchController extends FlightController

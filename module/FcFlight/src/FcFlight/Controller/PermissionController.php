@@ -11,6 +11,7 @@ use Zend\Json\Json as Json;
 
 /**
  * Class PermissionController
+ *
  * @package FcFlight\Controller
  */
 class PermissionController extends FlightController

@@ -10,6 +10,7 @@ use FcFlight\Form\ApServiceForm;
 
 /**
  * Class ApServiceController
+ *
  * @package FcFlight\Controller
  */
 class ApServiceController extends FlightController
