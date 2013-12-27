@@ -28,7 +28,7 @@
         </thead>
         <tbody>
         <? foreach ($this->data as $row): ?>
-<!--            --><?// \Zend\Debug\Debug::dump($row) ?>
+            <!--            --><? // \Zend\Debug\Debug::dump($row) ?>
             <tr data-row="<?= $row->preInvoiceId ?>" class="<? if ($row->incomeInvoiceMainId): ?>success<? endif ?>">
                 <td>
                     <input type="checkbox" class="rowsSelected" name="rowsSelected[]"
@@ -116,7 +116,8 @@
                 </td>
                 <td class="text-right">
                     <? if ($row->incomeInvoiceDataItemPrice): ?>
-                        <?= number_format($row->incomeInvoiceDataItemPrice, 2, '.', '') ?><small>, <?= $row->incomeInvoiceMainCurrency ?> </small>
+                        <?= number_format($row->incomeInvoiceDataItemPrice, 2, '.', '') ?>
+                        <small>, <?= $row->incomeInvoiceMainCurrency ?> </small>
                     <? else: ?>
                         &mdash;
                     <? endif; ?>
@@ -137,7 +138,8 @@
                 </td>
                 <td>
                     <? if ($row->incomeInvoiceDataPriceTotal): ?>
-                        <?= $row->incomeInvoiceDataPriceTotal ?><small>, <?= $row->incomeInvoiceMainCurrency ?> </small>
+                        <?= $row->incomeInvoiceDataPriceTotal ?>
+                        <small>, <?= $row->incomeInvoiceMainCurrency ?> </small>
                     <? else: ?>
                         &mdash;
                     <? endif; ?>

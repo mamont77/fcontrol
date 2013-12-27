@@ -377,20 +377,26 @@ class PermissionController extends FlightController
             return $this->redirect()->toRoute('management/permission/outcome-invoice-step1');
         }
 
-        $units = $this->getPermissionUnits();
-        $typeOfServices = array();
-        $typeOfServicesObj = $this->getTypeOfPermissions();
-        foreach ($typeOfServicesObj as $typeOfService) {
-            $typeOfServices[$typeOfService->id] = $typeOfService->name;
+        $units = array();
+        $unitsObj = $this->getUnits();
+        foreach ($unitsObj as $unit) {
+            $units[$unit->id] = $unit->name;
         }
         $currencies = new ApServiceForm(null, array());
         $currencies = $currencies->getCurrencyExchangeRate();
+        $aircrafts = array();
+        $aircraftsObj = $this->getAircrafts();
+        foreach ($aircraftsObj as $aircraft) {
+            $aircrafts[$aircraft->id] = $aircraft->aircraft_type_name . ' (' . $aircraft->reg_number . ')';
+        }
+        $typesOfPermission = $this->getTypeOfPermissions();
 
         $result = $request->getPost();
 
         return array(
             'currencies' => $currencies,
-            'typeOfServices' => $typeOfServices,
+            'typesOfPermission' => $typesOfPermission,
+            'aircrafts' => $aircrafts,
             'units' => $units,
             'result' => $result,
         );

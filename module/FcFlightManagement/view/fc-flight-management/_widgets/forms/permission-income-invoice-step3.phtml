@@ -64,14 +64,15 @@
     </thead>
     <tbody>
     <? foreach ($this->data->data as $row): ?>
-<!--                --><?// \Zend\Debug\Debug::dump($row) ?>
+        <!--                --><? // \Zend\Debug\Debug::dump($row) ?>
         <tr id="invoiceId_<?= $row['preInvoiceId'] ?>">
             <td class="noWrap">
                 <input type="hidden" name="data[<?= $row['preInvoiceId'] ?>][preInvoiceId]"
                        value="<?= $row['preInvoiceId'] ?>"/>
                 <input type="text" name="data[<?= $row['preInvoiceId'] ?>][flightRefNumberOrder]"
                        class="input-small readonly"
-                       maxlength="40" required="required" readonly="readonly" value="<?= $row['flightRefNumberOrder'] ?>">
+                       maxlength="40" required="required" readonly="readonly"
+                       value="<?= $row['flightRefNumberOrder'] ?>">
             </td>
             <td>
                 <input type="hidden" name="data[<?= $row['preInvoiceId'] ?>][customerId]"

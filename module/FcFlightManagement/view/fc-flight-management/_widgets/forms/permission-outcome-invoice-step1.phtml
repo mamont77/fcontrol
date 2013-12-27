@@ -29,7 +29,7 @@
         </thead>
         <tbody>
         <? foreach ($this->data as $row): ?>
-<!--            --><?// \Zend\Debug\Debug::dump($row) ?>
+            <!--            --><? // \Zend\Debug\Debug::dump($row) ?>
             <tr data-row="<?= $row->incomeInvoiceDataId ?>"
                 class="<? if ($row->outcomeInvoiceMainId): ?>success<? endif ?>">
                 <td rowspan="2">

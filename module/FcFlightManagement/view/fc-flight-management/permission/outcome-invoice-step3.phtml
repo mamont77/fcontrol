@@ -15,8 +15,9 @@ $this->headTitle($title);
     $this->partial('fc-flight-management/_widgets/forms/permission-outcome-invoice-step3.phtml',
         array(
             'data' => $this->result,
+            'typesOfPermission' => $this->typesOfPermission,
+            'aircrafts' => $this->aircrafts,
             'units' => $this->units,
-            'typeOfServices' => $this->typeOfServices,
             'currencies' => $this->currencies,
             'fixedHeader' => true,
         ))
