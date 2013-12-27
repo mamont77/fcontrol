@@ -262,10 +262,8 @@ class RefuelController extends FlightController
     {
         $this->dataForLogger = array(
             'id' => $data->id,
-            'Agent' => $data->agentName,
-            'LEG' => $data->airportDepartureICAO . ' (' . $data->airportDepartureIATA . ')'
-                . ' ⇒ '
-                . $data->airportArrivalICAO . ' (' . $data->airportArrivalIATA . ')',
+            'Agent' => $data->kontragentShortName,
+            'Airport' => $data->icao . ' (' . $data->iata . ')',
             'Quantity, LTR' => $data->quantityLtr,
             'Unit' => $data->unitName,
             'Price, USD' => $data->priceUsd,
