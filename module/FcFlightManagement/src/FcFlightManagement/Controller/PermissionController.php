@@ -221,7 +221,7 @@ class PermissionController extends FlightController
                 $this->getPermissionIncomeInvoiceDataModel()->add($row);
             }
 
-            $message = "AP Service income invoice was successfully added.";
+            $message = "Permission income invoice was successfully added.";
             $this->flashMessenger()->addSuccessMessage($message);
 
             return $this->redirect()->toRoute('management/permission/income-invoice-show',
@@ -415,14 +415,9 @@ class PermissionController extends FlightController
             $invoiceId = $this->getPermissionOutcomeInvoiceMainModel()->add($data);
             foreach ($data['data'] as $row) {
                 $row['invoiceId'] = $invoiceId;
-                $this->getPermissionOutcomeInvoiceDataModel()->add($row, false);
+                $this->getPermissionOutcomeInvoiceDataModel()->add($row);
             }
-            foreach ($data['subData'] as $row) {
-                $row['invoiceId'] = $invoiceId;
-                $this->getPermissionOutcomeInvoiceDataModel()->add($row, true);
-            }
-
-            $message = "AP Service outcome invoice was successfully added.";
+            $message = "Permission outcome invoice was successfully added.";
             $this->flashMessenger()->addSuccessMessage($message);
 
             return $this->redirect()->toRoute('management/permission/outcome-invoice-show',

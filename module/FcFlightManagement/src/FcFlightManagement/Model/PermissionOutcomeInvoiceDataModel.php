@@ -32,12 +32,13 @@ class PermissionOutcomeInvoiceDataModel extends BaseModel
 
     /**
      * @param $data
-     * @param bool $isAdditionalInfo
      * @return int
      */
-    public function add($data, $isAdditionalInfo = false)
+    public function add($data)
     {
-        $data['isAdditionalInfo'] = ($isAdditionalInfo) ? 1 : 0;
+        $data['dateDep'] = \DateTime::createFromFormat('d-m-Y', $data['dateDep'])->setTime(0, 0, 0)->getTimestamp();
+        $data['dateArr'] = \DateTime::createFromFormat('d-m-Y', $data['dateArr'])->setTime(0, 0, 0)->getTimestamp();
+
         $fields = array_flip($this->permissionOutcomeInvoiceDataTableFieldsMap);
 
         foreach ($fields as $key => &$field) {
@@ -47,8 +48,6 @@ class PermissionOutcomeInvoiceDataModel extends BaseModel
                 unset($fields[$key]);
             }
         }
-
-//        \Zend\Debug\Debug::dump($fields);exit;
 
         $this->insert($fields);
 
