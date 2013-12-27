@@ -441,13 +441,10 @@ class PermissionController extends FlightController
         }
 
         $header = $this->getPermissionOutcomeInvoiceMainModel()->get($invoiceId);
-        $data = $this->getPermissionOutcomeInvoiceDataModel()->getByInvoiceId($invoiceId, false);
+
+        $data = $this->getPermissionOutcomeInvoiceDataModel()->getByInvoiceId($invoiceId);
         foreach ($data as $row) {
             $header->data[$row->outcomeInvoiceDataId] = $row;
-        }
-        $subData = $this->getPermissionOutcomeInvoiceDataModel()->getByInvoiceId($invoiceId, true);
-        foreach ($subData as $row) {
-            $header->subData[$row->outcomeInvoiceDataId] = $row;
         }
 
         return new ViewModel(array(

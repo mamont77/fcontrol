@@ -14,33 +14,24 @@ $this->headTitle($title);
 <?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
 <?php echo $this->flashMessenger()->render('info', array('alert', 'alert-info')); ?>
 <?php echo $this->flashMessenger()->render('error', array('alert', 'alert-error')); ?>
+<?// \Zend\Debug\Debug::dump($this->header) ?>
 
-    <table id="invoiceMain" class="table table-bordered table-hover table-condensed">
+    <table id="invoiceHeader" class="table-bordered table-condensed">
         <thead>
         <tr>
-            <th>ORD #</th>
             <th>Invoice #</th>
             <th>Date</th>
             <th>Currency</th>
             <th>Exchange Rate</th>
-            <th>Agent</th>
-            <th colspan="2">Type of service</th>
+            <th>Customer</th>
         </tr>
         </thead>
         <tbody>
         <tr>
-            <td rowspan="2">
-                <a href="<?=
-                $this->url('browse',
-                    array('refNumberOrder' => $this->header->flightRefNumberOrder));?>"
-                   target="_blank">
-                    <?= $this->header->flightRefNumberOrder ?>
-                </a>
-            </td>
-            <td rowspan="2">
+            <td>
                 <?= $this->header->outcomeInvoiceMainNumber ?>
             </td>
-            <td rowspan="2">
+            <td>
                 <?= $this->header->outcomeInvoiceMainDate ?>
             </td>
             <td>
@@ -49,51 +40,8 @@ $this->headTitle($title);
             <td>
                 <?= $this->header->outcomeInvoiceMainExchangeRate ?>
             </td>
-            <td rowspan="2">
-                <?= $this->header->preInvoiceAgentShortName ?>
-            </td>
-            <td colspan="2">
-                <?= $this->header->outcomeInvoiceMainTypeOfServiceName ?>
-            </td>
-        </tr>
-        </tbody>
-        <thead>
-        <tr>
-            <th>Customer</th>
-            <th>Air Operator</th>
-            <th>Flight #</th>
-            <th>Aircraft</th>
-            <th>Airport Arr</th>
-            <th>Airport Dep</th>
-            <th>Date Arr</th>
-            <th>Date Dep</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td rowspan="2">
-                <?= $this->header->flightCustomerShortName ?>
-            </td>
-            <td rowspan="2">
-                <?= $this->header->flightAirOperatorShortName ?>
-            </td>
-            <td rowspan="2">
-                <?= $this->header->outcomeInvoiceFlightNumber ?>
-            </td>
-            <td rowspan="2">
-                <?= $this->header->flightAircraftTypeName ?> (<?= $this->header->flightAircraftName ?>)
-            </td>
-            <td rowspan="2">
-                <?= $this->header->preInvoiceAirportICAO ?> (<?= $this->header->preInvoiceAirportIATA ?>)
-            </td>
-            <td rowspan="2">
-                <?= $this->header->legDepToNextAirportICAO ?> (<?= $this->header->legDepToNextAirportIATA ?>)
-            </td>
             <td>
-                <?= $this->header->outcomeInvoiceMainDateArr ?>
-            </td>
-            <td>
-                <?= $this->header->outcomeInvoiceMainDateDep ?>
+                <?= $this->header->outcomeInvoiceMainCustomerShortName ?>
             </td>
         </tr>
         </tbody>

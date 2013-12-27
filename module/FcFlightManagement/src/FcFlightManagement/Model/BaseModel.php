@@ -269,7 +269,7 @@ class BaseModel extends AbstractTableGateway
         'outcomeInvoiceDataDateDep' => 'dateDep',
         'outcomeInvoiceDataDateArr' => 'dateArr',
         'outcomeInvoiceDataTypeOfPermission' => 'typeOfPermission',
-        'incomeInvoiceDataItemPrice' => 'itemPrice',
+        'outcomeInvoiceDataItemPrice' => 'itemPrice',
         'outcomeInvoiceDataQuantity' => 'quantity',
         'outcomeInvoiceDataUnitId' => 'unitId',
         'outcomeInvoiceDataPriceTotal' => 'priceTotal',
