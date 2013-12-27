@@ -33,7 +33,7 @@
             <tr data-row="<?= $row->incomeInvoiceDataId ?>"
                 class="<? if ($row->outcomeInvoiceMainId): ?>success<? endif ?>">
                 <td rowspan="2">
-                    <input type="checkbox" class="rowSelected" name="rowSelected[]"
+                    <input type="checkbox" class="rowsSelected" name="rowsSelected[]"
                            data-rowId="<?= $row->incomeInvoiceDataId ?>"
                            value="<?= $row->incomeInvoiceDataId ?>">
                 </td>
@@ -57,11 +57,11 @@
                         &mdash;
                     <? endif; ?>
                 </td>
-                <td rowspan="2">Customer
-
+                <td rowspan="2" class="customer">
+                    <?= $row->flightCustomerShortName ?>
                 </td>
-                <td rowspan="2">Air Operator
-
+                <td rowspan="2">
+                    <?= $row->flightAirOperatorICAO ?> (<?= $row->flightAirOperatorIATA ?>)
                 </td>
                 <td>Flight #
 
@@ -69,29 +69,29 @@
                 <td>Aircraft
 
                 </td>
-                <td rowspan="2">Airport Dep
-
+                <td rowspan="2">
+                    <?= $row->legAirportDepICAO ?> (<?= $row->legAirportDepIATA ?>)
                 </td>
                 <td>Date Dep
 
                 </td>
-                <td rowspan="2">Airport Arr
-
+                <td rowspan="2">
+                    <?= $row->legAirportArrICAO ?> (<?= $row->legAirportArrIATA ?>)
                 </td>
                 <td>Date Arr
 
                 </td>
-                <td rowspan="2">Country
-
+                <td rowspan="2">
+                    <?= $row->preInvoiceCountryName ?>
                 </td>
-                <td rowspan="2">Agent
-
+                <td rowspan="2">
+                    <?= $row->incomeInvoiceMainAgentShortName ?>
                 </td>
                 <td>Type of permission
 
                 </td>
-                <td rowspan="2">Number of permission
-
+                <td rowspan="2">
+                    <?= $row->preInvoiceRequestTime ?>
                 </td>
                 <td class="text-right">Price
 

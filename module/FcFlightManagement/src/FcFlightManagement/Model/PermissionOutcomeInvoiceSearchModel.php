@@ -101,6 +101,65 @@ class PermissionOutcomeInvoiceSearchModel extends BaseModel
             ),
             'left');
 
+        $select->join(
+            array('flightCustomer' => 'library_kontragent'),
+            'flight.kontragent = flightCustomer.id',
+            array(
+                'flightCustomerName' => 'name',
+                'flightCustomerShortName' => 'short_name',
+            ),
+            'left');
+
+        $select->join(
+            array('flightAirOperator' => 'library_air_operator'),
+            'flight.airOperator = flightAirOperator.id',
+            array(
+                'flightAirOperatorName' => 'name',
+                'flightAirOperatorShortName' => 'short_name',
+                'flightAirOperatorICAO' => 'code_icao',
+                'flightAirOperatorIATA' => 'code_iata',
+            ),
+            'left');
+
+        $select->join(
+            array('legAirportDep' => 'library_airport'),
+            'leg.apDepAirportId = legAirportDep.id',
+            array(
+                'legAirportDepName' => 'name',
+                'legAirportDepShortName' => 'short_name',
+                'legAirportDepICAO' => 'code_icao',
+                'legAirportDepIATA' => 'code_iata',
+            ),
+            'left');
+
+        $select->join(
+            array('legAirportArr' => 'library_airport'),
+            'leg.apArrAirportId = legAirportArr.id',
+            array(
+                'legAirportArrName' => 'name',
+                'legAirportArrShortName' => 'short_name',
+                'legAirportArrICAO' => 'code_icao',
+                'legAirportArrIATA' => 'code_iata',
+            ),
+            'left');
+
+        $select->join(
+            array('preInvoiceCountry' => 'library_country'),
+            'preInvoice.countryId = preInvoiceCountry.id',
+            array(
+                'preInvoiceCountryName' => 'name',
+            ),
+            'left');
+
+        $select->join(
+            array('incomeInvoiceMainAgent' => 'library_kontragent'),
+            'incomeInvoiceMain.agentId = incomeInvoiceMainAgent.id',
+            array(
+                'incomeInvoiceMainAgentName' => 'name',
+                'incomeInvoiceMainAgentShortName' => 'short_name',
+            ),
+            'left');
+
         if ($data['dateFrom'] != '' && $data['dateTo'] != '') {
             $select->where->between($this->table . '.dateArr', $data['dateFrom'], $data['dateTo']);
         } else {

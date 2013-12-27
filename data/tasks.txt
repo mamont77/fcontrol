@@ -41,3 +41,7 @@ https://github.com/raykolbe/DOMPDFModule
 9:25
 #96: Show Permission income invoice. #96: Search Permission income (step 1). #97: Search Permission outcome (step 1).
 14:10
+
+27.12
+7:50
+#97: Search Permission outcome (step 1).
