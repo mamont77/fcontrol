@@ -160,6 +160,31 @@ class PermissionOutcomeInvoiceSearchModel extends BaseModel
             ),
             'left');
 
+        $select->join(
+            array('outcomeInvoiceDataAircraft' => 'library_aircraft'),
+            'outcomeInvoiceData.aircraftId = outcomeInvoiceDataAircraft.id',
+            array(
+                'outcomeInvoiceDataAircraftTypeId' => 'aircraft_type',
+                'outcomeInvoiceDataAircraftName' => 'reg_number',
+            ),
+            'left');
+
+        $select->join(
+            array('outcomeInvoiceDataAircraftType' => 'library_aircraft_type'),
+            'incomeInvoiceDataAircraft.aircraft_type = outcomeInvoiceDataAircraftType.id',
+            array(
+                'outcomeInvoiceDataAircraftTypeName' => 'name',
+            ),
+            'left');
+
+        $select->join(
+            array('outcomeInvoiceDataUnit' => 'library_unit'),
+            'outcomeInvoiceData.unitId = outcomeInvoiceDataUnit.id',
+            array(
+                'outcomeInvoiceDataUnitName' => 'name',
+            ),
+            'left');
+
         if ($data['dateFrom'] != '' && $data['dateTo'] != '') {
             $select->where->between($this->table . '.dateArr', $data['dateFrom'], $data['dateTo']);
         } else {

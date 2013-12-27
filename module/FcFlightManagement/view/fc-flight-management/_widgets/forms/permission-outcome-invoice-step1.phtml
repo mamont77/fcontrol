@@ -29,7 +29,7 @@
         </thead>
         <tbody>
         <? foreach ($this->data as $row): ?>
-            <!--            --><? // \Zend\Debug\Debug::dump($row) ?>
+<!--            --><?// \Zend\Debug\Debug::dump($row) ?>
             <tr data-row="<?= $row->incomeInvoiceDataId ?>"
                 class="<? if ($row->outcomeInvoiceMainId): ?>success<? endif ?>">
                 <td rowspan="2">
@@ -63,23 +63,41 @@
                 <td rowspan="2">
                     <?= $row->flightAirOperatorShortName ?>
                 </td>
-                <td>Flight #
-
+                <td>
+                    <? if ($row->outcomeInvoiceDataFlightNumber): ?>
+                        <?= $row->outcomeInvoiceDataFlightNumber ?>
+                    <? else: ?>
+                        &mdash;
+                    <? endif; ?>
                 </td>
-                <td>Aircraft
-
+                <td>
+                    <? if ($row->outcomeInvoiceDataAircraftName): ?>
+                        <?= $row->outcomeInvoiceDataAircraftTypeName ?>
+                        <br/>
+                        <small>(<?= $row->outcomeInvoiceDataAircraftName ?>)</small>
+                    <? else: ?>
+                        &mdash;
+                    <? endif; ?>
                 </td>
                 <td rowspan="2">
                     <?= $row->legAirportDepICAO ?> (<?= $row->legAirportDepIATA ?>)
                 </td>
-                <td>Date Dep
-
+                <td>
+                    <? if ($row->outcomeInvoiceDataDateDep): ?>
+                        <?= date('d-m-Y', $row->outcomeInvoiceDataDateDep) ?>
+                    <? else: ?>
+                        &mdash;
+                    <? endif; ?>
                 </td>
                 <td rowspan="2">
                     <?= $row->legAirportArrICAO ?> (<?= $row->legAirportArrIATA ?>)
                 </td>
-                <td>Date Arr
-
+                <td>
+                    <? if ($row->outcomeInvoiceDataDateArr): ?>
+                        <?= date('d-m-Y', $row->outcomeInvoiceDataDateArr) ?>
+                    <? else: ?>
+                        &mdash;
+                    <? endif; ?>
                 </td>
                 <td rowspan="2">
                     <?= $row->preInvoiceCountryName ?>
@@ -87,30 +105,56 @@
                 <td rowspan="2">
                     <?= $row->incomeInvoiceMainAgentShortName ?>
                 </td>
-                <td>Type of permission
-
+                <td>
+                    <? if ($row->outcomeInvoiceDataTypeOfPermission): ?>
+                        <?= $row->outcomeInvoiceDataTypeOfPermission ?>
+                    <? else: ?>
+                        &mdash;
+                    <? endif; ?>
                 </td>
                 <td rowspan="2">
                     <?= $row->preInvoiceRequestTime ?>
                 </td>
-                <td class="text-right">Price
-
+                <td class="text-right">
+                    <? if ($row->outcomeInvoiceDataItemPrice): ?>
+                        <?= $row->outcomeInvoiceDataItemPrice ?>
+                        <small>, <?= $row->outcomeInvoiceMainCurrency ?> </small>
+                    <? else: ?>
+                        &mdash;
+                    <? endif; ?>
                 </td>
-                <td>Quantity
-
+                <td>
+                    <? if ($row->outcomeInvoiceDataQuantity): ?>
+                        <?= $row->outcomeInvoiceDataQuantity ?>
+                    <? else: ?>
+                        &mdash;
+                    <? endif; ?>
                 </td>
-                <td>Unit
-
+                <td>
+                    <? if ($row->outcomeInvoiceDataUnitName): ?>
+                        <?= $row->outcomeInvoiceDataUnitName ?>
+                    <? else: ?>
+                        &mdash;
+                    <? endif; ?>
                 </td>
-                <td class="text-right">Total
-
+                <td class="text-right">
+                    <? if ($row->outcomeInvoiceDataPriceTotal): ?>
+                        <?= $row->outcomeInvoiceDataPriceTotal ?>
+                        <small>, <?= $row->outcomeInvoiceMainCurrency ?> </small>
+                    <? else: ?>
+                        &mdash;
+                    <? endif; ?>
                 </td>
-                <td>Exchange Rate
-
+                <td>
+                    <? if ($row->outcomeInvoiceMainExchangeRate): ?>
+                        <?= $row->outcomeInvoiceMainExchangeRate ?>
+                    <? else: ?>
+                        &mdash;
+                    <? endif; ?>
                 </td>
-                <td class="text-right">Exchange Total, USD
-                    <? if ($row->outcomeInvoicePriceTotalExchangedToUsd): ?>
-                        <?= $row->outcomeInvoicePriceTotalExchangedToUsd ?>
+                <td class="text-right">
+                    <? if ($row->outcomeInvoiceDataPriceTotalExchangedToUsd): ?>
+                        <?= $row->outcomeInvoiceDataPriceTotalExchangedToUsd ?>
                     <? else: ?>
                         &mdash;
                     <? endif; ?>
@@ -147,7 +191,7 @@
                     <?= $row->incomeInvoiceDataTypeOfPermission ?>
                 </td>
                 <td class="text-right">
-                    <?= $row->incomeInvoicePrice ?>
+                    <?= $row->incomeInvoiceDataItemPrice ?>
                     <small>, <?= $row->incomeInvoiceMainCurrency ?> </small>
                 </td>
                 <td>
