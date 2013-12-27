@@ -1,7 +1,7 @@
 <?php
 $legsCount = count($this->legs);
 ?>
-
+<?// \Zend\Debug\Debug::dump($this->header) ?>
 <div id="header">
     <table id="flightBrowse">
         <tr>
@@ -29,7 +29,7 @@ $legsCount = count($this->legs);
                 <table class="cHeader table">
                     <tr>
                         <th>Date Order</th>
-                        <td><?= date('d-m-Y', $this->header->dateOrder) ?></td>
+                        <td><?= $this->header->dateOrder ?></td>
                     </tr>
                     <tr>
                         <th>Aircraft</th>

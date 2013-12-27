@@ -284,6 +284,8 @@ class FlightHeaderModel extends AbstractTableGateway
             throw new \Exception("Could not find row $refNumberOrder");
         }
 
+        $row->dateOrder = date('d-m-Y', $row->dateOrder);
+
         return $row;
     }
 
