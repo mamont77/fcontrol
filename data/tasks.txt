@@ -45,4 +45,4 @@ https://github.com/raykolbe/DOMPDFModule
 27.12
 7:50
 #97: Search Permission outcome (step 1). #97: Create Permission outcome invoice. #97: Check Permission outcome invoice. #97: Save Permission outcome invoice. #97: Show Permission outcome invoice. #97: Search Permission outcome (step 1). #100: Причесывание БД. #101: Поиск/устранение ошибок, не большие украшательства.
-13:55
+14:45
