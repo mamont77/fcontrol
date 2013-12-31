@@ -142,7 +142,7 @@ class ApServiceController extends FlightController
                         }
                         if (count($nextLegs)) {
                             $advancedDataWithOutIncomeInvoice[$apServiceMain->legId]['legDepToNextAirportTime']
-                                = (string)\DateTime::createFromFormat('d-m-Y', $nextLegs['dateOfFlight'])
+                                = (string)\DateTime::createFromFormat('d-m-Y H:i', $nextLegs['apDepTime'])
                                 ->setTime(0, 0)->getTimestamp();
                             $advancedDataWithOutIncomeInvoice[$apServiceMain->legId]['legDepToNextAirportICAO']
                                 = $nextLegs['apDepIcao'];
@@ -204,8 +204,8 @@ class ApServiceController extends FlightController
 
             }
             if (count($nextLegs)) {
-                $result->legDepToNextAirportTime = (string)\DateTime::createFromFormat('d-m-Y',
-                    $nextLegs['dateOfFlight'])->setTime(0, 0)->getTimestamp();
+                $result->legDepToNextAirportTime = (string)\DateTime::createFromFormat('d-m-Y H:i',
+                    $nextLegs['apDepTime'])->setTime(0, 0)->getTimestamp();
                 $result->legDepToNextAirportICAO = $nextLegs['apDepIcao'];
                 $result->legDepToNextAirportIATA = $nextLegs['apDepIata'];
             }
@@ -303,8 +303,8 @@ class ApServiceController extends FlightController
 
         }
         if (count($nextLegs)) {
-            $header->legDepToNextAirportTime = (string)\DateTime::createFromFormat('d-m-Y',
-                $nextLegs['dateOfFlight'])->setTime(0, 0)->getTimestamp();
+            $header->legDepToNextAirportTime = (string)\DateTime::createFromFormat('d-m-Y H:i',
+                $nextLegs['apDepTime'])->setTime(0, 0)->getTimestamp();
             $header->legDepToNextAirportICAO = $nextLegs['apDepIcao'];
             $header->legDepToNextAirportIATA = $nextLegs['apDepIata'];
         }
@@ -460,8 +460,8 @@ class ApServiceController extends FlightController
 
         }
         if (count($nextLegs)) {
-            $result->legDepToNextAirportTime = (string)\DateTime::createFromFormat('d-m-Y',
-                $nextLegs['dateOfFlight'])->setTime(0, 0)->getTimestamp();
+            $result->legDepToNextAirportTime = (string)\DateTime::createFromFormat('d-m-Y H:i',
+                $nextLegs['apDepTime'])->setTime(0, 0)->getTimestamp();
             $result->legDepToNextAirportICAO = $nextLegs['apDepIcao'];
             $result->legDepToNextAirportIATA = $nextLegs['apDepIata'];
         }
@@ -566,8 +566,8 @@ class ApServiceController extends FlightController
 
         }
         if (count($nextLegs)) {
-            $header->legDepToNextAirportTime = (string)\DateTime::createFromFormat('d-m-Y',
-                $nextLegs['dateOfFlight'])->setTime(0, 0)->getTimestamp();
+            $header->legDepToNextAirportTime = (string)\DateTime::createFromFormat('d-m-Y H:i',
+                $nextLegs['apDepTime'])->setTime(0, 0)->getTimestamp();
             $header->legDepToNextAirportICAO = $nextLegs['apDepIcao'];
             $header->legDepToNextAirportIATA = $nextLegs['apDepIata'];
         }

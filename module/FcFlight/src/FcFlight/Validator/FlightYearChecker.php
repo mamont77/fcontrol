@@ -31,7 +31,7 @@ class FlightYearChecker extends AbstractValidator
         $currentYear = date('Y');
         $lastYear = (int)$currentYear + 1;
 
-        $value = \DateTime::createFromFormat('d-m-Y', $value);
+        $value = \DateTime::createFromFormat('d-m-Y H:i', $value);
         $value = date('Y', $value->getTimestamp());
         $this->setValue($value);
 

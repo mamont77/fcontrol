@@ -47,17 +47,16 @@ class LegModel extends AbstractTableGateway
 
         $select->columns(array('id',
             'headerId',
-            'dateOfFlight',
-            'flightNumberAirportId',
-            'flightNumberText',
+            'airOperatorId',
+            'flightNumber',
             'apDepAirportId',
             'apDepTime',
             'apArrAirportId',
             'apArrTime'));
 
         $select->join(array('AirOperator' => 'library_air_operator'),
-            'AirOperator.id = flightLegForm.flightNumberAirportId',
-            array('flightNumberIcao' => 'code_icao', 'flightNumberIata' => 'code_iata'), 'left');
+            'AirOperator.id = flightLegForm.airOperatorId',
+            array('airOperatorIcao' => 'code_icao', 'airOperatorIata' => 'code_iata'), 'left');
 
         $select->join(array('ApDepAirport' => 'library_airport'),
             'ApDepAirport.id = flightLegForm.apDepAirportId',
@@ -91,9 +90,8 @@ class LegModel extends AbstractTableGateway
             throw new \Exception("Could not find row $id");
         }
 
-        $row->dateOfFlight = date('d-m-Y', $row->dateOfFlight);
-        $row->apDepTime = date('H:i', $row->apDepTime);
-        $row->apArrTime = date('H:i', $row->apArrTime);
+        $row->apDepTime = date('d-m-Y H:i', $row->apDepTime);
+        $row->apArrTime = date('d-m-Y H:i', $row->apArrTime);
 
         return $row;
     }
@@ -110,17 +108,16 @@ class LegModel extends AbstractTableGateway
 
         $select->columns(array('id',
             'headerId',
-            'dateOfFlight',
-            'flightNumberAirportId',
-            'flightNumberText',
+            'airOperatorId',
+            'flightNumber',
             'apDepAirportId',
             'apDepTime',
             'apArrAirportId',
             'apArrTime'));
 
         $select->join(array('AirOperator' => 'library_air_operator'),
-            'AirOperator.id = flightLegForm.flightNumberAirportId',
-            array('flightNumberIcao' => 'code_icao', 'flightNumberIata' => 'code_iata'), 'left');
+            'AirOperator.id = flightLegForm.airOperatorId',
+            array('airOperatorIcao' => 'code_icao', 'airOperatorIata' => 'code_iata'), 'left');
 
         $select->join(array('ApDepAirport' => 'library_airport'),
             'ApDepAirport.id = flightLegForm.apDepAirportId',
@@ -147,7 +144,7 @@ class LegModel extends AbstractTableGateway
             array('apArrCountryId' => 'id', 'apArrCountryName' => 'name', 'apArrCountryCode' => 'code'), 'left');
 
         $select->where(array('headerId' => $id));
-        $select->order(array('dateOfFlight ' . $select::ORDER_ASCENDING, 'id ' . $select::ORDER_ASCENDING));
+        $select->order(array('apDepTime ' . $select::ORDER_ASCENDING, 'id ' . $select::ORDER_ASCENDING));
 //        \Zend\Debug\Debug::dump($select->getSqlString());
 
         $resultSet = $this->selectWith($select);
@@ -158,28 +155,21 @@ class LegModel extends AbstractTableGateway
             //Real fields
             $data[$row->id]['id'] = $row->id;
             $data[$row->id]['headerId'] = $row->headerId;
-            $data[$row->id]['dateOfFlight'] = date('d-m-Y', $row->dateOfFlight);
-            $data[$row->id]['flightNumberAirportId'] = $row->flightNumberAirportId;
-            $data[$row->id]['flightNumberText'] = $row->flightNumberText;
+            $data[$row->id]['airOperatorId'] = $row->airOperatorId;
+            $data[$row->id]['flightNumber'] = $row->flightNumber;
             $data[$row->id]['apDepAirportId'] = $row->apDepAirportId;
-            $data[$row->id]['apDepTime'] = date('H:i', $row->apDepTime);
+            $data[$row->id]['apDepTime'] = date('d-m-Y H:i', $row->apDepTime);
             $data[$row->id]['apArrAirportId'] = $row->apArrAirportId;
-            $data[$row->id]['apArrTime'] = date('H:i', $row->apArrTime);
+            $data[$row->id]['apArrTime'] = date('d-m-Y H:i', $row->apArrTime);
             //Virtual fields from join
-            $data[$row->id]['flightNumberIcao'] = $row->flightNumberIcao;
-            $data[$row->id]['flightNumberIata'] = $row->flightNumberIata;
+            $data[$row->id]['airOperatorIcao'] = $row->airOperatorIcao;
+            $data[$row->id]['airOperatorIata'] = $row->airOperatorIata;
             $data[$row->id]['apDepIcao'] = $row->apDepIcao;
             $data[$row->id]['apDepIata'] = $row->apDepIata;
             $data[$row->id]['apArrIcao'] = $row->apArrIcao;
             $data[$row->id]['apArrIata'] = $row->apArrIata;
-            $data[$row->id]['apDepCityName'] = $row->apDepCityName;
             $data[$row->id]['apDepCountryId'] = $row->apDepCountryId;
-            $data[$row->id]['apDepCountryName'] = $row->apDepCountryName;
-            $data[$row->id]['apDepCountryCode'] = $row->apDepCountryCode;
-            $data[$row->id]['apArrCityName'] = $row->apArrCityName;
             $data[$row->id]['apArrCountryId'] = $row->apArrCountryId;
-            $data[$row->id]['apArrCountryName'] = $row->apArrCountryName;
-            $data[$row->id]['apArrCountryCode'] = $row->apArrCountryCode;
         }
 
         return $data;
@@ -202,7 +192,7 @@ class LegModel extends AbstractTableGateway
             throw new \Exception("Could not find row $id");
         }
 
-        $row->dateOfFlight = date('d-m-Y', $row->dateOfFlight);
+        $row->apDepTime = date('d-m-Y H:i', $row->apDepTime);
 
         return $row;
     }
@@ -213,23 +203,21 @@ class LegModel extends AbstractTableGateway
      */
     public function add(LegFilter $object)
     {
-        $dateOfFlight = \DateTime::createFromFormat('d-m-Y', $object->dateOfFlight)->setTime(0, 0)->getTimestamp();
-        $apDepTime = \DateTime::createFromFormat('d-m-Y H:i', $object->dateOfFlight . ' ' . $object->apDepTime)
+        $apDepTime = \DateTime::createFromFormat('d-m-Y H:i', $object->apDepTime)
             ->getTimestamp();
-        $apArrTime = \DateTime::createFromFormat('d-m-Y H:i', $object->dateOfFlight . ' ' . $object->apArrTime)
+        $apArrTime = \DateTime::createFromFormat('d-m-Y H:i', $object->apArrTime)
             ->getTimestamp();
 
         $data = array(
             'headerId' => (int)$object->headerId,
-            'dateOfFlight' => (string)$dateOfFlight,
-            'flightNumberAirportId' => (int)$object->flightNumberAirportId,
-            'flightNumberText' => (string)$object->flightNumberText,
+            'airOperatorId' => (int)$object->airOperatorId,
+            'flightNumber' => (string)$object->flightNumber,
             'apDepAirportId' => (int)$object->apDepAirportId,
             'apDepTime' => (string)$apDepTime,
             'apArrAirportId' => (int)$object->apArrAirportId,
             'apArrTime' => (string)$apArrTime,
         );
-        $hash = $object->dateOfFlight . ': Dep ' . $object->apDepTime . ', Arr ' . $object->apArrTime;
+        $hash = 'Dep ' . $object->apDepTime . ', Arr ' . $object->apArrTime;
 
         $this->insert($data);
 
@@ -246,23 +234,21 @@ class LegModel extends AbstractTableGateway
      */
     public function save(LegFilter $object)
     {
-        $dateOfFlight = \DateTime::createFromFormat('d-m-Y', $object->dateOfFlight)->setTime(0, 0)->getTimestamp();
-        $apDepTime = \DateTime::createFromFormat('d-m-Y H:i', $object->dateOfFlight . ' ' . $object->apDepTime)
+        $apDepTime = \DateTime::createFromFormat('d-m-Y H:i', $object->apDepTime)
             ->getTimestamp();
-        $apArrTime = \DateTime::createFromFormat('d-m-Y H:i', $object->dateOfFlight . ' ' . $object->apArrTime)
+        $apArrTime = \DateTime::createFromFormat('d-m-Y H:i', $object->apArrTime)
             ->getTimestamp();
 
         $data = array(
             'headerId' => (int)$object->headerId,
-            'dateOfFlight' => (string)$dateOfFlight,
-            'flightNumberAirportId' => (int)$object->flightNumberAirportId,
-            'flightNumberText' => (string)$object->flightNumberText,
+            'airOperatorId' => (int)$object->airOperatorId,
+            'flightNumber' => (string)$object->flightNumber,
             'apDepAirportId' => (int)$object->apDepAirportId,
             'apDepTime' => (string)$apDepTime,
             'apArrAirportId' => (int)$object->apArrAirportId,
             'apArrTime' => (string)$apArrTime,
         );
-        $hash = $object->dateOfFlight . ': Dep ' . $object->apDepTime . ', Arr ' . $object->apArrTime;
+        $hash = 'Dep ' . $object->apDepTime . ', Arr ' . $object->apArrTime;
 
         $id = (int)$object->id;
         if ($this->get($id)) {

@@ -39,14 +39,16 @@ class LegController extends FlightController
         $this->redirectForDoneStatus($header->refNumberOrder);
         $legs = $this->getLegModel()->getByHeaderId($headerId);
         $lastLeg = end($legs);
+//        \Zend\Debug\Debug::dump($lastLeg);
+
         if ($lastLeg) {
-            $previousDate = $lastLeg['dateOfFlight'];
-            $previousFlightNumberAirportId = $lastLeg['flightNumberAirportId'];
+            $previousDate = $lastLeg['apArrTime'];
+            $previousAirOperatorId = $lastLeg['airOperatorId'];
             $previousApArrCountryId = $lastLeg['apArrCountryId'];
             $previousApArrAirportId = $lastLeg['apArrAirportId'];
         } else {
             $previousDate = null;
-            $previousFlightNumberAirportId = null;
+            $previousAirOperatorId = null;
             $previousApArrCountryId = null;
             $previousApArrAirportId = null;
         }
@@ -55,13 +57,13 @@ class LegController extends FlightController
             array(
                 'headerId' => $headerId,
                 'libraries' => array(
-                    'flightNumberAirports' => $this->getAirOperators(),
+                    'airOperators' => $this->getAirOperators(),
                     'countries' => $this->getCountries(),
                 ),
                 'previousValues' => array(
                     'previousDate' => $previousDate,
                     'preSelected' => array(
-                        'flightNumberAirportId' => $previousFlightNumberAirportId,
+                        'airOperatorId' => $previousAirOperatorId,
                         'apDepCountryId' => $previousApArrCountryId,
                         'apDepAirportId' => $previousApArrAirportId,
                     ),
@@ -118,6 +120,7 @@ class LegController extends FlightController
         }
 
         $data = $this->getLegModel()->get($id);
+//        \Zend\Debug\Debug::dump($data);
         $header = $this->getFlightHeaderModel()->get($data->headerId);
         $this->redirectForDoneStatus($header->refNumberOrder);
 
@@ -126,8 +129,8 @@ class LegController extends FlightController
         $lastLeg = array_slice($legs, -2, 1);
         $lastLeg = $lastLeg[0];
         if ($lastLeg) {
-            $previousDate = $lastLeg['dateOfFlight'];
-            $previousFlightNumberAirportId = $lastLeg['flightNumberAirportId'];
+            $previousDate = $lastLeg['apArrTime'];
+            $previousAirOperatorId = $lastLeg['airOperatorId'];
             $previousApArrCountryId = $lastLeg['apArrCountryId'];
             $previousApArrAirportId = $lastLeg['apArrAirportId'];
         } else {
@@ -141,25 +144,16 @@ class LegController extends FlightController
         $loggerPlugin = $this->LogPlugin();
         $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
-        $data->flightNumber['flightNumberAirportId'] = $data->flightNumberAirportId;
-        $data->flightNumber['flightNumberText'] = $data->flightNumberText;
-        $data->apDep['apDepCountries'] = $data->apDepCountries;
-        $data->apDep['apDepAirports'] = $data->apDepAirports;
-        $data->apDep['apDepTime'] = $data->apDepTime;
-        $data->apArr['apArrCountries'] = $data->apArrCountries;
-        $data->apArr['apArrAirports'] = $data->apArrAirports;
-        $data->apArr['apArrTime'] = $data->apArrTime;
-
         $form = new LegForm('leg',
             array(
                 'libraries' => array(
-                    'flightNumberAirports' => $this->getAirOperators(),
+                    'airOperators' => $this->getAirOperators(),
                     'countries' => $this->getCountries(),
                 ),
                 'previousValues' => array(
                     'previousDate' => $previousDate,
                     'preSelected' => array(
-                        'flightNumberAirportId' => $previousFlightNumberAirportId,
+                        'airOperatorId' => $previousAirOperatorId,
                         'apDepCountryId' => $previousApArrCountryId,
                         'apDepAirportId' => $previousApArrAirportId,
                     ),
@@ -308,9 +302,8 @@ class LegController extends FlightController
     {
         $this->dataForLogger = array(
             'id' => $data->id,
-            'Date of Flight' => $data->dateOfFlight,
-            'Flight Number (ICAO/IATA/Text)' => $data->flightNumberIcao . '/'
-                . $data->flightNumberIata . '/' . $data->flightNumberText,
+            'Flight # (ICAO/IATA/Text)' => $data->airOperatorIcao . '/'
+                . $data->airOperatorIata . '/' . $data->flightNumber,
             'Ap Dep (ICAO/IATA/Time)' => $data->apDepIcao . '/'
                 . $data->apDepIata . '/' . $data->apDepTime,
             'Ap Arr (ICAO/IATA/Time)' => $data->apArrIcao . '/'

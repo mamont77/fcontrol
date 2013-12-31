@@ -116,7 +116,7 @@ foreach ($this->data as $row) {
             <input type="text" name="data[<?= $row->preInvoiceId ?>][flightNumber]"
                    class="input-small readonly"
                    maxlength="40" required="required"
-                   value="<?= $row->legFlightNumberText ?>">
+                   value="<?= $row->legFlightNumber ?>">
         </td>
         <td>
             <select id="aircraftId" name="data[<?= $row->preInvoiceId ?>][aircraftId]" class="chosen input-medium"
@@ -224,7 +224,7 @@ foreach ($this->data as $row) {
     </tr>
     <tr id="preInvoiceId_<?= $row->preInvoiceId ?>" class="info">
         <td>
-            <?= $row->legFlightNumberText ?>
+            <?= $row->legFlightNumber ?>
         </td>
         <td>
             <?= $row->flightAircraftTypeName . ' (' . $row->flightAircraftName . ')' ?>

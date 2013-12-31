@@ -2,11 +2,7 @@
     <table class="table table-bordered table-hover table-condensed <? if ($this->fixedHeader): ?> table-fixed-header<? endif ?>">
         <thead class="header">
         <tr>
-            <th rowspan="2">
-                Date of Flight
-            </th>
-            <th colspan="3">
-                Flight Number
+            <th colspan="2">
             </th>
             <th colspan="3">
                 Ap Dep
@@ -18,20 +14,10 @@
         </tr>
         <tr>
             <th>
-                ICAO
+                Air Operator
             </th>
             <th>
-                IATA
-            </th>
-            <th></th>
-            <th>
-                ICAO
-            </th>
-            <th>
-                IATA
-            </th>
-            <th>
-                Time, UTC
+                Flight #
             </th>
             <th>
                 ICAO
@@ -40,7 +26,16 @@
                 IATA
             </th>
             <th>
-                Time, UTC
+                Date, UTC
+            </th>
+            <th>
+                ICAO
+            </th>
+            <th>
+                IATA
+            </th>
+            <th>
+                Date, UTC
             </th>
         </tr>
         </thead>
@@ -51,11 +46,10 @@
         ?>
 
         <?php foreach ($this->legs as $row) : ?>
+<!--            --><?// \Zend\Debug\Debug::dump($row) ?>
             <tr data-legId="<?= $row['id'] ?>" class="<? if ($row['id'] == $this->currentId): ?><?= 'info' ?><? endif ?>">
-                <td class="date"><strong><?= $this->escapeHtml($row['dateOfFlight']) ?></strong></td>
-                <td><?= $this->escapeHtml($row['flightNumberIcao']) ?></td>
-                <td><?= $this->escapeHtml($row['flightNumberIata']) ?></td>
-                <td><?= $this->escapeHtml($row['flightNumberText']) ?></td>
+                <td><?= $this->escapeHtml($row['airOperatorIcao']) ?> (<?= $this->escapeHtml($row['airOperatorIata']) ?>)</td>
+                <td><?= $this->escapeHtml($row['flightNumber']) ?></td>
                 <td><strong><?= $this->escapeHtml($row['apDepIcao']) ?></strong></td>
                 <td><?= $this->escapeHtml($row['apDepIata']) ?></td>
                 <td><?= $this->escapeHtml($row['apDepTime']) ?></td>

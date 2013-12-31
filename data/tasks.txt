@@ -46,3 +46,13 @@ https://github.com/raykolbe/DOMPDFModule
 7:50
 #97: Search Permission outcome (step 1). #97: Create Permission outcome invoice. #97: Check Permission outcome invoice. #97: Save Permission outcome invoice. #97: Show Permission outcome invoice. #97: Search Permission outcome (step 1). #100: Причесывание БД. #101: Поиск/устранение ошибок, не большие украшательства.
 14:45
+
+31.12
+7:50
+#98: LEG - необходимо поле "Дата прибития". а также переделать дизайн под существующий стандарт.
+11:20
+
+01.01
+9:05
+#98: LEG - необходимо поле "Дата прибития". а также переделать дизайн под существующий стандарт.
+10:15

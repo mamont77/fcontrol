@@ -9,24 +9,27 @@
      *
      * @param $airportField
      * @param countryId
-     * @param airportId
+     * @param airportId | null
      */
     function renderAirportsByCountry($airportField, countryId, airportId) {
         var ajaxPath = '/leg/get-airports/';
         $.getJSON(ajaxPath + countryId, function (data) {
+            $airportField.append('<option value=""></option>');
             $.each(data['airports'], function (key, val) {
                 $airportField.append('<option value="' + key + '" ' +
                     'data-name="' + val['name'] + '">' + val['code'] + '</option>');
             });
             if (airportId) {
                 if ($airportField.selector === 'form#leg #apDepAirports') {
+                    $airportField.find('option[value=""]').remove();
                     $airportField.find('option').each(function () {
                         $(this).prop('disabled', true);
                     });
                 }
-                $airportField.find('[value="id_' + airportId + '"]').attr('selected', 'selected').prop('disabled', false);
+                $airportField.find('[value="id_' + airportId + '"]').attr('selected', 'selected')
+                    .prop('disabled', false);
             }
-            $airportField.prop('disabled', false);
+            $airportField.prop('disabled', false).trigger('chosen:updated');
         });
     }
 
@@ -185,60 +188,64 @@
 
             if ($form.length == 0) return;
 
-            var preSelectedFlightNumberAirportId = $form.find('#preSelectedFlightNumberAirportId').val(),
+            var preSelectedAirOperatorId = $form.find('#preSelectedAirOperatorId').val(),
                 preSelectedApDepCountryId = $form.find('#preSelectedApDepCountryId').val(),
                 preSelectedApDepAirportId = $form.find('#preSelectedApDepAirportId').val(),
-                $flightNumberAirportId = $form.find('#flightNumberAirportId'),
+                $airOperatorId = $form.find('#airOperatorId'),
                 $apDepAirportId = $form.find('#apDepAirportId'),
                 $apArrAirportId = $form.find('#apArrAirportId'),
-                $apDepCountries = $form.find('#apDepCountries'),
+                $apDepCountryId = $form.find('#apDepCountryId'),
                 $apDepAirports = $form.find('#apDepAirports'),
-                $apArrCountries = $form.find('#apArrCountries'),
+                $apArrCountryId = $form.find('#apArrCountryId'),
                 $apArrAirports = $form.find('#apArrAirports'),
                 currentCountryId;
 
-            $($form).find('#dateOfFlight').mask('99-99-9999');
-            $($form).find('#apDepTime').mask('99:99');
-            $($form).find('#apArrTime').mask('99:99');
+            $($form).find('#apDepTime').mask('99-99-9999 99:99');
+            $($form).find('#apArrTime').mask('99-99-9999 99:99');
 
-            if (preSelectedFlightNumberAirportId > 0) {
-                $flightNumberAirportId.val(preSelectedFlightNumberAirportId);
-                $flightNumberAirportId.find('option').each(function () {
+            // AirOperator может быть только один для всех строк
+            if (preSelectedAirOperatorId > 0) {
+                $airOperatorId.val(preSelectedAirOperatorId);
+                $airOperatorId.find('option').first().remove();
+                $airOperatorId.find('option').each(function () {
                     $(this).prop('disabled', true);
                 });
-                $flightNumberAirportId.find('[value="' + preSelectedFlightNumberAirportId + '"]')
-                    .attr('selected', 'selected').prop('disabled', false);
+                $airOperatorId.find('[value="' + preSelectedAirOperatorId + '"]')
+                    .prop('disabled', false).attr('selected', 'selected');
+                $airOperatorId.trigger('chosen:updated');
             }
 
             // если данные являются продолжением цепочки leg, то выбираем значения в Ap Dep
             // из предыдущего Ap Arr
             if (preSelectedApDepCountryId > 0 && preSelectedApDepAirportId > 0) {
-                $apDepCountries.find('option').each(function () {
-                    $(this).prop('disabled', true);
+                $apDepCountryId.find('option').first().remove().trigger('chosen:updated');
+                $apDepCountryId.find('option').each(function () {
+                    $(this).prop('disabled', true).trigger('chosen:updated');
                 });
-                $apDepCountries.find('[value="' + preSelectedApDepCountryId + '"]').attr('selected', 'selected').prop('disabled', false);
+                $apDepCountryId.find('[value="' + preSelectedApDepCountryId + '"]').attr('selected', 'selected')
+                    .prop('disabled', false).trigger('chosen:updated');
                 renderAirportsByCountry($apDepAirports, preSelectedApDepCountryId, preSelectedApDepAirportId);
-                $apDepAirportId.val(preSelectedApDepAirportId);
+                $apDepAirportId.val(preSelectedApDepAirportId).trigger('chosen:updated');
             }
 
-            // при редактировании данных, если уже есть $apArrAirportId, то отрисовываем поле IATA (ICAO)
+            // при редактировании данных, если уже есть $apArrAirportId, то отрисовываем поле Air Operator
             if ($apArrAirportId.val() > 0) {
-                currentCountryId = $apArrCountries.val();
+                currentCountryId = $apArrCountryId.val();
                 renderAirportsByCountry($apArrAirports, currentCountryId, $apArrAirportId.val());
             }
 
-            $apDepCountries.change(function () {
+            $apDepCountryId.change(function () {
                 var currentCountryId = $(this).val();
                 $apDepAirports.prop('disabled', true).empty();
                 $apDepAirports.val(0);
-                renderAirportsByCountry($apDepAirports, currentCountryId);
+                renderAirportsByCountry($apDepAirports, currentCountryId, null);
             });
 
-            $apArrCountries.change(function () {
+            $apArrCountryId.change(function () {
                 var currentCountryId = $(this).val();
                 $apArrAirports.prop('disabled', true).empty();
                 $apArrAirports.val(0);
-                renderAirportsByCountry($apArrAirports, currentCountryId);
+                renderAirportsByCountry($apArrAirports, currentCountryId, null);
             });
 
             $apDepAirports.change(function () {

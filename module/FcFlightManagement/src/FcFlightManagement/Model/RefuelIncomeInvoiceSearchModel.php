@@ -98,7 +98,7 @@ class RefuelIncomeInvoiceSearchModel extends AbstractTableGateway
             array('flightLeg' => 'flightLegForm'),
             $this->table . '.legId = flightLeg.id',
             array(
-                'flightAirOperatorNumber' => 'flightNumberText',
+                'flightAirOperatorNumber' => 'flightNumber',
             ),
             'left');
 

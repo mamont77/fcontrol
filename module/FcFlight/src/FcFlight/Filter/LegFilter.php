@@ -32,25 +32,19 @@ class LegFilter implements InputFilterAwareInterface
      */
     public $table = '';
 
-    /**
-     * @var string
-     */
-    protected $apDepTimeValue = '';
-
     //Fields for form and view
     public $id;
     public $headerId;
-    public $dateOfFlight;
-    public $flightNumberAirportId;
-    public $flightNumberText;
+    public $airOperatorId;
+    public $flightNumber;
     public $apDepAirportId;
     public $apDepTime;
     public $apArrAirportId;
     public $apArrTime;
 
     //Fields only for view
-    public $flightNumberIcao;
-    public $flightNumberIata;
+    public $airOperatorIcao;
+    public $airOperatorIata;
     public $apDepCountries;
     public $apArrCountries;
     public $apDepAirports;
@@ -59,16 +53,8 @@ class LegFilter implements InputFilterAwareInterface
     public $apDepIata;
     public $apArrIcao;
     public $apArrIata;
-
-//    public $apDepCityName;
     public $apDepCountryId;
-//    public $apDepCountryName;
-//    public $apDepCountryCode;
-
-//    public $apArrCityName;
     public $apArrCountryId;
-//    public $apArrCountryName;
-//    public $apArrCountryCode;
 
     /**
      * @var array
@@ -108,84 +94,36 @@ class LegFilter implements InputFilterAwareInterface
         $this->apArrCountryId = (isset($data['apArrCountryId'])) ? $data['apArrCountryId'] : null;
         $this->apDepAirportId = (isset($data['apDepAirportId'])) ? $data['apDepAirportId'] : null;
         $this->apArrAirportId = (isset($data['apArrAirportId'])) ? $data['apArrAirportId'] : null;
-        $this->dateOfFlight = (isset($data['dateOfFlight'])) ? $data['dateOfFlight'] : null;
 
-        if (isset($data['flightNumber']['flightNumberAirportId'])) {
-            $this->flightNumberAirportId = $data['flightNumber']['flightNumberAirportId'];
-        } elseif (isset($data['flightNumberAirportId'])) {
-            $this->flightNumberAirportId = $data['flightNumberAirportId'];
-        } else {
-            $this->flightNumberAirportId = null;
-        }
-        if (isset($data['flightNumber']['flightNumberText'])) {
-            $this->flightNumberText = $data['flightNumber']['flightNumberText'];
-        } elseif (isset($data['flightNumberText'])) {
-            $this->flightNumberText = $data['flightNumberText'];
-        } else {
-            $this->flightNumberText = null;
-        }
-
-        if (isset($data['apDep']['apDepCountries'])) {
-            $this->apDepCountries = $data['apDep']['apDepCountries'];
-        } elseif (isset($data['apDepCountryId'])) {
-            $this->apDepCountries = $data['apDepCountryId'];
-        } else {
-            $this->apDepCountries = null;
-        }
-        if (isset($data['apDep']['apDepAirports'])) {
-            $this->apDepAirports = $data['apDep']['apDepAirports'];
+        $this->airOperatorId = (isset($data['airOperatorId'])) ? $data['airOperatorId'] : null;
+        $this->flightNumber = (isset($data['flightNumber'])) ? $data['flightNumber'] : null;
+        if (isset($data['apDepAirports'])) {
+            $this->apDepAirports = $data['apDepAirports'];
         } elseif (isset($data['apDepAirportId'])) {
             $this->apDepAirports = $data['apDepAirportId'];
         } else {
             $this->apDepAirports = null;
         }
-        if (isset($data['apDep']['apDepTime'])) {
-            $this->apDepTime = $data['apDep']['apDepTime'];
-        } elseif (isset($data['apDepTime'])) {
-            $this->apDepTime = $data['apDepTime'];
-        } else {
-            $this->apDepTime = null;
-        }
-
-        if (isset($data['apArr']['apArrCountries'])) {
-            $this->apArrCountries = $data['apArr']['apArrCountries'];
-        } elseif (isset($data['apArrCountryId'])) {
-            $this->apArrCountries = $data['apArrCountryId'];
-        } else {
-            $this->apArrCountries = null;
-        }
-        if (isset($data['apArr']['apArrAirports'])) {
-            $this->apArrAirports = $data['apArr']['apArrAirports'];
+        $this->apDepTime = (isset($data['apDepTime'])) ? $data['apDepTime'] : null;
+        $this->apArrCountryId = (isset($data['apArrCountryId'])) ? $data['apArrCountryId'] : null;
+        if (isset($data['apArrAirports'])) {
+            $this->apArrAirports = $data['apArrAirports'];
         } elseif (isset($data['apArrAirportId'])) {
             $this->apArrAirports = $data['apArrAirportId'];
         } else {
             $this->apArrAirports = null;
         }
-        if (isset($data['apArr']['apArrTime'])) {
-            $this->apArrTime = $data['apArr']['apArrTime'];
-        } elseif (isset($data['apArrTime'])) {
-            $this->apArrTime = $data['apArrTime'];
-        } else {
-            $this->apArrTime = null;
-        }
+        $this->apArrTime = (isset($data['apArrTime'])) ? $data['apArrTime'] : null;
 
         //Fields only for view
-        $this->flightNumberIcao = (isset($data['flightNumberIcao'])) ? $data['flightNumberIcao'] : null;
-        $this->flightNumberIata = (isset($data['flightNumberIata'])) ? $data['flightNumberIata'] : null;
+        $this->airOperatorIcao = (isset($data['airOperatorIcao'])) ? $data['airOperatorIcao'] : null;
+        $this->airOperatorIata = (isset($data['airOperatorIata'])) ? $data['airOperatorIata'] : null;
 
         $this->apDepIcao = (isset($data['apDepIcao'])) ? $data['apDepIcao'] : null;
         $this->apDepIata = (isset($data['apDepIata'])) ? $data['apDepIata'] : null;
 
         $this->apArrIcao = (isset($data['apArrIcao'])) ? $data['apArrIcao'] : null;
         $this->apArrIata = (isset($data['apArrIata'])) ? $data['apArrIata'] : null;
-
-//        $this->apDepCityName = (isset($data['apDepCityName'])) ? $data['apDepCityName'] : null;
-//        $this->apDepCountryName = (isset($data['apDepCountryName'])) ? $data['apDepCountryName'] : null;
-//        $this->apDepCountryCode = (isset($data['apDepCountryCode'])) ? $data['apDepCountryCode'] : null;
-
-//        $this->apArrCityName = (isset($data['apArrCityName'])) ? $data['apArrCityName'] : null;
-//        $this->apArrCountryName = (isset($data['apArrCountryName'])) ? $data['apArrCountryName'] : null;
-//        $this->apArrCountryCode = (isset($data['apArrCountryCode'])) ? $data['apArrCountryCode'] : null;
     }
 
     /**
@@ -233,6 +171,14 @@ class LegFilter implements InputFilterAwareInterface
             )));
 
             $inputFilter->add($factory->createInput(array(
+                'name' => 'preSelectedAirOperatorId',
+                'filters' => array(
+                    array('name' => 'Int'),
+                ),
+                'required' => false,
+            )));
+
+            $inputFilter->add($factory->createInput(array(
                 'name' => 'preSelectedApDepCountryId',
                 'filters' => array(
                     array('name' => 'Int'),
@@ -265,38 +211,15 @@ class LegFilter implements InputFilterAwareInterface
             )));
 
             $inputFilter->add($factory->createInput(array(
-                'name' => 'dateOfFlight',
+                'name' => 'airOperatorId',
                 'required' => true,
-                'filters' => $this->defaultFilters,
-                'validators' => array(
-                    array(
-                        'name' => 'Date',
-                        'options' => array(
-                            'format' => 'd-m-Y',
-                            'messages' => array(
-                                'dateFalseFormat' => 'Invalid date format, must be dd-mm-YY',
-                                'dateInvalidDate' => 'Invalid date, must be dd-mm-YY'
-                            ),
-                        ),
-                    ),
-                    array(
-                        'name' => 'FcFlight\Validator\FlightDateChecker',
-                    ),
-                    array(
-                        'name' => 'FcFlight\Validator\FlightYearChecker',
-                    ),
+                'filters' => array(
+                    array('name' => 'Int'),
                 ),
             )));
 
-            $flightNumberInputFilter = new InputFilter();
-
-            $flightNumberInputFilter->add($factory->createInput(array(
-                'name' => 'flightNumberAirportId',
-                'required' => true,
-            )));
-
-            $flightNumberInputFilter->add($factory->createInput(array(
-                'name' => 'flightNumberText',
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'flightNumber',
                 'required' => true,
                 'filters' => $this->defaultFilters,
                 'validators' => array(
@@ -311,16 +234,7 @@ class LegFilter implements InputFilterAwareInterface
                 ),
             )));
 
-            $inputFilter->add($flightNumberInputFilter, 'flightNumber');
-
-            $apDepInputFilter = new InputFilter();
-
-            $apDepInputFilter->add($factory->createInput(array(
-                'name' => 'apDepAirports',
-                'required' => true,
-            )));
-
-            $apDepInputFilter->add($factory->createInput(array(
+            $inputFilter->add($factory->createInput(array(
                 'name' => 'apDepTime',
                 'required' => true,
                 'filters' => $this->defaultFilters,
@@ -328,31 +242,39 @@ class LegFilter implements InputFilterAwareInterface
                     array(
                         'name' => 'Date',
                         'options' => array(
-                            'format' => 'H:i',
+                            'format' => 'd-m-Y H:i',
+                            'messages' => array(
+                                'dateFalseFormat' => 'Invalid date format, must be dd-mm-YYYY HH:ii',
+                                'dateInvalidDate' => 'Invalid date, must be dd-mm-YYYY HH:ii',
+                            ),
                         ),
                     ),
                     array(
-                        'name' => 'Callback',
-                        'options' => array(
-                            'callback' => function ($value, $context = array()) use (&$apDepTimeValue) {
-                                $apDepTimeValue = $value;
-                                return true;
-                            },
-                        ),
+                        'name' => 'FcFlight\Validator\FlightDateChecker',
+                    ),
+                    array(
+                        'name' => 'FcFlight\Validator\FlightYearChecker',
                     ),
                 ),
             )));
 
-            $inputFilter->add($apDepInputFilter, 'apDep');
-
-            $apArrInputFilter = new InputFilter();
-
-            $apArrInputFilter->add($factory->createInput(array(
-                'name' => 'apArrAirports',
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'apDepCountryId',
                 'required' => true,
+                'filters' => array(
+                    array('name' => 'Int'),
+                ),
             )));
 
-            $apArrInputFilter->add($factory->createInput(array(
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'apDepAirports',
+                'required' => true,
+                'filters' => array(
+                    array('name' => 'Int'),
+                ),
+            )));
+
+            $inputFilter->add($factory->createInput(array(
                 'name' => 'apArrTime',
                 'required' => true,
                 'filters' => $this->defaultFilters,
@@ -360,48 +282,45 @@ class LegFilter implements InputFilterAwareInterface
                     array(
                         'name' => 'Date',
                         'options' => array(
-                            'format' => 'H:i',
+                            'format' => 'd-m-Y H:i',
                         ),
                     ),
                     array(
                         'name' => 'Callback',
                         'options' => array(
                             'messages' => array(
-                                \Zend\Validator\Callback::INVALID_VALUE => 'The arrival time is less than the departure time',
+                                \Zend\Validator\Callback::INVALID_VALUE =>
+                                    'The arrival time is less than the departure time',
                             ),
-                            'callback' => function ($value, $context = array()) use (&$apDepTimeValue) {
-                                $apArrTime = \DateTime::createFromFormat('H:i', $value);
-                                $apDepTime = \DateTime::createFromFormat('H:i', $apDepTimeValue);
-                                return $apArrTime > $apDepTime;
-                            },
+                            'callback' => function ($value, $context) {
+                                    $apArrTime = \DateTime::createFromFormat('d-m-Y H:i', $value);
+                                    $apDepTime = \DateTime::createFromFormat('d-m-Y H:i', $context['apDepTime']);
+                                    return $apArrTime > $apDepTime;
+                                },
                         ),
                     ),
                 ),
             )));
 
-            $inputFilter->add($apArrInputFilter, 'apArr');
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'apArrCountryId',
+                'required' => true,
+                'filters' => array(
+                    array('name' => 'Int'),
+                ),
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'apArrAirports',
+                'required' => true,
+                'filters' => array(
+                    array('name' => 'Int'),
+                ),
+            )));
 
             $this->inputFilter = $inputFilter;
         }
 
         return $this->inputFilter;
-    }
-
-    /**
-     * @param $value
-     * @deprecated
-     */
-    public function setApDepTimeValue($value)
-    {
-        $this->apDepTimeValue = $value;
-    }
-
-    /**
-     * @return string
-     * @deprecated
-     */
-    public function getApDepTimeValue()
-    {
-        return $this->apDepTimeValue;
     }
 }

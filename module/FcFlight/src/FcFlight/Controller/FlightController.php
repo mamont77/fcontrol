@@ -1126,14 +1126,12 @@ class FlightController extends AbstractActionController
         $legsCopy = $legs;
         $legFirst = reset($legs);
         $airports[$legFirst['id'] . '-' . $legFirst['apDepAirportId']] = $legFirst['apDepIcao'] . ' (' . $legFirst['apDepIata'] . '): '
-            . $legFirst['dateOfFlight'] . ' ' . $legFirst['apDepTime'];
+            . $legFirst['apDepTime'];
         foreach ($legs as $leg) {
             $nextLeg = next($legsCopy);
-            $selectionValues = $leg['apArrIcao'] . ' (' . $leg['apArrIata'] . '): '
-                . $leg['dateOfFlight'] . ' ' . $leg['apArrTime'];
-
+            $selectionValues = $leg['apArrIcao'] . ' (' . $leg['apArrIata'] . '): ' . $leg['apArrTime'];
             if (!is_bool($nextLeg)) {
-                $selectionValues .= ' ⇒ ' . $nextLeg['dateOfFlight'] . ' ' . $nextLeg['apDepTime']; //✈
+                $selectionValues .= ' ⇒ ' . $nextLeg['apDepTime']; //✈
             }
 
             $airports[$leg['id'] . '-' . $leg['apArrAirportId']] = $selectionValues;
