@@ -65,72 +65,72 @@
     </tr>
     </thead>
     <tbody>
-    <? foreach ($this->data['data'] as $row): ?>
+    <? foreach ($this->data['data'] as $item => $row): ?>
         <? // \Zend\Debug\Debug::dump($row) ?>
-        <tr id="invoiceRefuelId_<?= $row['refuelId'] ?>">
+        <tr id="invoiceRefuel_<?= $item ?>">
             <td>
-                <input type="hidden" name="data[<?= $row['refuelId'] ?>][refuelId]" value="<?= $row['refuelId'] ?>"/>
-                <input type="text" name="data[<?= $row['refuelId'] ?>][flightRefNumberOrder]"
+                <input type="hidden" name="data[<?= $item ?>][refuelId]" value="<?= $row['refuelId'] ?>"/>
+                <input type="text" name="data[<?= $item ?>][flightRefNumberOrder]"
                        class="input-small readonly"
                        maxlength="40" required="required" readonly="readonly"
                        value="<?= $row['flightRefNumberOrder'] ?>">
             </td>
             <td>
-                <input type="hidden" name="data[<?= $row['refuelId'] ?>][flightAgentId]"
+                <input type="hidden" name="data[<?= $item ?>][flightAgentId]"
                        value="<?= $row['flightAgentId'] ?>">
-                <input type="text" name="data[<?= $row['refuelId'] ?>][flightAgentShortName]"
+                <input type="text" name="data[<?= $item ?>][flightAgentShortName]"
                        class="input-small readonly"
                        maxlength="40" required="required" readonly="readonly"
                        value="<?= $row['flightAgentShortName'] ?>">
             </td>
             <td>
-                <input type="hidden" name="data[<?= $row['refuelId'] ?>][flightAirOperatorId]"
+                <input type="hidden" name="data[<?= $item ?>][flightAirOperatorId]"
                        value="<?= $row['flightAirOperatorId'] ?>">
-                <input type="text" name="data[<?= $row['refuelId'] ?>][flightAirOperatorShortName]"
+                <input type="text" name="data[<?= $item ?>][flightAirOperatorShortName]"
                        class="input-small readonly"
                        maxlength="40" required="required" readonly="readonly"
                        value="<?= $row['flightAirOperatorShortName'] ?>">
             </td>
             <td>
-                <input type="text" name="data[<?= $row['refuelId'] ?>][flightAirOperatorNumber]"
+                <input type="text" name="data[<?= $item ?>][flightAirOperatorNumber]"
                        class="input-small"
                        maxlength="40" required="required"
                        value="<?= $row['flightAirOperatorNumber'] ?>">
             </td>
             <td>
-                <input type="hidden" name="data[<?= $row['refuelId'] ?>][flightAircraftId]"
+                <input type="hidden" name="data[<?= $item ?>][flightAircraftId]"
                        value="<?= $row['flightAircraftId'] ?>">
-                <input type="text" name="data[<?= $row['refuelId'] ?>][flightAircraftName]" class="input-small readonly"
+                <input type="text" name="data[<?= $item ?>][flightAircraftName]" class="input-small readonly"
                        maxlength="40" required="required" readonly="readonly"
                        value="<?= $row['flightAircraftName'] ?>">
             </td>
             <td>
-                <input type="hidden" name="data[<?= $row['refuelId'] ?>][refuelAirportId]"
+                <input type="hidden" name="data[<?= $item ?>][refuelAirportId]"
                        value="<?= $row['refuelAirportId'] ?>">
-                <input type="text" name="data[<?= $row['refuelId'] ?>][refuelAirportName]" class="input-small readonly"
+                <input type="text" name="data[<?= $item ?>][refuelAirportName]" class="input-small readonly"
                        maxlength="40" required="required" readonly="readonly"
                        value="<?= $row['refuelAirportName'] ?>">
             </td>
             <td>
-                <input type="text" name="data[<?= $row['refuelId'] ?>][refuelDate]"
+                <input type="text" name="data[<?= $item ?>][refuelDate]"
                        class="input-small date"
                        placeholder="Date of refuel"
                        maxlength="40" required="required" value="<?= $row['refuelDate'] ?>">
             </td>
             <td>
                 <input type="text" class="refuelQuantityLtr input-mini"
-                       name="data[<?= $row['refuelId'] ?>][refuelQuantityLtr]"
+                       name="data[<?= $item ?>][refuelQuantityLtr]"
                        placeholder="QTY LTR"
                        maxlength="40" required="required" value="<?= $row['refuelQuantityLtr'] ?>">
             </td>
             <td>
                 <input type="text" class="refuelQuantityOtherUnits input-mini"
-                       name="data[<?= $row['refuelId'] ?>][refuelQuantityOtherUnits]"
+                       name="data[<?= $item ?>][refuelQuantityOtherUnits]"
                        placeholder="Quantity est"
                        maxlength="40" required="required" value="<?= $row['refuelQuantityOtherUnits'] ?>">
             </td>
             <td>
-                <select name="data[<?= $row['refuelId'] ?>][refuelUnitId]"
+                <select name="data[<?= $item ?>][refuelUnitId]"
                         class="refuelUnitId chosen input-small"
                         data-placeholder="Unit"
                         required="required">
@@ -146,34 +146,34 @@
             </td>
             <td>
                 <input type="text" class="refuelItemPrice input-mini text-right"
-                       name="data[<?= $row['refuelId'] ?>][refuelItemPrice]"
+                       name="data[<?= $item ?>][refuelItemPrice]"
                        placeholder="Price est"
                        maxlength="40" required="required"
                        value="<?= number_format($row['refuelItemPrice'], 4, '.', '') ?>">
             </td>
             <td>
-                <input type="text" class="refuelTax input-mini" name="data[<?= $row['refuelId'] ?>][refuelTax]"
+                <input type="text" class="refuelTax input-mini" name="data[<?= $item ?>][refuelTax]"
                        placeholder="TAX"
                        maxlength="40" required="required" value="<?= $row['refuelTax'] ?>">
             </td>
             <td>
-                <input type="text" class="refuelMot input-mini" name="data[<?= $row['refuelId'] ?>][refuelMot]"
+                <input type="text" class="refuelMot input-mini" name="data[<?= $item ?>][refuelMot]"
                        placeholder="MOT"
                        maxlength="40" required="required" value="<?= $row['refuelMot'] ?>">
             </td>
             <td>
-                <input type="text" class="refuelVat input-mini" name="data[<?= $row['refuelId'] ?>][refuelVat]"
+                <input type="text" class="refuelVat input-mini" name="data[<?= $item ?>][refuelVat]"
                        placeholder="VAT"
                        maxlength="40" required="required" value="<?= $row['refuelVat'] ?>">
             </td>
             <td>
-                <input type="text" class="refuelDeliver input-mini" name="data[<?= $row['refuelId'] ?>][refuelDeliver]"
+                <input type="text" class="refuelDeliver input-mini" name="data[<?= $item ?>][refuelDeliver]"
                        placeholder="Deliver"
                        maxlength="40" required="required" value="<?= $row['refuelDeliver'] ?>">
             </td>
             <td>
                 <input type="text" class="refuelPrice input-mini text-right"
-                       name="data[<?= $row['refuelId'] ?>][refuelPrice]"
+                       name="data[<?= $item ?>][refuelPrice]"
                        placeholder="Total price"
                        maxlength="40" required="required"
                        value="<?= $row['refuelPrice'] ?>">
@@ -183,7 +183,7 @@
                 $refuelPriceSubTotal += $row['refuelPriceTotal'];
                 ?>
                 <input type="text" class="refuelPriceTotal input-mini text-right"
-                       name="data[<?= $row['refuelId'] ?>][refuelPriceTotal]"
+                       name="data[<?= $item ?>][refuelPriceTotal]"
                        placeholder="Total"
                        maxlength="40" required="required"
                        value="<?= $row['refuelPriceTotal'] ?>">
@@ -193,7 +193,7 @@
                 $refuelExchangeToUsdPriceSubTotal += $row['refuelExchangeToUsdPriceTotal'];
                 ?>
                 <input type="text" class="refuelExchangeToUsdPriceTotal input-mini text-right"
-                       name="data[<?= $row['refuelId'] ?>][refuelExchangeToUsdPriceTotal]"
+                       name="data[<?= $item ?>][refuelExchangeToUsdPriceTotal]"
                        placeholder="Exchange Total"
                        maxlength="40" required="required"
                        value="<?= $row['refuelExchangeToUsdPriceTotal'] ?>">

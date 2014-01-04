@@ -1,53 +1,4 @@
-﻿18.12
-8:00
-#91: Search AP Service income (step 1) - калькуляторы. #91: Create AP Service income invoice. #91: Create AP Service - калькуляторы. #91: Check AP Service income invoice. #91: Check AP Service - калькуляторы. #91: AP Service сохранение в БД и отображение. #91: Search AP Service income (step 1) - подставляем значения из входящего инвойса.
-18:00
-
-19.12
-11:00
-ВОФИСЕ! #91: Поиск и исправление ошибок. #91: Search AP Service income - Новые предложения от Игоря.
-13:35
-14:50
-#92: Search AP Service outcome (step 1).
-17:25
-
-20.13
-10:00
-#92: Search AP Service outcome (step 1) - калькуляторы. #92: Create AP Service outcome invoice. #92: Create AP Service outcome invoice - калькуляторы. #92: Create AP Service outcome invoice - SubForm и его калькулятор. #92: Check AP Service outcome invoice. #92: Check AP Service outcome invoice - калькуляторы. #92: Check AP Service outcome invoice - сохранение в БД.
-
-21.12
-10:45
-#92: Search AP Service outcome (step 1) - данные с исходящего инвойса. #92: Show AP Service outcome invoice.
-12:20
-
-23.12
-9:45
-#92: Show AP Service outcome invoice. #92: Search AP Service outcome (step 1) - данные с исходящего инвойса.
-10:55
-#95: Внедрить возможность печатать счета в PDF.
-https://github.com/raykolbe/DOMPDFModule
-18:10
-
-24.12
-10:20
-#96: Management Permissions - Income Invoice - структура файлов и фильтр. #96: Search Permission income (step 1). #96: Create Permission income invoice.
-
-25.12
-13:00
-#96: Create Permission income invoice. #96: Check Permission income invoice. #96: Save Permission income invoice. #96: Show Permission income invoice.
-18:05
-
-26.12
-9:25
-#96: Show Permission income invoice. #96: Search Permission income (step 1). #97: Search Permission outcome (step 1).
-14:10
-
-27.12
-7:50
-#97: Search Permission outcome (step 1). #97: Create Permission outcome invoice. #97: Check Permission outcome invoice. #97: Save Permission outcome invoice. #97: Show Permission outcome invoice. #97: Search Permission outcome (step 1). #100: Причесывание БД. #101: Поиск/устранение ошибок, не большие украшательства.
-14:45
-
-31.12
+﻿31.12
 7:50
 #98: LEG - необходимо поле "Дата прибития". а также переделать дизайн под существующий стандарт.
 11:20
@@ -56,3 +7,8 @@ https://github.com/raykolbe/DOMPDFModule
 9:05
 #98: LEG - необходимо поле "Дата прибития". а также переделать дизайн под существующий стандарт.
 10:15
+
+04.01
+8:05
+#103: Если повторно создаем инвойс на уже ранее созданный инвойс, то есть потеря данных. Необходимо исследовать и устранить.
+8:55
