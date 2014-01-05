@@ -138,7 +138,7 @@ class SearchModel extends AbstractTableGateway
 
             case 'library_kontragent':
                 $select->columns(array('id',
-                    'name', 'short_name', 'address', 'phone1', 'phone2', 'phone3', 'fax', 'mail', 'sita'));
+                    'name', 'short_name', 'address', 'phone1', 'phone2', 'phone3', 'fax', 'mail', 'agreement'));
                 $select->where->like('name', $text . '%');
                 $select->order('name ' . Select::ORDER_ASCENDING);
                 break;

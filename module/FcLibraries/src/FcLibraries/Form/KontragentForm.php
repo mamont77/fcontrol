@@ -127,14 +127,14 @@ class KontragentForm extends Form
         ));
 
         $this->add(array(
-            'name' => 'sita',
+            'name' => 'agreement',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'required' => false,
+                'required' => true,
                 'maxlength' => '10',
             ),
             'options' => array(
-                'label' => 'SITA',
+                'label' => 'Agreement',
             ),
         ));
 

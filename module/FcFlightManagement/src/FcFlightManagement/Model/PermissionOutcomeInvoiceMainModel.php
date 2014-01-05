@@ -72,6 +72,7 @@ class PermissionOutcomeInvoiceMainModel extends BaseModel
             array(
                 'outcomeInvoiceMainCustomerName' => 'name',
                 'outcomeInvoiceMainCustomerShortName' => 'short_name',
+                'outcomeInvoiceMainCustomerAgreement' => 'agreement',
                 'outcomeInvoiceMainCustomerTermOfPayment' => 'termOfPayment',
             ),
             'left');

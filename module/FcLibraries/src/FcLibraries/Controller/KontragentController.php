@@ -202,7 +202,7 @@ class KontragentController extends IndexController
             'Phone 3' => $data->phone3,
             'Fax' => $data->fax,
             'E-mail' => $data->mail,
-            'SITA' => $data->sita,
+            'Agreement' => $data->agreement,
             'Term of payment' => $data->termOfPayment,
         );
     }

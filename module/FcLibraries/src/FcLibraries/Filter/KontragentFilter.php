@@ -31,7 +31,7 @@ class KontragentFilter extends BaseFilter
     public $phone3;
     public $fax;
     public $mail;
-    public $sita;
+    public $agreement;
     public $termOfPayment;
 
     /**
@@ -48,7 +48,7 @@ class KontragentFilter extends BaseFilter
         $this->phone3 = (isset($data['phone3'])) ? $data['phone3'] : null;
         $this->fax = (isset($data['fax'])) ? $data['fax'] : null;
         $this->mail = (isset($data['mail'])) ? $data['mail'] : null;
-        $this->sita = (isset($data['sita'])) ? $data['sita'] : null;
+        $this->agreement = (isset($data['agreement'])) ? $data['agreement'] : null;
         $this->termOfPayment = (isset($data['termOfPayment'])) ? $data['termOfPayment'] : 5;
     }
 
@@ -199,8 +199,8 @@ class KontragentFilter extends BaseFilter
             )));
 
             $inputFilter->add($factory->createInput(array(
-                'name' => 'sita',
-                'required' => false,
+                'name' => 'agreement',
+                'required' => true,
                 'filters' => $this->defaultFilters,
                 'validators' => array(
                     array(
