@@ -117,6 +117,18 @@ class Module
     /**
      * @return array
      */
+//    public function getViewHelperConfig()
+//    {
+//        return array(
+//            'invokables' => array(
+//                'numbersToWords' => 'FcFlightManagement\Helper\NumbersToWords',
+//            ),
+//        );
+//    }
+
+    /**
+     * @return array
+     */
     public function getServiceConfig()
     {
         return array(

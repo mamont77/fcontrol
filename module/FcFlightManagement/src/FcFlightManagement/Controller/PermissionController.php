@@ -461,6 +461,9 @@ class PermissionController extends FlightController
         }
 
         $header = $this->getPermissionOutcomeInvoiceMainModel()->get($invoiceId);
+        if (is_null($header->outcomeInvoiceMainCustomerTermOfPayment)) {
+            $header->outcomeInvoiceMainCustomerTermOfPayment = 5;
+        }
         $header->dueDate = \DateTime::createFromFormat('d-m-Y', $header->outcomeInvoiceMainDate)
             ->add(new \DateInterval('P' . $header->outcomeInvoiceMainCustomerTermOfPayment . 'D'))->format('d-m-Y');
 
@@ -468,10 +471,11 @@ class PermissionController extends FlightController
         foreach ($data as $row) {
             $header->data[] = $row;
         }
+//        \Zend\Debug\Debug::dump($header);
 
         $pdf = new PdfModel();
-//        $pdf = new ViewModel();
-        $pdf->setOption('filename', 'PermissionOutcome_' . $header->outcomeInvoiceMainCustomerShortName
+        $pdf = new ViewModel();
+        $pdf->setOption('filename', 'OP_' . $header->outcomeInvoiceMainCustomerShortName
         . '_' . $header->outcomeInvoiceMainNumber); // Triggers PDF download, automatically appends ".pdf"
         $pdf->setOption('paperSize', 'a4'); // Defaults to "8x11"
         $pdf->setOption('paperOrientation', 'portrait'); // Defaults to "portrait"

@@ -2,51 +2,51 @@
 $title = 'Show Permission outcome invoice';
 $this->headTitle($title);
 ?>
-    <ul class="breadcrumb">
-        <li><a href="/">Home</a> <span class="divider">/</span></li>
-        <li>Management <span class="divider">/</span></li>
-        <li>Permission outcome invoice<span class="divider">/</span></li>
-        <li><?= $this->header->outcomeInvoiceMainNumber ?></li>
-    </ul>
+<ul class="breadcrumb">
+    <li><a href="/">Home</a> <span class="divider">/</span></li>
+    <li>Management <span class="divider">/</span></li>
+    <li>Permission outcome invoice<span class="divider">/</span></li>
+    <li><?= $this->header->outcomeInvoiceMainNumber ?></li>
+</ul>
 
-    <h1><?= $title ?></h1>
+<h1><?= $title ?></h1>
 
 <?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
 <?php echo $this->flashMessenger()->render('info', array('alert', 'alert-info')); ?>
 <?php echo $this->flashMessenger()->render('error', array('alert', 'alert-error')); ?>
-<?// \Zend\Debug\Debug::dump($this->header) ?>
+<? // \Zend\Debug\Debug::dump($this->header) ?>
 
-    <table id="invoiceHeader" class="table table-bordered table-condensed">
-        <thead>
-        <tr>
-            <th>Invoice #</th>
-            <th>Date</th>
-            <th>Currency</th>
-            <th>Exchange Rate</th>
-            <th>Customer</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>
-                <?= $this->header->outcomeInvoiceMainNumber ?>
-            </td>
-            <td>
-                <?= $this->header->outcomeInvoiceMainDate ?>
-            </td>
-            <td>
-                <?= $this->header->outcomeInvoiceMainCurrency ?>
-            </td>
-            <td>
-                <?= $this->header->outcomeInvoiceMainExchangeRate ?>
-            </td>
-            <td>
-                <?= $this->header->outcomeInvoiceMainCustomerShortName ?>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <br/>
+<table id="invoiceHeader" class="table table-bordered table-condensed">
+    <thead>
+    <tr>
+        <th>Invoice #</th>
+        <th>Date</th>
+        <th>Currency</th>
+        <th>Exchange Rate</th>
+        <th>Customer</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>
+            <?= $this->header->outcomeInvoiceMainNumber ?>
+        </td>
+        <td>
+            <?= $this->header->outcomeInvoiceMainDate ?>
+        </td>
+        <td>
+            <?= $this->header->outcomeInvoiceMainCurrency ?>
+        </td>
+        <td>
+            <?= $this->header->outcomeInvoiceMainExchangeRate ?>
+        </td>
+        <td>
+            <?= $this->header->outcomeInvoiceMainCustomerShortName ?>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<br/>
 <?=
 $this->partial('fc-flight-management/_widgets/tables/permission-outcome-invoice.phtml',
     array(
@@ -54,3 +54,7 @@ $this->partial('fc-flight-management/_widgets/tables/permission-outcome-invoice.
     )
 )
 ?>
+<div>
+    <a class="btn"
+       href="/management/permission/outcome-invoice-print/<?= $this->header->outcomeInvoiceMainId ?>">Download INVOICE</a>
+</div>
