@@ -142,6 +142,19 @@ return array(
                                     )
                                 ),
                             ),
+                            'outcome-invoice-print' => array(
+                                'type' => 'segment',
+                                'options' => array(
+                                    'route' => '/outcome-invoice-print[/:id]',
+                                    'constraints' => array(
+                                        'id' => '[0-9]+',
+                                    ),
+                                    'defaults' => array(
+                                        'controller' => 'FcFlightManagement\Controller\Refuel',
+                                        'action' => 'outcomeInvoicePrint'
+                                    )
+                                ),
+                            ),
                         )
                     ),
                     'ap-service' => array(
@@ -390,6 +403,19 @@ return array(
                                     'defaults' => array(
                                         'controller' => 'FcFlightManagement\Controller\Permission',
                                         'action' => 'outcomeInvoiceShow'
+                                    )
+                                ),
+                            ),
+                            'outcome-invoice-print' => array(
+                                'type' => 'segment',
+                                'options' => array(
+                                    'route' => '/outcome-invoice-print[/:id]',
+                                    'constraints' => array(
+                                        'id' => '[0-9]+',
+                                    ),
+                                    'defaults' => array(
+                                        'controller' => 'FcFlightManagement\Controller\Permission',
+                                        'action' => 'outcomeInvoicePrint'
                                     )
                                 ),
                             ),

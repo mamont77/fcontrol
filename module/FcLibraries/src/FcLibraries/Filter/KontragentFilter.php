@@ -49,7 +49,7 @@ class KontragentFilter extends BaseFilter
         $this->fax = (isset($data['fax'])) ? $data['fax'] : null;
         $this->mail = (isset($data['mail'])) ? $data['mail'] : null;
         $this->sita = (isset($data['sita'])) ? $data['sita'] : null;
-        $this->termOfPayment = (isset($data['termOfPayment'])) ? $data['termOfPayment'] : null;
+        $this->termOfPayment = (isset($data['termOfPayment'])) ? $data['termOfPayment'] : 5;
     }
 
     /**

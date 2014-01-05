@@ -454,15 +454,31 @@ class PermissionController extends FlightController
 
     public function outcomeInvoicePrintAction()
     {
+        $invoiceId = (string)$this->params()->fromRoute('id', '');
+
+        if (empty($invoiceId)) {
+            return $this->redirect()->toRoute('management/permission/outcome-invoice-step1');
+        }
+
+        $header = $this->getPermissionOutcomeInvoiceMainModel()->get($invoiceId);
+        $header->dueDate = \DateTime::createFromFormat('d-m-Y', $header->outcomeInvoiceMainDate)
+            ->add(new \DateInterval('P' . $header->outcomeInvoiceMainCustomerTermOfPayment . 'D'))->format('d-m-Y');
+
+        $data = $this->getPermissionOutcomeInvoiceDataModel()->getByInvoiceId($invoiceId);
+        foreach ($data as $row) {
+            $header->data[] = $row;
+        }
+
         $pdf = new PdfModel();
 //        $pdf = new ViewModel();
-        $pdf->setOption('filename', 'monthly-report2'); // Triggers PDF download, automatically appends ".pdf"
+        $pdf->setOption('filename', 'PermissionOutcome_' . $header->outcomeInvoiceMainCustomerShortName
+        . '_' . $header->outcomeInvoiceMainNumber); // Triggers PDF download, automatically appends ".pdf"
         $pdf->setOption('paperSize', 'a4'); // Defaults to "8x11"
         $pdf->setOption('paperOrientation', 'portrait'); // Defaults to "portrait"
 
         // To set view variables
         $pdf->setVariables(array(
-            'message' => 'Hello <b>Word</b>!!!'
+            'header' => $header,
         ));
 
         return $pdf;

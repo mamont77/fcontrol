@@ -144,7 +144,7 @@ class KontragentForm extends Form
             'attributes' => array(
                 'required' => false,
                 'maxlength' => '2',
-                'value' => 5,
+                'value' => '5',
             ),
             'options' => array(
                 'label' => 'Term of payment',

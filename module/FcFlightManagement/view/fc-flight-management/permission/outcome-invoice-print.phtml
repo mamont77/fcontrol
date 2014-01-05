@@ -1,92 +1,78 @@
-<?php
-$title = 'Show Permission outcome invoice';
-$this->headTitle($title);
-?>
-<ul class="breadcrumb">
-    <li><a href="/">Home</a> <span class="divider">/</span></li>
-    <li>Management <span class="divider">/</span></li>
-    <li>Permission outcome invoice<span class="divider">/</span></li>
-    <li><?= $this->header->outcomeInvoiceMainNumber ?></li>
-</ul>
+<style>
+    th, td {
+        border: 1px solid #000000;
+    }
 
-<h1><?= $title ?></h1>
+    th {
+        font-weight: bold;
+    }
+</style>
 
-<table id="invoiceMain" class="table table-bordered table-hover table-condensed">
+<div class="header">
+    <strong>Invoice #:</strong> <?= $this->header->outcomeInvoiceMainNumber ?>
+    <br/>
+    <strong>Date:</strong> <?= $this->header->outcomeInvoiceMainDate ?>
+    <br/>
+    <strong>Due Date:</strong> <?= $this->header->dueDate ?>
+    <br/>
+    <strong>Customer:</strong> <?= $this->header->outcomeInvoiceMainCustomerName ?>
+    <br/>
+    <strong>Agreement:</strong> ???
+    <br/>
+    <strong>Type of service:</strong> Permission service
+    <br/>
+    <strong>Currency:</strong> <?= $this->header->outcomeInvoiceMainCurrency ?>
+    <br/>
+</div>
+<table class="table">
     <thead>
     <tr>
-        <th>ORD #</th>
-        <th>Invoice #</th>
-        <th>Date</th>
-        <th>Currency</th>
-        <th>Exchange Rate</th>
-        <th>Agent</th>
-        <th colspan="2">Type of service</th>
+        <th>
+            #
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Quantity
+        </th>
+        <th>
+            Price per unit
+        </th>
+        <th>
+            Total amount
+        </th>
     </tr>
     </thead>
     <tbody>
-    <tr>
-        <td rowspan="2">
-            test
-        </td>
-        <td rowspan="2">
-            test
-        </td>
-        <td rowspan="2">
-            test
-        </td>
-        <td>
-            test
-        </td>
-        <td>
-            test
-        </td>
-        <td rowspan="2">
-            test
-        </td>
-        <td colspan="2">
-            test
-        </td>
-    </tr>
-    </tbody>
-    <thead>
-    <tr>
-        <th>Customer</th>
-        <th>Air Operator</th>
-        <th>Flight #</th>
-        <th>Aircraft</th>
-        <th>Airport Arr</th>
-        <th>Airport Dep</th>
-        <th>Date Arr</th>
-        <th>Date Dep</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td rowspan="2">
-            test
-        </td>
-        <td rowspan="2">
-            test
-        </td>
-        <td rowspan="2">
-            test
-        </td>
-        <td rowspan="2">
-            test
-        </td>
-        <td rowspan="2">
-            test
-        </td>
-        <td rowspan="2">
-            test
-        </td>
-        <td>
-            test
-        </td>
-        <td>
-            test
-        </td>
-    </tr>
+    <? foreach ($this->header->data as $item => $row): ?>
+        <tr>
+            <td>
+                <?= $item + 1 ?>
+            </td>
+            <td>
+                <strong>Country</strong> <?= $row->preInvoiceCountryName ?>
+                <strong>Type perm</strong> <?= $row->preInvoiceTypeOfPermission ?>
+                <strong>Airport Dep</strong> <?= $row->legAirportDepICAO ?> <?= $row->legAirportDepIATA ?>
+                <strong>Airport Arr</strong> <?= $row->legAirportArrICAO ?> <?= $row->legAirportArrIATA ?>
+                <strong>Date Dep</strong> <?= date('d-m-Y', $row->outcomeInvoiceDataDateDep) ?>
+                <strong>Date Arr</strong> <?= date('d-m-Y', $row->outcomeInvoiceDataDateArr) ?>
+                <br/>
+                <strong>Flight #:</strong> <?= $row->outcomeInvoiceDataFlightNumber ?>
+                <br/>
+                <strong>Aircraft:</strong> <?= $row->outcomeInvoiceDataAircraftTypeName ?>
+                (<?= $row->outcomeInvoiceDataAircraftName ?>)
+            </td>
+            <td>
+                <?= $row->outcomeInvoiceDataQuantity ?>
+            </td>
+            <td>
+                <?= number_format($row->outcomeInvoiceDataItemPrice, 2, '.', '') ?>
+            </td>
+            <td>
+                <?= number_format($row->incomeInvoiceDataPriceTotal, 2, '.', '') ?>
+            </td>
+        </tr>
+    <? endforeach; ?>
     </tbody>
 </table>
-<br/>
