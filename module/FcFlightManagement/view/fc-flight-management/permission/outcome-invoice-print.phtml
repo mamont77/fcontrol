@@ -23,7 +23,7 @@
     }
 
     .invoiceLogo, .invoiceHeader {
-        margin-bottom: 1em;
+        margin-bottom: 3em;
     }
 
     .table {
@@ -83,7 +83,7 @@
     <br/><br/>
     <strong>Customer:</strong> <code><?= $this->header->outcomeInvoiceMainCustomerName ?></code>
     <br/><br/>
-    <strong>Agreement:</strong> <code>???</code>
+    <strong>Agreement:</strong> <code>//TODO</code>
     <br/><br/>
     <strong>Type of service:</strong> <code>Permission service</code>
     &nbsp;&nbsp;&nbsp;
@@ -157,12 +157,19 @@
     </tbody>
 </table>
 <div>
-    <pre>(<?= $this->numberToWords($subTotal) ?>)</pre>
+    <pre>(<?=
+        $this->numberFormat(
+            $subTotal,
+            NumberFormatter::SPELLOUT,
+            NumberFormatter::TYPE_DEFAULT,
+            "en_US"
+        )
+        ?>)</pre>
 </div>
 <div>
     <strong>Please pay to:</strong>
     <br />
-    <code>test</code>
+    <code>//TODO</code>
 </div>
 
 <div class="footer">

@@ -12,12 +12,6 @@ return array(
         'invokables' => array(),
     ),
 
-    'view_helpers' => array(
-        'invokables' => array(
-            'numberToWords' => 'FcFlightManagement\View\Helper\NumberToWords',
-        ),
-    ),
-
     'router' => array(
         'routes' => array(
             'management' => array(
