@@ -15,96 +15,117 @@ class NumberToWords extends AbstractHelper
 
     public function __invoke($number)
     {
-        $number = ( string )(( int )$number);
+        return $this->convertNumberToWords($number);
+    }
 
-        if (( int )($number) && ctype_digit($number)) {
-            $words = array();
+    public function convertNumberToWords ($number) {
+        $hyphen = '-';
+        $conjunction = ' and ';
+        $separator = ', ';
+        $negative = 'negative ';
+        $decimal = ' point ';
+        $dictionary = array(
+            0 => 'zero',
+            1 => 'one',
+            2 => 'two',
+            3 => 'three',
+            4 => 'four',
+            5 => 'five',
+            6 => 'six',
+            7 => 'seven',
+            8 => 'eight',
+            9 => 'nine',
+            10 => 'ten',
+            11 => 'eleven',
+            12 => 'twelve',
+            13 => 'thirteen',
+            14 => 'fourteen',
+            15 => 'fifteen',
+            16 => 'sixteen',
+            17 => 'seventeen',
+            18 => 'eighteen',
+            19 => 'nineteen',
+            20 => 'twenty',
+            30 => 'thirty',
+            40 => 'fourty',
+            50 => 'fifty',
+            60 => 'sixty',
+            70 => 'seventy',
+            80 => 'eighty',
+            90 => 'ninety',
+            100 => 'hundred',
+            1000 => 'thousand',
+            1000000 => 'million',
+            1000000000 => 'billion',
+            1000000000000 => 'trillion',
+            1000000000000000 => 'quadrillion',
+            1000000000000000000 => 'quintillion'
+        );
 
-            $number = str_replace(array(',', ' '), '', trim($number));
+        if (!is_numeric($number)) {
+            return false;
+        }
 
-            $list1 = array('', 'one', 'two', 'three', 'four', 'five', 'six', 'seven',
-                'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen',
-                'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen');
+        if (($number >= 0 && (int)$number < 0) || (int)$number < 0 - PHP_INT_MAX) {
+            // overflow
+            trigger_error(
+                'convert_number_to_words only accepts numbers between -' . PHP_INT_MAX . ' and ' . PHP_INT_MAX,
+                E_USER_WARNING
+            );
+            return false;
+        }
 
-            $list2 = array('', 'ten', 'twenty', 'thirty', 'forty', 'fifty', 'sixty',
-                'seventy', 'eighty', 'ninety', 'hundred');
+        if ($number < 0) {
+            return $negative . $this->convertNumberToWords(abs($number));
+        }
 
-            $list3 = array('', 'thousand', 'million', 'billion', 'trillion',
-                'quadrillion', 'quintillion', 'sextillion', 'septillion',
-                'octillion', 'nonillion', 'decillion', 'undecillion',
-                'duodecillion', 'tredecillion', 'quattuordecillion',
-                'quindecillion', 'sexdecillion', 'septendecillion',
-                'octodecillion', 'novemdecillion', 'vigintillion');
+        $string = $fraction = null;
 
-            $number_length = strlen($number);
-            $levels = ( int )(($number_length + 2) / 3);
-            $max_length = $levels * 3;
-            $number = substr('00' . $number, -$max_length);
-            $number_levels = str_split($number, 3);
+        if (strpos($number, '.') !== false) {
+            list($number, $fraction) = explode('.', $number);
+        }
 
-            foreach ($number_levels as $number_part) {
-                $levels--;
-                $hundreds = ( int )($number_part / 100);
-                $hundreds = ($hundreds ? ' ' . $list1[$hundreds] . ' Hundred' . ($hundreds == 1 ? '' : 's') . ' ' : '');
-                $tens = ( int )($number_part % 100);
-                $singles = '';
-
-                if ($tens < 20) {
-                    $tens = ($tens ? ' ' . $list1[$tens] . ' ' : '');
-                } else {
-                    $tens = ( int )($tens / 10);
-                    $tens = ' ' . $list2[$tens] . ' ';
-                    $singles = ( int )($number_part % 10);
-                    $singles = ' ' . $list1[$singles] . ' ';
+        switch (true) {
+            case $number < 21:
+                $string = $dictionary[$number];
+                break;
+            case $number < 100:
+                $tens = ((int)($number / 10)) * 10;
+                $units = $number % 10;
+                $string = $dictionary[$tens];
+                if ($units) {
+                    $string .= $hyphen . $dictionary[$units];
                 }
-                $words[] = $hundreds . $tens . $singles . (($levels && ( int )($number_part)) ? ' ' . $list3[$levels] . ' ' : '');
-            }
-
-            $commas = count($words);
-
-            if ($commas > 1) {
-                $commas = $commas - 1;
-            }
-
-            $words = implode(', ', $words);
-
-            //Some Finishing Touch
-            //Replacing multiples of spaces with one space
-            $words = trim(str_replace(' ,', ',', $this->trim_all(ucwords($words))), ', ');
-            if ($commas) {
-                $words = $this->str_replace_last(',', ' and', $words);
-            }
-
-            return $words;
-        } else if (!(( int )$number)) {
-            return 'Zero';
-        }
-        return '';
-    }
-
-    public function trim_all($str, $what = NULL, $with = ' ')
-    {
-        if ($what === NULL) {
-            //  Character      Decimal      Use
-            //  "\0"            0           Null Character
-            //  "\t"            9           Tab
-            //  "\n"           10           New line
-            //  "\x0B"         11           Vertical Tab
-            //  "\r"           13           New Line in Mac
-            //  " "            32           Space
-
-            $what = "\\x00-\\x20"; //all white-spaces and control chars
+                break;
+            case $number < 1000:
+                $hundreds = $number / 100;
+                $remainder = $number % 100;
+                $string = $dictionary[$hundreds] . ' ' . $dictionary[100];
+                if ($remainder) {
+                    $string .= $conjunction . $this->convertNumberToWords($remainder);
+                }
+                break;
+            default:
+                $baseUnit = pow(1000, floor(log($number, 1000)));
+                $numBaseUnits = (int)($number / $baseUnit);
+                $remainder = $number % $baseUnit;
+                $string = $this->convertNumberToWords($numBaseUnits) . ' ' . $dictionary[$baseUnit];
+                if ($remainder) {
+                    $string .= $remainder < 100 ? $conjunction : $separator;
+                    $string .= $this->convertNumberToWords($remainder);
+                }
+                break;
         }
 
-        return trim(preg_replace("/[" . $what . "]+/", $with, $str), $what);
-    }
-
-    public function str_replace_last($search, $replace, $str)
-    {
-        if (($pos = strrpos($str, $search)) !== false) {
-            $search_length = strlen($search);
-            $str = substr_replace($str, $replace, $pos, $search_length);
+        if (null !== $fraction && is_numeric($fraction)) {
+            $string .= $decimal;
+            $words = array();
+            foreach (str_split((string)$fraction) as $number) {
+                $words[] = $dictionary[$number];
+            }
+            $string .= implode(' ', $words);
         }
-        return $str;
+
+        return $string;
     }
 }
