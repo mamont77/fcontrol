@@ -1,11 +1,39 @@
 <style>
     th, td {
-        border: 1px solid #000000;
+        /*border: 1px solid #000000;*/
     }
 
     th {
         font-weight: bold;
     }
+    .table-bordered {
+        border: 1px solid #dddddd;
+        border-collapse: separate;
+        border-left: 0;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+    }
+    .table {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+    table {
+        max-width: 100%;
+        background-color: transparent;
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+    body {
+        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-size: 12px;
+        line-height: 15px;
+        color: #333333;
+    }
+    thead {
+        background-color: #eaeaea;
+    }
+
 </style>
 
 <div class="header">
@@ -24,7 +52,7 @@
     <strong>Currency:</strong> <?= $this->header->outcomeInvoiceMainCurrency ?>
     <br/>
 </div>
-<table class="table">
+<table class="table table-bordered table-condensed">
     <thead>
     <tr>
         <th>
