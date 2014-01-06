@@ -162,14 +162,7 @@
 </table>
 <p>
 <pre>
-    (<?=
-    $this->numberFormat(
-        $subTotal,
-        NumberFormatter::SPELLOUT,
-        NumberFormatter::TYPE_DEFAULT,
-        "en_US"
-    )
-    ?>)
+    <?= strtoupper($this->numberFormat($subTotal, NumberFormatter::SPELLOUT, NumberFormatter::TYPE_DEFAULT, "en_US")) ?>
 </pre>
 </p>
 <p>

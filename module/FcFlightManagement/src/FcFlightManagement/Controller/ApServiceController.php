@@ -542,7 +542,7 @@ class ApServiceController extends FlightController
     }
 
     /**
-     * @return ViewModel
+     * @return \Zend\Http\Response|ViewModel
      */
     public function outcomeInvoiceShowAction()
     {
@@ -589,6 +589,9 @@ class ApServiceController extends FlightController
         ));
     }
 
+    /**
+     * @return PdfModel|\Zend\Http\Response
+     */
     public function outcomeInvoicePrintAction()
     {
 
@@ -601,6 +604,13 @@ class ApServiceController extends FlightController
         $header = $this->getApServiceOutcomeInvoiceMainModel()->get($invoiceId);
         $header->outcomeInvoiceMainBankName = $this->getApServiceOutcomeInvoiceMainModel()
             ->getBankDetailById($header->outcomeInvoiceMainBankId);
+
+        if (is_null($header->flightCustomerTermOfPayment)) {
+            $header->flightCustomerTermOfPayment = 5;
+        }
+        $header->dueDate = \DateTime::createFromFormat('d-m-Y', $header->outcomeInvoiceMainDate)
+            ->add(new \DateInterval('P' . $header->flightCustomerTermOfPayment . 'D'))->format('d-m-Y');
+
         $header->legDepToNextAirportTime = '';
         $header->legDepToNextAirportICAO = '';
         $header->legDepToNextAirportIATA = '';
@@ -623,21 +633,17 @@ class ApServiceController extends FlightController
 
         $data = $this->getApServiceOutcomeInvoiceDataModel()->getByInvoiceId($invoiceId, false);
         foreach ($data as $row) {
-            $header->data[$row->outcomeInvoiceDataId] = $row;
+            $header->data[] = $row;
         }
         $subData = $this->getApServiceOutcomeInvoiceDataModel()->getByInvoiceId($invoiceId, true);
         foreach ($subData as $row) {
-            $header->subData[$row->outcomeInvoiceDataId] = $row;
+            $header->subData[] = $row;
         }
 
-        return new ViewModel(array(
-            'header' => $header,
-        ));
-
         $pdf = new PdfModel();
-        $pdf = new ViewModel();
-        \Zend\Debug\Debug::dump($header);
-        $pdf->setOption('filename', 'OA_' . $header->outcomeInvoiceMainCustomerShortName
+//        $pdf = new ViewModel();
+//        \Zend\Debug\Debug::dump($header);
+        $pdf->setOption('filename', 'OA_' . $header->flightCustomerShortName
             . '_' . $header->outcomeInvoiceMainNumber); // Triggers PDF download, automatically appends ".pdf"
         $pdf->setOption('paperSize', 'a4'); // Defaults to "8x11"
         $pdf->setOption('paperOrientation', 'portrait'); // Defaults to "portrait"

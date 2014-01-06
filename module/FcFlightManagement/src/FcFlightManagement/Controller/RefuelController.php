@@ -394,7 +394,7 @@ class RefuelController extends FlightController
     }
 
     /**
-     * @return ViewModel
+     * @return \Zend\Http\Response|ViewModel
      */
     public function outcomeInvoiceShowAction()
     {
@@ -420,7 +420,7 @@ class RefuelController extends FlightController
     }
 
     /**
-     * @return PdfModel
+     * @return PdfModel|\Zend\Http\Response
      */
     public function outcomeInvoicePrintAction()
     {
