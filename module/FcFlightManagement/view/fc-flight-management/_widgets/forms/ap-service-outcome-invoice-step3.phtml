@@ -11,23 +11,24 @@
         <th>Currency</th>
         <th>Exchange Rate</th>
         <th>Agent</th>
-        <th colspan="2">Type of service</th>
+        <th>Type of service</th>
+        <th colspan="2">Customer</th>
     </tr>
     </thead>
     <tbody>
     <tr>
-        <td rowspan="2">
+        <td>
             <input type="hidden" name="incomeInvoiceId" value="<?= $this->data->incomeInvoiceId ?>"/>
             <input type="text" id="flightRefNumberOrder" name="flightRefNumberOrder" class="input-small"
                    placeholder="ORD #" readonly="readonly"
                    maxlength="40" required="required" value="<?= $this->data->flightRefNumberOrder ?>"/>
         </td>
-        <td rowspan="2">
+        <td>
             <input type="text" id="number" name="number" class="input-small"
                    placeholder="Invoice #" readonly="readonly"
                    maxlength="40" required="required" value="<?= $this->data->number ?>"/>
         </td>
-        <td rowspan="2">
+        <td>
             <input type="text" id="date" name="date" class="input-small date" placeholder="Date"
                    maxlength="40" required="required" readonly="readonly" value="<?= $this->data->date ?>"/>
         </td>
@@ -40,12 +41,12 @@
                    placeholder="Exchange Rate" maxlength="40" required="required" readonly="readonly"
                    value="<?= $this->data->exchangeRate ?>"/>
         </td>
-        <td rowspan="2">
+        <td>
             <input type="text" class="input-small" name="agentName" maxlength="40" required="required"
                    readonly="readonly" value="<?= $this->data->agentName ?>">
         </td>
-        <td colspan="2">
-            <select id="typeOfServiceId" name="typeOfServiceId" class="chosen input-large"
+        <td>
+            <select id="typeOfServiceId" name="typeOfServiceId" class="chosen input-small"
                     data-placeholder="Type of Service"
                     required="required">
                 <? foreach ($this->typeOfServices as $key => $value): ?>
@@ -57,11 +58,16 @@
                 <? endforeach; ?>
             </select>
         </td>
+        <td colspan="2">
+            <input type="text" class="input-small" name="customerName" maxlength="40" required="required"
+                   readonly="readonly" value="<?= $this->data->customerName ?>">
+        </td>
     </tr>
     </tbody>
     <thead>
     <tr>
-        <th>Customer</th>
+        <th>Customer Agreement</th>
+        <th>Bank</th>
         <th>Air Operator</th>
         <th>Flight #</th>
         <th>Aircraft</th>
@@ -73,29 +79,34 @@
     </thead>
     <tbody>
     <tr>
-        <td rowspan="2">
-            <input type="text" class="input-small" name="customerName" maxlength="40" required="required"
-                   readonly="readonly" value="<?= $this->data->customerName ?>">
+        <td>
+            <input type="text" class="input-small" name="customerAgreement" maxlength="40" required="required"
+                   readonly="readonly" value="<?= $this->data['customerAgreement'] ?>">
         </td>
-        <td rowspan="2">
+        <td>
+            <input type="hidden" name="bankId" value="<?= $this->data['bankId'] ?>">
+            <input type="text" class="input-small" name="bankName" maxlength="40" required="required"
+                   readonly="readonly" value="<?= $this->data['bankName'] ?>">
+        </td>
+        <td>
             <input type="text" class="input-small" name="airOperatorName" maxlength="40" required="required"
                    readonly="readonly" value="<?= $this->data->airOperatorName ?>">
         </td>
-        <td rowspan="2">
+        <td>
             <input type="text" class="input-small" name="flightNumber" maxlength="40" required="required"
                    readonly="readonly" value="<?= $this->data->flightNumber ?>">
         </td>
-        <td rowspan="2">
+        <td>
             <input type="text" class="input-small" name="aircraftName" maxlength="40" required="required"
                    readonly="readonly"
                    value="<?= $this->data->aircraftName ?>">
         </td>
-        <td rowspan="2">
+        <td>
             <input type="text" class="input-small" name="airportArr" maxlength="40" required="required"
                    readonly="readonly"
                    value="<?= $this->data->airportArr ?>">
         </td>
-        <td rowspan="2">
+        <td>
             <input type="text" class="input-small" name="airportDep" maxlength="40" required="required"
                    readonly="readonly"
                    value="<?= $this->data->airportDep ?>">

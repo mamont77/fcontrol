@@ -24,12 +24,13 @@ $this->headTitle($title);
             <th>Currency</th>
             <th>Exchange Rate</th>
             <th>Agent</th>
-            <th colspan="2">Type of service</th>
+            <th>Type of service</th>
+            <th>Bank</th>
         </tr>
         </thead>
         <tbody>
         <tr>
-            <td rowspan="2">
+            <td>
                 <a href="<?=
                 $this->url('browse',
                     array('refNumberOrder' => $this->header->flightRefNumberOrder));?>"
@@ -37,10 +38,10 @@ $this->headTitle($title);
                     <?= $this->header->flightRefNumberOrder ?>
                 </a>
             </td>
-            <td rowspan="2">
+            <td>
                 <?= $this->header->outcomeInvoiceMainNumber ?>
             </td>
-            <td rowspan="2">
+            <td>
                 <?= $this->header->outcomeInvoiceMainDate ?>
             </td>
             <td>
@@ -49,11 +50,14 @@ $this->headTitle($title);
             <td>
                 <?= $this->header->outcomeInvoiceMainExchangeRate ?>
             </td>
-            <td rowspan="2">
+            <td>
                 <?= $this->header->preInvoiceAgentShortName ?>
             </td>
-            <td colspan="2">
+            <td>
                 <?= $this->header->outcomeInvoiceMainTypeOfServiceName ?>
+            </td>
+            <td>
+                <?= $this->header->outcomeInvoiceMainBankName ?>
             </td>
         </tr>
         </tbody>
@@ -71,22 +75,22 @@ $this->headTitle($title);
         </thead>
         <tbody>
         <tr>
-            <td rowspan="2">
+            <td>
                 <?= $this->header->flightCustomerShortName ?>
             </td>
-            <td rowspan="2">
+            <td>
                 <?= $this->header->flightAirOperatorShortName ?>
             </td>
-            <td rowspan="2">
+            <td>
                 <?= $this->header->outcomeInvoiceFlightNumber ?>
             </td>
-            <td rowspan="2">
+            <td>
                 <?= $this->header->flightAircraftTypeName ?> (<?= $this->header->flightAircraftName ?>)
             </td>
-            <td rowspan="2">
+            <td>
                 <?= $this->header->preInvoiceAirportICAO ?> (<?= $this->header->preInvoiceAirportIATA ?>)
             </td>
-            <td rowspan="2">
+            <td>
                 <?= $this->header->legDepToNextAirportICAO ?> (<?= $this->header->legDepToNextAirportIATA ?>)
             </td>
             <td>

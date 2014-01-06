@@ -70,6 +70,8 @@ class ApServiceOutcomeInvoiceSearchModel extends BaseModel
             array(
                 'flightCustomerName' => 'name',
                 'flightCustomerShortName' => 'short_name',
+                'flightCustomerAgreement' => 'agreement',
+                'flightCustomerTermOfPayment' => 'termOfPayment',
             ),
             'left');
 
@@ -118,6 +120,8 @@ class ApServiceOutcomeInvoiceSearchModel extends BaseModel
             array(
                 'preInvoiceAgentName' => 'name',
                 'preInvoiceAgentShortName' => 'short_name',
+                'preInvoiceAgentAgreement' => 'agreement',
+                'preInvoiceAgentTermOfPayment' => 'termOfPayment',
             ),
             'left');
 

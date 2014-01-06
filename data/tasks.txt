@@ -24,4 +24,4 @@
 06.12
 6:00
 #94: Print invoices. #105: Browser support. #106: BANK DETAILS. #108: Добавить поля Agreement и Bank Detail в исходящие счета.
-9:20
+10:50

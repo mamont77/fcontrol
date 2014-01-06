@@ -473,6 +473,7 @@ class ApServiceController extends FlightController
             'currencies' => $currencies,
             'typeOfServices' => $typeOfServices,
             'units' => $units,
+            'banks' => $this->getApServiceOutcomeInvoiceMainModel()->getBankDetailsList(),
             'result' => $result,
             'incomeInvoiceData' => $incomeInvoiceData,
         );
@@ -552,6 +553,8 @@ class ApServiceController extends FlightController
         }
 
         $header = $this->getApServiceOutcomeInvoiceMainModel()->get($invoiceId);
+        $header->outcomeInvoiceMainBankName = $this->getApServiceOutcomeInvoiceMainModel()
+            ->getBankDetailById($header->outcomeInvoiceMainBankId);
         $header->legDepToNextAirportTime = '';
         $header->legDepToNextAirportICAO = '';
         $header->legDepToNextAirportIATA = '';
@@ -588,15 +591,60 @@ class ApServiceController extends FlightController
 
     public function outcomeInvoicePrintAction()
     {
+
+        $invoiceId = (string)$this->params()->fromRoute('id', '');
+
+        if (empty($invoiceId)) {
+            return $this->redirect()->toRoute('management/ap-service/outcome-invoice-step1');
+        }
+
+        $header = $this->getApServiceOutcomeInvoiceMainModel()->get($invoiceId);
+        $header->outcomeInvoiceMainBankName = $this->getApServiceOutcomeInvoiceMainModel()
+            ->getBankDetailById($header->outcomeInvoiceMainBankId);
+        $header->legDepToNextAirportTime = '';
+        $header->legDepToNextAirportICAO = '';
+        $header->legDepToNextAirportIATA = '';
+        $legs = $this->getLegModel()->getByHeaderId($header->preInvoiceHeaderId);
+        $currentLegId = $header->legId;
+        $nextLegs = array();
+        foreach ($legs as $leg) {
+            if ($leg['id'] > $currentLegId) {
+                $nextLegs = $leg;
+                break;
+            }
+
+        }
+        if (count($nextLegs)) {
+            $header->legDepToNextAirportTime = (string)\DateTime::createFromFormat('d-m-Y H:i',
+                $nextLegs['apDepTime'])->setTime(0, 0)->getTimestamp();
+            $header->legDepToNextAirportICAO = $nextLegs['apDepIcao'];
+            $header->legDepToNextAirportIATA = $nextLegs['apDepIata'];
+        }
+
+        $data = $this->getApServiceOutcomeInvoiceDataModel()->getByInvoiceId($invoiceId, false);
+        foreach ($data as $row) {
+            $header->data[$row->outcomeInvoiceDataId] = $row;
+        }
+        $subData = $this->getApServiceOutcomeInvoiceDataModel()->getByInvoiceId($invoiceId, true);
+        foreach ($subData as $row) {
+            $header->subData[$row->outcomeInvoiceDataId] = $row;
+        }
+
+        return new ViewModel(array(
+            'header' => $header,
+        ));
+
         $pdf = new PdfModel();
-//        $pdf = new ViewModel();
-        $pdf->setOption('filename', 'monthly-report2'); // Triggers PDF download, automatically appends ".pdf"
+        $pdf = new ViewModel();
+        \Zend\Debug\Debug::dump($header);
+        $pdf->setOption('filename', 'OA_' . $header->outcomeInvoiceMainCustomerShortName
+            . '_' . $header->outcomeInvoiceMainNumber); // Triggers PDF download, automatically appends ".pdf"
         $pdf->setOption('paperSize', 'a4'); // Defaults to "8x11"
         $pdf->setOption('paperOrientation', 'portrait'); // Defaults to "portrait"
 
         // To set view variables
         $pdf->setVariables(array(
-            'message' => 'Hello <b>Word</b>!!!'
+            'header' => $header,
         ));
 
         return $pdf;

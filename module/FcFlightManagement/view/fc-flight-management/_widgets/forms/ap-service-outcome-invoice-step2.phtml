@@ -1,5 +1,5 @@
 <? // \Zend\Debug\Debug::dump($this->typeOfServices) ?>
-<? // \Zend\Debug\Debug::dump($this->data) ?>
+<?// \Zend\Debug\Debug::dump($this->data) ?>
 <form name="apServiceOutcomeInvoiceStep3" id="apServiceOutcomeInvoiceStep3" method="post"
       action="/management/ap-service/outcome-invoice-step3">
 <table id="invoiceMain" class="table table-bordered table-hover table-condensed">
@@ -8,11 +8,12 @@
         <th>ORD #</th>
         <th>Invoice #</th>
         <th>Date</th>
-        <th>Currency</th>
-        <th>Exchange Rate</th>
-        <th>Rate Apply</th>
         <th>Agent</th>
         <th>Type of service</th>
+        <th>Customer</th>
+        <th>Customer Agreement</th>
+        <th>Air Operator</th>
+        <th>Flight #</th>
     </tr>
     </thead>
     <tbody>
@@ -32,28 +33,7 @@
             <input type="text" id="date" name="date" class="input-small date" placeholder="Date"
                    maxlength="40" required="required" value="<?= date('d-m-Y', $this->data->incomeInvoiceMainDate) ?>"/>
         </td>
-        <td>
-            <select id="currency" name="currency" class="chosen input-small"
-                    data-placeholder="Currency"
-                    required="required">
-                <option value=""></option>
-                <? foreach ($this->currencies as $key => $value): ?>
-                    <? if ($value == $this->data->incomeInvoiceMainCurrency): ?>
-                        <option value="<?= $key ?>" selected="selected"><?= $value ?></option>
-                    <? else: ?>
-                        <option value="<?= $key ?>"><?= $value ?></option>
-                    <? endif; ?>
-                <? endforeach; ?>
-            </select>
-        </td>
-        <td>
-            <input type="text" id="exchangeRate" name="exchangeRate" class="input-small"
-                   placeholder="Exchange Rate" maxlength="40" required="required"
-                   value="<?= $this->data->incomeInvoiceMainExchangeRate ?>"/>
-        </td>
-        <td rowspan="2">
-            <input id="rateApply" name="rateApply" type="submit" class="btn btn-info" value="Apply">
-        </td>
+
         <td rowspan="2">
             <input type="text" class="input-small" name="agentName" maxlength="40" required="required"
                    readonly="readonly" value="<?= $this->data->preInvoiceAgentShortName ?>">
@@ -72,36 +52,13 @@
                 <? endforeach; ?>
             </select>
         </td>
-    </tr>
-    <tr class="info">
-        <td>
-            <?= $this->data->incomeInvoiceMainCurrency ?>
-        </td>
-        <td>
-            <?= $this->data->incomeInvoiceMainExchangeRate ?>
-        </td>
-        <td>
-            <?= $this->data->incomeInvoiceMainTypeOfServiceName ?>
-        </td>
-    </tr>
-    </tbody>
-    <thead>
-    <tr>
-        <th>Customer</th>
-        <th>Air Operator</th>
-        <th>Flight #</th>
-        <th>Aircraft</th>
-        <th>Airport Arr</th>
-        <th>Airport Dep</th>
-        <th>Date Arr</th>
-        <th>Date Dep</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
         <td rowspan="2">
             <input type="text" class="input-small" name="customerName" maxlength="40" required="required"
                    readonly="readonly" value="<?= $this->data->flightCustomerShortName ?>">
+        </td>
+        <td rowspan="2">
+            <input type="text" class="input-small" name="customerAgreement" maxlength="40" required="required"
+                   readonly="readonly" value="<?= $this->data->flightCustomerAgreement ?>">
         </td>
         <td rowspan="2">
             <input type="text" class="input-small" name="airOperatorName" maxlength="40" required="required"
@@ -111,6 +68,28 @@
             <input type="text" class="input-small" name="flightNumber" maxlength="40" required="required"
                    value="<?= $this->data->incomeInvoiceFlightNumber ?>">
         </td>
+    </tr>
+    <tr class="info">
+        <td>
+            <?= $this->data->incomeInvoiceMainTypeOfServiceName ?>
+        </td>
+    </tr>
+    </tbody>
+    <thead>
+    <tr>
+        <th>Aircraft</th>
+        <th>Airport Arr</th>
+        <th>Airport Dep</th>
+        <th>Date Arr</th>
+        <th>Date Dep</th>
+        <th>Bank</th>
+        <th>Currency</th>
+        <th>Exchange Rate</th>
+        <th>Rate Apply</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
         <td rowspan="2">
             <input type="text" class="input-small" name="aircraftName" maxlength="40" required="required"
                    readonly="readonly"
@@ -136,6 +115,42 @@
                    placeholder="Date"
                    value="<?= date('d-m-Y', $this->data->incomeInvoiceMainDateDep) ?>">
         </td>
+        <td rowspan="2">
+            <select id="bankId" name="bankId" class="chosen input-small"
+                    data-placeholder="Bank"
+                    required="required">
+                <option value=""></option>
+                <? foreach ($this->banks as $key => $value): ?>
+                    <? if ($key == '1'): ?>
+                        <option value="<?= $key ?>" selected="selected"><?= $value ?></option>
+                    <? else: ?>
+                        <option value="<?= $key ?>"><?= $value ?></option>
+                    <? endif; ?>
+                <? endforeach; ?>
+            </select>
+        </td>
+        <td>
+            <select id="currency" name="currency" class="chosen input-small"
+                    data-placeholder="Currency"
+                    required="required">
+                <option value=""></option>
+                <? foreach ($this->currencies as $key => $value): ?>
+                    <? if ($value == $this->data->incomeInvoiceMainCurrency): ?>
+                        <option value="<?= $key ?>" selected="selected"><?= $value ?></option>
+                    <? else: ?>
+                        <option value="<?= $key ?>"><?= $value ?></option>
+                    <? endif; ?>
+                <? endforeach; ?>
+            </select>
+        </td>
+        <td>
+            <input type="text" id="exchangeRate" name="exchangeRate" class="input-small"
+                   placeholder="Exchange Rate" maxlength="40" required="required"
+                   value="<?= $this->data->incomeInvoiceMainExchangeRate ?>"/>
+        </td>
+        <td rowspan="2">
+            <input id="rateApply" name="rateApply" type="submit" class="btn btn-info" value="Apply">
+        </td>
     </tr>
     <tr class="info">
         <td>
@@ -144,9 +159,16 @@
         <td>
             <?= date('d-m-Y', $this->data->incomeInvoiceMainDateDep) ?>
         </td>
+        <td>
+            <?= $this->data->incomeInvoiceMainCurrency ?>
+        </td>
+        <td>
+            <?= $this->data->incomeInvoiceMainExchangeRate ?>
+        </td>
     </tr>
     </tbody>
 </table>
+
 <hr/>
 <table id="invoiceData"
        class="table table-bordered table-hover table-condensed <? if ($this->fixedHeader): ?> table-fixed-header<? endif ?>">
