@@ -474,6 +474,7 @@ class PermissionController extends FlightController
 
         $pdf = new PdfModel();
 //        $pdf = new ViewModel();
+//        \Zend\Debug\Debug::dump($header);
         $pdf->setOption('filename', 'OP_' . $header->outcomeInvoiceMainCustomerShortName
         . '_' . $header->outcomeInvoiceMainNumber); // Triggers PDF download, automatically appends ".pdf"
         $pdf->setOption('paperSize', 'a4'); // Defaults to "8x11"

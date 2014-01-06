@@ -26,6 +26,10 @@
         margin-bottom: 3em;
     }
 
+    p {
+        margin-bottom: 1em;
+    }
+
     .table {
         width: 100%;
         margin-bottom: 15px;
@@ -130,7 +134,7 @@
                 (<?= $row->outcomeInvoiceDataAircraftName ?>)
             </td>
             <td>
-                <?= $row->outcomeInvoiceDataQuantity ?>
+                <?= $row->outcomeInvoiceDataQuantity ?>, <?= $row->outcomeInvoiceDataUnitName ?>
             </td>
             <td>
                 <?= number_format($row->outcomeInvoiceDataItemPrice, 2, '.', '') ?>
@@ -156,21 +160,28 @@
     </tr>
     </tbody>
 </table>
-<div>
-    <pre>(<?=
-        $this->numberFormat(
-            $subTotal,
-            NumberFormatter::SPELLOUT,
-            NumberFormatter::TYPE_DEFAULT,
-            "en_US"
-        )
-        ?>)</pre>
-</div>
-<div>
+<p>
+<pre>
+    (<?=
+    $this->numberFormat(
+        $subTotal,
+        NumberFormatter::SPELLOUT,
+        NumberFormatter::TYPE_DEFAULT,
+        "en_US"
+    )
+    ?>)
+</pre>
+</p>
+<p>
     <strong>Please pay to:</strong>
-    <br />
+    <br/>
     <code>//TODO</code>
-</div>
+</p>
+<p>
+    Thank you,
+    <br/>
+    Account Department
+</p>
 
 <div class="footer">
 <pre>
