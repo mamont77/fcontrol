@@ -14,16 +14,18 @@ $this->headTitle($title);
 <?php echo $this->flashMessenger()->render('success', array('alert', 'alert-success')); ?>
 <?php echo $this->flashMessenger()->render('info', array('alert', 'alert-info')); ?>
 <?php echo $this->flashMessenger()->render('error', array('alert', 'alert-error')); ?>
-<? // \Zend\Debug\Debug::dump($this->header) ?>
+<?// \Zend\Debug\Debug::dump($this->header) ?>
 
 <table id="invoiceHeader" class="table table-bordered table-condensed">
     <thead>
     <tr>
         <th>Invoice #</th>
         <th>Date</th>
+        <th>Customer</th>
+        <th>Customer Agreement</th>
+        <th>Bank</th>
         <th>Currency</th>
         <th>Exchange Rate</th>
-        <th>Customer</th>
     </tr>
     </thead>
     <tbody>
@@ -35,13 +37,19 @@ $this->headTitle($title);
             <?= $this->header->outcomeInvoiceMainDate ?>
         </td>
         <td>
+            <?= $this->header->outcomeInvoiceMainCustomerShortName ?>
+        </td>
+        <td>
+            <?= $this->header->outcomeInvoiceMainCustomerAgreement ?>
+        </td>
+        <td>
+            <?= $this->header->outcomeInvoiceMainBankName ?>
+        </td>
+        <td>
             <?= $this->header->outcomeInvoiceMainCurrency ?>
         </td>
         <td>
             <?= $this->header->outcomeInvoiceMainExchangeRate ?>
-        </td>
-        <td>
-            <?= $this->header->outcomeInvoiceMainCustomerShortName ?>
         </td>
     </tr>
     </tbody>

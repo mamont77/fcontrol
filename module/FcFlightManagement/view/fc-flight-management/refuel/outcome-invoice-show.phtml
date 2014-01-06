@@ -1,6 +1,7 @@
 <?php
 $title = 'Show refuel outcome invoice';
 $this->headTitle($title);
+//\Zend\Debug\Debug::dump($this->header);
 ?>
     <ul class="breadcrumb">
         <li><a href="/">Home</a> <span class="divider">/</span></li>
@@ -20,9 +21,11 @@ $this->headTitle($title);
         <tr>
             <th>Invoice #</th>
             <th>Date</th>
+            <th>Customer</th>
+            <th>Customer Agreement</th>
+            <th>Bank</th>
             <th>Currency</th>
             <th>Exchange Rate</th>
-            <th>Customer</th>
         </tr>
         </thead>
         <tbody>
@@ -34,13 +37,19 @@ $this->headTitle($title);
                 <?= $this->header->invoiceDate ?>
             </td>
             <td>
+                <?= $this->header->invoiceCustomerShortName ?>
+            </td>
+            <td>
+                <?= $this->header->invoiceMainCustomerAgreement ?>
+            </td>
+            <td>
+                <?= $this->header->invoiceMainBankName ?>
+            </td>
+            <td>
                 <?= $this->header->invoiceCurrency ?>
             </td>
             <td>
                 <?= $this->header->invoiceExchangeRate ?>
-            </td>
-            <td>
-                <?= $this->header->invoiceCustomerShortName ?>
             </td>
         </tr>
         </tbody>

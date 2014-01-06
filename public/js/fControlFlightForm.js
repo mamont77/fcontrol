@@ -714,9 +714,10 @@
 
             // invoice (header) values
             var $invoiceCurrency = $form.find('#invoiceCurrency'),
-                $invoiceExchangeRate = $form.find('#invoiceExchangeRate'),
                 invoiceCurrencyText = $invoiceCurrency.find(':selected').text() || 'USD',
-                invoiceExchangeRateVal = parseFloat($invoiceExchangeRate.val()) || 1;
+                $invoiceExchangeRate = $form.find('#invoiceExchangeRate'),
+                invoiceExchangeRateVal = parseFloat($invoiceExchangeRate.val()) || 1,
+                $invoiceBank = $form.find('#invoiceBankId');
 
             // Блокирум поля при инициилизации
             $($form).find('#invoiceData input, #invoiceData select').each(function () {
@@ -740,6 +741,8 @@
                     $(this).prop('readonly', true).trigger('chosen:updated');
                 });
                 $('#rateApply').prop('disabled', true);
+                $invoiceBank.parent().html('<input type="hidden" name="invoiceBankId" value="' + $invoiceBank.val() + '"/>'
+                    + '<input type="text" name="invoiceBankName" readonly="readonly" class="input-small" value="' + $invoiceBank.find(':selected').text() + '"/>');
                 $invoiceCurrency.parent().html('<input type="hidden" name="invoiceCurrency" value="' + invoiceCurrencyText + '"/>'
                     + invoiceCurrencyText);
 
@@ -1689,9 +1692,10 @@
 
             // invoice (header) values
             var $invoiceCurrency = $form.find('#currency'),
-                $invoiceExchangeRate = $form.find('#exchangeRate'),
                 invoiceCurrencyText = $invoiceCurrency.find(':selected').text() || 'USD',
-                invoiceExchangeRateVal = parseFloat($invoiceExchangeRate.val()) || 1;
+                $invoiceExchangeRate = $form.find('#exchangeRate'),
+                invoiceExchangeRateVal = parseFloat($invoiceExchangeRate.val()) || 1,
+                $invoiceBank = $form.find('#bankId');
 
             // Блокирум поля при инициилизации
             $($form).find('#invoiceData input, #invoiceData select').each(function () {
@@ -1715,6 +1719,8 @@
                     $(this).prop('readonly', true).trigger('chosen:updated');
                 });
                 $('#rateApply').prop('disabled', true);
+                $invoiceBank.parent().html('<input type="hidden" name="bankId" value="' + $invoiceBank.val() + '"/>'
+                    + '<input type="text" name="bankName" readonly="readonly" class="input-small" value="' + $invoiceBank.find(':selected').text() + '"/>');
                 $invoiceCurrency.parent().html('<input type="hidden" name="currency" value="' + invoiceCurrencyText + '"/>'
                     + invoiceCurrencyText);
 

@@ -107,6 +107,8 @@ class PermissionOutcomeInvoiceSearchModel extends BaseModel
             array(
                 'flightCustomerName' => 'name',
                 'flightCustomerShortName' => 'short_name',
+                'flightCustomerAgreement' => 'agreement',
+                'flightCustomerTermOfPayment' => 'termOfPayment',
             ),
             'left');
 
@@ -157,6 +159,8 @@ class PermissionOutcomeInvoiceSearchModel extends BaseModel
             array(
                 'incomeInvoiceMainAgentName' => 'name',
                 'incomeInvoiceMainAgentShortName' => 'short_name',
+                'incomeInvoiceMainAgentAgreement' => 'agreement',
+                'incomeInvoiceMainAgentTermOfPayment' => 'termOfPayment',
             ),
             'left');
 

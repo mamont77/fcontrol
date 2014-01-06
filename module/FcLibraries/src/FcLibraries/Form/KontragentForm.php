@@ -131,7 +131,7 @@ class KontragentForm extends Form
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'required' => true,
-                'maxlength' => '10',
+                'maxlength' => '30',
             ),
             'options' => array(
                 'label' => 'Agreement',

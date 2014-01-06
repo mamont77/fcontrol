@@ -362,6 +362,7 @@ class PermissionController extends FlightController
             'typesOfPermission' => $typesOfPermission,
             'aircrafts' => $aircrafts,
             'units' => $units,
+            'banks' => $this->getPermissionOutcomeInvoiceMainModel()->getBankDetailsList(),
             'result' => $result,
         );
     }
@@ -441,6 +442,7 @@ class PermissionController extends FlightController
         }
 
         $header = $this->getPermissionOutcomeInvoiceMainModel()->get($invoiceId);
+        $header->outcomeInvoiceMainBankName = $this->getPermissionOutcomeInvoiceMainModel()->getBankDetailById($header->outcomeInvoiceMainBankId);
 
         $data = $this->getPermissionOutcomeInvoiceDataModel()->getByInvoiceId($invoiceId);
         foreach ($data as $row) {
@@ -464,6 +466,8 @@ class PermissionController extends FlightController
         }
 
         $header = $this->getPermissionOutcomeInvoiceMainModel()->get($invoiceId);
+        $header->outcomeInvoiceMainBankName = $this->getPermissionOutcomeInvoiceMainModel()->getBankDetailById($header->outcomeInvoiceMainBankId);
+
         if (is_null($header->outcomeInvoiceMainCustomerTermOfPayment)) {
             $header->outcomeInvoiceMainCustomerTermOfPayment = 5;
         }

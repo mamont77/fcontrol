@@ -5,9 +5,11 @@
     <tr>
         <th>Invoice #</th>
         <th>Date</th>
+        <th>Customer</th>
+        <th>Customer Agreement</th>
+        <th>Bank</th>
         <th>Currency</th>
         <th>Exchange Rate</th>
-        <th>Customer</th>
     </tr>
     </thead>
     <tbody>
@@ -22,6 +24,20 @@
                    maxlength="40" required="required" readonly="readonly" value="<?= $this->data['invoiceDate'] ?>"/>
         </td>
         <td>
+            <input type="hidden" name="invoiceCustomerId" value="<?= $this->data['invoiceCustomerId'] ?>">
+            <input type="text" class="input-small" name="invoiceCustomerName" maxlength="40" required="required"
+                   readonly="readonly" value="<?= $this->data['invoiceCustomerName'] ?>">
+        </td>
+        <td>
+            <input type="text" class="input-small" name="invoiceCustomerAgreement" maxlength="40" required="required"
+                   readonly="readonly" value="<?= $this->data['invoiceCustomerAgreement'] ?>">
+        </td>
+        <td>
+            <input type="hidden" name="invoiceBankId" value="<?= $this->data['invoiceBankId'] ?>">
+            <input type="text" class="input-large" name="invoiceBankName" maxlength="40" required="required"
+                   readonly="readonly" value="<?= $this->data['invoiceBankName'] ?>">
+        </td>
+        <td>
             <input type="text" id="invoiceCurrency" name="invoiceCurrency" class="input-small"
                    placeholder="Currency" maxlength="40" required="required" readonly="readonly"
                    value="<?= $this->data['invoiceCurrency'] ?>"/>
@@ -30,11 +46,6 @@
             <input type="text" id="invoiceExchangeRate" name="invoiceExchangeRate" class="input-small"
                    placeholder="Exchange Rate" maxlength="40" required="required" readonly="readonly"
                    value="<?= $this->data['invoiceExchangeRate'] ?>"/>
-        </td>
-        <td>
-            <input type="hidden" name="invoiceCustomerId" value="<?= $this->data['invoiceCustomerId'] ?>">
-            <input type="text" class="input-small" name="invoiceCustomerName" maxlength="40" required="required"
-                   readonly="readonly" value="<?= $this->data['invoiceCustomerName'] ?>">
         </td>
     </tr>
     </tbody>

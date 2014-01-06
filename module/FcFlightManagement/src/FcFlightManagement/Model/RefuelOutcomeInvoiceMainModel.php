@@ -13,7 +13,7 @@ use Zend\Db\Sql\Select;
  * Class RefuelOutcomeInvoiceMainModel
  * @package FcFlightManagement\Model
  */
-class RefuelOutcomeInvoiceMainModel extends AbstractTableGateway
+class RefuelOutcomeInvoiceMainModel extends BaseModel
 {
     /**
      * @var string
@@ -30,6 +30,8 @@ class RefuelOutcomeInvoiceMainModel extends AbstractTableGateway
         'invoiceCurrency' => 'invoiceCurrency',
         'invoiceExchangeRate' => 'invoiceExchangeRate',
         'invoiceCustomerId' => 'invoiceCustomerId',
+        'invoiceMainCustomerAgreement' => 'invoiceCustomerAgreement',
+        'invoiceMainBankId' => 'invoiceBankId',
         'invoiceStatus' => 'invoiceStatus',
     );
 
@@ -58,6 +60,8 @@ class RefuelOutcomeInvoiceMainModel extends AbstractTableGateway
             'invoiceCurrency' => (string)$data['invoiceCurrency'],
             'invoiceExchangeRate' => (string)$data['invoiceExchangeRate'],
             'invoiceCustomerId' => (int)$data['invoiceCustomerId'],
+            'invoiceCustomerAgreement' => (string)$data['invoiceCustomerAgreement'],
+            'invoiceBankId' => (int)$data['invoiceBankId'],
             'invoiceStatus' => 1,
         );
 

@@ -8,9 +8,11 @@
     <tr>
         <th>Invoice #</th>
         <th>Date</th>
+        <th>Customer</th>
+        <th>Customer Agreement</th>
+        <th>Bank</th>
         <th>Currency</th>
         <th>Exchange Rate</th>
-        <th>Customer</th>
     </tr>
     </thead>
     <tbody>
@@ -24,6 +26,20 @@
                    required="required" readonly="readonly" value="<?= $this->data->date ?>"/>
         </td>
         <td>
+            <input type="hidden" name="customerId" value="<?= $this->data->customerId ?>">
+            <input type="text" class="input-small" name="customerShortName" maxlength="40" required="required"
+                   readonly="readonly" value="<?= $this->data->customerShortName ?>">
+        </td>
+        <td>
+            <input type="text" class="input-small" name="customerAgreement" maxlength="40" required="required"
+                   readonly="readonly" value="<?= $this->data['customerAgreement'] ?>">
+        </td>
+        <td>
+            <input type="hidden" name="bankId" value="<?= $this->data['bankId'] ?>">
+            <input type="text" class="input-large" name="bankName" maxlength="40" required="required"
+                   readonly="readonly" value="<?= $this->data['bankName'] ?>">
+        </td>
+        <td>
             <input type="text" id="currency" name="currency" class="input-small" placeholder="Currency"
                    maxlength="40"
                    required="required" readonly="readonly" value="<?= $this->data->currency ?>"/>
@@ -32,11 +48,7 @@
             <input type="text" id="exchangeRate" name="exchangeRate" class="input-small" placeholder="Exchange Rate"
                    maxlength="40" required="required" readonly="readonly" value="<?= $this->data->exchangeRate ?>"/>
         </td>
-        <td>
-            <input type="hidden" name="customerId" value="<?= $this->data->customerId ?>">
-            <input type="text" class="input-small" name="customerShortName" maxlength="40" required="required"
-                   readonly="readonly" value="<?= $this->data->customerShortName ?>">
-        </td>
+
     </tr>
     </tbody>
 </table>

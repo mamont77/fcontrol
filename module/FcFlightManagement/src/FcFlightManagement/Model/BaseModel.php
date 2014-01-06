@@ -177,6 +177,8 @@ class BaseModel extends AbstractTableGateway
         'disbursement' => 'disbursement',
         'disbursementTotal' => 'disbursementTotal',
         'disbursementTotalExchangedToUsd' => 'disbursementTotalExchangedToUsd',
+        'outcomeInvoiceMainCustomerAgreement' => 'customerAgreement',
+        'outcomeInvoiceMainBankId' => 'bankId',
         'outcomeInvoiceMainStatus' => 'status',
     );
 
@@ -253,6 +255,8 @@ class BaseModel extends AbstractTableGateway
         'outcomeInvoiceMainCurrency' => 'currency',
         'outcomeInvoiceMainExchangeRate' => 'exchangeRate',
         'outcomeInvoiceMainCustomerId' => 'customerId',
+        'outcomeInvoiceMainCustomerAgreement' => 'customerAgreement',
+        'outcomeInvoiceMainBankId' => 'bankId',
         'outcomeInvoiceMainStatus' => 'status',
     );
 
@@ -296,5 +300,22 @@ class BaseModel extends AbstractTableGateway
             3 => 'bank #3',
             4 => 'bank #4',
         );
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     * @throws \Exception
+     */
+    public function getBankDetailById($id)
+    {
+        $banks = $this->getBankDetailsList();
+        $row = $banks[$id];
+
+        if (!$row) {
+            throw new \Exception("Could not find row $id");
+        }
+
+        return $row;
     }
 }

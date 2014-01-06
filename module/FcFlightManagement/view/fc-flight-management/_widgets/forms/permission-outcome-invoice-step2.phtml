@@ -6,6 +6,7 @@
 foreach ($this->data as $row) {
     $preInvoiceCustomerId = $row->incomeInvoiceMainAgentId;
     $preInvoiceCustomerShortName = $row->incomeInvoiceMainAgentShortName;
+    $preInvoiceCustomerAgreement = $row->incomeInvoiceMainAgentAgreement;
 }
 //
 ?>
@@ -16,10 +17,12 @@ foreach ($this->data as $row) {
     <tr>
         <th>Invoice #</th>
         <th>Date</th>
+        <th>Customer</th>
+        <th>Customer Agreement</th>
+        <th>Bank</th>
         <th>Currency</th>
         <th>Exchange Rate</th>
         <th>Rate Apply</th>
-        <th>Customer</th>
     </tr>
     </thead>
     <tbody>
@@ -32,6 +35,29 @@ foreach ($this->data as $row) {
         <td>
             <input type="text" id="date" name="date" class="input-small date" placeholder="Date"
                    maxlength="40" required="required" value="<?= date('d-m-Y', time()) ?>"/>
+        </td>
+        <td>
+            <input type="hidden" name="customerId" value="<?= $preInvoiceCustomerId ?>">
+            <input type="text" class="input-small" name="customerShortName" maxlength="40" required="required"
+                   readonly="readonly" value="<?= $preInvoiceCustomerShortName ?>">
+        </td>
+        <td>
+            <input type="text" class="input-small" name="customerAgreement" maxlength="40" required="required"
+                   readonly="readonly" value="<?= $preInvoiceCustomerAgreement ?>">
+        </td>
+        <td>
+            <select id="bankId" name="bankId" class="chosen input-large"
+                    data-placeholder="Bank"
+                    required="required">
+                <option value=""></option>
+                <? foreach ($this->banks as $key => $value): ?>
+                    <? if ($key == '1'): ?>
+                        <option value="<?= $key ?>" selected="selected"><?= $value ?></option>
+                    <? else: ?>
+                        <option value="<?= $key ?>"><?= $value ?></option>
+                    <? endif; ?>
+                <? endforeach; ?>
+            </select>
         </td>
         <td>
             <select id="currency" name="currency" class="chosen input-small"
@@ -53,11 +79,6 @@ foreach ($this->data as $row) {
         </td>
         <td>
             <input id="rateApply" name="rateApply" type="submit" class="btn btn-info" value="Apply">
-        </td>
-        <td>
-            <input type="hidden" name="customerId" value="<?= $preInvoiceCustomerId ?>">
-            <input type="text" class="input-small" name="customerShortName" maxlength="40" required="required"
-                   readonly="readonly" value="<?= $preInvoiceCustomerShortName ?>">
         </td>
     </tr>
     </tbody>
@@ -174,7 +195,7 @@ foreach ($this->data as $row) {
                     data-placeholder="Type of permission"
                     required="required">
                 <? foreach ($this->typesOfPermission as $key => $value): ?>
-                    <? if ($row->preInvoiceTypeOfPermission == $value): ?>
+                    <? if ($row->incomeInvoiceDataTypeOfPermission == $value): ?>
                         <option value="<?= $key ?>" selected="selected"><?= $value ?></option>
                     <? else: ?>
                         <option value="<?= $key ?>"><?= $value ?></option>

@@ -160,6 +160,8 @@ class RefuelOutcomeInvoiceSearchModel extends AbstractTableGateway
             array(
                 'incomeInvoiceAgentName' => 'name',
                 'incomeInvoiceAgentShortName' => 'short_name',
+                'incomeInvoiceAgentAgreement' => 'agreement',
+                'incomeInvoiceAgentTermOfPayment' => 'termOfPayment',
             ),
             'left');
 
@@ -208,6 +210,8 @@ class RefuelOutcomeInvoiceSearchModel extends AbstractTableGateway
             array(
                 'incomeInvoiceSupplierName' => 'name',
                 'incomeInvoiceSupplierShortName' => 'short_name',
+                'incomeInvoiceSupplierAgreement' => 'agreement',
+                'incomeInvoiceSupplierTermOfPayment' => 'termOfPayment',
             ),
             'left');
 

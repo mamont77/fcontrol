@@ -309,6 +309,8 @@ class RefuelController extends FlightController
         $currencies = new ApServiceForm(null, array());
         $currencies = $currencies->getCurrencyExchangeRate();
 
+        $banks = $this->getRefuelOutcomeInvoiceMainModel()->getBankDetailsList();
+
         $data = $request->getPost();
 
         if (empty($data['refuelsSelected'])) {
@@ -329,6 +331,7 @@ class RefuelController extends FlightController
             'newInvoiceNumber' => $newInvoiceNumber,
             'currencies' => $currencies,
             'units' => $units,
+            'banks' => $banks,
             'result' => $result,
         );
     }
@@ -402,6 +405,7 @@ class RefuelController extends FlightController
         }
 
         $header = $this->getRefuelOutcomeInvoiceMainModel()->get($invoiceId);
+        $header->invoiceMainBankName = $this->getRefuelOutcomeInvoiceMainModel()->getBankDetailById($header->invoiceMainBankId);
         $data = $this->getRefuelOutcomeInvoiceDataModel()->getByInvoiceId($invoiceId);
 
         foreach ($data as $row) {
@@ -427,6 +431,7 @@ class RefuelController extends FlightController
         }
 
         $header = $this->getRefuelOutcomeInvoiceMainModel()->get($invoiceId);
+        $header->invoiceMainBankName = $this->getRefuelOutcomeInvoiceMainModel()->getBankDetailById($header->invoiceMainBankId);
         if (is_null($header->invoiceCustomerTermOfPayment)) {
             $header->invoiceCustomerTermOfPayment = 5;
         }
