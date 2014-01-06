@@ -23,5 +23,5 @@
 
 06.12
 6:00
-#94: Print invoices. #105: Browser support.
+#94: Print invoices. #105: Browser support. #160: BANK DETAILS.
 7:45

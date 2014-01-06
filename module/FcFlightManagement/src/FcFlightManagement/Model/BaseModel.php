@@ -284,4 +284,17 @@ class BaseModel extends AbstractTableGateway
         $this->resultSetPrototype = new ResultSet();
         $this->initialize();
     }
+
+    /**
+     * @return array
+     */
+    public function getBankDetailsList()
+    {
+        return array(
+            1 => 'bank #1',
+            2 => 'bank #2',
+            3 => 'bank #3',
+            4 => 'bank #4',
+        );
+    }
 }
