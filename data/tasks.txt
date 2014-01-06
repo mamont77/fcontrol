@@ -23,5 +23,5 @@
 
 06.12
 6:00
-#94: Print invoices.
-7:00
+#94: Print invoices. #105: Browser support.
+7:45

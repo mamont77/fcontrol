@@ -442,8 +442,7 @@ class RefuelController extends FlightController
         $pdf = new PdfModel();
 //        $pdf = new ViewModel();
 //        \Zend\Debug\Debug::dump($header);
-        $pdf->setOption('filename', 'OR_' . $header->outcomeInvoiceMainCustomerShortName
-            . '_' . $header->outcomeInvoiceMainNumber); // Triggers PDF download, automatically appends ".pdf"
+        $pdf->setOption('filename', 'OR_' . $header->invoiceCustomerShortName . '_' . $header->invoiceNumber); // Triggers PDF download, automatically appends ".pdf"
         $pdf->setOption('paperSize', 'a4'); // Defaults to "8x11"
         $pdf->setOption('paperOrientation', 'portrait'); // Defaults to "portrait"
 

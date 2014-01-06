@@ -46,3 +46,6 @@
 [submodule "vendor/php-font-lib"]
 	path = vendor/php-font-lib
 	url = https://github.com/PhenX/php-font-lib.git
+[submodule "public/lib/jquery.mb.browser"]
+	path = public/lib/jquery.mb.browser
+	url = https://github.com/pupunzi/jquery.mb.browser.git
