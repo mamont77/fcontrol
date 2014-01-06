@@ -40,7 +40,7 @@ $this->headTitle($title);
                 <?= $this->header->invoiceExchangeRate ?>
             </td>
             <td>
-                <?= $this->header->invoiceCustomerName ?>
+                <?= $this->header->invoiceCustomerShortName ?>
             </td>
         </tr>
         </tbody>
@@ -53,3 +53,7 @@ $this->partial('fc-flight-management/_widgets/tables/refuel-outcome-invoice.phtm
     )
 )
 ?>
+<div>
+    <a class="btn"
+       href="/management/refuel/outcome-invoice-print/<?= $this->header->invoiceId ?>">Download INVOICE</a>
+</div>

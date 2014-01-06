@@ -78,9 +78,16 @@ class RefuelOutcomeInvoiceMainModel extends AbstractTableGateway
         $select->from($this->table);
         $select->columns($this->_tableFields);
 
-        $select->join(array('libraryKontragent' => 'library_kontragent'),
+        $select->join(
+            array('libraryKontragent' => 'library_kontragent'),
             'libraryKontragent.id = ' . $this->table . '.invoiceCustomerId',
-            array('invoiceCustomerName' => 'short_name'), 'left');
+            array(
+                'invoiceCustomerName' => 'name',
+                'invoiceCustomerShortName' => 'short_name',
+                'invoiceCustomerAgreement' => 'agreement',
+                'invoiceCustomerTermOfPayment' => 'termOfPayment',
+            ),
+            'left');
 
         $select->where(array($this->table . '.invoiceId' => $id));
 

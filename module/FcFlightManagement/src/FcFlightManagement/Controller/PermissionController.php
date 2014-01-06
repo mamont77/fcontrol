@@ -452,6 +452,9 @@ class PermissionController extends FlightController
         ));
     }
 
+    /**
+     * @return PdfModel
+     */
     public function outcomeInvoicePrintAction()
     {
         $invoiceId = (string)$this->params()->fromRoute('id', '');

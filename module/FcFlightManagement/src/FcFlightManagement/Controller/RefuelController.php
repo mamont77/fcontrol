@@ -12,6 +12,7 @@ use FcFlightManagement\Form\RefuelIncomeInvoiceStep1Form;
 use FcFlightManagement\Form\RefuelOutcomeInvoiceStep1Form;
 use FcFlightManagement\Model\RefuelIncomeInvoiceSearchModel;
 use FcFlightManagement\Model\RefuelOutcomeInvoiceSearchModel;
+use DOMPDFModule\View\Model\PdfModel;
 
 /**
  * Class RefuelController
@@ -406,11 +407,52 @@ class RefuelController extends FlightController
         foreach ($data as $row) {
             $header->data[$row->refuelId] = $row;
         }
+//        \Zend\Debug\Debug::dump($header);
 
         return new ViewModel(array(
             'header' => $header,
         ));
 
+    }
+
+    /**
+     * @return PdfModel
+     */
+    public function outcomeInvoicePrintAction()
+    {
+        $invoiceId = (string)$this->params()->fromRoute('id', '');
+
+        if (empty($invoiceId)) {
+            return $this->redirect()->toRoute('management/refuel/outcome-invoice-step1');
+        }
+
+        $header = $this->getRefuelOutcomeInvoiceMainModel()->get($invoiceId);
+        if (is_null($header->invoiceCustomerTermOfPayment)) {
+            $header->invoiceCustomerTermOfPayment = 5;
+        }
+        $header->dueDate = \DateTime::createFromFormat('d-m-Y', $header->invoiceDate)
+            ->add(new \DateInterval('P' . $header->invoiceCustomerTermOfPayment . 'D'))->format('d-m-Y');
+
+        $data = $this->getRefuelOutcomeInvoiceDataModel()->getByInvoiceId($invoiceId);
+
+        foreach ($data as $row) {
+            $header->data[] = $row;
+        }
+
+        $pdf = new PdfModel();
+//        $pdf = new ViewModel();
+//        \Zend\Debug\Debug::dump($header);
+        $pdf->setOption('filename', 'OR_' . $header->outcomeInvoiceMainCustomerShortName
+            . '_' . $header->outcomeInvoiceMainNumber); // Triggers PDF download, automatically appends ".pdf"
+        $pdf->setOption('paperSize', 'a4'); // Defaults to "8x11"
+        $pdf->setOption('paperOrientation', 'portrait'); // Defaults to "portrait"
+
+        // To set view variables
+        $pdf->setVariables(array(
+            'header' => $header,
+        ));
+
+        return $pdf;
     }
 
     /**
