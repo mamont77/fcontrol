@@ -110,6 +110,10 @@ class ApServiceOutcomeInvoiceMainModel extends BaseModel
                 'flightCustomerShortName' => 'short_name',
                 'flightCustomerAgreement' => 'agreement',
                 'flightCustomerTermOfPayment' => 'termOfPayment',
+                'flightCustomerAddress' => 'address',
+                'flightCustomerPhone1' => 'phone1',
+                'flightCustomerFax' => 'fax',
+                'flightCustomerMail' => 'mail',
             ),
             'left');
 

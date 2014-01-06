@@ -90,6 +90,10 @@ class RefuelOutcomeInvoiceMainModel extends BaseModel
                 'invoiceCustomerShortName' => 'short_name',
                 'invoiceCustomerAgreement' => 'agreement',
                 'invoiceCustomerTermOfPayment' => 'termOfPayment',
+                'invoiceCustomerAddress' => 'address',
+                'invoiceCustomerPhone1' => 'phone1',
+                'invoiceCustomerFax' => 'fax',
+                'invoiceCustomerMail' => 'mail',
             ),
             'left');
 

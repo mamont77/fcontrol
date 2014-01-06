@@ -74,6 +74,10 @@ class PermissionOutcomeInvoiceMainModel extends BaseModel
                 'outcomeInvoiceMainCustomerShortName' => 'short_name',
                 'outcomeInvoiceMainCustomerAgreement' => 'agreement',
                 'outcomeInvoiceMainCustomerTermOfPayment' => 'termOfPayment',
+                'outcomeInvoiceMainCustomerAddress' => 'address',
+                'outcomeInvoiceMainCustomerPhone1' => 'phone1',
+                'outcomeInvoiceMainCustomerFax' => 'fax',
+                'outcomeInvoiceMainCustomerMail' => 'mail',
             ),
             'left');
 

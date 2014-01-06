@@ -85,14 +85,14 @@ if ($order) {
                         <td><?php echo $this->escapeHtml($row->address); ?></td>
                         <td>
                             <?php
-                            $showPnones = $row->phone1;
-                            if (!empty($row->phone1)) {
-                                $showPnones .= ', ' . $row->phone1;
-                            }
+                            $showPhones = $row->phone1;
                             if (!empty($row->phone2)) {
-                                $showPnones .= ', ' . $row->phone2;
+                                $showPhones .= ', ' . $row->phone2;
                             }
-                            echo $this->escapeHtml($showPnones);
+                            if (!empty($row->phone3)) {
+                                $showPhones .= ', ' . $row->phone3;
+                            }
+                            echo $this->escapeHtml($showPhones);
                             ?>
                         </td>
                         <td><?php echo $this->escapeHtml($row->fax); ?></td>
