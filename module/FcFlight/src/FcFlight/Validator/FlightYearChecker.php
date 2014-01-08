@@ -27,11 +27,14 @@ class FlightYearChecker extends AbstractValidator
      */
     public function isValid($value)
     {
-
         $currentYear = date('Y');
         $lastYear = (int)$currentYear + 1;
 
-        $value = \DateTime::createFromFormat('d-m-Y H:i', $value);
+        if (mb_strlen($value) == 10) {
+            $value = \DateTime::createFromFormat('d-m-Y', $value);
+        } else {
+            $value = \DateTime::createFromFormat('d-m-Y H:i', $value);
+        }
         $value = date('Y', $value->getTimestamp());
         $this->setValue($value);
 
