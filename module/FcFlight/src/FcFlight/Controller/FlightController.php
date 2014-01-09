@@ -1078,10 +1078,8 @@ class FlightController extends AbstractActionController
     public function getTypeOfPermissions()
     {
         return array(
-            'O/L' => 'O/L',
-            'LND' => 'LND',
-            'DG' => 'DG',
-            'DIP' => 'DIP',
+            'O/F' => 'O/F',
+            'LAND' => 'LAND',
         );
     }
 
