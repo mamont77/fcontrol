@@ -2,12 +2,12 @@
 $title = 'Add Flight';
 $this->headTitle($title);
 ?>
-    <ul class="breadcrumb">
-        <li><a href="/">Home</a> <span class="divider">/</span></li>
-        <li class="active">Flight form</li>
-    </ul>
+<ul class="breadcrumb">
+    <li><a href="/">Home</a> <span class="divider">/</span></li>
+    <li class="active">Flight form</li>
+</ul>
 
-    <h1><?= $title ?></h1>
+<h1><?= $title ?></h1>
 
 <?php if ($form->getMessages()): ?>
     <div class="alert alert-error">
@@ -29,85 +29,89 @@ echo $this->form()->openTag($form) . PHP_EOL;
 echo $this->formHidden($form->get('id')) . PHP_EOL;
 echo $this->formHidden($form->get('csrf')) . PHP_EOL;
 ?>
-
-    <table class="table ">
-        <thead>
-        <tr>
-            <th>Date Order</th>
-            <th>Customer</th>
-            <th>Air Operator</th>
-            <th>Aircraft</th>
-            <th>Alternative Aircraft 1</th>
-            <th>Alternative Aircraft 2</th>
-            <th>Status</th>
-            <th colspan="2"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>
-                <?php
-                $field = $form->get('dateOrder');
-                echo $this->formInput($field);
-                echo '<p class="help-block" id="help-dateOrder">' . $field->getOption('description') . '</p>';
-                ?>
-                <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
-            </td>
-            <td>
-                <?php
-                $field = $form->get('kontragent');
-                echo $this->formSelect($field);
-                ?>
-                <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
-            </td>
-            <td>
-                <?php
-                $field = $form->get('airOperator');
-                echo $this->formSelect($field);
-                ?>
-                <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
-            </td>
-            <td>
-                <?php
-                $field = $form->get('aircraftId');
-                echo $this->formSelect($field);
-                ?>
-                <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
-            </td>
-            <td>
-                <?php
-                $field = $form->get('alternativeAircraftId1');
-                echo $this->formSelect($field);
-                ?>
-                <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
-            </td>
-            <td>
-                <?php
-                $field = $form->get('alternativeAircraftId2');
-                echo $this->formSelect($field);
-                ?>
-                <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
-            </td>
-            <td>
-                <?php
-                $field = $form->get('status');
-                echo $this->formCheckbox($field);
-                ?>
-                <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
-            </td>
-            <td>
-                <?php
-                $field = $form->get('submitBtn');
-                echo $this->formElement($field);
-                ?>
-            </td>
-            <td>
-                <?php
-                $field = $form->get('cancel');
-                echo $this->formElement($field);
-                ?>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+<style>
+    .status {
+        display: none;
+    }
+</style>
+<table class="table ">
+    <thead>
+    <tr>
+        <th>Date Order</th>
+        <th>Customer</th>
+        <th>Air Operator</th>
+        <th>Aircraft</th>
+        <th>Alternative Aircraft 1</th>
+        <th>Alternative Aircraft 2</th>
+        <th class="status">Status</th>
+        <th colspan="2"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>
+            <?php
+            $field = $form->get('dateOrder');
+            echo $this->formInput($field);
+            echo '<p class="help-block" id="help-dateOrder">' . $field->getOption('description') . '</p>';
+            ?>
+            <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
+        </td>
+        <td>
+            <?php
+            $field = $form->get('kontragent');
+            echo $this->formSelect($field);
+            ?>
+            <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
+        </td>
+        <td>
+            <?php
+            $field = $form->get('airOperator');
+            echo $this->formSelect($field);
+            ?>
+            <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
+        </td>
+        <td>
+            <?php
+            $field = $form->get('aircraftId');
+            echo $this->formSelect($field);
+            ?>
+            <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
+        </td>
+        <td>
+            <?php
+            $field = $form->get('alternativeAircraftId1');
+            echo $this->formSelect($field);
+            ?>
+            <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
+        </td>
+        <td>
+            <?php
+            $field = $form->get('alternativeAircraftId2');
+            echo $this->formSelect($field);
+            ?>
+            <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
+        </td>
+        <td class="status">
+            <?php
+            $field = $form->get('status');
+            echo $this->formCheckbox($field);
+            ?>
+            <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
+        </td>
+        <td>
+            <?php
+            $field = $form->get('submitBtn');
+            echo $this->formElement($field);
+            ?>
+        </td>
+        <td>
+            <?php
+            $field = $form->get('cancel');
+            echo $this->formElement($field);
+            ?>
+        </td>
+    </tr>
+    </tbody>
+</table>
 <?= $this->form()->closeTag() ?>
