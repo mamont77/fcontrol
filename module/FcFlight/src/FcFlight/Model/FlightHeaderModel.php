@@ -321,7 +321,7 @@ class FlightHeaderModel extends AbstractTableGateway
         /*
         * ORD-YYMMDD-1
         */
-        $refNumberOrder = 'ORD-' . date('ymd', $dateOrder) . '-';
+        $refNumberOrder = 'ORD-' . date('dmy', $dateOrder) . '-';
         $allSimilarNumbers = array();
         $result = $this->_findSimilarRefNumberOrder($refNumberOrder);
 
