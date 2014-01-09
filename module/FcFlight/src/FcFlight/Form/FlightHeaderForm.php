@@ -42,7 +42,7 @@ class FlightHeaderForm extends BaseForm
 
         parent::__construct($this->_formName);
 
-        $this->setLibrary('kontragents', $options['libraries']['kontragent'], 'id', 'name');
+        $this->setLibrary('kontragents', $options['libraries']['kontragent'], 'id', 'short_name');
         $this->setLibrary('airOperators', $options['libraries']['air_operator'], 'id', 'short_name'); //don't rename
         $this->setLibrary('aircrafts', $options['libraries']['aircraft'], 'id', array('aircraft_type_name', 'reg_number'));
 
