@@ -559,13 +559,11 @@ class FlightController extends AbstractActionController
             if ($form->isValid()) {
                 $data = $form->getData();
                 $parentHeader = $this->getFlightHeaderModel()->get($data->id);
-                $parentHeader->status = 0;
 
                 $this->setDataForLogger($parentHeader);
                 $loggerPlugin = $this->LogPlugin();
                 $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
-                $this->getFlightHeaderModel()->save($parentHeader);
                 $data = $this->getFlightHeaderModel()->add($data);
 
                 $message = 'Flights ' . $parentHeader->refNumberOrder
