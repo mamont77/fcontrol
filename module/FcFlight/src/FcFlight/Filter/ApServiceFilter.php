@@ -43,6 +43,7 @@ class ApServiceFilter implements InputFilterAwareInterface
     public $currency;
     public $exchangeRate;
     public $priceUSD;
+    public $comment;
     public $status;
 
     //Virtual fields
@@ -94,6 +95,7 @@ class ApServiceFilter implements InputFilterAwareInterface
         $this->currency = (isset($data['currency'])) ? $data['currency'] : null;
         $this->exchangeRate = (isset($data['exchangeRate'])) ? $data['exchangeRate'] : null;
         $this->priceUSD = (isset($data['priceUSD'])) ? $data['priceUSD'] : null;
+        $this->comment = (isset($data['comment'])) ? $data['comment'] : null;
         $this->status = (isset($data['status'])) ? $data['status'] : null;
 
         //Virtual fields
@@ -232,6 +234,21 @@ class ApServiceFilter implements InputFilterAwareInterface
                         'name' => 'Float',
                         'options' => array(
                             'locale' => 'en',
+                        ),
+                    ),
+                ),
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'comment',
+                'required' => false,
+                'filters' => $this->defaultFilters,
+                'validators' => array(
+                    array(
+                        'name' => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'max' => 30,
                         ),
                     ),
                 ),

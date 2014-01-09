@@ -65,6 +65,7 @@ $this->partial('fc-flight/_widgets/components/flight.phtml',
             <th>Currency</th>
             <th>Exchange Rate</th>
             <th>Price, USD</th>
+            <th>Comment</th>
             <th>Status</th>
             <th></th>
         </tr>
@@ -116,6 +117,13 @@ $this->partial('fc-flight/_widgets/components/flight.phtml',
             <td>
                 <?php
                 $field = $form->get('priceUSD');
+                echo $this->formInput($field);
+                ?>
+                <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
+            </td>
+            <td>
+                <?php
+                $field = $form->get('comment');
                 echo $this->formInput($field);
                 ?>
                 <ul class="errors"><?= $this->formElementErrors($field) ?></ul>

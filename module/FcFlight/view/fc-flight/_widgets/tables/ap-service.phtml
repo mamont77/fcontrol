@@ -16,6 +16,9 @@
             <th>
                 Price, USD
             </th>
+            <th>
+                Comment
+            </th>
             <th class="actions">Actions</th>
         </tr>
         </thead>
@@ -32,6 +35,7 @@
                 <td><?= $this->escapeHtml($row['typeOfApServiceName']) ?></td>
                 <td><?= $this->escapeHtml($row['kontragentShortName']) ?></td>
                 <td class="text-right"><?= $this->escapeHtml($row['priceUSD']) ?></td>
+                <td><?= $this->escapeHtml($row['comment']) ?></td>
                 <td class="actions">
                     <a title="Edit" href="<?=
                     $this->url('apService',

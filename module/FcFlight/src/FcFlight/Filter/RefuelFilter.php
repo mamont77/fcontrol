@@ -44,6 +44,7 @@ class RefuelFilter implements InputFilterAwareInterface
     public $priceUsd;
     public $totalPriceUsd;
     public $date;
+    public $comment;
     public $status;
 
     //Fields only for view
@@ -97,6 +98,7 @@ class RefuelFilter implements InputFilterAwareInterface
         $this->priceUsd = (isset($data['priceUsd'])) ? $data['priceUsd'] : null;
         $this->totalPriceUsd = (isset($data['totalPriceUsd'])) ? $data['totalPriceUsd'] : null;
         $this->date = (isset($data['date'])) ? $data['date'] : null;
+        $this->comment = (isset($data['comment'])) ? $data['comment'] : null;
         $this->status = (isset($data['status'])) ? $data['status'] : null;
 
         //Fields only for view
@@ -259,6 +261,21 @@ class RefuelFilter implements InputFilterAwareInterface
 //                    array(
 //                        'name' => 'FcFlight\Validator\FlightYearChecker',
 //                    ),
+                ),
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'comment',
+                'required' => false,
+                'filters' => $this->defaultFilters,
+                'validators' => array(
+                    array(
+                        'name' => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'max' => 30,
+                        ),
+                    ),
                 ),
             )));
 

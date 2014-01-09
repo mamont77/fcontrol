@@ -166,6 +166,17 @@ class ApServiceForm extends BaseForm
         ));
 
         $this->add(array(
+            'name' => 'comment',
+            'type' => 'Zend\Form\Element\Text',
+            'attributes' => array(
+                'class' => 'input-small',
+                'required' => false,
+                'placeholder' => 'Comment',
+                'maxlength' => '30',
+            ),
+        ));
+
+        $this->add(array(
             'name' => 'status',
             'type' => 'Zend\Form\Element\Checkbox',
             'options' => array(

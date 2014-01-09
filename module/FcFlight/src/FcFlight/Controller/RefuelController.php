@@ -262,13 +262,14 @@ class RefuelController extends FlightController
     {
         $this->dataForLogger = array(
             'id' => $data->id,
-            'Agent' => $data->kontragentShortName,
             'Airport' => $data->icao . ' (' . $data->iata . ')',
+            'Date' => $data->date,
+            'Agent' => $data->kontragentShortName,
             'Quantity, LTR' => $data->quantityLtr,
             'Unit' => $data->unitName,
             'Price, USD' => $data->priceUsd,
             'Total, USD' => $data->totalPriceUsd,
-            'Date' => $data->date,
+            'Comment' => $data->comment,
             'Status' => ($data->status == 1) ? 'In process' : 'Done'
         );
     }

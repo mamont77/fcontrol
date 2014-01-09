@@ -38,6 +38,7 @@ class RefuelModel extends AbstractTableGateway
         'priceUsd',
         'totalPriceUsd',
         'date',
+        'comment',
         'status',
     );
 
@@ -136,6 +137,7 @@ class RefuelModel extends AbstractTableGateway
             $data[$row->id]['priceUsd'] = $row->priceUsd;
             $data[$row->id]['totalPriceUsd'] = $row->totalPriceUsd;
             $data[$row->id]['date'] = $row->date;
+            $data[$row->id]['comment'] = $row->comment;
             $data[$row->id]['status'] = $row->status;
 
             //Virtual fields
@@ -174,6 +176,7 @@ class RefuelModel extends AbstractTableGateway
             'priceUsd' => (string)$object->priceUsd,
             'totalPriceUsd' => (string)$object->totalPriceUsd,
             'date' => (string)$date,
+            'comment' => (string)$object->comment,
             'status' => (int)$object->status,
         );
         $hash = $object->date;
@@ -210,6 +213,7 @@ class RefuelModel extends AbstractTableGateway
             'priceUsd' => (string)$object->priceUsd,
             'totalPriceUsd' => (string)$object->totalPriceUsd,
             'date' => (string)$date,
+            'comment' => (string)$object->comment,
             'status' => (int)$object->status,
         );
         $hash = $object->date;

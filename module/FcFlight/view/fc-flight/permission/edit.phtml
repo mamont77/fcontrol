@@ -113,8 +113,8 @@ $this->partial('fc-flight/_widgets/components/flight.phtml',
                 <?php
                 $field = $form->get('comment');
                 echo $this->formInput($field);
-                echo $this->formElementErrors($field);
                 ?>
+                <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
             </td>
             <td>
                 <?php
