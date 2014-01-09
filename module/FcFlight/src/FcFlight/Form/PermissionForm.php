@@ -50,7 +50,7 @@ class PermissionForm extends BaseForm
 
         parent::__construct($this->_formName);
 
-        $this->setLibrary('_agents', $options['libraries']['agents'], 'id', 'name');
+        $this->setLibrary('_agents', $options['libraries']['agents'], 'id', 'short_name');
         $this->_legs = $options['libraries']['legs'];
         $this->setLibrary('_countries', $options['libraries']['countries'], 'id', 'name');
         $this->_typeOfPermissions = $options['libraries']['typeOfPermissions'];
@@ -94,7 +94,7 @@ class PermissionForm extends BaseForm
             'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
                 'id' => 'legId',
-                'class' => 'chosen input-medium',
+                'class' => 'chosen input-large',
                 'data-placeholder' => 'LEG',
                 'required' => true,
             ),
@@ -125,7 +125,7 @@ class PermissionForm extends BaseForm
             'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
                 'id' => 'typeOfPermission',
-                'class' => 'chosen input-medium',
+                'class' => 'chosen input-small',
                 'data-placeholder' => 'Type of permission',
                 'required' => true,
             ),

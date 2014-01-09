@@ -180,7 +180,7 @@ class PermissionFilter implements InputFilterAwareInterface
                         'name' => 'StringLength',
                         'options' => array(
                             'encoding' => 'UTF-8',
-                            'max' => 3,
+                            'max' => 4,
                         ),
                     ),
                 ),
