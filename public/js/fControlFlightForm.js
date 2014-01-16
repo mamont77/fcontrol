@@ -200,6 +200,11 @@
                 $apArrAirports = $form.find('#apArrAirports'),
                 currentCountryId;
 
+            $($form).find('#apDepTime2').click(function(e){
+//                e.preventDefault();
+                console.log("The value of this field is currently set to: " + $(this).val());
+            });
+
             $($form).find('#apDepTime').mask('99-99-9999 99:99');
             $($form).find('#apArrTime').mask('99-99-9999 99:99');
 
