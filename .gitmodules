@@ -49,3 +49,6 @@
 [submodule "public/lib/jquery.mb.browser"]
 	path = public/lib/jquery.mb.browser
 	url = https://github.com/pupunzi/jquery.mb.browser.git
+[submodule "public/lib/dyndatetime"]
+	path = public/lib/dyndatetime
+	url = git@github.com:mvj3/dyndatetime.git

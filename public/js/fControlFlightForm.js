@@ -205,7 +205,11 @@
                 console.log("The value of this field is currently set to: " + $(this).val());
             });
 
-            $($form).find('#apDepTime').mask('99-99-9999 99:99');
+//            $($form).find('#apDepTime').mask('99-99-9999 99:99');
+
+            $($form).find('#apDepTime').dynDateTime({
+                daFormat:     "%Y/%m/%d"
+            });
             $($form).find('#apArrTime').mask('99-99-9999 99:99');
 
             // AirOperator может быть только один для всех строк

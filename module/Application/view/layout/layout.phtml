@@ -14,6 +14,7 @@ $this->headLink()->appendStylesheet($basePath . '/css/dlu-tw-bootstrap.css', 'al
 
 $this->headLink()->appendStylesheet($basePath . '/lib/chosen/chosen.min.css', 'all');
 $this->headLink()->appendStylesheet($basePath . '/lib/table-fixed-header/table-fixed-header.css', 'all');
+$this->headLink()->appendStylesheet($basePath . '/lib/dyndatetime/css/calendar-system.css', 'all');
 
 //fControl style
 $this->headLink()->appendStylesheet($basePath . '/css/style.css', 'all');
@@ -26,6 +27,7 @@ $this->inlineScript()->appendFile($basePath . '/js/bootstrap.min.js');
 $this->inlineScript()->appendFile($basePath . '/lib/chosen/chosen.jquery.min.js');
 $this->inlineScript()->appendFile($basePath . '/lib/table-fixed-header/table-fixed-header.js');
 $this->inlineScript()->appendFile($basePath . '/lib/jquery.mb.browser/jquery.mb.browser.min.js');
+$this->inlineScript()->appendFile($basePath . '/lib/dyndatetime/src/jquery.dynDateTime.js');
 $this->inlineScript()->appendFile($basePath . '/js/jquery.maskedinput.min.js');
 $this->inlineScript()->appendFile($basePath . '/js/fControlGlobal.js');
 $this->inlineScript()->appendFile($basePath . '/js/fControlNav.js');
