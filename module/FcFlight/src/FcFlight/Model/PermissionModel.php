@@ -196,9 +196,9 @@ class PermissionModel extends AbstractTableGateway
         foreach ($resultSet as $row) {
             $data[$row->legId] = array(
                 'headerId' => $row->headerId,
-                'legName' => $row->airportDepartureICAO . ' (' . $row->airportDepartureIATA . ')'
+                'legName' => $row->airportDepartureICAO . ' / ' . $row->airportDepartureIATA
                     . ' ⇒ '
-                    . $row->airportArrivalICAO . ' (' . $row->airportArrivalIATA . ')',
+                    . $row->airportArrivalICAO . ' / ' . $row->airportArrivalIATA,
             );
         }
         foreach ($resultSet as $row) {

@@ -222,9 +222,9 @@ class PermissionController extends FlightController
         $this->_dataForLogger = array(
             'id' => $data->id,
             'Agent' => $data->agentName,
-            'LEG' => $data->airportDepartureICAO . ' (' . $data->airportDepartureIATA . ')'
+            'LEG' => $data->airportDepartureICAO . ' / ' . $data->airportDepartureIATA
                 . ' ⇒ '
-                . $data->airportArrivalICAO . ' (' . $data->airportArrivalIATA . ')',
+                . $data->airportArrivalICAO . ' / ' . $data->airportArrivalIATA,
             'Country' => $data->countryName,
             'Type of Permission' => $data->typeOfPermission,
             'Time of request' => $data->requestTime,

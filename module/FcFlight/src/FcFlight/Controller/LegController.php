@@ -283,7 +283,7 @@ class LegController extends FlightController
         );
         foreach ($data as $row) {
             $result['airports']['id_' . $row->id]['name'] = $row->name;
-            $result['airports']['id_' . $row->id]['code'] = $row->code_icao . ' (' . $row->code_iata . ')';
+            $result['airports']['id_' . $row->id]['code'] = $row->code_icao . ' / ' . $row->code_iata . ' / ' . $row->short_name;
         }
         uasort($result['airports'], array($this, 'sortLibrary'));
 

@@ -316,8 +316,8 @@ class LegModel extends AbstractTableGateway
 
         $result = array();
         foreach ($data as $row) {
-            $result[$row['id']] = $row['apDepIcao'] . ' (' . $row['apDepIata'] . ')' . ' ⇒ '
-                . $row['apArrIcao'] . ' (' . $row['apArrIata'] . ')';
+            $result[$row['id']] = $row['apDepIcao'] . ' / ' . $row['apDepIata'] . ' ⇒ '
+                . $row['apArrIcao'] . ' / ' . $row['apArrIata'];
         }
 
         return $result;

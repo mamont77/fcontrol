@@ -48,7 +48,7 @@
         <?php foreach ($this->legs as $row) : ?>
 <!--            --><?// \Zend\Debug\Debug::dump($row) ?>
             <tr data-legId="<?= $row['id'] ?>" class="<? if ($row['id'] == $this->currentId): ?><?= 'info' ?><? endif ?>">
-                <td><?= $this->escapeHtml($row['airOperatorIcao']) ?> (<?= $this->escapeHtml($row['airOperatorIata']) ?>)</td>
+                <td><?= $this->escapeHtml($row['airOperatorIcao']) ?> / <?= $this->escapeHtml($row['airOperatorIata']) ?></td>
                 <td><?= $this->escapeHtml($row['flightNumber']) ?></td>
                 <td><strong><?= $this->escapeHtml($row['apDepIcao']) ?></strong></td>
                 <td><?= $this->escapeHtml($row['apDepIata']) ?></td>
