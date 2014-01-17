@@ -200,6 +200,7 @@
                 $apArrAirports = $form.find('#apArrAirports'),
                 currentCountryId;
 
+            //https://code.google.com/p/dyndatetime/wiki/Home
             $($form).find('#apDepTime, #apArrTime')
                 .mask('99-99-9999 99:99')
                 .dynDateTime({
