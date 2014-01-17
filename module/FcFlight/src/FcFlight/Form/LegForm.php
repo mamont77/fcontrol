@@ -173,50 +173,6 @@ class LegForm extends BaseForm
         ));
 
         $this->add(array(
-            'name' => 'apDepTime2',
-            'type' => 'Zend\Form\Element\Date',
-            'attributes' => array(
-                'id' => 'apDepTime2',
-                'required' => true,
-//                'maxlength' => '16',
-                'class' => 'input-large',
-                'placeholder' => 'Date Dep',
-                'min' => '2012-01-01',
-                'max' => '2020-01-01',
-                'step' => '1', // minutes; default step interval is 1 min
-                'autocomplete' => 'off'
-            ),
-            'options' => array(
-                'label' => 'Date Dep',
-                'format' => 'Y-m-d',
-                'hint' => '(UTC)',
-//                'description' => 'DD-MM-YYYY HH:MM',
-            ),
-        ));
-
-        $this->add(array(
-            'name' => 'apDepTime3',
-            'type' => 'Zend\Form\Element\Time',
-            'attributes' => array(
-                'id' => 'apDepTime3',
-                'required' => true,
-//                'maxlength' => '16',
-                'class' => 'input-large',
-                'placeholder' => 'Time Dep',
-                'min' => '00:00:00',
-                'max' => '23:59:59',
-                'step' => '60', // seconds; default step interval is 60 seconds
-                'autocomplete' => 'off'
-            ),
-            'options' => array(
-                'label' => 'Date Dep',
-                'format' => 'H:i',
-                'hint' => '(UTC)',
-//                'description' => 'DD-MM-YYYY HH:MM',
-            ),
-        ));
-
-        $this->add(array(
             'name' => 'apDepCountryId',
             'type' => 'Zend\Form\Element\Select',
             'attributes' => array(

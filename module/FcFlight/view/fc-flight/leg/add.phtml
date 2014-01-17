@@ -88,21 +88,6 @@ $this->partial('fc-flight/_widgets/components/flight.phtml',
                 echo '<p class="help-block">' . $field->getOption('hint') . '</p>';
                 ?>
                 <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
-
-                <?php
-                $field = $form->get('apDepTime2');
-                echo $this->formInput($field);
-                echo '<p class="help-block">' . $field->getOption('description') . '</p>';
-                echo '<p class="help-block">' . $field->getOption('hint') . '</p>';
-                ?>
-                <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
-                <?php
-                $field = $form->get('apDepTime3');
-                echo $this->formInput($field);
-                echo '<p class="help-block">' . $field->getOption('description') . '</p>';
-                echo '<p class="help-block">' . $field->getOption('hint') . '</p>';
-                ?>
-                <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
             </td>
             <td>
                 <?php
