@@ -120,10 +120,9 @@ class LegController extends FlightController
         }
 
         $data = $this->getLegModel()->get($id);
-//        \Zend\Debug\Debug::dump($data);
+
         $header = $this->getFlightHeaderModel()->get($data->headerId);
         $this->redirectForDoneStatus($header->refNumberOrder);
-
         $legs = $this->getLegModel()->getByHeaderId($data->headerId);
 
         $lastLeg = array_slice($legs, -2, 1);
@@ -135,7 +134,7 @@ class LegController extends FlightController
             $previousApArrAirportId = $lastLeg['apArrAirportId'];
         } else {
             $previousDate = null;
-            $previousFlightNumberAirportId = null;
+            $previousAirOperatorId = null;
             $previousApArrCountryId = null;
             $previousApArrAirportId = null;
         }
@@ -167,12 +166,14 @@ class LegController extends FlightController
         $request = $this->getRequest();
 
         if ($request->isPost()) {
+
             $filter = $this->getServiceLocator()->get('FcFlight\Filter\LegFilter');
             $form->setInputFilter($filter->getInputFilter());
             $form->setData($request->getPost());
 
             if ($form->isValid()) {
                 $data = $form->getData();
+
                 $summaryData = $this->getLegModel()->save($data);
 
                 $message = "Leg '" . $summaryData . "' was successfully saved.";

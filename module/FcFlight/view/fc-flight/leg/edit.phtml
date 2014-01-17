@@ -1,6 +1,7 @@
 <?php
 $title = 'Edit LEG';
 $this->headTitle($title);
+//\Zend\Debug\Debug::dump($this->header);
 ?>
     <ul class="breadcrumb">
     <li><a href="/">Home</a> <span class="divider">/</span></li>
@@ -35,7 +36,7 @@ $this->partial('fc-flight/_widgets/components/flight.phtml',
 <div id="leg">
     <?php
     $form = $this->form;
-    $form->setAttribute('action', $this->url('leg', array('action' => 'edit', 'id' => $this->header->id)));
+    $form->setAttribute('action', $this->url('leg', array('action' => 'edit', 'id' => $this->id)));
     $form->prepare();
     // Get the form label plugin
     $formLabel = $this->plugin('formLabel');
