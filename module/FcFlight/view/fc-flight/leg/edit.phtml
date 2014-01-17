@@ -81,7 +81,7 @@ $this->partial('fc-flight/_widgets/components/flight.phtml',
                 ?>
                 <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
             </td>
-            <td>
+            <td class="apDepTime">
                 <?php
                 $field = $form->get('apDepTime');
                 echo $this->formInput($field);
@@ -104,7 +104,7 @@ $this->partial('fc-flight/_widgets/components/flight.phtml',
                 ?>
                 <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
             </td>
-            <td>
+            <td class="apArrTime">
                 <?php
                 $field = $form->get('apArrTime');
                 echo $this->formInput($field);

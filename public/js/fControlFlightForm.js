@@ -292,14 +292,16 @@
             $date.mask('99-99-9999');
 
             $legData.each(function () {
-                var $row = $(this);
+                var $row = $(this),
+                    currentDate = $row.find('.apDepTime').text();
 
-                legDataMapped[$row.attr('data-legId')] = $row.find('.date').text();
+                currentDate = currentDate.split(' ');
+                currentDate = currentDate[0];
+                legDataMapped[$row.attr('data-legId')] = currentDate;
             });
 
             $airportId.change(function () {
                 var legIdValue = $(this).val().split('-');
-
                 legIdValue = legIdValue[0];
                 $date.val(legDataMapped[legIdValue]);
             });

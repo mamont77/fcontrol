@@ -52,10 +52,10 @@
                 <td><?= $this->escapeHtml($row['flightNumber']) ?></td>
                 <td><strong><?= $this->escapeHtml($row['apDepIcao']) ?></strong></td>
                 <td><?= $this->escapeHtml($row['apDepIata']) ?></td>
-                <td><?= $this->escapeHtml($row['apDepTime']) ?></td>
+                <td class="apDepTime"><?= $this->escapeHtml($row['apDepTime']) ?></td>
                 <td><strong><?= $this->escapeHtml($row['apArrIcao']) ?></strong</td>
                 <td><?= $this->escapeHtml($row['apArrIata']) ?></td>
-                <td><?= $this->escapeHtml($row['apArrTime']) ?></td>
+                <td class="apArrTime"><?= $this->escapeHtml($row['apArrTime']) ?></td>
                 <td class="actions">
                     <? if ($row['id'] == $lastLeg): ?>
                         <a title="Edit" href="<?= $this->url('leg',
