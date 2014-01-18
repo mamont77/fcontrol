@@ -72,16 +72,6 @@ class LegForm extends BaseForm
             ),
         ));
 
-        // для всех ЛЕГов только одно значение, с первой строки
-        $this->add(array(
-            'name' => 'preSelectedAirOperatorId',
-            'attributes' => array(
-                'id' => 'preSelectedAirOperatorId',
-                'type' => 'hidden',
-                'value' => $options['previousValues']['preSelected']['airOperatorId'],
-            ),
-        ));
-
         // необходим, что бы при добавлении очередной строки выбрать Country в Ap Dep
         // после чего заблокировать это поле для редактирования
         $this->add(array(
@@ -121,22 +111,6 @@ class LegForm extends BaseForm
                 'id' => 'apArrAirportId',
                 'type' => 'hidden',
                 'value' => 0,
-            ),
-        ));
-
-        $this->add(array(
-            'name' => 'airOperatorId',
-            'type' => 'Zend\Form\Element\Select',
-            'attributes' => array(
-                'required' => true,
-                'id' => 'airOperatorId',
-                'class' => 'chosen input-medium',
-                'data-placeholder' => 'Air Operator',
-            ),
-            'options' => array(
-                'label' => 'Air Operator',
-                'empty_option' => '',
-                'value_options' => $this->airOperators,
             ),
         ));
 

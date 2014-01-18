@@ -43,7 +43,6 @@ $this->partial('fc-flight/_widgets/components/flight.phtml',
     echo $this->formHidden($form->get('id')) . PHP_EOL;
     echo $this->formHidden($form->get('headerId')) . PHP_EOL;
     echo $this->formHidden($form->get('previousDate')) . PHP_EOL;
-    echo $this->formHidden($form->get('preSelectedAirOperatorId')) . PHP_EOL;
     echo $this->formHidden($form->get('preSelectedApDepCountryId')) . PHP_EOL;
     echo $this->formHidden($form->get('preSelectedApDepAirportId')) . PHP_EOL;
     echo $this->formHidden($form->get('apDepAirportId')) . PHP_EOL;
@@ -53,7 +52,6 @@ $this->partial('fc-flight/_widgets/components/flight.phtml',
     <table class="table">
         <thead>
         <tr>
-            <th>Air Operator</th>
             <th>Flight #</th>
             <th>Dep Date</th>
             <th>Country Dep</th>
@@ -66,13 +64,6 @@ $this->partial('fc-flight/_widgets/components/flight.phtml',
         </thead>
         <tbody>
         <tr>
-            <td>
-                <?php
-                $field = $form->get('airOperatorId');
-                echo $this->formSelect($field);
-                ?>
-                <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
-            </td>
             <td>
                 <?php
                 $field = $form->get('flightNumber');

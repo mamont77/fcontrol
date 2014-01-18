@@ -47,16 +47,11 @@ class LegModel extends AbstractTableGateway
 
         $select->columns(array('id',
             'headerId',
-            'airOperatorId',
             'flightNumber',
             'apDepAirportId',
             'apDepTime',
             'apArrAirportId',
             'apArrTime'));
-
-        $select->join(array('AirOperator' => 'library_air_operator'),
-            'AirOperator.id = flightLegForm.airOperatorId',
-            array('airOperatorIcao' => 'code_icao', 'airOperatorIata' => 'code_iata'), 'left');
 
         $select->join(array('ApDepAirport' => 'library_airport'),
             'ApDepAirport.id = flightLegForm.apDepAirportId',
@@ -108,16 +103,11 @@ class LegModel extends AbstractTableGateway
 
         $select->columns(array('id',
             'headerId',
-            'airOperatorId',
             'flightNumber',
             'apDepAirportId',
             'apDepTime',
             'apArrAirportId',
             'apArrTime'));
-
-        $select->join(array('AirOperator' => 'library_air_operator'),
-            'AirOperator.id = flightLegForm.airOperatorId',
-            array('airOperatorIcao' => 'code_icao', 'airOperatorIata' => 'code_iata'), 'left');
 
         $select->join(array('ApDepAirport' => 'library_airport'),
             'ApDepAirport.id = flightLegForm.apDepAirportId',
@@ -155,7 +145,6 @@ class LegModel extends AbstractTableGateway
             //Real fields
             $data[$row->id]['id'] = $row->id;
             $data[$row->id]['headerId'] = $row->headerId;
-            $data[$row->id]['airOperatorId'] = $row->airOperatorId;
             $data[$row->id]['flightNumber'] = $row->flightNumber;
             $data[$row->id]['apDepAirportId'] = $row->apDepAirportId;
             $data[$row->id]['apDepTime'] = date('d-m-Y H:i', $row->apDepTime);
@@ -210,7 +199,6 @@ class LegModel extends AbstractTableGateway
 
         $data = array(
             'headerId' => (int)$object->headerId,
-            'airOperatorId' => (int)$object->airOperatorId,
             'flightNumber' => (string)$object->flightNumber,
             'apDepAirportId' => (int)$object->apDepAirportId,
             'apDepTime' => (string)$apDepTime,
@@ -241,7 +229,6 @@ class LegModel extends AbstractTableGateway
 
         $data = array(
             'headerId' => (int)$object->headerId,
-            'airOperatorId' => (int)$object->airOperatorId,
             'flightNumber' => (string)$object->flightNumber,
             'apDepAirportId' => (int)$object->apDepAirportId,
             'apDepTime' => (string)$apDepTime,

@@ -35,7 +35,6 @@ class LegFilter implements InputFilterAwareInterface
     //Fields for form and view
     public $id;
     public $headerId;
-    public $airOperatorId;
     public $flightNumber;
     public $apDepAirportId;
     public $apDepTime;
@@ -95,7 +94,6 @@ class LegFilter implements InputFilterAwareInterface
         $this->apDepAirportId = (isset($data['apDepAirportId'])) ? $data['apDepAirportId'] : null;
         $this->apArrAirportId = (isset($data['apArrAirportId'])) ? $data['apArrAirportId'] : null;
 
-        $this->airOperatorId = (isset($data['airOperatorId'])) ? $data['airOperatorId'] : null;
         $this->flightNumber = (isset($data['flightNumber'])) ? $data['flightNumber'] : null;
         if (isset($data['apDepAirports'])) {
             $this->apDepAirports = $data['apDepAirports'];
@@ -171,14 +169,6 @@ class LegFilter implements InputFilterAwareInterface
             )));
 
             $inputFilter->add($factory->createInput(array(
-                'name' => 'preSelectedAirOperatorId',
-                'filters' => array(
-                    array('name' => 'Int'),
-                ),
-                'required' => false,
-            )));
-
-            $inputFilter->add($factory->createInput(array(
                 'name' => 'preSelectedApDepCountryId',
                 'filters' => array(
                     array('name' => 'Int'),
@@ -204,14 +194,6 @@ class LegFilter implements InputFilterAwareInterface
 
             $inputFilter->add($factory->createInput(array(
                 'name' => 'apArrAirportId',
-                'required' => true,
-                'filters' => array(
-                    array('name' => 'Int'),
-                ),
-            )));
-
-            $inputFilter->add($factory->createInput(array(
-                'name' => 'airOperatorId',
                 'required' => true,
                 'filters' => array(
                     array('name' => 'Int'),

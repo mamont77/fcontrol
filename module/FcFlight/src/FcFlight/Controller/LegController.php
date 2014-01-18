@@ -43,12 +43,10 @@ class LegController extends FlightController
 
         if ($lastLeg) {
             $previousDate = $lastLeg['apArrTime'];
-            $previousAirOperatorId = $lastLeg['airOperatorId'];
             $previousApArrCountryId = $lastLeg['apArrCountryId'];
             $previousApArrAirportId = $lastLeg['apArrAirportId'];
         } else {
             $previousDate = null;
-            $previousAirOperatorId = null;
             $previousApArrCountryId = null;
             $previousApArrAirportId = null;
         }
@@ -63,7 +61,6 @@ class LegController extends FlightController
                 'previousValues' => array(
                     'previousDate' => $previousDate,
                     'preSelected' => array(
-                        'airOperatorId' => $previousAirOperatorId,
                         'apDepCountryId' => $previousApArrCountryId,
                         'apDepAirportId' => $previousApArrAirportId,
                     ),
@@ -129,12 +126,10 @@ class LegController extends FlightController
         $lastLeg = $lastLeg[0];
         if ($lastLeg) {
             $previousDate = $lastLeg['apArrTime'];
-            $previousAirOperatorId = $lastLeg['airOperatorId'];
             $previousApArrCountryId = $lastLeg['apArrCountryId'];
             $previousApArrAirportId = $lastLeg['apArrAirportId'];
         } else {
             $previousDate = null;
-            $previousAirOperatorId = null;
             $previousApArrCountryId = null;
             $previousApArrAirportId = null;
         }
@@ -152,7 +147,6 @@ class LegController extends FlightController
                 'previousValues' => array(
                     'previousDate' => $previousDate,
                     'preSelected' => array(
-                        'airOperatorId' => $previousAirOperatorId,
                         'apDepCountryId' => $previousApArrCountryId,
                         'apDepAirportId' => $previousApArrAirportId,
                     ),
@@ -303,8 +297,7 @@ class LegController extends FlightController
     {
         $this->dataForLogger = array(
             'id' => $data->id,
-            'Flight # (ICAO/IATA/Text)' => $data->airOperatorIcao . '/'
-                . $data->airOperatorIata . '/' . $data->flightNumber,
+            'Flight #' => $data->flightNumber,
             'Ap Dep (ICAO/IATA/Time)' => $data->apDepIcao . '/'
                 . $data->apDepIata . '/' . $data->apDepTime,
             'Ap Arr (ICAO/IATA/Time)' => $data->apArrIcao . '/'

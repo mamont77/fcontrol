@@ -188,10 +188,8 @@
 
             if ($form.length == 0) return;
 
-            var preSelectedAirOperatorId = $form.find('#preSelectedAirOperatorId').val(),
-                preSelectedApDepCountryId = $form.find('#preSelectedApDepCountryId').val(),
+            var preSelectedApDepCountryId = $form.find('#preSelectedApDepCountryId').val(),
                 preSelectedApDepAirportId = $form.find('#preSelectedApDepAirportId').val(),
-                $airOperatorId = $form.find('#airOperatorId'),
                 $apDepAirportId = $form.find('#apDepAirportId'),
                 $apArrAirportId = $form.find('#apArrAirportId'),
                 $apDepCountryId = $form.find('#apDepCountryId'),
@@ -209,18 +207,6 @@
                     showsTime: true,
                     step: 1
                 });
-
-            // AirOperator может быть только один для всех строк
-            if (preSelectedAirOperatorId > 0) {
-                $airOperatorId.val(preSelectedAirOperatorId);
-                $airOperatorId.find('option').first().remove();
-                $airOperatorId.find('option').each(function () {
-                    $(this).prop('disabled', true);
-                });
-                $airOperatorId.find('[value="' + preSelectedAirOperatorId + '"]')
-                    .prop('disabled', false).attr('selected', 'selected');
-                $airOperatorId.trigger('chosen:updated');
-            }
 
             // если данные являются продолжением цепочки leg, то выбираем значения в Ap Dep
             // из предыдущего Ap Arr
