@@ -198,14 +198,16 @@
                 $apArrAirports = $form.find('#apArrAirports'),
                 currentCountryId;
 
-            //https://code.google.com/p/dyndatetime/wiki/Home
+            //docs: https://code.google.com/p/dyndatetime/wiki/Home
             $($form).find('#apDepTime, #apArrTime')
                 .mask('99-99-9999 99:99')
                 .dynDateTime({
                     ifFormat: "%d-%m-%Y %H:%M",
                     timeFormat: 24,
                     showsTime: true,
-                    step: 1
+                    step: 2,
+                    firstDay: 1,
+                    weekNumbers: false
                 });
 
             // если данные являются продолжением цепочки leg, то выбираем значения в Ap Dep
@@ -275,7 +277,13 @@
                 $totalPriceUsd = $($form).find('#totalPriceUsd'),
                 $date = $($form).find('#date');
 
-            $date.mask('99-99-9999');
+            $date.mask('99-99-9999')
+                .dynDateTime({
+                    ifFormat: "%d-%m-%Y",
+                    step: 2,
+                    firstDay: 1,
+                    weekNumbers: false
+                });
 
             $legData.each(function () {
                 var $row = $(this),

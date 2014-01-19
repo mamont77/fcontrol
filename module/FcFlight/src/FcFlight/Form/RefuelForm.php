@@ -91,6 +91,23 @@ class RefuelForm extends BaseForm
         ));
 
         $this->add(array(
+            'name' => 'date',
+            'type' => 'Zend\Form\Element\Text',
+            'attributes' => array(
+                'id' => 'date',
+                'class' => 'input-small',
+                'required' => true,
+                'maxlength' => '10',
+                'placeholder' => 'Date',
+                'min' => '',
+                'max' => '',
+            ),
+            'options' => array(
+                'description' => 'DD-MM-YYYY',
+            ),
+        ));
+
+        $this->add(array(
             'name' => 'agentId',
             'type' => 'Zend\Form\Element\Select',
             'attributes' => array(
@@ -166,21 +183,6 @@ class RefuelForm extends BaseForm
                 'maxlength' => '10',
                 'placeholder' => 'Total, USD',
                 'readonly' => true,
-            ),
-        ));
-
-        $this->add(array(
-            'name' => 'date',
-            'type' => 'Zend\Form\Element\Text',
-            'attributes' => array(
-                'id' => 'date',
-                'class' => 'input-small',
-                'required' => true,
-                'maxlength' => '10',
-                'placeholder' => 'Date',
-            ),
-            'options' => array(
-                'description' => 'DD-MM-YYYY',
             ),
         ));
 
