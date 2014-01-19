@@ -210,7 +210,7 @@ class LegFilter implements InputFilterAwareInterface
                         'options' => array(
                             'encoding' => 'UTF-8',
                             'min' => 1,
-                            'max' => 6,
+                            'max' => 8,
                         ),
                     ),
                 ),

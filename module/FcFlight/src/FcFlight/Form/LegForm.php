@@ -119,7 +119,7 @@ class LegForm extends BaseForm
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
                 'required' => true,
-                'maxlength' => '6',
+                'maxlength' => '8',
                 'id' => 'flightNumber',
                 'class' => 'input-mini',
                 'placeholder' => 'Flight #',
