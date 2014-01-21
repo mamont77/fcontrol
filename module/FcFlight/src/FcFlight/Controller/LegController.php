@@ -122,17 +122,43 @@ class LegController extends FlightController
         $this->redirectForDoneStatus($header->refNumberOrder);
         $legs = $this->getLegModel()->getByHeaderId($data->headerId);
 
-        $lastLeg = array_slice($legs, -2, 1);
-        $lastLeg = $lastLeg[0];
-        if ($lastLeg) {
-            $previousDate = $lastLeg['apArrTime'];
-            $previousApArrCountryId = $lastLeg['apArrCountryId'];
-            $previousApArrAirportId = $lastLeg['apArrAirportId'];
+        // try find previous LEG
+        $legsCopy = array_values($legs);
+        $tempKey = 0;
+
+        foreach ($legsCopy as $key => $leg) {
+            if ($leg['id'] == $id) {
+                $tempKey = $key - 1;
+            }
+        }
+        $previousLeg = $legsCopy[$tempKey];
+
+        // try find next LEG
+        rsort($legsCopy);
+        $tempKey = 0;
+
+        foreach ($legsCopy as $key => $leg) {
+            if ($leg['id'] == $id) {
+                $tempKey = $key - 1;
+            }
+        }
+        $nextLeg = $legsCopy[$tempKey];
+//        \Zend\Debug\Debug::dump($nextLeg);
+//        \Zend\Debug\Debug::dump($previousLeg);
+
+
+        if ($previousLeg) {
+            $previousDate = $previousLeg['apArrTime'];
+            $previousApArrCountryId = $previousLeg['apArrCountryId'];
+            $previousApArrAirportId = $previousLeg['apArrAirportId'];
         } else {
             $previousDate = null;
             $previousApArrCountryId = null;
             $previousApArrAirportId = null;
         }
+//        \Zend\Debug\Debug::dump($previousDate);
+//        \Zend\Debug\Debug::dump($previousApArrCountryId);
+//        \Zend\Debug\Debug::dump($previousApArrAirportId);
 
         $this->setDataForLogger($data);
         $loggerPlugin = $this->LogPlugin();
@@ -168,7 +194,15 @@ class LegController extends FlightController
             if ($form->isValid()) {
                 $data = $form->getData();
 
+                // Save current LEG
                 $summaryData = $this->getLegModel()->save($data);
+
+                // Save apDepAirportId in next LEG
+                if ($nextLeg['id']) {
+                    $nextLeg = $this->getLegModel()->get($nextLeg['id']);
+                    $nextLeg->apDepAirportId = $data->apArrAirportId;
+                    $this->getLegModel()->save($nextLeg);
+                }
 
                 $message = "Leg '" . $summaryData . "' was successfully saved.";
                 $this->flashMessenger()->addSuccessMessage($message);

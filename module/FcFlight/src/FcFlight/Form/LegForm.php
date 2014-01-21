@@ -152,7 +152,7 @@ class LegForm extends BaseForm
             'attributes' => array(
                 'required' => true,
                 'id' => 'apDepCountryId',
-                'class' => 'chosen input-medium',
+                'class' => 'chosen input-medium noAllowSingleDeselect',
                 'data-placeholder' => 'Country Dep',
             ),
             'options' => array(
@@ -168,7 +168,7 @@ class LegForm extends BaseForm
             'attributes' => array(
                 'required' => true,
                 'id' => 'apDepAirports',
-                'class' => 'chosen input-small',
+                'class' => 'chosen input-small noAllowSingleDeselect',
                 'data-placeholder' => 'Airport Dep',
                 'disabled' => true,
             ),

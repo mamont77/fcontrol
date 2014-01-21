@@ -151,9 +151,7 @@ class LegModel extends AbstractTableGateway
             $data[$row->id]['apArrAirportId'] = $row->apArrAirportId;
             $data[$row->id]['apArrTime'] = date('d-m-Y H:i', $row->apArrTime);
             //Virtual fields from join
-            $data[$row->id]['airOperatorIcao'] = $row->airOperatorIcao;
-            $data[$row->id]['airOperatorIata'] = $row->airOperatorIata;
-            $data[$row->id]['apDepIcao'] = $row->apDepIcao;
+             $data[$row->id]['apDepIcao'] = $row->apDepIcao;
             $data[$row->id]['apDepIata'] = $row->apDepIata;
             $data[$row->id]['apArrIcao'] = $row->apArrIcao;
             $data[$row->id]['apArrIata'] = $row->apArrIata;

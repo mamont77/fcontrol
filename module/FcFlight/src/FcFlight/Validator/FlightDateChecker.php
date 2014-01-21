@@ -28,6 +28,8 @@ class FlightDateChecker extends AbstractValidator
      */
     public function isValid($value, $options = array())
     {
+//        \Zend\Debug\Debug::dump($value);
+//        \Zend\Debug\Debug::dump($options['previousDate']);
 
         $this->setValue($value);
 

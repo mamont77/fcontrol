@@ -42,8 +42,6 @@ class LegFilter implements InputFilterAwareInterface
     public $apArrTime;
 
     //Fields only for view
-    public $airOperatorIcao;
-    public $airOperatorIata;
     public $apDepCountries;
     public $apArrCountries;
     public $apDepAirports;
@@ -114,8 +112,6 @@ class LegFilter implements InputFilterAwareInterface
         $this->apArrTime = (isset($data['apArrTime'])) ? $data['apArrTime'] : null;
 
         //Fields only for view
-        $this->airOperatorIcao = (isset($data['airOperatorIcao'])) ? $data['airOperatorIcao'] : null;
-        $this->airOperatorIata = (isset($data['airOperatorIata'])) ? $data['airOperatorIata'] : null;
 
         $this->apDepIcao = (isset($data['apDepIcao'])) ? $data['apDepIcao'] : null;
         $this->apDepIata = (isset($data['apDepIata'])) ? $data['apDepIata'] : null;

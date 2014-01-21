@@ -154,9 +154,14 @@
      */
     fControl.behaviors.allForms = {
         attach: function (context, settings) {
-            $('.chosen').chosen(
+            $('.chosen').not('.noAllowSingleDeselect').chosen(
                 {
                     allow_single_deselect: true,
+                    no_results_text: 'Nothing found!'
+                }
+            );
+            $('.chosen.noAllowSingleDeselect').chosen(
+                {
                     no_results_text: 'Nothing found!'
                 }
             );
@@ -211,7 +216,7 @@
                 });
 
             // если данные являются продолжением цепочки leg, то выбираем значения в Ap Dep
-            // из предыдущего Ap Arr
+            // из предыдущего Ap Arr и любой ценой запрещает его изменять!
             if (preSelectedApDepCountryId > 0 && preSelectedApDepAirportId > 0) {
                 $apDepCountryId.find('option').first().remove().trigger('chosen:updated');
                 $apDepCountryId.find('option').each(function () {
@@ -220,10 +225,13 @@
                 $apDepCountryId.find('[value="' + preSelectedApDepCountryId + '"]').attr('selected', 'selected')
                     .prop('disabled', false).trigger('chosen:updated');
                 renderAirportsByCountry($apDepAirports, preSelectedApDepCountryId, preSelectedApDepAirportId);
-                $apDepAirportId.val(preSelectedApDepAirportId).trigger('chosen:updated');
+                $apDepAirports.val(preSelectedApDepAirportId).trigger('chosen:updated');
+            } else {
+                renderAirportsByCountry($apDepAirports, $apDepCountryId.val(), $apDepAirportId.val());
+                $apDepAirports.val($apDepAirportId).trigger('chosen:updated');
             }
 
-            // при редактировании данных, если уже есть $apArrAirportId, то отрисовываем поле Air Operator
+            // при редактировании данных, если уже есть $apArrAirportId, то отрисовываем поле Airport Arr
             if ($apArrAirportId.val() > 0) {
                 currentCountryId = $apArrCountryId.val();
                 renderAirportsByCountry($apArrAirports, currentCountryId, $apArrAirportId.val());

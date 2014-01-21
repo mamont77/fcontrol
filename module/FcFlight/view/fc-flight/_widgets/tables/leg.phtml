@@ -51,10 +51,10 @@
                 <td><?= $this->escapeHtml($row['apArrIata']) ?></td>
                 <td class="apArrTime"><?= $this->escapeHtml($row['apArrTime']) ?></td>
                 <td class="actions">
+                    <a title="Edit" href="<?= $this->url('leg',
+                        array('action' => 'edit', 'id' => $row['id'])) ?>"
+                       class="<?= ($this->header->status) ? '' : 'disabled' ?>"><i class="icon-edit"></i></a>
                     <? if ($row['id'] == $lastLeg): ?>
-                        <a title="Edit" href="<?= $this->url('leg',
-                            array('action' => 'edit', 'id' => $row['id'])) ?>"
-                           class="<?= ($this->header->status) ? '' : 'disabled' ?>"><i class="icon-edit"></i></a>
                         <a title="Remove" href="<?= $this->url('leg',
                             array('action' => 'delete', 'id' => $row['id'])) ?>"
                            class="<?= ($this->header->status) ? '' : 'disabled' ?>"><i class="icon-remove"></i></a>
