@@ -64,8 +64,45 @@ class SearchController extends FlightController
                                 // do nothing
                             }
 
-                            // TODO: Fix me after Permission feature.
-                            $data[$key]['permitStatus'] = 'NO';
+                            try {
+                                $hasPermission = $this->getPermissionModel()->getByHeaderId($data[$key]['id']);
+                                if (!empty($hasPermission)) {
+                                    $data[$key]['permitStatus'] = 'CNFMD';
+
+                                    foreach ($hasPermission as $row) {
+                                        if ($row['check'] != 'RECEIVED') {
+                                            $data[$key]['permitStatus'] = 'YES';
+                                            continue;
+                                        }
+                                    }
+                                } else {
+                                    $data[$key]['permitStatus'] = 'NO';
+                                }
+                            } catch (Exception $e) {
+                                // do nothing
+                            }
+
+                            try {
+                                $hasApService = $this->getApServiceModel()->getByHeaderId($data[$key]['id']);
+                                if (!empty($hasApService)) {
+                                    $data[$key]['apServiceStatus'] = 'YES';
+
+                                    $apServiceIsDone = true;
+                                    foreach ($hasApService as $row) {
+                                        if ($row['status'] == 0) {
+                                            $apServiceIsDone = false;
+                                            continue;
+                                        }
+                                    }
+                                    if ($apServiceIsDone) {
+                                        $data[$key]['apServiceStatus'] = 'DONE';
+                                    }
+                                } else {
+                                    $data[$key]['apServiceStatus'] = 'NO';
+                                }
+                            } catch (Exception $e) {
+                                // do nothing
+                            }
                         }
                     }
                 }

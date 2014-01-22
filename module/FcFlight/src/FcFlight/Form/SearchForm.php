@@ -61,7 +61,7 @@ class SearchForm extends BaseForm
                 'label' => 'Status',
                 'value_options' => array(
                     '2' => 'ANY',
-//                    '-1' => 'DRAFT',
+                    '-1' => 'DRAFT',
                     '1' => 'IN PROCESS',
                     '0' => 'DONE',
                 ),

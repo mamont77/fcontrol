@@ -405,8 +405,9 @@
 
             $statusLabels = $($form).find('#controls-status label');
             $statusLabels.eq(0).addClass('labelAny');
-            $statusLabels.eq(1).addClass('labelInProcess');
-            $statusLabels.eq(2).addClass('labelDone');
+            $statusLabels.eq(1).addClass('labelDraft');
+            $statusLabels.eq(2).addClass('labelInProcess');
+            $statusLabels.eq(3).addClass('labelDone');
         }
     };
 

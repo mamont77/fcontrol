@@ -18,12 +18,31 @@
         </th>
         <th>Refuel</th>
         <th>Permit</th>
+        <th>AP Service</th>
         <th class="actions"></th>
     </tr>
     </thead>
     <tbody>
     <?php foreach ($data as $row) : ?>
-        <tr class="<?= ($row['status']) ? 'warning' : 'success'; ?>">
+        <?php
+        //\Zend\Debug\Debug::dump($row);
+        $class = '';
+        switch ($row['status']) {
+            case -1:
+                $class = 'warning statusDraft';
+                break;
+            case 0:
+                $class = 'success statusDone';
+                break;
+            case 1:
+                $class = 'info statusActive';
+                break;
+            default:
+                $class = '';
+                break;
+        }
+        ?>
+        <tr class="<?= $class ?>">
             <td>
                 <a href="<?php
                 echo $this->url('browse',
@@ -93,6 +112,27 @@
                 ?>
                 <span class="<?= $class; ?>"><?= $row['permitStatus']; ?></span>
             </td>
+            <td>
+                <?php
+                $class = '';
+                switch ($row['apServiceStatus']) {
+                    case 'YES':
+                        $class = 'statusYes';
+                        break;
+                    case 'NO':
+                        $class = 'statusNo';
+                        break;
+                    case 'CNFMD':
+                        $class = 'statusCNFMD';
+                        break;
+                    default:
+                        $class = 'statusDone';
+                        break;
+                }
+                ?>
+                <span class="<?= $class; ?>"><?= $row['apServiceStatus']; ?></span>
+            </td>
+
             <td class="actions">
                 <a title="Edit" href="<?php echo $this->url('flight',
                     array('action' => 'edit-header', 'id' => $row['id']));?>"><i class="icon-edit"></i></a>

@@ -53,18 +53,32 @@ h1 {
     font-weight: bold;
 }
 
-.labelAny, .statusNo {
+.labelAny, span.statusNo {
     font-weight: bold;
 }
 
-.labelInProcess, .statusYes {
+.labelDraft {
+    font-weight: bold;
+    color: #b94a08;
+}
+
+span.statusYes {
     font-weight: bold;
     color: #b94a48;
 }
 
-tr.labelDone, tr.statusCNFMD, tr.statusDone, tr.statusActive  {
+.labelInProcess {
+    font-weight: bold;
+    color: #0044cc;
+}
+
+.labelDone, span.statusCNFMD, span.statusDone  {
     font-weight: bold;
     color: #468847;
+}
+
+tr.statusDraft, tr.statusDone, tr.statusActive  {
+    font-weight: bold;
 }
 
 /*.table {*/
