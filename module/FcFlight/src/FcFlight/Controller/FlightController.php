@@ -688,7 +688,7 @@ class FlightController extends AbstractActionController
             'Aircraft' => $data->aircraftName . ' (' . $data->aircraftTypeName . ')',
             'Alternative Aircraft 1' => $data->alternativeAircraftName1 . ' (' . $data->alternativeAircraftTypeName1 . ')',
             'Alternative Aircraft 2' => $data->alternativeAircraftName2 . ' (' . $data->alternativeAircraftTypeName2 . ')',
-            'Status' => ($data->status == 1) ? 'In process' : 'Done'
+            'Status' => ($data->status == -1) ? 'Draft' : (($data->status == 1) ? 'In process' : 'Done'),
         );
     }
 
@@ -839,6 +839,8 @@ class FlightController extends AbstractActionController
     }
 
     /**
+     * Get Country model
+     *
      * @return CountryModel
      */
     public function getCountryModel()
@@ -862,6 +864,8 @@ class FlightController extends AbstractActionController
     }
 
     /**
+     * Get Currency model
+     *
      * @return CurrencyModel
      */
     public function getCurrencyModel()
@@ -885,6 +889,8 @@ class FlightController extends AbstractActionController
     }
 
     /**
+     * Get Kontragent model
+     *
      * @return KontragentModel
      */
     public function getKontragentModel()
@@ -908,6 +914,8 @@ class FlightController extends AbstractActionController
     }
 
     /**
+     * Get Region model
+     *
      * @return RegionModel
      */
     public function getRegionModel()
@@ -931,6 +939,8 @@ class FlightController extends AbstractActionController
     }
 
     /**
+     * Get TypeOfApService model
+     *
      * @return TypeOfApServiceModel
      */
     public function getTypeOfApServiceModel()
@@ -954,6 +964,8 @@ class FlightController extends AbstractActionController
     }
 
     /**
+     * Get Unit model
+     *
      * @return UnitModel
      */
     public function getUnitModel()
@@ -1073,6 +1085,8 @@ class FlightController extends AbstractActionController
     }
 
     /**
+     * Get TypeOfPermissions list
+     *
      * @return array
      */
     public function getTypeOfPermissions()

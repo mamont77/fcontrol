@@ -51,6 +51,7 @@ class FlightHeaderFilter implements InputFilterAwareInterface
     public $alternativeAircraftName2;
     public $alternativeAircraftTypeName2;
     public $status;
+    public $isYoungest;
 
     /**
      * @var array
@@ -100,6 +101,7 @@ class FlightHeaderFilter implements InputFilterAwareInterface
         $this->alternativeAircraftName2 = (isset($data['alternativeAircraftName2'])) ? $data['alternativeAircraftName2'] : null;
         $this->alternativeAircraftTypeName2 = (isset($data['alternativeAircraftTypeName2'])) ? $data['alternativeAircraftTypeName2'] : null;
         $this->status = (isset($data['status'])) ? $data['status'] : null;
+        $this->isYoungest = (isset($data['isYoungest'])) ? $data['isYoungest'] : null;
     }
 
     /**

@@ -21,6 +21,10 @@ class FlightHeaderModel extends AbstractTableGateway
      */
     public $table = 'flightBaseHeaderForm';
 
+    const DRAFT = -1;
+    const ACTIVE = 1;
+    const DONE = 0;
+
     /**
      * @var array
      */
@@ -34,7 +38,8 @@ class FlightHeaderModel extends AbstractTableGateway
         'aircraftId',
         'alternativeAircraftId1',
         'alternativeAircraftId2',
-        'status'
+        'status',
+        'isYoungest',
     );
 
     /**
@@ -49,10 +54,11 @@ class FlightHeaderModel extends AbstractTableGateway
     }
 
     /**
-     * @param \Zend\Db\Sql\Select $select
+     * @param Select $select
+     * @param array $status
      * @return null|\Zend\Db\ResultSet\ResultSetInterface
      */
-    public function fetchAll(Select $select = null, $status = 1)
+    public function fetchAll(Select $select = null, $status = array(-1, 1))
     {
         if (null === $select)
             $select = new Select();
@@ -91,7 +97,11 @@ class FlightHeaderModel extends AbstractTableGateway
             'libraryAlternativeTypeAircraft2.id = libraryAlternativeAircraft2.aircraft_type',
             array('alternativeAircraftTypeName2' => 'name'), 'left');
 
-        $select->where(array('status' => $status));
+        if (is_array($status)) {
+            $select->where->in($this->table . '.status', $status);
+        } else {
+            $select->where->equalTo($this->table . '.status', $status);
+        }
 //        \Zend\Debug\Debug::dump($select->getSqlString());
 
         $resultSet = $this->selectWith($select);
@@ -173,7 +183,7 @@ class FlightHeaderModel extends AbstractTableGateway
 
         $data = array(
             'parentId' => $object->id,
-            'refNumberOrder' => $this->getLastRefNumberOrder($dateOrder),
+            'refNumberOrder' => $this->generateRefNumberOrder($dateOrder),
             'dateOrder' => $dateOrder,
             'kontragent' => $object->kontragent,
             'airOperator' => $object->airOperator,
@@ -181,6 +191,7 @@ class FlightHeaderModel extends AbstractTableGateway
             'alternativeAircraftId1' => $object->alternativeAircraftId1,
             'alternativeAircraftId2' => $object->alternativeAircraftId2,
             'status' => $object->status,
+            'isYoungest' => $object->isYoungest,
         );
 
 
@@ -211,12 +222,13 @@ class FlightHeaderModel extends AbstractTableGateway
             'alternativeAircraftId1' => $object->alternativeAircraftId1,
             'alternativeAircraftId2' => $object->alternativeAircraftId2,
             'status' => $object->status,
+            'isYoungest' => $object->isYoungest,
         );
         $id = (int)$object->id;
         $oldData = $this->get($id);
         if ($oldData) {
             if ($oldData->dateOrder != date('d-m-Y', $data['dateOrder'])) {
-                $data['refNumberOrder'] = $this->getLastRefNumberOrder($dateOrder);
+                $data['refNumberOrder'] = $this->generateRefNumberOrder($dateOrder);
             }
             $this->update($data, array('id' => $id));
         } else {
@@ -316,10 +328,10 @@ class FlightHeaderModel extends AbstractTableGateway
      * @param int $dateOrder
      * @return string
      */
-    public function getLastRefNumberOrder($dateOrder)
+    public function generateRefNumberOrder($dateOrder)
     {
         /*
-        * ORD-YYMMDD-1
+        * ORD-DDMMYYM-1/n
         */
         $refNumberOrder = 'ORD-' . date('dmy', $dateOrder) . '-';
         $allSimilarNumbers = array();

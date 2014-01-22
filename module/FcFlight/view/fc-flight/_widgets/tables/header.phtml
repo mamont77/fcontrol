@@ -44,7 +44,25 @@
     </thead>
     <tbody>
     <?php foreach ($data as $row) : ?>
-        <tr class="<?= ($row['status']) ? 'warning' : 'success'; ?>">
+<!--        --><?// \Zend\Debug\Debug::dump($row['status']) ?>
+        <?php
+        $class = '';
+        switch ($row['status']) {
+            case -1:
+                $class = 'warning statusDraft';
+                break;
+            case 0:
+                $class = 'success statusDone';
+                break;
+            case 1:
+                $class = 'info statusActive';
+                break;
+            default:
+                $class = '';
+                break;
+        }
+        ?>
+        <tr class="<?= $class ?>">
             <td>
                 <a href="<?php
                 echo $this->url('browse',

@@ -62,9 +62,30 @@ $legsCount = count($this->legs);
                         <td><?= $this->escapeHtml($this->header->kontragentShortName) ?></td>
                     </tr>
                     <tr>
-                    <tr class="<?= ($this->header->status) ? 'warning' : 'success' ?>">
+                        <?php
+                        $class = $status = '';
+                        switch ($this->header->status) {
+                            case -1:
+                                $class = 'warning statusDraft';
+                                $status = 'Draft';
+                                break;
+                            case 0:
+                                $class = 'success statusDone ';
+                                $status = 'Done';
+                                break;
+                            case 1:
+                                $class = 'info statusActive ';
+                                $status = 'In Process';
+                                break;
+                            default:
+                                $class = '';
+                                break;
+                        }
+                        ?>
+
+                    <tr class="<?= $class ?>">
                         <th>Status</th>
-                        <td><?= ($this->header->status) ? 'In Process' : 'Done' ?></td>
+                        <td><?= $status ?></td>
                     </tr>
                 </table>
             </td>
@@ -83,7 +104,7 @@ $legsCount = count($this->legs);
         </div>
         <div class="modal-footer">
             <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-            <a class="btn btn-primary"
+            <a class="btn btn-<?= $class ?>"
                href="<?= $this->url('flight', array('action' => 'status-header', 'id' => $this->header->id)) ?>">
                 Change status</a>
         </div>
@@ -94,7 +115,7 @@ $legsCount = count($this->legs);
             <div style="float: left; color: #999; font-size:12px; font-weight:bold; margin: 5px 10px 5px 0;">
                 OPERATIONS
             </div>
-            <a class="btn btn-primary" href="#switchStatus" data-toggle="modal" role="button">
+            <a class="btn btn-<?= $class ?>" href="#switchStatus" data-toggle="modal" role="button">
                 <i class="icon-refresh"></i> Change status</a>
             <a class="btn btn-primary <?= ($this->header->status) ? '' : 'disabled' ?>"
                href="<?= $this->url('flight', array('action' => 'clone-header', 'id' => $this->header->id)) ?>">
