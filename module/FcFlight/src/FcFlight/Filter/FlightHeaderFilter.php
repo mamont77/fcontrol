@@ -34,6 +34,8 @@ class FlightHeaderFilter implements InputFilterAwareInterface
 
     public $id;
     public $parentId;
+    public $authorId;
+    public $authorName;
     public $parentRefNumberOrder;
     public $refNumberOrder;
     public $dateOrder;
@@ -84,6 +86,8 @@ class FlightHeaderFilter implements InputFilterAwareInterface
     {
         $this->id = (isset($data['id'])) ? $data['id'] : null;
         $this->parentId = (isset($data['parentId'])) ? $data['parentId'] : null;
+        $this->authorId = (isset($data['authorId'])) ? $data['authorId'] : null;
+        $this->authorName = (isset($data['authorName'])) ? $data['authorName'] : null;
         $this->parentRefNumberOrder = (isset($data['parentRefNumberOrder'])) ? $data['parentRefNumberOrder'] : null;
         $this->refNumberOrder = (isset($data['refNumberOrder'])) ? $data['refNumberOrder'] : null;
         $this->dateOrder = (isset($data['dateOrder'])) ? $data['dateOrder'] : null;

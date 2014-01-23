@@ -42,6 +42,9 @@ class FlightController extends AbstractActionController
      */
     protected $_mapFields = array(
         'id',
+        'parentId',
+        'authorId',
+        'authorName',
         'refNumberOrder',
         'dateOrder',
         'kontragent',
@@ -58,6 +61,7 @@ class FlightController extends AbstractActionController
         'alternativeAircraftName2',
         'alternativeAircraftTypeName2',
         'status',
+        'isYoungest',
         'refuelStatus',
         'permitStatus',
     );

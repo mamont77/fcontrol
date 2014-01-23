@@ -31,6 +31,7 @@ class FlightHeaderModel extends AbstractTableGateway
     protected $_tableFields = array(
         'id',
         'parentId',
+        'authorId',
         'refNumberOrder',
         'dateOrder',
         'kontragent',
@@ -97,6 +98,10 @@ class FlightHeaderModel extends AbstractTableGateway
             'libraryAlternativeTypeAircraft2.id = libraryAlternativeAircraft2.aircraft_type',
             array('alternativeAircraftTypeName2' => 'name'), 'left');
 
+        $select->join(array('author' => 'user'),
+            'author.user_id = flightBaseHeaderForm.authorId',
+            array('authorName' => 'username'), 'left');
+
         if (is_array($status)) {
             $select->where->in($this->table . '.status', $status);
         } else {
@@ -154,6 +159,10 @@ class FlightHeaderModel extends AbstractTableGateway
             'libraryAlternativeTypeAircraft2.id = libraryAlternativeAircraft2.aircraft_type',
             array('alternativeAircraftTypeName2' => 'name'), 'left');
 
+        $select->join(array('author' => 'user'),
+            'author.user_id = flightBaseHeaderForm.authorId',
+            array('authorName' => 'username'), 'left');
+
         $select->where(array($this->table . '.id' => $id));
 
         $resultSet = $this->selectWith($select);
@@ -183,6 +192,7 @@ class FlightHeaderModel extends AbstractTableGateway
 
         $data = array(
             'parentId' => $object->id,
+            'authorId' => $object->authorId,
             'refNumberOrder' => $this->generateRefNumberOrder($dateOrder),
             'dateOrder' => $dateOrder,
             'kontragent' => $object->kontragent,
@@ -288,6 +298,10 @@ class FlightHeaderModel extends AbstractTableGateway
         $select->join(array('libraryAlternativeTypeAircraft2' => 'library_aircraft_type'),
             'libraryAlternativeTypeAircraft2.id = libraryAlternativeAircraft2.aircraft_type',
             array('alternativeAircraftTypeName2' => 'name'), 'left');
+
+        $select->join(array('author' => 'user'),
+            'author.user_id = flightBaseHeaderForm.authorId',
+            array('authorName' => 'username'), 'left');
 
         $select->where(array('refNumberOrder' => $refNumberOrder));
         $row = $this->selectWith($select)->current();
