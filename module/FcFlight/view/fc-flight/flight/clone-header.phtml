@@ -47,7 +47,6 @@ echo $this->formHidden($form->get('csrf')) . PHP_EOL;
         <th>Aircraft</th>
         <th>Alternative Aircraft 1</th>
         <th>Alternative Aircraft 2</th>
-        <th>Status</th>
         <th colspan="2"></th>
     </tr>
     </thead>
@@ -93,13 +92,6 @@ echo $this->formHidden($form->get('csrf')) . PHP_EOL;
             <?php
             $field = $form->get('alternativeAircraftId2');
             echo $this->formSelect($field);
-            ?>
-            <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
-        </td>
-        <td>
-            <?php
-            $field = $form->get('status');
-            echo $this->formCheckbox($field);
             ?>
             <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
         </td>

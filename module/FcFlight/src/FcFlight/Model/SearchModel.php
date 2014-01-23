@@ -98,6 +98,10 @@ class SearchModel extends AbstractTableGateway
             'libraryAlternativeTypeAircraft2.id = libraryAlternativeAircraft2.aircraft_type',
             array('alternativeAircraftTypeName2' => 'name'), 'left');
 
+        $select->join(array('author' => 'user'),
+            'author.user_id = flightBaseHeaderForm.authorId',
+            array('authorName' => 'username'), 'left');
+
         if ($object->dateOrderFrom != '' && $object->dateOrderTo != '') {
             $select->where->between('flightBaseHeaderForm.dateOrder', $object->dateOrderFrom, $object->dateOrderTo);
         } else {

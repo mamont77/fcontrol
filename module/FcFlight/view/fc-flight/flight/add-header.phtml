@@ -29,11 +29,7 @@ echo $this->form()->openTag($form) . PHP_EOL;
 echo $this->formHidden($form->get('id')) . PHP_EOL;
 echo $this->formHidden($form->get('csrf')) . PHP_EOL;
 ?>
-<style>
-    .status {
-        display: none;
-    }
-</style>
+
 <table class="table ">
     <thead>
     <tr>
@@ -43,7 +39,6 @@ echo $this->formHidden($form->get('csrf')) . PHP_EOL;
         <th>Aircraft</th>
         <th>Alternative Aircraft 1</th>
         <th>Alternative Aircraft 2</th>
-        <th class="status">Status</th>
         <th colspan="2"></th>
     </tr>
     </thead>
@@ -89,13 +84,6 @@ echo $this->formHidden($form->get('csrf')) . PHP_EOL;
             <?php
             $field = $form->get('alternativeAircraftId2');
             echo $this->formSelect($field);
-            ?>
-            <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
-        </td>
-        <td class="status">
-            <?php
-            $field = $form->get('status');
-            echo $this->formCheckbox($field);
             ?>
             <ul class="errors"><?= $this->formElementErrors($field) ?></ul>
         </td>

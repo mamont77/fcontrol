@@ -3,6 +3,9 @@ $legsCount = count($this->legs);
 ?>
 <?// \Zend\Debug\Debug::dump($this->header) ?>
 <div id="header">
+    <div class="flightAuthor">
+        <span class="label label-inverse">Author: <?= $this->header->authorName ?></span>
+    </div>
     <table id="flightBrowse">
         <tr>
             <td>

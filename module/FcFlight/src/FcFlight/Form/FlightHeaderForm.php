@@ -160,20 +160,6 @@ class FlightHeaderForm extends BaseForm
             ),
         ));
 
-        $this->add(array(
-            'name' => 'status',
-            'type' => 'Zend\Form\Element\Checkbox',
-            'options' => array(
-                'label' => 'Status',
-                'checked_value' => '1',
-                'unchecked_value' => '0',
-                'description' => 'In process (active) OR Done.',
-            ),
-            'attributes' => array(
-                'value' => true,
-            ),
-        ));
-
         $this->add(new Element\Csrf('csrf'));
 
         //Submit button

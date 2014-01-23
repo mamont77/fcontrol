@@ -191,3 +191,11 @@ tr.statusDraft, tr.statusDone, tr.statusActive  {
 .noWrap {
     white-space: nowrap;
 }
+
+.flightAuthor {
+    float: right;
+}
+
+.flightAuthor span {
+    font-size: 12px;
+}

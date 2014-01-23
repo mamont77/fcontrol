@@ -32,6 +32,11 @@ class LogPlugin extends AbstractPlugin
     /**
      * @var string
      */
+    protected $userId;
+
+    /**
+     * @var string
+     */
     protected $userName;
 
     /**
@@ -91,6 +96,27 @@ class LogPlugin extends AbstractPlugin
     public function getLogMessage()
     {
         return $this->logMessage;
+    }
+
+    /**
+     * @param $id
+     * @return $this
+     */
+    public function setCurrentUserId($id)
+    {
+        $this->userId = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get the user ID
+     *
+     * @return int
+     */
+    public function getCurrentUserId()
+    {
+        return $this->userId;
     }
 
     /**

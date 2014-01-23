@@ -441,14 +441,19 @@ class FlightController extends AbstractActionController
             $form->setData($request->getPost());
 
             if ($form->isValid()) {
+                $loggerPlugin = $this->LogPlugin();
+
                 $data = $form->getData();
                 $filter->exchangeArray($data);
+                $filter->authorId = $loggerPlugin->getCurrentUserId();
+                $filter->status = -1;
+                $filter->isYoungest = 1;
+
                 $data = $this->getFlightHeaderModel()->add($filter);
 
                 $message = "Flights '" . $data['refNumberOrder'] . "' was successfully added.";
                 $this->flashMessenger()->addSuccessMessage($message);
 
-                $loggerPlugin = $this->LogPlugin();
                 $this->setDataForLogger($this->getFlightHeaderModel()->get($data['lastInsertValue']));
                 $loggerPlugin->setNewLogRecord($this->dataForLogger);
                 $loggerPlugin->setLogMessage($message);
@@ -567,7 +572,9 @@ class FlightController extends AbstractActionController
                 $this->setDataForLogger($parentHeader);
                 $loggerPlugin = $this->LogPlugin();
                 $loggerPlugin->setOldLogRecord($this->dataForLogger);
-
+                $data->authorId = $loggerPlugin->getCurrentUserId();
+                $data->status = -1;
+                $data->isYoungest = 1;
                 $data = $this->getFlightHeaderModel()->add($data);
 
                 $message = 'Flights ' . $parentHeader->refNumberOrder

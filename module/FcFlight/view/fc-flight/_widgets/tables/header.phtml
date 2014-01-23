@@ -39,12 +39,13 @@
         <th>Refuel</th>
         <th>Permit</th>
         <th>AP Service</th>
+        <th>Author</th>
         <th class="actions"></th>
     </tr>
     </thead>
     <tbody>
     <?php foreach ($data as $row) : ?>
-        <? \Zend\Debug\Debug::dump($row) ?>
+<!--        --><?// \Zend\Debug\Debug::dump($row) ?>
         <?php
         $class = '';
         switch ($row['status']) {
@@ -151,6 +152,16 @@
                 }
                 ?>
                 <span class="<?= $class; ?>"><?= $row['apServiceStatus']; ?></span>
+            </td>
+            <td>
+                <?php
+                $authorName = '';
+                if ($row['authorName'] != '') {
+                    $authorName = explode(' ', $row['authorName']);
+                    $authorName = $authorName[0];
+                }
+                ?>
+                <?= $authorName ?>
             </td>
             <td class="actions">
                 <a title="Edit" href="<?php echo $this->url('flight',

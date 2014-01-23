@@ -98,6 +98,7 @@ class Module
                         $authService = $serviceLocator->get('zfcuser_auth_service');
                         $controllerPlugin = new Controller\Plugin\LogPlugin;
                         $controllerPlugin->setCurrentUserName($authService->getIdentity()->getUsername());
+                        $controllerPlugin->setCurrentUserId($authService->getIdentity()->getId());
                         return $controllerPlugin;
                     },
             ),
