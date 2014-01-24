@@ -107,6 +107,9 @@ class FlightHeaderModel extends AbstractTableGateway
         } else {
             $select->where->equalTo($this->table . '.status', $status);
         }
+        $select->where->equalTo($this->table . '.isYoungest', 1);
+
+
 //        \Zend\Debug\Debug::dump($select->getSqlString());
 
         $resultSet = $this->selectWith($select);
@@ -222,7 +225,7 @@ class FlightHeaderModel extends AbstractTableGateway
     {
         $dateOrder = \DateTime::createFromFormat('d-m-Y', $object->dateOrder);
         $dateOrder = $dateOrder->setTime(0, 0)->getTimestamp();
-        
+
         $data = array(
             'refNumberOrder' => $object->refNumberOrder,
             'dateOrder' => $dateOrder,
@@ -238,7 +241,6 @@ class FlightHeaderModel extends AbstractTableGateway
         if ($object->isYoungest) {
             $data['isYoungest'] = $object->isYoungest;
         }
-
         $id = (int)$object->id;
         $oldData = $this->get($id);
         if ($oldData) {
