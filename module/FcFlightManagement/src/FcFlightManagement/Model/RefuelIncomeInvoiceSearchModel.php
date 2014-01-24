@@ -249,6 +249,8 @@ class RefuelIncomeInvoiceSearchModel extends AbstractTableGateway
             ),
             'left');
 
+        $select->where->equalTo('flight.isYoungest', 1);
+
         if ($data['dateOrderFrom'] != '' && $data['dateOrderTo'] != '') {
             $select->where->between('flight.dateOrder', $data['dateOrderFrom'], $data['dateOrderTo']);
         } else {

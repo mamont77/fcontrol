@@ -131,6 +131,8 @@ class ApServiceIncomeInvoiceSearchModel extends BaseModel
             ),
             'left');
 
+        $select->where->equalTo('flight.isYoungest', 1);
+
         if ($data['dateFrom'] != '' && $data['dateTo'] != '') {
             $select->where->between('leg.apArrTime', $data['dateFrom'], $data['dateTo']);
         } else {

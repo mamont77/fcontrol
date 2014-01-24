@@ -109,7 +109,6 @@ class FlightHeaderModel extends AbstractTableGateway
         }
         $select->where->equalTo($this->table . '.isYoungest', 1);
 
-
 //        \Zend\Debug\Debug::dump($select->getSqlString());
 
         $resultSet = $this->selectWith($select);

@@ -165,6 +165,8 @@ class PermissionIncomeInvoiceSearchModel extends BaseModel
             ),
             'left');
 
+        $select->where->equalTo('flight.isYoungest', 1);
+
         if ($data['dateFrom'] != '' && $data['dateTo'] != '') {
             $select->where
                 ->NEST

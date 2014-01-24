@@ -231,6 +231,8 @@ class RefuelOutcomeInvoiceSearchModel extends AbstractTableGateway
             ),
             'left');
 
+        $select->where->equalTo('flight.isYoungest', 1);
+
         if ($data['dateFrom'] != '' && $data['dateTo'] != '') {
             $select->where->between($this->table . '.refuelDate', $data['dateFrom'], $data['dateTo']);
         } else {
