@@ -662,7 +662,7 @@ class FlightController extends AbstractActionController
         $loggerPlugin = $this->LogPlugin();
         $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
-        $data->status = ($data->status) ? 0 : 1;
+        $data->status = ($data->status == '-1') ? 1 : 0;
 
         $this->getFlightHeaderModel()->save($data);
 

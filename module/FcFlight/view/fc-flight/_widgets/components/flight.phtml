@@ -66,19 +66,21 @@ $legsCount = count($this->legs);
                     </tr>
                     <tr>
                         <?php
-                        $class = $status = '';
+                        $class = $status = $nextStatus = '';
                         switch ($this->header->status) {
                             case -1:
                                 $class = 'warning statusDraft';
                                 $status = 'Draft';
-                                break;
-                            case 0:
-                                $class = 'success statusDone ';
-                                $status = 'Done';
+                                $nextStatus = 'In Process';
                                 break;
                             case 1:
                                 $class = 'info statusActive ';
                                 $status = 'In Process';
+                                $nextStatus = 'Done';
+                                break;
+                            case 0:
+                                $class = 'success statusDone ';
+                                $status = 'Done';
                                 break;
                             default:
                                 $class = '';
@@ -102,8 +104,11 @@ $legsCount = count($this->legs);
             <h3 id="switchStatusLabel">Change status warring</h3>
         </div>
         <div class="modal-body">
-            <p>ARE YOU COMPLETELY SURE TO CHANGE STATUS FOR
-                FLIGHT<br/><b><?= $this->header->refNumberOrder ?></b>?</p>
+            <p>
+                ARE YOU COMPLETELY SURE TO CHANGE STATUS
+                <? if ($nextStatus): print 'to "<strong>' . $nextStatus . '</strong>"'; endif; ?>
+                FOR FLIGHT<br/><b><?= $this->header->refNumberOrder ?></b>?
+            </p>
         </div>
         <div class="modal-footer">
             <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
