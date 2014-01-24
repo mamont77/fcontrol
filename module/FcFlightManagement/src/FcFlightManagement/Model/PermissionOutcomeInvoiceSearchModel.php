@@ -190,6 +190,7 @@ class PermissionOutcomeInvoiceSearchModel extends BaseModel
             'left');
 
         $select->where->equalTo('flight.isYoungest', 1);
+        $select->where->in('flight.status', array(0, 1));
 
         if ($data['dateFrom'] != '' && $data['dateTo'] != '') {
             $select->where->between($this->table . '.dateArr', $data['dateFrom'], $data['dateTo']);
