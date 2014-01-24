@@ -1,5 +1,32 @@
 <?php
 $legsCount = count($this->legs);
+$canBeChangedStatus = false;
+$canBeCloned = false;
+$canBeEdited = false;
+$canBeEdited = false;
+$canAddLeg = false;
+$canAddServices = false;
+
+if (($this->header->status == '-1' && $legsCount > 0) || $this->header->status == 1) {
+    $canBeChangedStatus = true;
+}
+
+if ($this->header->status != '-1') {
+    $canBeCloned = true;
+}
+
+if ($this->header->status == '-1') {
+    $canBeEdited = true;
+}
+
+if ($this->header->status == '-1') {
+    $canAddLeg = true;
+}
+
+if ($this->header->status == '-1' && $legsCount > 0) {
+    $canAddServices = true;
+}
+
 ?>
 <?// \Zend\Debug\Debug::dump($this->header) ?>
 <div id="header">
@@ -15,7 +42,8 @@ $legsCount = count($this->legs);
                         <td class="cRefNumberOrder">
                             <?= $this->header->refNumberOrder ?>
                             <? if ($this->header->parentRefNumberOrder): ?>
-                                <?= ' <small>(<a href="' .
+                                <?=
+                                ' <small>(<a href="' .
                                 $this->url('browse',
                                     array('action' => 'show', 'refNumberOrder' => $this->header->parentRefNumberOrder))
                                 . '">' . $this->header->parentRefNumberOrder . '</a>)</small>' ?>
@@ -39,15 +67,17 @@ $legsCount = count($this->legs);
                         <td>
                             <?php
                             $aircraft = $this->escapeHtml($this->header->aircraftTypeName)
-                            . ' (' . $this->escapeHtml($this->header->aircraftName) . ')';
+                                . ' (' . $this->escapeHtml($this->header->aircraftName) . ')';
                             if ($this->header->alternativeAircraftTypeName1
-                                && $this->header->alternativeAircraftName1) {
+                                && $this->header->alternativeAircraftName1
+                            ) {
                                 $aircraft .= '<br /><small>'
                                     . $this->escapeHtml($this->header->alternativeAircraftTypeName1)
                                     . ' (' . $this->escapeHtml($this->header->alternativeAircraftName1) . ')</small>';
                             }
                             if ($this->header->alternativeAircraftTypeName2
-                                && $this->header->alternativeAircraftName2) {
+                                && $this->header->alternativeAircraftName2
+                            ) {
                                 $aircraft .= '<br /><small>'
                                     . $this->escapeHtml($this->header->alternativeAircraftTypeName2)
                                     . ' (' . $this->escapeHtml($this->header->alternativeAircraftName2) . ')</small>';
@@ -123,12 +153,12 @@ $legsCount = count($this->legs);
             <div style="float: left; color: #999; font-size:12px; font-weight:bold; margin: 5px 10px 5px 0;">
                 OPERATIONS
             </div>
-            <a class="btn btn-<?= $class ?>" href="#switchStatus" data-toggle="modal" role="button">
+            <a class="btn btn-<?= $class ?> <?= ($canBeChangedStatus) ? '' : 'disabled' ?>" href="#switchStatus" data-toggle="modal" role="button">
                 <i class="icon-refresh"></i> Change status</a>
-            <a class="btn btn-primary <?= ($this->header->status) ? '' : 'disabled' ?>"
+            <a class="btn btn-primary <?= ($canBeCloned) ? '' : 'disabled' ?>"
                href="<?= $this->url('flight', array('action' => 'clone-header', 'id' => $this->header->id)) ?>">
                 <i class="icon-share"></i> Clone</a>
-            <a class="btn btn-primary <?= ($this->header->status) ? '' : 'disabled' ?>"
+            <a class="btn btn-primary <?= ($canBeEdited) ? '' : 'disabled' ?>"
                href="<?= $this->url('flight', array('action' => 'edit-header', 'id' => $this->header->id)) ?>">
                 <i class="icon-edit"></i> Edit</a>
         </div>
@@ -136,25 +166,26 @@ $legsCount = count($this->legs);
             <div style="float: left; color: #999; font-size:12px; font-weight:bold; margin: 5px 10px 5px 0;">
                 ADD SERVICE
             </div>
-            <a class="btn <?= ($this->header->status) ? '' : 'disabled' ?>"
+            <a class="btn <?= ($canAddLeg) ? '' : 'disabled' ?>"
                href="<?= $this->url('leg', array('action' => 'add', 'id' => $this->header->id)) ?>">
                 <i class="icon-plane"></i> LEG</a>
-            <a class="btn <?= ($this->header->status && $legsCount > 0) ? '' : 'disabled' ?>"
+            <a class="btn <?= ($canAddServices) ? '' : 'disabled' ?>"
                href="<?= $this->url('refuel', array('action' => 'add', 'id' => $this->header->id)) ?>">
                 <i class="icon-plane"></i> Refuel</a>
-            <a class="btn <?= ($this->header->status && $legsCount > 0) ? '' : 'disabled' ?>"
+            <a class="btn <?= ($canAddServices) ? '' : 'disabled' ?>"
                href="<?= $this->url('permission', array('action' => 'add', 'id' => $this->header->id)) ?>">
                 <i class="icon-plane"></i> Permission</a>
-            <a class="btn <?= ($this->header->status && $legsCount > 0) ? '' : 'disabled' ?>"
+            <a class="btn <?= ($canAddServices) ? '' : 'disabled' ?>"
                href="<?= $this->url('apService', array('action' => 'add', 'id' => $this->header->id)) ?>">
                 <i class="icon-plane"></i> AP Service</a>
         </div>
     </div>
 
-<? if ($legsCount > 0): ?>
-    <legend>LEGs</legend>
-    <?= $this->partial('fc-flight/_widgets/tables/leg.phtml',
-        array('legs' => $this->legs, 'header' => $this->header, 'currentId' => $this->currentId))
-    ?>
-<? endif; ?>
+    <? if ($legsCount > 0): ?>
+        <legend>LEGs</legend>
+        <?=
+        $this->partial('fc-flight/_widgets/tables/leg.phtml',
+            array('legs' => $this->legs, 'header' => $this->header, 'currentId' => $this->currentId))
+        ?>
+    <? endif; ?>
 </div>

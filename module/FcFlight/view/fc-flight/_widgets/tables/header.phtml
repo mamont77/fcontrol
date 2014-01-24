@@ -1,4 +1,5 @@
-<table class="table table-bordered table-hover table-condensed <? if ($this->fixedHeader): ?> table-fixed-header<? endif ?>">
+<table
+    class="table table-bordered table-hover table-condensed <? if ($this->fixedHeader): ?> table-fixed-header<? endif ?>">
     <thead class="header">
     <tr>
         <th>
@@ -40,12 +41,14 @@
         <th>Permit</th>
         <th>AP Service</th>
         <th>Author</th>
-        <th class="actions"></th>
+        <? if (!$this->isArchive): ?>
+            <th class="actions"></th>
+        <? endif; ?>
     </tr>
     </thead>
     <tbody>
     <?php foreach ($data as $row) : ?>
-<!--        --><?// \Zend\Debug\Debug::dump($row) ?>
+        <!--        --><? // \Zend\Debug\Debug::dump($row) ?>
         <?php
         $class = '';
         switch ($row['status']) {
@@ -79,13 +82,15 @@
                 $aircraft = $this->escapeHtml($row['aircraftTypeName'])
                     . ' (' . $this->escapeHtml($row['aircraftName']) . ')';
                 if ($row['alternativeAircraftTypeName1']
-                    && $row['alternativeAircraftName1']) {
+                    && $row['alternativeAircraftName1']
+                ) {
                     $aircraft .= '<br /><small>'
                         . $this->escapeHtml($row['alternativeAircraftTypeName1'])
                         . ' (' . $this->escapeHtml($row['alternativeAircraftName1']) . ')</small>';
                 }
                 if ($row['alternativeAircraftTypeName2']
-                    && $row['alternativeAircraftName2']) {
+                    && $row['alternativeAircraftName2']
+                ) {
                     $aircraft .= '<br /><small>'
                         . $this->escapeHtml($row['alternativeAircraftTypeName2'])
                         . ' (' . $this->escapeHtml($row['alternativeAircraftName2']) . ')</small>';
@@ -163,12 +168,16 @@
                 ?>
                 <?= $authorName ?>
             </td>
-            <td class="actions">
-                <a title="Edit" href="<?php echo $this->url('flight',
-                    array('action' => 'edit-header', 'id' => $row['id']));?>"><i class="icon-edit"></i></a>
-                <a title="Remove" href="<?php echo $this->url('flight',
-                    array('action' => 'delete-header', 'id' => $row['id']));?>"><i class="icon-remove"></i></a>
-            </td>
+            <? if (!$this->isArchive): ?>
+                <td class="actions">
+                    <? if ($row['status'] == '-1'): ?>
+                        <a title="Edit" href="<?php echo $this->url('flight',
+                            array('action' => 'edit-header', 'id' => $row['id']));?>"><i class="icon-edit"></i></a>
+                        <a title="Remove" href="<?php echo $this->url('flight',
+                            array('action' => 'delete-header', 'id' => $row['id']));?>"><i class="icon-remove"></i></a>
+                    <? endif; ?>
+                </td>
+            <? endif; ?>
         </tr>
     <?php endforeach; ?>
     </tbody>

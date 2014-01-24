@@ -522,7 +522,11 @@ class FlightController extends AbstractActionController
                 $logger->addExtra(array('username' => $loggerPlugin->getCurrentUserName(), 'component' => 'flight'));
                 $logger->Notice($loggerPlugin->getLogMessage());
 
-                return $this->redirect()->toRoute('home');
+                return $this->redirect()->toRoute('browse',
+                    array(
+                        'action' => 'show',
+                        'refNumberOrder' => $refNumberOrder,
+                    ));
             }
         }
 

@@ -200,8 +200,8 @@ class FlightHeaderModel extends AbstractTableGateway
             'aircraftId' => $object->aircraftId,
             'alternativeAircraftId1' => $object->alternativeAircraftId1,
             'alternativeAircraftId2' => $object->alternativeAircraftId2,
-            'status' => $object->status,
-            'isYoungest' => $object->isYoungest,
+            'status' => '-1',
+            'isYoungest' => 1,
         );
 
 
@@ -231,9 +231,14 @@ class FlightHeaderModel extends AbstractTableGateway
             'aircraftId' => $object->aircraftId,
             'alternativeAircraftId1' => $object->alternativeAircraftId1,
             'alternativeAircraftId2' => $object->alternativeAircraftId2,
-            'status' => $object->status,
-            'isYoungest' => $object->isYoungest,
         );
+        if ($object->status) {
+            $data['status'] = $object->status;
+        }
+        if ($object->isYoungest) {
+            $data['isYoungest'] = $object->isYoungest;
+        }
+
         $id = (int)$object->id;
         $oldData = $this->get($id);
         if ($oldData) {
