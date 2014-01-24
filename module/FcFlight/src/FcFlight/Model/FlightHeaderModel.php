@@ -181,9 +181,10 @@ class FlightHeaderModel extends AbstractTableGateway
 
     /**
      * @param FlightHeaderFilter $object
+     * @param bool $needToClone
      * @return array
      */
-    public function add(FlightHeaderFilter $object)
+    public function add(FlightHeaderFilter $object, $needToClone = false)
     {
         $dateOrder = \DateTime::createFromFormat('d-m-Y', $object->dateOrder);
         $dateOrder = $dateOrder->setTime(0, 0)->getTimestamp();
@@ -192,10 +193,17 @@ class FlightHeaderModel extends AbstractTableGateway
             $object->id = null;
         }
 
+        if ($needToClone) {
+            $refNumberOrder = $this->generateCloneRefNumberOrder($needToClone);
+            $dateOrder = mktime(0, 0, 0, date('m'), date('d'), date('Y'));
+        } else {
+            $refNumberOrder = $this->generateNewRefNumberOrder($dateOrder);
+        }
+
         $data = array(
             'parentId' => $object->id,
             'authorId' => $object->authorId,
-            'refNumberOrder' => $this->generateRefNumberOrder($dateOrder),
+            'refNumberOrder' => $refNumberOrder,
             'dateOrder' => $dateOrder,
             'kontragent' => $object->kontragent,
             'airOperator' => $object->airOperator,
@@ -244,7 +252,7 @@ class FlightHeaderModel extends AbstractTableGateway
         $oldData = $this->get($id);
         if ($oldData) {
             if ($oldData->dateOrder != date('d-m-Y', $data['dateOrder'])) {
-                $data['refNumberOrder'] = $this->generateRefNumberOrder($dateOrder);
+                $data['refNumberOrder'] = $this->generateNewRefNumberOrder($dateOrder);
             }
             $this->update($data, array('id' => $id));
         } else {
@@ -345,10 +353,12 @@ class FlightHeaderModel extends AbstractTableGateway
     }
 
     /**
+     * Generate new ORD-DDMMYYM-1/n
+     *
      * @param int $dateOrder
      * @return string
      */
-    public function generateRefNumberOrder($dateOrder)
+    public function generateNewRefNumberOrder($dateOrder)
     {
         /*
         * ORD-DDMMYYM-1/n
@@ -369,6 +379,25 @@ class FlightHeaderModel extends AbstractTableGateway
             $refNumberOrder = $refNumberOrder . $nextKey;
         } else {
             $refNumberOrder = $refNumberOrder . '1';
+        }
+
+        return $refNumberOrder;
+    }
+
+    /**
+     * Generate clone ORD-DDMMYYM-1/n
+     *
+     * @param string $refNumberOrder
+     * @return string
+     */
+    public function generateCloneRefNumberOrder($refNumberOrder)
+    {
+        $refNumberOrder = explode('_', $refNumberOrder);
+        if (isset($refNumberOrder[1])) {
+            $refNumberOrder[1] += 1;
+            $refNumberOrder = $refNumberOrder[0] . '_' . $refNumberOrder[1];
+        } else {
+            $refNumberOrder = $refNumberOrder[0] . '_1';
         }
 
         return $refNumberOrder;

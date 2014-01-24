@@ -372,6 +372,7 @@ class FlightController extends AbstractActionController
     {
         $refNumberOrder = (string)$this->params()->fromRoute('refNumberOrder', '');
         $refNumberOrder = urldecode($refNumberOrder);
+//        \Zend\Debug\Debug::dump($refNumberOrder);
 
         if (empty($refNumberOrder)) {
             return $this->redirect()->toRoute('home', array(
@@ -579,7 +580,7 @@ class FlightController extends AbstractActionController
                 $data->authorId = $loggerPlugin->getCurrentUserId();
                 $data->status = -1;
                 $data->isYoungest = 1;
-                $data = $this->getFlightHeaderModel()->add($data);
+                $data = $this->getFlightHeaderModel()->add($data, $parentHeader->refNumberOrder);
 
                 $message = 'Flights ' . $parentHeader->refNumberOrder
                     . ' was successfully cloned as ' . $data['refNumberOrder'];
