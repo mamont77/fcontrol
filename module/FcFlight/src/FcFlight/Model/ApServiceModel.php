@@ -90,10 +90,10 @@ class ApServiceModel extends AbstractTableGateway
     }
 
     /**
-     * @param ApServiceFilter $object
+     * @param $object
      * @return array
      */
-    public function add(ApServiceFilter $object)
+    public function add($object)
     {
 
         $airport = explode('-', (string)$object->airportId);

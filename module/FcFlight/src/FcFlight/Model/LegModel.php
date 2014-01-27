@@ -185,10 +185,10 @@ class LegModel extends AbstractTableGateway
     }
 
     /**
-     * @param LegFilter $object
+     * @param $object
      * @return array
      */
-    public function add(LegFilter $object)
+    public function add($object)
     {
         $apDepTime = \DateTime::createFromFormat('d-m-Y H:i', $object->apDepTime)
             ->getTimestamp();

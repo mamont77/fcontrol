@@ -95,10 +95,10 @@ class PermissionModel extends AbstractTableGateway
     }
 
     /**
-     * @param PermissionFilter $object
+     * @param $object
      * @return array
      */
-    public function add(PermissionFilter $object)
+    public function add($object)
     {
         $data = array(
             'headerId' => (int)$object->headerId,

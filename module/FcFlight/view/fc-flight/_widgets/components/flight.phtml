@@ -11,7 +11,7 @@ if (($this->header->status == '-1' && $legsCount > 0) || $this->header->status =
     $canBeChangedStatus = true;
 }
 
-if ($this->header->status != '-1') {
+if ($this->header->status != '-1' && $this->header->isYoungest != 0) {
     $canBeCloned = true;
 }
 

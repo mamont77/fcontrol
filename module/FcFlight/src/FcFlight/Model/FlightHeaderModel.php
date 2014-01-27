@@ -180,11 +180,11 @@ class FlightHeaderModel extends AbstractTableGateway
     }
 
     /**
-     * @param FlightHeaderFilter $object
+     * @param $object
      * @param bool $needToClone
      * @return array
      */
-    public function add(FlightHeaderFilter $object, $needToClone = false)
+    public function add($object, $needToClone = false)
     {
         $dateOrder = \DateTime::createFromFormat('d-m-Y', $object->dateOrder);
         $dateOrder = $dateOrder->setTime(0, 0)->getTimestamp();
@@ -242,10 +242,10 @@ class FlightHeaderModel extends AbstractTableGateway
             'alternativeAircraftId1' => $object->alternativeAircraftId1,
             'alternativeAircraftId2' => $object->alternativeAircraftId2,
         );
-        if ($object->status) {
+        if (!is_null($object->status)) {
             $data['status'] = $object->status;
         }
-        if ($object->isYoungest) {
+        if (!is_null($object->isYoungest)) {
             $data['isYoungest'] = $object->isYoungest;
         }
         $id = (int)$object->id;

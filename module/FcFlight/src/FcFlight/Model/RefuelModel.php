@@ -154,10 +154,10 @@ class RefuelModel extends AbstractTableGateway
     }
 
     /**
-     * @param RefuelFilter $object
+     * @param $object
      * @return array
      */
-    public function add(RefuelFilter $object)
+    public function add($object)
     {
         $date = \DateTime::createFromFormat('d-m-Y', $object->date)->setTime(0, 0)->getTimestamp();
         $airport = explode('-', (string)$object->airportId);

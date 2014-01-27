@@ -549,64 +549,83 @@ class FlightController extends AbstractActionController
                 'action' => 'add'
             ));
         }
-        $header = $this->getFlightHeaderModel()->get($headerId);
+        $parentHeader = $this->getFlightHeaderModel()->get($headerId);
 
-        $form = new FlightHeaderForm('flightHeader',
-            array(
-                'libraries' => array(
-                    'kontragent' => $this->getKontragents(),
-                    'air_operator' => $this->getAirOperators(),
-                    'aircraft' => $this->getAircrafts(),
-                )
-            )
-        );
+        //Make parent as Done and no isYoungest
+        $oldFlight = $parentHeader;
+        $oldFlight->status = 0;
+        $oldFlight->isYoungest = 0;
 
-        $form->bind($header);
-        $form->get('submitBtn')->setAttribute('value', 'Save');
+        $this->getFlightHeaderModel()->save($oldFlight);
 
-        $request = $this->getRequest();
-        if ($request->isPost()) {
-            $filter = $this->getServiceLocator()->get('FcFlight\Filter\FlightHeaderFilter');
-            $form->setInputFilter($filter->getInputFilter());
-            $form->setData($request->getPost());
+        $this->setDataForLogger($parentHeader);
+        $loggerPlugin = $this->LogPlugin();
+        $loggerPlugin->setOldLogRecord($this->dataForLogger);
 
-            if ($form->isValid()) {
-                $data = $form->getData();
-                $parentHeader = $this->getFlightHeaderModel()->get($data->id);
+        //Save new flight header
+        $parentHeader->authorId = $loggerPlugin->getCurrentUserId();
+        $parentHeader->status = -1;
+        $parentHeader->isYoungest = 1;
+        $data = $this->getFlightHeaderModel()->add($parentHeader, $parentHeader->refNumberOrder);
+//        $data['lastInsertValue'] = 31;
 
-                $this->setDataForLogger($parentHeader);
-                $loggerPlugin = $this->LogPlugin();
-                $loggerPlugin->setOldLogRecord($this->dataForLogger);
-                $data->authorId = $loggerPlugin->getCurrentUserId();
-                $data->status = -1;
-                $data->isYoungest = 1;
-                $data = $this->getFlightHeaderModel()->add($data, $parentHeader->refNumberOrder);
-
-                $message = 'Flights ' . $parentHeader->refNumberOrder
-                    . ' was successfully cloned as ' . $data['refNumberOrder'];
-                $this->flashMessenger()->addSuccessMessage($message);
-
-                $this->setDataForLogger($this->getFlightHeaderModel()->get($data['lastInsertValue']));
-                $loggerPlugin->setNewLogRecord($this->dataForLogger);
-                $loggerPlugin->setLogMessage($message);
-
-                $logger = $this->getServiceLocator()->get('logger');
-                $logger->addExtra(array('username' => $loggerPlugin->getCurrentUserName(), 'component' => 'flight'));
-                $logger->Info($loggerPlugin->getLogMessage());
-
-                return $this->redirect()->toRoute('browse',
-                    array(
-                        'action' => 'show',
-                        'refNumberOrder' => $data['refNumberOrder'],
-                    ));
-            }
+        //Copy LEGs from old flight to new flight
+        $legs = $this->getLegModel()->getByHeaderId($parentHeader->id);
+        foreach ($legs as $leg) {
+            unset($leg['id']);
+            $leg['headerId'] = $data['lastInsertValue'];
+            $object = (object) $leg;
+            $this->getLegModel()->add($object);
         }
 
-        return array(
-            'id' => $headerId,
-            'form' => $form,
-            'header' => $header,
-        );
+        //Copy Refuels from old flight to new flight
+        $refuels = $this->getRefuelModel()->getByHeaderId($parentHeader->id);
+        foreach ($refuels as $refuel) {
+            unset($refuel['id']);
+            $refuel['headerId'] = $data['lastInsertValue'];
+            $refuel['date'] = date('d-m-Y', $refuel['date']);
+            $object = (object) $refuel;
+            $this->getRefuelModel()->add($object);
+        }
+
+        //Copy Permissions from old flight to new flight
+        $permissions = $this->getPermissionModel()->getByHeaderId($parentHeader->id);
+        foreach ($permissions as $legId => $value) {
+            $id = key($value['permission']);
+            $permission = $value['permission'][$id];
+            $permission['headerId'] = $data['lastInsertValue'];
+            $permission['legId'] = $legId;
+            $object = (object) $permission;
+            $this->getPermissionModel()->add($object);
+        }
+
+        //Copy ApServices from old flight to new flight
+        $apServices = $this->getApServiceModel()->getByHeaderId($parentHeader->id);
+        foreach ($apServices as $apService) {
+            unset($apService['id']);
+            $apService['headerId'] = $data['lastInsertValue'];
+            $object = (object) $apService;
+            $this->getApServiceModel()->add($object);
+        }
+
+        //Set message, save logs and redirect to new flight
+        $message = 'Flights ' . $parentHeader->refNumberOrder
+            . ' was successfully cloned as ' . $data['refNumberOrder'];
+        $this->flashMessenger()->addSuccessMessage($message);
+
+        $this->setDataForLogger($this->getFlightHeaderModel()->get($data['lastInsertValue']));
+        $loggerPlugin->setNewLogRecord($this->dataForLogger);
+        $loggerPlugin->setLogMessage($message);
+
+        $logger = $this->getServiceLocator()->get('logger');
+        $logger->addExtra(array('username' => $loggerPlugin->getCurrentUserName(), 'component' => 'flight'));
+        $logger->Info($loggerPlugin->getLogMessage());
+
+        return $this->redirect()->toRoute('browse',
+            array(
+                'action' => 'show',
+                'refNumberOrder' => $data['refNumberOrder'],
+            ));
     }
 
     /**
