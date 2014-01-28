@@ -225,7 +225,7 @@
                 $apDepCountryId.find('[value="' + preSelectedApDepCountryId + '"]').attr('selected', 'selected')
                     .prop('disabled', false).trigger('chosen:updated');
                 renderAirportsByCountry($apDepAirports, preSelectedApDepCountryId, preSelectedApDepAirportId);
-                $apDepAirports.val(preSelectedApDepAirportId).trigger('chosen:updated');
+                $apDepAirportId.val(preSelectedApDepAirportId);
             } else {
                 renderAirportsByCountry($apDepAirports, $apDepCountryId.val(), $apDepAirportId.val());
                 $apDepAirports.val($apDepAirportId).trigger('chosen:updated');

@@ -177,7 +177,6 @@ class FlightController extends AbstractActionController
         }
         $result->current();
 
-
         $data = array();
         foreach ($result as $key => $row) {
             if (!$row->id) {
@@ -291,7 +290,12 @@ class FlightController extends AbstractActionController
         $result->current();
 
         $data = array();
+
         foreach ($result as $key => $row) {
+            if (!$row->id) {
+                continue;
+            }
+
             foreach ($this->_mapFields as $field) {
                 if (isset($row->$field)) {
                     $data[$key][$field] = $row->$field;
@@ -301,6 +305,17 @@ class FlightController extends AbstractActionController
                 $hasRefuel = $this->getRefuelModel()->getByHeaderId($data[$key]['id']);
                 if (!empty($hasRefuel)) {
                     $data[$key]['refuelStatus'] = 'YES';
+
+                    $refuelIsDone = true;
+                    foreach ($hasRefuel as $refuel) {
+                        if ($refuel['status'] == 0) {
+                            $refuelIsDone = false;
+                            continue;
+                        }
+                    }
+                    if ($refuelIsDone) {
+                        $data[$key]['refuelStatus'] = 'DONE';
+                    }
                 } else {
                     $data[$key]['refuelStatus'] = 'NO';
                 }
@@ -311,13 +326,19 @@ class FlightController extends AbstractActionController
             try {
                 $hasPermission = $this->getPermissionModel()->getByHeaderId($data[$key]['id']);
                 if (!empty($hasPermission)) {
-                    $data[$key]['permitStatus'] = 'CNFMD';
+                    $data[$key]['permitStatus'] = 'YES';
 
-                    foreach ($hasPermission as $row) {
-                        if ($row['check'] != 'RECEIVED') {
-                            $data[$key]['permitStatus'] = 'YES';
-                            continue;
+                    $permissionIsDone = true;
+                    foreach ($hasPermission as $permissions) {
+                        foreach ($permissions['permission'] as $permission) {
+                            if ($permission['status'] == 0) {
+                                $permissionIsDone = false;
+                                continue;
+                            }
                         }
+                    }
+                    if ($permissionIsDone) {
+                        $data[$key]['permitStatus'] = 'DONE';
                     }
                 } else {
                     $data[$key]['permitStatus'] = 'NO';
@@ -332,8 +353,8 @@ class FlightController extends AbstractActionController
                     $data[$key]['apServiceStatus'] = 'YES';
 
                     $apServiceIsDone = true;
-                    foreach ($hasApService as $row) {
-                        if ($row['status'] == 0) {
+                    foreach ($hasApService as $apService) {
+                        if ($apService['status'] == 0) {
                             $apServiceIsDone = false;
                             continue;
                         }
@@ -542,7 +563,8 @@ class FlightController extends AbstractActionController
      */
     public function cloneHeaderAction()
     {
-
+        // FixMe: must be false
+        $isDebugMode = false;
         $headerId = (int)$this->params()->fromRoute('id', 0);
         if (!$headerId) {
             return $this->redirect()->toRoute('flight', array(
@@ -555,8 +577,9 @@ class FlightController extends AbstractActionController
         $oldFlight = $parentHeader;
         $oldFlight->status = 0;
         $oldFlight->isYoungest = 0;
-
-        $this->getFlightHeaderModel()->save($oldFlight);
+        if (!$isDebugMode) {
+            $this->getFlightHeaderModel()->save($oldFlight);
+        }
 
         $this->setDataForLogger($parentHeader);
         $loggerPlugin = $this->LogPlugin();
@@ -571,11 +594,15 @@ class FlightController extends AbstractActionController
 
         //Copy LEGs from old flight to new flight
         $legs = $this->getLegModel()->getByHeaderId($parentHeader->id);
-        foreach ($legs as $leg) {
+        foreach ($legs as $key => $leg) {
             unset($leg['id']);
             $leg['headerId'] = $data['lastInsertValue'];
-            $object = (object) $leg;
-            $this->getLegModel()->add($object);
+            $object = (object)$leg;
+            $newLeg = $this->getLegModel()->add($object);
+            $legs[$key]['newLegId'] = $newLeg['lastInsertValue'];
+        }
+        if ($isDebugMode) {
+            \Zend\Debug\Debug::dump($legs, '$leg');
         }
 
         //Copy Refuels from old flight to new flight
@@ -584,8 +611,13 @@ class FlightController extends AbstractActionController
             unset($refuel['id']);
             $refuel['headerId'] = $data['lastInsertValue'];
             $refuel['date'] = date('d-m-Y', $refuel['date']);
-            $object = (object) $refuel;
-            $this->getRefuelModel()->add($object);
+            $refuel['airportId'] = $legs[$refuel['legId']]['newLegId'] . '-' . $refuel['airportId'];
+            $object = (object)$refuel;
+            if (!$isDebugMode) {
+                $this->getRefuelModel()->add($object);
+            } else {
+                \Zend\Debug\Debug::dump($object, '$refuel');
+            }
         }
 
         //Copy Permissions from old flight to new flight
@@ -594,18 +626,30 @@ class FlightController extends AbstractActionController
             $id = key($value['permission']);
             $permission = $value['permission'][$id];
             $permission['headerId'] = $data['lastInsertValue'];
-            $permission['legId'] = $legId;
-            $object = (object) $permission;
-            $this->getPermissionModel()->add($object);
+            $permission['legId'] = $legs[$legId]['newLegId'];
+            $object = (object)$permission;
+            if (!$isDebugMode) {
+                $this->getPermissionModel()->add($object);
+            } else {
+                \Zend\Debug\Debug::dump($object, '$permission');
+            }
         }
 
         //Copy ApServices from old flight to new flight
         $apServices = $this->getApServiceModel()->getByHeaderId($parentHeader->id);
+        if ($isDebugMode) {
+            \Zend\Debug\Debug::dump($apServices, '$apServices');
+        }
         foreach ($apServices as $apService) {
-            unset($apService['id']);
             $apService['headerId'] = $data['lastInsertValue'];
-            $object = (object) $apService;
-            $this->getApServiceModel()->add($object);
+            $apService['airportId'] = $legs[$apService['legId']]['newLegId'] . '-' . $apService['airportId'];
+            unset($apService['id'], $apService['legId']);
+            $object = (object)$apService;
+            if (!$isDebugMode) {
+                $this->getApServiceModel()->add($object);
+            } else {
+                \Zend\Debug\Debug::dump($object, '$apService');
+            }
         }
 
         //Set message, save logs and redirect to new flight

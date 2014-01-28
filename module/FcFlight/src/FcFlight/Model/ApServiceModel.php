@@ -200,6 +200,7 @@ class ApServiceModel extends AbstractTableGateway
             $data[$row->id]['headerId'] = $row->headerId;
             $data[$row->id]['legId'] = $row->legId;
             $data[$row->id]['airportId'] = $row->airportId;
+            $data[$row->id]['typeOfApServiceId'] = $row->typeOfApServiceId;
             $data[$row->id]['agentId'] = $row->agentId;
             $data[$row->id]['price'] = $row->price;
             $data[$row->id]['currency'] = $row->currency;
