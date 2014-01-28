@@ -58,9 +58,9 @@ $this->partial('fc-flight/_widgets/components/flight.phtml',
             <th>Airport</th>
             <th>Date</th>
             <th>Agent</th>
-            <th>Quantity, LTR</th>
-            <th>Quantity in Selected Units</th>
             <th>Unit</th>
+            <th>Quantity in Selected Units</th>
+            <th>Quantity, LTR</th>
             <th>Price, USD</th>
             <th>Total, USD</th>
             <th>Comment</th>
@@ -95,8 +95,8 @@ $this->partial('fc-flight/_widgets/components/flight.phtml',
             </td>
             <td>
                 <?php
-                $field = $form->get('quantityLtr');
-                echo $this->formInput($field);
+                $field = $form->get('unitId');
+                echo $this->formSelect($field);
                 echo $this->formElementErrors($field);
                 ?>
             </td>
@@ -109,8 +109,8 @@ $this->partial('fc-flight/_widgets/components/flight.phtml',
             </td>
             <td>
                 <?php
-                $field = $form->get('unitId');
-                echo $this->formSelect($field);
+                $field = $form->get('quantityLtr');
+                echo $this->formInput($field);
                 echo $this->formElementErrors($field);
                 ?>
             </td>

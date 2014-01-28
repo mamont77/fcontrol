@@ -13,13 +13,13 @@
                 Agent
             </th>
             <th>
-                Quantity, LTR
+                Unit
             </th>
             <th>
                 Quantity in Selected Units
             </th>
             <th>
-                Unit
+                Quantity, LTR
             </th>
             <th>
                 Price, USD
@@ -45,9 +45,9 @@
                 </td>
                 <td><?= date('d-m-Y', $row['date']) ?></td>
                 <td><?= $this->escapeHtml($row['kontragentShortName']) ?></td>
-                <td><?= $this->escapeHtml($row['quantityLtr']) ?></td>
-                <td><?= $this->escapeHtml($row['quantityOtherUnits']) ?></td>
                 <td><?= $this->escapeHtml($row['unitName']) ?></td>
+                <td><?= $this->escapeHtml($row['quantityOtherUnits']) ?></td>
+                <td><?= $this->escapeHtml($row['quantityLtr']) ?></td>
                 <td class="text-right"><?= $this->escapeHtml($row['priceUsd']) ?></td>
                 <td class="text-right"><?= $this->escapeHtml($row['totalPriceUsd']) ?></td>
                 <td><?= $this->escapeHtml($row['comment']) ?></td>
