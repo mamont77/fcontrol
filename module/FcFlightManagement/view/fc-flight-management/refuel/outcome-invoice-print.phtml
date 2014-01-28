@@ -198,11 +198,13 @@
 <code class="subTotal">
     <?= strtoupper($this->numberFormat($subTotal, NumberFormatter::SPELLOUT, NumberFormatter::TYPE_DEFAULT, "en_US")) ?>
 </code>
-<p>
+<div>
     <strong>Please pay to:</strong>
     <br/>
-    <code><?= $this->header->invoiceMainBankName ?></code>
-</p>
+    <div>
+        <?= $this->header->invoiceMainBankName['description'] ?>
+    </div>
+</div>
 <p>
     Thank you,
     <br/>

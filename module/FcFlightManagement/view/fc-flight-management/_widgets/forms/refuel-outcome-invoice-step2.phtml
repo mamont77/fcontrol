@@ -51,11 +51,7 @@ foreach ($this->data as $row) {
                     required="required">
                 <option value=""></option>
                 <? foreach ($this->banks as $key => $value): ?>
-                    <? if ($key == '1'): ?>
-                        <option value="<?= $key ?>" selected="selected"><?= $value ?></option>
-                    <? else: ?>
-                        <option value="<?= $key ?>"><?= $value ?></option>
-                    <? endif; ?>
+                    <option value="<?= $key ?>"><?= $value['title'] ?></option>
                 <? endforeach; ?>
             </select>
         </td>

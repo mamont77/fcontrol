@@ -206,17 +206,18 @@
     </tbody>
 </table>
 <p>
-<code class="subTotal">
-    <?= strtoupper($this->numberFormat($subTotal, NumberFormatter::SPELLOUT, NumberFormatter::TYPE_DEFAULT, "en_US")) ?>
-</code>
-</p>
-<p>
-    <strong>Please pay to:</strong>
-    <br/>
-    <code>
-        <?= $this->header->outcomeInvoiceMainBankName ?>
+    <code class="subTotal">
+        <?= strtoupper($this->numberFormat($subTotal, NumberFormatter::SPELLOUT, NumberFormatter::TYPE_DEFAULT, "en_US")) ?>
     </code>
 </p>
+<div>
+    <strong>Please pay to:</strong>
+    <br/>
+
+    <div>
+        <?= $this->header->invoiceMainBankName['description'] ?>
+    </div>
+</div>
 <p>
     Thank you,
     <br/>

@@ -295,10 +295,59 @@ class BaseModel extends AbstractTableGateway
     public function getBankDetailsList()
     {
         return array(
-            1 => 'bank #1',
-            2 => 'bank #2',
-            3 => 'bank #3',
-            4 => 'bank #4',
+            1 => array(
+                'title' => 'SIB AED',
+                'description' => 'BANK BENEFICIARY: SHARJAH ISLAMIC BANK, SHARJAH, U.A.E.<br />
+                    SWIFT: NBSHAEAS<br />
+                    BENEFICIARY: CARGO AIR CHARTERING F.Z.E.<br />
+                    IBAN ACCOUNT NO. (AED): AE39 0410 0000 32508002001',
+            ),
+            2 => array(
+                'title' => 'SIB USD',
+                'description' => 'BANK BENEFICIARY: SHARJAH ISLAMIC BANK, SHARJAH, U.A.E.<br />
+                    SWIFT: NBSHAEAS<br />
+                    BENEFICIARY: CARGO AIR CHARTERING F.Z.E.<br />
+                    IBAN ACCOUNT NO. (USD): AE12 0410 0000 32508002002<br />
+                    <br />
+                    Correspondent bank: Deutsch Bank Trust Company, NEW YORK, USA <br />
+                    Swift: BKTRUS33<br />
+                    ACC: 04-169575',
+            ),
+            3 => array(
+                'title' => 'SIB EUR',
+                'description' => 'BANK BENEFICIARY: SHARJAH ISLAMIC BANK, SHARJAH, U.A.E.<br />
+                    SWIFT: NBSHAEAS<br />
+                    BENEFICIARY: CARGO AIR CHARTERING F.Z.E.<br />
+                    IBAN ACCOUNT NO. (EUR): AE82 0410 0000 32508002003',
+            ),
+            4 => array(
+                'title' => 'MASH AED',
+                'description' => 'BENEFICIARY BANK: MASHREQBANK PSC, SHARJAH K.A.A. Branch, U.A.E.<br />
+                    IBAN BENEFICIARY ACCOUNT No.(AED): AE570330000010496305788<br />
+                    SWIFT CODE: BOMLAEAD<br />
+                    BENEFICIARY: CARGO AIR CHARTERING F.Z.E.',
+            ),
+            5 => array(
+                'title' => 'MASH USD',
+                'description' => 'CORRESPONDENT BANK: MASHREQBANK, NEW YORK,<br />
+                    SWIFT: MSHQUS33<br />
+                    CORR. ACCOUNT: 0123452<br />
+                    <br />
+                    BENEFICIARY BANK: MASHREQBANK PSC, SHARJAH K.A.A. Branch, U.A.E.<br />
+                    IBAN BENEFICIARY ACCOUNT No.(USD): AE100330000010448962098<br />
+                    SWIFT CODE: BOMLAEAD<br />
+                    BENEFICIARY: CARGO AIR CHARTERING F.Z.E.',
+            ),
+            6 => array(
+                'title' => 'MASH EUR',
+                'description' => 'CORR. BANK: MASHREQ BANK, LONDON, UK<br />
+                    CORR. SWIFT: MSHQGB2L<br />
+                    <br />
+                    BANK BENEFICIARY: MASHREQBANK PSC, SHARJAH K.A.A. Branch, U.A.E.<br />
+                    SWIFT: BOMLAEAD<br />
+                    IBAN ACCOUNT (EUR): AE43 0330 0000 1045 5080 264<br />
+                    BENEFICIARY: CARGO AIR CHARTERING F.Z.E.',
+            ),
         );
     }
 
