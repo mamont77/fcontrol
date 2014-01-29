@@ -119,13 +119,6 @@ $this->partial('fc-flight/_widgets/components/flight.phtml',
             </td>
             <td>
                 <?php
-                $field = $form->get('quantityOtherUnits');
-                echo $this->formInput($field);
-                echo $this->formElementErrors($field);
-                ?>
-            </td>
-            <td>
-                <?php
                 $field = $form->get('priceUsd');
                 echo $this->formInput($field);
                 echo $this->formElementErrors($field);
