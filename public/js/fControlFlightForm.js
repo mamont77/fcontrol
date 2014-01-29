@@ -179,7 +179,13 @@
 
             if ($form.length == 0) return;
 
-            $($form).find('#dateOrder').mask('99-99-9999');
+            $($form).find('#dateOrder').mask('99-99-9999')
+                .dynDateTime({
+                    ifFormat: "%d-%m-%Y",
+                    step: 2,
+                    firstDay: 1,
+                    weekNumbers: false
+                });
         }
     };
 
@@ -401,7 +407,14 @@
 
             if ($form.length == 0) return;
 
-            $($form).find('#dateOrderFrom, #dateOrderTo').mask('99-99-9999');
+            $($form).find('#dateOrderFrom, #dateOrderTo').mask('99-99-9999')
+                .dynDateTime({
+                    ifFormat: "%d-%m-%Y",
+                    step: 2,
+                    firstDay: 1,
+                    weekNumbers: false
+                });
+            ;
 
             $statusLabels = $($form).find('#controls-status label');
             $statusLabels.eq(0).addClass('labelAny');
