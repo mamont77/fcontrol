@@ -622,17 +622,21 @@ class FlightController extends AbstractActionController
 
         //Copy Permissions from old flight to new flight
         $permissions = $this->getPermissionModel()->getByHeaderId($parentHeader->id);
+        if ($isDebugMode) {
+            \Zend\Debug\Debug::dump($permissions, '$permissions');
+        }
         foreach ($permissions as $legId => $value) {
-            $id = key($value['permission']);
-            $permission = $value['permission'][$id];
-            $permission['headerId'] = $data['lastInsertValue'];
-            $permission['legId'] = $legs[$legId]['newLegId'];
-            $object = (object)$permission;
-            if (!$isDebugMode) {
-                $this->getPermissionModel()->add($object);
-            } else {
-                \Zend\Debug\Debug::dump($object, '$permission');
+            foreach ($value['permission'] as $key => $item) {
+                $object = $this->getPermissionModel()->get($key);
+                $object->headerId = $data['lastInsertValue'];
+                $object->legId = $legs[$legId]['newLegId'];
+                if (!$isDebugMode) {
+                    $this->getPermissionModel()->add($object);
+                } else {
+                    \Zend\Debug\Debug::dump($object, '$permission');
+                }
             }
+
         }
 
         //Copy ApServices from old flight to new flight
