@@ -28,6 +28,13 @@ class FlightHeaderModel extends AbstractTableGateway
     /**
      * @var array
      */
+    public $parentsFlight = array();
+
+    public $resultParents = null;
+
+    /**
+     * @var array
+     */
     protected $_tableFields = array(
         'id',
         'parentId',
@@ -418,5 +425,82 @@ class FlightHeaderModel extends AbstractTableGateway
         $resultSet->buffer();
 
         return $resultSet;
+    }
+
+    /**
+     * @param $id
+     * @param int $level
+     * @return array
+     * @throws \Exception
+     */
+    public function _getAllParents($id, $level = 10)
+    {
+        $id = (int)$id;
+        $select = new Select();
+        $select->from($this->table);
+        $select->columns(array('id', 'parentId', 'refNumberOrder'));
+
+        $select->where(array($this->table . '.id' => $id));
+
+        $resultSet = $this->selectWith($select);
+        $row = $resultSet->current();
+
+        if ($row->parentId && $level > 0) {
+            $this->setParents($row);
+            $level = $level - 1;
+            $this->getAllParents($row->parentId, $level);
+        } else {
+            return $this->getParents();
+        }
+
+//        if (!$row) {
+//            throw new \Exception("Could not find row $id");
+//        }
+
+        return $row;
+    }
+
+    /**
+     * @param $id
+     * @param int $level
+     * @return mixed
+     */
+    public function getAllParents($id, $level = 10)
+    {
+        $id = (int)$id;
+        $select = new Select();
+        $select->from($this->table);
+        $select->columns(array('id', 'parentId', 'refNumberOrder'));
+
+        $select->where(array($this->table . '.id' => $id));
+
+        $resultSet = $this->selectWith($select);
+        $row = $resultSet->current();
+
+        if ($row->parentId && $level > 0) {
+            $this->setParents($row);
+            $level = $level - 1;
+            $this->getAllParents($row->parentId, $level);
+        } else {
+            $this->getParents();
+        }
+
+        return $row;
+    }
+
+    /**
+     * @return array
+     */
+    public function getParents()
+    {
+        return $this->parentsFlight;
+    }
+
+    /**
+     * @param $row
+     */
+    public function setParents($row)
+    {
+        $this->parentsFlight[$row->id] = $row->refNumberOrder;
     }
 }
