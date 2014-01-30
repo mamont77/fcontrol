@@ -28,7 +28,7 @@ if ($this->header->status == '-1' && $legsCount > 0) {
 
 ?>
 <?// \Zend\Debug\Debug::dump($this->header) ?>
-<? if ($this->header->parents): ?>
+<? if (count($this->header->parents) > 1): ?>
     <?php
     unset ($this->header->parents[$this->header->id]);
     ?>
