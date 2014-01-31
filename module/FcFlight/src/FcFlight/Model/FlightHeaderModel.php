@@ -465,7 +465,7 @@ class FlightHeaderModel extends AbstractTableGateway
      * @param int $level
      * @return mixed
      */
-    public function getAllParents($id, $level = 10)
+    public function getAllParents($id, $level = 15)
     {
         $id = (int)$id;
         $select = new Select();
