@@ -314,6 +314,16 @@ class FlightController extends AbstractActionController
                     $data[$key][$field] = $row->$field;
                 }
             }
+
+            try {
+                $hasLeg = $this->getLegModel()->getByHeaderId($data[$key]['id']);
+                if (!empty($hasLeg)) {
+                    $data[$key]['legs'] = $hasLeg;
+                }
+            } catch (Exception $e) {
+                // do nothing
+            }
+
             try {
                 $hasRefuel = $this->getRefuelModel()->getByHeaderId($data[$key]['id']);
                 if (!empty($hasRefuel)) {
@@ -329,6 +339,7 @@ class FlightController extends AbstractActionController
                     if ($refuelIsDone) {
                         $data[$key]['refuelStatus'] = 'DONE';
                     }
+                    $data[$key]['refuels'] = $hasRefuel;
                 } else {
                     $data[$key]['refuelStatus'] = 'NO';
                 }
@@ -353,6 +364,7 @@ class FlightController extends AbstractActionController
                     if ($permissionIsDone) {
                         $data[$key]['permitStatus'] = 'DONE';
                     }
+                    $data[$key]['permissions'] = $hasPermission;
                 } else {
                     $data[$key]['permitStatus'] = 'NO';
                 }
@@ -375,6 +387,7 @@ class FlightController extends AbstractActionController
                     if ($apServiceIsDone) {
                         $data[$key]['apServiceStatus'] = 'DONE';
                     }
+                    $data[$key]['apServices'] = $hasApService;
                 } else {
                     $data[$key]['apServiceStatus'] = 'NO';
                 }

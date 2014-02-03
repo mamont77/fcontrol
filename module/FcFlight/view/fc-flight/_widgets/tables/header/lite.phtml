@@ -14,12 +14,22 @@
             Air Operator
         </th>
         <th>
+            Flight
+        <th>
             Aircraft
         </th>
-        <th>Refuel</th>
-        <th>Permit</th>
-        <th>AP Service</th>
-        <th>Author</th>
+        <th>
+            Refuel
+        </th>
+        <th>
+            Permit
+        </th>
+        <th>
+            AP Service
+        </th>
+        <th>
+            Author
+        </th>
         <? if (!$this->isArchive): ?>
             <th class="actions"></th>
         <? endif; ?>
@@ -44,6 +54,12 @@
                 $class = '';
                 break;
         }
+
+        $flightNumber = '-';
+        if (isset($row['legs']) && !empty($row['legs'])) {
+            $firstLeg = array_shift($row['legs']);
+            $flightNumber = $firstLeg['flightNumber'];
+        }
         ?>
         <tr class="<?= $class ?>">
             <td>
@@ -56,6 +72,9 @@
             <td><strong><?php echo date('d-m-Y', $row['dateOrder']); ?></strong></td>
             <td><?php echo $this->escapeHtml($row['kontragentShortName']); ?></td>
             <td><?php echo $this->escapeHtml($row['airOperatorShortName']); ?></td>
+            <td>
+                <?= $flightNumber ?>
+            </td>
             <td>
                 <?php
                 $aircraft = $this->escapeHtml($row['aircraftTypeName'])
