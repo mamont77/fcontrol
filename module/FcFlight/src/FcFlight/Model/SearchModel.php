@@ -66,6 +66,17 @@ class SearchModel extends AbstractTableGateway
             'status',
         ));
 
+        $select->join(array('flightLegForm' => 'flightLegForm'),
+            'flightBaseHeaderForm.id = flightLegForm.headerId',
+            array(
+                'flightNumber' => 'flightNumber',
+                'apDepAirportId' => 'apDepAirportId',
+                'apDepTime' => 'apDepTime',
+                'apArrAirportId' => 'apArrAirportId',
+                'apArrTime' => 'apArrTime',
+            ),
+            'right');
+
         $select->join(array('libraryKontragent' => 'library_kontragent'),
             'libraryKontragent.id = flightBaseHeaderForm.kontragent',
             array('kontragentShortName' => 'short_name'), 'left');
@@ -153,6 +164,11 @@ class SearchModel extends AbstractTableGateway
                 ->UNNEST;
         }
 
+        if ($object->flightNumber != '') {
+            $select->where->like('flightLegForm.flightNumber', $object->flightNumber . '%');
+        }
+
+        $select->group('refNumberOrder');
         $select->order('dateOrder ' . Select::ORDER_DESCENDING);
 //        \Zend\Debug\Debug::dump($select->getSqlString());
 

@@ -49,6 +49,11 @@ class SearchFilter implements InputFilterAwareInterface
     /**
      * @var string
      */
+    public $flightNumber;
+
+    /**
+     * @var string
+     */
     public $aircraft;
 
     /**
@@ -84,6 +89,7 @@ class SearchFilter implements InputFilterAwareInterface
         $this->dateOrderTo = (isset($data['dateOrderTo'])) ? $data['dateOrderTo'] : null;
         $this->status = (isset($data['status'])) ? $data['status'] : null;
         $this->customer = (isset($data['customer'])) ? $data['customer'] : null;
+        $this->flightNumber = (isset($data['flightNumber'])) ? $data['flightNumber'] : null;
         $this->airOperator = (isset($data['airOperator'])) ? $data['airOperator'] : null;
         $this->aircraft = (isset($data['aircraft'])) ? $data['aircraft'] : null;
     }
@@ -167,6 +173,22 @@ class SearchFilter implements InputFilterAwareInterface
             $inputFilter->add($factory->createInput(array(
                 'name' => 'status',
                 'required' => false,
+            )));
+
+            $inputFilter->add($factory->createInput(array(
+                'name' => 'flightNumber',
+                'required' => false,
+                'filters' => $this->defaultFilters,
+                'validators' => array(
+                    array(
+                        'name' => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min' => 2,
+                            'max' => 32,
+                        ),
+                    ),
+                ),
             )));
 
             $inputFilter->add($factory->createInput(array(

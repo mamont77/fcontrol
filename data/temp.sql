@@ -1,60 +1,14 @@
-CREATE TABLE IF NOT EXISTS `invoiceIncomePermissionMain` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `number` varchar(40) NOT NULL,
-  `date` int(10) NOT NULL,
-  `currency` varchar(3) NOT NULL,
-  `exchangeRate` varchar(10) NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `date` (`date`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
-CREATE TABLE IF NOT EXISTS `invoiceIncomePermissionData` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `invoiceId` int(10) DEFAULT NULL,
-  `preInvoiceId` int(10) NOT NULL,
-  `flightNumber` varchar(40) NOT NULL DEFAULT '',
-  `aircraftId` int(10) NOT NULL,
-  `dateDep` int(10) NOT NULL,
-  `dateArr` int(10) NOT NULL,
-  `typeOfPermission` varchar(3) NOT NULL DEFAULT '',
-  `quantity` varchar(40) NOT NULL DEFAULT '',
-  `unitId` int(10) NOT NULL,
-  `priceTotal` varchar(40) NOT NULL DEFAULT '',
-  `priceTotalExchangedToUsd` varchar(40) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  KEY `invoiceId` (`invoiceId`),
-  KEY `preInvoiceId` (`preInvoiceId`),
-  KEY `unitId` (`unitId`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
-CREATE TABLE IF NOT EXISTS `invoiceOutcomePermissionMain` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `number` varchar(40) NOT NULL,
-  `date` int(10) NOT NULL,
-  `currency` varchar(3) NOT NULL,
-  `exchangeRate` varchar(10) NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `date` (`date`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
-CREATE TABLE IF NOT EXISTS `invoiceOutcomePermissionData` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `invoiceId` int(10) DEFAULT NULL,
-  `incomeInvoiceId` int(10) NOT NULL,
-  `flightNumber` varchar(40) NOT NULL DEFAULT '',
-  `aircraftId` int(10) NOT NULL,
-  `dateDep` int(10) NOT NULL,
-  `dateArr` int(10) NOT NULL,
-  `typeOfPermission` varchar(3) NOT NULL DEFAULT '',
-  `quantity` varchar(40) NOT NULL DEFAULT '',
-  `unitId` int(10) NOT NULL,
-  `priceTotal` varchar(40) NOT NULL DEFAULT '',
-  `priceTotalExchangedToUsd` varchar(40) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  KEY `invoiceId` (`invoiceId`),
-  KEY `incomeInvoiceId` (`incomeInvoiceId`),
-  KEY `aircraftId` (`aircraftId`),
-  KEY `unitId` (`unitId`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+SELECT flightBaseHeaderForm.id AS id, flightBaseHeaderForm.refNumberOrder AS refNumberOrder, flightBaseHeaderForm.dateOrder AS dateOrder, flightBaseHeaderForm.kontragent AS kontragent, flightBaseHeaderForm.airOperator AS airOperator, flightBaseHeaderForm.aircraftId AS aircraftId, flightBaseHeaderForm.alternativeAircraftId1 AS alternativeAircraftId1, flightBaseHeaderForm.alternativeAircraftId2 AS alternativeAircraftId2, flightBaseHeaderForm.status AS status, flightLegForm.flightNumber AS flightNumber, flightLegForm.apDepAirportId AS apDepAirportId, flightLegForm.apDepTime AS apDepTime, flightLegForm.apArrAirportId AS apArrAirportId, flightLegForm.apArrTime AS apArrTime, libraryKontragent.short_name AS kontragentShortName, libraryAirOperator.short_name AS airOperatorShortName, libraryAircraft.aircraft_type AS aircraftTypeId, libraryAircraft.reg_number AS aircraftName, libraryAircraftType.name AS aircraftTypeName, libraryAlternativeAircraft1.aircraft_type AS alternativeAircraftTypeId1, libraryAlternativeAircraft1.reg_number AS alternativeAircraftName1, libraryAlternativeTypeAircraft1.name AS alternativeAircraftTypeName1, libraryAlternativeAircraft2.aircraft_type AS alternativeAircraftTypeId2, libraryAlternativeAircraft2.reg_number AS alternativeAircraftName2, libraryAlternativeTypeAircraft2.name AS alternativeAircraftTypeName2, author.username AS authorName
+FROM flightBaseHeaderForm
+RIGHT JOIN flightLegForm AS flightLegForm ON flightBaseHeaderForm.id = flightLegForm.headerId
+LEFT JOIN library_kontragent AS libraryKontragent ON libraryKontragent.id = flightBaseHeaderForm.kontragent
+LEFT JOIN library_air_operator AS libraryAirOperator ON libraryAirOperator.id = flightBaseHeaderForm.airOperator
+LEFT JOIN library_aircraft AS libraryAircraft ON libraryAircraft.id = flightBaseHeaderForm.aircraftId
+LEFT JOIN library_aircraft_type AS libraryAircraftType ON libraryAircraftType.id = libraryAircraft.aircraft_type
+LEFT JOIN library_aircraft AS libraryAlternativeAircraft1 ON libraryAlternativeAircraft1.id = flightBaseHeaderForm.alternativeAircraftId1
+LEFT JOIN library_aircraft_type AS libraryAlternativeTypeAircraft1 ON libraryAlternativeTypeAircraft1.id = libraryAlternativeAircraft1.aircraft_type
+LEFT JOIN library_aircraft AS libraryAlternativeAircraft2 ON libraryAlternativeAircraft2.id = flightBaseHeaderForm.alternativeAircraftId2
+LEFT JOIN library_aircraft_type AS libraryAlternativeTypeAircraft2 ON libraryAlternativeTypeAircraft2.id = libraryAlternativeAircraft2.aircraft_type
+LEFT JOIN user AS author ON author.user_id = flightBaseHeaderForm.authorId
+WHERE flightBaseHeaderForm.dateOrder >= '220971786'
+ORDER BY dateOrder DESC

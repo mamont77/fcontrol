@@ -13,6 +13,9 @@ $displayOptions = array(
         'customer' => array(
             'required' => false,
         ),
+        'flightNumber' => array(
+            'required' => false,
+        ),
         'airOperator' => array(
             'required' => false,
         ),
@@ -32,6 +35,7 @@ echo $this->formRowTwb($form->get('dateOrderFrom'), $formType, $displayOptions['
 echo $this->formRowTwb($form->get('dateOrderTo'), $formType, $displayOptions['elements']['dateOrderTo']);
 echo $this->formRowTwb($form->get('status'), $formType, $displayOptions['elements']['status']);
 echo $this->formRowTwb($form->get('customer'), $formType, $displayOptions['elements']['customer']);
+echo $this->formRowTwb($form->get('flightNumber'), $formType, $displayOptions['elements']['flightNumber']);
 echo $this->formRowTwb($form->get('airOperator'), $formType, $displayOptions['elements']['airOperator']);
 echo $this->formRowTwb($form->get('aircraft'), $formType, $displayOptions['elements']['aircraft']);
 

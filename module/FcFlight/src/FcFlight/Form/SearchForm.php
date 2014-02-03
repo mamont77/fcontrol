@@ -94,6 +94,17 @@ class SearchForm extends BaseForm
         ));
 
         $this->add(array(
+            'name' => 'flightNumber',
+            'type' => 'Zend\Form\Element\Text',
+            'attributes' => array(
+                'class' => 'input-medium',
+            ),
+            'options' => array(
+                'label' => 'Flight #',
+            ),
+        ));
+
+        $this->add(array(
             'name' => 'aircraft',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
