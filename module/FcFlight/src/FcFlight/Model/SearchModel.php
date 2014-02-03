@@ -113,16 +113,22 @@ class SearchModel extends AbstractTableGateway
             'author.user_id = flightBaseHeaderForm.authorId',
             array('authorName' => 'username'), 'left');
 
-        if ($object->dateOrderFrom != '' && $object->dateOrderTo != '') {
-            $select->where->between('flightBaseHeaderForm.dateOrder', $object->dateOrderFrom, $object->dateOrderTo);
-        } else {
-            if ($object->dateOrderFrom != '') {
-                $select->where->greaterThanOrEqualTo('flightBaseHeaderForm.dateOrder', $object->dateOrderFrom);
-            }
+        if ($object->dateOrderFrom != '') {
+            $select->where
+                ->NEST
+                ->greaterThanOrEqualTo('flightBaseHeaderForm.dateOrder', $object->dateOrderFrom)
+                ->OR
+                ->greaterThanOrEqualTo('flightLegForm.apDepTime', $object->dateOrderFrom)
+                ->UNNEST;
+        }
 
-            if ($object->dateOrderTo != '') {
-                $select->where->lessThanOrEqualTo('flightBaseHeaderForm.dateOrder', $object->dateOrderTo);
-            }
+        if ($object->dateOrderTo != '') {
+            $select->where
+                ->NEST
+                ->lessThanOrEqualTo('flightBaseHeaderForm.dateOrder', $object->dateOrderTo)
+                ->OR
+                ->lessThanOrEqualTo('flightLegForm.apArrTime', $object->dateOrderTo)
+                ->UNNEST;
         }
 
         if ($object->status != '2') {
