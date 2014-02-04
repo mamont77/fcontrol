@@ -104,7 +104,6 @@ class BaseModel extends AbstractTableGateway
     public $legTableFieldsMap = array(
         'legId' => 'id',
         'legHeaderId' => 'headerId',
-        'legFlightNumberAirportId' => 'airOperatorId',
         'legFlightNumber' => 'flightNumber',
         'legAirportDepId' => 'apDepAirportId',
         'legDepTime' => 'apDepTime',
