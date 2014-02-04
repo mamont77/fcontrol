@@ -134,7 +134,8 @@ class LegModel extends AbstractTableGateway
             array('apArrCountryId' => 'id', 'apArrCountryName' => 'name', 'apArrCountryCode' => 'code'), 'left');
 
         $select->where(array('headerId' => $id));
-        $select->order(array('apDepTime ' . $select::ORDER_ASCENDING, 'id ' . $select::ORDER_ASCENDING));
+//        $select->order(array('apDepTime ' . $select::ORDER_ASCENDING, 'id ' . $select::ORDER_ASCENDING));
+        $select->order('id ' . $select::ORDER_ASCENDING);
 //        \Zend\Debug\Debug::dump($select->getSqlString());
 
         $resultSet = $this->selectWith($select);
