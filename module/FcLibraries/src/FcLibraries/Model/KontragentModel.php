@@ -41,6 +41,7 @@ class KontragentModel extends BaseModel
         if (null === $select)
             $select = new Select();
         $select->from($this->table);
+        //$select->order(array($this->table . '.name ' . $select::ORDER_ASCENDING));
         $resultSet = $this->selectWith($select);
         $resultSet->buffer();
 

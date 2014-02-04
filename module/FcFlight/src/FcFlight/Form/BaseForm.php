@@ -29,8 +29,12 @@ class BaseForm extends Form
             if ($type == 'array') {
                 foreach ($data as $row) {
                     if (is_array($fieldName)) {
-                        if ($row[$fieldName[1]] != '') {
-                            $fieldValue = $row[$fieldName[0]] . ' (' . $row[$fieldName[1]] . ')';
+                        if ($row[$fieldName[1]] != ''
+                            && (isset($row[$fieldName[2]]) && $row[$fieldName[2]] != '')) {
+                            $fieldValue = $row[$fieldName[0]] . ' / '
+                                . $row[$fieldName[1]] . ' / ' . $row[$fieldName[2]];
+                        } elseif ($row[$fieldName[1]] != '') {
+                                $fieldValue = $row[$fieldName[0]] . ' / ' . $row[$fieldName[1]];
                         } else {
                             $fieldValue = $row[$fieldName[0]];
                         }
@@ -44,8 +48,12 @@ class BaseForm extends Form
             } else {
                 foreach ($data as $row) {
                     if (is_array($fieldName)) {
-                        if ($row->{$fieldName[1]} != '') {
-                            $fieldValue = $row->{$fieldName[0]} . ' (' . $row->{$fieldName[1]} . ')';
+                        if ($row->{$fieldName[1]} != ''
+                            && (isset($row->{$fieldName[2]}) && $row->{$fieldName[2]} != '')) {
+                            $fieldValue = $row->{$fieldName[0]}
+                                . ' / ' . $row->{$fieldName[1]} . ' / ' . $row->{$fieldName[2]};
+                        } elseif ($row->{$fieldName[1]} != '') {
+                                $fieldValue = $row->{$fieldName[0]} . ' / ' . $row->{$fieldName[1]};
                         } else {
                             $fieldValue = $row->{$fieldName[0]};
                         }
