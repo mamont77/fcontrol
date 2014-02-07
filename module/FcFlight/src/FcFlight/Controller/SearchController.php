@@ -59,10 +59,12 @@ class SearchController extends FlightController
                                 }
                             }
 
+                            $builtAirports = array();
                             try {
                                 $hasLeg = $this->getLegModel()->getByHeaderId($data[$key]['id']);
                                 if (!empty($hasLeg)) {
                                     $data[$key]['legs'] = $hasLeg;
+                                    $builtAirports = $this->buildAirportsFromLeg($hasLeg);
                                 }
                             } catch (Exception $e) {
                                 // do nothing
@@ -72,9 +74,16 @@ class SearchController extends FlightController
                                 $hasRefuel = $this->getRefuelModel()->getByHeaderId($data[$key]['id']);
                                 if (!empty($hasRefuel)) {
                                     $data[$key]['refuelStatus'] = 'YES';
+                                    $data[$key]['refuels'] = $hasRefuel;
 
+                                    foreach ($data[$key]['refuels'] as $id => $refuel) {
+                                        $builtId = $refuel['legId'] . '-' . $refuel['airportId'];
+                                        if (array_key_exists($builtId, $builtAirports)) {
+                                            $data[$key]['refuels'][$id]['builtAirportName'] = $builtAirports[$builtId];
+                                        }
+                                    }
                                     $refuelIsDone = true;
-                                    foreach ($hasRefuel as $refuel) {
+                                    foreach ($data[$key]['refuels'] as $refuel) {
                                         if ($refuel['status'] == 0) {
                                             $refuelIsDone = false;
                                             continue;
@@ -83,7 +92,6 @@ class SearchController extends FlightController
                                     if ($refuelIsDone) {
                                         $data[$key]['refuelStatus'] = 'DONE';
                                     }
-                                    $data[$key]['refuels'] = $hasRefuel;
                                 } else {
                                     $data[$key]['refuelStatus'] = 'NO';
                                 }
@@ -95,9 +103,10 @@ class SearchController extends FlightController
                                 $hasPermission = $this->getPermissionModel()->getByHeaderId($data[$key]['id']);
                                 if (!empty($hasPermission)) {
                                     $data[$key]['permitStatus'] = 'YES';
+                                    $data[$key]['permissions'] = $hasPermission;
 
                                     $permissionIsDone = true;
-                                    foreach ($hasPermission as $permissions) {
+                                    foreach ($data[$key]['permissions'] as $permissions) {
                                         foreach ($permissions['permission'] as $permission) {
                                             if ($permission['status'] == 0) {
                                                 $permissionIsDone = false;
@@ -108,7 +117,6 @@ class SearchController extends FlightController
                                     if ($permissionIsDone) {
                                         $data[$key]['permitStatus'] = 'DONE';
                                     }
-                                    $data[$key]['permissions'] = $hasPermission;
                                 } else {
                                     $data[$key]['permitStatus'] = 'NO';
                                 }
@@ -120,9 +128,15 @@ class SearchController extends FlightController
                                 $hasApService = $this->getApServiceModel()->getByHeaderId($data[$key]['id']);
                                 if (!empty($hasApService)) {
                                     $data[$key]['apServiceStatus'] = 'YES';
-
+                                    $data[$key]['apServices'] = $hasApService;
+                                    foreach ($data[$key]['apServices'] as $id => $apService) {
+                                        $builtId = $apService['legId'] . '-' . $apService['airportId'];
+                                        if (array_key_exists($builtId, $builtAirports)) {
+                                            $data[$key]['apServices'][$id]['builtAirportName'] = $builtAirports[$builtId];
+                                        }
+                                    }
                                     $apServiceIsDone = true;
-                                    foreach ($hasApService as $apService) {
+                                    foreach ($data[$key]['apServices'] as $apService) {
                                         if ($apService['status'] == 0) {
                                             $apServiceIsDone = false;
                                             continue;
@@ -131,7 +145,6 @@ class SearchController extends FlightController
                                     if ($apServiceIsDone) {
                                         $data[$key]['apServiceStatus'] = 'DONE';
                                     }
-                                    $data[$key]['apServices'] = $hasApService;
                                 } else {
                                     $data[$key]['apServiceStatus'] = 'NO';
                                 }

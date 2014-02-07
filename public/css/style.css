@@ -72,17 +72,17 @@ span.statusYes {
     color: #0044cc;
 }
 
-.labelDone, span.statusCNFMD, span.statusDone  {
+.labelDone, span.statusCNFMD, span.statusDone {
     font-weight: bold;
     color: #468847;
 }
 
-tr.statusDraft, tr.statusDone, tr.statusActive  {
+tr.statusDraft, tr.statusDone, tr.statusActive {
     font-weight: bold;
 }
 
 /*.table {*/
-    /*width: auto;*/
+/*width: auto;*/
 /*}*/
 
 .table-condensed th, .table-condensed td {
@@ -144,9 +144,9 @@ tr.statusDraft, tr.statusDone, tr.statusActive  {
     -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
     border-radius: 8px;
-    -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
-    -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
-    box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+    -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
 }
 
 .tt-suggestion {
@@ -172,14 +172,12 @@ tr.statusDraft, tr.statusDone, tr.statusActive  {
     border-top: 1px solid #ccc;
 }
 
-
 #permission .repo-name {
     font-weight: bold;
 }
 
 #permission .repo-address,
-#permission .repo-code
-{
+#permission .repo-code {
     float: right;
     font-style: italic;
 }
@@ -198,4 +196,26 @@ tr.statusDraft, tr.statusDone, tr.statusActive  {
 
 .flightAuthor span {
     font-size: 12px;
+}
+
+td.service {
+    margin-bottom: 0.5em;
+}
+
+td.services label {
+    text-decoration: underline;
+    font-weight: bold;
+    color: #008844;
+}
+
+td.services .data {
+    margin-bottom: 0.5em;
+}
+
+td.services .subTitle {
+    color: #007ED1;
+}
+
+td.services .subData {
+    margin-bottom: 0.4em;
 }
