@@ -32,6 +32,7 @@ class SearchController extends FlightController
                 && $data->dateOrderTo == ''
                 && $data->customer == ''
                 && $data->airOperator == ''
+                && $data->flightNumber == ''
                 && $data->aircraft == ''
             ) {
                 $result = 'Result not found. Enter one or more fields.';
