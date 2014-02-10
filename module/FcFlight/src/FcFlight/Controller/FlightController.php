@@ -459,6 +459,8 @@ class FlightController extends AbstractActionController
             $header->parentRefNumberOrder = $this->getFlightHeaderModel()->getRefNumberOrderById($header->parentId);
             $this->getFlightHeaderModel()->getAllParents($header->id);
             $header->parents = $this->getFlightHeaderModel()->getParents();
+            $this->getFlightHeaderModel()->getAllChildrens($header->id);
+            $header->childrens = $this->getFlightHeaderModel()->getChildrens();
         }
 
         $legs = $this->getLegModel()->getByHeaderId($header->id);

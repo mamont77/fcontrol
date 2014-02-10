@@ -414,7 +414,6 @@
                     firstDay: 1,
                     weekNumbers: false
                 });
-            ;
 
             $statusLabels = $($form).find('#controls-status label');
             $statusLabels.eq(0).addClass('labelAny');
