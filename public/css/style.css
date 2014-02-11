@@ -219,3 +219,7 @@ td.services .subTitle {
 td.services .subData {
     margin-bottom: 0.4em;
 }
+
+.relatives.breadcrumb .active {
+    font-weight: bold;
+}

@@ -519,4 +519,46 @@ class FlightHeaderModel extends AbstractTableGateway
     {
         $this->childrensFlight[$row->id] = $row->refNumberOrder;
     }
+
+    /**
+     * @param $refNumberOrder
+     * @return array|bool
+     */
+    public function getFlightRelatives($refNumberOrder)
+    {
+        $relatives = $this->_findRelativesRefNumberOrders($refNumberOrder);
+        if (!$relatives) {
+            return false;
+        }
+        $result = array();
+        foreach ($relatives as $flight) {
+            $result[$flight->id] = $flight->refNumberOrder;
+        }
+        return $result;
+    }
+
+
+    /**
+     * @param $refNumberOrder
+     * @return bool|null|\Zend\Db\ResultSet\ResultSetInterface
+     */
+    private function _findRelativesRefNumberOrders($refNumberOrder)
+    {
+        $refNumberOrder = (string)$refNumberOrder;
+        $refNumberOrder = explode('_', $refNumberOrder);
+        if (!isset($refNumberOrder[1])) {
+            return false;
+        }
+        $refNumberOrder = $refNumberOrder[0] . '_';
+
+        $select = new Select();
+        $select->from($this->table);
+        $select->columns(array('id', 'refNumberOrder'));
+        $select->where->like('refNumberOrder', $refNumberOrder . '%');
+        $select->order(array('id ' . $select::ORDER_ASCENDING));
+        $resultSet = $this->selectWith($select);
+        $resultSet->buffer();
+
+        return $resultSet;
+    }
 }
