@@ -546,9 +546,6 @@ class FlightHeaderModel extends AbstractTableGateway
     {
         $refNumberOrder = (string)$refNumberOrder;
         $refNumberOrder = explode('_', $refNumberOrder);
-        if (!isset($refNumberOrder[1])) {
-            return false;
-        }
         $refNumberOrder = $refNumberOrder[0] . '_';
 
         $select = new Select();
