@@ -64,13 +64,6 @@ if ($this->header->status == '-1' && $legsCount > 0) {
                         <th>Reg Number Order</th>
                         <td class="cRefNumberOrder">
                             <?= $this->header->refNumberOrder ?>
-                            <? if ($this->header->parentRefNumberOrder): ?>
-                                <?=
-                                ' <small>(<a href="' .
-                                $this->url('browse',
-                                    array('action' => 'show', 'refNumberOrder' => $this->header->parentRefNumberOrder))
-                                . '">' . $this->header->parentRefNumberOrder . '</a>)</small>' ?>
-                            <? endif ?>
                         </td>
                     </tr>
                     <tr>
