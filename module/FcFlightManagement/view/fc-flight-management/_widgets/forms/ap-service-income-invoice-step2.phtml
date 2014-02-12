@@ -1,3 +1,4 @@
+<?// \Zend\Debug\Debug::dump($this->data); ?>
 <form name="apServiceIncomeInvoiceStep3" id="apServiceIncomeInvoiceStep3" method="post"
       action="/management/ap-service/income-invoice-step3">
 <table id="invoiceMain" class="table table-bordered table-hover table-condensed">
@@ -116,30 +117,30 @@
         <td rowspan="2">
             <input type="text" class="input-small" name="airportArr" maxlength="40" required="required"
                    readonly="readonly"
-                   value="<?= $this->data->legDepToNextAirportICAO . ' (' . $this->data->legDepToNextAirportIATA . ')' ?>">
+                   value="<? if ($this->data->legDepToNextAirportICAO != '' || $this->data->legDepToNextAirportIATA != ''): ?><?= $this->data->legDepToNextAirportICAO . ' (' . $this->data->legDepToNextAirportIATA . ')' ?><? endif; ?>">
         </td>
         <td rowspan="2">
             <input type="text" class="input-small" name="airportDep" maxlength="40" required="required"
                    readonly="readonly"
-                   value="<?= $this->data->preInvoiceAirportICAO . ' (' . $this->data->preInvoiceAirportIATA . ')' ?>">
+                   value="<? if ($this->data->preInvoiceAirportICAO != '' || $this->data->preInvoiceAirportIATA != ''): ?><?= $this->data->preInvoiceAirportICAO . ' (' . $this->data->preInvoiceAirportIATA . ')' ?><? endif; ?>">
         </td>
         <td>
             <input type="text" class="input-small date" name="dateArr" maxlength="40" required="required"
                    placeholder="Date"
-                   value="<?= date('d-m-Y', $this->data->legArrTime) ?>">
+                   value="<? if ($this->data->legArrTime != ''): ?><?= date('d-m-Y', $this->data->legArrTime) ?><? endif; ?>">
         </td>
         <td>
             <input type="text" class="input-small date" name="dateDep" maxlength="40" required="required"
                    placeholder="Date"
-                   value="<?= date('d-m-Y', $this->data->legDepToNextAirportTime) ?>">
+                   value="<? if ($this->data->legDepToNextAirportTime != ''): ?><?= date('d-m-Y', $this->data->legDepToNextAirportTime) ?><? endif; ?>">
         </td>
     </tr>
     <tr class="info">
         <td>
-            <?= date('d-m-Y', $this->data->legArrTime) ?>
+            <? if ($this->data->legArrTime != ''): ?><?= date('d-m-Y', $this->data->legArrTime) ?><? endif; ?>
         </td>
         <td>
-            <?= date('d-m-Y', $this->data->legDepToNextAirportTime) ?>
+            <? if ($this->data->legDepToNextAirportTime != ''): ?><?= date('d-m-Y', $this->data->legDepToNextAirportTime) ?><? endif; ?>
         </td>
     </tr>
     </tbody>
