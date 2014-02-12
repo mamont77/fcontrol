@@ -320,6 +320,11 @@ class RefuelController extends FlightController
 
         $currencies = new ApServiceForm(null, array());
         $currencies = $currencies->getCurrencyExchangeRate();
+        $aircrafts = array();
+        $aircraftsObj = $this->getAircrafts();
+        foreach ($aircraftsObj as $aircraft) {
+            $aircrafts[$aircraft->id] = $aircraft->aircraft_type_name . ' (' . $aircraft->reg_number . ')';
+        }
 
         $banks = $this->getRefuelOutcomeInvoiceMainModel()->getBankDetailsList();
 
@@ -342,6 +347,7 @@ class RefuelController extends FlightController
         return array(
             'newInvoiceNumber' => $newInvoiceNumber,
             'currencies' => $currencies,
+            'aircrafts' => $aircrafts,
             'units' => $units,
             'banks' => $banks,
             'result' => $result,
@@ -361,6 +367,11 @@ class RefuelController extends FlightController
 
         $currencies = new ApServiceForm(null, array());
         $currencies = $currencies->getCurrencyExchangeRate();
+        $aircrafts = array();
+        $aircraftsObj = $this->getAircrafts();
+        foreach ($aircraftsObj as $aircraft) {
+            $aircrafts[$aircraft->id] = $aircraft->aircraft_type_name . ' (' . $aircraft->reg_number . ')';
+        }
 
         $request = $this->getRequest();
 
@@ -369,6 +380,7 @@ class RefuelController extends FlightController
 
             return array(
                 'currencies' => $currencies,
+                'aircrafts' => $aircrafts,
                 'units' => $units,
                 'result' => $result,
             );

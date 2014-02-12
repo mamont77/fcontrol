@@ -110,12 +110,17 @@
                        value="<?= $row['airOperatorNumber'] ?>">
             </td>
             <td>
-                <input type="hidden" name="data[<?= $item ?>][aircraftId]"
-                       value="<?= $row['aircraftId'] ?>">
-                <input type="text" name="data[<?= $item ?>][incomeInvoiceAircraftName]"
-                       class="input-small readonly"
-                       maxlength="40" required="required" readonly="readonly"
-                       value="<?= $row['incomeInvoiceAircraftName'] ?>">
+                <select id="aircraftId" name="data[<?= $item ?>][aircraftId]" class="chosen input-medium"
+                        data-placeholder="Aircraft"
+                        required="required">
+                    <? foreach ($this->aircrafts as $key => $value): ?>
+                        <? if ($key == $row['aircraftId']): ?>
+                            <option value="<?= $key ?>" selected="selected"><?= $value ?></option>
+                        <? else: ?>
+                            <option value="<?= $key ?>"><?= $value ?></option>
+                        <? endif; ?>
+                    <? endforeach; ?>
+                </select>
             </td>
             <td>
                 <input type="hidden" name="data[<?= $item ?>][airportDepId]"

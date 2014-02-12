@@ -138,11 +138,17 @@ foreach ($this->data as $row) {
                    value="<?= $row->incomeInvoiceAirOperatorNumber ?>">
         </td>
         <td rowspan="2">
-            <input type="hidden" name="data[<?= $item ?>][aircraftId]"
-                   value="<?= $row->incomeInvoiceAircraftId ?>">
-            <input type="text" name="data[<?= $item ?>][incomeInvoiceAircraftName]" class="input-small readonly"
-                   maxlength="40" required="required" readonly="readonly"
-                   value="<?= $row->incomeInvoiceAircraftTypeName . ' (' . $row->incomeInvoiceAircraftName . ')' ?>">
+            <select id="aircraftId" name="data[<?= $item ?>][aircraftId]" class="chosen input-medium"
+                    data-placeholder="Aircraft"
+                    required="required">
+                <? foreach ($this->aircrafts as $key => $value): ?>
+                    <? if ($key == $row->incomeInvoiceAircraftId): ?>
+                        <option value="<?= $key ?>" selected="selected"><?= $value ?></option>
+                    <? else: ?>
+                        <option value="<?= $key ?>"><?= $value ?></option>
+                    <? endif; ?>
+                <? endforeach; ?>
+            </select>
         </td>
         <td rowspan="2">
             <input type="hidden" name="data[<?= $item ?>][airportDepId]"
