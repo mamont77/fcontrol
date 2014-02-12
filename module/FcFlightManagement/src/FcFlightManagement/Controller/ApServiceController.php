@@ -179,6 +179,11 @@ class ApServiceController extends FlightController
         }
         $currencies = new ApServiceForm(null, array());
         $currencies = $currencies->getCurrencyExchangeRate();
+        $aircrafts = array();
+        $aircraftsObj = $this->getAircrafts();
+        foreach ($aircraftsObj as $aircraft) {
+            $aircrafts[$aircraft->id] = $aircraft->aircraft_type_name . ' (' . $aircraft->reg_number . ')';
+        }
 
         if ($request->isPost()) {
             $data = $request->getPost();
@@ -213,6 +218,7 @@ class ApServiceController extends FlightController
 
         return array(
             'currencies' => $currencies,
+            'aircrafts' => $aircrafts,
             'units' => $units,
             'typeOfServices' => $typeOfServices,
             'result' => $result,
@@ -233,6 +239,11 @@ class ApServiceController extends FlightController
 
         $currencies = new ApServiceForm(null, array());
         $currencies = $currencies->getCurrencyExchangeRate();
+        $aircrafts = array();
+        $aircraftsObj = $this->getAircrafts();
+        foreach ($aircraftsObj as $aircraft) {
+            $aircrafts[$aircraft->id] = $aircraft->aircraft_type_name . ' (' . $aircraft->reg_number . ')';
+        }
 
         $request = $this->getRequest();
 
@@ -241,6 +252,7 @@ class ApServiceController extends FlightController
 
             return array(
                 'currencies' => $currencies,
+                'aircrafts' => $aircrafts,
                 'units' => $units,
                 'typeOfServices' => $typeOfServices,
                 'result' => $result,
@@ -435,6 +447,11 @@ class ApServiceController extends FlightController
         }
         $currencies = new ApServiceForm(null, array());
         $currencies = $currencies->getCurrencyExchangeRate();
+        $aircrafts = array();
+        $aircraftsObj = $this->getAircrafts();
+        foreach ($aircraftsObj as $aircraft) {
+            $aircrafts[$aircraft->id] = $aircraft->aircraft_type_name . ' (' . $aircraft->reg_number . ')';
+        }
 
         $data = $request->getPost();
 
@@ -471,6 +488,7 @@ class ApServiceController extends FlightController
         return array(
             'newInvoiceNumber' => $newInvoiceNumber,
             'currencies' => $currencies,
+            'aircrafts' => $aircrafts,
             'typeOfServices' => $typeOfServices,
             'units' => $units,
             'banks' => $this->getApServiceOutcomeInvoiceMainModel()->getBankDetailsList(),
@@ -498,11 +516,17 @@ class ApServiceController extends FlightController
         }
         $currencies = new ApServiceForm(null, array());
         $currencies = $currencies->getCurrencyExchangeRate();
+        $aircrafts = array();
+        $aircraftsObj = $this->getAircrafts();
+        foreach ($aircraftsObj as $aircraft) {
+            $aircrafts[$aircraft->id] = $aircraft->aircraft_type_name . ' (' . $aircraft->reg_number . ')';
+        }
 
         $result = $request->getPost();
 
         return array(
             'currencies' => $currencies,
+            'aircrafts' => $aircrafts,
             'typeOfServices' => $typeOfServices,
             'units' => $units,
             'result' => $result,
