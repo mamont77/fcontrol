@@ -51,43 +51,6 @@ if ($this->header->status == '-1' && $legsCount > 0) {
     </ul>
 <? endif; ?>
 
-<?// if (count($this->header->parents) > 1): ?>
-<!--    --><?php
-//    unset ($this->header->parents[$this->header->id]);
-//    ?>
-<!--    <ul class="breadcrumb">-->
-<!--        <li>Parents: </li>-->
-<!--        --><?// foreach ($this->header->parents as $parent): ?>
-<!--            <li class="parent">-->
-<!--                --><?//=
-//                '<a href="' . $this->url('browse',
-//                                    array('action' => 'show', 'refNumberOrder' => $parent))
-//                                . '">' . $parent . '</a>'
-//                ?>
-<!--                <span class="divider">/</span>-->
-<!--            </li>-->
-<!--        --><?// endforeach; ?>
-<!--    </ul>-->
-<?// endif; ?>
-<?// if (count($this->header->childrens) > 1): ?>
-<!--    --><?php
-//    unset ($this->header->childrens[$this->header->id]);
-//    ?>
-<!--    <ul class="breadcrumb">-->
-<!--        <li>Childrens: </li>-->
-<!--        --><?// foreach ($this->header->childrens as $parent): ?>
-<!--            <li class="parent">-->
-<!--                --><?//=
-//                '<a href="' . $this->url('browse',
-//                    array('action' => 'show', 'refNumberOrder' => $parent))
-//                . '">' . $parent . '</a>'
-//                ?>
-<!--                <span class="divider">/</span>-->
-<!--            </li>-->
-<!--        --><?// endforeach; ?>
-<!--    </ul>-->
-<?// endif; ?>
-
 <div id="header">
     <div class="flightAuthor">
         <span class="label label-inverse">Author: <?= $this->header->authorName ?></span>

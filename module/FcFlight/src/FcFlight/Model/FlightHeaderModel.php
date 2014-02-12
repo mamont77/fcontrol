@@ -530,9 +530,11 @@ class FlightHeaderModel extends AbstractTableGateway
         if (!$relatives) {
             return false;
         }
-        $result = array();
+        $refNumberOrder = (string)$refNumberOrder;
+        $refNumberOrder = explode('_', $refNumberOrder);
+        $result = array($refNumberOrder[0]);
         foreach ($relatives as $flight) {
-            $result[$flight->id] = $flight->refNumberOrder;
+            $result[] = $flight->refNumberOrder;
         }
         return $result;
     }
