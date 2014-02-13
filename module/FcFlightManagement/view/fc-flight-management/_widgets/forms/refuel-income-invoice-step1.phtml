@@ -65,7 +65,11 @@
                     <?= $row->flightAirOperatorNumber ?>
                 </td>
                 <td>
-                    <?= $row->flightAircraftTypeName . ' (' . $row->flightAircraftName . ')' ?>
+                    <? if ($row->incomeInvoiceAircraftTypeName || $row->incomeInvoiceAircraftName): ?>
+                        <?= $row->incomeInvoiceAircraftTypeName . ' (' . $row->incomeInvoiceAircraftName . ')' ?>
+                    <? else: ?>
+                        <?= $row->flightAircraftTypeName . ' (' . $row->flightAircraftName . ')' ?>
+                    <? endif; ?>
                 </td>
                 <td>
                     <?= $row->refuelAirportICAO . ' (' . $row->refuelAirportIATA . ')' ?>
