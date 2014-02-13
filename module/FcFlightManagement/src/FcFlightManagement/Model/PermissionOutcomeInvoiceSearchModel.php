@@ -175,7 +175,7 @@ class PermissionOutcomeInvoiceSearchModel extends BaseModel
 
         $select->join(
             array('outcomeInvoiceDataAircraftType' => 'library_aircraft_type'),
-            'incomeInvoiceDataAircraft.aircraft_type = outcomeInvoiceDataAircraftType.id',
+            'outcomeInvoiceDataAircraft.aircraft_type = outcomeInvoiceDataAircraftType.id',
             array(
                 'outcomeInvoiceDataAircraftTypeName' => 'name',
             ),

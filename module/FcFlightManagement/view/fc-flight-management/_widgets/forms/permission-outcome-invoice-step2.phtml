@@ -104,7 +104,7 @@ foreach ($this->data as $row) {
 </thead>
 <tbody>
 <? foreach ($this->data as $item => $row): ?>
-    <!--                --><? // \Zend\Debug\Debug::dump($row) ?>
+<!--    --><?// \Zend\Debug\Debug::dump($row) ?>
     <tr id="invoice_<?= $item ?>">
         <td class="noWrap" rowspan="2">
             <input type="hidden" name="data[<?= $item ?>][incomeInvoiceId]"
@@ -141,7 +141,7 @@ foreach ($this->data as $row) {
                     data-placeholder="Aircraft"
                     required="required">
                 <? foreach ($this->aircrafts as $key => $value): ?>
-                    <? if ($key == $row->flightAircraftId): ?>
+                    <? if ($key == $row->incomeInvoiceDataAircraftId): ?>
                         <option value="<?= $key ?>" selected="selected"><?= $value ?></option>
                     <? else: ?>
                         <option value="<?= $key ?>"><?= $value ?></option>
