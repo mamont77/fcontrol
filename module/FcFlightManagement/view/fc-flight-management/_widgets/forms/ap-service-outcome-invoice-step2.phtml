@@ -91,16 +91,11 @@
     <tbody>
     <tr>
         <td rowspan="2">
-            <input type="text" class="input-small" name="aircraftName" maxlength="40" required="required"
-                   readonly="readonly"
-                   value="<?= $this->data->flightAircraftTypeName . ' (' . $this->data->flightAircraftName . ')' ?>">
-        </td>
-        <td rowspan="2">
             <select id="aircraftId" name="aircraftId" class="chosen input-small"
                     data-placeholder="Aircraft"
                     required="required">
                 <? foreach ($this->aircrafts as $key => $value): ?>
-                    <? if ($key == $this->data->aircraftId): ?>
+                    <? if ($key == $this->data->incomeInvoiceMainAircraftId): ?>
                         <option value="<?= $key ?>" selected="selected"><?= $value ?></option>
                     <? else: ?>
                         <option value="<?= $key ?>"><?= $value ?></option>

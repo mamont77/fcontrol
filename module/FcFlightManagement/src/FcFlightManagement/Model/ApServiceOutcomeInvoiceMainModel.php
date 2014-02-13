@@ -129,19 +129,19 @@ class ApServiceOutcomeInvoiceMainModel extends BaseModel
             'left');
 
         $select->join(
-            array('flightAircraft' => 'library_aircraft'),
-            'flight.aircraftId = flightAircraft.id',
+            array('outcomeInvoiceMainAircraft' => 'library_aircraft'),
+            $this->table . '.aircraftId = outcomeInvoiceMainAircraft.id',
             array(
-                'flightAircraftTypeId' => 'aircraft_type',
-                'flightAircraftName' => 'reg_number',
+                'outcomeInvoiceMainAircraftTypeId' => 'aircraft_type',
+                'outcomeInvoiceMainAircraftName' => 'reg_number',
             ),
             'left');
 
         $select->join(
-            array('flightAircraftType' => 'library_aircraft_type'),
-            'flightAircraft.aircraft_type = flightAircraftType.id',
+            array('outcomeInvoiceMainAircraftType' => 'library_aircraft_type'),
+            'outcomeInvoiceMainAircraft.aircraft_type = outcomeInvoiceMainAircraftType.id',
             array(
-                'flightAircraftTypeName' => 'name',
+                'outcomeInvoiceMainAircraftTypeName' => 'name',
             ),
             'left');
 

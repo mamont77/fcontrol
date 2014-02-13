@@ -1,5 +1,5 @@
 <? // \Zend\Debug\Debug::dump($this->typeOfServices) ?>
-<? // \Zend\Debug\Debug::dump($this->data) ?>
+<?// \Zend\Debug\Debug::dump($this->data) ?>
 <form name="apServiceOutcomeInvoiceStep4" id="apServiceOutcomeInvoiceStep4" method="post"
       action="/management/ap-service/outcome-invoice-add">
 <table id="invoiceMain" class="table table-bordered table-hover table-condensed">
@@ -97,9 +97,17 @@
                    readonly="readonly" value="<?= $this->data->flightNumber ?>">
         </td>
         <td>
-            <input type="text" class="input-small" name="aircraftName" maxlength="40" required="required"
-                   readonly="readonly"
-                   value="<?= $this->data->aircraftName ?>">
+            <select id="aircraftId" name="aircraftId" class="chosen input-small"
+                    data-placeholder="Aircraft"
+                    required="required">
+                <? foreach ($this->aircrafts as $key => $value): ?>
+                    <? if ($key == $this->data->aircraftId): ?>
+                        <option value="<?= $key ?>" selected="selected"><?= $value ?></option>
+                    <? else: ?>
+                        <option disabled value="<?= $key ?>"><?= $value ?></option>
+                    <? endif; ?>
+                <? endforeach; ?>
+            </select>
         </td>
         <td>
             <input type="text" class="input-small" name="airportArr" maxlength="40" required="required"

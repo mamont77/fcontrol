@@ -87,23 +87,6 @@ class ApServiceOutcomeInvoiceSearchModel extends BaseModel
             'left');
 
         $select->join(
-            array('flightAircraft' => 'library_aircraft'),
-            'flight.aircraftId = flightAircraft.id',
-            array(
-                'flightAircraftTypeId' => 'aircraft_type',
-                'flightAircraftName' => 'reg_number',
-            ),
-            'left');
-
-        $select->join(
-            array('flightAircraftType' => 'library_aircraft_type'),
-            'flightAircraft.aircraft_type = flightAircraftType.id',
-            array(
-                'flightAircraftTypeName' => 'name',
-            ),
-            'left');
-
-        $select->join(
             array('preInvoiceAirport' => 'library_airport'),
             'preInvoice.airportId = preInvoiceAirport.id',
             array(
@@ -134,10 +117,44 @@ class ApServiceOutcomeInvoiceSearchModel extends BaseModel
             'left');
 
         $select->join(
+            array('incomeInvoiceMainAircraft' => 'library_aircraft'),
+            $this->table . '.aircraftId = incomeInvoiceMainAircraft.id',
+            array(
+                'incomeInvoiceMainAircraftTypeId' => 'aircraft_type',
+                'incomeInvoiceMainAircraftName' => 'reg_number',
+            ),
+            'left');
+
+        $select->join(
+            array('incomeInvoiceMainAircraftType' => 'library_aircraft_type'),
+            'incomeInvoiceMainAircraft.aircraft_type = incomeInvoiceMainAircraftType.id',
+            array(
+                'incomeInvoiceMainAircraftTypeName' => 'name',
+            ),
+            'left');
+
+        $select->join(
             array('outcomeInvoiceMainTypeOfService' => 'library_type_of_ap_service'),
             'outcomeInvoice.typeOfServiceId = outcomeInvoiceMainTypeOfService.id',
             array(
                 'outcomeInvoiceMainTypeOfServiceName' => 'name',
+            ),
+            'left');
+
+        $select->join(
+            array('outcomeInvoiceMainAircraft' => 'library_aircraft'),
+            'outcomeInvoice.aircraftId = outcomeInvoiceMainAircraft.id',
+            array(
+                'outcomeInvoiceMainAircraftTypeId' => 'aircraft_type',
+                'outcomeInvoiceMainAircraftName' => 'reg_number',
+            ),
+            'left');
+
+        $select->join(
+            array('outcomeInvoiceMainAircraftType' => 'library_aircraft_type'),
+            'outcomeInvoiceMainAircraft.aircraft_type = outcomeInvoiceMainAircraftType.id',
+            array(
+                'outcomeInvoiceMainAircraftTypeName' => 'name',
             ),
             'left');
 

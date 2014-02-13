@@ -65,8 +65,12 @@
                         &mdash;
                     <? endif; ?>
                 </td>
-                <td rowspan="2" class="noWrap">
-                    <?= $row->flightAircraftTypeName . '<br /><small>(' . $row->flightAircraftName . ')</small>' ?>
+                <td class="noWrap">
+                    <? if ($row->outcomeInvoiceMainAircraftTypeName || $row->outcomeInvoiceMainAircraftName): ?>
+                        <?= $row->outcomeInvoiceMainAircraftTypeName . '<br /><small>(' . $row->outcomeInvoiceMainAircraftName . ')</small>' ?>
+                    <? else: ?>
+                        &mdash;
+                    <? endif; ?>
                 </td>
                 <td rowspan="2">
                     <?= $row->preInvoiceAirportICAO . ' (' . $row->preInvoiceAirportIATA . ')' ?>
@@ -132,6 +136,9 @@
                 </td>
                 <td>
                     <?= $row->incomeInvoiceFlightNumber ?>
+                </td>
+                <td>
+                    <?= $row->incomeInvoiceMainAircraftTypeName . '<br /><small>(' . $row->incomeInvoiceMainAircraftName . ')</small>' ?>
                 </td>
                 <td>
                     <?= date('d-m-Y', $row->incomeInvoiceMainDateArr) ?>
