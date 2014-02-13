@@ -231,6 +231,23 @@ class RefuelOutcomeInvoiceSearchModel extends AbstractTableGateway
             ),
             'left');
 
+        $select->join(
+            array('outcomeInvoiceAircraft' => 'library_aircraft'),
+            'invoiceOutcomeRefuelData.aircraftId = outcomeInvoiceAircraft.id',
+            array(
+                'outcomeInvoiceAircraftTypeId' => 'aircraft_type',
+                'outcomeInvoiceAircraftName' => 'reg_number',
+            ),
+            'left');
+
+        $select->join(
+            array('outcomeInvoiceAircraftType' => 'library_aircraft_type'),
+            'outcomeInvoiceAircraft.aircraft_type = outcomeInvoiceAircraftType.id',
+            array(
+                'outcomeInvoiceAircraftTypeName' => 'name',
+            ),
+            'left');
+
         $select->where->equalTo('flight.isYoungest', 1);
         $select->where->in('flight.status', array(0, 1));
 

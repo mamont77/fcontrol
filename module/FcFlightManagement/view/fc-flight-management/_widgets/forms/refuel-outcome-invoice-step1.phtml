@@ -70,8 +70,12 @@
                         &mdash;
                     <? endif; ?>
                 </td>
-                <td rowspan="2" class="noWrap">
-                    <?= $row->incomeInvoiceAircraftTypeName . '<br /><small>(' . $row->incomeInvoiceAircraftName . ')</small>' ?>
+                <td class="noWrap">
+                    <? if ($row->outcomeInvoiceAircraftTypeName || $row->outcomeInvoiceAircraftName): ?>
+                        <?= $row->outcomeInvoiceAircraftTypeName . '<br /><small>(' . $row->outcomeInvoiceAircraftName . ')</small>' ?>
+                    <? else: ?>
+                        &mdash;
+                    <? endif; ?>
                 </td>
                 <td rowspan="2">
                     <?= $row->incomeInvoiceAirportDepICAO . ' (' . $row->incomeInvoiceAirportDepIATA . ')' ?>
@@ -179,6 +183,9 @@
                 </td>
                 <td>
                     <?= $row->incomeInvoiceAirOperatorNumber ?>
+                </td>
+                <td>
+                    <?= $row->incomeInvoiceAircraftTypeName . '<br /><small>(' . $row->incomeInvoiceAircraftName . ')</small>' ?>
                 </td>
                 <td>
                     <?= date('d-m-Y', $row->incomeInvoiceDate) ?>
