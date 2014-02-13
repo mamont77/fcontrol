@@ -131,6 +131,23 @@ class ApServiceIncomeInvoiceSearchModel extends BaseModel
             ),
             'left');
 
+        $select->join(
+            array('incomeInvoiceAircraft' => 'library_aircraft'),
+            'incomeInvoiceMain.aircraftId = incomeInvoiceAircraft.id',
+            array(
+                'incomeInvoiceAircraftTypeId' => 'aircraft_type',
+                'incomeInvoiceAircraftName' => 'reg_number',
+            ),
+            'left');
+
+        $select->join(
+            array('incomeInvoiceAircraftType' => 'library_aircraft_type'),
+            'incomeInvoiceAircraft.aircraft_type = incomeInvoiceAircraftType.id',
+            array(
+                'incomeInvoiceAircraftTypeName' => 'name',
+            ),
+            'left');
+
         $select->where->equalTo('flight.isYoungest', 1);
         $select->where->in('flight.status', array(0, 1));
 

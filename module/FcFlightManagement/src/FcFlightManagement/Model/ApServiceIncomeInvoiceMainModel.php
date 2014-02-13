@@ -119,19 +119,19 @@ class ApServiceIncomeInvoiceMainModel extends BaseModel
             'left');
 
         $select->join(
-            array('flightAircraft' => 'library_aircraft'),
-            'flight.aircraftId = flightAircraft.id',
+            array('incomeInvoiceMainAircraft' => 'library_aircraft'),
+            $this->table . '.aircraftId = incomeInvoiceMainAircraft.id',
             array(
-                'flightAircraftTypeId' => 'aircraft_type',
-                'flightAircraftName' => 'reg_number',
+                'incomeInvoiceMainAircraftTypeId' => 'aircraft_type',
+                'incomeInvoiceMainAircraftName' => 'reg_number',
             ),
             'left');
 
         $select->join(
-            array('flightAircraftType' => 'library_aircraft_type'),
-            'flightAircraft.aircraft_type = flightAircraftType.id',
+            array('incomeInvoiceMainAircraftType' => 'library_aircraft_type'),
+            'incomeInvoiceMainAircraft.aircraft_type = incomeInvoiceMainAircraftType.id',
             array(
-                'flightAircraftTypeName' => 'name',
+                'incomeInvoiceMainAircraftTypeName' => 'name',
             ),
             'left');
 
