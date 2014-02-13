@@ -101,23 +101,6 @@ class PermissionIncomeInvoiceDataModel extends PermissionIncomeInvoiceMainModel
             'left');
 
         $select->join(
-            array('flightAircraft' => 'library_aircraft'),
-            'flight.aircraftId = flightAircraft.id',
-            array(
-                'flightAircraftTypeId' => 'aircraft_type',
-                'flightAircraftName' => 'reg_number',
-            ),
-            'left');
-
-        $select->join(
-            array('flightAircraftType' => 'library_aircraft_type'),
-            'flightAircraft.aircraft_type = flightAircraftType.id',
-            array(
-                'flightAircraftTypeName' => 'name',
-            ),
-            'left');
-
-        $select->join(
             array('legAirportDep' => 'library_airport'),
             'leg.apDepAirportId = legAirportDep.id',
             array(
@@ -152,6 +135,23 @@ class PermissionIncomeInvoiceDataModel extends PermissionIncomeInvoiceMainModel
             $this->table . '.unitId = incomeInvoiceDataUnit.id',
             array(
                 'incomeInvoiceDataUnitName' => 'name',
+            ),
+            'left');
+
+        $select->join(
+            array('incomeInvoiceDataAircraft' => 'library_aircraft'),
+            $this->table . '.aircraftId = incomeInvoiceDataAircraft.id',
+            array(
+                'incomeInvoiceDataAircraftTypeId' => 'aircraft_type',
+                'incomeInvoiceDataAircraftName' => 'reg_number',
+            ),
+            'left');
+
+        $select->join(
+            array('incomeInvoiceDataAircraftType' => 'library_aircraft_type'),
+            'incomeInvoiceDataAircraft.aircraft_type = incomeInvoiceDataAircraftType.id',
+            array(
+                'incomeInvoiceDataAircraftTypeName' => 'name',
             ),
             'left');
 
