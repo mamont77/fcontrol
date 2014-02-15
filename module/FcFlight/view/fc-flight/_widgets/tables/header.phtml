@@ -33,7 +33,7 @@
 </thead>
 <tbody>
 <?php foreach ($data as $row) : ?>
-    <!--        --><? // \Zend\Debug\Debug::dump($row) ?>
+<!--            --><?//  \Zend\Debug\Debug::dump($row) ?>
     <?php
     $class = '';
     switch ($row['status']) {
@@ -133,6 +133,8 @@
                                 </span>
                             -
                             <?= $item['typeOfApServiceName'] ?>
+                            -
+                            <?= $item['kontragentShortName'] ?>
                             <br/>
                         <? endforeach; ?>
                     </div>
