@@ -64,6 +64,7 @@ class AirportForm extends Form
             'name' => 'code_icao',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
+                'required' => true,
                 'minlength' => '4',
                 'maxlength' => '4',
             ),
@@ -76,7 +77,7 @@ class AirportForm extends Form
             'name' => 'code_iata',
             'type' => 'Zend\Form\Element\Text',
             'attributes' => array(
-                'required' => true,
+                'required' => false,
                 'minlength' => '3',
                 'maxlength' => '3',
             ),

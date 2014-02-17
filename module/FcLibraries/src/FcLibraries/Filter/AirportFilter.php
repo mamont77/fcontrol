@@ -116,7 +116,7 @@ class AirportFilter extends BaseFilter
 
             $inputFilter->add($factory->createInput(array(
                 'name' => 'code_iata',
-                'required' => true,
+                'required' => false,
                 'filters' => $this->defaultFilters,
                 'validators' => array(
                     array(
