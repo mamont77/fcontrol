@@ -52,6 +52,15 @@ class BaseFilter implements InputFilterAwareInterface
     }
 
     /**
+     * @param $name
+     * @param $value
+     */
+    public function __set($name, $value)
+    {
+        $this->{$name} = $value;
+    }
+
+    /**
      * @return \Zend\Db\Adapter\Adapter
      */
     public function getDbAdapter()

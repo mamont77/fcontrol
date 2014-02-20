@@ -21,20 +21,28 @@ class AircraftFilter extends BaseFilter
      */
     protected $table = 'library_aircraft';
 
-    public $id;
-    public $aircraft_type;
-    public $aircraft_type_name;
-    public $reg_number;
+    public $id = null;
+    public $aircraft_type = null;
+    public $aircraft_type_name = null;
+    public $reg_number = null;
 
     /**
      * @param $data
      */
     public function exchangeArray($data)
     {
-        $this->id = (isset($data['id'])) ? $data['id'] : null;
-        $this->aircraft_type = (isset($data['aircraft_type'])) ? $data['aircraft_type'] : null;
-        $this->aircraft_type_name = (isset($data['aircraft_type_name'])) ? $data['aircraft_type_name'] : null;
-        $this->reg_number = (isset($data['reg_number'])) ? $data['reg_number'] : null;
+        if (isset($data['id'])) {
+            $this->__set('id', $data['id']);
+        }
+        if (isset($data['aircraft_type'])) {
+            $this->__set('aircraft_type', $data['aircraft_type']);
+        }
+        if (isset($data['aircraft_type_name'])) {
+            $this->__set('aircraft_type_name', $data['aircraft_type_name']);
+        }
+        if (isset($data['reg_number'])) {
+            $this->__set('reg_number', $data['reg_number']);
+        }
     }
 
     /**

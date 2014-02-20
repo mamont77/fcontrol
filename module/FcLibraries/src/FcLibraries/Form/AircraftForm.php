@@ -90,18 +90,60 @@ class AircraftForm extends Form
     }
 
     /**
+     * @param $name
+     * @return bool
+     */
+    public function __isset($name)
+    {
+        return isset($this->{$name});
+    }
+
+    /**
+     * @param $name
+     * @param $value
+     */
+    public function __set($name, $value)
+    {
+        if (is_array($value) && count($value) == 1) {
+            $key = key($value);
+            $this->{$name}[$key] = $value[$key];
+        } else {
+            $this->{$name} = $value;
+        }
+    }
+
+    /**
+     * @param $name
+     * @return null
+     */
+    public function __get($name)
+    {
+        if ($this->__isset($name)) {
+            return $this->$name;
+        }
+
+        return null;
+    }
+
+    /**
      * @param \Zend\Db\ResultSet\ResultSet $data
      */
     private function setAircraftTypes(\Zend\Db\ResultSet\ResultSet $data)
     {
-        if (!$this->aircraft_types) {
+        if (!$this->__get('aircraft_types')) {
             foreach ($data as $row) {
-                $this->aircraft_types[$row->id] = $row->name;
+                $this->__set('aircraft_types', array($row->id => $row->name));
             }
-            uasort($this->aircraft_types, array($this, 'sortLibrary'));
+            $aircraftTypes = $this->__get('aircraft_types');
+            uasort($aircraftTypes, array($this, 'sortLibrary'));
         }
     }
 
+    /**
+     * @param $a
+     * @param $b
+     * @return bool
+     */
     protected function sortLibrary($a, $b)
     {
         return $a > $b;
