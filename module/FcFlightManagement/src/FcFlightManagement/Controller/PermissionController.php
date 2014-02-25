@@ -20,6 +20,8 @@ use DOMPDFModule\View\Model\PdfModel;
  */
 class PermissionController extends FlightController
 {
+    const DEFAULT_MONTH_VIEW_PERIOD = 1;
+
     /**
      * Fields for search
      *
@@ -117,6 +119,12 @@ class PermissionController extends FlightController
                 $data = $searchForm->getData();
                 $result = $this->getPermissionIncomeInvoiceSearchModel()->findByParams($data);
             }
+        } else {
+            $data = array(
+                'dateFrom' => date('d-m-Y', strtotime('-' . self::DEFAULT_MONTH_VIEW_PERIOD . ' month', time())),
+                'dateTo' => date('d-m-Y'),
+            );
+            $result = $this->getPermissionIncomeInvoiceSearchModel()->findByParams($data);
         }
 
         return array(
@@ -305,6 +313,12 @@ class PermissionController extends FlightController
                 $data = $searchForm->getData();
                 $result = $this->getPermissionOutcomeInvoiceSearchModel()->findByParams($data);
             }
+        } else {
+            $data = array(
+                'dateFrom' => date('d-m-Y', strtotime('-' . self::DEFAULT_MONTH_VIEW_PERIOD . ' month', time())),
+                'dateTo' => date('d-m-Y'),
+            );
+            $result = $this->getPermissionOutcomeInvoiceSearchModel()->findByParams($data);
         }
 
         return array(

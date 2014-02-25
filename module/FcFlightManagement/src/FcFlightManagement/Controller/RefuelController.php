@@ -20,6 +20,8 @@ use DOMPDFModule\View\Model\PdfModel;
  */
 class RefuelController extends FlightController
 {
+    const DEFAULT_MONTH_VIEW_PERIOD = 1;
+
     /**
      * Fields for search
      *
@@ -86,7 +88,6 @@ class RefuelController extends FlightController
         );
 
         $request = $this->getRequest();
-
         if ($request->isPost()) {
             $data = $request->getPost();
 
@@ -110,8 +111,13 @@ class RefuelController extends FlightController
             if ($searchForm->isValid() && !$postIsEmpty) {
                 $data = $searchForm->getData();
                 $result = $this->getRefuelIncomeInvoiceSearchModel()->findByParams($data);
-
             }
+        } else {
+            $data = array(
+                'dateOrderFrom' => date('d-m-Y', strtotime('-' . self::DEFAULT_MONTH_VIEW_PERIOD . ' month', time())),
+                'dateOrderTo' => date('d-m-Y'),
+            );
+            $result = $this->getRefuelIncomeInvoiceSearchModel()->findByParams($data);
         }
 
         return array(
@@ -293,6 +299,12 @@ class RefuelController extends FlightController
                 $result = $this->getRefuelOutcomeInvoiceSearchModel()->findByParams($data);
 
             }
+        } else {
+            $data = array(
+                'dateOrderFrom' => date('d-m-Y', strtotime('-' . self::DEFAULT_MONTH_VIEW_PERIOD . ' month', time())),
+                'dateOrderTo' => date('d-m-Y'),
+            );
+            $result = $this->getRefuelOutcomeInvoiceSearchModel()->findByParams($data);
         }
 
         return array(
